@@ -16,15 +16,19 @@ import android.view.View;
 import com.pixplicity.cryptogram.R;
 import com.pixplicity.cryptogram.models.Cryptogram;
 
+import java.util.HashMap;
+
 
 public class CryptogramView extends View {
 
     private Cryptogram mCryptogram;
     private String[] mWords;
+    private HashMap<Character, Character> mUserChars;
 
-    private float mBoxW, mBoxH, mCharW, mCharH;
+    private float mBoxW, mBoxH, mCharW1, mCharW2;
     private Paint mPaint;
-    private TextPaint mTextPaint;
+    private Paint mLinePaint;
+    private TextPaint mTextPaint1, mTextPaint2;
 
 
     public CryptogramView(Context context) {
@@ -49,24 +53,31 @@ public class CryptogramView extends View {
     }
 
     private void init(Context context, AttributeSet attrs, int defStyleAttr, int defStyleRes) {
+        Resources r = context.getResources();
+
         mPaint = new Paint();
         mPaint.setColor(Color.BLACK);
         mPaint.setAntiAlias(true);
 
-        mTextPaint = new TextPaint(mPaint);
-        mTextPaint.setTypeface(Typeface.MONOSPACE);
+        mLinePaint = new Paint(mPaint);
+        mLinePaint.setStrokeWidth(r.getDimensionPixelSize(R.dimen.puzzle_line_height));
+        mLinePaint.setStrokeCap(Paint.Cap.ROUND);
+
+        mTextPaint1 = new TextPaint(mPaint);
+        mTextPaint1.setTypeface(Typeface.MONOSPACE);
+
+        mTextPaint2 = new TextPaint(mTextPaint1);
 
         // Compute size of each box
-        Resources r = context.getResources();
         mBoxW = r.getDimensionPixelSize(R.dimen.puzzle_box_width);
         mBoxH = r.getDimensionPixelSize(R.dimen.puzzle_box_height);
-        mTextPaint.setTextSize(r.getDimensionPixelSize(R.dimen.puzzle_text_size));
+        mTextPaint1.setTextSize(r.getDimensionPixelSize(R.dimen.puzzle_text_size));
+        mTextPaint2.setTextSize(r.getDimensionPixelSize(R.dimen.puzzle_hint_size));
 
         // Compute size of a single char (assumes monospaced font!)
         Rect bounds = new Rect();
-        mTextPaint.getTextBounds("M", 0, 1, bounds);
-        mCharW = bounds.width();
-        mCharH = bounds.height();
+        mTextPaint1.getTextBounds("M", 0, 1, bounds);
+        mCharW1 = bounds.width();
 
         if (isInEditMode()) {
             setCryptogram(new Cryptogram());
@@ -76,6 +87,18 @@ public class CryptogramView extends View {
     public void setCryptogram(Cryptogram cryptogram) {
         mCryptogram = cryptogram;
         mWords = mCryptogram.getWords();
+        mUserChars = new HashMap<>();
+
+        for (String word : mWords) {
+            for (int i = 0; i < word.length(); i++) {
+                mUserChars.put(word.charAt(i), (char) 0);
+            }
+        }
+
+        // FIXME remove
+        mUserChars.put('a', 'a');
+        mUserChars.put('e', 'e');
+
         invalidate();
     }
 
@@ -83,7 +106,15 @@ public class CryptogramView extends View {
     protected void onDraw(Canvas canvas) {
         super.onDraw(canvas);
 
-        float offsetX = (mBoxW - mCharW) / 2;
+        if (mCryptogram == null) {
+            // Nothing to do
+            return;
+        }
+
+        HashMap<Character, Character> charMapping = mCryptogram.getCharMapping();
+
+        float offsetX1 = (mBoxW - mCharW1) / 4;
+        float offsetX2 = (mBoxW - mCharW2) / 4;
         float offsetY = mBoxH / 4;
         float x = 0, y = mBoxH;
         for (String word : mWords) {
@@ -93,15 +124,35 @@ public class CryptogramView extends View {
                 y += mBoxH * 2 + offsetY * 2;
             }
             for (int i = 0; i < word.length(); i++) {
-                String chr = String.valueOf(word.charAt(i));
-                canvas.drawText(chr, x + offsetX, y, mTextPaint);
-                canvas.drawLine(x, y + offsetY, x + mBoxW, y + offsetY, mPaint);
+                char c = word.charAt(i);
+                String chr;
+                Character mappedChar = charMapping.get(c);
+                if (mappedChar != null) {
+                    chr = String.valueOf(mappedChar);
+                    canvas.drawText(chr, x + offsetX2, y + mBoxH + offsetY, mTextPaint2);
+                }
+                if (mCryptogram.isInputChar(c)) {
+                    canvas.drawLine(x + offsetX1, y + offsetY, x + mBoxW - offsetX1, y + offsetY, mLinePaint);
+                    c = getUserInput(c);
+                }
+                if (c > 0) {
+                    chr = String.valueOf(c);
+                    canvas.drawText(chr, x + offsetX1, y, mTextPaint1);
+                }
                 // Box width
                 x += mBoxW;
             }
             // Trailing space
             x += mBoxW;
         }
+    }
+
+    private char getUserInput(char c) {
+        Character input = mUserChars.get(c);
+        if (input == null) {
+            return 0;
+        }
+        return input;
     }
 
 }
