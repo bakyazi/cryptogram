@@ -13,6 +13,15 @@ public class Cryptogram {
     @SerializedName("category")
     private String mCategory;
 
+    /**
+     * Creates a mock cryptogram.
+     */
+    public Cryptogram() {
+        mQuote = "Sample cryptogram; for testing only.";
+        mAuthor = "Paul Lammertsma";
+        mCategory = "Other";
+    }
+
     public String getQuote() {
         return mQuote;
     }
@@ -23,6 +32,10 @@ public class Cryptogram {
 
     public String getCategory() {
         return mCategory;
+    }
+
+    public String[] getWords() {
+        return mQuote.split("\\s");
     }
 
 }

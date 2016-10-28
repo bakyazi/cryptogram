@@ -6,6 +6,7 @@ import android.widget.TextView;
 
 import com.pixplicity.cryptogram.models.Cryptogram;
 import com.pixplicity.cryptogram.utils.CryptogramProvider;
+import com.pixplicity.cryptogram.views.CryptogramView;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -15,6 +16,9 @@ public class CryptogramActivity extends AppCompatActivity {
     @BindView(R.id.vg_author)
     protected TextView mTvAuthor;
 
+    @BindView(R.id.cryptogram)
+    protected CryptogramView mCryptogramView;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -23,8 +27,7 @@ public class CryptogramActivity extends AppCompatActivity {
 
         Cryptogram cryptogram = CryptogramProvider.getInstance(this).getCurrent();
         if (cryptogram != null) {
-            // TODO
-            cryptogram.getQuote();
+            mCryptogramView.setCryptogram(cryptogram);
             mTvAuthor.setText(cryptogram.getAuthor());
         } else {
             // TODO
