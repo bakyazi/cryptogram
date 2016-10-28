@@ -12,6 +12,12 @@ import android.os.Build;
 import android.text.TextPaint;
 import android.util.AttributeSet;
 import android.view.View;
+import android.view.inputmethod.BaseInputConnection;
+import android.view.inputmethod.EditorInfo;
+import android.view.inputmethod.InputConnection;
+import android.view.inputmethod.InputMethodManager;
+import android.widget.TextView;
+import android.widget.Toast;
 
 import com.pixplicity.cryptogram.R;
 import com.pixplicity.cryptogram.models.Cryptogram;
@@ -19,7 +25,7 @@ import com.pixplicity.cryptogram.models.Cryptogram;
 import java.util.HashMap;
 
 
-public class CryptogramView extends View {
+public class CryptogramView extends TextView {
 
     private Cryptogram mCryptogram;
     private String[] mWords;
@@ -82,6 +88,72 @@ public class CryptogramView extends View {
         if (isInEditMode()) {
             setCryptogram(new Cryptogram());
         }
+
+        setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                showSoftInput();
+            }
+        });
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            setShowSoftInputOnFocus(true);
+        }
+        setFocusable(true);
+        setFocusableInTouchMode(true);
+        setClickable(true);
+    }
+
+    @Override
+    protected void onFocusChanged(boolean focused, int direction, Rect previouslyFocusedRect) {
+        super.onFocusChanged(focused, direction, previouslyFocusedRect);
+        if (focused) {
+            showSoftInput();
+        }
+    }
+
+    private void showSoftInput() {
+        InputMethodManager inputMethodManager = (InputMethodManager) getContext().getSystemService(Context.INPUT_METHOD_SERVICE);
+        if (inputMethodManager != null) {
+            inputMethodManager.toggleSoftInput(InputMethodManager.SHOW_IMPLICIT, 0);
+        }
+    }
+
+    @Override
+    public InputConnection onCreateInputConnection(EditorInfo outAttrs) {
+        outAttrs.actionLabel = "";
+        outAttrs.hintText = "";
+        outAttrs.initialCapsMode = 0;
+        outAttrs.initialSelEnd = outAttrs.initialSelStart = -1;
+        outAttrs.label = "";
+        outAttrs.imeOptions = EditorInfo.IME_ACTION_UNSPECIFIED | EditorInfo.IME_FLAG_NO_EXTRACT_UI;
+        return new BaseInputConnection(CryptogramView.this, false) {
+            @Override
+            public boolean setComposingText(CharSequence text,
+                                            int newCursorPosition) {
+                return super.setComposingText(text, newCursorPosition);
+            }
+
+
+            @Override
+            public boolean finishComposingText() {
+                return super.finishComposingText();
+            }
+
+            @Override
+            public boolean commitText(CharSequence text, int newCursorPosition) {
+                onKeyPress(text);
+                return super.commitText(text, newCursorPosition);
+            }
+        };
+    }
+
+    private void onKeyPress(CharSequence text) {
+        Toast.makeText(getContext(), "onKeyPress: " + text, Toast.LENGTH_SHORT).show();
+    }
+
+    @Override
+    public boolean onCheckIsTextEditor() {
+        return true;
     }
 
     public void setCryptogram(Cryptogram cryptogram) {
