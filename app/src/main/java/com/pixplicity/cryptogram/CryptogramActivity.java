@@ -71,23 +71,27 @@ public class CryptogramActivity extends AppCompatActivity {
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
+        final Cryptogram cryptogram = mCryptogramView.getCryptogram();
         switch (item.getItemId()) {
             case R.id.action_next: {
-                new AlertDialog.Builder(this)
-                        .setMessage(R.string.skip_puzzle)
-                        .setPositiveButton(R.string.next, new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialogInterface, int i) {
-                                Cryptogram cryptogram = CryptogramProvider.getInstance(CryptogramActivity.this).getNext();
-                                updateCryptogram(cryptogram);
-                            }
-                        })
-                        .setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialogInterface, int i) {
-                            }
-                        })
-                        .show();
+                if (cryptogram == null || cryptogram.isCompleted()) {
+                    nextPuzzle();
+                } else {
+                    new AlertDialog.Builder(this)
+                            .setMessage(R.string.skip_puzzle)
+                            .setPositiveButton(R.string.next, new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialogInterface, int i) {
+                                    nextPuzzle();
+                                }
+                            })
+                            .setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialogInterface, int i) {
+                                }
+                            })
+                            .show();
+                }
             }
             return true;
             case R.id.action_reset: {
@@ -96,7 +100,6 @@ public class CryptogramActivity extends AppCompatActivity {
                         .setPositiveButton(R.string.reset, new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialogInterface, int i) {
-                                Cryptogram cryptogram = mCryptogramView.getCryptogram();
                                 if (cryptogram != null) {
                                     cryptogram.reset();
                                     mCryptogramView.invalidate();
@@ -113,6 +116,11 @@ public class CryptogramActivity extends AppCompatActivity {
             return true;
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    private void nextPuzzle() {
+        Cryptogram cryptogram = CryptogramProvider.getInstance(CryptogramActivity.this).getNext();
+        updateCryptogram(cryptogram);
     }
 
 }
