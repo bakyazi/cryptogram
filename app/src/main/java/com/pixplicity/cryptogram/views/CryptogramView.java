@@ -182,6 +182,66 @@ public class CryptogramView extends TextView {
     }
 
     @Override
+    protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
+        int widthMode = MeasureSpec.getMode(widthMeasureSpec);
+        int widthSize = MeasureSpec.getSize(widthMeasureSpec);
+        int heightMode = MeasureSpec.getMode(heightMeasureSpec);
+        int heightSize = MeasureSpec.getSize(heightMeasureSpec);
+
+        int desiredWidth = getSuggestedMinimumWidth();
+        int width;
+
+        //Measure Width
+        if (widthMode == MeasureSpec.EXACTLY) {
+            //Must be this size
+            width = widthSize;
+        } else if (widthMode == MeasureSpec.AT_MOST) {
+            //Can't be bigger than...
+            width = Math.min(desiredWidth, widthSize);
+        } else {
+            //Be whatever you want
+            width = desiredWidth;
+        }
+
+        int desiredHeight = 0;
+        int height;
+
+        if (mCryptogram != null) {
+            // Compute the height that works for this width
+            float offsetY = mBoxH / 4;
+            float x = 0, y = mBoxH;
+            for (String word : mWords) {
+                float w = word.length() * mBoxW;
+                if (x + w > width) {
+                    x = 0;
+                    y += mBoxH * 2 + offsetY * 2;
+                }
+                for (int i = 0; i < word.length(); i++) {
+                    // Box width
+                    x += mBoxW;
+                }
+                // Trailing space
+                x += mBoxW;
+            }
+            desiredHeight = (int) (y + mBoxH + offsetY * 2);
+        }
+
+        //Measure Height
+        if (heightMode == MeasureSpec.EXACTLY) {
+            //Must be this size
+            height = heightSize;
+        } else if (heightMode == MeasureSpec.AT_MOST) {
+            //Can't be bigger than...
+            height = Math.min(desiredHeight, heightSize);
+        } else {
+            //Be whatever you want
+            height = desiredHeight;
+        }
+
+        setMeasuredDimension(width, height);
+    }
+
+    @Override
     protected void onDraw(Canvas canvas) {
         super.onDraw(canvas);
 
@@ -190,7 +250,12 @@ public class CryptogramView extends TextView {
             return;
         }
 
-        HashMap<Character, Character> charMapping = mCryptogram.getCharMapping();
+        HashMap<Character, Character> charMapping;
+        if (isInEditMode()) {
+            charMapping = new HashMap<>();
+        } else {
+            charMapping = mCryptogram.getCharMapping();
+        }
 
         float offsetX1 = (mBoxW - mCharW1) / 4;
         float offsetX2 = (mBoxW - mCharW2) / 4;
@@ -232,6 +297,9 @@ public class CryptogramView extends TextView {
     }
 
     private char getUserInput(char c) {
+        if (isInEditMode()) {
+            return 0;
+        }
         Character input = mCryptogram.getUserChar(c);
         if (input == null) {
             return 0;
