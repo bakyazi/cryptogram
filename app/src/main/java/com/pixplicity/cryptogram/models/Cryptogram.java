@@ -1,11 +1,24 @@
 package com.pixplicity.cryptogram.models;
 
+import android.support.annotation.NonNull;
+
 import com.google.gson.annotations.SerializedName;
 
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Random;
 
 public class Cryptogram {
+
+    private static final List<Character> ALPHABET = new ArrayList<>(26);
+
+    static {
+        for (int i = 'A'; i <= 'Z'; i++) {
+            ALPHABET.add((char) i);
+        }
+    }
 
     @SerializedName("quote")
     private String mQuote;
@@ -43,22 +56,29 @@ public class Cryptogram {
         return mQuote.split("\\s");
     }
 
+    @NonNull
     public HashMap<Character, Character> getCharMapping() {
         if (mCharMapping == null) {
             mCharMapping = new HashMap<>();
             for (String word : getWords()) {
                 for (int i = 0; i < word.length(); i++) {
-                    char c = word.charAt(i);
+                    char c = Character.toUpperCase(word.charAt(i));
                     if (isInputChar(c)) {
                         mCharMapping.put(c, (char) 0);
                     }
                 }
             }
-            char mappedC = (char) ('A' + new Random().nextInt(26));
+            Random r = new Random(100);
+            List<Character> alphabet = new ArrayList<>(ALPHABET.size());
+            for (Character c : ALPHABET) {
+                alphabet.add(c);
+            }
+            Collections.shuffle(alphabet, r);
             for (Character c : mCharMapping.keySet()) {
-                if (mappedC > 'Z') mappedC = 'A';
+                int i = r.nextInt(alphabet.size());
+                char mappedC = alphabet.get(i);
+                alphabet.remove(i);
                 mCharMapping.put(c, mappedC);
-                mappedC++;
             }
         }
         return mCharMapping;

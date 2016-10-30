@@ -11,13 +11,10 @@ import android.graphics.Typeface;
 import android.os.Build;
 import android.text.TextPaint;
 import android.util.AttributeSet;
+import android.view.KeyEvent;
 import android.view.View;
-import android.view.inputmethod.BaseInputConnection;
-import android.view.inputmethod.EditorInfo;
-import android.view.inputmethod.InputConnection;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.pixplicity.cryptogram.R;
 import com.pixplicity.cryptogram.models.Cryptogram;
@@ -30,10 +27,10 @@ public class CryptogramView extends TextView {
     private Cryptogram mCryptogram;
     private String[] mWords;
     private HashMap<Character, Character> mUserChars;
+    private char mSelectedCharacter;
 
     private float mBoxW, mBoxH, mCharW1, mCharW2;
-    private Paint mPaint;
-    private Paint mLinePaint;
+    private Paint mPaint, mLinePaint, mSelectionPaint;
     private TextPaint mTextPaint1, mTextPaint2;
 
 
@@ -68,6 +65,10 @@ public class CryptogramView extends TextView {
         mLinePaint = new Paint(mPaint);
         mLinePaint.setStrokeWidth(r.getDimensionPixelSize(R.dimen.puzzle_line_height));
         mLinePaint.setStrokeCap(Paint.Cap.ROUND);
+
+        mSelectionPaint = new Paint(mPaint);
+        mSelectionPaint.setColor(Color.YELLOW);
+        mSelectionPaint.setStyle(Paint.Style.FILL);
 
         mTextPaint1 = new TextPaint(mPaint);
         mTextPaint1.setTypeface(Typeface.MONOSPACE);
@@ -119,36 +120,19 @@ public class CryptogramView extends TextView {
     }
 
     @Override
-    public InputConnection onCreateInputConnection(EditorInfo outAttrs) {
-        outAttrs.actionLabel = "";
-        outAttrs.hintText = "";
-        outAttrs.initialCapsMode = 0;
-        outAttrs.initialSelEnd = outAttrs.initialSelStart = -1;
-        outAttrs.label = "";
-        outAttrs.imeOptions = EditorInfo.IME_ACTION_UNSPECIFIED | EditorInfo.IME_FLAG_NO_EXTRACT_UI;
-        return new BaseInputConnection(CryptogramView.this, false) {
-            @Override
-            public boolean setComposingText(CharSequence text,
-                                            int newCursorPosition) {
-                return super.setComposingText(text, newCursorPosition);
+    public boolean onKeyUp(int keyCode, KeyEvent event) {
+        switch (keyCode) {
+            case KeyEvent.KEYCODE_BACK:
+                return false;
+        }
+        if (mCryptogram != null) {
+            char c = (char) event.getUnicodeChar();
+            if (!setCharacterMapping(c)) {
+                setCharacterSelection(c);
             }
-
-
-            @Override
-            public boolean finishComposingText() {
-                return super.finishComposingText();
-            }
-
-            @Override
-            public boolean commitText(CharSequence text, int newCursorPosition) {
-                onKeyPress(text);
-                return super.commitText(text, newCursorPosition);
-            }
-        };
-    }
-
-    private void onKeyPress(CharSequence text) {
-        Toast.makeText(getContext(), "onKeyPress: " + text, Toast.LENGTH_SHORT).show();
+            return true;
+        }
+        return false;
     }
 
     @Override
@@ -163,15 +147,46 @@ public class CryptogramView extends TextView {
 
         for (String word : mWords) {
             for (int i = 0; i < word.length(); i++) {
-                mUserChars.put(word.charAt(i), (char) 0);
+                mUserChars.put(Character.toUpperCase(word.charAt(i)), (char) 0);
             }
         }
 
-        // FIXME remove
-        mUserChars.put('a', 'a');
-        mUserChars.put('e', 'e');
-
         invalidate();
+    }
+
+    public boolean setCharacterMapping(char c) {
+        if (mSelectedCharacter != 0) {
+            if (mCryptogram.isInputChar(c)) {
+                // Enter the user's mapping
+                mUserChars.put(mSelectedCharacter, Character.toUpperCase(c));
+            } else {
+                // Clear it
+                mUserChars.put(mSelectedCharacter, (char) 0);
+            }
+            mSelectedCharacter = 0;
+            invalidate();
+            return true;
+        }
+        return false;
+    }
+
+    public boolean setCharacterSelection(char c) {
+        // Character does not occur in the mapping
+        mSelectedCharacter = 0;
+        if (mCryptogram.isInputChar(c)) {
+            c = Character.toUpperCase(c);
+            HashMap<Character, Character> charMapping = mCryptogram.getCharMapping();
+            for (Character chrOrig : charMapping.keySet()) {
+                Character chrMapped = charMapping.get(chrOrig);
+                if (chrMapped == c) {
+                    // Current selection is the input character
+                    mSelectedCharacter = chrOrig;
+                    break;
+                }
+            }
+        }
+        invalidate();
+        return mSelectedCharacter != 0;
     }
 
     @Override
@@ -196,14 +211,19 @@ public class CryptogramView extends TextView {
                 y += mBoxH * 2 + offsetY * 2;
             }
             for (int i = 0; i < word.length(); i++) {
-                char c = word.charAt(i);
+                char c = Character.toUpperCase(word.charAt(i));
                 String chr;
                 Character mappedChar = charMapping.get(c);
+                if (mSelectedCharacter == c) {
+                    // The user is inputting this character; highlight it
+                    canvas.drawRect(x, y - mBoxH, x + mBoxW, y + offsetY, mSelectionPaint);
+                }
                 if (mappedChar != null) {
                     chr = String.valueOf(mappedChar);
                     canvas.drawText(chr, x + offsetX2, y + mBoxH + offsetY, mTextPaint2);
                 }
                 if (mCryptogram.isInputChar(c)) {
+                    // This is a box the user has to fill to complete the puzzle
                     canvas.drawLine(x + offsetX1, y + offsetY, x + mBoxW - offsetX1, y + offsetY, mLinePaint);
                     c = getUserInput(c);
                 }
