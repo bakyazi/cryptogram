@@ -47,6 +47,13 @@ public class CryptogramProvider {
     private CryptogramProvider(Context context) throws IOException {
         InputStream is = context.getAssets().open("cryptograms.json");
         mCryptograms = mGson.fromJson(new InputStreamReader(is), Cryptogram[].class);
+        int i = 1000000;
+        for (Cryptogram cryptogram : mCryptograms) {
+            if (cryptogram.getId() == 0) {
+                cryptogram.setId(i);
+                i++;
+            }
+        }
     }
 
     private Cryptogram[] getAll() {
@@ -60,7 +67,6 @@ public class CryptogramProvider {
     @Nullable
     public Cryptogram getCurrent() {
         if (mCurrentId < 0) {
-
             mCurrentId = PrefsUtils.getCurrentId();
         }
         if (mCurrentId < 0) {
@@ -72,6 +78,24 @@ public class CryptogramProvider {
             PrefsUtils.setCurrentId(mCurrentId);
         }
         return mCryptograms[mCurrentId];
+    }
+
+    @Nullable
+    public Cryptogram getNext() {
+        int oldId = mCurrentId;
+        mCurrentId = -1;
+        Cryptogram cryptogram = getCurrent();
+        if (mCurrentId == oldId) {
+            // If the puzzle didn't change, simply take the next puzzle
+            if (oldId + 1 < getCount()) {
+                mCurrentId = oldId + 1;
+            } else {
+                mCurrentId = 0;
+            }
+            PrefsUtils.setCurrentId(mCurrentId);
+            cryptogram = getCurrent();
+        }
+        return cryptogram;
     }
 
     @NonNull

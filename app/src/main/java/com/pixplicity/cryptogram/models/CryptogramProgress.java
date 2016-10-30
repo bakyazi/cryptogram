@@ -20,6 +20,13 @@ public class CryptogramProgress {
         }
     }
 
+    public CryptogramProgress() {
+    }
+
+    public CryptogramProgress(int id) {
+        mId = id;
+    }
+
     @SerializedName("id")
     private int mId;
 

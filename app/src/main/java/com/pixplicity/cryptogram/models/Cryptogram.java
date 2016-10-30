@@ -6,11 +6,7 @@ import com.google.gson.annotations.SerializedName;
 import com.pixplicity.cryptogram.CryptogramApp;
 import com.pixplicity.cryptogram.utils.CryptogramProvider;
 
-import java.util.ArrayList;
-import java.util.Collections;
 import java.util.HashMap;
-import java.util.List;
-import java.util.Random;
 
 public class Cryptogram {
 
@@ -26,6 +22,8 @@ public class Cryptogram {
     @SerializedName("category")
     private String mCategory;
 
+    private transient String[] mWords;
+
     private CryptogramProgress mProgress;
     private boolean mLoadedProgress;
 
@@ -36,6 +34,14 @@ public class Cryptogram {
         mQuote = "Sample cryptogram; for testing only.";
         mAuthor = "Paul Lammertsma";
         mCategory = "Other";
+    }
+
+    public int getId() {
+        return mId;
+    }
+
+    public void setId(int id) {
+        mId = id;
     }
 
     public String getQuote() {
@@ -50,13 +56,17 @@ public class Cryptogram {
         return mCategory;
     }
 
+    @NonNull
     public String[] getWords() {
-        return mQuote.split("\\s");
+        if (mWords == null) {
+            mWords = mQuote.split("\\s");
+        }
+        return mWords;
     }
 
     public CryptogramProgress getProgress() {
         if (mProgress == null) {
-            mProgress = new CryptogramProgress();
+            mProgress = new CryptogramProgress(mId);
         }
         return mProgress;
     }
@@ -98,8 +108,12 @@ public class Cryptogram {
         mLoadedProgress = true;
     }
 
+    public void reset() {
+        mProgress = null;
+        save();
+    }
+
     public void save() {
         CryptogramProvider.getInstance(CryptogramApp.getInstance()).setProgress(getProgress());
     }
-
 }

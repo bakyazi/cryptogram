@@ -25,7 +25,6 @@ import java.util.HashMap;
 public class CryptogramView extends TextView {
 
     private Cryptogram mCryptogram;
-    private String[] mWords;
     private char mSelectedCharacter;
 
     private float mBoxW, mBoxH, mCharW1, mCharW2;
@@ -139,11 +138,13 @@ public class CryptogramView extends TextView {
         return true;
     }
 
+    public Cryptogram getCryptogram() {
+        return mCryptogram;
+    }
+
     public void setCryptogram(Cryptogram cryptogram) {
         mCryptogram = cryptogram;
-        mWords = mCryptogram.getWords();
-
-        invalidate();
+        requestLayout();
     }
 
     public boolean setCharacterSelection(char c) {
@@ -210,7 +211,7 @@ public class CryptogramView extends TextView {
             // Compute the height that works for this width
             float offsetY = mBoxH / 4;
             float x = 0, y = mBoxH;
-            for (String word : mWords) {
+            for (String word : mCryptogram.getWords()) {
                 float w = word.length() * mBoxW;
                 if (x + w > width) {
                     x = 0;
@@ -261,7 +262,7 @@ public class CryptogramView extends TextView {
         float offsetX2 = (mBoxW - mCharW2) / 4;
         float offsetY = mBoxH / 4;
         float x = 0, y = mBoxH;
-        for (String word : mWords) {
+        for (String word : mCryptogram.getWords()) {
             float w = word.length() * mBoxW;
             if (x + w > canvas.getWidth()) {
                 x = 0;
