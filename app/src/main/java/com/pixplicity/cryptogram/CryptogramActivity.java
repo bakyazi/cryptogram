@@ -54,9 +54,11 @@ public class CryptogramActivity extends AppCompatActivity {
             mVgCryptogram.setVisibility(View.VISIBLE);
             mCryptogramView.setCryptogram(cryptogram);
             mTvAuthor.setText(cryptogram.getAuthor());
+            mToolbar.setSubtitle(getString(R.string.puzzle_number, cryptogram.getId()));
         } else {
             mTvError.setVisibility(View.VISIBLE);
             mVgCryptogram.setVisibility(View.GONE);
+            mToolbar.setSubtitle(null);
         }
     }
 

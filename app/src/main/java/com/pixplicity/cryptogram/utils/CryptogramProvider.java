@@ -28,7 +28,8 @@ public class CryptogramProvider {
     private Cryptogram[] mCryptograms;
     private SparseArray<CryptogramProgress> mCryptogramProgress;
 
-    private Gson mGson = new Gson();
+    private final Gson mGson = new Gson();
+    private final Random mRandom = new Random();
 
     @NonNull
     public static CryptogramProvider getInstance(Context context) {
@@ -69,12 +70,7 @@ public class CryptogramProvider {
             mCurrentIndex = PrefsUtils.getCurrentId();
         }
         if (mCurrentIndex < 0) {
-            int count = getCount();
-            if (count == 0) {
-                return null;
-            }
-            mCurrentIndex = new Random().nextInt(count);
-            PrefsUtils.setCurrentId(mCurrentIndex);
+            return getNext();
         }
         return mCryptograms[mCurrentIndex];
     }
@@ -82,8 +78,11 @@ public class CryptogramProvider {
     @Nullable
     public Cryptogram getNext() {
         int oldId = mCurrentIndex;
-        mCurrentIndex = -1;
-        Cryptogram cryptogram = getCurrent();
+        int count = getCount();
+        if (count == 0) {
+            return null;
+        }
+        mCurrentIndex = mRandom.nextInt(count);
         if (mCurrentIndex == oldId) {
             // If the puzzle didn't change, simply take the next puzzle
             if (oldId + 1 < getCount()) {
@@ -91,10 +90,9 @@ public class CryptogramProvider {
             } else {
                 mCurrentIndex = 0;
             }
-            PrefsUtils.setCurrentId(mCurrentIndex);
-            cryptogram = getCurrent();
         }
-        return cryptogram;
+        PrefsUtils.setCurrentId(mCurrentIndex);
+        return mCryptograms[mCurrentIndex];
     }
 
     @NonNull
