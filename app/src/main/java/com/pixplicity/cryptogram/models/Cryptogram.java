@@ -104,7 +104,9 @@ public class Cryptogram {
     private void load() {
         if (!mLoadedProgress) {
             mProgress = CryptogramProvider.getInstance(CryptogramApp.getInstance()).getProgress().get(mId);
-            mProgress.sanitize(this);
+            if (mProgress != null) {
+                mProgress.sanitize(this);
+            }
         }
         mLoadedProgress = true;
     }
