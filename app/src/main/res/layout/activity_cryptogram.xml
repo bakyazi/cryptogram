@@ -57,6 +57,7 @@
                 android:id="@+id/tv_author"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
                 android:gravity="end"
                 tools:text="John Doe"/>
 
