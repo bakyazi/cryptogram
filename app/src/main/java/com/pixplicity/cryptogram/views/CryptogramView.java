@@ -262,9 +262,10 @@ public class CryptogramView extends TextView {
             charMapping = mCryptogram.getCharMapping();
         }
 
-        TextPaint textPaintUser = mCryptogram.isCompleted()
-                ? mTextPaintInputComplete
-                : mTextPaintInput;
+        TextPaint textPaintUser = mTextPaintInput;
+        if (!isInEditMode() && mCryptogram.isCompleted()) {
+            textPaintUser = mTextPaintInputComplete;
+        }
 
         float offsetX1 = (mBoxW - mCharW1) / 4;
         float offsetX2 = (mBoxW - mCharW2) / 4;

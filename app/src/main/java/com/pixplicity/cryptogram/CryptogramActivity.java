@@ -5,6 +5,8 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.pixplicity.cryptogram.models.Cryptogram;
@@ -16,7 +18,10 @@ import butterknife.ButterKnife;
 
 public class CryptogramActivity extends AppCompatActivity {
 
-    @BindView(R.id.vg_author)
+    @BindView(R.id.vg_cryptogram)
+    protected ViewGroup mVgCryptogram;
+
+    @BindView(R.id.tv_author)
     protected TextView mTvAuthor;
 
     @BindView(R.id.cryptogram)
@@ -24,6 +29,9 @@ public class CryptogramActivity extends AppCompatActivity {
 
     @BindView(R.id.toolbar)
     protected Toolbar mToolbar;
+
+    @BindView(R.id.tv_error)
+    protected TextView mTvError;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,10 +48,13 @@ public class CryptogramActivity extends AppCompatActivity {
 
     private void updateCryptogram(Cryptogram cryptogram) {
         if (cryptogram != null) {
+            mTvError.setVisibility(View.GONE);
+            mVgCryptogram.setVisibility(View.VISIBLE);
             mCryptogramView.setCryptogram(cryptogram);
             mTvAuthor.setText(cryptogram.getAuthor());
         } else {
-            // TODO
+            mTvError.setVisibility(View.VISIBLE);
+            mVgCryptogram.setVisibility(View.GONE);
         }
     }
 
