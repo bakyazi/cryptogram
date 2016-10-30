@@ -10,7 +10,6 @@ import android.widget.Toast;
 import com.google.gson.Gson;
 import com.pixplicity.cryptogram.models.Cryptogram;
 import com.pixplicity.cryptogram.models.CryptogramProgress;
-import com.pixplicity.easyprefs.library.Prefs;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -25,7 +24,7 @@ public class CryptogramProvider {
 
     private static CryptogramProvider sInstance;
 
-    private int mCurrentId = -1;
+    private int mCurrentIndex = -1;
     private Cryptogram[] mCryptograms;
     private SparseArray<CryptogramProgress> mCryptogramProgress;
 
@@ -47,7 +46,7 @@ public class CryptogramProvider {
     private CryptogramProvider(Context context) throws IOException {
         InputStream is = context.getAssets().open("cryptograms.json");
         mCryptograms = mGson.fromJson(new InputStreamReader(is), Cryptogram[].class);
-        int i = 1000000;
+        int i = 0;
         for (Cryptogram cryptogram : mCryptograms) {
             if (cryptogram.getId() == 0) {
                 cryptogram.setId(i);
@@ -66,33 +65,33 @@ public class CryptogramProvider {
 
     @Nullable
     public Cryptogram getCurrent() {
-        if (mCurrentId < 0) {
-            mCurrentId = PrefsUtils.getCurrentId();
+        if (mCurrentIndex < 0) {
+            mCurrentIndex = PrefsUtils.getCurrentId();
         }
-        if (mCurrentId < 0) {
+        if (mCurrentIndex < 0) {
             int count = getCount();
             if (count == 0) {
                 return null;
             }
-            mCurrentId = new Random().nextInt(count);
-            PrefsUtils.setCurrentId(mCurrentId);
+            mCurrentIndex = new Random().nextInt(count);
+            PrefsUtils.setCurrentId(mCurrentIndex);
         }
-        return mCryptograms[mCurrentId];
+        return mCryptograms[mCurrentIndex];
     }
 
     @Nullable
     public Cryptogram getNext() {
-        int oldId = mCurrentId;
-        mCurrentId = -1;
+        int oldId = mCurrentIndex;
+        mCurrentIndex = -1;
         Cryptogram cryptogram = getCurrent();
-        if (mCurrentId == oldId) {
+        if (mCurrentIndex == oldId) {
             // If the puzzle didn't change, simply take the next puzzle
             if (oldId + 1 < getCount()) {
-                mCurrentId = oldId + 1;
+                mCurrentIndex = oldId + 1;
             } else {
-                mCurrentId = 0;
+                mCurrentIndex = 0;
             }
-            PrefsUtils.setCurrentId(mCurrentId);
+            PrefsUtils.setCurrentId(mCurrentIndex);
             cryptogram = getCurrent();
         }
         return cryptogram;

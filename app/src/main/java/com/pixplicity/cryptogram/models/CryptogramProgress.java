@@ -99,7 +99,7 @@ public class CryptogramProgress {
     }
 
     public void sanitize(Cryptogram cryptogram) {
-        Iterator<Character> i = mUserChars.keySet().iterator();
+        Iterator<Character> i = getUserChars(cryptogram).keySet().iterator();
         while (i.hasNext()) {
             Character c = i.next();
             if (!cryptogram.isInputChar(c)) {
