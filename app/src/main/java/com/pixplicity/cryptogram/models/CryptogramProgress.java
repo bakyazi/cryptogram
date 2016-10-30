@@ -7,6 +7,7 @@ import com.google.gson.annotations.SerializedName;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Random;
 
@@ -45,7 +46,6 @@ public class CryptogramProgress {
     public int getId() {
         return mId;
     }
-
 
     @NonNull
     public HashMap<Character, Character> getCharMapping(Cryptogram cryptogram) {
@@ -88,11 +88,24 @@ public class CryptogramProgress {
             mUserChars = new HashMap<>();
             for (String word : cryptogram.getWords()) {
                 for (int i = 0; i < word.length(); i++) {
-                    mUserChars.put(Character.toUpperCase(word.charAt(i)), (char) 0);
+                    char c = Character.toUpperCase(word.charAt(i));
+                    if (cryptogram.isInputChar(c)) {
+                        mUserChars.put(c, (char) 0);
+                    }
                 }
             }
         }
         return mUserChars;
+    }
+
+    public void sanitize(Cryptogram cryptogram) {
+        Iterator<Character> i = mUserChars.keySet().iterator();
+        while (i.hasNext()) {
+            Character c = i.next();
+            if (!cryptogram.isInputChar(c)) {
+                i.remove();
+            }
+        }
     }
 
 }

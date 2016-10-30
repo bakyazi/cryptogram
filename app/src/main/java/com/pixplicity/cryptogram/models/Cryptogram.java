@@ -104,6 +104,7 @@ public class Cryptogram {
     private void load() {
         if (!mLoadedProgress) {
             mProgress = CryptogramProvider.getInstance(CryptogramApp.getInstance()).getProgress().get(mId);
+            mProgress.sanitize(this);
         }
         mLoadedProgress = true;
     }
@@ -116,4 +117,16 @@ public class Cryptogram {
     public void save() {
         CryptogramProvider.getInstance(CryptogramApp.getInstance()).setProgress(getProgress());
     }
+
+    public boolean isCompleted() {
+        HashMap<Character, Character> userChars = getUserChars();
+        for (Character character : userChars.keySet()) {
+            // In order to be correct, the key and value must be identical
+            if (character != userChars.get(character)) {
+                return false;
+            }
+        }
+        return true;
+    }
+
 }

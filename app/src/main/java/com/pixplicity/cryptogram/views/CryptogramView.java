@@ -9,6 +9,7 @@ import android.graphics.Paint;
 import android.graphics.Rect;
 import android.graphics.Typeface;
 import android.os.Build;
+import android.support.v4.content.ContextCompat;
 import android.text.TextPaint;
 import android.util.AttributeSet;
 import android.view.KeyEvent;
@@ -29,7 +30,7 @@ public class CryptogramView extends TextView {
 
     private float mBoxW, mBoxH, mCharW1, mCharW2;
     private Paint mPaint, mLinePaint, mSelectionPaint;
-    private TextPaint mTextPaint1, mTextPaint2;
+    private TextPaint mTextPaintInput, mTextPaintInputComplete, mTextPaintMapping;
 
 
     public CryptogramView(Context context) {
@@ -68,20 +69,23 @@ public class CryptogramView extends TextView {
         mSelectionPaint.setColor(Color.YELLOW);
         mSelectionPaint.setStyle(Paint.Style.FILL);
 
-        mTextPaint1 = new TextPaint(mPaint);
-        mTextPaint1.setTypeface(Typeface.MONOSPACE);
+        mTextPaintInput = new TextPaint(mPaint);
+        mTextPaintInput.setTypeface(Typeface.MONOSPACE);
 
-        mTextPaint2 = new TextPaint(mTextPaint1);
+        mTextPaintMapping = new TextPaint(mTextPaintInput);
 
         // Compute size of each box
         mBoxW = r.getDimensionPixelSize(R.dimen.puzzle_box_width);
         mBoxH = r.getDimensionPixelSize(R.dimen.puzzle_box_height);
-        mTextPaint1.setTextSize(r.getDimensionPixelSize(R.dimen.puzzle_text_size));
-        mTextPaint2.setTextSize(r.getDimensionPixelSize(R.dimen.puzzle_hint_size));
+        mTextPaintInput.setTextSize(r.getDimensionPixelSize(R.dimen.puzzle_text_size));
+        mTextPaintMapping.setTextSize(r.getDimensionPixelSize(R.dimen.puzzle_hint_size));
+
+        mTextPaintInputComplete = new TextPaint(mTextPaintInput);
+        mTextPaintInputComplete.setColor(ContextCompat.getColor(context, R.color.textComplete));
 
         // Compute size of a single char (assumes monospaced font!)
         Rect bounds = new Rect();
-        mTextPaint1.getTextBounds("M", 0, 1, bounds);
+        mTextPaintInput.getTextBounds("M", 0, 1, bounds);
         mCharW1 = bounds.width();
 
         if (isInEditMode()) {
@@ -258,6 +262,10 @@ public class CryptogramView extends TextView {
             charMapping = mCryptogram.getCharMapping();
         }
 
+        TextPaint textPaintUser = mCryptogram.isCompleted()
+                ? mTextPaintInputComplete
+                : mTextPaintInput;
+
         float offsetX1 = (mBoxW - mCharW1) / 4;
         float offsetX2 = (mBoxW - mCharW2) / 4;
         float offsetY = mBoxH / 4;
@@ -278,7 +286,7 @@ public class CryptogramView extends TextView {
                 }
                 if (mappedChar != null) {
                     chr = String.valueOf(mappedChar);
-                    canvas.drawText(chr, x + offsetX2, y + mBoxH + offsetY, mTextPaint2);
+                    canvas.drawText(chr, x + offsetX2, y + mBoxH + offsetY, mTextPaintMapping);
                 }
                 if (mCryptogram.isInputChar(c)) {
                     // This is a box the user has to fill to complete the puzzle
@@ -287,7 +295,7 @@ public class CryptogramView extends TextView {
                 }
                 if (c > 0) {
                     chr = String.valueOf(c);
-                    canvas.drawText(chr, x + offsetX1, y, mTextPaint1);
+                    canvas.drawText(chr, x + offsetX1, y, textPaintUser);
                 }
                 // Box width
                 x += mBoxW;
