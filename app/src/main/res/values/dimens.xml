@@ -9,5 +9,6 @@
     <dimen name="puzzle_box_width">16sp</dimen>
     <dimen name="puzzle_box_height">20sp</dimen>
     <dimen name="puzzle_line_height">1.5dp</dimen>
+    <dimen name="box_highlight_stroke">2dp</dimen>
 
 </resources>

@@ -6,4 +6,5 @@
 
     <color name="textLight">#FFFFFF</color>
     <color name="textComplete">#008000</color>
+    <color name="box_highlight">#80808ee0</color>
 </resources>

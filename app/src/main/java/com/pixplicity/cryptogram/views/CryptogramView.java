@@ -29,8 +29,9 @@ public class CryptogramView extends TextView {
     private char mSelectedCharacter;
 
     private float mBoxW, mBoxH, mCharW1, mCharW2;
-    private Paint mPaint, mLinePaint, mSelectionPaint;
+    private Paint mPaint, mLinePaint, mBoxPaint1, mBoxPaint2;
     private TextPaint mTextPaintInput, mTextPaintInputComplete, mTextPaintMapping;
+    private int mBoxInset;
 
 
     public CryptogramView(Context context) {
@@ -65,9 +66,14 @@ public class CryptogramView extends TextView {
         mLinePaint.setStrokeWidth(r.getDimensionPixelSize(R.dimen.puzzle_line_height));
         mLinePaint.setStrokeCap(Paint.Cap.ROUND);
 
-        mSelectionPaint = new Paint(mPaint);
-        mSelectionPaint.setColor(Color.YELLOW);
-        mSelectionPaint.setStyle(Paint.Style.FILL);
+        mBoxPaint1 = new Paint(mPaint);
+        mBoxPaint1.setColor(ContextCompat.getColor(context, R.color.box_highlight));
+        mBoxPaint1.setStrokeWidth(r.getDimensionPixelSize(R.dimen.box_highlight_stroke));
+        mBoxPaint1.setStyle(Paint.Style.FILL);
+        mBoxPaint2 = new Paint(mBoxPaint1);
+        mBoxPaint2.setStyle(Paint.Style.STROKE);
+
+        mBoxInset = r.getDimensionPixelSize(R.dimen.box_highlight_stroke) / 2;
 
         mTextPaintInput = new TextPaint(mPaint);
         mTextPaintInput.setTypeface(Typeface.MONOSPACE);
@@ -283,7 +289,9 @@ public class CryptogramView extends TextView {
                 Character mappedChar = charMapping.get(c);
                 if (mSelectedCharacter == c) {
                     // The user is inputting this character; highlight it
-                    canvas.drawRect(x, y - mBoxH, x + mBoxW, y + offsetY, mSelectionPaint);
+                    canvas.drawRect(x + mBoxInset, y - mBoxH + mBoxInset, x + mBoxW - mBoxInset, y + offsetY - mBoxInset, mBoxPaint1);
+                    canvas.drawRect(x + mBoxInset, y - mBoxH + mBoxInset, x + mBoxW - mBoxInset, y + offsetY - mBoxInset, mBoxPaint2);
+                    //canvas.drawRect(x, y - mBoxH, x + mBoxW, y + offsetY, mBoxPaint2);
                 }
                 if (mappedChar != null) {
                     chr = String.valueOf(mappedChar);
