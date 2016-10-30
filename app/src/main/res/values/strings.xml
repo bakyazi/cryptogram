@@ -4,5 +4,8 @@
 
     <string name="next">Next</string>
     <string name="reset">Reset</string>
+    <string name="cancel">Cancel</string>
+    <string name="skip_puzzle">Are you sure you’d like to skip this puzzle?</string>
+    <string name="reset_puzzle">Are you sure you’d like to reset this puzzle?</string>
 
 </resources>

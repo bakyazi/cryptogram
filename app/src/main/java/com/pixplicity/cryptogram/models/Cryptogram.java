@@ -13,8 +13,8 @@ public class Cryptogram {
     @SerializedName("id")
     private int mId;
 
-    @SerializedName("quote")
-    private String mQuote;
+    @SerializedName("text")
+    private String mText;
 
     @SerializedName("author")
     private String mAuthor;
@@ -31,7 +31,7 @@ public class Cryptogram {
      * Creates a mock cryptogram.
      */
     public Cryptogram() {
-        mQuote = "Sample cryptogram; for testing only.";
+        mText = "Sample cryptogram; for testing only.";
         mAuthor = "Paul Lammertsma";
         mCategory = "Other";
     }
@@ -44,8 +44,8 @@ public class Cryptogram {
         mId = id;
     }
 
-    public String getQuote() {
-        return mQuote;
+    public String getText() {
+        return mText;
     }
 
     public String getAuthor() {
@@ -59,7 +59,7 @@ public class Cryptogram {
     @NonNull
     public String[] getWords() {
         if (mWords == null) {
-            mWords = mQuote.split("\\s");
+            mWords = mText.split("\\s");
         }
         return mWords;
     }

@@ -1,6 +1,8 @@
 package com.pixplicity.cryptogram;
 
+import android.content.DialogInterface;
 import android.os.Bundle;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
@@ -69,17 +71,42 @@ public class CryptogramActivity extends AppCompatActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.action_next: {
-                // TODO ask confirmation
-                Cryptogram cryptogram = CryptogramProvider.getInstance(this).getNext();
-                updateCryptogram(cryptogram);
+                new AlertDialog.Builder(this)
+                        .setMessage(R.string.skip_puzzle)
+                        .setPositiveButton(R.string.next, new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialogInterface, int i) {
+                                Cryptogram cryptogram = CryptogramProvider.getInstance(CryptogramActivity.this).getNext();
+                                updateCryptogram(cryptogram);
+                            }
+                        })
+                        .setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialogInterface, int i) {
+                            }
+                        })
+                        .show();
             }
             return true;
             case R.id.action_reset: {
-                // TODO ask confirmation
-                Cryptogram cryptogram = mCryptogramView.getCryptogram();
-                if (cryptogram != null) {
-                    cryptogram.reset();
-                }
+                new AlertDialog.Builder(this)
+                        .setMessage(R.string.reset_puzzle)
+                        .setPositiveButton(R.string.reset, new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialogInterface, int i) {
+                                Cryptogram cryptogram = mCryptogramView.getCryptogram();
+                                if (cryptogram != null) {
+                                    cryptogram.reset();
+                                    mCryptogramView.invalidate();
+                                }
+                            }
+                        })
+                        .setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialogInterface, int i) {
+                            }
+                        })
+                        .show();
             }
             return true;
         }
