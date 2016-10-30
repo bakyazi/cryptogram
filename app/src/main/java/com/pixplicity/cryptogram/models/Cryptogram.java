@@ -3,6 +3,8 @@ package com.pixplicity.cryptogram.models;
 import android.support.annotation.NonNull;
 
 import com.google.gson.annotations.SerializedName;
+import com.pixplicity.cryptogram.CryptogramApp;
+import com.pixplicity.cryptogram.utils.CryptogramProvider;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -12,13 +14,8 @@ import java.util.Random;
 
 public class Cryptogram {
 
-    private static final List<Character> ALPHABET = new ArrayList<>(26);
-
-    static {
-        for (int i = 'A'; i <= 'Z'; i++) {
-            ALPHABET.add((char) i);
-        }
-    }
+    @SerializedName("id")
+    private int mId;
 
     @SerializedName("quote")
     private String mQuote;
@@ -29,7 +26,8 @@ public class Cryptogram {
     @SerializedName("category")
     private String mCategory;
 
-    private HashMap<Character, Character> mCharMapping;
+    private CryptogramProgress mProgress;
+    private boolean mLoadedProgress;
 
     /**
      * Creates a mock cryptogram.
@@ -56,36 +54,52 @@ public class Cryptogram {
         return mQuote.split("\\s");
     }
 
+    public CryptogramProgress getProgress() {
+        if (mProgress == null) {
+            mProgress = new CryptogramProgress();
+        }
+        return mProgress;
+    }
+
     @NonNull
     public HashMap<Character, Character> getCharMapping() {
-        if (mCharMapping == null) {
-            mCharMapping = new HashMap<>();
-            for (String word : getWords()) {
-                for (int i = 0; i < word.length(); i++) {
-                    char c = Character.toUpperCase(word.charAt(i));
-                    if (isInputChar(c)) {
-                        mCharMapping.put(c, (char) 0);
-                    }
-                }
-            }
-            Random r = new Random(100);
-            List<Character> alphabet = new ArrayList<>(ALPHABET.size());
-            for (Character c : ALPHABET) {
-                alphabet.add(c);
-            }
-            Collections.shuffle(alphabet, r);
-            for (Character c : mCharMapping.keySet()) {
-                int i = r.nextInt(alphabet.size());
-                char mappedC = alphabet.get(i);
-                alphabet.remove(i);
-                mCharMapping.put(c, mappedC);
-            }
-        }
-        return mCharMapping;
+        // Ensure we've attempted to load the data
+        load();
+        return getProgress().getCharMapping(this);
+    }
+
+    public void setCharMapping(HashMap<Character, Character> charMapping) {
+        getProgress().setCharMapping(charMapping);
+    }
+
+    @NonNull
+    private HashMap<Character, Character> getUserChars() {
+        load();
+        return getProgress().getUserChars(this);
+    }
+
+    public Character getUserChar(char c) {
+        return getUserChars().get(c);
+    }
+
+    public void setUserChar(char selectedCharacter, char c) {
+        getUserChars().put(selectedCharacter, Character.toUpperCase(c));
+        save();
     }
 
     public boolean isInputChar(char c) {
         return (c >= 'a' && c <= 'z') || (c >= 'A' && c <= 'Z');
+    }
+
+    private void load() {
+        if (!mLoadedProgress) {
+            mProgress = CryptogramProvider.getInstance(CryptogramApp.getInstance()).getProgress().get(mId);
+        }
+        mLoadedProgress = true;
+    }
+
+    public void save() {
+        CryptogramProvider.getInstance(CryptogramApp.getInstance()).setProgress(getProgress());
     }
 
 }

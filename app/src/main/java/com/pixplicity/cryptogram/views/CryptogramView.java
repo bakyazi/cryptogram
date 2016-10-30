@@ -26,7 +26,6 @@ public class CryptogramView extends TextView {
 
     private Cryptogram mCryptogram;
     private String[] mWords;
-    private HashMap<Character, Character> mUserChars;
     private char mSelectedCharacter;
 
     private float mBoxW, mBoxH, mCharW1, mCharW2;
@@ -143,31 +142,8 @@ public class CryptogramView extends TextView {
     public void setCryptogram(Cryptogram cryptogram) {
         mCryptogram = cryptogram;
         mWords = mCryptogram.getWords();
-        mUserChars = new HashMap<>();
-
-        for (String word : mWords) {
-            for (int i = 0; i < word.length(); i++) {
-                mUserChars.put(Character.toUpperCase(word.charAt(i)), (char) 0);
-            }
-        }
 
         invalidate();
-    }
-
-    public boolean setCharacterMapping(char c) {
-        if (mSelectedCharacter != 0) {
-            if (mCryptogram.isInputChar(c)) {
-                // Enter the user's mapping
-                mUserChars.put(mSelectedCharacter, Character.toUpperCase(c));
-            } else {
-                // Clear it
-                mUserChars.put(mSelectedCharacter, (char) 0);
-            }
-            mSelectedCharacter = 0;
-            invalidate();
-            return true;
-        }
-        return false;
     }
 
     public boolean setCharacterSelection(char c) {
@@ -187,6 +163,22 @@ public class CryptogramView extends TextView {
         }
         invalidate();
         return mSelectedCharacter != 0;
+    }
+
+    public boolean setCharacterMapping(char c) {
+        if (mSelectedCharacter != 0) {
+            if (mCryptogram.isInputChar(c)) {
+                // Enter the user's mapping
+                mCryptogram.setUserChar(mSelectedCharacter, Character.toUpperCase(c));
+            } else {
+                // Clear it
+                mCryptogram.setUserChar(mSelectedCharacter, (char) 0);
+            }
+            mSelectedCharacter = 0;
+            invalidate();
+            return true;
+        }
+        return false;
     }
 
     @Override
@@ -240,7 +232,7 @@ public class CryptogramView extends TextView {
     }
 
     private char getUserInput(char c) {
-        Character input = mUserChars.get(c);
+        Character input = mCryptogram.getUserChar(c);
         if (input == null) {
             return 0;
         }

@@ -1,12 +1,24 @@
 package com.pixplicity.cryptogram;
 
 import android.app.Application;
+import android.content.Context;
 import android.content.ContextWrapper;
 
 import com.pixplicity.easyprefs.library.Prefs;
 
 
-public class CryptographyApp extends Application {
+public class CryptogramApp extends Application {
+
+    private static Context sInstance;
+
+    public CryptogramApp() {
+        super();
+        sInstance = this;
+    }
+
+    public static Context getInstance() {
+        return sInstance;
+    }
 
     @Override
     public void onCreate() {

@@ -4,27 +4,30 @@ import android.content.Context;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.util.Log;
+import android.util.SparseArray;
 import android.widget.Toast;
 
 import com.google.gson.Gson;
 import com.pixplicity.cryptogram.models.Cryptogram;
+import com.pixplicity.cryptogram.models.CryptogramProgress;
 import com.pixplicity.easyprefs.library.Prefs;
 
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.util.LinkedHashSet;
 import java.util.Random;
+import java.util.Set;
 
 public class CryptogramProvider {
 
     private static final String TAG = CryptogramProvider.class.getSimpleName();
 
-    private static final String KEY_CURRENT_ID = "current_puzzle_index";
-
     private static CryptogramProvider sInstance;
 
     private int mCurrentId = -1;
     private Cryptogram[] mCryptograms;
+    private SparseArray<CryptogramProgress> mCryptogramProgress;
 
     private Gson mGson = new Gson();
 
@@ -57,7 +60,8 @@ public class CryptogramProvider {
     @Nullable
     public Cryptogram getCurrent() {
         if (mCurrentId < 0) {
-            mCurrentId = Prefs.getInt(KEY_CURRENT_ID, -1);
+
+            mCurrentId = PrefsUtils.getCurrentId();
         }
         if (mCurrentId < 0) {
             int count = getCount();
@@ -65,9 +69,36 @@ public class CryptogramProvider {
                 return null;
             }
             mCurrentId = new Random().nextInt(count);
-            Prefs.putInt(KEY_CURRENT_ID, mCurrentId);
+            PrefsUtils.setCurrentId(mCurrentId);
         }
         return mCryptograms[mCurrentId];
+    }
+
+    @NonNull
+    public SparseArray<CryptogramProgress> getProgress() {
+        if (mCryptogramProgress == null) {
+            mCryptogramProgress = new SparseArray<>();
+            Set<String> progressStrSet = PrefsUtils.getProgress();
+            if (progressStrSet != null) {
+                for (String progressStr : progressStrSet) {
+                    CryptogramProgress progress = mGson.fromJson(progressStr, CryptogramProgress.class);
+                    mCryptogramProgress.put(progress.getId(), progress);
+                }
+            }
+        }
+        return mCryptogramProgress;
+    }
+
+    public void setProgress(CryptogramProgress progress) {
+        SparseArray<CryptogramProgress> progressList = getProgress();
+        progressList.put(progress.getId(), progress);
+
+        // Now store everything
+        Set<String> progressStrSet = new LinkedHashSet<>();
+        for (int i = 0; i < progressList.size(); i++) {
+            progressStrSet.add(mGson.toJson(progressList.valueAt(i)));
+        }
+        PrefsUtils.setProgress(progressStrSet);
     }
 
 }
