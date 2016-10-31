@@ -3,6 +3,7 @@ package com.pixplicity.cryptogram.activities;
 import android.content.Intent;
 import android.os.Build;
 import android.support.annotation.LayoutRes;
+import android.support.annotation.NonNull;
 import android.support.v4.app.NavUtils;
 import android.support.v4.app.TaskStackBuilder;
 import android.support.v4.content.ContextCompat;
@@ -38,7 +39,6 @@ public abstract class BaseActivity extends AppCompatActivity {
         setSupportActionBar(mToolbar);
 
         ActionBar ab = getSupportActionBar();
-        assert ab != null;
         ab.setHomeAsUpIndicator(R.drawable.ic_arrow_back);
         ab.setElevation(6);
         ab.setTitle(R.string.app_name);
@@ -62,6 +62,14 @@ public abstract class BaseActivity extends AppCompatActivity {
                 }
             }
         });
+    }
+
+    @NonNull
+    @Override
+    public ActionBar getSupportActionBar() {
+        ActionBar actionBar = super.getSupportActionBar();
+        assert actionBar != null;
+        return actionBar;
     }
 
 }
