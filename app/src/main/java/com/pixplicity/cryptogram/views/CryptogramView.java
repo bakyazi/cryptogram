@@ -10,10 +10,14 @@ import android.graphics.Rect;
 import android.graphics.Typeface;
 import android.os.Build;
 import android.support.v4.content.ContextCompat;
+import android.text.InputType;
 import android.text.TextPaint;
 import android.util.AttributeSet;
 import android.view.KeyEvent;
 import android.view.View;
+import android.view.inputmethod.BaseInputConnection;
+import android.view.inputmethod.EditorInfo;
+import android.view.inputmethod.InputConnection;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.TextView;
 
@@ -131,16 +135,40 @@ public class CryptogramView extends TextView {
     public boolean onKeyUp(int keyCode, KeyEvent event) {
         switch (keyCode) {
             case KeyEvent.KEYCODE_BACK:
+                // Don't consume
                 return false;
+            case KeyEvent.KEYCODE_ENTER:
+                // Clear selection
+                setCharacterSelection((char) 0);
+                return true;
         }
+        char c = (char) event.getUnicodeChar();
+        return onKeyPress(c);
+    }
+
+    private boolean onKeyPress(char c) {
         if (mCryptogram != null) {
-            char c = (char) event.getUnicodeChar();
             if (!setCharacterMapping(c)) {
                 setCharacterSelection(c);
             }
             return true;
         }
         return false;
+    }
+
+    @Override
+    public InputConnection onCreateInputConnection(EditorInfo outAttrs) {
+        outAttrs.inputType = InputType.TYPE_TEXT_FLAG_NO_SUGGESTIONS;
+        outAttrs.imeOptions = EditorInfo.IME_ACTION_NEXT;
+        return new BaseInputConnection(this, true) {
+            @Override
+            public boolean commitText(CharSequence text, int newCursorPosition) {
+                if (text.length() > 0) {
+                    onKeyPress(text.charAt(0));
+                }
+                return true;
+            }
+        };
     }
 
     @Override
