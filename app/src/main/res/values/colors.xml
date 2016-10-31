@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+
     <color name="colorPrimary">#3F51B5</color>
     <color name="colorPrimaryDark">#303F9F</color>
     <color name="colorAccent">#FF4081</color>
@@ -7,4 +8,7 @@
     <color name="textLight">#FFFFFF</color>
     <color name="textComplete">#008000</color>
     <color name="box_highlight">#80808ee0</color>
+
+    <color name="link">#00bcd4</color>
+
 </resources>

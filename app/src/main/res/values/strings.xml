@@ -4,9 +4,70 @@
 
     <string name="next">Next</string>
     <string name="reset">Reset</string>
+    <string name="about">About</string>
     <string name="cancel">Cancel</string>
     <string name="skip_puzzle">Are you sure you’d like to skip this puzzle?</string>
     <string name="reset_puzzle">Are you sure you’d like to reset this puzzle?</string>
     <string name="puzzle_number">Puzzle #%1$d</string>
+
+    <string name="tv_made_by">made by</string>
+    <string name="pixplicity_labs">Pixplicity Labs</string>
+
+    <string name="version" translatable="false">%s (%d)</string>
+    <string name="version_long" translatable="false">%s\n%d</string>
+
+    <string name="title_disclaimer">Legal</string>
+    <string name="title_licenses">Licenses</string>
+    <string name="title_about">About this app</string>
+
+    <string name="about_this_app_1">
+        <![CDATA[
+            <p>
+                <strong>
+                    Decipher the encrypted text to reveal the motivational quote!
+                </strong>
+            </p>
+            <p>
+                A cryptogram is a type of puzzle that consists of a short piece of encrypted text.
+                The cipher used to encrypt the text is a simple substitution of letters and is
+                simple enough that the cryptogram can be solved by hand.
+            </p>
+            %1$s for Android works completely offline, so you can enjoy some brain teasers while
+            traveling.
+            ]]>
+    </string>
+    <string name="about_this_app_2">
+        <![CDATA[
+            Made by the Netherlands’ top Android developers at <strong>Pixplicity</strong>, this
+            simple little game showcases our passion for apps and our attention to detail.
+            <br /><br />
+            Best of all, it’s completely free, and free of ads! Enjoy!
+        ]]>
+    </string>
+    <string name="disclaimer">
+        <![CDATA[
+            <p>
+                Anonymous crash and usage data may be sent to Crashlytics by Twitter. This is solely
+                used to gather anonymous statistics about usage for automatic reporting of any
+                issues. There is strictly no identifiable information
+                transferred.
+            </p>
+            <p>
+                THIS APP COMES WITHOUT WARRANTY OF ANY KIND AND IS COPYRIGHT OF PIXPLICITY B.V., THE
+                NETHERLANDS.
+            </p>
+        ]]>
+    </string>
+    <string name="licenses">
+        <![CDATA[
+            This app uses the following libraries, licensed under the Apache License 2.0:
+            <br /><br />
+            • <strong>EasyPrefs</strong> by Pixplicity<br />
+            • <strong>Butter Knife</strong> by Square Inc.<br />
+            • <strong>Picasso</strong> by Square Inc.<br />
+            ]]>
+    </string>
+    <string name="website">Visit Pixplicity.com</string>
+    <string name="url">https://pixplicity.com/?utm_source=component_app&amp;utm_medium=android-app&amp;utm_content=en&amp;utm_campaign=component_app</string>
 
 </resources>
