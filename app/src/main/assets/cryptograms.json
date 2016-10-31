@@ -115,7 +115,7 @@
     "category": "Love"
   },
   {
-    "text": "We're born alone, we live alone, we die alone. Only through our love and friendship can we create the illusion for the moment that we're not alone.",
+    "text": "We’re born alone, we live alone, we die alone. Only through our love and friendship can we create the illusion for the moment that we’re not alone.",
     "author": "Orson Welles",
     "category": "Love"
   },
@@ -213,5 +213,90 @@
     "text": "Laziness is nothing more than the habit of resting before you get tired.",
     "author": "Jules Renard",
     "category": "Funny"
+  },
+  {
+    "text": "Weather forecast for tonight: dark.",
+    "author": "George Carlin",
+    "category": "Funny"
+  },
+  {
+    "text": "All generalizations are false, including this one.",
+    "author": "Mark Twain",
+    "category": "Funny"
+  },
+  {
+    "text": "It’s amazing that the amount of news that happens in the world every day always just exactly fits the newspaper.",
+    "author": "Jerry Seinfeld",
+    "category": "Funny"
+  },
+  {
+    "text": "I refuse to join any club that would have me as a member.",
+    "author": "Groucho Marx",
+    "category": "Funny"
+  },
+  {
+    "text": "The trouble with having an open mind, of course, is that people will insist on coming along and trying to put things in it.",
+    "author": "Terry Pratchett",
+    "category": "Funny"
+  },
+  {
+    "text": "Why do they call it rush hour when nothing moves?",
+    "author": "Robin Williams",
+    "category": "Funny"
+  },
+  {
+    "text": "Mistakes are always forgivable, if one has the courage to admit them.",
+    "author": "Bruce Lee",
+    "category": "Life"
+  },
+  {
+    "text": "When you forgive, you in no way change the past - but you sure do change the future.",
+    "author": "Bernard Meltzer",
+    "category": "Life"
+  },
+  {
+    "text": "Forgive, forget. Bear with the faults of others as you would have them bear with yours.",
+    "author": "Phillips Brooks",
+    "category": "Life"
+  },
+  {
+    "text": "Success is not final, failure is not fatal: it is the courage to continue that counts.",
+    "author": "Winston Churchill",
+    "category": "Success"
+  },
+  {
+    "text": "Success is not the key to happiness. Happiness is the key to success. If you love what you are doing, you will be successful.",
+    "author": "Albert Schweitzer",
+    "category": "Success"
+  },
+  {
+    "text": "Try not to become a man of success, but rather try to become a man of value.",
+    "author": "Albert Einstein",
+    "category": "Success"
+  },
+  {
+    "text": "However difficult life may seem, there is always something you can do and succeed at.",
+    "author": "Stephen Hawking",
+    "category": "Success"
+  },
+  {
+    "text": "All you need in this life is ignorance and confidence, and then success is sure.",
+    "author": "Mark Twain",
+    "category": "Success"
+  },
+  {
+    "text": "Happiness lies in the joy of achievement and the thrill of creative effort.",
+    "author": "Franklin D. Roosevelt",
+    "category": "Success"
+  },
+  {
+    "text": "Let me tell you the secret that has led me to my goal. My strength lies solely in my tenacity.",
+    "author": "Louis Pasteur",
+    "category": "Success"
+  },
+  {
+    "text": "It's the steady, quiet, plodding ones who win in the lifelong race.",
+    "author": "Robert W. Service",
+    "category": "Success"
   }
 ]
