@@ -13,5 +13,6 @@
     android:paddingTop="4dp"
     android:theme="@style/ThemeOverlay.AppCompat.ActionBar"
     app:subtitleTextColor="@color/textLight"
+    app:theme="@style/ToolbarStyle"
     app:titleTextColor="@color/textLight"
     tools:ignore="UnusedAttribute"/>

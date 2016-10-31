@@ -15,13 +15,13 @@
         android:icon="@drawable/ic_reset"
         android:orderInCategory="200"
         android:title="@string/reset"
-        app:showAsAction="ifRoom"/>
+        app:showAsAction="never"/>
 
     <item
         android:id="@+id/action_about"
         android:icon="@drawable/ic_info"
         android:orderInCategory="300"
         android:title="@string/about"
-        app:showAsAction="ifRoom"/>
+        app:showAsAction="never"/>
 
 </menu>
