@@ -16,6 +16,7 @@ import android.util.AttributeSet;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.inputmethod.BaseInputConnection;
+import android.view.inputmethod.CompletionInfo;
 import android.view.inputmethod.EditorInfo;
 import android.view.inputmethod.InputConnection;
 import android.view.inputmethod.InputMethodManager;
@@ -30,6 +31,9 @@ import java.util.HashMap;
 public class CryptogramView extends TextView {
 
     private static final String TAG = CryptogramView.class.getSimpleName();
+
+    public static final int INPUT_TYPE = InputType.TYPE_TEXT_VARIATION_VISIBLE_PASSWORD |
+            InputType.TYPE_TEXT_FLAG_NO_SUGGESTIONS;
 
     private Cryptogram mCryptogram;
     private char mSelectedCharacter;
@@ -141,6 +145,11 @@ public class CryptogramView extends TextView {
     }
 
     @Override
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
+        return true;
+    }
+
+    @Override
     public boolean onKeyUp(int keyCode, KeyEvent event) {
         switch (keyCode) {
             case KeyEvent.KEYCODE_BACK:
@@ -170,18 +179,28 @@ public class CryptogramView extends TextView {
 
     @Override
     public int getInputType() {
-        return InputType.TYPE_TEXT_VARIATION_VISIBLE_PASSWORD;
+        return INPUT_TYPE;
     }
 
     @Override
     public InputConnection onCreateInputConnection(EditorInfo outAttrs) {
-        outAttrs.inputType = InputType.TYPE_TEXT_VARIATION_VISIBLE_PASSWORD;
+        outAttrs.inputType = INPUT_TYPE;
         outAttrs.imeOptions = EditorInfo.IME_ACTION_NEXT;
         return new BaseInputConnection(this, true) {
+            @Override
+            public boolean commitCompletion(CompletionInfo text) {
+                return super.commitCompletion(text);
+            }
+
             @Override
             public boolean deleteSurroundingText(int beforeLength, int afterLength) {
                 onKeyPress((char) 0);
                 return false;
+            }
+
+            @Override
+            public boolean sendKeyEvent(KeyEvent event) {
+                return super.sendKeyEvent(event);
             }
 
             @Override
