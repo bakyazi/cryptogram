@@ -82,6 +82,16 @@ public class Cryptogram {
         getProgress().setCharMapping(charMapping);
     }
 
+    public Character getCharacterForMapping(char c) {
+        HashMap<Character, Character> charMapping = getCharMapping();
+        for (Character character : charMapping.keySet()) {
+            if (charMapping.get(character) == c) {
+                return character;
+            }
+        }
+        return null;
+    }
+
     @NonNull
     private HashMap<Character, Character> getUserChars() {
         load();

@@ -11,9 +11,16 @@
         app:showAsAction="ifRoom"/>
 
     <item
+        android:id="@+id/action_reveal"
+        android:icon="@drawable/ic_reveal"
+        android:orderInCategory="200"
+        android:title="@string/reveal_letter"
+        app:showAsAction="never"/>
+
+    <item
         android:id="@+id/action_reset"
         android:icon="@drawable/ic_reset"
-        android:orderInCategory="200"
+        android:orderInCategory="205"
         android:title="@string/reset"
         app:showAsAction="never"/>
 

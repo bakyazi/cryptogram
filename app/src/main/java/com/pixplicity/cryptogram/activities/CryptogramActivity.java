@@ -2,6 +2,7 @@ package com.pixplicity.cryptogram.activities;
 
 import android.content.DialogInterface;
 import android.os.Bundle;
+import android.support.design.widget.Snackbar;
 import android.support.v7.app.AlertDialog;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -85,24 +86,49 @@ public class CryptogramActivity extends BaseActivity {
                 }
             }
             return true;
+            case R.id.action_reveal: {
+                if (cryptogram == null || !mCryptogramView.hasSelectedCharacter()) {
+                    Snackbar.make(mRootView, "Please select a letter first.", Snackbar.LENGTH_SHORT).show();
+                } else {
+                    new AlertDialog.Builder(this)
+                            .setMessage(R.string.reveal_confirmation)
+                            .setPositiveButton(R.string.reveal, new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialogInterface, int i) {
+                                    if (mCryptogramView.revealCharacterMapping(
+                                            mCryptogramView.getSelectedCharacter())) {
+                                        // Answer revealed; clear the selection
+                                        mCryptogramView.setSelectedCharacter((char) 0);
+                                    }
+                                }
+                            })
+                            .setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialogInterface, int i) {
+                                }
+                            })
+                            .show();
+                }
+            }
+            return true;
             case R.id.action_reset: {
-                new AlertDialog.Builder(this)
-                        .setMessage(R.string.reset_puzzle)
-                        .setPositiveButton(R.string.reset, new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialogInterface, int i) {
-                                if (cryptogram != null) {
+                if (cryptogram != null) {
+                    new AlertDialog.Builder(this)
+                            .setMessage(R.string.reset_puzzle)
+                            .setPositiveButton(R.string.reset, new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialogInterface, int i) {
                                     cryptogram.reset();
                                     mCryptogramView.invalidate();
                                 }
-                            }
-                        })
-                        .setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialogInterface, int i) {
-                            }
-                        })
-                        .show();
+                            })
+                            .setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialogInterface, int i) {
+                                }
+                            })
+                            .show();
+                }
             }
             return true;
             case R.id.action_about: {

@@ -139,7 +139,7 @@ public class CryptogramView extends TextView {
                 return false;
             case KeyEvent.KEYCODE_ENTER:
                 // Clear selection
-                setCharacterSelection((char) 0);
+                setSelectedCharacter((char) 0);
                 return true;
         }
         char c = (char) event.getUnicodeChar();
@@ -148,8 +148,12 @@ public class CryptogramView extends TextView {
 
     private boolean onKeyPress(char c) {
         if (mCryptogram != null) {
-            if (!setCharacterMapping(c)) {
-                setCharacterSelection(c);
+            if (setCharacterMapping(getSelectedCharacter(), c)) {
+                // Answer filled in; clear the selection
+                setSelectedCharacter((char) 0);
+            } else {
+                // Make a selection
+                setSelectedCharacter(c);
             }
             return true;
         }
@@ -185,7 +189,15 @@ public class CryptogramView extends TextView {
         requestLayout();
     }
 
-    public boolean setCharacterSelection(char c) {
+    public boolean hasSelectedCharacter() {
+        return mSelectedCharacter != 0;
+    }
+
+    public char getSelectedCharacter() {
+        return mSelectedCharacter;
+    }
+
+    public boolean setSelectedCharacter(char c) {
         // Character does not occur in the mapping
         mSelectedCharacter = 0;
         if (mCryptogram.isInputChar(c)) {
@@ -204,20 +216,23 @@ public class CryptogramView extends TextView {
         return mSelectedCharacter != 0;
     }
 
-    public boolean setCharacterMapping(char c) {
-        if (mSelectedCharacter != 0) {
-            if (mCryptogram.isInputChar(c)) {
+    public boolean setCharacterMapping(char selectedChar, char userChar) {
+        if (selectedChar != 0) {
+            if (mCryptogram.isInputChar(userChar)) {
                 // Enter the user's mapping
-                mCryptogram.setUserChar(mSelectedCharacter, Character.toUpperCase(c));
+                mCryptogram.setUserChar(selectedChar, Character.toUpperCase(userChar));
             } else {
                 // Clear it
-                mCryptogram.setUserChar(mSelectedCharacter, (char) 0);
+                mCryptogram.setUserChar(selectedChar, (char) 0);
             }
-            mSelectedCharacter = 0;
             invalidate();
             return true;
         }
         return false;
+    }
+
+    public boolean revealCharacterMapping(char c) {
+        return setCharacterMapping(c, c);
     }
 
     @Override

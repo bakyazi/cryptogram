@@ -1,5 +1,6 @@
 package com.pixplicity.cryptogram.activities;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Build;
 import android.support.annotation.LayoutRes;
@@ -9,6 +10,7 @@ import android.support.v4.content.ContextCompat;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.AttributeSet;
 import android.view.View;
 
 import com.pixplicity.cryptogram.R;
@@ -17,6 +19,8 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 
 public abstract class BaseActivity extends AppCompatActivity {
+
+    protected View mRootView;
 
     @BindView(R.id.toolbar)
     protected Toolbar mToolbar;
@@ -53,6 +57,12 @@ public abstract class BaseActivity extends AppCompatActivity {
                 }
             }
         });
+    }
+
+    @Override
+    public View onCreateView(String name, Context context, AttributeSet attrs) {
+        mRootView = super.onCreateView(name, context, attrs);
+        return mRootView;
     }
 
 }

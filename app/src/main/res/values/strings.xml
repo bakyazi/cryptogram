@@ -3,10 +3,13 @@
     <string name="app_name">Cryptogram</string>
 
     <string name="next">Next</string>
+    <string name="reveal">Reveal</string>
+    <string name="reveal_letter">Reveal letter</string>
     <string name="reset">Reset</string>
     <string name="about">About</string>
     <string name="cancel">Cancel</string>
     <string name="skip_puzzle">Are you sure you’d like to skip this puzzle?</string>
+    <string name="reveal_confirmation">Are you sure you’d like to reveal the selected letter?</string>
     <string name="reset_puzzle">Are you sure you’d like to reset this puzzle?</string>
     <string name="puzzle_number">Puzzle #%1$d</string>
 
