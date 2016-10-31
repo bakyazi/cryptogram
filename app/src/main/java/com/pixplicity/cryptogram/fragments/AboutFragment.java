@@ -30,7 +30,10 @@ public class AboutFragment extends BaseFragment {
     protected TextView mTvVersion;
 
     @BindView(R.id.tv_about_this_app_1)
-    protected TextView mTvAboutThisApp;
+    protected TextView mTvAboutThisApp1;
+
+    @BindView(R.id.tv_about_this_app_2)
+    protected TextView mTvAboutThisApp2;
 
     @BindView(R.id.disclaimer)
     protected TextView mTvDisclaimer;
@@ -64,8 +67,10 @@ public class AboutFragment extends BaseFragment {
 
         // About this app
         String appName = getString(R.string.app_name);
-        mTvAboutThisApp.setText(
+        mTvAboutThisApp1.setText(
                 HtmlCompat.fromHtml(getString(R.string.about_this_app_1, appName)));
+        mTvAboutThisApp2.setText(
+                HtmlCompat.fromHtml(getString(R.string.about_this_app_2)));
 
         // Legal
         mTvDisclaimer.setText(HtmlCompat.fromHtml(getString(R.string.disclaimer)));

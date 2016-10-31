@@ -13,13 +13,13 @@
 
         <ImageView
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_height="128dp"
             android:layout_gravity="center_horizontal"
-            android:layout_margin="16dp"
+            android:layout_marginBottom="16dp"
             android:adjustViewBounds="true"
             android:contentDescription="@string/app_name"
             android:scaleType="centerInside"
-            android:src="@mipmap/ic_launcher"/>
+            android:src="@drawable/ic_icon"/>
 
         <TextView
             style="@style/Base.TextAppearance.Widget.AppCompat.Toolbar.Title"
@@ -63,6 +63,15 @@
             android:contentDescription="@string/pixplicity_labs"
             android:scaleType="centerInside"
             android:src="@drawable/pixplicity_labs"/>
+
+        <TextView
+            android:id="@+id/tv_about_this_app_2"
+            style="@style/InfoTextView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:text="@string/about_this_app_2"
+            android:textSize="15sp"/>
 
         <Button
             android:id="@+id/bt_website"

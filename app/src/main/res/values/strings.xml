@@ -24,24 +24,37 @@
         <![CDATA[
             <p>
                 <strong>
-                    %s lists all the information of your device and offers tools to developers.
+                    Decipher the encrypted text to reveal the motivational quote!
                 </strong>
             </p>
             <p>
-                Made by the Netherlands’ top Android developers at <strong>Pixplicity</strong>, this app shows you all the useful information you
-                might want to know about a phone or tablet: hardware features, screen size, resolution and density, ip-addresses,
-                camera specs, OS information… you name it!
+                A cryptogram is a type of puzzle that consists of a short piece of encrypted text.
+                The cipher used to encrypt the text is a simple substitution of letters and is
+                simple enough that the cryptogram can be solved by hand.
             </p>
+            %1$s for Android works completely offline, so you can enjoy some brain teasers while
+            traveling.
             ]]>
-        </string>
+    </string>
+    <string name="about_this_app_2">
+        <![CDATA[
+            Made by the Netherlands’ top Android developers at <strong>Pixplicity</strong>, this
+            simple little game showcases our passion for apps and our attention to detail.
+            <br /><br />
+            Best of all, it’s completely free, and free of ads! Enjoy!
+        ]]>
+    </string>
     <string name="disclaimer">
         <![CDATA[
             <p>
-                Anonymous data may be sent to Pixplicity with your explicit consent. This will be used to gather statistics about
-                existing devices, and the results will at one point be delivered through this app.
+                Anonymous crash and usage data may be sent to Crashlytics by Twitter. This is solely
+                used to gather anonymous statistics about usage for automatic reporting of any
+                issues. There is strictly no identifiable information
+                transferred.
             </p>
             <p>
-                THIS APP COMES WITHOUT WARRANTY OF ANY KIND AND IS COPYRIGHT OF PIXPLICITY B.V., THE NETHERLANDS.
+                THIS APP COMES WITHOUT WARRANTY OF ANY KIND AND IS COPYRIGHT OF PIXPLICITY B.V., THE
+                NETHERLANDS.
             </p>
         ]]>
     </string>
@@ -50,12 +63,8 @@
             This app uses the following libraries, licensed under the Apache License 2.0:
             <br /><br />
             • <strong>EasyPrefs</strong> by Pixplicity<br />
-            • <strong>Letter Press</strong> by Pixplicity<br />
-            • <strong>Otto</strong> by Square Inc.<br />
+            • <strong>Butter Knife</strong> by Square Inc.<br />
             • <strong>Picasso</strong> by Square Inc.<br />
-            • <strong>recycler-fast-scroll</strong> by FutureMind<br />
-            <br />
-            Public IP address provided by <a href="http://whatismyip.akamai.com/">http://whatismyip.akamai.com/</a>.
             ]]>
     </string>
     <string name="website">Visit Pixplicity.com</string>
