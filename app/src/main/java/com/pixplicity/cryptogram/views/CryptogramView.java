@@ -13,7 +13,6 @@ import android.support.v4.content.ContextCompat;
 import android.text.InputType;
 import android.text.TextPaint;
 import android.util.AttributeSet;
-import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.inputmethod.BaseInputConnection;
@@ -132,12 +131,6 @@ public class CryptogramView extends TextView {
         if (inputMethodManager != null) {
             inputMethodManager.toggleSoftInput(InputMethodManager.SHOW_IMPLICIT, 0);
         }
-    }
-
-    @Override
-    public boolean onKeyDown(int keyCode, KeyEvent event) {
-        Log.d(TAG, "key: " + keyCode);
-        return true;
     }
 
     @Override
