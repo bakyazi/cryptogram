@@ -1,9 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
-<manifest
-    package="com.pixplicity.cryptogram"
-    xmlns:android="http://schemas.android.com/apk/res/android">
+<manifest package="com.pixplicity.cryptogram"
+          xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.INTERNET"/>
 
     <application
         android:name=".CryptogramApp"
@@ -13,23 +12,20 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
 
-        <activity android:name=".activities.CryptogramActivity" />
-
-        <activity-alias
-            android:name=".CryptogramActivity"
-            android:targetActivity=".activities.CryptogramActivity">
+        <activity android:name=".activities.CryptogramActivity"
+                  android:theme="@style/SplashTheme">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
 
                 <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
-        </activity-alias>
+        </activity>
 
         <activity android:name=".activities.AboutActivity"/>
 
         <meta-data
             android:name="io.fabric.ApiKey"
-            android:value="cb7ab6c28552bf25b9c45e17100b55d0e3a8686a" />
+            android:value="cb7ab6c28552bf25b9c45e17100b55d0e3a8686a"/>
 
     </application>
 

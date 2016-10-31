@@ -10,6 +10,10 @@
         <item name="actionOverflowButtonStyle">@style/OverflowButtonStyle</item>
     </style>
 
+    <style name="SplashTheme" parent="@style/AppTheme">
+        <item name="android:windowBackground">@drawable/bg_splash</item>
+    </style>
+
     <style name="ToolbarStyle" parent="ThemeOverlay.AppCompat.ActionBar">
         <item name="colorControlNormal">@color/textLight</item>
     </style>
