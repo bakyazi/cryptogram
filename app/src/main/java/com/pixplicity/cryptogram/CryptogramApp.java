@@ -5,6 +5,8 @@ import android.content.Context;
 import android.content.ContextWrapper;
 
 import com.pixplicity.easyprefs.library.Prefs;
+import com.crashlytics.android.Crashlytics;
+import io.fabric.sdk.android.Fabric;
 
 
 public class CryptogramApp extends Application {
@@ -23,6 +25,10 @@ public class CryptogramApp extends Application {
     @Override
     public void onCreate() {
         super.onCreate();
+
+        // Initialize Crashlytics
+        Fabric.with(this, new Crashlytics());
+
         // Initialize the Prefs class
         new Prefs.Builder()
                 .setContext(this)
