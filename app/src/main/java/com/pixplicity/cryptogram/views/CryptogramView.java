@@ -129,7 +129,14 @@ public class CryptogramView extends TextView {
     private void showSoftInput() {
         InputMethodManager inputMethodManager = (InputMethodManager) getContext().getSystemService(Context.INPUT_METHOD_SERVICE);
         if (inputMethodManager != null) {
-            inputMethodManager.toggleSoftInput(InputMethodManager.SHOW_IMPLICIT, 0);
+            inputMethodManager.showSoftInput(this, InputMethodManager.SHOW_IMPLICIT);
+        }
+    }
+
+    private void hideSoftInput() {
+        InputMethodManager inputMethodManager = (InputMethodManager) getContext().getSystemService(Context.INPUT_METHOD_SERVICE);
+        if (inputMethodManager != null) {
+            inputMethodManager.hideSoftInputFromWindow(getWindowToken(), InputMethodManager.HIDE_IMPLICIT_ONLY);
         }
     }
 
@@ -230,6 +237,9 @@ public class CryptogramView extends TextView {
             if (mCryptogram.isInputChar(userChar)) {
                 // Enter the user's mapping
                 mCryptogram.setUserChar(selectedChar, Character.toUpperCase(userChar));
+                if (mCryptogram.isCompleted()) {
+                    hideSoftInput();
+                }
             } else {
                 // Clear it
                 mCryptogram.setUserChar(selectedChar, (char) 0);
