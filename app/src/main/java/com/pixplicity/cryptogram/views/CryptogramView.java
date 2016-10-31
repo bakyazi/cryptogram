@@ -169,8 +169,13 @@ public class CryptogramView extends TextView {
     }
 
     @Override
+    public int getInputType() {
+        return InputType.TYPE_TEXT_VARIATION_VISIBLE_PASSWORD;
+    }
+
+    @Override
     public InputConnection onCreateInputConnection(EditorInfo outAttrs) {
-        outAttrs.inputType = InputType.TYPE_TEXT_FLAG_NO_SUGGESTIONS;
+        outAttrs.inputType = InputType.TYPE_TEXT_VARIATION_VISIBLE_PASSWORD;
         outAttrs.imeOptions = EditorInfo.IME_ACTION_NEXT;
         return new BaseInputConnection(this, true) {
             @Override
@@ -181,11 +186,13 @@ public class CryptogramView extends TextView {
 
             @Override
             public boolean commitText(CharSequence text, int newCursorPosition) {
-                if (text.length() > 0) {
-                    onKeyPress(text.charAt(0));
+                String input = text.toString().trim();
+                if (input.length() > 0) {
+                    onKeyPress(input.charAt(0));
                 } else {
                     onKeyPress((char) 0);
                 }
+                finishComposingText();
                 return true;
             }
         };
