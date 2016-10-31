@@ -1,4 +1,4 @@
-package com.pixplicity.cryptogram;
+package com.pixplicity.cryptogram.activities;
 
 import android.content.DialogInterface;
 import android.os.Bundle;
@@ -11,6 +11,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import com.pixplicity.cryptogram.R;
 import com.pixplicity.cryptogram.models.Cryptogram;
 import com.pixplicity.cryptogram.utils.CryptogramProvider;
 import com.pixplicity.cryptogram.views.CryptogramView;
@@ -112,6 +113,10 @@ public class CryptogramActivity extends AppCompatActivity {
                             }
                         })
                         .show();
+            }
+            return true;
+            case R.id.action_about: {
+                startActivity(AboutActivity.create(this));
             }
             return true;
         }

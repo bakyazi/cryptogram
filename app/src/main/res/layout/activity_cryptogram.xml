@@ -7,16 +7,9 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context="com.pixplicity.cryptogram.CryptogramActivity">
+    tools:context="com.pixplicity.cryptogram.activities.CryptogramActivity">
 
-    <android.support.v7.widget.Toolbar
-        android:id="@+id/toolbar"
-        android:layout_width="match_parent"
-        android:layout_height="64dp"
-        android:background="?attr/colorPrimary"
-        android:minHeight="?attr/actionBarSize"
-        app:subtitleTextColor="@color/textLight"
-        app:titleTextColor="@color/textLight"/>
+    <include layout="@layout/in_toolbar"/>
 
     <TextView
         android:id="@+id/tv_error"

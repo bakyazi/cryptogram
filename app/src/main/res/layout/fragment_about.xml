@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:paddingBottom="20dp">
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:layout_margin="16dp"
+            android:adjustViewBounds="true"
+            android:contentDescription="@string/app_name"
+            android:scaleType="centerInside"
+            android:src="@mipmap/ic_launcher"/>
+
+        <TextView
+            style="@style/Base.TextAppearance.Widget.AppCompat.Toolbar.Title"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="1dp"
+            android:gravity="center_horizontal"
+            android:text="@string/app_name"/>
+
+        <TextView
+            android:id="@+id/tv_version"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center_horizontal"
+            tools:text="vX.Y.Z"/>
+
+        <TextView
+            android:id="@+id/about_this_app_1"
+            style="@style/InfoTextView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:text="@string/about_this_app_1"
+            android:textSize="15sp"/>
+
+        <TextView
+            style="@style/InfoTextView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:gravity="center_horizontal"
+            android:text="@string/tv_made_by"
+            android:textSize="14sp"/>
+
+        <ImageView
+            android:id="@+id/iv_labs"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:adjustViewBounds="true"
+            android:contentDescription="@string/pixplicity_labs"
+            android:scaleType="centerInside"
+            android:src="@drawable/pixplicity_labs"/>
+
+        <Button
+            android:id="@+id/bt_website"
+            style="@style/Widget.AppCompat.Button.Borderless"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/activity_horizontal_margin"
+            android:layout_marginRight="@dimen/activity_horizontal_margin"
+            android:gravity="center"
+            android:text="@string/website"
+            android:textAllCaps="true"
+            android:textColor="@color/link"
+            tools:ignore="UnusedAttribute"/>
+
+        <TextView
+            style="@style/InfoTextView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/title_disclaimer"
+            android:textStyle="bold"/>
+
+        <TextView
+            android:id="@+id/disclaimer"
+            style="@style/InfoTextView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/disclaimer"
+            tools:targetApi="ice_cream_sandwich"/>
+
+        <TextView
+            style="@style/InfoTextView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/title_licenses"
+            android:textStyle="bold"/>
+
+        <TextView
+            android:id="@+id/licenses"
+            style="@style/InfoTextView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            tools:text="@string/licenses"/>
+
+    </LinearLayout>
+
+</ScrollView>

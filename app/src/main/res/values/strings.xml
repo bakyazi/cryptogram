@@ -10,4 +10,52 @@
     <string name="reset_puzzle">Are you sure you’d like to reset this puzzle?</string>
     <string name="puzzle_number">Puzzle #%1$d</string>
 
+    <string name="tv_made_by">made by</string>
+    <string name="pixplicity_labs">Pixplicity Labs</string>
+
+    <string name="title_disclaimer">Legal</string>
+    <string name="title_licenses">Licenses</string>
+    <string name="title_about">About this app</string>
+
+    <string name="about_this_app_1">
+        <![CDATA[
+            <p>
+                <strong>
+                    %s lists all the information of your device and offers tools to developers.
+                </strong>
+            </p>
+            <p>
+                Made by the Netherlands’ top Android developers at <strong>Pixplicity</strong>, this app shows you all the useful information you
+                might want to know about a phone or tablet: hardware features, screen size, resolution and density, ip-addresses,
+                camera specs, OS information… you name it!
+            </p>
+            ]]>
+        </string>
+    <string name="disclaimer">
+        <![CDATA[
+            <p>
+                Anonymous data may be sent to Pixplicity with your explicit consent. This will be used to gather statistics about
+                existing devices, and the results will at one point be delivered through this app.
+            </p>
+            <p>
+                THIS APP COMES WITHOUT WARRANTY OF ANY KIND AND IS COPYRIGHT OF PIXPLICITY B.V., THE NETHERLANDS.
+            </p>
+        ]]>
+    </string>
+    <string name="licenses">
+        <![CDATA[
+            This app uses the following libraries, licensed under the Apache License 2.0:
+            <br /><br />
+            • <strong>EasyPrefs</strong> by Pixplicity<br />
+            • <strong>Letter Press</strong> by Pixplicity<br />
+            • <strong>Otto</strong> by Square Inc.<br />
+            • <strong>Picasso</strong> by Square Inc.<br />
+            • <strong>recycler-fast-scroll</strong> by FutureMind<br />
+            <br />
+            Public IP address provided by <a href="http://whatismyip.akamai.com/">http://whatismyip.akamai.com/</a>.
+            ]]>
+    </string>
+    <string name="website">Visit Pixplicity.com</string>
+    <string name="url">https://pixplicity.com/?utm_source=component_app&amp;utm_medium=android-app&amp;utm_content=en&amp;utm_campaign=component_app</string>
+
 </resources>
