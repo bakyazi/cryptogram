@@ -88,7 +88,7 @@ public class CryptogramActivity extends BaseActivity {
             return true;
             case R.id.action_reveal: {
                 if (cryptogram == null || !mCryptogramView.hasSelectedCharacter()) {
-                    Snackbar.make(mRootView, "Please select a letter first.", Snackbar.LENGTH_SHORT).show();
+                    Snackbar.make(mVgContent, "Please select a letter first.", Snackbar.LENGTH_SHORT).show();
                 } else {
                     new AlertDialog.Builder(this)
                             .setMessage(R.string.reveal_confirmation)
