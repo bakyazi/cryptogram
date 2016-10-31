@@ -32,6 +32,9 @@ public abstract class BaseActivity extends AppCompatActivity {
         super.setContentView(layoutResID);
         ButterKnife.bind(this);
 
+        // Replace any splash screen image
+        getWindow().setBackgroundDrawableResource(R.drawable.bg_activity);
+
         setSupportActionBar(mToolbar);
 
         ActionBar ab = getSupportActionBar();
