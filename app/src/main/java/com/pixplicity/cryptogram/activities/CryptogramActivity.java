@@ -3,8 +3,6 @@ package com.pixplicity.cryptogram.activities;
 import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.v7.app.AlertDialog;
-import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -17,9 +15,8 @@ import com.pixplicity.cryptogram.utils.CryptogramProvider;
 import com.pixplicity.cryptogram.views.CryptogramView;
 
 import butterknife.BindView;
-import butterknife.ButterKnife;
 
-public class CryptogramActivity extends AppCompatActivity {
+public class CryptogramActivity extends BaseActivity {
 
     @BindView(R.id.vg_cryptogram)
     protected ViewGroup mVgCryptogram;
@@ -30,9 +27,6 @@ public class CryptogramActivity extends AppCompatActivity {
     @BindView(R.id.cryptogram)
     protected CryptogramView mCryptogramView;
 
-    @BindView(R.id.toolbar)
-    protected Toolbar mToolbar;
-
     @BindView(R.id.tv_error)
     protected TextView mTvError;
 
@@ -40,10 +34,6 @@ public class CryptogramActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_cryptogram);
-        ButterKnife.bind(this);
-
-        mToolbar.setTitle(R.string.app_name);
-        setSupportActionBar(mToolbar);
 
         Cryptogram cryptogram = CryptogramProvider.getInstance(this).getCurrent();
         updateCryptogram(cryptogram);

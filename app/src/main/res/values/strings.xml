@@ -13,6 +13,9 @@
     <string name="tv_made_by">made by</string>
     <string name="pixplicity_labs">Pixplicity Labs</string>
 
+    <string name="version" translatable="false">%s (%d)</string>
+    <string name="version_long" translatable="false">%s\n%d</string>
+
     <string name="title_disclaimer">Legal</string>
     <string name="title_licenses">Licenses</string>
     <string name="title_about">About this app</string>
