@@ -13,6 +13,7 @@ import android.support.v4.content.ContextCompat;
 import android.text.InputType;
 import android.text.TextPaint;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.inputmethod.BaseInputConnection;
@@ -28,6 +29,8 @@ import java.util.HashMap;
 
 
 public class CryptogramView extends TextView {
+
+    private static final String TAG = CryptogramView.class.getSimpleName();
 
     private Cryptogram mCryptogram;
     private char mSelectedCharacter;
@@ -132,6 +135,12 @@ public class CryptogramView extends TextView {
     }
 
     @Override
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
+        Log.d(TAG, "key: " + keyCode);
+        return true;
+    }
+
+    @Override
     public boolean onKeyUp(int keyCode, KeyEvent event) {
         switch (keyCode) {
             case KeyEvent.KEYCODE_BACK:
@@ -142,8 +151,7 @@ public class CryptogramView extends TextView {
                 setSelectedCharacter((char) 0);
                 return true;
         }
-        char c = (char) event.getUnicodeChar();
-        return onKeyPress(c);
+        return onKeyPress((char) event.getUnicodeChar());
     }
 
     private boolean onKeyPress(char c) {
@@ -166,9 +174,17 @@ public class CryptogramView extends TextView {
         outAttrs.imeOptions = EditorInfo.IME_ACTION_NEXT;
         return new BaseInputConnection(this, true) {
             @Override
+            public boolean deleteSurroundingText(int beforeLength, int afterLength) {
+                onKeyPress((char) 0);
+                return false;
+            }
+
+            @Override
             public boolean commitText(CharSequence text, int newCursorPosition) {
                 if (text.length() > 0) {
                     onKeyPress(text.charAt(0));
+                } else {
+                    onKeyPress((char) 0);
                 }
                 return true;
             }
@@ -311,10 +327,13 @@ public class CryptogramView extends TextView {
             charMapping = mCryptogram.getCharMapping();
         }
 
-        TextPaint textPaintUser = mTextPaintInput;
+        boolean completed = false;
         if (!isInEditMode() && mCryptogram.isCompleted()) {
-            textPaintUser = mTextPaintInputComplete;
+            completed = true;
         }
+        TextPaint textPaintUser = completed ? mTextPaintInputComplete : mTextPaintInput;
+        mTextPaintMapping.setAlpha(completed ? 96 : 255);
+        mLinePaint.setAlpha(completed ? 96 : 255);
 
         float offsetX1 = (mBoxW - mCharW1) / 4;
         float offsetX2 = (mBoxW - mCharW2) / 4;
