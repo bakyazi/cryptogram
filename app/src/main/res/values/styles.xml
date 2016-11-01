@@ -15,7 +15,7 @@
     </style>
 
     <style name="ToolbarStyle" parent="ThemeOverlay.AppCompat.ActionBar">
-        <item name="colorControlNormal">@color/textLight</item>
+        <item name="colorControlNormal">#000000</item>
     </style>
 
     <style name="OverflowButtonStyle" parent="Widget.AppCompat.ActionButton.Overflow">

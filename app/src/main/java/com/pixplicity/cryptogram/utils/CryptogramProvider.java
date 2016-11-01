@@ -87,14 +87,17 @@ public class CryptogramProvider {
         if (count == 0) {
             return null;
         }
-        mCurrentIndex = mRandom.nextInt(count);
+        if (PrefsUtils.getRandomize()) {
+            mCurrentIndex = mRandom.nextInt(count);
+        } else {
+            mCurrentIndex++;
+        }
         if (mCurrentIndex == oldId) {
             // If the puzzle didn't change, simply take the next puzzle
-            if (oldId + 1 < getCount()) {
-                mCurrentIndex = oldId + 1;
-            } else {
-                mCurrentIndex = 0;
-            }
+            mCurrentIndex = oldId + 1;
+        }
+        if (mCurrentIndex >= getCount()) {
+            mCurrentIndex = 0;
         }
         setCurrent(mCurrentIndex);
         return get(mCurrentIndex);

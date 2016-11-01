@@ -32,6 +32,14 @@
         app:showAsAction="never"/>
 
     <item
+        android:id="@+id/action_randomize"
+        android:checkable="true"
+        android:checked="false"
+        android:orderInCategory="215"
+        android:title="@string/randomize_puzzles"
+        app:showAsAction="never"/>
+
+    <item
         android:id="@+id/action_about"
         android:icon="@drawable/ic_info"
         android:orderInCategory="300"

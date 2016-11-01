@@ -19,6 +19,7 @@ import com.afollestad.materialdialogs.internal.MDButton;
 import com.pixplicity.cryptogram.R;
 import com.pixplicity.cryptogram.models.Cryptogram;
 import com.pixplicity.cryptogram.utils.CryptogramProvider;
+import com.pixplicity.cryptogram.utils.PrefsUtils;
 import com.pixplicity.cryptogram.views.CryptogramView;
 
 import butterknife.BindView;
@@ -69,6 +70,10 @@ public class CryptogramActivity extends BaseActivity {
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.menu_cryptogram, menu);
+        {
+            MenuItem item = menu.findItem(R.id.action_randomize);
+            item.setChecked(PrefsUtils.getRandomize());
+        }
         return true;
     }
 
@@ -190,6 +195,12 @@ public class CryptogramActivity extends BaseActivity {
                                 }
                             }
                         }).show();
+            }
+            return true;
+            case R.id.action_randomize: {
+                boolean randomize = !item.isChecked();
+                PrefsUtils.setRandomize(randomize);
+                item.setChecked(randomize);
             }
             return true;
             case R.id.action_about: {

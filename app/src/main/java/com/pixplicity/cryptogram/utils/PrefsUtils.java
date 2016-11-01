@@ -8,8 +8,9 @@ import java.util.Set;
 
 public class PrefsUtils {
 
-    public static final String KEY_CURRENT_ID = "current_puzzle_index";
-    public static final String KEY_PROGRESS = "puzzle_progress";
+    private static final String KEY_CURRENT_ID = "current_puzzle_index";
+    private static final String KEY_PROGRESS = "puzzle_progress";
+    private static final String KEY_RANDOMIZE = "randomize";
 
     private static SparseArray<String> sPuzzleProgress;
 
@@ -27,6 +28,14 @@ public class PrefsUtils {
 
     public static void setProgress(Set<String> progressStrSet) {
         Prefs.putOrderedStringSet(PrefsUtils.KEY_PROGRESS, progressStrSet);
+    }
+
+    public static boolean getRandomize() {
+        return Prefs.getBoolean(KEY_RANDOMIZE, false);
+    }
+
+    public static void setRandomize(boolean randomize) {
+        Prefs.putBoolean(KEY_RANDOMIZE, randomize);
     }
 
 }
