@@ -11,7 +11,10 @@
     <string name="skip_puzzle">Are you sure you’d like to skip this puzzle?</string>
     <string name="reveal_confirmation">Are you sure you’d like to reveal the selected letter?</string>
     <string name="reset_puzzle">Are you sure you’d like to reset this puzzle?</string>
+
     <string name="puzzle_number">Puzzle #%1$d of %2$d</string>
+
+    <string name="quote">— %1$s</string>
 
     <string name="tv_made_by">made by</string>
     <string name="pixplicity_labs">Pixplicity Labs</string>

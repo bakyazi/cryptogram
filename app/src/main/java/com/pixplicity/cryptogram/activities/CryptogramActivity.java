@@ -45,7 +45,7 @@ public class CryptogramActivity extends BaseActivity {
             mTvError.setVisibility(View.GONE);
             mVgCryptogram.setVisibility(View.VISIBLE);
             mCryptogramView.setCryptogram(cryptogram);
-            mTvAuthor.setText(cryptogram.getAuthor());
+            mTvAuthor.setText(getString(R.string.quote, cryptogram.getAuthor()));
             mToolbar.setSubtitle(getString(
                     R.string.puzzle_number,
                     cryptogram.getId() + 1,
