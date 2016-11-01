@@ -2,14 +2,20 @@ package com.pixplicity.cryptogram.activities;
 
 import android.content.DialogInterface;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AlertDialog;
+import android.text.Editable;
+import android.text.InputType;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import com.afollestad.materialdialogs.DialogAction;
+import com.afollestad.materialdialogs.MaterialDialog;
+import com.afollestad.materialdialogs.internal.MDButton;
 import com.pixplicity.cryptogram.R;
 import com.pixplicity.cryptogram.models.Cryptogram;
 import com.pixplicity.cryptogram.utils.CryptogramProvider;
@@ -18,6 +24,8 @@ import com.pixplicity.cryptogram.views.CryptogramView;
 import butterknife.BindView;
 
 public class CryptogramActivity extends BaseActivity {
+
+    private static final String TAG = CryptogramActivity.class.getSimpleName();
 
     @BindView(R.id.vg_cryptogram)
     protected ViewGroup mVgCryptogram;
@@ -132,6 +140,56 @@ public class CryptogramActivity extends BaseActivity {
                             })
                             .show();
                 }
+            }
+            return true;
+            case R.id.action_go_to: {
+                String currentId = String.valueOf(cryptogram.getId() + 1);
+                new MaterialDialog.Builder(this)
+                        .content(R.string.go_to_puzzle_content)
+                        .inputType(InputType.TYPE_CLASS_NUMBER)
+                        .input(null, currentId, new MaterialDialog.InputCallback() {
+                            @Override
+                            public void onInput(MaterialDialog dialog, CharSequence input) {
+                                MDButton button = dialog.getActionButton(DialogAction.POSITIVE);
+                                try {
+                                    //noinspection ResultOfMethodCallIgnored
+                                    Integer.parseInt(input.toString());
+                                    button.setEnabled(true);
+                                } catch (NumberFormatException ignored) {
+                                    button.setEnabled(false);
+                                }
+                            }
+                        })
+                        .alwaysCallInputCallback()
+                        .showListener(new DialogInterface.OnShowListener() {
+                            @Override
+                            public void onShow(DialogInterface dialogInterface) {
+                                MaterialDialog dialog = (MaterialDialog) dialogInterface;
+                                //noinspection ConstantConditions
+                                dialog.getInputEditText().selectAll();
+                            }
+                        })
+                        .onPositive(new MaterialDialog.SingleButtonCallback() {
+                            @Override
+                            public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
+                                //noinspection ConstantConditions
+                                Editable input = dialog.getInputEditText().getText();
+                                try {
+                                    int id = Integer.parseInt(input.toString());
+                                    CryptogramProvider provider = CryptogramProvider
+                                            .getInstance(CryptogramActivity.this);
+                                    Cryptogram cryptogram = provider.get(id - 1);
+                                    if (cryptogram == null) {
+                                        Snackbar.make(mVgContent, getString(R.string.puzzle_nonexistant, id),
+                                                Snackbar.LENGTH_SHORT).show();
+                                    } else {
+                                        provider.setCurrent(cryptogram.getId());
+                                        updateCryptogram(cryptogram);
+                                    }
+                                } catch (NumberFormatException ignored) {
+                                }
+                            }
+                        }).show();
             }
             return true;
             case R.id.action_about: {

@@ -72,7 +72,12 @@ public class CryptogramProvider {
         if (mCurrentIndex < 0) {
             return getNext();
         }
-        return mCryptograms[mCurrentIndex];
+        return get(mCurrentIndex);
+    }
+
+    public void setCurrent(int index) {
+        mCurrentIndex = index;
+        PrefsUtils.setCurrentId(index);
     }
 
     @Nullable
@@ -91,8 +96,16 @@ public class CryptogramProvider {
                 mCurrentIndex = 0;
             }
         }
-        PrefsUtils.setCurrentId(mCurrentIndex);
-        return mCryptograms[mCurrentIndex];
+        setCurrent(mCurrentIndex);
+        return get(mCurrentIndex);
+    }
+
+    @Nullable
+    public Cryptogram get(int index) {
+        if (index < 0 || index >= mCryptograms.length) {
+            return null;
+        }
+        return mCryptograms[index];
     }
 
     @NonNull
