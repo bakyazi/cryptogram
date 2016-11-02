@@ -49,6 +49,7 @@ public abstract class BaseActivity extends AppCompatActivity {
         getWindow().setBackgroundDrawableResource(R.drawable.bg_activity);
 
         setSupportActionBar(mToolbar);
+        mToolbar.setContentInsetStartWithNavigation(0);
 
         ActionBar ab = getSupportActionBar();
         ab.setHomeAsUpIndicator(R.drawable.ic_arrow_back);
@@ -92,6 +93,13 @@ public abstract class BaseActivity extends AppCompatActivity {
         ActionBar actionBar = super.getSupportActionBar();
         assert actionBar != null;
         return actionBar;
+    }
+
+    protected void setHomeButtonEnabled(boolean enabled) {
+        ActionBar ab = getSupportActionBar();
+        ab.setHomeButtonEnabled(enabled);
+        ab.setDisplayShowHomeEnabled(enabled);
+        ab.setDisplayHomeAsUpEnabled(enabled);
     }
 
     @Override
