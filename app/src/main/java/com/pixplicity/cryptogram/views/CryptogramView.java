@@ -246,17 +246,23 @@ public class CryptogramView extends TextView {
 
     public boolean setCharacterMapping(char selectedChar, char userChar) {
         if (selectedChar != 0) {
+            boolean wasCompleted = mCryptogram.isCompleted();
+            boolean progressChange = wasCompleted;
             if (mCryptogram.isInputChar(userChar)) {
                 // Enter the user's mapping
                 mCryptogram.setUserChar(selectedChar, Character.toUpperCase(userChar));
                 if (mCryptogram.isCompleted()) {
-                    if (mOnCryptogramProgressListener != null)
-                        mOnCryptogramProgressListener.onCryptogramProgress(mCryptogram);
+                    if (!wasCompleted) {
+                        progressChange = true;
+                    }
                     hideSoftInput();
                 }
             } else {
                 // Clear it
                 mCryptogram.setUserChar(selectedChar, (char) 0);
+            }
+            if (progressChange && mOnCryptogramProgressListener != null) {
+                mOnCryptogramProgressListener.onCryptogramProgress(mCryptogram);
             }
             invalidate();
             return true;
