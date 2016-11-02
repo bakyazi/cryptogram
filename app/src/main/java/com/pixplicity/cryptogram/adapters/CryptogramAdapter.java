@@ -5,6 +5,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.pixplicity.cryptogram.R;
@@ -61,6 +62,7 @@ public class CryptogramAdapter extends RecyclerView.Adapter<CryptogramAdapter.Vi
         vh.setPosition(position);
         vh.tvPuzzleId.setText(mContext.getString(R.string.puzzle_number2, cryptogram.getId() + 1));
         vh.tvAuthor.setText(cryptogram.getAuthor());
+        vh.ivCompleted.setVisibility(cryptogram.isCompleted() ? View.VISIBLE : View.GONE);
     }
 
     @Override
@@ -81,6 +83,9 @@ public class CryptogramAdapter extends RecyclerView.Adapter<CryptogramAdapter.Vi
 
         @BindView(R.id.tv_author)
         protected TextView tvAuthor;
+
+        @BindView(R.id.iv_completed)
+        protected ImageView ivCompleted;
 
         protected ViewGroup vgContainer;
 

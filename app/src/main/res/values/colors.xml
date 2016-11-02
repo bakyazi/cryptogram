@@ -13,5 +13,6 @@
 
     <color name="link">#00bcd4</color>
     <color name="error">#c6001e</color>
+    <color name="success">#28c600</color>
 
 </resources>
