@@ -44,6 +44,12 @@ public class CryptogramProgress {
     @SerializedName("shuffle")
     private HashMap<Character, Character> mCharMapping;
 
+    /**
+     * List of characters that have been revealed.
+     */
+    @SerializedName("revealed")
+    private List<Character> mRevealed;
+
     private transient Boolean mCompleted;
 
     public int getId() {
@@ -111,16 +117,6 @@ public class CryptogramProgress {
         getUserChars(cryptogram).put(selectedCharacter, Character.toUpperCase(c));
     }
 
-    public void sanitize(Cryptogram cryptogram) {
-        Iterator<Character> i = getUserChars(cryptogram).keySet().iterator();
-        while (i.hasNext()) {
-            Character c = i.next();
-            if (!cryptogram.isInputChar(c)) {
-                i.remove();
-            }
-        }
-    }
-
     public boolean isCompleted(Cryptogram cryptogram) {
         if (mCompleted == null) {
             mCompleted = true;
@@ -134,6 +130,36 @@ public class CryptogramProgress {
             }
         }
         return mCompleted;
+    }
+
+    public void reveal(char c) {
+        if (mRevealed == null) {
+            mRevealed = new ArrayList<>();
+        } else if (mRevealed.contains(c)) {
+            return;
+        }
+        mRevealed.add(c);
+    }
+
+    public boolean isRevealed(char c) {
+        return mRevealed != null && mRevealed.contains(c);
+    }
+
+    public void sanitize(Cryptogram cryptogram) {
+        // Ensure that only input characters have user mappings
+        Iterator<Character> i = getUserChars(cryptogram).keySet().iterator();
+        while (i.hasNext()) {
+            Character c = i.next();
+            if (!cryptogram.isInputChar(c)) {
+                i.remove();
+            }
+        }
+        // Apply mappings for any revealed characters
+        if (mRevealed != null) {
+            for (Character c : mRevealed) {
+                setUserChar(cryptogram, c, c);
+            }
+        }
     }
 
 }

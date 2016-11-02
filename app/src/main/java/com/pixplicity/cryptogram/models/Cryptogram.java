@@ -112,6 +112,21 @@ public class Cryptogram {
         return getProgress().isCompleted(this);
     }
 
+    public void reveal(char c) {
+        if (!isInputChar(c)) {
+            // Not applicable
+            return;
+        }
+        load();
+        getProgress().reveal(c);
+        save();
+    }
+
+    public boolean isRevealed(char c) {
+        load();
+        return getProgress().isRevealed(c);
+    }
+
     private void load() {
         if (!mLoadedProgress) {
             mProgress = CryptogramProvider.getInstance(CryptogramApp.getInstance()).getProgress().get(mId);

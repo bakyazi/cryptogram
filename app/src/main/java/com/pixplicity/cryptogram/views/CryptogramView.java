@@ -38,7 +38,7 @@ public class CryptogramView extends TextView {
     private char mSelectedCharacter;
 
     private float mBoxW, mBoxH, mCharW1, mCharW2;
-    private Paint mPaint, mLinePaint, mBoxPaint1, mBoxPaint2;
+    private Paint mPaint, mLinePaint1, mLinePaint2, mBoxPaint1, mBoxPaint2;
     private TextPaint mTextPaintInput, mTextPaintInputComplete, mTextPaintMapping;
     private int mBoxInset;
 
@@ -73,9 +73,11 @@ public class CryptogramView extends TextView {
         mPaint.setColor(Color.BLACK);
         mPaint.setAntiAlias(true);
 
-        mLinePaint = new Paint(mPaint);
-        mLinePaint.setStrokeWidth(r.getDimensionPixelSize(R.dimen.puzzle_line_height));
-        mLinePaint.setStrokeCap(Paint.Cap.ROUND);
+        mLinePaint1 = new Paint(mPaint);
+        mLinePaint1.setStrokeWidth(r.getDimensionPixelSize(R.dimen.puzzle_line_height));
+        mLinePaint1.setStrokeCap(Paint.Cap.ROUND);
+        mLinePaint2 = new Paint(mLinePaint1);
+        mLinePaint2.setAlpha(96);
 
         mBoxPaint1 = new Paint(mPaint);
         mBoxPaint1.setColor(ContextCompat.getColor(context, R.color.box_highlight));
@@ -248,6 +250,11 @@ public class CryptogramView extends TextView {
 
     public boolean setCharacterMapping(char selectedChar, char userChar) {
         if (selectedChar != 0) {
+            if (mCryptogram.isRevealed(selectedChar)) {
+                // This character was already revealed; don't allow the user to alter it
+                mCryptogram.setUserChar(selectedChar, selectedChar);
+                return true;
+            }
             boolean wasCompleted = mCryptogram.isCompleted();
             boolean progressChange = wasCompleted;
             if (mCryptogram.isInputChar(userChar)) {
@@ -273,6 +280,7 @@ public class CryptogramView extends TextView {
     }
 
     public boolean revealCharacterMapping(char c) {
+        mCryptogram.reveal(c);
         return setCharacterMapping(c, c);
     }
 
@@ -358,7 +366,7 @@ public class CryptogramView extends TextView {
         }
         TextPaint textPaintUser = completed ? mTextPaintInputComplete : mTextPaintInput;
         mTextPaintMapping.setAlpha(completed ? 96 : 255);
-        mLinePaint.setAlpha(completed ? 96 : 255);
+        Paint linePaint = completed ? mLinePaint2 : mLinePaint1;
 
         float offsetX1 = (mBoxW - mCharW1) / 4;
         float offsetX2 = (mBoxW - mCharW2) / 4;
@@ -384,9 +392,12 @@ public class CryptogramView extends TextView {
                     chr = String.valueOf(mappedChar);
                     canvas.drawText(chr, x + offsetX2, y + mBoxH + offsetY, mTextPaintMapping);
                 }
-                if (mCryptogram.isInputChar(c)) {
+                if (mCryptogram.isRevealed(c)) {
+                    // This box has already been revealed to the user
+                    canvas.drawLine(x + offsetX1, y + offsetY, x + mBoxW - offsetX1, y + offsetY, mLinePaint2);
+                } else if (mCryptogram.isInputChar(c)) {
                     // This is a box the user has to fill to complete the puzzle
-                    canvas.drawLine(x + offsetX1, y + offsetY, x + mBoxW - offsetX1, y + offsetY, mLinePaint);
+                    canvas.drawLine(x + offsetX1, y + offsetY, x + mBoxW - offsetX1, y + offsetY, linePaint);
                     c = getUserInput(c);
                 }
                 if (c > 0) {
