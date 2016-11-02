@@ -92,23 +92,24 @@ public class Cryptogram {
         return null;
     }
 
-    @NonNull
-    private HashMap<Character, Character> getUserChars() {
-        load();
-        return getProgress().getUserChars(this);
-    }
-
     public Character getUserChar(char c) {
-        return getUserChars().get(c);
+        load();
+        return getProgress().getUserChar(this, c);
     }
 
     public void setUserChar(char selectedCharacter, char c) {
-        getUserChars().put(selectedCharacter, Character.toUpperCase(c));
+        load();
+        getProgress().setUserChar(this, selectedCharacter, c);
         save();
     }
 
     public boolean isInputChar(char c) {
         return (c >= 'a' && c <= 'z') || (c >= 'A' && c <= 'Z');
+    }
+
+    public boolean isCompleted() {
+        load();
+        return getProgress().isCompleted(this);
     }
 
     private void load() {
@@ -128,17 +129,6 @@ public class Cryptogram {
 
     public void save() {
         CryptogramProvider.getInstance(CryptogramApp.getInstance()).setProgress(getProgress());
-    }
-
-    public boolean isCompleted() {
-        HashMap<Character, Character> userChars = getUserChars();
-        for (Character character : userChars.keySet()) {
-            // In order to be correct, the key and value must be identical
-            if (character != userChars.get(character)) {
-                return false;
-            }
-        }
-        return true;
     }
 
 }

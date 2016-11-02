@@ -65,6 +65,13 @@ public class CryptogramActivity extends BaseActivity {
         });
         mRvDrawer.setAdapter(mAdapter);
 
+        mCryptogramView.setOnCryptogramProgressListener(new CryptogramView.OnCryptogramProgressListener() {
+            @Override
+            public void onCryptogramProgress(Cryptogram cryptogram) {
+                mAdapter.notifyDataSetChanged();
+            }
+        });
+
         updateCryptogram(cryptogramProvider.getCurrent());
     }
 

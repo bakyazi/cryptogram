@@ -1,6 +1,7 @@
 package com.pixplicity.cryptogram.models;
 
 import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 
 import com.google.gson.annotations.SerializedName;
 
@@ -43,6 +44,8 @@ public class CryptogramProgress {
     @SerializedName("shuffle")
     private HashMap<Character, Character> mCharMapping;
 
+    private transient Boolean mCompleted;
+
     public int getId() {
         return mId;
     }
@@ -83,7 +86,7 @@ public class CryptogramProgress {
     }
 
     @NonNull
-    public HashMap<Character, Character> getUserChars(Cryptogram cryptogram) {
+    private HashMap<Character, Character> getUserChars(Cryptogram cryptogram) {
         if (mUserChars == null) {
             mUserChars = new HashMap<>();
             for (String word : cryptogram.getWords()) {
@@ -98,6 +101,16 @@ public class CryptogramProgress {
         return mUserChars;
     }
 
+    @Nullable
+    public Character getUserChar(Cryptogram cryptogram, char c) {
+        return getUserChars(cryptogram).get(c);
+    }
+
+    public void setUserChar(Cryptogram cryptogram, char selectedCharacter, char c) {
+        mCompleted = null;
+        getUserChars(cryptogram).put(selectedCharacter, Character.toUpperCase(c));
+    }
+
     public void sanitize(Cryptogram cryptogram) {
         Iterator<Character> i = getUserChars(cryptogram).keySet().iterator();
         while (i.hasNext()) {
@@ -106,6 +119,21 @@ public class CryptogramProgress {
                 i.remove();
             }
         }
+    }
+
+    public boolean isCompleted(Cryptogram cryptogram) {
+        if (mCompleted == null) {
+            mCompleted = true;
+            HashMap<Character, Character> userChars = getUserChars(cryptogram);
+            for (Character character : userChars.keySet()) {
+                // In order to be correct, the key and value must be identical
+                if (character != userChars.get(character)) {
+                    mCompleted = false;
+                    break;
+                }
+            }
+        }
+        return mCompleted;
     }
 
 }

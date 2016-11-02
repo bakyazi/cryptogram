@@ -42,6 +42,8 @@ public class CryptogramView extends TextView {
     private TextPaint mTextPaintInput, mTextPaintInputComplete, mTextPaintMapping;
     private int mBoxInset;
 
+    private OnCryptogramProgressListener mOnCryptogramProgressListener;
+
 
     public CryptogramView(Context context) {
         super(context);
@@ -248,6 +250,8 @@ public class CryptogramView extends TextView {
                 // Enter the user's mapping
                 mCryptogram.setUserChar(selectedChar, Character.toUpperCase(userChar));
                 if (mCryptogram.isCompleted()) {
+                    if (mOnCryptogramProgressListener != null)
+                        mOnCryptogramProgressListener.onCryptogramProgress(mCryptogram);
                     hideSoftInput();
                 }
             } else {
@@ -398,6 +402,16 @@ public class CryptogramView extends TextView {
             return 0;
         }
         return input;
+    }
+
+    public void setOnCryptogramProgressListener(OnCryptogramProgressListener onCryptogramProgressListener) {
+        mOnCryptogramProgressListener = onCryptogramProgressListener;
+    }
+
+    public interface OnCryptogramProgressListener {
+
+        void onCryptogramProgress(Cryptogram cryptogram);
+
     }
 
 }
