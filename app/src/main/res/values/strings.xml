@@ -11,6 +11,7 @@
     <string name="reset">Reset</string>
     <string name="go_to_puzzle">Go to puzzle…</string>
     <string name="randomize_puzzles">Randomize puzzles</string>
+    <string name="share">Share puzzle…</string>
     <string name="about">About</string>
     <string name="cancel">Cancel</string>
     <string name="skip_puzzle">Are you sure you’d like to skip this puzzle?</string>
@@ -22,8 +23,12 @@
     <string name="puzzle_number">Puzzle #%1$d of %2$d</string>
     <string name="puzzle_number2">Puzzle #%1$d</string>
 
-    <string name="puzzle_nonexistant">Puzzle #%1$d doesn\'t exist</string>
+    <string name="puzzle_nonexistant">Puzzle #%1$d doesn’t exist</string>
     <string name="puzzle_completed">Puzzle completed</string>
+
+    <string name="share_full">“%1$s”\n— %2$s\n\nDecipher cryptograms to reveal quotes like these! %3$s</string>
+    <string name="share_partial">I’m working on a quote by %1$s!\n\nDecipher cryptograms to reveal quotes like these! %2$s</string>
+    <string name="share_url">https://play.google.com/store/apps/details?id=com.pixplicity.cryptogram</string>
 
     <string name="quote">— %1$s</string>
 

@@ -1,6 +1,7 @@
 package com.pixplicity.cryptogram.activities;
 
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.Snackbar;
@@ -248,6 +249,24 @@ public class CryptogramActivity extends BaseActivity {
                 boolean randomize = !item.isChecked();
                 PrefsUtils.setRandomize(randomize);
                 item.setChecked(randomize);
+            }
+            return true;
+            case R.id.action_share: {
+                Intent intent = new Intent(Intent.ACTION_SEND);
+                intent.setType("text/plain");
+                if (cryptogram.isCompleted()) {
+                    intent.putExtra(Intent.EXTRA_TEXT, getString(
+                            R.string.share_full,
+                            cryptogram.getText(),
+                            cryptogram.getAuthor(),
+                            getString(R.string.share_url)));
+                } else {
+                    intent.putExtra(Intent.EXTRA_TEXT, getString(
+                            R.string.share_partial,
+                            cryptogram.getAuthor(),
+                            getString(R.string.share_url)));
+                }
+                startActivity(Intent.createChooser(intent, getString(R.string.share)));
             }
             return true;
             case R.id.action_about: {

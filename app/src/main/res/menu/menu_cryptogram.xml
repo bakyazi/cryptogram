@@ -40,9 +40,16 @@
         app:showAsAction="never"/>
 
     <item
+        android:id="@+id/action_share"
+        android:icon="@drawable/ic_share"
+        android:orderInCategory="300"
+        android:title="@string/share"
+        app:showAsAction="never"/>
+
+    <item
         android:id="@+id/action_about"
         android:icon="@drawable/ic_info"
-        android:orderInCategory="300"
+        android:orderInCategory="305"
         android:title="@string/about"
         app:showAsAction="never"/>
 
