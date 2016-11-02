@@ -5,39 +5,31 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AlertDialog;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.text.Editable;
 import android.text.InputType;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
-import android.widget.ListView;
-import android.widget.SimpleAdapter;
 import android.widget.TextView;
 
 import com.afollestad.materialdialogs.DialogAction;
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.afollestad.materialdialogs.internal.MDButton;
 import com.pixplicity.cryptogram.R;
+import com.pixplicity.cryptogram.adapters.CryptogramAdapter;
 import com.pixplicity.cryptogram.models.Cryptogram;
 import com.pixplicity.cryptogram.utils.CryptogramProvider;
 import com.pixplicity.cryptogram.utils.PrefsUtils;
 import com.pixplicity.cryptogram.views.CryptogramView;
-
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
 
 import butterknife.BindView;
 
 public class CryptogramActivity extends BaseActivity {
 
     private static final String TAG = CryptogramActivity.class.getSimpleName();
-
-    private static final String KEY_ID = "id";
-    private static final String KEY_AUTHOR = "author";
 
     @BindView(R.id.vg_cryptogram)
     protected ViewGroup mVgCryptogram;
@@ -51,8 +43,10 @@ public class CryptogramActivity extends BaseActivity {
     @BindView(R.id.tv_error)
     protected TextView mTvError;
 
-    @BindView(R.id.lv_drawer)
-    protected ListView mLvDrawer;
+    @BindView(R.id.rv_drawer)
+    protected RecyclerView mRvDrawer;
+
+    private CryptogramAdapter mAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -60,37 +54,27 @@ public class CryptogramActivity extends BaseActivity {
         setContentView(R.layout.activity_cryptogram);
 
         final CryptogramProvider cryptogramProvider = CryptogramProvider.getInstance(this);
-        updateCryptogram(cryptogramProvider.getCurrent());
 
-        List<Map<String, String>> data = new ArrayList<>(cryptogramProvider.getCount());
-        for (Cryptogram cryptogram : cryptogramProvider.getAll()) {
-            Map<String, String> map = new HashMap<>();
-            map.put(KEY_ID, getString(R.string.puzzle_number2, cryptogram.getId() + 1));
-            map.put(KEY_AUTHOR, cryptogram.getAuthor());
-            data.add(map);
-        }
-        SimpleAdapter adapter = new SimpleAdapter(
-                this,
-                data,
-                R.layout.item_puzzle,
-                new String[]{KEY_ID, KEY_AUTHOR},
-                new int[]{R.id.tv_puzzle_id, R.id.tv_author});
-        mLvDrawer.setAdapter(adapter);
-        mLvDrawer.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+        mRvDrawer.setLayoutManager(new LinearLayoutManager(this));
+        mAdapter = new CryptogramAdapter(this, new CryptogramAdapter.OnItemClickListener() {
             @Override
-            public void onItemClick(AdapterView<?> adapterView, View view, int position, long id) {
+            public void onItemClick(int position) {
                 mDrawerLayout.closeDrawers();
                 updateCryptogram(cryptogramProvider.get(position));
             }
         });
+        mRvDrawer.setAdapter(mAdapter);
+
+        updateCryptogram(cryptogramProvider.getCurrent());
     }
 
     private void updateCryptogram(Cryptogram cryptogram) {
         if (cryptogram != null) {
             CryptogramProvider provider = CryptogramProvider.getInstance(this);
             provider.setCurrent(cryptogram.getId());
-            mLvDrawer.smoothScrollToPosition(
+            mRvDrawer.smoothScrollToPosition(
                     provider.getCurrentIndex());
+            mAdapter.notifyDataSetChanged();
             mTvError.setVisibility(View.GONE);
             mVgCryptogram.setVisibility(View.VISIBLE);
             mCryptogramView.setCryptogram(cryptogram);
