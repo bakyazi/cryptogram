@@ -8,6 +8,12 @@
         <item name="colorAccent">@color/colorAccent</item>
         <item name="actionMenuTextColor">@color/textLight</item>
         <item name="actionOverflowButtonStyle">@style/OverflowButtonStyle</item>
+        <item name="drawerArrowStyle">@style/DrawerArrowStyle</item>
+    </style>
+
+    <style name="DrawerArrowStyle" parent="Widget.AppCompat.DrawerArrowToggle">
+        <item name="spinBars">true</item>
+        <item name="color">@color/white</item>
     </style>
 
     <style name="SplashTheme" parent="@style/AppTheme">

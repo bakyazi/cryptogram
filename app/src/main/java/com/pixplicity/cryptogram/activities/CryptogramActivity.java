@@ -79,6 +79,10 @@ public class CryptogramActivity extends BaseActivity {
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
+        if (super.onOptionsItemSelected(item)) {
+            return true;
+        }
+
         final Cryptogram cryptogram = mCryptogramView.getCryptogram();
         switch (item.getItemId()) {
             case R.id.action_next: {

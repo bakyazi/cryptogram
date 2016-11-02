@@ -80,5 +80,7 @@
     <string name="website">Visit Pixplicity.com</string>
     <string name="url">https://pixplicity.com/?utm_source=component_app&amp;utm_medium=android-app&amp;utm_content=en&amp;utm_campaign=component_app</string>
     <string name="puzzle_nonexistant">Puzzle #%1$d doesn\'t exist</string>
+    <string name="drawer_open">Open drawer</string>
+    <string name="drawer_close">Close drawer</string>
 
 </resources>

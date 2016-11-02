@@ -1,16 +1,23 @@
 package com.pixplicity.cryptogram.activities;
 
 import android.content.Intent;
+import android.content.res.Configuration;
 import android.os.Build;
+import android.os.Bundle;
 import android.support.annotation.LayoutRes;
 import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.support.v4.app.NavUtils;
 import android.support.v4.app.TaskStackBuilder;
 import android.support.v4.content.ContextCompat;
+import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBar;
+import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.view.MenuItem;
 import android.view.View;
+import android.widget.Toast;
 
 import com.pixplicity.cryptogram.R;
 
@@ -27,6 +34,12 @@ public abstract class BaseActivity extends AppCompatActivity {
 
     @BindView(R.id.toolbar)
     protected Toolbar mToolbar;
+
+    @Nullable
+    @BindView(R.id.drawer_layout)
+    protected DrawerLayout mDrawerLayout;
+
+    protected ActionBarDrawerToggle mDrawerToggle;
 
     @Override
     public void setContentView(@LayoutRes int layoutResID) {
@@ -47,21 +60,37 @@ public abstract class BaseActivity extends AppCompatActivity {
             getWindow().setStatusBarColor(ContextCompat.getColor(this, R.color.colorPrimaryDark));
         }
 
-        // Show 'up' navigation
-        mToolbar.setNavigationOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent up = new Intent(BaseActivity.this, CryptogramActivity.class);
-                if (NavUtils.shouldUpRecreateTask(BaseActivity.this, up)) {
-                    TaskStackBuilder.create(BaseActivity.this)
-                                    .addNextIntent(up)
-                                    .startActivities();
-                    finish();
-                } else {
-                    NavUtils.navigateUpTo(BaseActivity.this, up);
+        if (mDrawerLayout != null) {
+            // Apply side navigation
+            mDrawerToggle = new ActionBarDrawerToggle(
+                    this,                  /* host Activity */
+                    mDrawerLayout,         /* DrawerLayout object */
+                    R.string.drawer_open,  /* "open drawer" description */
+                    R.string.drawer_close  /* "close drawer" description */
+            ) {
+                /** Called when a drawer has settled in a completely closed state. */
+                public void onDrawerClosed(View view) {
+                    super.onDrawerClosed(view);
                 }
-            }
-        });
+
+                /** Called when a drawer has settled in a completely open state. */
+                public void onDrawerOpened(View drawerView) {
+                    super.onDrawerOpened(drawerView);
+                }
+            };
+            mDrawerToggle.setToolbarNavigationClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    Toast.makeText(BaseActivity.this, "nav", Toast.LENGTH_SHORT).show();
+                }
+            });
+
+            // Set the drawer toggle as the DrawerListener
+            mDrawerLayout.addDrawerListener(mDrawerToggle);
+
+            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+            getSupportActionBar().setHomeButtonEnabled(true);
+        }
     }
 
     @NonNull
@@ -72,4 +101,44 @@ public abstract class BaseActivity extends AppCompatActivity {
         return actionBar;
     }
 
+    @Override
+    protected void onPostCreate(Bundle savedInstanceState) {
+        super.onPostCreate(savedInstanceState);
+        if (mDrawerToggle != null) {
+            // Sync the toggle state after onRestoreInstanceState has occurred.
+            mDrawerToggle.syncState();
+        }
+    }
+
+    @Override
+    public void onConfigurationChanged(Configuration newConfig) {
+        super.onConfigurationChanged(newConfig);
+        if (mDrawerToggle != null) {
+            mDrawerToggle.onConfigurationChanged(newConfig);
+        }
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        // Pass the event to ActionBarDrawerToggle if it's present
+        if (mDrawerToggle != null && mDrawerToggle.onOptionsItemSelected(item)) {
+            // If it returns true, then it has handled the option item selection event
+            return true;
+        }
+        switch (item.getItemId()) {
+            case android.R.id.home: {
+                Intent up = new Intent(BaseActivity.this, CryptogramActivity.class);
+                if (NavUtils.shouldUpRecreateTask(BaseActivity.this, up)) {
+                    TaskStackBuilder.create(BaseActivity.this)
+                                    .addNextIntent(up)
+                                    .startActivities();
+                    finish();
+                } else {
+                    NavUtils.navigateUpTo(BaseActivity.this, up);
+                }
+            }
+            return true;
+        }
+        return super.onOptionsItemSelected(item);
+    }
 }
