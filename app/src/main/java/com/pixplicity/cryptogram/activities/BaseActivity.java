@@ -68,23 +68,59 @@ public abstract class BaseActivity extends AppCompatActivity {
                     R.string.drawer_open,  /* "open drawer" description */
                     R.string.drawer_close  /* "close drawer" description */
             ) {
-                /** Called when a drawer has settled in a completely closed state. */
-                public void onDrawerClosed(View view) {
-                    super.onDrawerClosed(view);
-                }
-
                 /** Called when a drawer has settled in a completely open state. */
                 public void onDrawerOpened(View drawerView) {
                     super.onDrawerOpened(drawerView);
+                    BaseActivity.this.onDrawerOpened(drawerView);
+                }
+
+                /** Called when a drawer has settled in a completely closed state. */
+                public void onDrawerClosed(View drawerView) {
+                    super.onDrawerClosed(drawerView);
+                    BaseActivity.this.onDrawerClosed(drawerView);
                 }
             };
 
             // Set the drawer toggle as the DrawerListener
             mDrawerLayout.addDrawerListener(mDrawerToggle);
+            mDrawerLayout.addDrawerListener(new DrawerLayout.DrawerListener() {
+                @Override
+                public void onDrawerSlide(View drawerView, float slideOffset) {
+                }
+
+                @Override
+                public void onDrawerOpened(View drawerView) {
+                }
+
+                @Override
+                public void onDrawerClosed(View drawerView) {
+                }
+
+                @Override
+                public void onDrawerStateChanged(int newState) {
+                    switch (newState) {
+                        case DrawerLayout.STATE_IDLE:
+                            break;
+                        case DrawerLayout.STATE_SETTLING:
+                        case DrawerLayout.STATE_DRAGGING:
+                            BaseActivity.this.onDrawerMoving();
+                            break;
+                    }
+                }
+            });
 
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
             getSupportActionBar().setHomeButtonEnabled(true);
         }
+    }
+
+    protected void onDrawerOpened(View drawerView) {
+    }
+
+    protected void onDrawerClosed(View drawerView) {
+    }
+
+    protected void onDrawerMoving() {
     }
 
     @NonNull

@@ -128,17 +128,19 @@ public class CryptogramView extends TextView {
         super.onFocusChanged(focused, direction, previouslyFocusedRect);
         if (focused) {
             showSoftInput();
+        } else {
+            hideSoftInput();
         }
     }
 
-    private void showSoftInput() {
+    public void showSoftInput() {
         InputMethodManager inputMethodManager = (InputMethodManager) getContext().getSystemService(Context.INPUT_METHOD_SERVICE);
         if (inputMethodManager != null) {
             inputMethodManager.showSoftInput(this, InputMethodManager.SHOW_IMPLICIT);
         }
     }
 
-    private void hideSoftInput() {
+    public void hideSoftInput() {
         InputMethodManager inputMethodManager = (InputMethodManager) getContext().getSystemService(Context.INPUT_METHOD_SERVICE);
         if (inputMethodManager != null) {
             inputMethodManager.hideSoftInputFromWindow(getWindowToken(), InputMethodManager.HIDE_IMPLICIT_ONLY);

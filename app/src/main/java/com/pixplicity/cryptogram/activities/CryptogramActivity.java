@@ -98,6 +98,19 @@ public class CryptogramActivity extends BaseActivity {
     }
 
     @Override
+    protected void onDrawerOpened(View drawerView) {
+    }
+
+    @Override
+    protected void onDrawerClosed(View drawerView) {
+    }
+
+    @Override
+    protected void onDrawerMoving() {
+        mCryptogramView.hideSoftInput();
+    }
+
+    @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.menu_cryptogram, menu);
