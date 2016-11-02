@@ -56,12 +56,16 @@ public class CryptogramProvider {
         }
     }
 
-    private Cryptogram[] getAll() {
+    public Cryptogram[] getAll() {
         return mCryptograms;
     }
 
     public int getCount() {
         return getAll().length;
+    }
+
+    public int getCurrentIndex() {
+        return mCurrentIndex;
     }
 
     @Nullable

@@ -11,6 +11,9 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.ListView;
+import android.widget.SimpleAdapter;
 import android.widget.TextView;
 
 import com.afollestad.materialdialogs.DialogAction;
@@ -22,11 +25,19 @@ import com.pixplicity.cryptogram.utils.CryptogramProvider;
 import com.pixplicity.cryptogram.utils.PrefsUtils;
 import com.pixplicity.cryptogram.views.CryptogramView;
 
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
 import butterknife.BindView;
 
 public class CryptogramActivity extends BaseActivity {
 
     private static final String TAG = CryptogramActivity.class.getSimpleName();
+
+    private static final String KEY_ID = "id";
+    private static final String KEY_AUTHOR = "author";
 
     @BindView(R.id.vg_cryptogram)
     protected ViewGroup mVgCryptogram;
@@ -40,17 +51,46 @@ public class CryptogramActivity extends BaseActivity {
     @BindView(R.id.tv_error)
     protected TextView mTvError;
 
+    @BindView(R.id.lv_drawer)
+    protected ListView mLvDrawer;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_cryptogram);
 
-        Cryptogram cryptogram = CryptogramProvider.getInstance(this).getCurrent();
-        updateCryptogram(cryptogram);
+        final CryptogramProvider cryptogramProvider = CryptogramProvider.getInstance(this);
+        updateCryptogram(cryptogramProvider.getCurrent());
+
+        List<Map<String, String>> data = new ArrayList<>(cryptogramProvider.getCount());
+        for (Cryptogram cryptogram : cryptogramProvider.getAll()) {
+            Map<String, String> map = new HashMap<>();
+            map.put(KEY_ID, getString(R.string.puzzle_number2, cryptogram.getId() + 1));
+            map.put(KEY_AUTHOR, cryptogram.getAuthor());
+            data.add(map);
+        }
+        SimpleAdapter adapter = new SimpleAdapter(
+                this,
+                data,
+                R.layout.item_puzzle,
+                new String[]{KEY_ID, KEY_AUTHOR},
+                new int[]{R.id.tv_puzzle_id, R.id.tv_author});
+        mLvDrawer.setAdapter(adapter);
+        mLvDrawer.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int position, long id) {
+                mDrawerLayout.closeDrawers();
+                updateCryptogram(cryptogramProvider.get(position));
+            }
+        });
     }
 
     private void updateCryptogram(Cryptogram cryptogram) {
         if (cryptogram != null) {
+            CryptogramProvider provider = CryptogramProvider.getInstance(this);
+            provider.setCurrent(cryptogram.getId());
+            mLvDrawer.smoothScrollToPosition(
+                    provider.getCurrentIndex());
             mTvError.setVisibility(View.GONE);
             mVgCryptogram.setVisibility(View.VISIBLE);
             mCryptogramView.setCryptogram(cryptogram);
@@ -58,7 +98,7 @@ public class CryptogramActivity extends BaseActivity {
             mToolbar.setSubtitle(getString(
                     R.string.puzzle_number,
                     cryptogram.getId() + 1,
-                    CryptogramProvider.getInstance(this).getCount()));
+                    provider.getCount()));
         } else {
             mTvError.setVisibility(View.VISIBLE);
             mVgCryptogram.setVisibility(View.GONE);
@@ -192,7 +232,6 @@ public class CryptogramActivity extends BaseActivity {
                                         Snackbar.make(mVgContent, getString(R.string.puzzle_nonexistant, id),
                                                 Snackbar.LENGTH_SHORT).show();
                                     } else {
-                                        provider.setCurrent(cryptogram.getId());
                                         updateCryptogram(cryptogram);
                                     }
                                 } catch (NumberFormatException ignored) {

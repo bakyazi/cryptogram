@@ -17,7 +17,6 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.Toast;
 
 import com.pixplicity.cryptogram.R;
 
@@ -78,12 +77,6 @@ public abstract class BaseActivity extends AppCompatActivity {
                     super.onDrawerOpened(drawerView);
                 }
             };
-            mDrawerToggle.setToolbarNavigationClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    Toast.makeText(BaseActivity.this, "nav", Toast.LENGTH_SHORT).show();
-                }
-            });
 
             // Set the drawer toggle as the DrawerListener
             mDrawerLayout.addDrawerListener(mDrawerToggle);

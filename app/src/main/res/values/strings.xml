@@ -15,6 +15,7 @@
     <string name="reset_puzzle">Are you sure you’d like to reset this puzzle?</string>
 
     <string name="puzzle_number">Puzzle #%1$d of %2$d</string>
+    <string name="puzzle_number2">Puzzle #%1$d</string>
 
     <string name="quote">— %1$s</string>
 
