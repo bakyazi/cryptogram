@@ -2,8 +2,10 @@ package com.pixplicity.cryptogram.models;
 
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.widget.Toast;
 
 import com.google.gson.annotations.SerializedName;
+import com.pixplicity.cryptogram.CryptogramApp;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -49,6 +51,20 @@ public class CryptogramProgress {
      */
     @SerializedName("revealed")
     private List<Character> mRevealed;
+
+    /**
+     * Timestamp of (corrected) puzzle start time.
+     */
+    @SerializedName("start_time")
+    private Long mStartTime;
+
+    /**
+     * Timestamp of puzzle completion time, or time at which playing was stopped.
+     */
+    @SerializedName("stop_time")
+    private Long mStopTime;
+
+    private transient Boolean mPlaying;
 
     private transient Boolean mCompleted;
 
@@ -143,6 +159,49 @@ public class CryptogramProgress {
 
     public boolean isRevealed(char c) {
         return mRevealed != null && mRevealed.contains(c);
+    }
+
+    public int getReveals() {
+        return mRevealed == null ? 0 : mRevealed.size();
+    }
+
+    public boolean isPlaying() {
+        return mPlaying != null && mPlaying;
+    }
+
+    public void onResume(Cryptogram cryptogram) {
+        if (!isPlaying() && !isCompleted(cryptogram)) {
+            // Only resume playing if the puzzle wasn't completed
+            mPlaying = true;
+            setTimes(cryptogram);
+        }
+    }
+
+    public void onPause(Cryptogram cryptogram) {
+        if (isPlaying()) {
+            setTimes(cryptogram);
+            mPlaying = false;
+        }
+    }
+
+    private void setTimes(Cryptogram cryptogram) {
+        long stopTime = System.currentTimeMillis();
+        mStartTime = stopTime - getDuration(cryptogram);
+        mStopTime = stopTime;
+        Toast.makeText(CryptogramApp.getInstance(), getDuration(cryptogram) + "ms", Toast.LENGTH_LONG).show();
+    }
+
+    public long getDuration(Cryptogram cryptogram) {
+        if (mStartTime == null || mStartTime == 0) {
+            return 0;
+        }
+        if (!isPlaying() || isCompleted(cryptogram)) {
+            if (mStopTime == null || mStopTime == 0) {
+                return 0;
+            }
+            return mStopTime - mStartTime;
+        }
+        return System.currentTimeMillis() - mStartTime;
     }
 
     public void sanitize(Cryptogram cryptogram) {

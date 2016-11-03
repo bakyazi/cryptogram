@@ -26,11 +26,16 @@ import com.pixplicity.cryptogram.utils.CryptogramProvider;
 import com.pixplicity.cryptogram.utils.PrefsUtils;
 import com.pixplicity.cryptogram.views.CryptogramView;
 
+import java.util.Locale;
+
 import butterknife.BindView;
 
 public class CryptogramActivity extends BaseActivity {
 
     private static final String TAG = CryptogramActivity.class.getSimpleName();
+
+    @BindView(R.id.rv_drawer)
+    protected RecyclerView mRvDrawer;
 
     @BindView(R.id.vg_cryptogram)
     protected ViewGroup mVgCryptogram;
@@ -44,8 +49,23 @@ public class CryptogramActivity extends BaseActivity {
     @BindView(R.id.tv_error)
     protected TextView mTvError;
 
-    @BindView(R.id.rv_drawer)
-    protected RecyclerView mRvDrawer;
+    @BindView(R.id.vg_stats)
+    protected ViewGroup mVgStats;
+
+    @BindView(R.id.vg_stats_excess)
+    protected ViewGroup mVgStatsExcess;
+
+    @BindView(R.id.tv_stats_excess)
+    protected TextView mTvStatsExcess;
+
+    @BindView(R.id.vg_stats_time)
+    protected ViewGroup mVgStatsTime;
+
+    @BindView(R.id.tv_stats_time)
+    protected TextView mTvStatsTime;
+
+    @BindView(R.id.tv_stats_reveals)
+    protected TextView mTvStatsReveals;
 
     private CryptogramAdapter mAdapter;
 
@@ -69,11 +89,33 @@ public class CryptogramActivity extends BaseActivity {
         mCryptogramView.setOnCryptogramProgressListener(new CryptogramView.OnCryptogramProgressListener() {
             @Override
             public void onCryptogramProgress(Cryptogram cryptogram) {
-                mAdapter.notifyDataSetChanged();
+                onCryptogramUpdated(cryptogram);
             }
         });
 
         updateCryptogram(cryptogramProvider.getCurrent());
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+
+        final CryptogramProvider cryptogramProvider = CryptogramProvider.getInstance(this);
+        Cryptogram cryptogram = cryptogramProvider.getCurrent();
+        if (cryptogram != null) {
+            cryptogram.onResume();
+        }
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+
+        final CryptogramProvider cryptogramProvider = CryptogramProvider.getInstance(this);
+        Cryptogram cryptogram = cryptogramProvider.getCurrent();
+        if (cryptogram != null) {
+            cryptogram.onPause();
+        }
     }
 
     private void updateCryptogram(Cryptogram cryptogram) {
@@ -82,7 +124,6 @@ public class CryptogramActivity extends BaseActivity {
             provider.setCurrent(cryptogram.getId());
             mRvDrawer.smoothScrollToPosition(
                     provider.getCurrentIndex());
-            mAdapter.notifyDataSetChanged();
             mTvError.setVisibility(View.GONE);
             mVgCryptogram.setVisibility(View.VISIBLE);
             mCryptogramView.setCryptogram(cryptogram);
@@ -91,10 +132,38 @@ public class CryptogramActivity extends BaseActivity {
                     R.string.puzzle_number,
                     cryptogram.getId() + 1,
                     provider.getCount()));
+            onCryptogramUpdated(cryptogram);
+            cryptogram.onResume();
         } else {
             mTvError.setVisibility(View.VISIBLE);
             mVgCryptogram.setVisibility(View.GONE);
             mToolbar.setSubtitle(null);
+        }
+    }
+
+    public void onCryptogramUpdated(Cryptogram cryptogram) {
+        mAdapter.notifyDataSetChanged();
+        if (cryptogram.isCompleted()) {
+            mVgStats.setVisibility(View.VISIBLE);
+            long durationMs = cryptogram.getDuration();
+            if (durationMs <= 0) {
+                mVgStatsExcess.setVisibility(View.GONE);
+                mVgStatsTime.setVisibility(View.GONE);
+            } else {
+                mVgStatsExcess.setVisibility(View.VISIBLE);
+                mTvStatsExcess.setText(String.valueOf(cryptogram.getExcessCount()));
+                mVgStatsTime.setVisibility(View.VISIBLE);
+                int durationS = (int) (durationMs / 1000);
+                mTvStatsTime.setText(String.format(
+                        Locale.ENGLISH,
+                        "%d:%02d:%02d",
+                        durationS / 3600,
+                        durationS % 3600 / 60,
+                        durationS % 60));
+            }
+            mTvStatsReveals.setText(String.valueOf(cryptogram.getReveals()));
+        } else {
+            mVgStats.setVisibility(View.GONE);
         }
     }
 

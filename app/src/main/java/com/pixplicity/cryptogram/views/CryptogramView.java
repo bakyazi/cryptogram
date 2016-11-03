@@ -129,7 +129,9 @@ public class CryptogramView extends TextView {
     protected void onFocusChanged(boolean focused, int direction, Rect previouslyFocusedRect) {
         super.onFocusChanged(focused, direction, previouslyFocusedRect);
         if (focused) {
-            showSoftInput();
+            if (mCryptogram != null && !mCryptogram.isCompleted()) {
+                showSoftInput();
+            }
         } else {
             hideSoftInput();
         }
@@ -164,7 +166,7 @@ public class CryptogramView extends TextView {
     }
 
     private boolean onKeyPress(char c) {
-        if (mCryptogram != null) {
+        if (mCryptogram != null && !mCryptogram.isCompleted()) {
             if (setCharacterMapping(getSelectedCharacter(), c)) {
                 // Answer filled in; clear the selection
                 setSelectedCharacter((char) 0);
@@ -264,6 +266,7 @@ public class CryptogramView extends TextView {
                     if (!wasCompleted) {
                         progressChange = true;
                     }
+                    mCryptogram.onPause();
                     hideSoftInput();
                 }
             } else {

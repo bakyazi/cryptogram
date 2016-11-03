@@ -65,6 +65,8 @@ public class Cryptogram {
     }
 
     public CryptogramProgress getProgress() {
+        // Ensure we've attempted to load the data
+        load();
         if (mProgress == null) {
             mProgress = new CryptogramProgress(mId);
         }
@@ -73,13 +75,7 @@ public class Cryptogram {
 
     @NonNull
     public HashMap<Character, Character> getCharMapping() {
-        // Ensure we've attempted to load the data
-        load();
         return getProgress().getCharMapping(this);
-    }
-
-    public void setCharMapping(HashMap<Character, Character> charMapping) {
-        getProgress().setCharMapping(charMapping);
     }
 
     public Character getCharacterForMapping(char c) {
@@ -93,12 +89,10 @@ public class Cryptogram {
     }
 
     public Character getUserChar(char c) {
-        load();
         return getProgress().getUserChar(this, c);
     }
 
     public void setUserChar(char selectedCharacter, char c) {
-        load();
         getProgress().setUserChar(this, selectedCharacter, c);
         save();
     }
@@ -108,7 +102,6 @@ public class Cryptogram {
     }
 
     public boolean isCompleted() {
-        load();
         return getProgress().isCompleted(this);
     }
 
@@ -117,14 +110,36 @@ public class Cryptogram {
             // Not applicable
             return;
         }
-        load();
         getProgress().reveal(c);
         save();
     }
 
     public boolean isRevealed(char c) {
-        load();
         return getProgress().isRevealed(c);
+    }
+
+    public int getReveals() {
+        return getProgress().getReveals();
+    }
+
+    public int getExcessCount() {
+        // TODO
+        return 0;
+    }
+
+    /**
+     * Returns the duration of the user's play time on this puzzle in milliseconds.
+     */
+    public long getDuration() {
+        return getProgress().getDuration(this);
+    }
+
+    public void onResume() {
+        getProgress().onResume(this);
+    }
+
+    public void onPause() {
+        getProgress().onPause(this);
     }
 
     private void load() {
