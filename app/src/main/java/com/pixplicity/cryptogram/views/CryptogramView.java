@@ -266,7 +266,6 @@ public class CryptogramView extends TextView {
                     if (!wasCompleted) {
                         progressChange = true;
                     }
-                    mCryptogram.onPause();
                     hideSoftInput();
                 }
             } else {
@@ -285,6 +284,11 @@ public class CryptogramView extends TextView {
     public boolean revealCharacterMapping(char c) {
         mCryptogram.reveal(c);
         return setCharacterMapping(c, c);
+    }
+
+    public void reset() {
+        mSelectedCharacter = 0;
+        invalidate();
     }
 
     @Override

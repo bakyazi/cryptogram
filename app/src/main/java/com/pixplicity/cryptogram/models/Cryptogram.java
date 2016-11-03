@@ -154,7 +154,7 @@ public class Cryptogram {
     }
 
     public void reset() {
-        getProgress().reset();
+        getProgress().reset(this);
         save();
     }
 

@@ -2,8 +2,10 @@ package com.pixplicity.cryptogram.models;
 
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.widget.Toast;
 
 import com.google.gson.annotations.SerializedName;
+import com.pixplicity.cryptogram.CryptogramApp;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -142,6 +144,9 @@ public class CryptogramProgress {
                     break;
                 }
             }
+            if (mCompleted) {
+                onPause(cryptogram);
+            }
         }
         return mCompleted;
     }
@@ -186,13 +191,20 @@ public class CryptogramProgress {
         long stopTime = System.currentTimeMillis();
         mStartTime = stopTime - getDuration(cryptogram);
         mStopTime = stopTime;
+        Toast.makeText(CryptogramApp.getInstance(), getDuration(cryptogram) + "ms", Toast.LENGTH_SHORT).show();
     }
 
     public long getDuration(Cryptogram cryptogram) {
+        long duration = getDurationInner(cryptogram);
+        Toast.makeText(CryptogramApp.getInstance(), "duration: " + duration + "ms", Toast.LENGTH_SHORT).show();
+        return duration;
+    }
+
+    private long getDurationInner(Cryptogram cryptogram) {
         if (mStartTime == null || mStartTime == 0) {
             return 0;
         }
-        if (!isPlaying() || isCompleted(cryptogram)) {
+        if (!isPlaying()) {
             if (mStopTime == null || mStopTime == 0) {
                 return 0;
             }
@@ -218,12 +230,17 @@ public class CryptogramProgress {
         }
     }
 
-    public void reset() {
+    public void reset(Cryptogram cryptogram) {
         mUserChars = null;
         mCharMapping = null;
         mStartTime = null;
         mStopTime = null;
         mCompleted = null;
+        if (isPlaying()) {
+            mPlaying = null;
+            onResume(cryptogram);
+        }
+        sanitize(cryptogram);
     }
 
 }

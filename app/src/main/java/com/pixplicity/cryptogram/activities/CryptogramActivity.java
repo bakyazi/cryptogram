@@ -253,7 +253,7 @@ public class CryptogramActivity extends BaseActivity {
                                 @Override
                                 public void onClick(DialogInterface dialogInterface, int i) {
                                     cryptogram.reset();
-                                    mCryptogramView.invalidate();
+                                    mCryptogramView.reset();
                                 }
                             })
                             .setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {
