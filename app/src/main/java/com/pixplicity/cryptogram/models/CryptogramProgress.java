@@ -2,10 +2,8 @@ package com.pixplicity.cryptogram.models;
 
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
-import android.widget.Toast;
 
 import com.google.gson.annotations.SerializedName;
-import com.pixplicity.cryptogram.CryptogramApp;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -189,18 +187,11 @@ public class CryptogramProgress {
 
     private void setTimes(Cryptogram cryptogram) {
         long stopTime = System.currentTimeMillis();
-        mStartTime = stopTime - getDuration(cryptogram);
+        mStartTime = stopTime - getDuration();
         mStopTime = stopTime;
-        Toast.makeText(CryptogramApp.getInstance(), getDuration(cryptogram) + "ms", Toast.LENGTH_SHORT).show();
     }
 
-    public long getDuration(Cryptogram cryptogram) {
-        long duration = getDurationInner(cryptogram);
-        Toast.makeText(CryptogramApp.getInstance(), "duration: " + duration + "ms", Toast.LENGTH_SHORT).show();
-        return duration;
-    }
-
-    private long getDurationInner(Cryptogram cryptogram) {
+    public long getDuration() {
         if (mStartTime == null || mStartTime == 0) {
             return 0;
         }

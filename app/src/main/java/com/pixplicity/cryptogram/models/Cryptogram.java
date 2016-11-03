@@ -131,7 +131,7 @@ public class Cryptogram {
      * Returns the duration of the user's play time on this puzzle in milliseconds.
      */
     public long getDuration() {
-        return getProgress().getDuration(this);
+        return getProgress().getDuration();
     }
 
     public void onResume() {
