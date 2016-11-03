@@ -169,7 +169,7 @@ public class CryptogramProgress {
                 }
             }
             if (mCompleted) {
-                onPause(cryptogram);
+                onPause();
             }
         }
         return mCompleted;
@@ -199,19 +199,19 @@ public class CryptogramProgress {
     public void onResume(Cryptogram cryptogram) {
         if (!isPlaying() && !isCompleted(cryptogram)) {
             // Only resume playing if the puzzle wasn't completed
-            setTimes(cryptogram);
+            setTimes();
             mPlaying = true;
         }
     }
 
-    public void onPause(Cryptogram cryptogram) {
+    public void onPause() {
         if (isPlaying()) {
-            setTimes(cryptogram);
+            setTimes();
             mPlaying = false;
         }
     }
 
-    private void setTimes(Cryptogram cryptogram) {
+    private void setTimes() {
         long stopTime = System.currentTimeMillis();
         mStartTime = stopTime - getDuration();
         mStopTime = stopTime;

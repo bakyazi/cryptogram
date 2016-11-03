@@ -138,7 +138,7 @@ public class Cryptogram {
     }
 
     public void onPause() {
-        getProgress().onPause(this);
+        getProgress().onPause();
         save();
     }
 
