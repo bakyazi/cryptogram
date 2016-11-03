@@ -147,16 +147,8 @@ public class CryptogramActivity extends BaseActivity {
             mVgStats.setVisibility(View.VISIBLE);
             long durationMs = cryptogram.getDuration();
             if (durationMs <= 0) {
-                mVgStatsExcess.setVisibility(View.GONE);
                 mVgStatsTime.setVisibility(View.GONE);
             } else {
-                int excessCount = cryptogram.getExcessCount();
-                if (excessCount < 0) {
-                    mVgStatsExcess.setVisibility(View.GONE);
-                } else {
-                    mVgStatsExcess.setVisibility(View.VISIBLE);
-                    mTvStatsExcess.setText(String.valueOf(excessCount));
-                }
                 mVgStatsTime.setVisibility(View.VISIBLE);
                 int durationS = (int) (durationMs / 1000);
                 mTvStatsTime.setText(String.format(
@@ -165,6 +157,13 @@ public class CryptogramActivity extends BaseActivity {
                         durationS / 3600,
                         durationS % 3600 / 60,
                         durationS % 60));
+            }
+            int excessCount = cryptogram.getExcessCount();
+            if (excessCount < 0) {
+                mVgStatsExcess.setVisibility(View.GONE);
+            } else {
+                mVgStatsExcess.setVisibility(View.VISIBLE);
+                mTvStatsExcess.setText(String.valueOf(excessCount));
             }
             mTvStatsReveals.setText(String.valueOf(cryptogram.getReveals()));
         } else {
@@ -259,6 +258,7 @@ public class CryptogramActivity extends BaseActivity {
                                 public void onClick(DialogInterface dialogInterface, int i) {
                                     cryptogram.reset();
                                     mCryptogramView.reset();
+                                    onCryptogramUpdated(cryptogram);
                                 }
                             })
                             .setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {
