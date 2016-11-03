@@ -62,15 +62,15 @@
      inkscape:pageopacity="0.0"
      inkscape:pageshadow="2"
      inkscape:zoom="0.49497475"
-     inkscape:cx="354.07625"
+     inkscape:cx="52.040641"
      inkscape:cy="541.66347"
      inkscape:document-units="px"
      inkscape:current-layer="layer1"
      showgrid="false"
      units="px"
-     inkscape:window-width="1858"
-     inkscape:window-height="1057"
-     inkscape:window-x="54"
+     inkscape:window-width="1473"
+     inkscape:window-height="841"
+     inkscape:window-x="55"
      inkscape:window-y="-8"
      inkscape:window-maximized="1" />
   <metadata
@@ -81,7 +81,7 @@
         <dc:format>image/svg+xml</dc:format>
         <dc:type
            rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
-        <dc:title></dc:title>
+        <dc:title />
       </cc:Work>
     </rdf:RDF>
   </metadata>
@@ -98,10 +98,10 @@
        x="17.025269"
        y="204.99142"
        ry="56.568542"
-       transform="matrix(0.92857143,0,0,0.92857143,40.612016,-34.133716)" />
+       transform="matrix(0.9869074,0,0,0.9869074,10.997841,-70.22547)" />
     <g
        id="g4193"
-       transform="matrix(1.1560779,0,0,1.1560779,-72.727065,-74.99608)">
+       transform="matrix(1.2287066,0,0,1.2287066,-109.46158,-113.65494)">
       <path
          d="m 279.18022,317.65731 q -28.55645,0 -45.14526,19.07713 -16.47033,18.95864 -16.47033,52.01778 0,34.00706 15.87787,52.61023 15.99635,18.48467 45.50074,18.48467 18.1292,0 41.35353,-6.51703 l 0,17.65524 q -18.0107,6.75401 -44.43431,6.75401 -38.27276,0 -59.12728,-23.22433 -20.736,-23.22434 -20.736,-65.99978 0,-26.77908 9.95329,-46.92264 10.07177,-20.14356 28.91193,-31.04477 18.95864,-10.90122 44.55281,-10.90122 27.25304,0 47.63357,9.95328 l -8.53138,17.29976 q -19.66959,-9.24233 -39.33918,-9.24233 z"
          style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:medium;line-height:125%;font-family:'Open Sans';-inkscape-font-specification:'Open Sans';letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
