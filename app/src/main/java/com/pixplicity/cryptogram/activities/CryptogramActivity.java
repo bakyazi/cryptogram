@@ -150,8 +150,13 @@ public class CryptogramActivity extends BaseActivity {
                 mVgStatsExcess.setVisibility(View.GONE);
                 mVgStatsTime.setVisibility(View.GONE);
             } else {
-                mVgStatsExcess.setVisibility(View.VISIBLE);
-                mTvStatsExcess.setText(String.valueOf(cryptogram.getExcessCount()));
+                int excessCount = cryptogram.getExcessCount();
+                if (excessCount < 0) {
+                    mVgStatsExcess.setVisibility(View.GONE);
+                } else {
+                    mVgStatsExcess.setVisibility(View.VISIBLE);
+                    mTvStatsExcess.setText(String.valueOf(excessCount));
+                }
                 mVgStatsTime.setVisibility(View.VISIBLE);
                 int durationS = (int) (durationMs / 1000);
                 mTvStatsTime.setText(String.format(

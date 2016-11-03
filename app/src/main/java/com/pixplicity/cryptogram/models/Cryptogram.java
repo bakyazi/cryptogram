@@ -123,8 +123,7 @@ public class Cryptogram {
     }
 
     public int getExcessCount() {
-        // TODO
-        return 0;
+        return getProgress().getExcessCount(this);
     }
 
     /**

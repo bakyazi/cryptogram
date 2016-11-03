@@ -62,6 +62,12 @@ public class CryptogramProgress {
     @SerializedName("stop_time")
     private Long mStopTime;
 
+    /**
+     * Total times characters were input by the user.
+     */
+    @SerializedName("inputs")
+    private Integer mInputs;
+
     private transient Boolean mPlaying;
 
     private transient Boolean mCompleted;
@@ -128,7 +134,27 @@ public class CryptogramProgress {
 
     public void setUserChar(Cryptogram cryptogram, char selectedCharacter, char c) {
         mCompleted = null;
+        if (mInputs == null) {
+            mInputs = 1;
+        } else {
+            mInputs++;
+        }
         getUserChars(cryptogram).put(selectedCharacter, Character.toUpperCase(c));
+    }
+
+    public int getExcessCount(Cryptogram cryptogram) {
+        if (mInputs == null) {
+            return -1;
+        }
+        // Start with total number of inputs
+        int count = mInputs;
+        for (Character c : getUserChars(cryptogram).values()) {
+            if (c != 0) {
+                // Subtract any filled in characters
+                count--;
+            }
+        }
+        return count;
     }
 
     public boolean isCompleted(Cryptogram cryptogram) {
