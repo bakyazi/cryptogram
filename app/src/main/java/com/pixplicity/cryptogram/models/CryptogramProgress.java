@@ -2,10 +2,8 @@ package com.pixplicity.cryptogram.models;
 
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
-import android.widget.Toast;
 
 import com.google.gson.annotations.SerializedName;
-import com.pixplicity.cryptogram.CryptogramApp;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -172,8 +170,8 @@ public class CryptogramProgress {
     public void onResume(Cryptogram cryptogram) {
         if (!isPlaying() && !isCompleted(cryptogram)) {
             // Only resume playing if the puzzle wasn't completed
-            mPlaying = true;
             setTimes(cryptogram);
+            mPlaying = true;
         }
     }
 
@@ -188,7 +186,6 @@ public class CryptogramProgress {
         long stopTime = System.currentTimeMillis();
         mStartTime = stopTime - getDuration(cryptogram);
         mStopTime = stopTime;
-        Toast.makeText(CryptogramApp.getInstance(), getDuration(cryptogram) + "ms", Toast.LENGTH_LONG).show();
     }
 
     public long getDuration(Cryptogram cryptogram) {
@@ -219,6 +216,14 @@ public class CryptogramProgress {
                 setUserChar(cryptogram, c, c);
             }
         }
+    }
+
+    public void reset() {
+        mUserChars = null;
+        mCharMapping = null;
+        mStartTime = null;
+        mStopTime = null;
+        mCompleted = null;
     }
 
 }

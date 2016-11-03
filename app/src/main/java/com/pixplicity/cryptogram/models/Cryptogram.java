@@ -140,6 +140,7 @@ public class Cryptogram {
 
     public void onPause() {
         getProgress().onPause(this);
+        save();
     }
 
     private void load() {
@@ -153,7 +154,7 @@ public class Cryptogram {
     }
 
     public void reset() {
-        mProgress = null;
+        getProgress().reset();
         save();
     }
 
