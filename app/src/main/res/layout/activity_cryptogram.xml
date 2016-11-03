@@ -78,28 +78,6 @@
                             android:padding="16dp">
 
                             <TableRow
-                                android:id="@+id/vg_stats_excess"
-                                android:layout_marginBottom="8dp">
-
-                                <TextView
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
-                                    android:text="@string/stats_excess"
-                                    android:textColor="@color/colorPrimaryDark"/>
-
-                                <TextView
-                                    android:id="@+id/tv_stats_excess"
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
-                                    android:layout_marginLeft="8dp"
-                                    android:layout_marginStart="8dp"
-                                    android:minWidth="64dp"
-                                    android:textColor="@color/colorPrimaryDark"
-                                    android:textStyle="bold"/>
-
-                            </TableRow>
-
-                            <TableRow
                                 android:id="@+id/vg_stats_time"
                                 android:layout_marginBottom="8dp">
 
@@ -111,6 +89,28 @@
 
                                 <TextView
                                     android:id="@+id/tv_stats_time"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginLeft="8dp"
+                                    android:layout_marginStart="8dp"
+                                    android:minWidth="64dp"
+                                    android:textColor="@color/colorPrimaryDark"
+                                    android:textStyle="bold"/>
+
+                            </TableRow>
+
+                            <TableRow
+                                android:id="@+id/vg_stats_excess"
+                                android:layout_marginBottom="8dp">
+
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:text="@string/stats_excess"
+                                    android:textColor="@color/colorPrimaryDark"/>
+
+                                <TextView
+                                    android:id="@+id/tv_stats_excess"
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
                                     android:layout_marginLeft="8dp"
