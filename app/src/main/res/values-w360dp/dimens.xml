@@ -1,0 +1,10 @@
+<resources>
+
+    <dimen name="puzzle_text_size">20sp</dimen>
+    <dimen name="puzzle_hint_size">16sp</dimen>
+    <dimen name="puzzle_box_width">18sp</dimen>
+    <dimen name="puzzle_box_height">22sp</dimen>
+    <dimen name="puzzle_line_height">2dp</dimen>
+    <dimen name="box_highlight_stroke">3dp</dimen>
+
+</resources>

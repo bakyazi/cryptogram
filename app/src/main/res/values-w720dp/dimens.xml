@@ -1,0 +1,12 @@
+<resources>
+
+    <dimen name="activity_horizontal_margin">48dp</dimen>
+
+    <dimen name="puzzle_text_size">24sp</dimen>
+    <dimen name="puzzle_hint_size">20sp</dimen>
+    <dimen name="puzzle_box_width">22sp</dimen>
+    <dimen name="puzzle_box_height">26sp</dimen>
+    <dimen name="puzzle_line_height">2.5dp</dimen>
+    <dimen name="box_highlight_stroke">4dp</dimen>
+
+</resources>
