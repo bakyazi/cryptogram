@@ -6,6 +6,7 @@ import com.google.gson.annotations.SerializedName;
 import com.pixplicity.cryptogram.CryptogramApp;
 import com.pixplicity.cryptogram.utils.CryptogramProvider;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 
 public class Cryptogram {
@@ -76,6 +77,10 @@ public class Cryptogram {
     @NonNull
     public HashMap<Character, Character> getCharMapping() {
         return getProgress().getCharMapping(this);
+    }
+
+    public ArrayList<Character> getCharacterList() {
+        return getProgress().getCharacterList(this);
     }
 
     public Character getCharacterForMapping(char c) {

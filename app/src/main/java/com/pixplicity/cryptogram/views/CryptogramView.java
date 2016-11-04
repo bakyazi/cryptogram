@@ -9,6 +9,7 @@ import android.graphics.Paint;
 import android.graphics.Rect;
 import android.graphics.Typeface;
 import android.os.Build;
+import android.support.annotation.Nullable;
 import android.support.v4.content.ContextCompat;
 import android.text.InputType;
 import android.text.TextPaint;
@@ -24,6 +25,7 @@ import android.widget.TextView;
 import com.pixplicity.cryptogram.R;
 import com.pixplicity.cryptogram.models.Cryptogram;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 
 
@@ -34,8 +36,10 @@ public class CryptogramView extends TextView {
     public static final int INPUT_TYPE = InputType.TYPE_TEXT_VARIATION_VISIBLE_PASSWORD |
             InputType.TYPE_TEXT_FLAG_NO_SUGGESTIONS;
 
+    @Nullable
     private Cryptogram mCryptogram;
-    private char mSelectedCharacter;
+
+    private char mSelectedCharacter, mSelectedCharacterLast;
 
     private float mBoxW, mBoxH, mCharW1, mCharW2;
     private Paint mPaint, mLinePaint1, mLinePaint2, mBoxPaint1, mBoxPaint2;
@@ -158,8 +162,25 @@ public class CryptogramView extends TextView {
                 // Don't consume
                 return false;
             case KeyEvent.KEYCODE_ENTER:
-                // Clear selection
-                setSelectedCharacter((char) 0);
+            case KeyEvent.KEYCODE_NAVIGATE_NEXT:
+                if (mCryptogram != null) {
+                    ArrayList<Character> charMapping = mCryptogram.getCharacterList();
+                    int index = 0;
+                    if (mSelectedCharacter == 0) {
+                        mSelectedCharacter = mSelectedCharacterLast;
+                    }
+                    if (mSelectedCharacter != 0) {
+                        index = charMapping.indexOf(mSelectedCharacter) + 1;
+                    }
+                    if (charMapping.size() > index) {
+                        char c = charMapping.get(index);
+                        setSelectedCharacter(mCryptogram.getCharMapping().get(c));
+                    } else {
+                        setSelectedCharacter((char) 0);
+                    }
+                } else {
+                    setSelectedCharacter((char) 0);
+                }
                 return true;
         }
         return onKeyPress((char) event.getUnicodeChar());
@@ -214,6 +235,7 @@ public class CryptogramView extends TextView {
         return true;
     }
 
+    @Nullable
     public Cryptogram getCryptogram() {
         return mCryptogram;
     }
@@ -234,7 +256,7 @@ public class CryptogramView extends TextView {
     public boolean setSelectedCharacter(char c) {
         // Character does not occur in the mapping
         mSelectedCharacter = 0;
-        if (mCryptogram.isInputChar(c)) {
+        if (mCryptogram != null && mCryptogram.isInputChar(c)) {
             c = Character.toUpperCase(c);
             HashMap<Character, Character> charMapping = mCryptogram.getCharMapping();
             for (Character chrOrig : charMapping.keySet()) {
@@ -242,6 +264,7 @@ public class CryptogramView extends TextView {
                 if (chrMapped == c) {
                     // Current selection is the input character
                     mSelectedCharacter = chrOrig;
+                    mSelectedCharacterLast = chrOrig;
                     break;
                 }
             }

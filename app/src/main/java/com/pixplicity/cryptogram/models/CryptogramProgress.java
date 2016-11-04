@@ -45,6 +45,11 @@ public class CryptogramProgress {
     private HashMap<Character, Character> mCharMapping;
 
     /**
+     * Temporary ordered list of characters.
+     */
+    private transient ArrayList<Character> mCharacterList;
+
+    /**
      * List of characters that have been revealed.
      */
     @SerializedName("revealed")
@@ -81,11 +86,13 @@ public class CryptogramProgress {
         // Ensure we've attempted to load the data
         if (mCharMapping == null) {
             mCharMapping = new HashMap<>();
+            mCharacterList = new ArrayList<>();
             for (String word : cryptogram.getWords()) {
                 for (int i = 0; i < word.length(); i++) {
                     char c = Character.toUpperCase(word.charAt(i));
-                    if (cryptogram.isInputChar(c)) {
+                    if (cryptogram.isInputChar(c) && !mCharMapping.containsKey(c)) {
                         mCharMapping.put(c, (char) 0);
+                        mCharacterList.add(c);
                     }
                 }
             }
@@ -105,6 +112,23 @@ public class CryptogramProgress {
             cryptogram.save();
         }
         return mCharMapping;
+    }
+
+    public ArrayList<Character> getCharacterList(Cryptogram cryptogram) {
+        getCharMapping(cryptogram);
+        if (mCharacterList == null) {
+            // May need to be regenerated as the field is transient
+            mCharacterList = new ArrayList<>();
+            for (String word : cryptogram.getWords()) {
+                for (int i = 0; i < word.length(); i++) {
+                    char c = Character.toUpperCase(word.charAt(i));
+                    if (cryptogram.isInputChar(c) && !mCharacterList.contains(c)) {
+                        mCharacterList.add(c);
+                    }
+                }
+            }
+        }
+        return mCharacterList;
     }
 
     public void setCharMapping(HashMap<Character, Character> charMapping) {
