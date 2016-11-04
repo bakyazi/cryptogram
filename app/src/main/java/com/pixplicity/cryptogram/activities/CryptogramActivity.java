@@ -2,6 +2,7 @@ package com.pixplicity.cryptogram.activities;
 
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -18,6 +19,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import com.afollestad.easyvideoplayer.EasyVideoCallback;
 import com.afollestad.easyvideoplayer.EasyVideoPlayer;
 import com.afollestad.materialdialogs.DialogAction;
 import com.afollestad.materialdialogs.MaterialDialog;
@@ -125,6 +127,48 @@ public class CryptogramActivity extends BaseActivity {
         }
         View customView = LayoutInflater.from(this).inflate(R.layout.dialog_intro, null);
         EasyVideoPlayer player = (EasyVideoPlayer) customView.findViewById(R.id.player);
+        player.hideControls();
+        player.start();
+        player.setBackgroundColor(Color.WHITE);
+        player.setCallback(new EasyVideoCallback() {
+            @Override
+            public void onStarted(EasyVideoPlayer player) {
+            }
+
+            @Override
+            public void onPaused(EasyVideoPlayer player) {
+            }
+
+            @Override
+            public void onPreparing(EasyVideoPlayer player) {
+            }
+
+            @Override
+            public void onPrepared(EasyVideoPlayer player) {
+            }
+
+            @Override
+            public void onBuffering(int percent) {
+            }
+
+            @Override
+            public void onError(EasyVideoPlayer player, Exception e) {
+            }
+
+            @Override
+            public void onCompletion(EasyVideoPlayer player) {
+                player.seekTo(0);
+                player.start();
+            }
+
+            @Override
+            public void onRetry(EasyVideoPlayer player, Uri source) {
+            }
+
+            @Override
+            public void onSubmit(EasyVideoPlayer player, Uri source) {
+            }
+        });
 
         Uri uri = Uri.parse("android.resource://" + getPackageName() + "/raw/vid_intro1");
         player.setSource(uri);
