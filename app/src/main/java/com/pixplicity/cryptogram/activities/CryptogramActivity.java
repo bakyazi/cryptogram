@@ -102,9 +102,6 @@ public class CryptogramActivity extends BaseActivity {
             }
         });
 
-        // FIXME remove:
-        PrefsUtils.setOnboarding(-1);
-
         showOnboarding(0);
 
         updateCryptogram(cryptogramProvider.getCurrent());
