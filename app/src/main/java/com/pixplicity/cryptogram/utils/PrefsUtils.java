@@ -11,6 +11,7 @@ public class PrefsUtils {
     private static final String KEY_CURRENT_ID = "current_puzzle_index";
     private static final String KEY_PROGRESS = "puzzle_progress";
     private static final String KEY_RANDOMIZE = "randomize";
+    private static final String KEY_ONBOARDING = "onboarding";
 
     private static SparseArray<String> sPuzzleProgress;
 
@@ -36,6 +37,14 @@ public class PrefsUtils {
 
     public static void setRandomize(boolean randomize) {
         Prefs.putBoolean(KEY_RANDOMIZE, randomize);
+    }
+
+    public static void setOnboarding(int page) {
+        Prefs.putInt(KEY_ONBOARDING, page);
+    }
+
+    public static int getOnboarding() {
+        return Prefs.getInt(KEY_ONBOARDING, -1);
     }
 
 }

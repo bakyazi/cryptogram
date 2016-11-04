@@ -2,6 +2,13 @@
 
     <string name="app_name">Cryptogram</string>
 
+    <string name="intro1_title">How to play</string>
+    <string name="intro1_text">Decipher the encrypted text to reveal the motivational quote!</string>
+    <string name="intro2_title">How it works</string>
+    <string name="intro2_text">Use the keyboard to select hints and insert answers.</string>
+    <string name="intro_next">Go on…</string>
+    <string name="intro_done">Got it!</string>
+
     <string name="drawer_open">Open drawer</string>
     <string name="drawer_close">Close drawer</string>
 

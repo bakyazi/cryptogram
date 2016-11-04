@@ -10,15 +10,18 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.Editable;
 import android.text.InputType;
+import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.afollestad.materialdialogs.DialogAction;
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.afollestad.materialdialogs.internal.MDButton;
+import com.bumptech.glide.Glide;
 import com.pixplicity.cryptogram.R;
 import com.pixplicity.cryptogram.adapters.CryptogramAdapter;
 import com.pixplicity.cryptogram.models.Cryptogram;
@@ -93,7 +96,62 @@ public class CryptogramActivity extends BaseActivity {
             }
         });
 
+        // FIXME remove:
+        PrefsUtils.setOnboarding(-1);
+
+        showOnboarding(0);
+
         updateCryptogram(cryptogramProvider.getCurrent());
+    }
+
+    private void showOnboarding(final int page) {
+        int titleStringResId;
+        int actionStringResId = R.string.intro_next;
+        int layoutResId;
+        int animResId;
+        int placeholderResId;
+        switch (page) {
+            case 0:
+                titleStringResId = R.string.intro1_title;
+                layoutResId = R.layout.dialog_intro_1;
+                animResId = R.raw.im_intro1;
+                placeholderResId = R.drawable.im_intro1;
+                break;
+            case 1:
+                titleStringResId = R.string.intro2_title;
+                actionStringResId = R.string.intro_done;
+                layoutResId = R.layout.dialog_intro_2;
+                animResId = R.raw.im_intro2;
+                placeholderResId = R.drawable.im_intro2;
+                break;
+            default:
+                mCryptogramView.requestFocus();
+                return;
+        }
+        if (PrefsUtils.getOnboarding() >= page) {
+            showOnboarding(page + 1);
+            return;
+        }
+        View customView = LayoutInflater.from(this).inflate(layoutResId, null);
+        ImageView imageView = (ImageView) customView.findViewById(R.id.iv_illustration);
+        Glide.with(this)
+             .load(animResId)
+             .asGif()
+             .placeholder(placeholderResId)
+             .into(imageView);
+        new MaterialDialog.Builder(this)
+                .title(titleStringResId)
+                .customView(customView, false)
+                .cancelable(false)
+                .positiveText(actionStringResId)
+                .onAny(new MaterialDialog.SingleButtonCallback() {
+                    @Override
+                    public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
+                        PrefsUtils.setOnboarding(page);
+                        showOnboarding(page + 1);
+                    }
+                })
+                .show();
     }
 
     @Override
