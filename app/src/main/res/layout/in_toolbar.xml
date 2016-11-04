@@ -19,6 +19,7 @@
         android:paddingBottom="4dp"
         android:paddingTop="4dp"
         android:theme="@style/ThemeOverlay.AppCompat.ActionBar"
+        app:layout_scrollFlags="scroll|enterAlways"
         app:subtitleTextColor="@color/textLight"
         app:theme="@style/ToolbarStyle"
         app:titleTextColor="@color/textLight"
