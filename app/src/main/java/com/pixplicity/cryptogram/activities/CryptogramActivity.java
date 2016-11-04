@@ -2,6 +2,7 @@ package com.pixplicity.cryptogram.activities;
 
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.Snackbar;
@@ -15,13 +16,12 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.afollestad.easyvideoplayer.EasyVideoPlayer;
 import com.afollestad.materialdialogs.DialogAction;
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.afollestad.materialdialogs.internal.MDButton;
-import com.bumptech.glide.Glide;
 import com.pixplicity.cryptogram.R;
 import com.pixplicity.cryptogram.adapters.CryptogramAdapter;
 import com.pixplicity.cryptogram.models.Cryptogram;
@@ -107,22 +107,13 @@ public class CryptogramActivity extends BaseActivity {
     private void showOnboarding(final int page) {
         int titleStringResId;
         int actionStringResId = R.string.intro_next;
-        int layoutResId;
-        int animResId;
-        int placeholderResId;
         switch (page) {
             case 0:
                 titleStringResId = R.string.intro1_title;
-                layoutResId = R.layout.dialog_intro_1;
-                animResId = R.raw.im_intro1;
-                placeholderResId = R.drawable.im_intro1;
                 break;
             case 1:
                 titleStringResId = R.string.intro2_title;
                 actionStringResId = R.string.intro_done;
-                layoutResId = R.layout.dialog_intro_2;
-                animResId = R.raw.im_intro2;
-                placeholderResId = R.drawable.im_intro2;
                 break;
             default:
                 mCryptogramView.requestFocus();
@@ -132,13 +123,12 @@ public class CryptogramActivity extends BaseActivity {
             showOnboarding(page + 1);
             return;
         }
-        View customView = LayoutInflater.from(this).inflate(layoutResId, null);
-        ImageView imageView = (ImageView) customView.findViewById(R.id.iv_illustration);
-        Glide.with(this)
-             .load(animResId)
-             .asGif()
-             .placeholder(placeholderResId)
-             .into(imageView);
+        View customView = LayoutInflater.from(this).inflate(R.layout.dialog_intro, null);
+        EasyVideoPlayer player = (EasyVideoPlayer) customView.findViewById(R.id.player);
+
+        Uri uri = Uri.parse("android.resource://" + getPackageName() + "/raw/vid_intro1");
+        player.setSource(uri);
+
         new MaterialDialog.Builder(this)
                 .title(titleStringResId)
                 .customView(customView, false)
