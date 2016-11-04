@@ -172,6 +172,9 @@ public class CryptogramView extends TextView {
                     if (mSelectedCharacter != 0) {
                         index = charMapping.indexOf(mSelectedCharacter) + 1;
                     }
+                    if (index >= charMapping.size()) {
+                        index = 0;
+                    }
                     if (charMapping.size() > index) {
                         char c = charMapping.get(index);
                         setSelectedCharacter(mCryptogram.getCharMapping().get(c));
@@ -242,6 +245,7 @@ public class CryptogramView extends TextView {
 
     public void setCryptogram(Cryptogram cryptogram) {
         mCryptogram = cryptogram;
+        mSelectedCharacter = mSelectedCharacterLast = 0;
         requestLayout();
     }
 
