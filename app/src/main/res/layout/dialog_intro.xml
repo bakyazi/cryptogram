@@ -10,9 +10,7 @@
     <com.afollestad.easyvideoplayer.EasyVideoPlayer
         android:id="@+id/player"
         android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="1"
-        android:minHeight="128dp"/>
+        android:layout_height="128dp"/>
 
     <TextView
         style="@android:style/Theme.Dialog"

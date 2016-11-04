@@ -109,13 +109,16 @@ public class CryptogramActivity extends BaseActivity {
     private void showOnboarding(final int page) {
         int titleStringResId;
         int actionStringResId = R.string.intro_next;
+        String videoResName;
         switch (page) {
             case 0:
                 titleStringResId = R.string.intro1_title;
+                videoResName = "vid_intro1";
                 break;
             case 1:
                 titleStringResId = R.string.intro2_title;
                 actionStringResId = R.string.intro_done;
+                videoResName = "vid_intro2";
                 break;
             default:
                 mCryptogramView.requestFocus();
@@ -126,9 +129,8 @@ public class CryptogramActivity extends BaseActivity {
             return;
         }
         View customView = LayoutInflater.from(this).inflate(R.layout.dialog_intro, null);
-        EasyVideoPlayer player = (EasyVideoPlayer) customView.findViewById(R.id.player);
-        player.hideControls();
-        player.start();
+        final EasyVideoPlayer player = (EasyVideoPlayer) customView.findViewById(R.id.player);
+        player.disableControls();
         player.setBackgroundColor(Color.WHITE);
         player.setCallback(new EasyVideoCallback() {
             @Override
@@ -169,8 +171,9 @@ public class CryptogramActivity extends BaseActivity {
             public void onSubmit(EasyVideoPlayer player, Uri source) {
             }
         });
+        player.setAutoPlay(true);
 
-        Uri uri = Uri.parse("android.resource://" + getPackageName() + "/raw/vid_intro1");
+        Uri uri = Uri.parse("android.resource://" + getPackageName() + "/raw/" + videoResName);
         player.setSource(uri);
 
         new MaterialDialog.Builder(this)
@@ -178,6 +181,12 @@ public class CryptogramActivity extends BaseActivity {
                 .customView(customView, false)
                 .cancelable(false)
                 .positiveText(actionStringResId)
+                .showListener(new DialogInterface.OnShowListener() {
+                    @Override
+                    public void onShow(DialogInterface dialogInterface) {
+                        player.start();
+                    }
+                })
                 .onAny(new MaterialDialog.SingleButtonCallback() {
                     @Override
                     public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
