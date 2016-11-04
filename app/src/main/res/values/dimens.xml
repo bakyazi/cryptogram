@@ -11,4 +11,6 @@
     <dimen name="puzzle_line_height">1.5dp</dimen>
     <dimen name="box_highlight_stroke">2dp</dimen>
 
+    <dimen name="side_navigation_width">-2px</dimen>
+
 </resources>
