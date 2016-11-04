@@ -90,6 +90,7 @@ dependencies {
 
     //compile 'com.squareup.dagger:dagger:1.2.5'
 
+    compile 'net.soulwolf.widget:ratiolayout:1.0.0'
     compile 'com.afollestad.material-dialogs:core:0.9.0.2'
 
     compile 'com.pixplicity.easyprefs:library:1.8.1@aar'

@@ -1,16 +1,24 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:paddingLeft="16dp"
     android:paddingRight="16dp">
 
-    <com.afollestad.easyvideoplayer.EasyVideoPlayer
-        android:id="@+id/player"
+    <net.soulwolf.widget.ratiolayout.widget.RatioFrameLayout
+        android:id="@+id/vg_ratio"
         android:layout_width="match_parent"
-        android:layout_height="128dp"/>
+        android:layout_height="wrap_content"
+        app:datumRatio="datumWidth"
+        app:heightRatio="608"
+        app:widthRatio="1080">
+
+        <include layout="@layout/in_video"/>
+
+    </net.soulwolf.widget.ratiolayout.widget.RatioFrameLayout>
 
     <TextView
         style="@android:style/Theme.Dialog"

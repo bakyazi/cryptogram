@@ -17,6 +17,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.afollestad.easyvideoplayer.EasyVideoCallback;
@@ -30,6 +31,9 @@ import com.pixplicity.cryptogram.models.Cryptogram;
 import com.pixplicity.cryptogram.utils.CryptogramProvider;
 import com.pixplicity.cryptogram.utils.PrefsUtils;
 import com.pixplicity.cryptogram.views.CryptogramView;
+
+import net.soulwolf.widget.ratiolayout.RatioDatumMode;
+import net.soulwolf.widget.ratiolayout.widget.RatioFrameLayout;
 
 import java.util.Locale;
 
@@ -109,72 +113,91 @@ public class CryptogramActivity extends BaseActivity {
     private void showOnboarding(final int page) {
         int titleStringResId;
         int actionStringResId = R.string.intro_next;
+        int stillFrameResId;
         String videoResName;
+        int videoW, videoH;
         switch (page) {
             case 0:
                 titleStringResId = R.string.intro1_title;
                 videoResName = "vid_intro1";
+                stillFrameResId = R.drawable.im_intro1;
+                videoW = 1088;
+                videoH = 386;
                 break;
             case 1:
                 titleStringResId = R.string.intro2_title;
                 actionStringResId = R.string.intro_done;
                 videoResName = "vid_intro2";
+                stillFrameResId = R.drawable.im_intro2;
+                videoW = 1088;
+                videoH = 962;
                 break;
             default:
                 mCryptogramView.requestFocus();
                 return;
         }
+
         if (PrefsUtils.getOnboarding() >= page) {
             showOnboarding(page + 1);
             return;
         }
+
         View customView = LayoutInflater.from(this).inflate(R.layout.dialog_intro, null);
+
+        final RatioFrameLayout vgRatio = (RatioFrameLayout) customView.findViewById(R.id.vg_ratio);
+        vgRatio.setRatio(RatioDatumMode.DATUM_WIDTH, videoW, videoH);
+
         final EasyVideoPlayer player = (EasyVideoPlayer) customView.findViewById(R.id.player);
-        player.disableControls();
-        player.setBackgroundColor(Color.WHITE);
-        player.setCallback(new EasyVideoCallback() {
-            @Override
-            public void onStarted(EasyVideoPlayer player) {
-            }
+        if (player != null) {
+            player.disableControls();
+            player.setBackgroundColor(Color.WHITE);
+            player.setCallback(new EasyVideoCallback() {
+                @Override
+                public void onStarted(EasyVideoPlayer player) {
+                }
 
-            @Override
-            public void onPaused(EasyVideoPlayer player) {
-            }
+                @Override
+                public void onPaused(EasyVideoPlayer player) {
+                }
 
-            @Override
-            public void onPreparing(EasyVideoPlayer player) {
-            }
+                @Override
+                public void onPreparing(EasyVideoPlayer player) {
+                }
 
-            @Override
-            public void onPrepared(EasyVideoPlayer player) {
-            }
+                @Override
+                public void onPrepared(EasyVideoPlayer player) {
+                }
 
-            @Override
-            public void onBuffering(int percent) {
-            }
+                @Override
+                public void onBuffering(int percent) {
+                }
 
-            @Override
-            public void onError(EasyVideoPlayer player, Exception e) {
-            }
+                @Override
+                public void onError(EasyVideoPlayer player, Exception e) {
+                }
 
-            @Override
-            public void onCompletion(EasyVideoPlayer player) {
-                player.seekTo(0);
-                player.start();
-            }
+                @Override
+                public void onCompletion(EasyVideoPlayer player) {
+                    player.seekTo(0);
+                    player.start();
+                }
 
-            @Override
-            public void onRetry(EasyVideoPlayer player, Uri source) {
-            }
+                @Override
+                public void onRetry(EasyVideoPlayer player, Uri source) {
+                }
 
-            @Override
-            public void onSubmit(EasyVideoPlayer player, Uri source) {
-            }
-        });
-        player.setAutoPlay(true);
+                @Override
+                public void onSubmit(EasyVideoPlayer player, Uri source) {
+                }
+            });
+            player.setAutoPlay(true);
 
-        Uri uri = Uri.parse("android.resource://" + getPackageName() + "/raw/" + videoResName);
-        player.setSource(uri);
+            Uri uri = Uri.parse("android.resource://" + getPackageName() + "/raw/" + videoResName);
+            player.setSource(uri);
+        } else {
+            ImageView ivVideo = (ImageView) customView.findViewById(R.id.iv_still_frame);
+            ivVideo.setImageResource(stillFrameResId);
+        }
 
         new MaterialDialog.Builder(this)
                 .title(titleStringResId)
@@ -184,7 +207,9 @@ public class CryptogramActivity extends BaseActivity {
                 .showListener(new DialogInterface.OnShowListener() {
                     @Override
                     public void onShow(DialogInterface dialogInterface) {
-                        player.start();
+                        if (player != null) {
+                            player.start();
+                        }
                     }
                 })
                 .onAny(new MaterialDialog.SingleButtonCallback() {
