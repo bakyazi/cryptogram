@@ -211,7 +211,7 @@ public class CryptogramView extends TextView {
     @Override
     public InputConnection onCreateInputConnection(EditorInfo outAttrs) {
         outAttrs.inputType = INPUT_TYPE;
-        outAttrs.imeOptions = EditorInfo.IME_ACTION_NEXT;
+        outAttrs.imeOptions = EditorInfo.IME_ACTION_NEXT | EditorInfo.IME_FLAG_NO_EXTRACT_UI;
         return new BaseInputConnection(this, true) {
             @Override
             public boolean deleteSurroundingText(int beforeLength, int afterLength) {
