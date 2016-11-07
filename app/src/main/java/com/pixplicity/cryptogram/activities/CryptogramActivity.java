@@ -31,6 +31,7 @@ import com.pixplicity.cryptogram.models.Cryptogram;
 import com.pixplicity.cryptogram.utils.CryptogramProvider;
 import com.pixplicity.cryptogram.utils.PrefsUtils;
 import com.pixplicity.cryptogram.views.CryptogramView;
+import com.pixplicity.cryptogram.views.HintView;
 
 import net.soulwolf.widget.ratiolayout.RatioDatumMode;
 import net.soulwolf.widget.ratiolayout.widget.RatioFrameLayout;
@@ -54,6 +55,9 @@ public class CryptogramActivity extends BaseActivity {
 
     @BindView(R.id.cryptogram)
     protected CryptogramView mCryptogramView;
+
+    @BindView(R.id.hint)
+    protected HintView mHintView;
 
     @BindView(R.id.tv_error)
     protected TextView mTvError;
@@ -249,12 +253,16 @@ public class CryptogramActivity extends BaseActivity {
                     provider.getCurrentIndex());
             mTvError.setVisibility(View.GONE);
             mVgCryptogram.setVisibility(View.VISIBLE);
+            // Apply the puzzle to both the CrytogramView and HintView
             mCryptogramView.setCryptogram(cryptogram);
+            mHintView.setCryptogram(cryptogram);
+            // Show other puzzle details
             mTvAuthor.setText(getString(R.string.quote, cryptogram.getAuthor()));
             mToolbar.setSubtitle(getString(
                     R.string.puzzle_number,
                     cryptogram.getId() + 1,
                     provider.getCount()));
+            // Invoke various events
             onCryptogramUpdated(cryptogram);
             cryptogram.onResume();
         } else {

@@ -389,7 +389,7 @@ public class CryptogramView extends TextView {
 
         HashMap<Character, Character> charMapping;
         if (isInEditMode()) {
-            charMapping = new HashMap<>();
+            charMapping = null;
         } else {
             charMapping = mCryptogram.getCharMapping();
         }
@@ -415,7 +415,7 @@ public class CryptogramView extends TextView {
             for (int i = 0; i < word.length(); i++) {
                 char c = Character.toUpperCase(word.charAt(i));
                 String chr;
-                Character mappedChar = charMapping.get(c);
+                Character mappedChar = charMapping == null ? null : charMapping.get(c);
                 if (mSelectedCharacter == c) {
                     // The user is inputting this character; highlight it
                     canvas.drawRect(x + mBoxInset, y - mBoxH + mBoxInset, x + mBoxW - mBoxInset, y + offsetY - mBoxInset, mBoxPaint1);
