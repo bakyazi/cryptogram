@@ -40,6 +40,14 @@
         app:showAsAction="never"/>
 
     <item
+        android:id="@+id/action_show_hints"
+        android:checkable="true"
+        android:checked="false"
+        android:orderInCategory="220"
+        android:title="@string/show_hints"
+        app:showAsAction="never"/>
+
+    <item
         android:id="@+id/action_share"
         android:icon="@drawable/ic_share"
         android:orderInCategory="300"

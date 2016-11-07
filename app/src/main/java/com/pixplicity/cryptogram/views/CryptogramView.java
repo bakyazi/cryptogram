@@ -243,7 +243,7 @@ public class CryptogramView extends TextView {
         return mCryptogram;
     }
 
-    public void setCryptogram(Cryptogram cryptogram) {
+    public void setCryptogram(@Nullable Cryptogram cryptogram) {
         mCryptogram = cryptogram;
         mSelectedCharacter = mSelectedCharacterLast = 0;
         requestLayout();
@@ -278,7 +278,7 @@ public class CryptogramView extends TextView {
     }
 
     public boolean setCharacterMapping(char selectedChar, char userChar) {
-        if (selectedChar != 0) {
+        if (selectedChar != 0 && mCryptogram != null) {
             if (mCryptogram.isRevealed(selectedChar)) {
                 // This character was already revealed; don't allow the user to alter it
                 mCryptogram.setUserChar(selectedChar, selectedChar);
@@ -299,7 +299,7 @@ public class CryptogramView extends TextView {
                 // Clear it
                 mCryptogram.setUserChar(selectedChar, (char) 0);
             }
-            if (progressChange && mOnCryptogramProgressListener != null) {
+            if (mOnCryptogramProgressListener != null) {
                 mOnCryptogramProgressListener.onCryptogramProgress(mCryptogram);
             }
             invalidate();
@@ -309,7 +309,9 @@ public class CryptogramView extends TextView {
     }
 
     public boolean revealCharacterMapping(char c) {
-        mCryptogram.reveal(c);
+        if (mCryptogram != null) {
+            mCryptogram.reveal(c);
+        }
         return setCharacterMapping(c, c);
     }
 
@@ -447,14 +449,13 @@ public class CryptogramView extends TextView {
     }
 
     private char getUserInput(char c) {
-        if (isInEditMode()) {
-            return 0;
+        if (mCryptogram != null) {
+            Character input = mCryptogram.getUserChar(c);
+            if (input != null) {
+                return input;
+            }
         }
-        Character input = mCryptogram.getUserChar(c);
-        if (input == null) {
-            return 0;
-        }
-        return input;
+        return 0;
     }
 
     public void setOnCryptogramProgressListener(OnCryptogramProgressListener onCryptogramProgressListener) {

@@ -10,12 +10,11 @@ import android.os.Build;
 import android.support.annotation.Nullable;
 import android.text.TextPaint;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.widget.TextView;
 
 import com.pixplicity.cryptogram.R;
 import com.pixplicity.cryptogram.models.Cryptogram;
-
-import java.util.HashMap;
 
 
 public class HintView extends TextView {
@@ -127,11 +126,6 @@ public class HintView extends TextView {
     protected void onDraw(Canvas canvas) {
         super.onDraw(canvas);
 
-        if (mCryptogram == null) {
-            // Nothing to do
-            return;
-        }
-
         int width = canvas.getWidth() - getPaddingRight();
         drawChars(canvas, width);
     }
@@ -151,12 +145,6 @@ public class HintView extends TextView {
         int desiredHeight = getPaddingTop();
 
         if (mCryptogram != null) {
-            HashMap<Character, Character> charMapping;
-            if (isInEditMode()) {
-                charMapping = mCryptogram.getCharMapping();
-            } else {
-                charMapping = null;
-            }
             // Compute the height that works for this width
             float offsetY = mCharH / 2;
             float offsetX = (boxW / 2) - (mCharW / 2);
@@ -174,14 +162,16 @@ public class HintView extends TextView {
                 }
                 if (canvas != null) {
                     String chr = String.valueOf(c);
+                    // Check if it's been mapped already
+                    Character userChar = mCryptogram.getUserChar(c);
+                    Log.d(TAG, chr + " --> " + userChar);
+                    if (userChar != null && userChar != 0) {
+                        mTextPaint.setAlpha(96);
+                    } else {
+                        mTextPaint.setAlpha(255);
+                    }
                     // Draw the character
                     canvas.drawText(chr, x + offsetX, y, mTextPaint);
-                    // Check if it's been mapped already
-                    Character mappedChar = charMapping == null ? null : charMapping.get(c);
-                    if (mappedChar != null) {
-                        // Already mapped, cross it out
-                        // TODO
-                    }
                 }
                 c++;
             }

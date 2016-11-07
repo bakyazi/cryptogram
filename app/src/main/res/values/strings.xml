@@ -18,6 +18,7 @@
     <string name="reset">Reset</string>
     <string name="go_to_puzzle">Go to puzzle…</string>
     <string name="randomize_puzzles">Randomize puzzles</string>
+    <string name="show_hints">Show hints</string>
     <string name="share">Share puzzle…</string>
     <string name="about">About</string>
     <string name="cancel">Cancel</string>
