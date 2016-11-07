@@ -10,11 +10,12 @@ import android.os.Build;
 import android.support.annotation.Nullable;
 import android.text.TextPaint;
 import android.util.AttributeSet;
-import android.util.Log;
 import android.widget.TextView;
 
 import com.pixplicity.cryptogram.R;
 import com.pixplicity.cryptogram.models.Cryptogram;
+
+import java.util.Collection;
 
 
 public class HintView extends TextView {
@@ -145,6 +146,7 @@ public class HintView extends TextView {
         int desiredHeight = getPaddingTop();
 
         if (mCryptogram != null) {
+            Collection<Character> userChars = mCryptogram.getUserChars();
             // Compute the height that works for this width
             float offsetY = mCharH / 2;
             float offsetX = (boxW / 2) - (mCharW / 2);
@@ -163,9 +165,7 @@ public class HintView extends TextView {
                 if (canvas != null) {
                     String chr = String.valueOf(c);
                     // Check if it's been mapped already
-                    Character userChar = mCryptogram.getUserChar(c);
-                    Log.d(TAG, chr + " --> " + userChar);
-                    if (userChar != null && userChar != 0) {
+                    if (userChars.contains(c)) {
                         mTextPaint.setAlpha(96);
                     } else {
                         mTextPaint.setAlpha(255);
