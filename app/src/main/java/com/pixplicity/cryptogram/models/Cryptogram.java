@@ -7,6 +7,7 @@ import com.pixplicity.cryptogram.CryptogramApp;
 import com.pixplicity.cryptogram.utils.CryptogramProvider;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.HashMap;
 
 public class Cryptogram {
@@ -91,6 +92,10 @@ public class Cryptogram {
             }
         }
         return null;
+    }
+
+    public Collection<Character> getUserChars() {
+        return getProgress().getUserChars(this);
     }
 
     public Character getUserChar(char c) {

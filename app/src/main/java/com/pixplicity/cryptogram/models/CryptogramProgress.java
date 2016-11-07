@@ -6,6 +6,7 @@ import android.support.annotation.Nullable;
 import com.google.gson.annotations.SerializedName;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.Iterator;
@@ -136,7 +137,7 @@ public class CryptogramProgress {
     }
 
     @NonNull
-    private HashMap<Character, Character> getUserChars(Cryptogram cryptogram) {
+    private HashMap<Character, Character> getUserCharsMapping(Cryptogram cryptogram) {
         if (mUserChars == null) {
             mUserChars = new HashMap<>();
             for (String word : cryptogram.getWords()) {
@@ -151,9 +152,13 @@ public class CryptogramProgress {
         return mUserChars;
     }
 
+    public Collection<Character> getUserChars(Cryptogram cryptogram) {
+        return getUserCharsMapping(cryptogram).values();
+    }
+
     @Nullable
     public Character getUserChar(Cryptogram cryptogram, char c) {
-        return getUserChars(cryptogram).get(c);
+        return getUserCharsMapping(cryptogram).get(c);
     }
 
     public void setUserChar(Cryptogram cryptogram, char selectedCharacter, char c) {
@@ -163,7 +168,7 @@ public class CryptogramProgress {
         } else {
             mInputs++;
         }
-        getUserChars(cryptogram).put(selectedCharacter, Character.toUpperCase(c));
+        getUserCharsMapping(cryptogram).put(selectedCharacter, Character.toUpperCase(c));
     }
 
     public int getExcessCount(Cryptogram cryptogram) {
@@ -172,7 +177,7 @@ public class CryptogramProgress {
         }
         // Start with total number of inputs
         int count = mInputs;
-        for (Character c : getUserChars(cryptogram).values()) {
+        for (Character c : getUserCharsMapping(cryptogram).values()) {
             if (c != 0) {
                 // Subtract any filled in characters
                 count--;
@@ -184,7 +189,7 @@ public class CryptogramProgress {
     public boolean isCompleted(Cryptogram cryptogram) {
         if (mCompleted == null) {
             mCompleted = true;
-            HashMap<Character, Character> userChars = getUserChars(cryptogram);
+            HashMap<Character, Character> userChars = getUserCharsMapping(cryptogram);
             for (Character character : userChars.keySet()) {
                 // In order to be correct, the key and value must be identical
                 if (character != userChars.get(character)) {
@@ -256,7 +261,7 @@ public class CryptogramProgress {
 
     public void sanitize(Cryptogram cryptogram) {
         // Ensure that only input characters have user mappings
-        Iterator<Character> i = getUserChars(cryptogram).keySet().iterator();
+        Iterator<Character> i = getUserCharsMapping(cryptogram).keySet().iterator();
         while (i.hasNext()) {
             Character c = i.next();
             if (!cryptogram.isInputChar(c)) {
