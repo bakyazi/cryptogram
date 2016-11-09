@@ -12,6 +12,7 @@ public class PrefsUtils {
     private static final String KEY_PROGRESS = "puzzle_progress";
     private static final String KEY_RANDOMIZE = "randomize";
     private static final String KEY_ONBOARDING = "onboarding";
+    private static final String KEY_SHOW_HINTS = "show_hints";
 
     private static SparseArray<String> sPuzzleProgress;
 
@@ -45,6 +46,14 @@ public class PrefsUtils {
 
     public static int getOnboarding() {
         return Prefs.getInt(KEY_ONBOARDING, -1);
+    }
+
+    public static boolean getShowHints() {
+        return Prefs.getBoolean(KEY_SHOW_HINTS, false);
+    }
+
+    public static void setShowHints(boolean show) {
+        Prefs.putBoolean(KEY_SHOW_HINTS, show);
     }
 
 }

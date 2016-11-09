@@ -31,6 +31,7 @@ import com.pixplicity.cryptogram.models.Cryptogram;
 import com.pixplicity.cryptogram.utils.CryptogramProvider;
 import com.pixplicity.cryptogram.utils.PrefsUtils;
 import com.pixplicity.cryptogram.views.CryptogramView;
+import com.pixplicity.cryptogram.views.HintView;
 
 import net.soulwolf.widget.ratiolayout.RatioDatumMode;
 import net.soulwolf.widget.ratiolayout.widget.RatioFrameLayout;
@@ -54,6 +55,9 @@ public class CryptogramActivity extends BaseActivity {
 
     @BindView(R.id.cryptogram)
     protected CryptogramView mCryptogramView;
+
+    @BindView(R.id.hint)
+    protected HintView mHintView;
 
     @BindView(R.id.tv_error)
     protected TextView mTvError;
@@ -255,12 +259,15 @@ public class CryptogramActivity extends BaseActivity {
                     provider.getCurrentIndex());
             mTvError.setVisibility(View.GONE);
             mVgCryptogram.setVisibility(View.VISIBLE);
+            // Apply the puzzle to the CryptogramView
             mCryptogramView.setCryptogram(cryptogram);
+            // Show other puzzle details
             mTvAuthor.setText(getString(R.string.quote, cryptogram.getAuthor()));
             mToolbar.setSubtitle(getString(
                     R.string.puzzle_number,
                     cryptogram.getId() + 1,
                     provider.getCount()));
+            // Invoke various events
             onCryptogramUpdated(cryptogram);
             cryptogram.onResume();
         } else {
@@ -271,8 +278,11 @@ public class CryptogramActivity extends BaseActivity {
     }
 
     public void onCryptogramUpdated(Cryptogram cryptogram) {
+        // Update the HintView as the puzzle updates
+        mHintView.setCryptogram(cryptogram);
         mAdapter.notifyDataSetChanged();
         if (cryptogram.isCompleted()) {
+            mHintView.setVisibility(View.GONE);
             mVgStats.setVisibility(View.VISIBLE);
             long durationMs = cryptogram.getDuration();
             if (durationMs <= 0) {
@@ -296,6 +306,7 @@ public class CryptogramActivity extends BaseActivity {
             }
             mTvStatsReveals.setText(String.valueOf(cryptogram.getReveals()));
         } else {
+            mHintView.setVisibility(PrefsUtils.getShowHints() ? View.VISIBLE : View.GONE);
             mVgStats.setVisibility(View.GONE);
         }
     }
@@ -320,6 +331,10 @@ public class CryptogramActivity extends BaseActivity {
         {
             MenuItem item = menu.findItem(R.id.action_randomize);
             item.setChecked(PrefsUtils.getRandomize());
+        }
+        {
+            MenuItem item = menu.findItem(R.id.action_show_hints);
+            item.setChecked(PrefsUtils.getShowHints());
         }
         return true;
     }
@@ -454,10 +469,17 @@ public class CryptogramActivity extends BaseActivity {
                 item.setChecked(randomize);
             }
             return true;
+            case R.id.action_show_hints: {
+                boolean showHints = !item.isChecked();
+                PrefsUtils.setShowHints(showHints);
+                item.setChecked(showHints);
+                onCryptogramUpdated(cryptogram);
+            }
+            return true;
             case R.id.action_share: {
                 Intent intent = new Intent(Intent.ACTION_SEND);
                 intent.setType("text/plain");
-                if (cryptogram.isCompleted()) {
+                if (cryptogram != null && cryptogram.isCompleted()) {
                     intent.putExtra(Intent.EXTRA_TEXT, getString(
                             R.string.share_full,
                             cryptogram.getText(),
