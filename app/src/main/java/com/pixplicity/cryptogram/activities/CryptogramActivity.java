@@ -109,6 +109,7 @@ public class CryptogramActivity extends BaseActivity {
 
     private void showOnboarding(final int page) {
         int titleStringResId;
+        int textStringResId;
         int actionStringResId = R.string.intro_next;
         int stillFrameResId;
         String videoResName;
@@ -116,6 +117,7 @@ public class CryptogramActivity extends BaseActivity {
         switch (page) {
             case 0:
                 titleStringResId = R.string.intro1_title;
+                textStringResId = R.string.intro1_text;
                 videoResName = "vid_intro1";
                 stillFrameResId = R.drawable.im_intro1;
                 videoW = 1088;
@@ -123,6 +125,7 @@ public class CryptogramActivity extends BaseActivity {
                 break;
             case 1:
                 titleStringResId = R.string.intro2_title;
+                textStringResId = R.string.intro2_text;
                 actionStringResId = R.string.intro_done;
                 videoResName = "vid_intro2";
                 stillFrameResId = R.drawable.im_intro2;
@@ -140,6 +143,9 @@ public class CryptogramActivity extends BaseActivity {
         }
 
         View customView = LayoutInflater.from(this).inflate(R.layout.dialog_intro, null);
+
+        TextView tvIntro = (TextView) customView.findViewById(R.id.tv_intro);
+        tvIntro.setText(textStringResId);
 
         final RatioFrameLayout vgRatio = (RatioFrameLayout) customView.findViewById(R.id.vg_ratio);
         vgRatio.setRatio(RatioDatumMode.DATUM_WIDTH, videoW, videoH);

@@ -21,10 +21,10 @@
     </net.soulwolf.widget.ratiolayout.widget.RatioFrameLayout>
 
     <TextView
+        android:id="@+id/tv_intro"
         style="@android:style/Theme.Dialog"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
-        android:text="@string/intro1_text"/>
+        android:layout_marginTop="8dp"/>
 
 </LinearLayout>
