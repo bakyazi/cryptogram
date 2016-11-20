@@ -79,6 +79,14 @@
                             android:textStyle="italic"
                             tools:text="John Doe"/>
 
+                        <TextView
+                            android:id="@+id/tv_topic"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="8dp"
+                            android:gravity="end"
+                            tools:text="Inspirational"/>
+
                         <TableLayout
                             android:id="@+id/vg_stats"
                             android:layout_width="match_parent"

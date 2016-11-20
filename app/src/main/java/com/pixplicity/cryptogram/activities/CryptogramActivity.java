@@ -53,6 +53,9 @@ public class CryptogramActivity extends BaseActivity {
     @BindView(R.id.tv_author)
     protected TextView mTvAuthor;
 
+    @BindView(R.id.tv_topic)
+    protected TextView mTvTopic;
+
     @BindView(R.id.cryptogram)
     protected CryptogramView mCryptogramView;
 
@@ -263,6 +266,7 @@ public class CryptogramActivity extends BaseActivity {
             mCryptogramView.setCryptogram(cryptogram);
             // Show other puzzle details
             mTvAuthor.setText(getString(R.string.quote, cryptogram.getAuthor()));
+            mTvTopic.setText(getString(R.string.topic, cryptogram.getTopic()));
             mToolbar.setSubtitle(getString(
                     R.string.puzzle_number,
                     cryptogram.getId() + 1,
