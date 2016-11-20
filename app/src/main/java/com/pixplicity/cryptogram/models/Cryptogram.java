@@ -21,8 +21,8 @@ public class Cryptogram {
     @SerializedName("author")
     private String mAuthor;
 
-    @SerializedName("category")
-    private String mCategory;
+    @SerializedName("topic")
+    private String mTopic;
 
     private transient String[] mWords;
 
@@ -35,7 +35,7 @@ public class Cryptogram {
     public Cryptogram() {
         mText = "Sample cryptogram; for testing only.";
         mAuthor = "Paul Lammertsma";
-        mCategory = "Other";
+        mTopic = "Other";
     }
 
     public int getId() {
@@ -54,8 +54,8 @@ public class Cryptogram {
         return mAuthor;
     }
 
-    public String getCategory() {
-        return mCategory;
+    public String getTopic() {
+        return mTopic;
     }
 
     @NonNull
