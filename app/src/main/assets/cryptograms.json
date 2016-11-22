@@ -1135,7 +1135,7 @@
     "topic": "Funny"
   },
   {
-    "text": "I’ve got an idea—an idea so smart that my head would explode if I even began to know what I’m talking about.",
+    "text": "I’ve got an idea — an idea so smart that my head would explode if I even began to know what I’m talking about.",
     "author": "Peter Griffin, Family Guy",
     "topic": "Funny"
   },
@@ -1310,7 +1310,7 @@
     "topic": "Inspirational"
   },
   {
-    "text": "There is no passion to be found playing small—in settling for a life that is less than the one you are capable of living.",
+    "text": "There is no passion to be found playing small — in settling for a life that is less than the one you are capable of living.",
     "author": "Nelson Mandela",
     "topic": "Motivational"
   },
@@ -1340,7 +1340,7 @@
     "topic": "Motivational"
   },
   {
-    "text": "A man is but the product of his thoughts what he thinks, he becomes.",
+    "text": "A man is but the product of his thoughts. What he thinks, he becomes.",
     "author": "Mahatma Gandhi",
     "topic": "Inspirational"
   },
@@ -1448,5 +1448,125 @@
     "text": "There is no racial or ethnic involvement in Thanksgiving, and people who may be very distant from the Christian system can see the beauty and the positive spirit that comes from the holiday.",
     "author": "John Clayton",
     "topic": "Thanksgiving"
+  },
+  {
+    "text": "Tell me and I forget. Teach me and I remember. Involve me and I learn.",
+    "author": "Benjamin Franklin",
+    "topic": "Inspirational"
+  },
+  {
+    "text": "We are all born ignorant, but one must work hard to remain stupid.",
+    "author": "Benjamin Franklin",
+    "topic": "Knowledge"
+  },
+  {
+    "text": "Without continual growth and progress, such words as improvement, achievement, and success have no meaning.",
+    "author": "Benjamin Franklin",
+    "topic": "Success"
+  },
+  {
+    "text": "Early to bed and early to rise makes a man healthy, wealthy and wise.",
+    "author": "Benjamin Franklin",
+    "topic": "Success"
+  },
+  {
+    "text": "Money has never made man happy, nor will it, there is nothing in its nature to produce happiness. The more of it one has the more one wants.",
+    "author": "Benjamin Franklin",
+    "topic": "Success"
+  },
+  {
+    "text": "Any fool can criticize, condemn and complain — and most fools do.",
+    "author": "Benjamin Franklin",
+    "topic": "Motivational"
+  },
+  {
+    "text": "There is always some madness in love. But there is also always some reason in madness.",
+    "author": "Friedrich Nietzsche",
+    "topic": "Love"
+  },
+  {
+    "text": "We love life, not because we are used to living but because we are used to loving.",
+    "author": "Friedrich Nietzsche",
+    "topic": "Love"
+  },
+  {
+    "text": "To live is to suffer, to survive is to find some meaning in the suffering.",
+    "author": "Friedrich Nietzsche",
+    "topic": "Life"
+  },
+  {
+    "text": "Whoever fights monsters should see to it that in the process he does not become a monster. And if you gaze long enough into an abyss, the abyss will gaze back into you.",
+    "author": "Friedrich Nietzsche",
+    "topic": "Motivational"
+  },
+  {
+    "text": "Thoughts are the shadows of our feelings - always darker, emptier and simpler.",
+    "author": "Friedrich Nietzsche",
+    "topic": "Motivational"
+  },
+  {
+    "text": "All things are subject to interpretation. Whichever interpretation prevails at a given time is a function of power and not truth.",
+    "author": "Friedrich Nietzsche",
+    "topic": "Power"
+  },
+  {
+    "text": "That which does not kill us makes us stronger.",
+    "author": "Friedrich Nietzsche",
+    "topic": "Motivational"
+  },
+  {
+    "text": "Those who cannot understand how to put their thoughts on ice should not enter into the heat of debate.",
+    "author": "Friedrich Nietzsche",
+    "topic": "Thoughts"
+  },
+  {
+    "text": "On the mountains of truth you can never climb in vain: either you will reach a point higher up today, or you will be training your powers so that you will be able to climb higher tomorrow.",
+    "author": "Friedrich Nietzsche",
+    "topic": "Thoughts"
+  },
+  {
+    "text": "God gave us the gift of life; it is up to us to give ourselves the gift of living well.",
+    "author": "Voltaire",
+    "topic": "Life"
+  },
+  {
+    "text": "Appreciation is a wonderful thing: It makes what is excellent in others belong to us as well.",
+    "author": "Voltaire",
+    "topic": "Inspirational"
+  },
+  {
+    "text": "Those who can make you believe absurdities can make you commit atrocities.",
+    "author": "Voltaire",
+    "topic": "Power"
+  },
+  {
+    "text": "Think for yourselves and let others enjoy the privilege to do so, too.",
+    "author": "Voltaire",
+    "topic": "Thoughts"
+  },
+  {
+    "text": "No problem can withstand the assault of sustained thinking.",
+    "author": "Voltaire",
+    "topic": "Thoughts"
+  },
+  {
+    "text": "It is not sufficient to see and to know the beauty of a work. We must feel and be affected by it.",
+    "author": "Voltaire",
+    "topic": "Beauty"
+  },
+  {
+    "text": "Perfection is attained by slow degrees; it requires the hand of time.",
+    "author": "Voltaire",
+    "topic": "Beauty"
+  },
+  {
+    "text": "Paradise was made for tender hearts; hell, for loveless hearts.",
+    "author": "Voltaire",
+    "topic": "Love"
+  },
+  {
+    "text": "Each player must accept the cards life deals him or her: but once they are in hand, he or she alone must decide how to play the cards in order to win the game.",
+    "author": "Voltaire",
+    "topic": "Life"
   }
 ]
