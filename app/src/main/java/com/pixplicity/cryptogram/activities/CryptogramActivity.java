@@ -83,6 +83,12 @@ public class CryptogramActivity extends BaseActivity {
     @BindView(R.id.tv_stats_reveals)
     protected TextView mTvStatsReveals;
 
+    @BindView(R.id.vg_stats_score)
+    protected ViewGroup mVgStatsScore;
+
+    @BindView(R.id.tv_stats_score)
+    protected TextView mTvStatsScore;
+
     private CryptogramAdapter mAdapter;
 
     @Override
@@ -309,6 +315,16 @@ public class CryptogramActivity extends BaseActivity {
                 mTvStatsExcess.setText(String.valueOf(excessCount));
             }
             mTvStatsReveals.setText(String.valueOf(cryptogram.getReveals()));
+            float score = cryptogram.getScore();
+            if (score < 0) {
+                mVgStatsScore.setVisibility(View.GONE);
+            } else {
+                mVgStatsScore.setVisibility(View.VISIBLE);
+                mTvStatsScore.setText(String.format(
+                        Locale.ENGLISH,
+                        "%.1f%%",
+                        score * 100));
+            }
         } else {
             mHintView.setVisibility(PrefsUtils.getShowHints() ? View.VISIBLE : View.GONE);
             mVgStats.setVisibility(View.GONE);

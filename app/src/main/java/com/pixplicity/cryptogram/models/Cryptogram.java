@@ -143,6 +143,10 @@ public class Cryptogram {
         return getProgress().getDuration();
     }
 
+    public float getScore() {
+        return getProgress().getScore(this);
+    }
+
     public void onResume() {
         getProgress().onResume(this);
     }

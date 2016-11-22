@@ -44,6 +44,7 @@
     <string name="stats_excess">Number of excess inputs:</string>
     <string name="stats_time">Time elapsed:</string>
     <string name="stats_reveals">Characters revealed:</string>
+    <string name="stats_score">Score:</string>
 
     <string name="go_to_puzzle_content">Please enter the puzzle number to go to:</string>
 

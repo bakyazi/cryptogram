@@ -140,7 +140,8 @@
 
                             </TableRow>
 
-                            <TableRow>
+                            <TableRow
+                                android:id="@+id/vg_stats_reveals">
 
                                 <TextView
                                     android:layout_width="wrap_content"
@@ -150,6 +151,28 @@
 
                                 <TextView
                                     android:id="@+id/tv_stats_reveals"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginLeft="8dp"
+                                    android:layout_marginStart="8dp"
+                                    android:minWidth="64dp"
+                                    android:textColor="@color/textLight"
+                                    android:textStyle="bold"/>
+
+                            </TableRow>
+
+                            <TableRow
+                                android:id="@+id/vg_stats_score"
+                                android:layout_marginTop="8dp">
+
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:text="@string/stats_score"
+                                    android:textColor="@color/textLight"/>
+
+                                <TextView
+                                    android:id="@+id/tv_stats_score"
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
                                     android:layout_marginLeft="8dp"

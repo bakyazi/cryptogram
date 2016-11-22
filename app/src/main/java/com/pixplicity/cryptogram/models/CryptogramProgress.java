@@ -3,6 +3,8 @@ package com.pixplicity.cryptogram.models;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 
+import com.crashlytics.android.answers.Answers;
+import com.crashlytics.android.answers.LevelEndEvent;
 import com.google.gson.annotations.SerializedName;
 
 import java.util.ArrayList;
@@ -74,16 +76,20 @@ public class CryptogramProgress {
     @SerializedName("inputs")
     private Integer mInputs;
 
-    private transient Boolean mPlaying;
+    /**
+     * Total times characters were input by the user.
+     */
+    @SerializedName("completed")
+    private Boolean mCompleted;
 
-    private transient Boolean mCompleted;
+    private transient Boolean mPlaying;
 
     public int getId() {
         return mId;
     }
 
     @NonNull
-    public HashMap<Character, Character> getCharMapping(Cryptogram cryptogram) {
+    public HashMap<Character, Character> getCharMapping(@NonNull Cryptogram cryptogram) {
         // Ensure we've attempted to load the data
         if (mCharMapping == null) {
             mCharMapping = new HashMap<>();
@@ -115,7 +121,7 @@ public class CryptogramProgress {
         return mCharMapping;
     }
 
-    public ArrayList<Character> getCharacterList(Cryptogram cryptogram) {
+    public ArrayList<Character> getCharacterList(@NonNull Cryptogram cryptogram) {
         getCharMapping(cryptogram);
         if (mCharacterList == null) {
             // May need to be regenerated as the field is transient
@@ -137,7 +143,7 @@ public class CryptogramProgress {
     }
 
     @NonNull
-    private HashMap<Character, Character> getUserCharsMapping(Cryptogram cryptogram) {
+    private HashMap<Character, Character> getUserCharsMapping(@NonNull Cryptogram cryptogram) {
         if (mUserChars == null) {
             mUserChars = new HashMap<>();
             for (String word : cryptogram.getWords()) {
@@ -152,16 +158,16 @@ public class CryptogramProgress {
         return mUserChars;
     }
 
-    public Collection<Character> getUserChars(Cryptogram cryptogram) {
+    public Collection<Character> getUserChars(@NonNull Cryptogram cryptogram) {
         return getUserCharsMapping(cryptogram).values();
     }
 
     @Nullable
-    public Character getUserChar(Cryptogram cryptogram, char c) {
+    public Character getUserChar(@NonNull Cryptogram cryptogram, char c) {
         return getUserCharsMapping(cryptogram).get(c);
     }
 
-    public void setUserChar(Cryptogram cryptogram, char selectedCharacter, char c) {
+    public void setUserChar(@NonNull Cryptogram cryptogram, char selectedCharacter, char c) {
         mCompleted = null;
         if (mInputs == null) {
             mInputs = 1;
@@ -171,7 +177,7 @@ public class CryptogramProgress {
         getUserCharsMapping(cryptogram).put(selectedCharacter, Character.toUpperCase(c));
     }
 
-    public int getExcessCount(Cryptogram cryptogram) {
+    public int getExcessCount(@NonNull Cryptogram cryptogram) {
         if (mInputs == null) {
             return -1;
         }
@@ -186,7 +192,7 @@ public class CryptogramProgress {
         return count;
     }
 
-    public boolean isCompleted(Cryptogram cryptogram) {
+    public boolean isCompleted(@NonNull Cryptogram cryptogram) {
         if (mCompleted == null) {
             mCompleted = true;
             HashMap<Character, Character> userChars = getUserCharsMapping(cryptogram);
@@ -198,6 +204,7 @@ public class CryptogramProgress {
                 }
             }
             if (mCompleted) {
+                onCompleted(cryptogram);
                 onPause();
             }
         }
@@ -240,6 +247,15 @@ public class CryptogramProgress {
         }
     }
 
+    private void onCompleted(@NonNull Cryptogram cryptogram) {
+        int puzzleId = cryptogram.getId() + 1;
+        Answers.getInstance().logLevelEnd(
+                new LevelEndEvent()
+                        .putLevelName("Puzzle #" + puzzleId)
+                        .putScore(getScore(cryptogram))
+                        .putSuccess(true));
+    }
+
     private void setTimes() {
         long stopTime = System.currentTimeMillis();
         mStartTime = stopTime - getDuration();
@@ -259,7 +275,19 @@ public class CryptogramProgress {
         return System.currentTimeMillis() - mStartTime;
     }
 
-    public void sanitize(Cryptogram cryptogram) {
+    public float getScore(@NonNull Cryptogram cryptogram) {
+        long duration = getDuration();
+        int excessCount = getExcessCount(cryptogram);
+        if (duration == 0 || excessCount < 0) {
+            return -1;
+        }
+        float score = Math.min(1f, (float) duration / 120f);
+        score *= (6f - getReveals()) / 6f;
+        score *= (26f - excessCount) / 26f;
+        return score;
+    }
+
+    public void sanitize(@NonNull Cryptogram cryptogram) {
         // Ensure that only input characters have user mappings
         Iterator<Character> i = getUserCharsMapping(cryptogram).keySet().iterator();
         while (i.hasNext()) {
@@ -276,7 +304,7 @@ public class CryptogramProgress {
         }
     }
 
-    public void reset(Cryptogram cryptogram) {
+    public void reset(@NonNull Cryptogram cryptogram) {
         mUserChars = null;
         mCharMapping = null;
         mStartTime = null;
