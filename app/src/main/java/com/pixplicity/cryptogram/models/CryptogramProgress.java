@@ -5,6 +5,7 @@ import android.support.annotation.Nullable;
 
 import com.crashlytics.android.answers.Answers;
 import com.crashlytics.android.answers.LevelEndEvent;
+import com.crashlytics.android.answers.LevelStartEvent;
 import com.google.gson.annotations.SerializedName;
 
 import java.util.ArrayList;
@@ -234,6 +235,9 @@ public class CryptogramProgress {
 
     public void onResume(Cryptogram cryptogram) {
         if (!isPlaying() && !isCompleted(cryptogram)) {
+            if (mStartTime == 0) {
+                onStart(cryptogram);
+            }
             // Only resume playing if the puzzle wasn't completed
             setTimes();
             mPlaying = true;
@@ -245,6 +249,13 @@ public class CryptogramProgress {
             setTimes();
             mPlaying = false;
         }
+    }
+
+    private void onStart(Cryptogram cryptogram) {
+        int puzzleId = cryptogram.getId() + 1;
+        Answers.getInstance().logLevelStart(
+                new LevelStartEvent()
+                        .putLevelName("Puzzle #" + puzzleId));
     }
 
     private void onCompleted(@NonNull Cryptogram cryptogram) {
