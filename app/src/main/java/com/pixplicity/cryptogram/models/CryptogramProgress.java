@@ -235,7 +235,7 @@ public class CryptogramProgress {
 
     public void onResume(Cryptogram cryptogram) {
         if (!isPlaying() && !isCompleted(cryptogram)) {
-            if (mStartTime == 0) {
+            if (mStartTime == null || mStartTime == 0) {
                 onStart(cryptogram);
             }
             // Only resume playing if the puzzle wasn't completed
