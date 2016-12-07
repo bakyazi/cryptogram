@@ -7,6 +7,7 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.Snackbar;
+import android.support.v4.view.GravityCompat;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -102,7 +103,9 @@ public class CryptogramActivity extends BaseActivity {
         mAdapter = new CryptogramAdapter(this, new CryptogramAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(int position) {
-                mDrawerLayout.closeDrawers();
+                if (mDrawerLayout != null) {
+                    mDrawerLayout.closeDrawers();
+                }
                 updateCryptogram(cryptogramProvider.get(position));
             }
         });
@@ -258,6 +261,15 @@ public class CryptogramActivity extends BaseActivity {
         if (cryptogram != null) {
             cryptogram.onPause();
         }
+    }
+
+    @Override
+    public void onBackPressed() {
+        if (mDrawerLayout != null && mDrawerLayout.isDrawerOpen(GravityCompat.START)) {
+            mDrawerLayout.closeDrawer(GravityCompat.START);
+            return;
+        }
+        super.onBackPressed();
     }
 
     private void updateCryptogram(Cryptogram cryptogram) {
