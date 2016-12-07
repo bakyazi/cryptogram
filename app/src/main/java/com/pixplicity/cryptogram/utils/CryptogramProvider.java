@@ -7,7 +7,9 @@ import android.util.Log;
 import android.util.SparseArray;
 import android.widget.Toast;
 
+import com.crashlytics.android.Crashlytics;
 import com.google.gson.Gson;
+import com.google.gson.JsonSyntaxException;
 import com.pixplicity.cryptogram.models.Cryptogram;
 import com.pixplicity.cryptogram.models.CryptogramProgress;
 
@@ -118,13 +120,25 @@ public class CryptogramProvider {
     @NonNull
     public SparseArray<CryptogramProgress> getProgress() {
         if (mCryptogramProgress == null) {
+            int failures = 0;
             mCryptogramProgress = new SparseArray<>();
             Set<String> progressStrSet = PrefsUtils.getProgress();
             if (progressStrSet != null) {
                 for (String progressStr : progressStrSet) {
-                    CryptogramProgress progress = mGson.fromJson(progressStr, CryptogramProgress.class);
-                    mCryptogramProgress.put(progress.getId(), progress);
+                    try {
+                        CryptogramProgress progress = mGson.fromJson(progressStr, CryptogramProgress.class);
+                        mCryptogramProgress.put(progress.getId(), progress);
+                    } catch (JsonSyntaxException e) {
+                        Crashlytics.setString("progressStr", progressStr);
+                        Crashlytics.logException(new RuntimeException("Failed reading progress string", e));
+                        progressStrSet.remove(progressStr);
+                        failures++;
+                    }
                 }
+            }
+            if (failures > 0) {
+                // Remove any corrupted data
+                PrefsUtils.setProgress(progressStrSet);
             }
         }
         return mCryptogramProgress;
