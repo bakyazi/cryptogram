@@ -7,6 +7,8 @@ import com.crashlytics.android.answers.Answers;
 import com.crashlytics.android.answers.LevelEndEvent;
 import com.crashlytics.android.answers.LevelStartEvent;
 import com.google.gson.annotations.SerializedName;
+import com.pixplicity.cryptogram.CryptogramApp;
+import com.pixplicity.cryptogram.events.CryptogramEvent;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -169,7 +171,6 @@ public class CryptogramProgress {
     }
 
     public void setUserChar(@NonNull Cryptogram cryptogram, char selectedCharacter, char c) {
-        mCompleted = null;
         if (mInputs == null) {
             mInputs = 1;
         } else {
@@ -256,6 +257,9 @@ public class CryptogramProgress {
         Answers.getInstance().logLevelStart(
                 new LevelStartEvent()
                         .putLevelName("Puzzle #" + puzzleId));
+
+        CryptogramApp.getInstance().getBus().post(
+                new CryptogramEvent.CryptogramStartedEvent(cryptogram));
     }
 
     private void onCompleted(@NonNull Cryptogram cryptogram) {
@@ -265,6 +269,9 @@ public class CryptogramProgress {
                         .putLevelName("Puzzle #" + puzzleId)
                         .putScore(getScore(cryptogram))
                         .putSuccess(true));
+
+        CryptogramApp.getInstance().getBus().post(
+                new CryptogramEvent.CryptogramCompletedEvent(cryptogram));
     }
 
     private void setTimes() {

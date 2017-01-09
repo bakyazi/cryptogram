@@ -108,5 +108,6 @@
     </string>
     <string name="website">Visit Pixplicity.com</string>
     <string name="url">https://pixplicity.com/?utm_source=component_app&amp;utm_medium=android-app&amp;utm_content=en&amp;utm_campaign=component_app</string>
+    <string name="rating">Nice, you\'re solving some cryptograms!\n\nWould you mind visiting the Play store to give %1$s a rating? It would help in sharing the fun!\n\nInstead, if you\'re experiencing problems, please give me some feedback so I can improve. Thanks!</string>
 
 </resources>

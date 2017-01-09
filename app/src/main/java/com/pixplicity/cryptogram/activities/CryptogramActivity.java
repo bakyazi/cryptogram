@@ -26,18 +26,23 @@ import com.afollestad.easyvideoplayer.EasyVideoPlayer;
 import com.afollestad.materialdialogs.DialogAction;
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.afollestad.materialdialogs.internal.MDButton;
+import com.pixplicity.cryptogram.CryptogramApp;
 import com.pixplicity.cryptogram.R;
 import com.pixplicity.cryptogram.adapters.CryptogramAdapter;
+import com.pixplicity.cryptogram.events.CryptogramEvent;
 import com.pixplicity.cryptogram.models.Cryptogram;
 import com.pixplicity.cryptogram.utils.CryptogramProvider;
 import com.pixplicity.cryptogram.utils.PrefsUtils;
 import com.pixplicity.cryptogram.views.CryptogramView;
 import com.pixplicity.cryptogram.views.HintView;
+import com.pixplicity.generate.Rate;
+import com.squareup.otto.Subscribe;
 
 import net.soulwolf.widget.ratiolayout.RatioDatumMode;
 import net.soulwolf.widget.ratiolayout.widget.RatioFrameLayout;
 
 import java.util.Locale;
+import java.util.concurrent.TimeUnit;
 
 import butterknife.BindView;
 
@@ -92,12 +97,21 @@ public class CryptogramActivity extends BaseActivity {
 
     private CryptogramAdapter mAdapter;
 
+    private Rate mRate;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_cryptogram);
 
         final CryptogramProvider cryptogramProvider = CryptogramProvider.getInstance(this);
+
+        mRate = new Rate.Builder(this)
+                .setTriggerCount(10)
+                .setMinimumInstallTime((int) TimeUnit.DAYS.toMillis(2))
+                .setMessage(getString(R.string.rating, getString(R.string.app_name)))
+                .setFeedbackAction(Uri.parse("mailto:paul@pixplicity.com"))
+                .build();
 
         mRvDrawer.setLayoutManager(new LinearLayoutManager(this));
         mAdapter = new CryptogramAdapter(this, new CryptogramAdapter.OnItemClickListener() {
@@ -149,7 +163,7 @@ public class CryptogramActivity extends BaseActivity {
                 videoH = 962;
                 break;
             default:
-                mCryptogramView.requestFocus();
+                onCryptogramReady();
                 return;
         }
 
@@ -250,6 +264,8 @@ public class CryptogramActivity extends BaseActivity {
         if (cryptogram != null) {
             cryptogram.onResume();
         }
+
+        CryptogramApp.getInstance().getBus().register(this);
     }
 
     @Override
@@ -261,6 +277,8 @@ public class CryptogramActivity extends BaseActivity {
         if (cryptogram != null) {
             cryptogram.onPause();
         }
+
+        CryptogramApp.getInstance().getBus().unregister(this);
     }
 
     @Override
@@ -297,6 +315,10 @@ public class CryptogramActivity extends BaseActivity {
             mVgCryptogram.setVisibility(View.GONE);
             mToolbar.setSubtitle(null);
         }
+    }
+
+    private void onCryptogramReady() {
+        mCryptogramView.requestFocus();
     }
 
     public void onCryptogramUpdated(Cryptogram cryptogram) {
@@ -537,6 +559,15 @@ public class CryptogramActivity extends BaseActivity {
     private void nextPuzzle() {
         Cryptogram cryptogram = CryptogramProvider.getInstance(CryptogramActivity.this).getNext();
         updateCryptogram(cryptogram);
+    }
+
+    @Subscribe
+    public void onCryptogramCompleted(CryptogramEvent.CryptogramCompletedEvent event) {
+        // Increment the trigger for displaying the rating dialog
+        mRate.launched();
+
+        // Allow the rating dialog to appear if needed
+        mRate.check();
     }
 
 }
