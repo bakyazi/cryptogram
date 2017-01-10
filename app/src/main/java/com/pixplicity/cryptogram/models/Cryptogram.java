@@ -12,30 +12,39 @@ import java.util.HashMap;
 
 public class Cryptogram {
 
+    protected boolean mIsMock;
+
     @SerializedName("id")
-    private int mId;
+    protected int mId;
 
     @SerializedName("text")
-    private String mText;
+    protected String mText;
 
     @SerializedName("author")
-    private String mAuthor;
+    protected String mAuthor;
 
     @SerializedName("topic")
-    private String mTopic;
+    protected String mTopic;
 
     private transient String[] mWords;
 
     private CryptogramProgress mProgress;
     private boolean mLoadedProgress;
 
-    /**
-     * Creates a mock cryptogram.
-     */
-    public Cryptogram() {
-        mText = "Sample cryptogram; for testing only.";
-        mAuthor = "Paul Lammertsma";
-        mTopic = "Other";
+    public Cryptogram() {}
+
+    public static class Mock extends Cryptogram {
+
+        /**
+         * Creates a mock cryptogram.
+         */
+        public Mock() {
+            mText = "Bright vixens jump; dozy fowl quack.";
+            mAuthor = "Paul Lammertsma";
+            mTopic = "Other";
+            mIsMock = true;
+        }
+
     }
 
     public int getId() {
@@ -157,7 +166,7 @@ public class Cryptogram {
     }
 
     private void load() {
-        if (!mLoadedProgress) {
+        if (!mLoadedProgress && !mIsMock) {
             mProgress = CryptogramProvider.getInstance(CryptogramApp.getInstance()).getProgress().get(mId);
             if (mProgress != null) {
                 mProgress.sanitize(this);
@@ -172,7 +181,9 @@ public class Cryptogram {
     }
 
     public void save() {
-        CryptogramProvider.getInstance(CryptogramApp.getInstance()).setProgress(getProgress());
+        if (!mIsMock) {
+            CryptogramProvider.getInstance(CryptogramApp.getInstance()).setProgress(getProgress());
+        }
     }
 
 }

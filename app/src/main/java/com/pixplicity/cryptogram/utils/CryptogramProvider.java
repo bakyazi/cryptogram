@@ -46,14 +46,16 @@ public class CryptogramProvider {
         return sInstance;
     }
 
-    private CryptogramProvider(Context context) throws IOException {
-        InputStream is = context.getAssets().open("cryptograms.json");
-        mCryptograms = mGson.fromJson(new InputStreamReader(is), Cryptogram[].class);
-        int i = 0;
-        for (Cryptogram cryptogram : mCryptograms) {
-            if (cryptogram.getId() == 0) {
-                cryptogram.setId(i);
-                i++;
+    private CryptogramProvider(@Nullable Context context) throws IOException {
+        if (context != null) {
+            InputStream is = context.getAssets().open("cryptograms.json");
+            mCryptograms = mGson.fromJson(new InputStreamReader(is), Cryptogram[].class);
+            int i = 0;
+            for (Cryptogram cryptogram : mCryptograms) {
+                if (cryptogram.getId() == 0) {
+                    cryptogram.setId(i);
+                    i++;
+                }
             }
         }
     }

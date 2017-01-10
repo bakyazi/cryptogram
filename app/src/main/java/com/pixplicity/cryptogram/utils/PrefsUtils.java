@@ -1,9 +1,9 @@
 package com.pixplicity.cryptogram.utils;
 
-import android.util.SparseArray;
-
+import com.pixplicity.cryptogram.CryptogramApp;
 import com.pixplicity.easyprefs.library.Prefs;
 
+import java.util.HashSet;
 import java.util.Set;
 
 public class PrefsUtils {
@@ -14,8 +14,6 @@ public class PrefsUtils {
     private static final String KEY_ONBOARDING = "onboarding";
     private static final String KEY_SHOW_HINTS = "show_hints";
 
-    private static SparseArray<String> sPuzzleProgress;
-
     public static int getCurrentId() {
         return Prefs.getInt(PrefsUtils.KEY_CURRENT_ID, -1);
     }
@@ -25,10 +23,16 @@ public class PrefsUtils {
     }
 
     public static Set<String> getProgress() {
+        if (CryptogramApp.getInstance() == null) {
+            return null;
+        }
         return Prefs.getOrderedStringSet(PrefsUtils.KEY_PROGRESS, null);
     }
 
     public static void setProgress(Set<String> progressStrSet) {
+        if (CryptogramApp.getInstance() == null) {
+            return;
+        }
         Prefs.putOrderedStringSet(PrefsUtils.KEY_PROGRESS, progressStrSet);
     }
 
