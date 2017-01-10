@@ -12,7 +12,6 @@ import com.pixplicity.cryptogram.events.CryptogramEvent;
 
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.Collections;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
@@ -27,6 +26,8 @@ public class CryptogramProgress {
             ALPHABET.add((char) i);
         }
     }
+
+    private static Long sRandomSeed;
 
     public CryptogramProgress() {
     }
@@ -87,6 +88,10 @@ public class CryptogramProgress {
 
     private transient Boolean mPlaying;
 
+    public static void setRandomSeed(Long randomSeed) {
+        sRandomSeed = randomSeed;
+    }
+
     public int getId() {
         return mId;
     }
@@ -106,17 +111,42 @@ public class CryptogramProgress {
                     }
                 }
             }
-            Random r = new Random();
+            Random r;
+            if (sRandomSeed == null) {
+                r = new Random();
+            } else {
+                r = new Random(sRandomSeed);
+            }
             List<Character> alphabet = new ArrayList<>(ALPHABET.size());
             for (Character c : ALPHABET) {
                 alphabet.add(c);
             }
-            Collections.shuffle(alphabet, r);
+            int remaining = mCharMapping.size();
+            // Figure out what the last character would be
+            char lastChar = 0;
+            for (Character c : mCharMapping.keySet()) {
+                lastChar = c;
+            }
+            // Create mappings
             for (Character c : mCharMapping.keySet()) {
                 int i = r.nextInt(alphabet.size());
                 char mappedC = alphabet.get(i);
+                if (mappedC == c) {
+                    i = (i + 1) % alphabet.size();
+                }
+                // Special case for the last two mappings to ensure a solution
+                if (remaining == 2) {
+                    // Check if by selecting this character, we have a solution for the last character
+                    int j = (i + 1) % alphabet.size();
+                    if (alphabet.get(j) == lastChar) {
+                        // We don't; select the other instead
+                        i = (i + 1) % alphabet.size();
+                    }
+                }
+                mappedC = alphabet.get(i);
                 alphabet.remove(i);
                 mCharMapping.put(c, mappedC);
+                remaining--;
             }
             // We've generated the mappings, save it
             cryptogram.save();
@@ -195,7 +225,7 @@ public class CryptogramProgress {
     }
 
     public boolean isCompleted(@NonNull Cryptogram cryptogram) {
-        if (mCompleted == null) {
+        if (mCompleted == null || !mCompleted) {
             mCompleted = true;
             HashMap<Character, Character> userChars = getUserCharsMapping(cryptogram);
             for (Character character : userChars.keySet()) {
