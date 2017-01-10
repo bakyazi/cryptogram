@@ -24,6 +24,8 @@ public class CryptogramProvider {
 
     private static final String TAG = CryptogramProvider.class.getSimpleName();
 
+    private static final String ASSET_FILENAME = "cryptograms.json";
+
     private static CryptogramProvider sInstance;
 
     private int mCurrentIndex = -1;
@@ -48,14 +50,22 @@ public class CryptogramProvider {
 
     private CryptogramProvider(@Nullable Context context) throws IOException {
         if (context != null) {
-            InputStream is = context.getAssets().open("cryptograms.json");
-            mCryptograms = mGson.fromJson(new InputStreamReader(is), Cryptogram[].class);
-            int i = 0;
-            for (Cryptogram cryptogram : mCryptograms) {
-                if (cryptogram.getId() == 0) {
-                    cryptogram.setId(i);
-                    i++;
-                }
+            InputStream is = context.getAssets().open(ASSET_FILENAME);
+            readStream(is);
+        } else {
+            InputStream is = this.getClass().getClassLoader().getResourceAsStream("assets/" + ASSET_FILENAME);
+            readStream(is);
+            is.close();
+        }
+    }
+
+    private void readStream(InputStream is) {
+        mCryptograms = mGson.fromJson(new InputStreamReader(is), Cryptogram[].class);
+        int i = 0;
+        for (Cryptogram cryptogram : mCryptograms) {
+            if (cryptogram.getId() == 0) {
+                cryptogram.setId(i);
+                i++;
             }
         }
     }

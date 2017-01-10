@@ -1,12 +1,16 @@
 package com.pixplicity.cryptogram;
 
+import android.annotation.SuppressLint;
+
 import com.pixplicity.cryptogram.models.Cryptogram;
 import com.pixplicity.cryptogram.models.CryptogramProgress;
+import com.pixplicity.cryptogram.utils.CryptogramProvider;
 
 import org.junit.Test;
 
 import java.util.HashMap;
 
+import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotEquals;
 
 /**
@@ -30,6 +34,29 @@ public class CryptogramTest {
                 assertNotEquals(key, value);
             }
             System.out.println();
+        }
+    }
+
+    @Test
+    public void noEmptyOrDuplicateCryptograms() throws Exception {
+        @SuppressLint("UseSparseArrays") HashMap<Integer, Integer> hashes = new HashMap<>();
+        for (Cryptogram cryptogram : CryptogramProvider.getInstance(null).getAll()) {
+            int id = cryptogram.getId();
+            String text = cryptogram.getText().trim().toLowerCase();
+            String author = cryptogram.getAuthor();
+            int hash = text.hashCode();
+            System.out.println("cryptogram " + id + ": " + text.length() + " chars, author '" + author + "'");
+            // Ensure there's content
+            assertNotEquals(0, text.length());
+            // Ensure there aren't single quotes (replace with ’)
+            assertEquals(-1, text.indexOf('\''));
+            // Ensure there aren't simple hyphens (replace with —)
+            assertEquals(-1, text.indexOf(" - "));
+            // Ensure there's an author
+            assertNotEquals(0, author.length());
+            // Ensure there aren't duplicates
+            assertEquals(false, hashes.containsKey(hash));
+            hashes.put(id, hash);
         }
     }
 
