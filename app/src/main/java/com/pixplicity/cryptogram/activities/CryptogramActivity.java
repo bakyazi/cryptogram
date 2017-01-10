@@ -2,10 +2,12 @@ package com.pixplicity.cryptogram.activities;
 
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.IntentSender;
 import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.support.design.widget.Snackbar;
 import android.support.v4.view.GravityCompat;
 import android.support.v7.app.AlertDialog;
@@ -13,6 +15,7 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.Editable;
 import android.text.InputType;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -20,12 +23,18 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.afollestad.easyvideoplayer.EasyVideoCallback;
 import com.afollestad.easyvideoplayer.EasyVideoPlayer;
 import com.afollestad.materialdialogs.DialogAction;
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.afollestad.materialdialogs.internal.MDButton;
+import com.crashlytics.android.Crashlytics;
+import com.google.android.gms.common.ConnectionResult;
+import com.google.android.gms.common.api.GoogleApiClient;
+import com.google.android.gms.games.Games;
+import com.google.android.gms.games.Player;
 import com.pixplicity.cryptogram.CryptogramApp;
 import com.pixplicity.cryptogram.R;
 import com.pixplicity.cryptogram.adapters.CryptogramAdapter;
@@ -46,9 +55,11 @@ import java.util.concurrent.TimeUnit;
 
 import butterknife.BindView;
 
-public class CryptogramActivity extends BaseActivity {
+public class CryptogramActivity extends BaseActivity implements GoogleApiClient.ConnectionCallbacks, GoogleApiClient.OnConnectionFailedListener {
 
     private static final String TAG = CryptogramActivity.class.getSimpleName();
+
+    private static final int RC_SIGN_IN = 1001;
 
     @BindView(R.id.rv_drawer)
     protected RecyclerView mRvDrawer;
@@ -98,6 +109,17 @@ public class CryptogramActivity extends BaseActivity {
     private CryptogramAdapter mAdapter;
 
     private Rate mRate;
+
+    private GoogleApiClient mGoogleApiClient;
+
+    // Are we currently resolving a connection failure?
+    private boolean mResolvingConnectionFailure = false;
+
+    // Has the user clicked the sign-in button?
+    private boolean mSignInClicked = false;
+
+    // Automatically start the sign-in flow when the Activity starts
+    private boolean mAutoStartSignInFlow = true;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -282,12 +304,36 @@ public class CryptogramActivity extends BaseActivity {
     }
 
     @Override
+    protected void onStop() {
+        super.onStop();
+
+        if (mGoogleApiClient != null && mGoogleApiClient.isConnected()) {
+            mGoogleApiClient.disconnect();
+        }
+    }
+
+    @Override
     public void onBackPressed() {
         if (mDrawerLayout != null && mDrawerLayout.isDrawerOpen(GravityCompat.START)) {
             mDrawerLayout.closeDrawer(GravityCompat.START);
             return;
         }
         super.onBackPressed();
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent intent) {
+        super.onActivityResult(requestCode, resultCode, intent);
+        if (requestCode == RC_SIGN_IN) {
+            mSignInClicked = false;
+            mResolvingConnectionFailure = false;
+            if (resultCode == RESULT_OK) {
+                mGoogleApiClient.connect();
+            } else {
+                // TODO handle error
+                Toast.makeText(this, "Failed connecting to Google Play Games (code " + resultCode + ")", Toast.LENGTH_LONG).show();
+            }
+        }
     }
 
     private void updateCryptogram(Cryptogram cryptogram) {
@@ -319,6 +365,14 @@ public class CryptogramActivity extends BaseActivity {
 
     private void onCryptogramReady() {
         mCryptogramView.requestFocus();
+
+        // Create the Google Api Client with access to Games
+        mGoogleApiClient = new GoogleApiClient.Builder(this)
+                .addConnectionCallbacks(this)
+                .addOnConnectionFailedListener(this)
+                .addApi(Games.API).addScope(Games.SCOPE_GAMES)
+                .build();
+        mGoogleApiClient.connect();
     }
 
     public void onCryptogramUpdated(Cryptogram cryptogram) {
@@ -507,7 +561,7 @@ public class CryptogramActivity extends BaseActivity {
                                     Cryptogram cryptogram = provider.get(id - 1);
                                     if (cryptogram == null) {
                                         Snackbar.make(mVgContent, getString(R.string.puzzle_nonexistant, id),
-                                                Snackbar.LENGTH_SHORT).show();
+                                                      Snackbar.LENGTH_SHORT).show();
                                     } else {
                                         updateCryptogram(cryptogram);
                                     }
@@ -568,6 +622,61 @@ public class CryptogramActivity extends BaseActivity {
 
         // Allow the rating dialog to appear if needed
         mRate.check();
+    }
+
+    // TODO attach to button
+    public void onSignInButtonClicked() {
+        // start the sign-in flow
+        mSignInClicked = true;
+        mGoogleApiClient.connect();
+    }
+
+    // Google Play Services
+    @Override
+    public void onConnected(@Nullable Bundle bundle) {
+        Log.d(TAG, "onConnected(): connected to Google APIs");
+
+        // Set the greeting appropriately on main menu
+        Player p = Games.Players.getCurrentPlayer(mGoogleApiClient);
+        String displayName;
+        if (p == null) {
+            Log.w(TAG, "mGamesClient.getCurrentPlayer() is NULL!");
+            displayName = "???";
+        } else {
+            displayName = p.getDisplayName();
+        }
+        // TODO update UI
+        Toast.makeText(this, "Welcome, " + displayName + "!", Toast.LENGTH_SHORT).show();
+    }
+
+    // Google Play Services
+    @Override
+    public void onConnectionSuspended(int i) {
+        Log.d(TAG, "onConnectionSuspended(): attempting to connect");
+        mGoogleApiClient.connect();
+    }
+
+    @Override
+    public void onConnectionFailed(@NonNull ConnectionResult connectionResult) {
+        Log.d(TAG, "onConnectionFailed(): attempting to resolve");
+        if (mResolvingConnectionFailure) {
+            Log.d(TAG, "onConnectionFailed(): already resolving");
+            return;
+        }
+
+        if (mSignInClicked || mAutoStartSignInFlow) {
+            mAutoStartSignInFlow = false;
+            mSignInClicked = false;
+            mResolvingConnectionFailure = true;
+            try {
+                connectionResult.startResolutionForResult(this, RC_SIGN_IN);
+            } catch (IntentSender.SendIntentException e) {
+                Crashlytics.logException(e);
+            }
+        }
+
+        // TODO update UI
+        Toast.makeText(this, "Disconnected from Google Play Games (code " + connectionResult.getErrorCode() + ")", Toast.LENGTH_LONG).show();
     }
 
 }
