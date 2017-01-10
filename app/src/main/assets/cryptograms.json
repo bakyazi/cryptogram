@@ -1500,7 +1500,7 @@
     "topic": "Motivational"
   },
   {
-    "text": "Thoughts are the shadows of our feelings - always darker, emptier and simpler.",
+    "text": "Thoughts are the shadows of our feelings—always darker, emptier and simpler.",
     "author": "Friedrich Nietzsche",
     "topic": "Motivational"
   },
@@ -1590,7 +1590,7 @@
     "topic": "Christmas"
   },
   {
-    "text": "Christmas gives us the opportunity to pause and reflect on the important things around us - a time when we can look back on the year that has passed and prepare for the year ahead.",
+    "text": "Christmas gives us the opportunity to pause and reflect on the important things around us—a time when we can look back on the year that has passed and prepare for the year ahead.",
     "author": "David Cameron",
     "topic": "Christmas"
   },
@@ -1605,12 +1605,12 @@
     "topic": "Christmas"
   },
   {
-    "text": "When you look back on all the Christmases in your life, you'll find you've created family traditions and lasting memories. Those memories, good and bad, are really what help to keep a family together over the long haul.",
+    "text": "When you look back on all the Christmases in your life, you’ll find you’ve created family traditions and lasting memories. Those memories, good and bad, are really what help to keep a family together over the long haul.",
     "author": "Caroline Kennedy",
     "topic": "Christmas"
   },
   {
-    "text": "One of the most glorious messes in the world is the mess created in the living room on Christmas day. Don't clean it up too quickly.",
+    "text": "One of the most glorious messes in the world is the mess created in the living room on Christmas day. Don’t clean it up too quickly.",
     "author": "Andy Rooney",
     "topic": "Christmas"
   },
@@ -1640,12 +1640,12 @@
     "topic": "Christmas"
   },
   {
-    "text": "Christmas and the holidays are the season of giving. It's a time when people are more kind and open-hearted.",
+    "text": "Christmas and the holidays are the season of giving. It’s a time when people are more kind and open-hearted.",
     "author": "Gisele Bundchen",
     "topic": "Christmas"
   },
   {
-    "text": "When you give up yourself, that's when you will feel the true spirit of Christmas. And that's giving that's serving others and that's when you feel fulfilled.",
+    "text": "When you give up yourself, that’s when you will feel the true spirit of Christmas. And that’s giving that’s serving others and that’s when you feel fulfilled.",
     "author": "Joel Osteen",
     "topic": "Christmas"
   },
@@ -1660,17 +1660,17 @@
     "topic": "Christmas"
   },
   {
-    "text": "Throughout history, Hanukkah was a relatively minor festival, but it's become very popular in America due to its proximity to Christmas.",
+    "text": "Throughout history, Hanukkah was a relatively minor festival, but it’s become very popular in America due to its proximity to Christmas.",
     "author": "Gil Marks",
     "topic": "Hanukkah"
   },
   {
-    "text": "On Hanukkah, the first dark night,\nLight yourself a candle bright.\nI'll you, if you will me invite\nTo dance within that gentle light.",
+    "text": "On Hanukkah, the first dark night,\nLight yourself a candle bright.\nI’ll you, if you will me invite\nTo dance within that gentle light.",
     "author": "Nick Gordon",
     "topic": "Hanukkah"
   },
   {
-    "text": "I love Hanukkah because it's so weird. You just sit there and light candles and say spells.",
+    "text": "I love Hanukkah because it’s so weird. You just sit there and light candles and say spells.",
     "author": "King Tuff",
     "topic": "Hanukkah"
   },
@@ -1710,12 +1710,12 @@
     "topic": "Family"
   },
   {
-    "text": "I wanted to say thanks... and share my gratitude for everything I've been blessed with. Family, friends, and continued support from everyone.",
+    "text": "I wanted to say thanks... and share my gratitude for everything I’ve been blessed with. Family, friends, and continued support from everyone.",
     "author": "Travis Barker",
     "topic": "Family"
   },
   {
-    "text": "I'm surrounded by great friends and family. I don't know what I would do without them.",
+    "text": "I’m surrounded by great friends and family. I don’t know what I would do without them.",
     "author": "Emma Roberts",
     "topic": "Family"
   },
@@ -1723,5 +1723,160 @@
     "text": "The most important thing in the world is family and love.",
     "author": "John Wooden",
     "topic": "Family"
+  },
+  {
+    "text": "For last year’s words belong to last year’s language\nAnd next year’s words await another voice.\nAnd to make an end is to make a beginning.",
+    "author": "T.S. Eliot",
+    "topic": "New year"
+  },
+  {
+    "text": "Tomorrow, is the first blank page of a 365 page book. Write a good one.",
+    "author": "Brad Paisley",
+    "topic": "New year"
+  },
+  {
+    "text": "Departure of a year welcomes so many new memories.",
+    "author": "Munia Khan",
+    "topic": "New year"
+  },
+  {
+    "text": "New Year—a new chapter, new verse, or just the same old story? Ultimately we write it. The choice is ours.",
+    "author": "Alex Morritt",
+    "topic": "New year"
+  },
+  {
+    "text": "In the depth of winter I finally learned that there was in me an invincible summer.",
+    "author": "Albert Camus",
+    "topic": "Winter"
+  },
+  {
+    "text": "People don’t notice whether it’s winter or summer when they’re happy.",
+    "author": "Anton Chekhov",
+    "topic": "Winter"
+  },
+  {
+    "text": "Laughter is the sun that drives winter from the human face.",
+    "author": "Victor Hugo",
+    "topic": "Winter"
+  },
+  {
+    "text": "He who marvels at the beauty of the world in summer will find equal cause for wonder and admiration in winter.",
+    "author": "John Burroughs",
+    "topic": "Winter"
+  },
+  {
+    "text": "While I relish our warm months, winter forms our character and brings out our best.",
+    "author": "Tom Allen",
+    "topic": "Winter"
+  },
+  {
+    "text": "In the depth of winter I finally learned that there was in me an invincible summer.",
+    "author": "Albert Camus",
+    "topic": "Winter"
+  },
+  {
+    "text": "Never cut a tree down in the wintertime. Never make a negative decision in the low time. Never make your most important decisions when you are in your worst moods. Wait. Be patient. The storm will pass. The spring will come.",
+    "author": "Robert H. Schuller",
+    "topic": "Winter"
+  },
+  {
+    "text": "The spring of love becomes hidden and soon filled up.",
+    "author": "Max Muller",
+    "topic": "Spring"
+  },
+  {
+    "text": "Spring is proof that there is beauty in new beginnings.",
+    "author": "Matshona Dhliwayo",
+    "topic": "Spring"
+  },
+  {
+    "text": "You can cut all the flowers but you cannot keep spring from coming.",
+    "author": "Pablo Neruda",
+    "topic": "Spring"
+  },
+  {
+    "text": "In the spring, at the end of the day, you should smell like dirt.",
+    "author": "Margaret Atwood",
+    "topic": "Spring"
+  },
+  {
+    "text": "The beautiful spring came; and when Nature resumes her loveliness, the human soul is apt to revive also.",
+    "author": "Harriet Ann Jacobs",
+    "topic": "Spring"
+  },
+  {
+    "text": "I am going to look around at all the flowers, and look up at the hectic trees. I am going to close my eyes and listen.",
+    "author": "Anne Lamott",
+    "topic": "Spring"
+  },
+  {
+    "text": "It is only the farmer who faithfully plants seeds in the Spring, who reaps a harvest in the Autumn.",
+    "author": "B. C. Forbes",
+    "topic": "Spring"
+  },
+  {
+    "text": "Fall gives us a premonition of winter, but then, winter, will be forced to relent, once again, to the new beginnings of soft greens, longer light, and the sweet air of spring.",
+    "author": "Madeleine M. Kunin",
+    "topic": "Spring"
+  },
+  {
+    "text": "Deep summer is when laziness finds respectability.",
+    "author": "Sam Keen",
+    "topic": "Summer"
+  },
+  {
+    "text": "There is no real need for decorations when throwing a barbecue party—let the summer garden, in all its vibrant and luscious splendour, speak for itself.",
+    "author": "Pippa Middleton",
+    "topic": "Summer"
+  },
+  {
+    "text": "What good is the warmth of summer, without the cold of winter to give it sweetness.",
+    "author": "John Steinbeck",
+    "topic": "Summer"
+  },
+  {
+    "text": "Summer afternoon; to me those have always been the two most beautiful words in the English language.",
+    "author": "Henry James",
+    "topic": "Summer"
+  },
+  {
+    "text": "The moon is at her full, and riding high, floods the calm fields with light. The airs that hover in the summer sky are all asleep tonight.",
+    "author": "William C. Bryant",
+    "topic": "Summer"
+  },
+  {
+    "text": "There is a time in the last few days of summer when the ripeness of autumn fills the air.",
+    "author": "Rudolfo Anaya",
+    "topic": "Summer"
+  },
+  {
+    "text": "Summer ends, and autumn comes, and he who would have it otherwise would have high tide always and a full moon every night.",
+    "author": "Hal Borland",
+    "topic": "Autumn"
+  },
+  {
+    "text": "Autumn is a second spring when every leaf is a flower.",
+    "author": "Albert Camus",
+    "topic": "Autumn"
+  },
+  {
+    "text": "Autumn wins you best by this its mute appeal to sympathy for its decay.",
+    "author": "Robert Browning",
+    "topic": "Autumn"
+  },
+  {
+    "text": "Autumn’s fire burns slowly along the woods and day by day the dead leaves fall and melt.",
+    "author": "William Allingham",
+    "topic": "Autumn"
+  },
+  {
+    "text": "No man can taste the fruits of autumn while he is delighting his scent with the flowers of spring.",
+    "author": "Samuel Johnson",
+    "topic": "Autumn"
+  },
+  {
+    "text": "It looked like the world was covered in a cobbler crust of brown sugar and cinnamon.",
+    "author": "Sarah Addison Allen",
+    "topic": "Autumn"
   }
 ]
