@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+Google Play game services IDs.
+Save this file as res/values/games-ids.xml in your project.
+-->
+<resources>
+    <string name="app_id">1070342491314</string>
+    <string name="package_name">com.pixplicity.cryptogram</string>
+    <string name="achievement_boned_up">CgkIspmJq5MfEAIQAg</string>
+    <string name="achievement_bookworm">CgkIspmJq5MfEAIQBg</string>
+    <string name="achievement_whizkid">CgkIspmJq5MfEAIQDg</string>
+    <string name="achievement_nobrainer">CgkIspmJq5MfEAIQAQ</string>
+    <string name="achievement_flight_mode">CgkIspmJq5MfEAIQCQ</string>
+    <string name="achievement_its_the_bees_knees">CgkIspmJq5MfEAIQCA</string>
+    <string name="achievement_cream_of_the_crop">CgkIspmJq5MfEAIQDQ</string>
+    <string name="achievement_man_of_all_trades">CgkIspmJq5MfEAIQBw</string>
+    <string name="achievement_hope_youre_comfortable">CgkIspmJq5MfEAIQAw</string>
+    <string name="achievement_hope_youre_really_comfortable">CgkIspmJq5MfEAIQBA</string>
+    <string name="achievement_zen_master">CgkIspmJq5MfEAIQBQ</string>
+    <string name="achievement_twoday_streak">CgkIspmJq5MfEAIQCg</string>
+    <string name="achievement_threeday_streak">CgkIspmJq5MfEAIQCw</string>
+    <string name="achievement_fiveday_streak">CgkIspmJq5MfEAIQDA</string>
+</resources>
