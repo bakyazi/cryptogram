@@ -40,6 +40,7 @@ import com.pixplicity.cryptogram.R;
 import com.pixplicity.cryptogram.adapters.CryptogramAdapter;
 import com.pixplicity.cryptogram.events.CryptogramEvent;
 import com.pixplicity.cryptogram.models.Cryptogram;
+import com.pixplicity.cryptogram.utils.AchievementProvider;
 import com.pixplicity.cryptogram.utils.CryptogramProvider;
 import com.pixplicity.cryptogram.utils.PrefsUtils;
 import com.pixplicity.cryptogram.views.CryptogramView;
@@ -427,6 +428,17 @@ public class CryptogramActivity extends BaseActivity implements GoogleApiClient.
         }
     }
 
+    @Subscribe
+    public void onCryptogramCompleted(CryptogramEvent.CryptogramCompletedEvent event) {
+        // Increment the trigger for displaying the rating dialog
+        mRate.launched();
+
+        // Allow the rating dialog to appear if needed
+        mRate.check();
+
+        updateGooglePlayGames();
+    }
+
     @Override
     protected void onDrawerOpened(View drawerView) {
     }
@@ -483,6 +495,9 @@ public class CryptogramActivity extends BaseActivity implements GoogleApiClient.
                     });
 
                     Button btAchievements = (Button) dialogView.findViewById(R.id.bt_achievements);
+                    ImageView ivAchievementsComingSoon = (ImageView) dialogView.findViewById(R.id.iv_achievements_coming_soon);
+                    btAchievements.setEnabled(AchievementProvider.ENABLED);
+                    ivAchievementsComingSoon.setVisibility(AchievementProvider.ENABLED ? View.GONE : View.VISIBLE);
                     btAchievements.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View view) {
@@ -618,7 +633,7 @@ public class CryptogramActivity extends BaseActivity implements GoogleApiClient.
                                     Cryptogram cryptogram = provider.get(id - 1);
                                     if (cryptogram == null) {
                                         Snackbar.make(mVgContent, getString(R.string.puzzle_nonexistant, id),
-                                                      Snackbar.LENGTH_SHORT).show();
+                                                Snackbar.LENGTH_SHORT).show();
                                     } else {
                                         updateCryptogram(cryptogram);
                                     }
@@ -672,17 +687,6 @@ public class CryptogramActivity extends BaseActivity implements GoogleApiClient.
         updateCryptogram(cryptogram);
     }
 
-    @Subscribe
-    public void onCryptogramCompleted(CryptogramEvent.CryptogramCompletedEvent event) {
-        // Increment the trigger for displaying the rating dialog
-        mRate.launched();
-
-        // Allow the rating dialog to appear if needed
-        mRate.check();
-
-        updateGooglePlayGames();
-    }
-
     // Google Play Services
     @Override
     public void onConnected(@Nullable Bundle bundle) {
@@ -732,8 +736,17 @@ public class CryptogramActivity extends BaseActivity implements GoogleApiClient.
     }
 
     private void updateGooglePlayGames() {
+        if (!mGoogleApiClient.isConnected()) {
+            // Nothing to do since we're not connected
+            return;
+        }
+
+        // Submit score
         long score = CryptogramProvider.getInstance(this).getTotalScore();
         Games.Leaderboards.submitScore(mGoogleApiClient, getString(R.string.leaderboard_scoreboard), score);
+
+        // Submit any achievements
+        AchievementProvider.getInstance().check(mGoogleApiClient);
     }
 
     private void showGmsError(int errorCode) {
