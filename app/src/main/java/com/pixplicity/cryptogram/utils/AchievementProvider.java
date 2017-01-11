@@ -13,7 +13,7 @@ public class AchievementProvider {
 
     private static final String TAG = AchievementProvider.class.getSimpleName();
 
-    public static final boolean ENABLED = true;
+    public static final boolean ENABLED = false;
 
     private static final int[] ACHIEVEMENTS = new int[]{
             R.string.achievement_boned_up,

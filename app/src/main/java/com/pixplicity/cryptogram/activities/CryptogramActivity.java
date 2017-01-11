@@ -497,7 +497,9 @@ public class CryptogramActivity extends BaseActivity implements GoogleApiClient.
                     Button btAchievements = (Button) dialogView.findViewById(R.id.bt_achievements);
                     ImageView ivAchievementsComingSoon = (ImageView) dialogView.findViewById(R.id.iv_achievements_coming_soon);
                     btAchievements.setEnabled(AchievementProvider.ENABLED);
-                    ivAchievementsComingSoon.setVisibility(AchievementProvider.ENABLED ? View.GONE : View.VISIBLE);
+                    ivAchievementsComingSoon.setVisibility(AchievementProvider.ENABLED
+                            ? View.GONE
+                            : View.VISIBLE);
                     btAchievements.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View view) {
@@ -745,8 +747,10 @@ public class CryptogramActivity extends BaseActivity implements GoogleApiClient.
         long score = CryptogramProvider.getInstance(this).getTotalScore();
         Games.Leaderboards.submitScore(mGoogleApiClient, getString(R.string.leaderboard_scoreboard), score);
 
-        // Submit any achievements
-        AchievementProvider.getInstance().check(mGoogleApiClient);
+        if (AchievementProvider.ENABLED) {
+            // Submit any achievements
+            AchievementProvider.getInstance().check(mGoogleApiClient);
+        }
     }
 
     private void showGmsError(int errorCode) {
