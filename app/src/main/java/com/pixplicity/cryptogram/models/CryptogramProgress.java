@@ -323,15 +323,24 @@ public class CryptogramProgress {
         return System.currentTimeMillis() - mStartTime;
     }
 
-    public float getScore(@NonNull Cryptogram cryptogram) {
+    public boolean hasScore(@NonNull Cryptogram cryptogram) {
         long duration = getDuration();
         int excessCount = getExcessCount(cryptogram);
         if (duration == 0 || excessCount < 0) {
-            return -1;
+            return false;
         }
-        float score = Math.min(1f, (float) duration / 120f);
-        score *= (6f - getReveals()) / 6f;
-        score *= (26f - excessCount) / 26f;
+        return true;
+    }
+
+    public float getScore(@NonNull Cryptogram cryptogram) {
+        if (!hasScore(cryptogram)) {
+            return 0;
+        }
+        long duration = getDuration();
+        int excessCount = getExcessCount(cryptogram);
+        float score = Math.max(-1f, Math.min(1f, (float) duration / 120f));
+        score *= Math.max(-1f, Math.min(1f, (6f - getReveals()) / 6f));
+        score *= Math.max(-1f, Math.min(1f, (26f - excessCount) / 26f));
         return score;
     }
 

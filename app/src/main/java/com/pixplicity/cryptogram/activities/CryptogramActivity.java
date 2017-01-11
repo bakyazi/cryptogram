@@ -471,7 +471,7 @@ public class CryptogramActivity extends BaseActivity implements GoogleApiClient.
                         public void onClick(View view) {
                             dialog.dismiss();
                             startActivityForResult(
-                                    Games.Leaderboards.getAllLeaderboardsIntent(mGoogleApiClient),
+                                    Games.Leaderboards.getLeaderboardIntent(mGoogleApiClient, getString(R.string.leaderboard_scoreboard)),
                                     RC_UNUSED);
                         }
                     });
@@ -662,7 +662,7 @@ public class CryptogramActivity extends BaseActivity implements GoogleApiClient.
     }
 
     private void nextPuzzle() {
-        Cryptogram cryptogram = CryptogramProvider.getInstance(CryptogramActivity.this).getNext();
+        Cryptogram cryptogram = CryptogramProvider.getInstance(this).getNext();
         updateCryptogram(cryptogram);
     }
 
@@ -673,6 +673,8 @@ public class CryptogramActivity extends BaseActivity implements GoogleApiClient.
 
         // Allow the rating dialog to appear if needed
         mRate.check();
+
+        updateGooglePlayGames();
     }
 
     // Google Play Services
@@ -690,6 +692,8 @@ public class CryptogramActivity extends BaseActivity implements GoogleApiClient.
             displayName = p.getDisplayName();
         }
         Log.w(TAG, "onConnected(): current player is " + displayName);
+
+        updateGooglePlayGames();
     }
 
     // Google Play Services
@@ -719,6 +723,11 @@ public class CryptogramActivity extends BaseActivity implements GoogleApiClient.
                 showGmsError(0);
             }
         }
+    }
+
+    private void updateGooglePlayGames() {
+        long score = CryptogramProvider.getInstance(this).getTotalScore();
+        Games.Leaderboards.submitScore(mGoogleApiClient, getString(R.string.leaderboard_scoreboard), score);
     }
 
     private void showGmsError(int errorCode) {

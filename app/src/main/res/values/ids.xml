@@ -20,4 +20,5 @@ Save this file as res/values/games-ids.xml in your project.
     <string name="achievement_twoday_streak">CgkIspmJq5MfEAIQCg</string>
     <string name="achievement_threeday_streak">CgkIspmJq5MfEAIQCw</string>
     <string name="achievement_fiveday_streak">CgkIspmJq5MfEAIQDA</string>
+    <string name="leaderboard_scoreboard">CgkIspmJq5MfEAIQDw</string>
 </resources>

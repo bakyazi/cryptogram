@@ -129,6 +129,21 @@ public class CryptogramProvider {
         return mCryptograms[index];
     }
 
+    public long getTotalScore() {
+        long score = 0;
+        for (Cryptogram cryptogram : mCryptograms) {
+            if (!cryptogram.isCompleted()) {
+                continue;
+            }
+            CryptogramProgress progress = cryptogram.getProgress();
+            if (!progress.hasScore(cryptogram)) {
+                continue;
+            }
+            score += Math.round(100f * progress.getScore(cryptogram));
+        }
+        return score;
+    }
+
     @NonNull
     public SparseArray<CryptogramProgress> getProgress() {
         if (mCryptogramProgress == null) {
