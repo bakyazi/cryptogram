@@ -119,6 +119,7 @@
             style="@style/InfoTextView"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginTop="24dp"
             android:text="@string/title_artwork"
             android:textStyle="bold"/>
 

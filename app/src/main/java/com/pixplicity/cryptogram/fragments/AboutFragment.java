@@ -41,6 +41,9 @@ public class AboutFragment extends BaseFragment {
     @BindView(R.id.licenses)
     protected TextView mTvLicenses;
 
+    @BindView(R.id.artwork)
+    protected TextView mTvArtwork;
+
     @BindView(R.id.bt_website)
     protected Button mBtWebsite;
 
@@ -79,6 +82,11 @@ public class AboutFragment extends BaseFragment {
         mTvLicenses.setMovementMethod(LinkMovementMethod.getInstance());
         mTvLicenses.setText(
                 HtmlCompat.fromHtml(getString(R.string.licenses)));
+
+        // Artwork
+        mTvArtwork.setMovementMethod(LinkMovementMethod.getInstance());
+        mTvArtwork.setText(
+                HtmlCompat.fromHtml(getString(R.string.artwork)));
 
         // Website
         final View.OnClickListener launchWebsite = new View.OnClickListener() {
