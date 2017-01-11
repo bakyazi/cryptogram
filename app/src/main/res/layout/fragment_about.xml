@@ -123,11 +123,11 @@
             android:textStyle="bold"/>
 
         <TextView
-            android:id="@+id/disclaimer"
+            android:id="@+id/artwork"
             style="@style/InfoTextView"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="@string/disclaimer"
+            android:text="@string/artwork"
             tools:targetApi="ice_cream_sandwich"/>
 
     </LinearLayout>
