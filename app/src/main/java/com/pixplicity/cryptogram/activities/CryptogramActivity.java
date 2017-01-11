@@ -288,6 +288,13 @@ public class CryptogramActivity extends BaseActivity implements GoogleApiClient.
     }
 
     @Override
+    protected void onStart() {
+        super.onStart();
+
+        mGoogleApiClient.connect();
+    }
+
+    @Override
     protected void onResume() {
         super.onResume();
 
@@ -374,7 +381,6 @@ public class CryptogramActivity extends BaseActivity implements GoogleApiClient.
 
     private void onCryptogramReady() {
         mCryptogramView.requestFocus();
-        mGoogleApiClient.connect();
     }
 
     public void onCryptogramUpdated(Cryptogram cryptogram) {
