@@ -495,9 +495,6 @@ public class CryptogramActivity extends BaseActivity implements GoogleApiClient.
                     });
 
                     Button btAchievements = (Button) dialogView.findViewById(R.id.bt_achievements);
-                    ImageView ivAchievementsComingSoon = (ImageView) dialogView.findViewById(R.id.iv_achievements_coming_soon);
-                    btAchievements.setEnabled(AchievementProvider.ENABLED);
-                    ivAchievementsComingSoon.setVisibility(AchievementProvider.ENABLED ? View.GONE : View.VISIBLE);
                     btAchievements.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View view) {

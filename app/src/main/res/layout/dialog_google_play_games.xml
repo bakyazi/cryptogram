@@ -21,31 +21,16 @@
             android:text="@string/google_play_games_leaderboards"
             tools:targetApi="m"/>
 
-        <FrameLayout
-            android:layout_height="match_parent">
-
-            <android.support.v7.widget.AppCompatButton
-                android:id="@+id/bt_achievements"
-                style="@style/Widget.AppCompat.Button.Borderless"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:drawablePadding="8dp"
-                android:drawableTint="@color/colorAccentDisabled"
-                android:drawableTop="@drawable/games_achievements"
-                android:enabled="false"
-                android:padding="24dp"
-                android:text="@string/google_play_games_achievements"
-                tools:targetApi="m"/>
-
-            <ImageView
-                android:id="@+id/iv_achievements_coming_soon"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="top|right"
-                android:src="@drawable/coming_soon"
-                tools:ignore="RtlHardcoded"/>
-
-        </FrameLayout>
+        <android.support.v7.widget.AppCompatButton
+            android:id="@+id/bt_achievements"
+            style="@style/Widget.AppCompat.Button.Borderless"
+            android:layout_height="match_parent"
+            android:drawablePadding="8dp"
+            android:drawableTint="@color/colorAccent"
+            android:drawableTop="@drawable/games_achievements"
+            android:padding="24dp"
+            android:text="@string/google_play_games_achievements"
+            tools:targetApi="m"/>
 
     </TableRow>
 
