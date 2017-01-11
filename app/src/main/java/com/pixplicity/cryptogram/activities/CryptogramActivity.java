@@ -21,9 +21,9 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.afollestad.easyvideoplayer.EasyVideoCallback;
 import com.afollestad.easyvideoplayer.EasyVideoPlayer;
@@ -59,6 +59,7 @@ public class CryptogramActivity extends BaseActivity implements GoogleApiClient.
 
     private static final String TAG = CryptogramActivity.class.getSimpleName();
 
+    private static final int RC_UNUSED = 1000;
     private static final int RC_SIGN_IN = 1001;
 
     @BindView(R.id.rv_drawer)
@@ -316,7 +317,7 @@ public class CryptogramActivity extends BaseActivity implements GoogleApiClient.
     protected void onStop() {
         super.onStop();
 
-        if (mGoogleApiClient != null && mGoogleApiClient.isConnected()) {
+        if (mGoogleApiClient.isConnected()) {
             mGoogleApiClient.disconnect();
         }
     }
@@ -457,8 +458,47 @@ public class CryptogramActivity extends BaseActivity implements GoogleApiClient.
         final Cryptogram cryptogram = mCryptogramView.getCryptogram();
         switch (item.getItemId()) {
             case R.id.action_google_play_games: {
-                if (mGoogleApiClient != null && mGoogleApiClient.isConnected()) {
+                if (mGoogleApiClient.isConnected()) {
                     // Connected; show gameplay options
+                    View dialogView = LayoutInflater.from(this).inflate(R.layout.dialog_google_play_games, null);
+                    final AlertDialog dialog = new AlertDialog.Builder(this)
+                            .setView(dialogView)
+                            .show();
+
+                    Button btLeaderboards = (Button) dialogView.findViewById(R.id.bt_leaderboards);
+                    btLeaderboards.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View view) {
+                            dialog.dismiss();
+                            startActivityForResult(
+                                    Games.Leaderboards.getAllLeaderboardsIntent(mGoogleApiClient),
+                                    RC_UNUSED);
+                        }
+                    });
+
+                    Button btAchievements = (Button) dialogView.findViewById(R.id.bt_achievements);
+                    btAchievements.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View view) {
+                            dialog.dismiss();
+                            startActivityForResult(
+                                    Games.Achievements.getAchievementsIntent(mGoogleApiClient),
+                                    RC_UNUSED);
+                        }
+                    });
+
+                    Button btSignOut = (Button) dialogView.findViewById(R.id.bt_sign_out);
+                    btSignOut.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View view) {
+                            dialog.dismiss();
+                            mSignInClicked = false;
+                            Games.signOut(mGoogleApiClient);
+                            if (mGoogleApiClient.isConnected()) {
+                                mGoogleApiClient.disconnect();
+                            }
+                        }
+                    });
                 } else {
                     // start the sign-in flow
                     mSignInClicked = true;
@@ -645,13 +685,11 @@ public class CryptogramActivity extends BaseActivity implements GoogleApiClient.
         Player p = Games.Players.getCurrentPlayer(mGoogleApiClient);
         String displayName;
         if (p == null) {
-            Log.w(TAG, "mGamesClient.getCurrentPlayer() is NULL!");
             displayName = "???";
         } else {
             displayName = p.getDisplayName();
         }
-        // TODO update UI
-        Toast.makeText(this, "Welcome, " + displayName + "!", Toast.LENGTH_SHORT).show();
+        Log.w(TAG, "onConnected(): current player is " + displayName);
     }
 
     // Google Play Services
