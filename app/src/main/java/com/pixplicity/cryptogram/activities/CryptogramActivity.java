@@ -119,7 +119,9 @@ public class CryptogramActivity extends BaseActivity implements GoogleApiClient.
     private boolean mSignInClicked = false;
 
     // Automatically start the sign-in flow when the Activity starts
-    private boolean mAutoStartSignInFlow = true;
+    private boolean mAutoStartSignInFlow = false;
+
+    private int mLastConnectionError;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -127,6 +129,13 @@ public class CryptogramActivity extends BaseActivity implements GoogleApiClient.
         setContentView(R.layout.activity_cryptogram);
 
         final CryptogramProvider cryptogramProvider = CryptogramProvider.getInstance(this);
+
+        // Create the Google Api Client with access to Games
+        mGoogleApiClient = new GoogleApiClient.Builder(this)
+                .addConnectionCallbacks(this)
+                .addOnConnectionFailedListener(this)
+                .addApi(Games.API).addScope(Games.SCOPE_GAMES)
+                .build();
 
         mRate = new Rate.Builder(this)
                 .setTriggerCount(10)
@@ -330,8 +339,7 @@ public class CryptogramActivity extends BaseActivity implements GoogleApiClient.
             if (resultCode == RESULT_OK) {
                 mGoogleApiClient.connect();
             } else {
-                // TODO handle error
-                Toast.makeText(this, "Failed connecting to Google Play Games (code " + resultCode + ")", Toast.LENGTH_LONG).show();
+                showGmsError(resultCode);
             }
         }
     }
@@ -365,13 +373,6 @@ public class CryptogramActivity extends BaseActivity implements GoogleApiClient.
 
     private void onCryptogramReady() {
         mCryptogramView.requestFocus();
-
-        // Create the Google Api Client with access to Games
-        mGoogleApiClient = new GoogleApiClient.Builder(this)
-                .addConnectionCallbacks(this)
-                .addOnConnectionFailedListener(this)
-                .addApi(Games.API).addScope(Games.SCOPE_GAMES)
-                .build();
         mGoogleApiClient.connect();
     }
 
@@ -455,6 +456,16 @@ public class CryptogramActivity extends BaseActivity implements GoogleApiClient.
 
         final Cryptogram cryptogram = mCryptogramView.getCryptogram();
         switch (item.getItemId()) {
+            case R.id.action_google_play_games: {
+                if (mGoogleApiClient != null && mGoogleApiClient.isConnected()) {
+                    // Connected; show gameplay options
+                } else {
+                    // start the sign-in flow
+                    mSignInClicked = true;
+                    mGoogleApiClient.connect();
+                }
+            }
+            return true;
             case R.id.action_next: {
                 if (cryptogram == null || cryptogram.isCompleted()) {
                     nextPuzzle();
@@ -624,16 +635,10 @@ public class CryptogramActivity extends BaseActivity implements GoogleApiClient.
         mRate.check();
     }
 
-    // TODO attach to button
-    public void onSignInButtonClicked() {
-        // start the sign-in flow
-        mSignInClicked = true;
-        mGoogleApiClient.connect();
-    }
-
     // Google Play Services
     @Override
     public void onConnected(@Nullable Bundle bundle) {
+        mLastConnectionError = 0;
         Log.d(TAG, "onConnected(): connected to Google APIs");
 
         // Set the greeting appropriately on main menu
@@ -664,6 +669,7 @@ public class CryptogramActivity extends BaseActivity implements GoogleApiClient.
             return;
         }
 
+        mLastConnectionError = connectionResult.getErrorCode();
         if (mSignInClicked || mAutoStartSignInFlow) {
             mAutoStartSignInFlow = false;
             mSignInClicked = false;
@@ -672,11 +678,21 @@ public class CryptogramActivity extends BaseActivity implements GoogleApiClient.
                 connectionResult.startResolutionForResult(this, RC_SIGN_IN);
             } catch (IntentSender.SendIntentException e) {
                 Crashlytics.logException(e);
+                showGmsError(0);
             }
         }
+    }
 
-        // TODO update UI
-        Toast.makeText(this, "Disconnected from Google Play Games (code " + connectionResult.getErrorCode() + ")", Toast.LENGTH_LONG).show();
+    private void showGmsError(int errorCode) {
+        new AlertDialog.Builder(this)
+                .setMessage(getString(R.string.google_play_games_connection_failure, mLastConnectionError, errorCode))
+                .setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int i) {
+                        dialog.dismiss();
+                    }
+                })
+                .show();
     }
 
 }
