@@ -52,7 +52,6 @@ public class AchievementProvider {
     }
 
     private AchievementProvider() {
-        // TODO read prefs
         mStartedInAirplaneMode = Prefs.getBoolean(KEY_STARTED_IN_AIRPLANE_MODE, false);
         mUnlockedFlightMode = Prefs.getBoolean(KEY_UNLOCKED_FLIGHT_MODE, false);
     }
@@ -110,11 +109,17 @@ public class AchievementProvider {
             if (cryptogram.getExcessCount() == 0 && cryptogram.getReveals() == 0 && !cryptogram.hadHints()) {
                 unlockedJackOfAllTrades = true;
             }
-            long duration = cryptogram.getProgress().getDuration();
-            if (duration <= 45 * 1000) {
-                unlockedNoBrainer = true;
+            long startTime = cryptogram.getProgress().getStartTime();
+            if (startTime > 0) {
+                long duration = cryptogram.getProgress().getDuration();
+                if (!cryptogram.isCompleted()) {
+                    duration = 0;
+                }
+                if (duration > 0 && duration <= 45 * 1000) {
+                    unlockedNoBrainer = true;
+                }
+                times.put(startTime, duration);
             }
-            times.put(cryptogram.getProgress().getStartTime(), duration);
         }
         int longestStreak = longestStreak(times);
         for (int achievementResId : ACHIEVEMENTS) {
@@ -224,14 +229,18 @@ public class AchievementProvider {
         }
     }
 
-    private boolean hasSeries(SortedMap<Long, Long> times, int length, int duration) {
+    private boolean hasSeries(SortedMap<Long, Long> times, int length, int seriesDuration) {
         Long[] keys = new Long[times.size()];
         times.keySet().toArray(keys);
         for (int i = length; i < times.size(); i++) {
             long start = keys[i - length];
-            long finish = keys[i] + times.get(keys[i]);
+            long duration = times.get(keys[i]);
+            if (duration == 0) {
+                continue;
+            }
+            long finish = keys[i] + duration;
             long curDuration = finish - start;
-            if (curDuration <= duration) {
+            if (curDuration <= seriesDuration) {
                 return true;
             }
         }
@@ -241,8 +250,8 @@ public class AchievementProvider {
     private int longestStreak(SortedMap<Long, Long> times) {
         int streak = 0, bestStreak = 0;
         Calendar lastCalendar = null;
-        for (long time : times.keySet()) {
-            Calendar calendar = toCalendar(time);
+        for (long start : times.keySet()) {
+            Calendar calendar = toCalendar(start);
             if (lastCalendar == null) {
                 // First puzzle
                 streak = 1;
