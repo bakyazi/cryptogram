@@ -26,6 +26,7 @@ import com.afollestad.easyvideoplayer.EasyVideoPlayer;
 import com.afollestad.materialdialogs.DialogAction;
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.afollestad.materialdialogs.internal.MDButton;
+import com.pixplicity.cryptogram.BuildConfig;
 import com.pixplicity.cryptogram.CryptogramApp;
 import com.pixplicity.cryptogram.R;
 import com.pixplicity.cryptogram.adapters.CryptogramAdapter;
@@ -385,6 +386,10 @@ public class CryptogramActivity extends BaseActivity {
             MenuItem item = menu.findItem(R.id.action_show_hints);
             item.setChecked(PrefsUtils.getShowHints());
         }
+        {
+            MenuItem item = menu.findItem(R.id.action_reveal_puzzle);
+            item.setVisible(BuildConfig.DEBUG);
+        }
         return true;
     }
 
@@ -439,6 +444,17 @@ public class CryptogramActivity extends BaseActivity {
                                 }
                             })
                             .show();
+                }
+            }
+            return true;
+            case R.id.action_reveal_puzzle: {
+                if (BuildConfig.DEBUG) {
+                    if (cryptogram != null) {
+                        cryptogram.revealPuzzle();
+                    }
+                    mCryptogramView.invalidate();
+                } else {
+                    throw new IllegalStateException("Only applicable to debug builds");
                 }
             }
             return true;

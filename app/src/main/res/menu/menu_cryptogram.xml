@@ -18,6 +18,14 @@
         app:showAsAction="never"/>
 
     <item
+        android:id="@+id/action_reveal_puzzle"
+        android:icon="@drawable/ic_reveal"
+        android:orderInCategory="201"
+        android:visible="false"
+        android:title="@string/reveal_puzzle"
+        app:showAsAction="never"/>
+
+    <item
         android:id="@+id/action_reset"
         android:icon="@drawable/ic_reset"
         android:orderInCategory="205"

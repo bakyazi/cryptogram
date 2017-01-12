@@ -191,7 +191,7 @@ public class CryptogramView extends TextView {
 
     private boolean onKeyPress(char c) {
         if (mCryptogram != null && !mCryptogram.isCompleted()) {
-            if (setCharacterMapping(getSelectedCharacter(), c)) {
+            if (setUserChar(getSelectedCharacter(), c)) {
                 // Answer filled in; clear the selection
                 setSelectedCharacter((char) 0);
             } else {
@@ -277,7 +277,7 @@ public class CryptogramView extends TextView {
         return mSelectedCharacter != 0;
     }
 
-    public boolean setCharacterMapping(char selectedChar, char userChar) {
+    public boolean setUserChar(char selectedChar, char userChar) {
         if (selectedChar != 0 && mCryptogram != null) {
             if (mCryptogram.isRevealed(selectedChar)) {
                 // This character was already revealed; don't allow the user to alter it
@@ -312,7 +312,7 @@ public class CryptogramView extends TextView {
         if (mCryptogram != null) {
             mCryptogram.reveal(c);
         }
-        return setCharacterMapping(c, c);
+        return setUserChar(c, c);
     }
 
     public void reset() {
