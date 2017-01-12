@@ -11,6 +11,9 @@ import com.pixplicity.cryptogram.R;
 import com.pixplicity.cryptogram.models.Cryptogram;
 import com.pixplicity.easyprefs.library.Prefs;
 
+import java.util.SortedMap;
+import java.util.TreeMap;
+
 public class AchievementProvider {
 
     private static final String TAG = AchievementProvider.class.getSimpleName();
@@ -98,8 +101,11 @@ public class AchievementProvider {
     public void check(GoogleApiClient googleApiClient) {
         CryptogramApp context = CryptogramApp.getInstance();
 
+        SortedMap<Long, Long> times = new TreeMap<>();
+
         int completed = 0, perfectScore = 0;
         boolean unlockedJackOfAllTrades = false;
+        boolean unlockedNoBrainer = false;
         for (Cryptogram cryptogram : CryptogramProvider.getInstance(context).getAll()) {
             if (cryptogram.isCompleted()) {
                 completed++;
@@ -110,6 +116,11 @@ public class AchievementProvider {
             if (cryptogram.getExcessCount() == 0 && cryptogram.getReveals() == 0 && !cryptogram.hadHints()) {
                 unlockedJackOfAllTrades = true;
             }
+            long duration = cryptogram.getProgress().getDuration();
+            if (duration <= 45 * 1000) {
+                unlockedNoBrainer = true;
+            }
+            times.put(cryptogram.getProgress().getStartTime(), duration);
         }
         for (int achievementResId : ACHIEVEMENTS) {
             switch (achievementResId) {
@@ -164,6 +175,9 @@ public class AchievementProvider {
                 break;
                 case R.string.achievement_nobrainer: {
                     // Breeze through a puzzle in 45 seconds or less.
+                    if (unlockedNoBrainer) {
+                        unlock(context, googleApiClient, achievementResId);
+                    }
                 }
                 break;
                 case R.string.achievement_hope_youre_comfortable: {

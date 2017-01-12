@@ -316,6 +316,13 @@ public class CryptogramProgress {
         mStopTime = stopTime;
     }
 
+    public long getStartTime() {
+        if (mStartTime == null || mStartTime == 0) {
+            return 0;
+        }
+        return mStartTime;
+    }
+
     public long getDuration() {
         if (mStartTime == null || mStartTime == 0) {
             return 0;
