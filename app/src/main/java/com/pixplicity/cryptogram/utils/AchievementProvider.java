@@ -2,7 +2,6 @@ package com.pixplicity.cryptogram.utils;
 
 import android.content.Context;
 import android.support.annotation.NonNull;
-import android.widget.Toast;
 
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.games.Games;
@@ -70,9 +69,6 @@ public class AchievementProvider {
      */
     public void onCryptogramStart(GoogleApiClient googleApiClient) {
         CryptogramApp context = CryptogramApp.getInstance();
-        Toast.makeText(context,
-                "start at " + System.currentTimeMillis(),
-                Toast.LENGTH_SHORT).show();
 
         mStartedInAirplaneMode = SystemUtils.isAirplaneModeOn(context);
 
@@ -86,9 +82,6 @@ public class AchievementProvider {
      */
     public void onCryptogramCompleted(GoogleApiClient googleApiClient) {
         CryptogramApp context = CryptogramApp.getInstance();
-        Toast.makeText(context,
-                "complete at " + System.currentTimeMillis(),
-                Toast.LENGTH_SHORT).show();
 
         if (mStartedInAirplaneMode && SystemUtils.isAirplaneModeOn(context)) {
             mUnlockedFlightMode = true;
@@ -246,7 +239,7 @@ public class AchievementProvider {
     }
 
     private int longestStreak(SortedMap<Long, Long> times) {
-        int streak = 0;
+        int streak = 0, bestStreak = 0;
         Calendar lastCalendar = null;
         for (long time : times.keySet()) {
             Calendar calendar = toCalendar(time);
@@ -262,12 +255,15 @@ public class AchievementProvider {
                     // Puzzle made on subsequent day
                     streak++;
                 } else {
+                    // Puzzle not on a subsequent day; reset the streak
+                    bestStreak = Math.max(bestStreak, streak);
                     streak = 1;
                 }
             }
             lastCalendar = calendar;
         }
-        return streak;
+        bestStreak = Math.max(bestStreak, streak);
+        return bestStreak;
     }
 
     private Calendar toCalendar(long timestamp) {
