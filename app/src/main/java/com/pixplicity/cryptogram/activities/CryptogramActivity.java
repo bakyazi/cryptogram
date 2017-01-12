@@ -19,6 +19,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.TableLayout;
 import android.widget.TextView;
 
 import com.afollestad.easyvideoplayer.EasyVideoCallback;
@@ -549,6 +550,7 @@ public class CryptogramActivity extends BaseActivity {
             }
             return true;
             case R.id.action_stats: {
+                TableLayout dialogView = (TableLayout) LayoutInflater.from(this).inflate(R.layout.dialog_statistics, null);
                 if (cryptogram != null) {
                     cryptogram.save();
                 }
@@ -576,21 +578,54 @@ public class CryptogramActivity extends BaseActivity {
                 } else {
                     fastestCompletion = StringUtils.getDurationString(shortestDurationMs);
                 }
-                String stats = getString(R.string.stats_total_completed,
-                                         count,
-                                         provider.getCount())
-                        + "\n" +
-                        getString(R.string.stats_average_score,
-                                  score)
-                        + "\n" +
-                        getString(R.string.stats_fastest_completion,
-                                  fastestCompletion)
-                        + "\n" +
-                        getString(R.string.stats_total_time_spent,
-                                  StringUtils.getDurationString(totalDurationMs));
+                AchievementProvider.AchievementStats achievementStats = AchievementProvider.getInstance().getAchievementStats();
+                achievementStats.calculate(this);
+                int longestStreak = achievementStats.getLongestStreak();
+                {
+                    View view = LayoutInflater.from(this).inflate(R.layout.in_statistics_row, null);
+                    ((TextView) view.findViewById(R.id.tv_label)).setText(R.string.stats_total_completed_label);
+                    ((TextView) view.findViewById(R.id.tv_value)).setText(
+                            getString(R.string.stats_total_completed_value,
+                                      count,
+                                      provider.getCount()));
+                    dialogView.addView(view);
+                }
+                {
+                    View view = LayoutInflater.from(this).inflate(R.layout.in_statistics_row, null);
+                    ((TextView) view.findViewById(R.id.tv_label)).setText(R.string.stats_average_score_label);
+                    ((TextView) view.findViewById(R.id.tv_value)).setText(
+                            getString(R.string.stats_average_score_value,
+                                      score));
+                    dialogView.addView(view);
+                }
+                {
+                    View view = LayoutInflater.from(this).inflate(R.layout.in_statistics_row, null);
+                    ((TextView) view.findViewById(R.id.tv_label)).setText(R.string.stats_fastest_completion_label);
+                    ((TextView) view.findViewById(R.id.tv_value)).setText(
+                            getString(R.string.stats_fastest_completion_value,
+                                      fastestCompletion));
+                    dialogView.addView(view);
+                }
+                {
+                    View view = LayoutInflater.from(this).inflate(R.layout.in_statistics_row, null);
+                    ((TextView) view.findViewById(R.id.tv_label)).setText(R.string.stats_total_time_spent_label);
+                    ((TextView) view.findViewById(R.id.tv_value)).setText(
+                            getString(R.string.stats_total_time_spent_value,
+                                      StringUtils.getDurationString(totalDurationMs)));
+                    dialogView.addView(view);
+                }
+                {
+                    View view = LayoutInflater.from(this).inflate(R.layout.in_statistics_row, null);
+                    ((TextView) view.findViewById(R.id.tv_label)).setText(R.string.stats_longest_streak_label);
+                    ((TextView) view.findViewById(R.id.tv_value)).setText(
+                            getString(R.string.stats_longest_streak_value,
+                                      longestStreak,
+                                      getResources().getQuantityString(R.plurals.days, longestStreak)));
+                    dialogView.addView(view);
+                }
                 new AlertDialog.Builder(this)
                         .setTitle(R.string.statistics)
-                        .setMessage(stats)
+                        .setView(dialogView)
                         .setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialogInterface, int i) {
