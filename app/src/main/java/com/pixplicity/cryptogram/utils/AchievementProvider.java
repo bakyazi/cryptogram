@@ -182,26 +182,44 @@ public class AchievementProvider {
                 break;
                 case R.string.achievement_hope_youre_comfortable: {
                     // Complete five puzzles in ten minutes.
+                    if (hasSeries(times, 5, 10 * 60 * 1000)) {
+                        unlock(context, googleApiClient, achievementResId);
+                    }
                 }
                 break;
                 case R.string.achievement_hope_youre_really_comfortable: {
                     // Complete ten puzzles in thirty minutes.
+                    if (hasSeries(times, 10, 30 * 60 * 1000)) {
+                        unlock(context, googleApiClient, achievementResId);
+                    }
                 }
                 break;
                 case R.string.achievement_zen_master: {
                     // Complete twenty puzzles in an hour.
+                    if (hasSeries(times, 20, 60 * 60 * 1000)) {
+                        unlock(context, googleApiClient, achievementResId);
+                    }
                 }
                 break;
                 case R.string.achievement_twoday_streak: {
                     // Play for two consecutive days.
+                    if (longestStreak(times) >= 2) {
+                        unlock(context, googleApiClient, achievementResId);
+                    }
                 }
                 break;
                 case R.string.achievement_threeday_streak: {
                     // Play for three consecutive days.
+                    if (longestStreak(times) >= 3) {
+                        unlock(context, googleApiClient, achievementResId);
+                    }
                 }
                 break;
                 case R.string.achievement_fiveday_streak: {
                     // Play for five consecutive days.
+                    if (longestStreak(times) >= 5) {
+                        unlock(context, googleApiClient, achievementResId);
+                    }
                 }
                 break;
                 default:
@@ -211,7 +229,26 @@ public class AchievementProvider {
         }
     }
 
-    public void unlock(Context context, GoogleApiClient googleApiClient, int achievementResId) {
+    private boolean hasSeries(SortedMap<Long, Long> times, int length, int duration) {
+        Long[] keys = new Long[times.size()];
+        times.keySet().toArray(keys);
+        for (int i = length; i < times.size(); i++) {
+            long start = keys[i - length];
+            long finish = keys[i] + times.get(keys[i]);
+            long curDuration = finish - start;
+            if (curDuration <= duration) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    private int longestStreak(SortedMap<Long, Long> times) {
+        // TODO
+        return 0;
+    }
+
+    private void unlock(Context context, GoogleApiClient googleApiClient, int achievementResId) {
         String achievementId = context.getString(achievementResId);
         Games.Achievements.unlock(googleApiClient, achievementId);
     }
