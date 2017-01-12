@@ -94,7 +94,7 @@
             android:textStyle="bold"/>
 
         <TextView
-            android:id="@+id/disclaimer"
+            android:id="@+id/tv_disclaimer"
             style="@style/InfoTextView"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -109,7 +109,7 @@
             android:textStyle="bold"/>
 
         <TextView
-            android:id="@+id/licenses"
+            android:id="@+id/tv_licenses"
             style="@style/InfoTextView"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
