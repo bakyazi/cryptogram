@@ -31,7 +31,8 @@ public class Cryptogram {
     private CryptogramProgress mProgress;
     private boolean mLoadedProgress;
 
-    public Cryptogram() {}
+    public Cryptogram() {
+    }
 
     public static class Mock extends Cryptogram {
 
@@ -116,6 +117,15 @@ public class Cryptogram {
         save();
     }
 
+    public boolean hasUserChars() {
+        for (Character c : getUserChars()) {
+            if (c != 0) {
+                return true;
+            }
+        }
+        return false;
+    }
+
     public boolean isInputChar(char c) {
         return (c >= 'a' && c <= 'z') || (c >= 'A' && c <= 'Z');
     }
@@ -154,6 +164,14 @@ public class Cryptogram {
 
     public float getScore() {
         return getProgress().getScore(this);
+    }
+
+    public void setHadHints(boolean hadHints) {
+        getProgress().setHadHints(hadHints);
+    }
+
+    public boolean hadHints() {
+        return getProgress().hadHints();
     }
 
     public void onResume() {

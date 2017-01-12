@@ -13,7 +13,7 @@ Save this file as res/values/games-ids.xml in your project.
     <string name="achievement_flight_mode">CgkIspmJq5MfEAIQCQ</string>
     <string name="achievement_its_the_bees_knees">CgkIspmJq5MfEAIQCA</string>
     <string name="achievement_cream_of_the_crop">CgkIspmJq5MfEAIQDQ</string>
-    <string name="achievement_man_of_all_trades">CgkIspmJq5MfEAIQBw</string>
+    <string name="achievement_jack_of_all_trades">CgkIspmJq5MfEAIQBw</string>
     <string name="achievement_hope_youre_comfortable">CgkIspmJq5MfEAIQAw</string>
     <string name="achievement_hope_youre_really_comfortable">CgkIspmJq5MfEAIQBA</string>
     <string name="achievement_zen_master">CgkIspmJq5MfEAIQBQ</string>

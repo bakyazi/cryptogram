@@ -42,6 +42,7 @@ import com.pixplicity.cryptogram.events.CryptogramEvent;
 import com.pixplicity.cryptogram.models.Cryptogram;
 import com.pixplicity.cryptogram.utils.AchievementProvider;
 import com.pixplicity.cryptogram.utils.CryptogramProvider;
+import com.pixplicity.cryptogram.utils.LeaderboardProvider;
 import com.pixplicity.cryptogram.utils.PrefsUtils;
 import com.pixplicity.cryptogram.views.CryptogramView;
 import com.pixplicity.cryptogram.views.HintView;
@@ -196,7 +197,7 @@ public class CryptogramActivity extends BaseActivity implements GoogleApiClient.
                 videoH = 962;
                 break;
             default:
-                onCryptogramReady();
+                onGameplayReady();
                 return;
         }
 
@@ -380,7 +381,7 @@ public class CryptogramActivity extends BaseActivity implements GoogleApiClient.
         }
     }
 
-    private void onCryptogramReady() {
+    private void onGameplayReady() {
         mCryptogramView.requestFocus();
     }
 
@@ -423,8 +424,19 @@ public class CryptogramActivity extends BaseActivity implements GoogleApiClient.
                         score * 100));
             }
         } else {
+            if (PrefsUtils.getShowHints() && cryptogram.hasUserChars()) {
+                cryptogram.setHadHints(true);
+            }
             mHintView.setVisibility(PrefsUtils.getShowHints() ? View.VISIBLE : View.GONE);
             mVgStats.setVisibility(View.GONE);
+        }
+    }
+
+    @Subscribe
+    public void onCryptogramStarted(CryptogramEvent.CryptogramStartedEvent event) {
+        if (mGoogleApiClient.isConnected()) {
+            // Submit any achievements
+            AchievementProvider.getInstance().onCryptogramStart(mGoogleApiClient);
         }
     }
 
@@ -436,7 +448,13 @@ public class CryptogramActivity extends BaseActivity implements GoogleApiClient.
         // Allow the rating dialog to appear if needed
         mRate.check();
 
-        updateGooglePlayGames();
+        if (mGoogleApiClient.isConnected()) {
+            // Submit score
+            LeaderboardProvider.getInstance().submit(mGoogleApiClient);
+
+            // Submit any achievements
+            AchievementProvider.getInstance().onCryptogramCompleted(mGoogleApiClient);
+        }
     }
 
     @Override
@@ -700,7 +718,13 @@ public class CryptogramActivity extends BaseActivity implements GoogleApiClient.
         }
         Log.w(TAG, "onConnected(): current player is " + displayName);
 
-        updateGooglePlayGames();
+        if (mGoogleApiClient.isConnected()) {
+            // Submit score
+            LeaderboardProvider.getInstance().submit(mGoogleApiClient);
+
+            // Submit any achievements
+            AchievementProvider.getInstance().check(mGoogleApiClient);
+        }
     }
 
     // Google Play Services
@@ -730,20 +754,6 @@ public class CryptogramActivity extends BaseActivity implements GoogleApiClient.
                 showGmsError(0);
             }
         }
-    }
-
-    private void updateGooglePlayGames() {
-        if (!mGoogleApiClient.isConnected()) {
-            // Nothing to do since we're not connected
-            return;
-        }
-
-        // Submit score
-        long score = CryptogramProvider.getInstance(this).getTotalScore();
-        Games.Leaderboards.submitScore(mGoogleApiClient, getString(R.string.leaderboard_scoreboard), score);
-
-        // Submit any achievements
-        AchievementProvider.getInstance().check(mGoogleApiClient);
     }
 
     private void showGmsError(int errorCode) {

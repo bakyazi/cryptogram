@@ -2,12 +2,14 @@ package com.pixplicity.cryptogram.utils;
 
 import android.content.Context;
 import android.support.annotation.NonNull;
+import android.widget.Toast;
 
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.games.Games;
 import com.pixplicity.cryptogram.CryptogramApp;
 import com.pixplicity.cryptogram.R;
 import com.pixplicity.cryptogram.models.Cryptogram;
+import com.pixplicity.easyprefs.library.Prefs;
 
 public class AchievementProvider {
 
@@ -21,7 +23,7 @@ public class AchievementProvider {
             R.string.achievement_flight_mode,
             R.string.achievement_its_the_bees_knees,
             R.string.achievement_cream_of_the_crop,
-            R.string.achievement_man_of_all_trades,
+            R.string.achievement_jack_of_all_trades,
             R.string.achievement_hope_youre_comfortable,
             R.string.achievement_hope_youre_really_comfortable,
             R.string.achievement_zen_master,
@@ -30,7 +32,13 @@ public class AchievementProvider {
             R.string.achievement_fiveday_streak,
             };
 
+    private static final String KEY_STARTED_IN_AIRPLANE_MODE = "started_in_airplane_mode";
+    private static final String KEY_UNLOCKED_FLIGHT_MODE = "unlocked_flight_mode";
+
     private static AchievementProvider sInstance;
+
+    private boolean mStartedInAirplaneMode;
+    private boolean mUnlockedFlightMode;
 
     @NonNull
     public static AchievementProvider getInstance() {
@@ -42,26 +50,65 @@ public class AchievementProvider {
 
     private AchievementProvider() {
         // TODO read prefs
-        //Prefs.getBoolean(...);
+        mStartedInAirplaneMode = Prefs.getBoolean(KEY_STARTED_IN_AIRPLANE_MODE, false);
+        mUnlockedFlightMode = Prefs.getBoolean(KEY_UNLOCKED_FLIGHT_MODE, false);
+    }
+
+    private void save() {
+        Prefs.putBoolean(KEY_STARTED_IN_AIRPLANE_MODE, mStartedInAirplaneMode);
+        Prefs.putBoolean(KEY_UNLOCKED_FLIGHT_MODE, mUnlockedFlightMode);
     }
 
     /**
-     * Update the state of any ongoing achievement checks.
+     * Register start events
+     *
+     * @param googleApiClient
      */
-    public void ping() {
-        // TODO
+    public void onCryptogramStart(GoogleApiClient googleApiClient) {
+        CryptogramApp context = CryptogramApp.getInstance();
+        Toast.makeText(context,
+                "start at " + System.currentTimeMillis(),
+                Toast.LENGTH_SHORT).show();
+
+        mStartedInAirplaneMode = SystemUtils.isAirplaneModeOn(context);
+
+        save();
+    }
+
+    /**
+     * Register completion events and perform any achievement unlocks as necessary
+     *
+     * @param googleApiClient
+     */
+    public void onCryptogramCompleted(GoogleApiClient googleApiClient) {
+        CryptogramApp context = CryptogramApp.getInstance();
+        Toast.makeText(context,
+                "complete at " + System.currentTimeMillis(),
+                Toast.LENGTH_SHORT).show();
+
+        if (mStartedInAirplaneMode && SystemUtils.isAirplaneModeOn(context)) {
+            mUnlockedFlightMode = true;
+        }
+
+        save();
+
+        check(googleApiClient);
     }
 
     public void check(GoogleApiClient googleApiClient) {
         CryptogramApp context = CryptogramApp.getInstance();
 
         int completed = 0, perfectScore = 0;
+        boolean unlockedJackOfAllTrades = false;
         for (Cryptogram cryptogram : CryptogramProvider.getInstance(context).getAll()) {
             if (cryptogram.isCompleted()) {
                 completed++;
             }
             if (cryptogram.getScore() >= 1f) {
                 perfectScore++;
+            }
+            if (cryptogram.getExcessCount() == 0 && cryptogram.getReveals() == 0 && !cryptogram.hadHints()) {
+                unlockedJackOfAllTrades = true;
             }
         }
         for (int achievementResId : ACHIEVEMENTS) {
@@ -89,6 +136,9 @@ public class AchievementProvider {
                 break;
                 case R.string.achievement_flight_mode: {
                     // Solve a puzzle in airplane mode. Isn't this the perfect game for a long flight?
+                    if (mUnlockedFlightMode) {
+                        unlock(context, googleApiClient, achievementResId);
+                    }
                 }
                 break;
                 case R.string.achievement_its_the_bees_knees: {
@@ -105,8 +155,11 @@ public class AchievementProvider {
                     }
                 }
                 break;
-                case R.string.achievement_man_of_all_trades: {
+                case R.string.achievement_jack_of_all_trades: {
                     // Solve a puzzle with no reveals or excess inputs—and without using the hint bar.
+                    if (unlockedJackOfAllTrades) {
+                        unlock(context, googleApiClient, achievementResId);
+                    }
                 }
                 break;
                 case R.string.achievement_nobrainer: {
