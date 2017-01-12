@@ -728,6 +728,9 @@ public class CryptogramActivity extends BaseActivity implements GoogleApiClient.
                 } else {
                     fastestCompletion = StringUtils.getDurationString(shortestDurationMs);
                 }
+                AchievementProvider.AchievementStats achievementStats = AchievementProvider.getInstance().getAchievementStats();
+                achievementStats.calculate(this);
+                int longestStreak = achievementStats.getLongestStreak();
                 String stats = getString(R.string.stats_total_completed,
                                          count,
                                          provider.getCount())
@@ -739,7 +742,11 @@ public class CryptogramActivity extends BaseActivity implements GoogleApiClient.
                                   fastestCompletion)
                         + "\n" +
                         getString(R.string.stats_total_time_spent,
-                                  StringUtils.getDurationString(totalDurationMs));
+                                  StringUtils.getDurationString(totalDurationMs))
+                        + "\n" +
+                        getString(R.string.stats_longest_streak,
+                                  longestStreak,
+                                  getResources().getQuantityString(R.plurals.days, longestStreak));
                 new AlertDialog.Builder(this)
                         .setTitle(R.string.statistics)
                         .setMessage(stats)

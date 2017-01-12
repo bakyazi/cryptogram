@@ -49,10 +49,29 @@
     <string name="stats_reveals">Characters revealed:</string>
     <string name="stats_score">Score:</string>
 
-    <string name="stats_total_completed">Completed %1$d of %2$d puzzles</string>
+    <string name="stats_total_completed">Completed puzzles: %1$d of %2$d</string>
     <string name="stats_average_score">Average score: %1$.1f%%</string>
     <string name="stats_fastest_completion">Fastest completion: %1$s</string>
     <string name="stats_total_time_spent">Total time played: %1$s</string>
+    <string name="stats_longest_streak">Longest streak: %1$d %2$s</string>
+
+    <!--
+    <string name="stats_total_completed_label">Completed puzzles:</string>
+    <string name="stats_total_completed_value">%1$d of %2$d</string>
+    <string name="stats_average_score_label">Average score:</string>
+    <string name="stats_average_score_value">%1$.1f%%</string>
+    <string name="stats_fastest_completion_label">Fastest completion:</string>
+    <string name="stats_fastest_completion_value">%1$s</string>
+    <string name="stats_total_time_spent_label">Total time played:</string>
+    <string name="stats_total_time_spent_value">%1$s</string>
+    <string name="stats_longest_streak_label">Longest streak:</string>
+    <string name="stats_longest_streak_value">%1$d %2$s</string>
+    -->
+
+    <plurals name="days">
+        <item quantity="one">day</item>
+        <item quantity="other">days</item>
+    </plurals>
 
     <string name="go_to_puzzle_content">Please enter the puzzle number to go to:</string>
 
