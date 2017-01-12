@@ -11,6 +11,7 @@ import com.pixplicity.cryptogram.R;
 import com.pixplicity.cryptogram.models.Cryptogram;
 import com.pixplicity.easyprefs.library.Prefs;
 
+import java.util.Calendar;
 import java.util.SortedMap;
 import java.util.TreeMap;
 
@@ -122,6 +123,7 @@ public class AchievementProvider {
             }
             times.put(cryptogram.getProgress().getStartTime(), duration);
         }
+        int longestStreak = longestStreak(times);
         for (int achievementResId : ACHIEVEMENTS) {
             switch (achievementResId) {
                 case R.string.achievement_boned_up: {
@@ -203,21 +205,21 @@ public class AchievementProvider {
                 break;
                 case R.string.achievement_twoday_streak: {
                     // Play for two consecutive days.
-                    if (longestStreak(times) >= 2) {
+                    if (longestStreak >= 2) {
                         unlock(context, googleApiClient, achievementResId);
                     }
                 }
                 break;
                 case R.string.achievement_threeday_streak: {
                     // Play for three consecutive days.
-                    if (longestStreak(times) >= 3) {
+                    if (longestStreak >= 3) {
                         unlock(context, googleApiClient, achievementResId);
                     }
                 }
                 break;
                 case R.string.achievement_fiveday_streak: {
                     // Play for five consecutive days.
-                    if (longestStreak(times) >= 5) {
+                    if (longestStreak >= 5) {
                         unlock(context, googleApiClient, achievementResId);
                     }
                 }
@@ -244,8 +246,38 @@ public class AchievementProvider {
     }
 
     private int longestStreak(SortedMap<Long, Long> times) {
-        // TODO
-        return 0;
+        int streak = 0;
+        Calendar lastCalendar = null;
+        for (long time : times.keySet()) {
+            Calendar calendar = toCalendar(time);
+            if (lastCalendar == null) {
+                // First puzzle
+                streak = 1;
+            } else if (calendar.equals(lastCalendar)) {
+                // Puzzle made on the same day
+            } else {
+                Calendar tempCalendar = (Calendar) calendar.clone();
+                tempCalendar.add(Calendar.DAY_OF_MONTH, -1);
+                if (tempCalendar.equals(lastCalendar)) {
+                    // Puzzle made on subsequent day
+                    streak++;
+                } else {
+                    streak = 1;
+                }
+            }
+            lastCalendar = calendar;
+        }
+        return streak;
+    }
+
+    private Calendar toCalendar(long timestamp) {
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTimeInMillis(timestamp);
+        calendar.set(Calendar.HOUR_OF_DAY, 0);
+        calendar.set(Calendar.MINUTE, 0);
+        calendar.set(Calendar.SECOND, 0);
+        calendar.set(Calendar.MILLISECOND, 0);
+        return calendar;
     }
 
     private void unlock(Context context, GoogleApiClient googleApiClient, int achievementResId) {
