@@ -201,12 +201,16 @@ public class CryptogramProgress {
     }
 
     public void setUserChar(@NonNull Cryptogram cryptogram, char selectedCharacter, char c) {
-        if (mInputs == null) {
-            mInputs = 1;
-        } else {
-            mInputs++;
+        char previousChar = getUserCharsMapping(cryptogram).get(selectedCharacter);
+        char userChar = Character.toUpperCase(c);
+        if (previousChar != userChar && userChar != 0) {
+            if (mInputs == null) {
+                mInputs = 1;
+            } else {
+                mInputs++;
+            }
         }
-        getUserCharsMapping(cryptogram).put(selectedCharacter, Character.toUpperCase(c));
+        getUserCharsMapping(cryptogram).put(selectedCharacter, userChar);
     }
 
     public int getExcessCount(@NonNull Cryptogram cryptogram) {
