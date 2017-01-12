@@ -714,7 +714,7 @@ public class CryptogramActivity extends BaseActivity implements GoogleApiClient.
                     long duration = c.getDuration();
                     if (c.isCompleted()) {
                         count++;
-                        score += c.getScore();
+                        score += 100f * c.getScore();
                         if (shortestDurationMs == 0 || shortestDurationMs > duration) {
                             shortestDurationMs = duration;
                         }
