@@ -48,6 +48,7 @@
 
     <string name="go_to_puzzle_content">Please enter the puzzle number to go to:</string>
 
+    <string name="feedback">Send feedback</string>
     <string name="tv_made_by">made by</string>
     <string name="pixplicity_labs">Pixplicity Labs</string>
 
