@@ -295,11 +295,6 @@ public class CryptogramActivity extends BaseActivity implements GoogleApiClient.
         super.onStart();
 
         mGoogleApiClient.connect();
-    }
-
-    @Override
-    protected void onResume() {
-        super.onResume();
 
         final CryptogramProvider cryptogramProvider = CryptogramProvider.getInstance(this);
         Cryptogram cryptogram = cryptogramProvider.getCurrent();
@@ -311,8 +306,12 @@ public class CryptogramActivity extends BaseActivity implements GoogleApiClient.
     }
 
     @Override
-    protected void onPause() {
-        super.onPause();
+    protected void onStop() {
+        super.onStop();
+
+        if (mGoogleApiClient.isConnected()) {
+            mGoogleApiClient.disconnect();
+        }
 
         final CryptogramProvider cryptogramProvider = CryptogramProvider.getInstance(this);
         Cryptogram cryptogram = cryptogramProvider.getCurrent();
@@ -321,15 +320,6 @@ public class CryptogramActivity extends BaseActivity implements GoogleApiClient.
         }
 
         CryptogramApp.getInstance().getBus().unregister(this);
-    }
-
-    @Override
-    protected void onStop() {
-        super.onStop();
-
-        if (mGoogleApiClient.isConnected()) {
-            mGoogleApiClient.disconnect();
-        }
     }
 
     @Override
