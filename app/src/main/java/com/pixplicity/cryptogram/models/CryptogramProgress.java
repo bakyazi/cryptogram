@@ -33,8 +33,16 @@ public class CryptogramProgress {
     public CryptogramProgress() {
     }
 
-    public CryptogramProgress(int id) {
-        mId = id;
+    public CryptogramProgress(@NonNull Cryptogram cryptogram) {
+        mId = cryptogram.getId();
+        // Apply mappings for any given characters
+        String given = cryptogram.getGiven();
+        if (given != null) {
+            for (int j = 0; j < given.length(); j++) {
+                char c = given.charAt(j);
+                setUserChar(cryptogram, c, c);
+            }
+        }
     }
 
     @SerializedName("id")
@@ -241,7 +249,7 @@ public class CryptogramProgress {
             HashMap<Character, Character> userChars = getUserCharsMapping(cryptogram);
             for (Character character : userChars.keySet()) {
                 // In order to be correct, the key and value must be identical
-                if (character != userChars.get(character)) {
+                if (character != userChars.get(character) && !cryptogram.isGiven(character)) {
                     mCompleted = false;
                     break;
                 }
@@ -386,14 +394,7 @@ public class CryptogramProgress {
                 i.remove();
             }
         }
-        // Apply mappings for any given or revealed characters
-        String given = cryptogram.getGiven();
-        if (given != null) {
-            for (int j = 0; j < given.length(); j++) {
-                char c = given.charAt(j);
-                setUserChar(cryptogram, c, c);
-            }
-        }
+        // Apply mappings for any revealed characters
         if (mRevealed != null) {
             for (Character c : mRevealed) {
                 setUserChar(cryptogram, c, c);
