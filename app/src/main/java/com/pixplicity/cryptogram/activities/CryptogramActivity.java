@@ -84,6 +84,9 @@ public class CryptogramActivity extends BaseActivity implements GoogleApiClient.
     @BindView(R.id.tv_google_play_games_name)
     protected TextView mTvGooglePlayGamesName;
 
+    @BindView(R.id.vg_google_play_games_actions)
+    protected ViewGroup mVgGooglePlayGamesActions;
+
     @BindView(R.id.rv_drawer)
     protected RecyclerView mRvDrawer;
 
@@ -913,11 +916,13 @@ public class CryptogramActivity extends BaseActivity implements GoogleApiClient.
             mTvGooglePlayGames.setVisibility(View.GONE);
             mTvGooglePlayGamesName.setVisibility(View.VISIBLE);
             mTvGooglePlayGamesName.setText(displayName);
+            mVgGooglePlayGamesActions.setVisibility(View.VISIBLE);
         } else {
             mIvGooglePlayGamesIcon.setVisibility(View.VISIBLE);
             mIvGooglePlayGamesAvatar.setVisibility(View.GONE);
             mTvGooglePlayGames.setVisibility(View.VISIBLE);
             mTvGooglePlayGamesName.setVisibility(View.GONE);
+            mVgGooglePlayGamesActions.setVisibility(View.GONE);
         }
     }
 
