@@ -5,6 +5,7 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 
 import com.google.gson.annotations.SerializedName;
+import com.pixplicity.cryptogram.BuildConfig;
 import com.pixplicity.cryptogram.CryptogramApp;
 import com.pixplicity.cryptogram.R;
 import com.pixplicity.cryptogram.utils.CryptogramProvider;
@@ -110,7 +111,7 @@ public class Cryptogram {
         // Ensure we've attempted to load the data
         load();
         if (mProgress == null) {
-            mProgress = new CryptogramProgress(mId);
+            mProgress = new CryptogramProgress(this);
         }
         return mProgress;
     }
@@ -157,6 +158,25 @@ public class Cryptogram {
 
     public boolean isCompleted() {
         return getProgress().isCompleted(this);
+    }
+
+    public boolean isNoScore() {
+        return mNoScore;
+    }
+
+    @Nullable
+    public String getGiven() {
+        return mGiven;
+    }
+
+    public boolean isGiven(char matchChar) {
+        if (mGiven != null) {
+            for (int j = 0; j < mGiven.length(); j++) {
+                char c = mGiven.charAt(j);
+                if (c == matchChar) return true;
+            }
+        }
+        return false;
     }
 
     public void reveal(char c) {
