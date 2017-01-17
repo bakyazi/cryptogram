@@ -200,9 +200,9 @@ public class Cryptogram {
         return getProgress().getDuration();
     }
 
-    public float getScore() {
+    public Float getScore() {
         if (isInstruction()) {
-            return 0;
+            return null;
         }
         return getProgress().getScore(this);
     }

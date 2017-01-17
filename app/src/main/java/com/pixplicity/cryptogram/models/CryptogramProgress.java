@@ -298,11 +298,15 @@ public class CryptogramProgress {
 
     private void onCompleted(@NonNull Cryptogram cryptogram) {
         int puzzleNumber = cryptogram.getNumber();
+        LevelEndEvent event = new LevelEndEvent()
+                .putLevelName("Puzzle #" + puzzleNumber)
+                .putSuccess(true);
+        Float score = getScore(cryptogram);
+        if (score != null) {
+            event.putScore(score);
+        }
         Answers.getInstance().logLevelEnd(
-                new LevelEndEvent()
-                        .putLevelName("Puzzle #" + puzzleNumber)
-                        .putScore(getScore(cryptogram))
-                        .putSuccess(true));
+                event);
 
         CryptogramApp.getInstance().getBus().post(
                 new CryptogramEvent.CryptogramCompletedEvent(cryptogram));
@@ -327,11 +331,11 @@ public class CryptogramProgress {
         return System.currentTimeMillis() - mStartTime;
     }
 
-    public float getScore(@NonNull Cryptogram cryptogram) {
+    public Float getScore(@NonNull Cryptogram cryptogram) {
         long duration = cryptogram.getDuration();
         int excessCount = getExcessCount(cryptogram);
         if (duration == 0 || excessCount < 0) {
-            return -1;
+            return null;
         }
         float score = Math.min(1f, (float) duration / 120f);
         score *= (6f - getReveals()) / 6f;

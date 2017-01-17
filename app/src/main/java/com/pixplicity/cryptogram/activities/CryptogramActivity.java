@@ -350,15 +350,13 @@ public class CryptogramActivity extends BaseActivity {
             }
             mTvStatsReveals.setText(String.valueOf(cryptogram.getReveals()));
             mVgStatsScore.setVisibility(View.GONE);
-            if (!cryptogram.isInstruction()) {
-                float score = cryptogram.getScore();
-                if (score >= 0) {
-                    mVgStatsScore.setVisibility(View.VISIBLE);
-                    mTvStatsScore.setText(String.format(
-                            Locale.ENGLISH,
-                            "%.1f%%",
-                            score * 100));
-                }
+            Float score = cryptogram.getScore();
+            if (score != null) {
+                mVgStatsScore.setVisibility(View.VISIBLE);
+                mTvStatsScore.setText(String.format(
+                        Locale.ENGLISH,
+                        "%.1f%%",
+                        score * 100));
             }
         } else {
             mHintView.setVisibility(PrefsUtils.getShowHints() ? View.VISIBLE : View.GONE);
@@ -555,22 +553,29 @@ public class CryptogramActivity extends BaseActivity {
                     cryptogram.save();
                 }
                 CryptogramProvider provider = CryptogramProvider.getInstance(this);
-                int count = 0;
+                int count = 0, scoreCount = 0;
                 float score = 0f;
                 long shortestDurationMs = 0, totalDurationMs = 0;
                 for (Cryptogram c : provider.getAll()) {
                     long duration = c.getDuration();
                     if (c.isCompleted()) {
                         count++;
-                        score += c.getScore();
+                        Float puzzleScore = c.getScore();
+                        if (puzzleScore != null) {
+                            score += puzzleScore;
+                            scoreCount++;
+                        }
                         if (shortestDurationMs == 0 || shortestDurationMs > duration) {
                             shortestDurationMs = duration;
                         }
                     }
                     totalDurationMs += duration;
                 }
-                if (count > 0) {
-                    score /= (float) count;
+                String scoreText;
+                if (scoreCount > 0) {
+                    scoreText = getString(R.string.stats_score_format, score / (float) scoreCount);
+                } else {
+                    scoreText = getString(R.string.not_applicable);
                 }
                 String fastestCompletion;
                 if (shortestDurationMs == 0) {
@@ -595,7 +600,7 @@ public class CryptogramActivity extends BaseActivity {
                     ((TextView) view.findViewById(R.id.tv_label)).setText(R.string.stats_average_score_label);
                     ((TextView) view.findViewById(R.id.tv_value)).setText(
                             getString(R.string.stats_average_score_value,
-                                      score));
+                                      scoreText));
                     dialogView.addView(view);
                 }
                 {
