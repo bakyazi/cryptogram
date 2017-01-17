@@ -358,8 +358,20 @@ public class CryptogramActivity extends BaseActivity implements GoogleApiClient.
             // Apply the puzzle to the CryptogramView
             mCryptogramView.setCryptogram(cryptogram);
             // Show other puzzle details
-            mTvAuthor.setText(getString(R.string.quote, cryptogram.getAuthor()));
-            mTvTopic.setText(getString(R.string.topic, cryptogram.getTopic()));
+            String author = cryptogram.getAuthor();
+            if (author == null) {
+                mTvAuthor.setVisibility(View.GONE);
+            } else {
+                mTvAuthor.setVisibility(View.VISIBLE);
+                mTvAuthor.setText(getString(R.string.quote, author));
+            }
+            String topic = cryptogram.getTopic();
+            if (topic == null) {
+                mTvTopic.setVisibility(View.GONE);
+            } else {
+                mTvTopic.setVisibility(View.VISIBLE);
+                mTvTopic.setText(getString(R.string.topic, topic));
+            }
             if (cryptogram.isInstruction()) {
                 mToolbar.setSubtitle(cryptogram.getTitle(this));
             } else {
