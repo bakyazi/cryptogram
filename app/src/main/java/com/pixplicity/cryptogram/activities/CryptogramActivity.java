@@ -372,7 +372,7 @@ public class CryptogramActivity extends BaseActivity implements GoogleApiClient.
                 mTvTopic.setVisibility(View.VISIBLE);
                 mTvTopic.setText(getString(R.string.topic, topic));
             }
-            if (cryptogram.isInstruction()) {
+            if (cryptogram.isInstruction() || cryptogram.isNoScore()) {
                 mToolbar.setSubtitle(cryptogram.getTitle(this));
             } else {
                 mToolbar.setSubtitle(getString(

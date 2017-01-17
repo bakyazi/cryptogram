@@ -5,7 +5,6 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 
 import com.google.gson.annotations.SerializedName;
-import com.pixplicity.cryptogram.BuildConfig;
 import com.pixplicity.cryptogram.CryptogramApp;
 import com.pixplicity.cryptogram.R;
 import com.pixplicity.cryptogram.utils.CryptogramProvider;
@@ -83,6 +82,8 @@ public class Cryptogram {
     public String getTitle(Context context) {
         if (isInstruction()) {
             return context.getString(R.string.puzzle_number_instruction);
+        } else if (isNoScore()) {
+            return context.getString(R.string.puzzle_number_practice, getNumber());
         }
         return context.getString(R.string.puzzle_number, getNumber());
     }
