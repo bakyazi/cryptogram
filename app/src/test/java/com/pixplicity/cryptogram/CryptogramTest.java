@@ -21,6 +21,11 @@ import static org.junit.Assert.assertNotEquals;
 public class CryptogramTest {
 
     @Test
+    public void validProvider() throws Exception {
+        System.out.println("Total puzzles: " + CryptogramProvider.getInstance(null).getCount());
+    }
+
+    @Test
     public void validCryptogramMapping() throws Exception {
         for (long seed = 0L; seed < 100L; seed++) {
             System.out.print("seed " + seed + ":");
