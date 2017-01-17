@@ -188,15 +188,6 @@ public class Cryptogram {
         save();
     }
 
-    public boolean isNoScore() {
-        return mNoScore;
-    }
-
-    @Nullable
-    public String getGiven() {
-        return mGiven;
-    }
-
     public boolean isRevealed(char c) {
         if (mGiven != null && mGiven.indexOf(c) > -1) {
             return true;
