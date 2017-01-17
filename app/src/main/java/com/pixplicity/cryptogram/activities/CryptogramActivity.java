@@ -573,7 +573,7 @@ public class CryptogramActivity extends BaseActivity {
                 }
                 String scoreText;
                 if (scoreCount > 0) {
-                    scoreText = getString(R.string.stats_score_format, score / (float) scoreCount);
+                    scoreText = getString(R.string.stats_score_format, score / (float) scoreCount * 100f);
                 } else {
                     scoreText = getString(R.string.not_applicable);
                 }
