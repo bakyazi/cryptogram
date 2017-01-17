@@ -56,8 +56,10 @@ public class CryptogramProvider {
             readStream(is);
         } else {
             InputStream is = this.getClass().getClassLoader().getResourceAsStream("assets/" + ASSET_FILENAME);
-            readStream(is);
-            is.close();
+            if (is != null) {
+                readStream(is);
+                is.close();
+            }
         }
     }
 

@@ -3,6 +3,7 @@ package com.pixplicity.cryptogram.models;
 import android.content.Context;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.text.TextUtils;
 
 import com.google.gson.annotations.SerializedName;
 import com.pixplicity.cryptogram.CryptogramApp;
@@ -103,7 +104,11 @@ public class Cryptogram {
     @NonNull
     public String[] getWords() {
         if (mWords == null) {
-            mWords = mText.split("\\s");
+            if (TextUtils.isEmpty(mText)) {
+                mWords = new String[0];
+            } else {
+                mWords = mText.split("\\s");
+            }
         }
         return mWords;
     }
@@ -183,7 +188,9 @@ public class Cryptogram {
         if (mGiven != null) {
             for (int j = 0; j < mGiven.length(); j++) {
                 char c = mGiven.charAt(j);
-                if (c == matchChar) return true;
+                if (c == matchChar) {
+                    return true;
+                }
             }
         }
         return false;

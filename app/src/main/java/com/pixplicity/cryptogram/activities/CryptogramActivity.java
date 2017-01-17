@@ -34,6 +34,7 @@ import com.afollestad.materialdialogs.internal.MDButton;
 import com.crashlytics.android.Crashlytics;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.api.GoogleApiClient;
+import com.google.android.gms.common.images.ImageManager;
 import com.google.android.gms.games.Games;
 import com.google.android.gms.games.Player;
 import com.pixplicity.cryptogram.BuildConfig;
@@ -59,6 +60,7 @@ import java.util.Locale;
 import java.util.concurrent.TimeUnit;
 
 import butterknife.BindView;
+import butterknife.OnClick;
 
 public class CryptogramActivity extends BaseActivity implements GoogleApiClient.ConnectionCallbacks, GoogleApiClient.OnConnectionFailedListener {
 
@@ -66,6 +68,21 @@ public class CryptogramActivity extends BaseActivity implements GoogleApiClient.
 
     private static final int RC_UNUSED = 1000;
     private static final int RC_SIGN_IN = 1001;
+
+    @BindView(R.id.iv_google_play_games_banner)
+    protected ImageView mIvGooglePlayGamesBanner;
+
+    @BindView(R.id.iv_google_play_games_icon)
+    protected ImageView mIvGooglePlayGamesIcon;
+
+    @BindView(R.id.tv_google_play_games)
+    protected TextView mTvGooglePlayGames;
+
+    @BindView(R.id.iv_google_play_games_avatar)
+    protected ImageView mIvGooglePlayGamesAvatar;
+
+    @BindView(R.id.tv_google_play_games_name)
+    protected TextView mTvGooglePlayGamesName;
 
     @BindView(R.id.rv_drawer)
     protected RecyclerView mRvDrawer;
@@ -347,6 +364,57 @@ public class CryptogramActivity extends BaseActivity implements GoogleApiClient.
         }
     }
 
+    @OnClick(R.id.vg_google_play_games)
+    protected void onClickGooglePlayGames() {
+        if (mGoogleApiClient.isConnected()) {
+            // Connected; show gameplay options
+            View dialogView = LayoutInflater.from(this).inflate(R.layout.dialog_google_play_games, null);
+            final AlertDialog dialog = new AlertDialog.Builder(this)
+                    .setView(dialogView)
+                    .show();
+
+            Button btLeaderboards = (Button) dialogView.findViewById(R.id.bt_leaderboards);
+            btLeaderboards.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    dialog.dismiss();
+                    startActivityForResult(
+                            Games.Leaderboards.getLeaderboardIntent(mGoogleApiClient, getString(R.string.leaderboard_scoreboard)),
+                            RC_UNUSED);
+                }
+            });
+
+            Button btAchievements = (Button) dialogView.findViewById(R.id.bt_achievements);
+            btAchievements.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    dialog.dismiss();
+                    startActivityForResult(
+                            Games.Achievements.getAchievementsIntent(mGoogleApiClient),
+                            RC_UNUSED);
+                }
+            });
+
+            Button btSignOut = (Button) dialogView.findViewById(R.id.bt_sign_out);
+            btSignOut.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    dialog.dismiss();
+                    mSignInClicked = false;
+                    Games.signOut(mGoogleApiClient);
+                    if (mGoogleApiClient.isConnected()) {
+                        mGoogleApiClient.disconnect();
+                    }
+                    updateGooglePlayGames();
+                }
+            });
+        } else {
+            // start the sign-in flow
+            mSignInClicked = true;
+            mGoogleApiClient.connect();
+        }
+    }
+
     private void updateCryptogram(Cryptogram cryptogram) {
         if (cryptogram != null) {
             CryptogramProvider provider = CryptogramProvider.getInstance(this);
@@ -500,52 +568,7 @@ public class CryptogramActivity extends BaseActivity implements GoogleApiClient.
         final Cryptogram cryptogram = mCryptogramView.getCryptogram();
         switch (item.getItemId()) {
             case R.id.action_google_play_games: {
-                if (mGoogleApiClient.isConnected()) {
-                    // Connected; show gameplay options
-                    View dialogView = LayoutInflater.from(this).inflate(R.layout.dialog_google_play_games, null);
-                    final AlertDialog dialog = new AlertDialog.Builder(this)
-                            .setView(dialogView)
-                            .show();
-
-                    Button btLeaderboards = (Button) dialogView.findViewById(R.id.bt_leaderboards);
-                    btLeaderboards.setOnClickListener(new View.OnClickListener() {
-                        @Override
-                        public void onClick(View view) {
-                            dialog.dismiss();
-                            startActivityForResult(
-                                    Games.Leaderboards.getLeaderboardIntent(mGoogleApiClient, getString(R.string.leaderboard_scoreboard)),
-                                    RC_UNUSED);
-                        }
-                    });
-
-                    Button btAchievements = (Button) dialogView.findViewById(R.id.bt_achievements);
-                    btAchievements.setOnClickListener(new View.OnClickListener() {
-                        @Override
-                        public void onClick(View view) {
-                            dialog.dismiss();
-                            startActivityForResult(
-                                    Games.Achievements.getAchievementsIntent(mGoogleApiClient),
-                                    RC_UNUSED);
-                        }
-                    });
-
-                    Button btSignOut = (Button) dialogView.findViewById(R.id.bt_sign_out);
-                    btSignOut.setOnClickListener(new View.OnClickListener() {
-                        @Override
-                        public void onClick(View view) {
-                            dialog.dismiss();
-                            mSignInClicked = false;
-                            Games.signOut(mGoogleApiClient);
-                            if (mGoogleApiClient.isConnected()) {
-                                mGoogleApiClient.disconnect();
-                            }
-                        }
-                    });
-                } else {
-                    // start the sign-in flow
-                    mSignInClicked = true;
-                    mGoogleApiClient.connect();
-                }
+                onClickGooglePlayGames();
             }
             return true;
             case R.id.action_next: {
@@ -665,7 +688,7 @@ public class CryptogramActivity extends BaseActivity implements GoogleApiClient.
                                     Cryptogram cryptogram = provider.getByNumber(puzzleNumber);
                                     if (cryptogram == null) {
                                         Snackbar.make(mVgContent, getString(R.string.puzzle_nonexistant, puzzleNumber),
-                                                      Snackbar.LENGTH_SHORT).show();
+                                                Snackbar.LENGTH_SHORT).show();
                                     } else {
                                         updateCryptogram(cryptogram);
                                     }
@@ -751,8 +774,8 @@ public class CryptogramActivity extends BaseActivity implements GoogleApiClient.
                     ((TextView) view.findViewById(R.id.tv_label)).setText(R.string.stats_total_completed_label);
                     ((TextView) view.findViewById(R.id.tv_value)).setText(
                             getString(R.string.stats_total_completed_value,
-                                      count,
-                                      provider.getCount()));
+                                    count,
+                                    provider.getCount()));
                     dialogView.addView(view);
                 }
                 {
@@ -760,7 +783,7 @@ public class CryptogramActivity extends BaseActivity implements GoogleApiClient.
                     ((TextView) view.findViewById(R.id.tv_label)).setText(R.string.stats_average_score_label);
                     ((TextView) view.findViewById(R.id.tv_value)).setText(
                             getString(R.string.stats_average_score_value,
-                                      scoreAverageText));
+                                    scoreAverageText));
                     dialogView.addView(view);
                 }
                 {
@@ -768,7 +791,7 @@ public class CryptogramActivity extends BaseActivity implements GoogleApiClient.
                     ((TextView) view.findViewById(R.id.tv_label)).setText(R.string.stats_cumulative_score_label);
                     ((TextView) view.findViewById(R.id.tv_value)).setText(
                             getString(R.string.stats_cumulative_score_value,
-                                      scoreCumulativeText));
+                                    scoreCumulativeText));
                     dialogView.addView(view);
                 }
                 {
@@ -776,7 +799,7 @@ public class CryptogramActivity extends BaseActivity implements GoogleApiClient.
                     ((TextView) view.findViewById(R.id.tv_label)).setText(R.string.stats_fastest_completion_label);
                     ((TextView) view.findViewById(R.id.tv_value)).setText(
                             getString(R.string.stats_fastest_completion_value,
-                                      fastestCompletion));
+                                    fastestCompletion));
                     dialogView.addView(view);
                 }
                 {
@@ -784,7 +807,7 @@ public class CryptogramActivity extends BaseActivity implements GoogleApiClient.
                     ((TextView) view.findViewById(R.id.tv_label)).setText(R.string.stats_total_time_spent_label);
                     ((TextView) view.findViewById(R.id.tv_value)).setText(
                             getString(R.string.stats_total_time_spent_value,
-                                      StringUtils.getDurationString(totalDurationMs)));
+                                    StringUtils.getDurationString(totalDurationMs)));
                     dialogView.addView(view);
                 }
                 {
@@ -792,8 +815,8 @@ public class CryptogramActivity extends BaseActivity implements GoogleApiClient.
                     ((TextView) view.findViewById(R.id.tv_label)).setText(R.string.stats_longest_streak_label);
                     ((TextView) view.findViewById(R.id.tv_value)).setText(
                             getString(R.string.stats_longest_streak_value,
-                                      longestStreak,
-                                      getResources().getQuantityString(R.plurals.days, longestStreak)));
+                                    longestStreak,
+                                    getResources().getQuantityString(R.plurals.days, longestStreak)));
                     dialogView.addView(view);
                 }
                 new AlertDialog.Builder(this)
@@ -826,15 +849,7 @@ public class CryptogramActivity extends BaseActivity implements GoogleApiClient.
         mLastConnectionError = 0;
         Log.d(TAG, "onConnected(): connected to Google APIs");
 
-        // Set the greeting appropriately on main menu
-        Player p = Games.Players.getCurrentPlayer(mGoogleApiClient);
-        String displayName;
-        if (p == null) {
-            displayName = "???";
-        } else {
-            displayName = p.getDisplayName();
-        }
-        Log.w(TAG, "onConnected(): current player is " + displayName);
+        updateGooglePlayGames();
 
         if (mGoogleApiClient.isConnected()) {
             // Submit score
@@ -871,6 +886,38 @@ public class CryptogramActivity extends BaseActivity implements GoogleApiClient.
                 Crashlytics.logException(e);
                 showGmsError(0);
             }
+        }
+        updateGooglePlayGames();
+    }
+
+    private void updateGooglePlayGames() {
+        if (mGoogleApiClient.isConnected()) {
+            // Set the greeting appropriately on main menu
+            Player p = Games.Players.getCurrentPlayer(mGoogleApiClient);
+            String displayName;
+            Uri imageUri, bannerUri;
+            if (p == null) {
+                displayName = "???";
+                imageUri = null;
+                bannerUri = null;
+            } else {
+                displayName = p.getDisplayName();
+                imageUri = p.hasHiResImage() ? p.getHiResImageUri() : p.getIconImageUri();
+                bannerUri = p.getBannerImageLandscapeUri();
+            }
+            Log.w(TAG, "onConnected(): current player is " + displayName);
+
+            mIvGooglePlayGamesIcon.setVisibility(View.GONE);
+            mIvGooglePlayGamesAvatar.setVisibility(View.VISIBLE);
+            ImageManager.create(this).loadImage(mIvGooglePlayGamesAvatar, imageUri, R.drawable.im_avatar);
+            mTvGooglePlayGames.setVisibility(View.GONE);
+            mTvGooglePlayGamesName.setVisibility(View.VISIBLE);
+            mTvGooglePlayGamesName.setText(displayName);
+        } else {
+            mIvGooglePlayGamesIcon.setVisibility(View.VISIBLE);
+            mIvGooglePlayGamesAvatar.setVisibility(View.GONE);
+            mTvGooglePlayGames.setVisibility(View.VISIBLE);
+            mTvGooglePlayGamesName.setVisibility(View.GONE);
         }
     }
 
