@@ -233,25 +233,29 @@ public class AchievementProvider {
             mUnlockedJackOfAllTrades = false;
             mUnlockedNoBrainer = false;
             for (Cryptogram cryptogram : CryptogramProvider.getInstance(context).getAll()) {
-                if (cryptogram.isCompleted()) {
-                    mCompleted++;
+                if (!cryptogram.isCompleted()) {
+                    continue;
                 }
-                if (cryptogram.getScore() >= 1f) {
-                    mPerfectScore++;
-                }
-                if (cryptogram.getExcessCount() == 0 && cryptogram.getReveals() == 0 && !cryptogram.hadHints()) {
-                    mUnlockedJackOfAllTrades = true;
-                }
-                long startTime = cryptogram.getProgress().getStartTime();
-                if (startTime > 0) {
-                    long duration = cryptogram.getProgress().getDuration();
-                    if (!cryptogram.isCompleted()) {
-                        duration = 0;
+                mCompleted++;
+                if (!cryptogram.isNoScore()) {
+                    Float score = cryptogram.getScore();
+                    if (score != null && score >= 1f) {
+                        mPerfectScore++;
                     }
-                    if (duration > 0 && duration <= 45 * 1000) {
-                        mUnlockedNoBrainer = true;
+                    if (cryptogram.getExcessCount() == 0 && cryptogram.getReveals() == 0 && !cryptogram.hadHints()) {
+                        mUnlockedJackOfAllTrades = true;
                     }
-                    mTimes.put(startTime, duration);
+                    long startTime = cryptogram.getProgress().getStartTime();
+                    if (startTime > 0) {
+                        long duration = cryptogram.getProgress().getDuration();
+                        if (!cryptogram.isCompleted()) {
+                            duration = 0;
+                        }
+                        if (duration > 0 && duration <= 45 * 1000) {
+                            mUnlockedNoBrainer = true;
+                        }
+                        mTimes.put(startTime, duration);
+                    }
                 }
             }
             int streak = 0, bestStreak = 0;
