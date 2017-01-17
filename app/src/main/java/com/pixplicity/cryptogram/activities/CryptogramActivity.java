@@ -730,12 +730,13 @@ public class CryptogramActivity extends BaseActivity implements GoogleApiClient.
                     }
                     totalDurationMs += duration;
                 }
-                String scoreText;
+                String scoreAverageText;
                 if (scoreCount > 0) {
-                    scoreText = getString(R.string.stats_score_format, score / (float) scoreCount * 100f);
+                    scoreAverageText = getString(R.string.stats_average_score_format, score / (float) scoreCount * 100f);
                 } else {
-                    scoreText = getString(R.string.not_applicable);
+                    scoreAverageText = getString(R.string.not_applicable);
                 }
+                String scoreCumulativeText = getString(R.string.stats_cumulative_score_format, score * 100f);
                 String fastestCompletion;
                 if (shortestDurationMs == 0) {
                     fastestCompletion = getString(R.string.not_applicable);
@@ -759,7 +760,15 @@ public class CryptogramActivity extends BaseActivity implements GoogleApiClient.
                     ((TextView) view.findViewById(R.id.tv_label)).setText(R.string.stats_average_score_label);
                     ((TextView) view.findViewById(R.id.tv_value)).setText(
                             getString(R.string.stats_average_score_value,
-                                      scoreText));
+                                      scoreAverageText));
+                    dialogView.addView(view);
+                }
+                {
+                    View view = LayoutInflater.from(this).inflate(R.layout.in_statistics_row, null);
+                    ((TextView) view.findViewById(R.id.tv_label)).setText(R.string.stats_cumulative_score_label);
+                    ((TextView) view.findViewById(R.id.tv_value)).setText(
+                            getString(R.string.stats_cumulative_score_value,
+                                      scoreCumulativeText));
                     dialogView.addView(view);
                 }
                 {
