@@ -245,28 +245,31 @@ public class AchievementProvider {
             mUnlockedNoBrainer = false;
             for (Cryptogram cryptogram : CryptogramProvider.getInstance(context).getAll()) {
                 if (!cryptogram.isCompleted()) {
+                    // Puzzle was not completed
+                    continue;
+                }
+                if (cryptogram.isNoScore()) {
+                    // Puzzle does not qualify for achievements
                     continue;
                 }
                 mCompleted++;
-                if (!cryptogram.isNoScore()) {
-                    Float score = cryptogram.getScore();
-                    if (score != null && score >= 1f) {
-                        mPerfectScore++;
+                Float score = cryptogram.getScore();
+                if (score != null && score >= 1f) {
+                    mPerfectScore++;
+                }
+                if (cryptogram.getExcessCount() == 0 && cryptogram.getReveals() == 0 && !cryptogram.hadHints()) {
+                    mUnlockedJackOfAllTrades = true;
+                }
+                long startTime = cryptogram.getProgress().getStartTime();
+                if (startTime > 0) {
+                    long duration = cryptogram.getProgress().getDuration();
+                    if (!cryptogram.isCompleted()) {
+                        duration = 0;
                     }
-                    if (cryptogram.getExcessCount() == 0 && cryptogram.getReveals() == 0 && !cryptogram.hadHints()) {
-                        mUnlockedJackOfAllTrades = true;
+                    if (duration > 0 && duration <= 45 * 1000) {
+                        mUnlockedNoBrainer = true;
                     }
-                    long startTime = cryptogram.getProgress().getStartTime();
-                    if (startTime > 0) {
-                        long duration = cryptogram.getProgress().getDuration();
-                        if (!cryptogram.isCompleted()) {
-                            duration = 0;
-                        }
-                        if (duration > 0 && duration <= 45 * 1000) {
-                            mUnlockedNoBrainer = true;
-                        }
-                        mTimes.put(startTime, duration);
-                    }
+                    mTimes.put(startTime, duration);
                 }
             }
             int streak = 0, bestStreak = 0;
