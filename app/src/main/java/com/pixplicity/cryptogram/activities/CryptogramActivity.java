@@ -350,7 +350,7 @@ public class CryptogramActivity extends BaseActivity implements GoogleApiClient.
     private void updateCryptogram(Cryptogram cryptogram) {
         if (cryptogram != null) {
             CryptogramProvider provider = CryptogramProvider.getInstance(this);
-            provider.setCurrent(cryptogram.getId());
+            provider.setCurrentId(cryptogram.getId());
             mRvDrawer.smoothScrollToPosition(
                     provider.getCurrentIndex());
             mTvError.setVisibility(View.GONE);
@@ -360,10 +360,14 @@ public class CryptogramActivity extends BaseActivity implements GoogleApiClient.
             // Show other puzzle details
             mTvAuthor.setText(getString(R.string.quote, cryptogram.getAuthor()));
             mTvTopic.setText(getString(R.string.topic, cryptogram.getTopic()));
-            mToolbar.setSubtitle(getString(
-                    R.string.puzzle_number,
-                    cryptogram.getId() + 1,
-                    provider.getCount()));
+            if (cryptogram.isInstruction()) {
+                mToolbar.setSubtitle(cryptogram.getTitle(this));
+            } else {
+                mToolbar.setSubtitle(getString(
+                        R.string.puzzle_number_of_total,
+                        cryptogram.getNumber(),
+                        provider.getCount()));
+            }
             // Invoke various events
             onCryptogramUpdated(cryptogram);
             cryptogram.onResume();
@@ -400,10 +404,9 @@ public class CryptogramActivity extends BaseActivity implements GoogleApiClient.
                 mTvStatsExcess.setText(String.valueOf(excessCount));
             }
             mTvStatsReveals.setText(String.valueOf(cryptogram.getReveals()));
-            float score = cryptogram.getScore();
-            if (score < 0) {
-                mVgStatsScore.setVisibility(View.GONE);
-            } else {
+            mVgStatsScore.setVisibility(View.GONE);
+            Float score = cryptogram.getScore();
+            if (score != null) {
                 mVgStatsScore.setVisibility(View.VISIBLE);
                 mTvStatsScore.setText(String.format(
                         Locale.ENGLISH,
@@ -612,7 +615,7 @@ public class CryptogramActivity extends BaseActivity implements GoogleApiClient.
             }
             return true;
             case R.id.action_go_to: {
-                String currentId = String.valueOf(cryptogram.getId() + 1);
+                String currentId = String.valueOf(cryptogram.getNumber());
                 new MaterialDialog.Builder(this)
                         .content(R.string.go_to_puzzle_content)
                         .inputType(InputType.TYPE_CLASS_NUMBER)
@@ -644,12 +647,12 @@ public class CryptogramActivity extends BaseActivity implements GoogleApiClient.
                                 //noinspection ConstantConditions
                                 Editable input = dialog.getInputEditText().getText();
                                 try {
-                                    int id = Integer.parseInt(input.toString());
+                                    int puzzleNumber = Integer.parseInt(input.toString());
                                     CryptogramProvider provider = CryptogramProvider
                                             .getInstance(CryptogramActivity.this);
-                                    Cryptogram cryptogram = provider.get(id - 1);
+                                    Cryptogram cryptogram = provider.getByNumber(puzzleNumber);
                                     if (cryptogram == null) {
-                                        Snackbar.make(mVgContent, getString(R.string.puzzle_nonexistant, id),
+                                        Snackbar.make(mVgContent, getString(R.string.puzzle_nonexistant, puzzleNumber),
                                                       Snackbar.LENGTH_SHORT).show();
                                     } else {
                                         updateCryptogram(cryptogram);
@@ -697,22 +700,29 @@ public class CryptogramActivity extends BaseActivity implements GoogleApiClient.
                     cryptogram.save();
                 }
                 CryptogramProvider provider = CryptogramProvider.getInstance(this);
-                int count = 0;
+                int count = 0, scoreCount = 0;
                 float score = 0f;
                 long shortestDurationMs = 0, totalDurationMs = 0;
                 for (Cryptogram c : provider.getAll()) {
-                    long duration = c.getDuration();
+                    long duration = c.getProgress().getDuration();
                     if (c.isCompleted()) {
                         count++;
-                        score += 100f * c.getScore();
+                        Float puzzleScore = c.getScore();
+                        if (puzzleScore != null) {
+                            score += puzzleScore;
+                            scoreCount++;
+                        }
                         if (shortestDurationMs == 0 || shortestDurationMs > duration) {
                             shortestDurationMs = duration;
                         }
                     }
                     totalDurationMs += duration;
                 }
-                if (count > 0) {
-                    score /= (float) count;
+                String scoreText;
+                if (scoreCount > 0) {
+                    scoreText = getString(R.string.stats_score_format, score / (float) scoreCount * 100f);
+                } else {
+                    scoreText = getString(R.string.not_applicable);
                 }
                 String fastestCompletion;
                 if (shortestDurationMs == 0) {

@@ -293,22 +293,26 @@ public class CryptogramProgress {
     }
 
     private void onStart(Cryptogram cryptogram) {
-        int puzzleId = cryptogram.getId() + 1;
+        int puzzleNumber = cryptogram.getNumber();
         Answers.getInstance().logLevelStart(
                 new LevelStartEvent()
-                        .putLevelName("Puzzle #" + puzzleId));
+                        .putLevelName("Puzzle #" + puzzleNumber));
 
         CryptogramApp.getInstance().getBus().post(
                 new CryptogramEvent.CryptogramStartedEvent(cryptogram));
     }
 
     private void onCompleted(@NonNull Cryptogram cryptogram) {
-        int puzzleId = cryptogram.getId() + 1;
+        int puzzleNumber = cryptogram.getNumber();
+        LevelEndEvent event = new LevelEndEvent()
+                .putLevelName("Puzzle #" + puzzleNumber)
+                .putSuccess(true);
+        Float score = getScore(cryptogram);
+        if (score != null) {
+            event.putScore(score);
+        }
         Answers.getInstance().logLevelEnd(
-                new LevelEndEvent()
-                        .putLevelName("Puzzle #" + puzzleId)
-                        .putScore(getScore(cryptogram))
-                        .putSuccess(true));
+                event);
 
         CryptogramApp.getInstance().getBus().post(
                 new CryptogramEvent.CryptogramCompletedEvent(cryptogram));
@@ -341,7 +345,7 @@ public class CryptogramProgress {
     }
 
     public boolean hasScore(@NonNull Cryptogram cryptogram) {
-        long duration = getDuration();
+        long duration = cryptogram.getDuration();
         int excessCount = getExcessCount(cryptogram);
         if (duration == 0 || excessCount < 0) {
             return false;
@@ -349,9 +353,9 @@ public class CryptogramProgress {
         return true;
     }
 
-    public float getScore(@NonNull Cryptogram cryptogram) {
+    public Float getScore(@NonNull Cryptogram cryptogram) {
         if (!hasScore(cryptogram)) {
-            return 0;
+            return null;
         }
         long duration = getDuration();
         int excessCount = getExcessCount(cryptogram);
@@ -381,7 +385,14 @@ public class CryptogramProgress {
                 i.remove();
             }
         }
-        // Apply mappings for any revealed characters
+        // Apply mappings for any given or revealed characters
+        String given = cryptogram.getGiven();
+        if (given != null) {
+            for (int j = 0; j < given.length(); j++) {
+                char c = given.charAt(j);
+                setUserChar(cryptogram, c, c);
+            }
+        }
         if (mRevealed != null) {
             for (Character c : mRevealed) {
                 setUserChar(cryptogram, c, c);

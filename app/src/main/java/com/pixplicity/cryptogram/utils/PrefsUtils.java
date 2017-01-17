@@ -15,7 +15,7 @@ public class PrefsUtils {
     private static final String KEY_SHOW_HINTS = "show_hints";
 
     public static int getCurrentId() {
-        return Prefs.getInt(PrefsUtils.KEY_CURRENT_ID, -1);
+        return Prefs.getInt(PrefsUtils.KEY_CURRENT_ID, 0);
     }
 
     public static void setCurrentId(int currentId) {

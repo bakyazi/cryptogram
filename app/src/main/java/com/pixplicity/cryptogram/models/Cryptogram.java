@@ -1,9 +1,12 @@
 package com.pixplicity.cryptogram.models;
 
+import android.content.Context;
 import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 
 import com.google.gson.annotations.SerializedName;
 import com.pixplicity.cryptogram.CryptogramApp;
+import com.pixplicity.cryptogram.R;
 import com.pixplicity.cryptogram.utils.CryptogramProvider;
 
 import java.util.ArrayList;
@@ -17,6 +20,9 @@ public class Cryptogram {
     @SerializedName("id")
     protected int mId;
 
+    @SerializedName("number")
+    protected Integer mNumber;
+
     @SerializedName("text")
     protected String mText;
 
@@ -25,6 +31,12 @@ public class Cryptogram {
 
     @SerializedName("topic")
     protected String mTopic;
+
+    @SerializedName("given")
+    protected String mGiven;
+
+    @SerializedName("noscore")
+    protected boolean mNoScore;
 
     private transient String[] mWords;
 
@@ -54,6 +66,24 @@ public class Cryptogram {
 
     public void setId(int id) {
         mId = id;
+    }
+
+    public int getNumber() {
+        if (mNumber == null) {
+            return mId + 1;
+        }
+        return mNumber;
+    }
+
+    public void setNumber(int number) {
+        mNumber = number;
+    }
+
+    public String getTitle(Context context) {
+        if (isInstruction()) {
+            return context.getString(R.string.puzzle_number_instruction);
+        }
+        return context.getString(R.string.puzzle_number, getNumber());
     }
 
     public String getText() {
@@ -130,8 +160,21 @@ public class Cryptogram {
         return (c >= 'a' && c <= 'z') || (c >= 'A' && c <= 'Z');
     }
 
+    public boolean isInstruction() {
+        return mId < 0;
+    }
+
     public boolean isCompleted() {
         return getProgress().isCompleted(this);
+    }
+
+    public boolean isNoScore() {
+        return mNoScore;
+    }
+
+    @Nullable
+    public String getGiven() {
+        return mGiven;
     }
 
     public void reveal(char c) {
@@ -152,6 +195,9 @@ public class Cryptogram {
     }
 
     public boolean isRevealed(char c) {
+        if (mGiven != null && mGiven.indexOf(c) > -1) {
+            return true;
+        }
         return getProgress().isRevealed(c);
     }
 
@@ -167,10 +213,17 @@ public class Cryptogram {
      * Returns the duration of the user's play time on this puzzle in milliseconds.
      */
     public long getDuration() {
+        if (isNoScore()) {
+            // Don't measure the duration for puzzles with given characters
+            return 0;
+        }
         return getProgress().getDuration();
     }
 
-    public float getScore() {
+    public Float getScore() {
+        if (isInstruction()) {
+            return null;
+        }
         return getProgress().getScore(this);
     }
 
