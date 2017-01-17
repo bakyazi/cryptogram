@@ -287,20 +287,20 @@ public class CryptogramProgress {
     }
 
     private void onStart(Cryptogram cryptogram) {
-        int puzzleId = cryptogram.getId() + 1;
+        int puzzleNumber = cryptogram.getNumber();
         Answers.getInstance().logLevelStart(
                 new LevelStartEvent()
-                        .putLevelName("Puzzle #" + puzzleId));
+                        .putLevelName("Puzzle #" + puzzleNumber));
 
         CryptogramApp.getInstance().getBus().post(
                 new CryptogramEvent.CryptogramStartedEvent(cryptogram));
     }
 
     private void onCompleted(@NonNull Cryptogram cryptogram) {
-        int puzzleId = cryptogram.getId() + 1;
+        int puzzleNumber = cryptogram.getNumber();
         Answers.getInstance().logLevelEnd(
                 new LevelEndEvent()
-                        .putLevelName("Puzzle #" + puzzleId)
+                        .putLevelName("Puzzle #" + puzzleNumber)
                         .putScore(getScore(cryptogram))
                         .putSuccess(true));
 

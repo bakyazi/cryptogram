@@ -17,6 +17,9 @@ public class Cryptogram {
     @SerializedName("id")
     protected int mId;
 
+    @SerializedName("number")
+    protected Integer mNumber;
+
     @SerializedName("text")
     protected String mText;
 
@@ -25,6 +28,9 @@ public class Cryptogram {
 
     @SerializedName("topic")
     protected String mTopic;
+
+    @SerializedName("reveal")
+    protected String mReveal;
 
     private transient String[] mWords;
 
@@ -53,6 +59,17 @@ public class Cryptogram {
 
     public void setId(int id) {
         mId = id;
+    }
+
+    public int getNumber() {
+        if (mNumber == null) {
+            return mId + 1;
+        }
+        return mNumber;
+    }
+
+    public void setNumber(int number) {
+        mNumber = number;
     }
 
     public String getText() {

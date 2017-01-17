@@ -293,7 +293,7 @@ public class CryptogramActivity extends BaseActivity {
     private void updateCryptogram(Cryptogram cryptogram) {
         if (cryptogram != null) {
             CryptogramProvider provider = CryptogramProvider.getInstance(this);
-            provider.setCurrent(cryptogram.getId());
+            provider.setCurrentId(cryptogram.getId());
             mRvDrawer.smoothScrollToPosition(
                     provider.getCurrentIndex());
             mTvError.setVisibility(View.GONE);
@@ -469,7 +469,7 @@ public class CryptogramActivity extends BaseActivity {
             }
             return true;
             case R.id.action_go_to: {
-                String currentId = String.valueOf(cryptogram.getId() + 1);
+                String currentId = String.valueOf(cryptogram.getNumber());
                 new MaterialDialog.Builder(this)
                         .content(R.string.go_to_puzzle_content)
                         .inputType(InputType.TYPE_CLASS_NUMBER)
@@ -501,13 +501,13 @@ public class CryptogramActivity extends BaseActivity {
                                 //noinspection ConstantConditions
                                 Editable input = dialog.getInputEditText().getText();
                                 try {
-                                    int id = Integer.parseInt(input.toString());
+                                    int puzzleNumber = Integer.parseInt(input.toString());
                                     CryptogramProvider provider = CryptogramProvider
                                             .getInstance(CryptogramActivity.this);
-                                    Cryptogram cryptogram = provider.get(id - 1);
+                                    Cryptogram cryptogram = provider.getByNumber(puzzleNumber);
                                     if (cryptogram == null) {
-                                        Snackbar.make(mVgContent, getString(R.string.puzzle_nonexistant, id),
-                                                Snackbar.LENGTH_SHORT).show();
+                                        Snackbar.make(mVgContent, getString(R.string.puzzle_nonexistant, puzzleNumber),
+                                                      Snackbar.LENGTH_SHORT).show();
                                     } else {
                                         updateCryptogram(cryptogram);
                                     }

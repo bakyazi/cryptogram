@@ -1,8 +1,28 @@
 [
   {
+    "text": "Complete the puzzle by filling in the missing characters.",
+    "id": -2,
+    "reveal": "complefng"
+  },
+  {
+    "text": "Remember, the topic can sometimes help you along.",
+    "topic": "Remember",
+    "id": -1,
+    "reveal": "topichang"
+  },
+  {
+    "text": "My mission in life is not merely to survive, but to thrive; and to do so with some passion, some compassion, some humor, and some style.",
+    "author": "Maya Angelou",
+    "topic": "Life",
+    "id": 7,
+    "number": 1,
+    "reveal": "life"
+  },
+  {
     "text": "The more of your private life you put into the public domain, the smaller your private life becomes.",
     "author": "Kevin McCloud",
-    "topic": "Life"
+    "topic": "Life",
+    "reveal": "prvtl"
   },
   {
     "text": "Life is really simple, but we insist on making it complicated.",
@@ -32,11 +52,6 @@
   {
     "text": "In the end, it’s not the years in your life that count. It’s the life in your years.",
     "author": "Abraham Lincoln",
-    "topic": "Life"
-  },
-  {
-    "text": "My mission in life is not merely to survive, but to thrive; and to do so with some passion, some compassion, some humor, and some style.",
-    "author": "Maya Angelou",
     "topic": "Life"
   },
   {

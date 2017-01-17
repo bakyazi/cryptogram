@@ -60,7 +60,7 @@ public class CryptogramAdapter extends RecyclerView.Adapter<CryptogramAdapter.Vi
     public void onBindViewHolder(ViewHolder vh, int position) {
         Cryptogram cryptogram = mData[position];
         vh.setPosition(position);
-        vh.tvPuzzleId.setText(mContext.getString(R.string.puzzle_number2, cryptogram.getId() + 1));
+        vh.tvPuzzleId.setText(mContext.getString(R.string.puzzle_number2, cryptogram.getNumber()));
         vh.tvAuthor.setText(cryptogram.getAuthor());
         vh.ivCompleted.setVisibility(cryptogram.isCompleted() ? View.VISIBLE : View.GONE);
     }
