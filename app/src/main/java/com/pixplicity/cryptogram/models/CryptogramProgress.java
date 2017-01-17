@@ -371,7 +371,8 @@ public class CryptogramProgress {
         score = addScore(score, (float) duration / 120f);
         score = addScore(score, (6f - getReveals()) / 6f);
         score = addScore(score, (26f - excessCount) / 26f);
-        return score;
+        // Never return a score below 0.0% or above 100.0%
+        return Math.max(0f, Math.min(1f, score));
     }
 
     private float addScore(float score, float addition) {
