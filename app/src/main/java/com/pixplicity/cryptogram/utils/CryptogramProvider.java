@@ -93,7 +93,7 @@ public class CryptogramProvider {
     }
 
     private int getIndexFromId(int id) {
-        return mCryptogramIds.get(id);
+        return mCryptogramIds.get(id, -1);
     }
 
     private int getIdFromIndex(int index) {
