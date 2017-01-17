@@ -23,6 +23,7 @@ public class AchievementProvider {
     private static final String TAG = AchievementProvider.class.getSimpleName();
 
     private static final int[] ACHIEVEMENTS = new int[]{
+            R.string.achievement_wet_feet,
             R.string.achievement_boned_up,
             R.string.achievement_bookworm,
             R.string.achievement_whizkid,
@@ -107,6 +108,13 @@ public class AchievementProvider {
 
         for (int achievementResId : ACHIEVEMENTS) {
             switch (achievementResId) {
+                case R.string.achievement_wet_feet: {
+                    // Finish the instructional puzzles.
+                    if (mAchievementStats.isUnlockedWetFeet()) {
+                        unlock(context, googleApiClient, achievementResId);
+                    }
+                }
+                break;
                 case R.string.achievement_boned_up: {
                     // Complete your first puzzle to figure out how cryptograms work by trial and error.
                     if (mAchievementStats.getCompleted() >= 1) {
@@ -230,6 +238,7 @@ public class AchievementProvider {
 
         private int mCompleted;
         private int mPerfectScore;
+        private boolean mUnlockedWetFeet;
         private boolean mUnlockedJackOfAllTrades;
         private boolean mUnlockedNoBrainer;
         private int mLongestStreak;
@@ -241,11 +250,15 @@ public class AchievementProvider {
             mTimes.clear();
             mCompleted = 0;
             mPerfectScore = 0;
+            mUnlockedWetFeet = true;
             mUnlockedJackOfAllTrades = false;
             mUnlockedNoBrainer = false;
             for (Cryptogram cryptogram : CryptogramProvider.getInstance(context).getAll()) {
                 if (!cryptogram.isCompleted()) {
                     // Puzzle was not completed
+                    if (cryptogram.isInstruction()) {
+                        mUnlockedWetFeet = false;
+                    }
                     continue;
                 }
                 if (cryptogram.isNoScore()) {
@@ -304,6 +317,10 @@ public class AchievementProvider {
 
         public int getPerfectScore() {
             return mPerfectScore;
+        }
+
+        public boolean isUnlockedWetFeet() {
+            return mUnlockedWetFeet;
         }
 
         public boolean isUnlockedJackOfAllTrades() {
