@@ -2,9 +2,13 @@ package com.pixplicity.cryptogram.utils;
 
 import android.content.Context;
 import android.support.annotation.NonNull;
+import android.util.Log;
+import android.view.Gravity;
+import android.widget.Toast;
 
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.games.Games;
+import com.pixplicity.cryptogram.BuildConfig;
 import com.pixplicity.cryptogram.CryptogramApp;
 import com.pixplicity.cryptogram.R;
 import com.pixplicity.cryptogram.models.Cryptogram;
@@ -211,6 +215,13 @@ public class AchievementProvider {
     private void unlock(Context context, GoogleApiClient googleApiClient, int achievementResId) {
         String achievementId = context.getString(achievementResId);
         Games.Achievements.unlock(googleApiClient, achievementId);
+        if (BuildConfig.DEBUG) {
+            String message = "unlocked " + context.getResources().getResourceEntryName(achievementResId);
+            Log.i(TAG, message);
+            Toast toast = Toast.makeText(context, message, Toast.LENGTH_LONG);
+            toast.setGravity(Gravity.TOP, 0, 0);
+            toast.show();
+        }
     }
 
     public static class AchievementStats {
