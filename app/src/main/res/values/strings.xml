@@ -20,6 +20,7 @@
     <string name="randomize_puzzles">Randomize puzzles</string>
     <string name="show_hints">Show hints</string>
     <string name="share">Share puzzle…</string>
+    <string name="statistics">Statistics</string>
     <string name="about">About</string>
     <string name="cancel">Cancel</string>
     <string name="skip_puzzle">Are you sure you’d like to skip this puzzle?</string>
@@ -41,11 +42,17 @@
 
     <string name="quote">— %1$s</string>
     <string name="topic">Topic: %1$s</string>
+    <string name="not_applicable">N/A</string>
 
     <string name="stats_excess">Number of excess inputs:</string>
     <string name="stats_time">Time elapsed:</string>
     <string name="stats_reveals">Characters revealed:</string>
     <string name="stats_score">Score:</string>
+
+    <string name="stats_total_completed">Completed %1$d of %2$d puzzles</string>
+    <string name="stats_average_score">Average score: %1$.1f%%</string>
+    <string name="stats_fastest_completion">Fastest completion: %1$s</string>
+    <string name="stats_total_time_spent">Total time played: %1$s</string>
 
     <string name="go_to_puzzle_content">Please enter the puzzle number to go to:</string>
 

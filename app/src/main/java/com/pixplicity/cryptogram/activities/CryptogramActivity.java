@@ -33,6 +33,7 @@ import com.pixplicity.cryptogram.events.CryptogramEvent;
 import com.pixplicity.cryptogram.models.Cryptogram;
 import com.pixplicity.cryptogram.utils.CryptogramProvider;
 import com.pixplicity.cryptogram.utils.PrefsUtils;
+import com.pixplicity.cryptogram.utils.StringUtils;
 import com.pixplicity.cryptogram.views.CryptogramView;
 import com.pixplicity.cryptogram.views.HintView;
 import com.pixplicity.generate.Rate;
@@ -337,13 +338,7 @@ public class CryptogramActivity extends BaseActivity {
                 mVgStatsTime.setVisibility(View.GONE);
             } else {
                 mVgStatsTime.setVisibility(View.VISIBLE);
-                int durationS = (int) (durationMs / 1000);
-                mTvStatsTime.setText(String.format(
-                        Locale.ENGLISH,
-                        "%d:%02d:%02d",
-                        durationS / 3600,
-                        durationS % 3600 / 60,
-                        durationS % 60));
+                mTvStatsTime.setText(StringUtils.getDurationString(durationMs));
             }
             int excessCount = cryptogram.getExcessCount();
             if (excessCount < 0) {
@@ -551,6 +546,57 @@ public class CryptogramActivity extends BaseActivity {
                             getString(R.string.share_url)));
                 }
                 startActivity(Intent.createChooser(intent, getString(R.string.share)));
+            }
+            return true;
+            case R.id.action_stats: {
+                if (cryptogram != null) {
+                    cryptogram.save();
+                }
+                CryptogramProvider provider = CryptogramProvider.getInstance(this);
+                int count = 0;
+                float score = 0f;
+                long shortestDurationMs = 0, totalDurationMs = 0;
+                for (Cryptogram c : provider.getAll()) {
+                    long duration = c.getDuration();
+                    if (c.isCompleted()) {
+                        count++;
+                        score += c.getScore();
+                        if (shortestDurationMs == 0 || shortestDurationMs > duration) {
+                            shortestDurationMs = duration;
+                        }
+                    }
+                    totalDurationMs += duration;
+                }
+                if (count > 0) {
+                    score /= (float) count;
+                }
+                String fastestCompletion;
+                if (shortestDurationMs == 0) {
+                    fastestCompletion = getString(R.string.not_applicable);
+                } else {
+                    fastestCompletion = StringUtils.getDurationString(shortestDurationMs);
+                }
+                String stats = getString(R.string.stats_total_completed,
+                                         count,
+                                         provider.getCount())
+                        + "\n" +
+                        getString(R.string.stats_average_score,
+                                  score)
+                        + "\n" +
+                        getString(R.string.stats_fastest_completion,
+                                  fastestCompletion)
+                        + "\n" +
+                        getString(R.string.stats_total_time_spent,
+                                  StringUtils.getDurationString(totalDurationMs));
+                new AlertDialog.Builder(this)
+                        .setTitle(R.string.statistics)
+                        .setMessage(stats)
+                        .setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialogInterface, int i) {
+                            }
+                        })
+                        .show();
             }
             return true;
             case R.id.action_about: {
