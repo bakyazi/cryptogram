@@ -328,7 +328,7 @@ public class CryptogramProgress {
     }
 
     public float getScore(@NonNull Cryptogram cryptogram) {
-        long duration = getDuration();
+        long duration = cryptogram.getDuration();
         int excessCount = getExcessCount(cryptogram);
         if (duration == 0 || excessCount < 0) {
             return -1;
@@ -348,7 +348,14 @@ public class CryptogramProgress {
                 i.remove();
             }
         }
-        // Apply mappings for any revealed characters
+        // Apply mappings for any given or revealed characters
+        String given = cryptogram.getGiven();
+        if (given != null) {
+            for (int j = 0; j < given.length(); j++) {
+                char c = given.charAt(j);
+                setUserChar(cryptogram, c, c);
+            }
+        }
         if (mRevealed != null) {
             for (Character c : mRevealed) {
                 setUserChar(cryptogram, c, c);

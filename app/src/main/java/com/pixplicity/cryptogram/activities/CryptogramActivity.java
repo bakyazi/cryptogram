@@ -303,10 +303,14 @@ public class CryptogramActivity extends BaseActivity {
             // Show other puzzle details
             mTvAuthor.setText(getString(R.string.quote, cryptogram.getAuthor()));
             mTvTopic.setText(getString(R.string.topic, cryptogram.getTopic()));
-            mToolbar.setSubtitle(getString(
-                    R.string.puzzle_number,
-                    cryptogram.getId() + 1,
-                    provider.getCount()));
+            if (cryptogram.isInstruction()) {
+                mToolbar.setSubtitle(cryptogram.getTitle(this));
+            } else {
+                mToolbar.setSubtitle(getString(
+                        R.string.puzzle_number_of_total,
+                        cryptogram.getNumber(),
+                        provider.getCount()));
+            }
             // Invoke various events
             onCryptogramUpdated(cryptogram);
             cryptogram.onResume();
@@ -349,15 +353,16 @@ public class CryptogramActivity extends BaseActivity {
                 mTvStatsExcess.setText(String.valueOf(excessCount));
             }
             mTvStatsReveals.setText(String.valueOf(cryptogram.getReveals()));
-            float score = cryptogram.getScore();
-            if (score < 0) {
-                mVgStatsScore.setVisibility(View.GONE);
-            } else {
-                mVgStatsScore.setVisibility(View.VISIBLE);
-                mTvStatsScore.setText(String.format(
-                        Locale.ENGLISH,
-                        "%.1f%%",
-                        score * 100));
+            mVgStatsScore.setVisibility(View.GONE);
+            if (!cryptogram.isInstruction()) {
+                float score = cryptogram.getScore();
+                if (score >= 0) {
+                    mVgStatsScore.setVisibility(View.VISIBLE);
+                    mTvStatsScore.setText(String.format(
+                            Locale.ENGLISH,
+                            "%.1f%%",
+                            score * 100));
+                }
             }
         } else {
             mHintView.setVisibility(PrefsUtils.getShowHints() ? View.VISIBLE : View.GONE);
