@@ -61,7 +61,13 @@ public class CryptogramAdapter extends RecyclerView.Adapter<CryptogramAdapter.Vi
         Cryptogram cryptogram = mData[position];
         vh.setPosition(position);
         vh.tvPuzzleId.setText(cryptogram.getTitle(mContext));
-        vh.tvAuthor.setText(cryptogram.getAuthor());
+        String author = cryptogram.getAuthor();
+        if (author == null) {
+            vh.tvAuthor.setVisibility(View.GONE);
+        } else {
+            vh.tvAuthor.setVisibility(View.VISIBLE);
+            vh.tvAuthor.setText(author);
+        }
         vh.ivCompleted.setVisibility(cryptogram.isCompleted() ? View.VISIBLE : View.GONE);
     }
 
