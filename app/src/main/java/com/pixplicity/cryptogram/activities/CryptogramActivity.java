@@ -557,7 +557,7 @@ public class CryptogramActivity extends BaseActivity {
                 float score = 0f;
                 long shortestDurationMs = 0, totalDurationMs = 0;
                 for (Cryptogram c : provider.getAll()) {
-                    long duration = c.getDuration();
+                    long duration = c.getProgress().getDuration();
                     if (c.isCompleted()) {
                         count++;
                         Float puzzleScore = c.getScore();

@@ -35,6 +35,9 @@ public class Cryptogram {
     @SerializedName("given")
     protected String mGiven;
 
+    @SerializedName("noscore")
+    protected boolean mNoScore;
+
     private transient String[] mWords;
 
     private CryptogramProgress mProgress;
@@ -165,8 +168,8 @@ public class Cryptogram {
         save();
     }
 
-    public boolean hasGiven() {
-        return mGiven != null && mGiven.length() > 0;
+    public boolean isNoScore() {
+        return mNoScore;
     }
 
     @Nullable
@@ -193,7 +196,7 @@ public class Cryptogram {
      * Returns the duration of the user's play time on this puzzle in milliseconds.
      */
     public long getDuration() {
-        if (hasGiven()) {
+        if (isNoScore()) {
             // Don't measure the duration for puzzles with given characters
             return 0;
         }
