@@ -2,7 +2,6 @@ package com.pixplicity.cryptogram.models;
 
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
-import android.widget.Toast;
 
 import com.crashlytics.android.answers.Answers;
 import com.crashlytics.android.answers.LevelEndEvent;
@@ -368,10 +367,19 @@ public class CryptogramProgress {
         }
         long duration = getDuration();
         int excessCount = getExcessCount(cryptogram);
-        float score = Math.max(-1f, Math.min(1f, (float) duration / 120f));
-        score *= Math.max(-1f, Math.min(1f, (6f - getReveals()) / 6f));
-        score *= Math.max(-1f, Math.min(1f, (26f - excessCount) / 26f));
+        float score = 1;
+        score = addScore(score, (float) duration / 120f);
+        score = addScore(score, (6f - getReveals()) / 6f);
+        score = addScore(score, (26f - excessCount) / 26f);
         return score;
+    }
+
+    private float addScore(float score, float addition) {
+        addition = Math.max(-1f, Math.min(1f, addition));
+        if (score < 0 && addition < 0) {
+            return score * -addition;
+        }
+        return score * addition;
     }
 
     public void setHadHints(boolean hadHints) {
