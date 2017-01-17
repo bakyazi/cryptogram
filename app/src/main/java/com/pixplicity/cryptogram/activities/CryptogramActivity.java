@@ -578,9 +578,9 @@ public class CryptogramActivity extends BaseActivity {
                 } else {
                     fastestCompletion = StringUtils.getDurationString(shortestDurationMs);
                 }
-                AchievementProvider.AchievementStats achievementStats = AchievementProvider.getInstance().getAchievementStats();
-                achievementStats.calculate(this);
-                int longestStreak = achievementStats.getLongestStreak();
+//                AchievementProvider.AchievementStats achievementStats = AchievementProvider.getInstance().getAchievementStats();
+//                achievementStats.calculate(this);
+//                int longestStreak = achievementStats.getLongestStreak();
                 {
                     View view = LayoutInflater.from(this).inflate(R.layout.in_statistics_row, null);
                     ((TextView) view.findViewById(R.id.tv_label)).setText(R.string.stats_total_completed_label);
@@ -614,15 +614,15 @@ public class CryptogramActivity extends BaseActivity {
                                       StringUtils.getDurationString(totalDurationMs)));
                     dialogView.addView(view);
                 }
-                {
-                    View view = LayoutInflater.from(this).inflate(R.layout.in_statistics_row, null);
-                    ((TextView) view.findViewById(R.id.tv_label)).setText(R.string.stats_longest_streak_label);
-                    ((TextView) view.findViewById(R.id.tv_value)).setText(
-                            getString(R.string.stats_longest_streak_value,
-                                      longestStreak,
-                                      getResources().getQuantityString(R.plurals.days, longestStreak)));
-                    dialogView.addView(view);
-                }
+//                {
+//                    View view = LayoutInflater.from(this).inflate(R.layout.in_statistics_row, null);
+//                    ((TextView) view.findViewById(R.id.tv_label)).setText(R.string.stats_longest_streak_label);
+//                    ((TextView) view.findViewById(R.id.tv_value)).setText(
+//                            getString(R.string.stats_longest_streak_value,
+//                                      longestStreak,
+//                                      getResources().getQuantityString(R.plurals.days, longestStreak)));
+//                    dialogView.addView(view);
+//                }
                 new AlertDialog.Builder(this)
                         .setTitle(R.string.statistics)
                         .setView(dialogView)
