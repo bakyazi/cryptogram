@@ -595,20 +595,17 @@ public class CryptogramActivity extends BaseActivity implements GoogleApiClient.
                 }
             }
             return true;
-            case R.id.action_reveal: {
+            case R.id.action_reveal_letter: {
                 if (cryptogram == null || !mCryptogramView.hasSelectedCharacter()) {
                     Snackbar.make(mVgContent, "Please select a letter first.", Snackbar.LENGTH_SHORT).show();
                 } else {
                     new AlertDialog.Builder(this)
-                            .setMessage(R.string.reveal_confirmation)
+                            .setMessage(R.string.reveal_letter_confirmation)
                             .setPositiveButton(R.string.reveal, new DialogInterface.OnClickListener() {
                                 @Override
                                 public void onClick(DialogInterface dialogInterface, int i) {
-                                    if (mCryptogramView.revealCharacterMapping(
-                                            mCryptogramView.getSelectedCharacter())) {
-                                        // Answer revealed; clear the selection
-                                        mCryptogramView.setSelectedCharacter((char) 0);
-                                    }
+                                    mCryptogramView.revealCharacterMapping(
+                                            mCryptogramView.getSelectedCharacter());
                                 }
                             })
                             .setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {
@@ -618,6 +615,23 @@ public class CryptogramActivity extends BaseActivity implements GoogleApiClient.
                             })
                             .show();
                 }
+            }
+            return true;
+            case R.id.action_reveal_mistakes: {
+                new AlertDialog.Builder(this)
+                        .setMessage(R.string.reveal_mistakes_confirmation)
+                        .setPositiveButton(R.string.reveal, new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialogInterface, int i) {
+                                mCryptogramView.revealMistakes();
+                            }
+                        })
+                        .setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialogInterface, int i) {
+                            }
+                        })
+                        .show();
             }
             return true;
             case R.id.action_reveal_puzzle: {
@@ -777,8 +791,8 @@ public class CryptogramActivity extends BaseActivity implements GoogleApiClient.
                     ((TextView) view.findViewById(R.id.tv_label)).setText(R.string.stats_total_completed_label);
                     ((TextView) view.findViewById(R.id.tv_value)).setText(
                             getString(R.string.stats_total_completed_value,
-                                    count,
-                                    provider.getCount()));
+                                      count,
+                                      provider.getCount()));
                     dialogView.addView(view);
                 }
                 {
@@ -786,7 +800,7 @@ public class CryptogramActivity extends BaseActivity implements GoogleApiClient.
                     ((TextView) view.findViewById(R.id.tv_label)).setText(R.string.stats_average_score_label);
                     ((TextView) view.findViewById(R.id.tv_value)).setText(
                             getString(R.string.stats_average_score_value,
-                                    scoreAverageText));
+                                      scoreAverageText));
                     dialogView.addView(view);
                 }
                 {
@@ -794,7 +808,7 @@ public class CryptogramActivity extends BaseActivity implements GoogleApiClient.
                     ((TextView) view.findViewById(R.id.tv_label)).setText(R.string.stats_cumulative_score_label);
                     ((TextView) view.findViewById(R.id.tv_value)).setText(
                             getString(R.string.stats_cumulative_score_value,
-                                    scoreCumulativeText));
+                                      scoreCumulativeText));
                     dialogView.addView(view);
                 }
                 {
@@ -802,7 +816,7 @@ public class CryptogramActivity extends BaseActivity implements GoogleApiClient.
                     ((TextView) view.findViewById(R.id.tv_label)).setText(R.string.stats_fastest_completion_label);
                     ((TextView) view.findViewById(R.id.tv_value)).setText(
                             getString(R.string.stats_fastest_completion_value,
-                                    fastestCompletion));
+                                      fastestCompletion));
                     dialogView.addView(view);
                 }
                 {
@@ -810,7 +824,7 @@ public class CryptogramActivity extends BaseActivity implements GoogleApiClient.
                     ((TextView) view.findViewById(R.id.tv_label)).setText(R.string.stats_total_time_spent_label);
                     ((TextView) view.findViewById(R.id.tv_value)).setText(
                             getString(R.string.stats_total_time_spent_value,
-                                    StringUtils.getDurationString(totalDurationMs)));
+                                      StringUtils.getDurationString(totalDurationMs)));
                     dialogView.addView(view);
                 }
                 {
@@ -818,8 +832,8 @@ public class CryptogramActivity extends BaseActivity implements GoogleApiClient.
                     ((TextView) view.findViewById(R.id.tv_label)).setText(R.string.stats_longest_streak_label);
                     ((TextView) view.findViewById(R.id.tv_value)).setText(
                             getString(R.string.stats_longest_streak_value,
-                                    longestStreak,
-                                    getResources().getQuantityString(R.plurals.days, longestStreak)));
+                                      longestStreak,
+                                      getResources().getQuantityString(R.plurals.days, longestStreak)));
                     dialogView.addView(view);
                 }
                 new AlertDialog.Builder(this)

@@ -131,10 +131,14 @@ public class Cryptogram {
         return getProgress().getCharacterList(this);
     }
 
-    public Character getCharacterForMapping(char c) {
+    public Character getCharacterForMapping(char mappedChar) {
+        return getCharMapping().get(mappedChar);
+    }
+
+    public Character getMappedCharacter(char inputChar) {
         HashMap<Character, Character> charMapping = getCharMapping();
         for (Character character : charMapping.keySet()) {
-            if (charMapping.get(character) == c) {
+            if (charMapping.get(character) == inputChar) {
                 return character;
             }
         }
@@ -202,6 +206,19 @@ public class Cryptogram {
             return;
         }
         getProgress().reveal(c);
+        save();
+    }
+
+    public void revealedMistakes() {
+        getProgress().incrementRevealedMistakes();
+        save();
+    }
+
+    public void revealPuzzle() {
+        HashMap<Character, Character> charMapping = getCharMapping();
+        for (Character c : charMapping.keySet()) {
+            getProgress().setUserChar(this, c, c);
+        }
         save();
     }
 

@@ -100,6 +100,12 @@ public class CryptogramProgress {
     @SerializedName("had_hints")
     private Boolean mHadHints;
 
+    /**
+     * Total times mistakes were revealed by the user.
+     */
+    @SerializedName("revealed_mistakes")
+    private Integer mRevealedMistakes;
+
     private transient Boolean mPlaying;
 
     public static void setRandomSeed(Long randomSeed) {
@@ -278,6 +284,18 @@ public class CryptogramProgress {
         return mRevealed == null ? 0 : mRevealed.size();
     }
 
+    public Integer getRevealedMistakes() {
+        return mRevealedMistakes == null ? 0 : mRevealedMistakes;
+    }
+
+    public void incrementRevealedMistakes() {
+        if (mRevealedMistakes == null) {
+            mRevealedMistakes = 1;
+        } else {
+            mRevealedMistakes++;
+        }
+    }
+
     public boolean isPlaying() {
         return mPlaying != null && mPlaying;
     }
@@ -369,6 +387,7 @@ public class CryptogramProgress {
         int excessCount = getExcessCount(cryptogram);
         float score = 1;
         score = addScore(score, (float) duration / 120f);
+        score = addScore(score, (float) Math.pow(0.75f, getRevealedMistakes()));
         score = addScore(score, (6f - getReveals()) / 6f);
         score = addScore(score, (26f - excessCount) / 26f);
         // Never return a score below 0.0% or above 100.0%

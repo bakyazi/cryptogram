@@ -14,8 +14,10 @@
 
     <string name="next">Next</string>
     <string name="reveal">Reveal</string>
-    <string name="reveal_letter">Reveal letter</string>
-    <string name="reveal_puzzle">Reveal puzzle</string>
+    <string name="reveal_select">Reveal…</string>
+    <string name="reveal_letter">…letter</string>
+    <string name="reveal_mistakes">…mistakes</string>
+    <string name="reveal_puzzle">…puzzle</string>
     <string name="reset">Reset</string>
     <string name="go_to_puzzle">Go to puzzle…</string>
     <string name="randomize_puzzles">Randomize puzzles</string>
@@ -25,7 +27,8 @@
     <string name="about">About</string>
     <string name="cancel">Cancel</string>
     <string name="skip_puzzle">Are you sure you’d like to skip this puzzle?</string>
-    <string name="reveal_confirmation">Are you sure you’d like to reveal the selected letter?</string>
+    <string name="reveal_letter_confirmation">Are you sure you’d like to reveal the selected letter? This affects your score.</string>
+    <string name="reveal_mistakes_confirmation">Are you sure you’d like to highlight all mistakes in the puzzle? This affects your score.</string>
     <string name="reset_puzzle">Are you sure you’d like to reset this puzzle?</string>
 
     <string name="error_no_puzzles">Whoops! Looks like we couldn’t load the puzzle.</string>
