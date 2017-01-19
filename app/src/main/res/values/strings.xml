@@ -17,11 +17,13 @@
     <string name="reveal_select">Reveal…</string>
     <string name="reveal_letter">…letter</string>
     <string name="reveal_mistakes">…mistakes</string>
+    <string name="reveal_puzzle">…puzzle</string>
     <string name="reset">Reset</string>
     <string name="go_to_puzzle">Go to puzzle…</string>
     <string name="randomize_puzzles">Randomize puzzles</string>
     <string name="show_hints">Show hints</string>
     <string name="share">Share puzzle…</string>
+    <string name="statistics">Statistics</string>
     <string name="about">About</string>
     <string name="cancel">Cancel</string>
     <string name="skip_puzzle">Are you sure you’d like to skip this puzzle?</string>
@@ -43,15 +45,38 @@
 
     <string name="quote">— %1$s</string>
     <string name="topic">Topic: %1$s</string>
+    <string name="not_applicable">N/A</string>
 
     <string name="stats_excess">Number of excess inputs:</string>
     <string name="stats_time">Time elapsed:</string>
     <string name="stats_reveals">Characters revealed:</string>
     <string name="stats_score">Score:</string>
 
+    <string name="stats_average_score_format" translatable="false">%1$.1f%%</string>
+    <string name="stats_cumulative_score_format" translatable="false">%1$.0f</string>
+
+    <string name="stats_total_completed_label">Completed puzzles:</string>
+    <string name="stats_total_completed_value">%1$d of %2$d</string>
+    <string name="stats_average_score_label">Average score:</string>
+    <string name="stats_average_score_value">%1$s</string>
+    <string name="stats_cumulative_score_label">Cumulative score:</string>
+    <string name="stats_cumulative_score_value">%1$s</string>
+    <string name="stats_fastest_completion_label">Fastest completion:</string>
+    <string name="stats_fastest_completion_value">%1$s</string>
+    <string name="stats_total_time_spent_label">Total time played:</string>
+    <string name="stats_total_time_spent_value">%1$s</string>
+    <string name="stats_longest_streak_label">Longest streak:</string>
+    <string name="stats_longest_streak_value">%1$d %2$s</string>
+
+    <plurals name="days">
+        <item quantity="one">day</item>
+        <item quantity="other">days</item>
+    </plurals>
+
     <string name="go_to_puzzle_content">Please enter the puzzle number to go to:</string>
 
-    <string name="tv_made_by">made by</string>
+    <string name="feedback">Send feedback</string>
+    <string name="made_by">made by</string>
     <string name="pixplicity_labs">Pixplicity Labs</string>
 
     <string name="version" translatable="false">%s (%d)</string>
