@@ -222,14 +222,6 @@ public class Cryptogram {
         save();
     }
 
-    public void revealPuzzle() {
-        HashMap<Character, Character> charMapping = getCharMapping();
-        for (Character c : charMapping.keySet()) {
-            getProgress().setUserChar(this, c, c);
-        }
-        save();
-    }
-
     public boolean isRevealed(char c) {
         if (mGiven != null && mGiven.indexOf(c) > -1) {
             return true;
