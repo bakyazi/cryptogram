@@ -40,10 +40,11 @@ public class CryptogramView extends TextView {
     private Cryptogram mCryptogram;
 
     private char mSelectedCharacter, mSelectedCharacterLast;
+    private boolean mHighlightMistakes;
 
     private float mBoxW, mBoxH, mCharW1, mCharW2;
     private Paint mPaint, mLinePaint1, mLinePaint2, mBoxPaint1, mBoxPaint2;
-    private TextPaint mTextPaintInput, mTextPaintInputComplete, mTextPaintMapping;
+    private TextPaint mTextPaintInput, mTextPaintInputComplete, mTextPaintMapping, mTextPaintMistake;
     private int mBoxInset;
 
     private OnCryptogramProgressListener mOnCryptogramProgressListener;
@@ -105,6 +106,9 @@ public class CryptogramView extends TextView {
 
         mTextPaintInputComplete = new TextPaint(mTextPaintInput);
         mTextPaintInputComplete.setColor(ContextCompat.getColor(context, R.color.textComplete));
+
+        mTextPaintMistake = new TextPaint(mTextPaintInput);
+        mTextPaintMistake.setColor(ContextCompat.getColor(context, R.color.textMistake));
 
         // Compute size of a single char (assumes monospaced font!)
         Rect bounds = new Rect();
@@ -258,6 +262,8 @@ public class CryptogramView extends TextView {
     }
 
     public boolean setSelectedCharacter(char c) {
+        // Stop highlighting mistakes
+        mHighlightMistakes = false;
         // Character does not occur in the mapping
         mSelectedCharacter = 0;
         if (mCryptogram != null && mCryptogram.isInputChar(c)) {
@@ -278,6 +284,9 @@ public class CryptogramView extends TextView {
     }
 
     public boolean setCharacterMapping(char selectedChar, char userChar) {
+        // Stop highlighting mistakes
+        mHighlightMistakes = false;
+        // Map the currently selected character to what the user inputs
         if (selectedChar != 0 && mCryptogram != null) {
             if (mCryptogram.isRevealed(selectedChar)) {
                 // This character was already revealed; don't allow the user to alter it
@@ -308,11 +317,22 @@ public class CryptogramView extends TextView {
         return false;
     }
 
-    public boolean revealCharacterMapping(char c) {
+    public void revealCharacterMapping(char c) {
         if (mCryptogram != null) {
             mCryptogram.reveal(c);
         }
-        return setCharacterMapping(c, c);
+        if (setCharacterMapping(c, c)) {
+            // Answer revealed; clear the selection
+            setSelectedCharacter((char) 0);
+        }
+    }
+
+    public void revealMistakes() {
+        if (mCryptogram == null) {
+            return;
+        }
+        mHighlightMistakes = true;
+        invalidate();
     }
 
     public void reset() {
@@ -437,8 +457,16 @@ public class CryptogramView extends TextView {
                     c = getUserInput(c);
                 }
                 if (c > 0) {
+                    TextPaint textPaint = textPaintUser;
+                    if (mHighlightMistakes) {
+                        Character correctMapping = mCryptogram.getCharacterForMapping(c);
+                        if (mappedChar != correctMapping) {
+                            textPaint = mTextPaintMistake;
+                        }
+                    }
+                    // The character should be drawn in place
                     chr = String.valueOf(c);
-                    canvas.drawText(chr, x + offsetX1, y, textPaintUser);
+                    canvas.drawText(chr, x + offsetX1, y, textPaint);
                 }
                 // Box width
                 x += mBoxW;
