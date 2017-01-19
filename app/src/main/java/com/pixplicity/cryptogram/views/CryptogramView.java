@@ -331,7 +331,10 @@ public class CryptogramView extends TextView {
         if (mCryptogram == null) {
             return;
         }
-        mHighlightMistakes = true;
+        if (!mHighlightMistakes) {
+            mCryptogram.revealedMistakes();
+            mHighlightMistakes = true;
+        }
         invalidate();
     }
 

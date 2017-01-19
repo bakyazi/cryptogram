@@ -137,6 +137,11 @@ public class Cryptogram {
         save();
     }
 
+    public void revealedMistakes() {
+        getProgress().incrementRevealedMistakes();
+        save();
+    }
+
     public void revealPuzzle() {
         HashMap<Character, Character> charMapping = getCharMapping();
         for (Character c : charMapping.keySet()) {
