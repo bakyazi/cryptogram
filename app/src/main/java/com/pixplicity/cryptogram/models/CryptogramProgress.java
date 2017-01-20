@@ -101,7 +101,7 @@ public class CryptogramProgress {
     private Boolean mHadHints;
 
     /**
-     * Total times characters were input by the user.
+     * Total times mistakes were revealed by the user.
      */
     @SerializedName("revealed_mistakes")
     private Integer mRevealedMistakes;
