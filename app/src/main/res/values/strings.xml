@@ -30,8 +30,9 @@
 
     <string name="error_no_puzzles">Whoops! Looks like we couldn’t load the puzzle.</string>
 
-    <string name="puzzle_number">Puzzle #%1$d of %2$d</string>
-    <string name="puzzle_number2">Puzzle #%1$d</string>
+    <string name="puzzle_number_instruction">Instructional puzzle</string>
+    <string name="puzzle_number_of_total">Puzzle #%1$d of %2$d</string>
+    <string name="puzzle_number">Puzzle #%1$d</string>
 
     <string name="puzzle_nonexistant">Puzzle #%1$d doesn’t exist</string>
     <string name="puzzle_completed">Puzzle completed</string>
@@ -41,7 +42,7 @@
     <string name="share_url">https://play.google.com/store/apps/details?id=com.pixplicity.cryptogram</string>
 
     <string name="quote">— %1$s</string>
-    <string name="topic">Topic: %1$s</string>
+    <string name="topic">Topic: “%1$s”</string>
     <string name="not_applicable">N/A</string>
 
     <string name="stats_excess">Number of excess inputs:</string>

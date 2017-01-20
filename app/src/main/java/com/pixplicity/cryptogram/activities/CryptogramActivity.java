@@ -296,7 +296,7 @@ public class CryptogramActivity extends BaseActivity {
     private void updateCryptogram(Cryptogram cryptogram) {
         if (cryptogram != null) {
             CryptogramProvider provider = CryptogramProvider.getInstance(this);
-            provider.setCurrent(cryptogram.getId());
+            provider.setCurrentId(cryptogram.getId());
             mRvDrawer.smoothScrollToPosition(
                     provider.getCurrentIndex());
             mTvError.setVisibility(View.GONE);
@@ -304,12 +304,28 @@ public class CryptogramActivity extends BaseActivity {
             // Apply the puzzle to the CryptogramView
             mCryptogramView.setCryptogram(cryptogram);
             // Show other puzzle details
-            mTvAuthor.setText(getString(R.string.quote, cryptogram.getAuthor()));
-            mTvTopic.setText(getString(R.string.topic, cryptogram.getTopic()));
-            mToolbar.setSubtitle(getString(
-                    R.string.puzzle_number,
-                    cryptogram.getId() + 1,
-                    provider.getCount()));
+            String author = cryptogram.getAuthor();
+            if (author == null) {
+                mTvAuthor.setVisibility(View.GONE);
+            } else {
+                mTvAuthor.setVisibility(View.VISIBLE);
+                mTvAuthor.setText(getString(R.string.quote, author));
+            }
+            String topic = cryptogram.getTopic();
+            if (topic == null) {
+                mTvTopic.setVisibility(View.GONE);
+            } else {
+                mTvTopic.setVisibility(View.VISIBLE);
+                mTvTopic.setText(getString(R.string.topic, topic));
+            }
+            if (cryptogram.isInstruction()) {
+                mToolbar.setSubtitle(cryptogram.getTitle(this));
+            } else {
+                mToolbar.setSubtitle(getString(
+                        R.string.puzzle_number_of_total,
+                        cryptogram.getNumber(),
+                        provider.getCount()));
+            }
             // Invoke various events
             onCryptogramUpdated(cryptogram);
             cryptogram.onResume();
@@ -346,10 +362,9 @@ public class CryptogramActivity extends BaseActivity {
                 mTvStatsExcess.setText(String.valueOf(excessCount));
             }
             mTvStatsReveals.setText(String.valueOf(cryptogram.getReveals()));
-            float score = cryptogram.getScore();
-            if (score < 0) {
-                mVgStatsScore.setVisibility(View.GONE);
-            } else {
+            mVgStatsScore.setVisibility(View.GONE);
+            Float score = cryptogram.getScore();
+            if (score != null) {
                 mVgStatsScore.setVisibility(View.VISIBLE);
                 mTvStatsScore.setText(String.format(
                         Locale.ENGLISH,
@@ -481,7 +496,7 @@ public class CryptogramActivity extends BaseActivity {
             }
             return true;
             case R.id.action_go_to: {
-                String currentId = String.valueOf(cryptogram.getId() + 1);
+                String currentId = String.valueOf(cryptogram.getNumber());
                 new MaterialDialog.Builder(this)
                         .content(R.string.go_to_puzzle_content)
                         .inputType(InputType.TYPE_CLASS_NUMBER)
@@ -513,12 +528,12 @@ public class CryptogramActivity extends BaseActivity {
                                 //noinspection ConstantConditions
                                 Editable input = dialog.getInputEditText().getText();
                                 try {
-                                    int id = Integer.parseInt(input.toString());
+                                    int puzzleNumber = Integer.parseInt(input.toString());
                                     CryptogramProvider provider = CryptogramProvider
                                             .getInstance(CryptogramActivity.this);
-                                    Cryptogram cryptogram = provider.get(id - 1);
+                                    Cryptogram cryptogram = provider.getByNumber(puzzleNumber);
                                     if (cryptogram == null) {
-                                        Snackbar.make(mVgContent, getString(R.string.puzzle_nonexistant, id),
+                                        Snackbar.make(mVgContent, getString(R.string.puzzle_nonexistant, puzzleNumber),
                                                       Snackbar.LENGTH_SHORT).show();
                                     } else {
                                         updateCryptogram(cryptogram);

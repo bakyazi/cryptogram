@@ -5,6 +5,7 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.util.Log;
 import android.util.SparseArray;
+import android.util.SparseIntArray;
 import android.widget.Toast;
 
 import com.crashlytics.android.Crashlytics;
@@ -30,6 +31,7 @@ public class CryptogramProvider {
 
     private int mCurrentIndex = -1;
     private Cryptogram[] mCryptograms;
+    private SparseIntArray mCryptogramIds;
     private SparseArray<CryptogramProgress> mCryptogramProgress;
 
     private final Gson mGson = new Gson();
@@ -61,12 +63,20 @@ public class CryptogramProvider {
 
     private void readStream(InputStream is) {
         mCryptograms = mGson.fromJson(new InputStreamReader(is), Cryptogram[].class);
-        int i = 0;
+        int index = 0, nextId = 0;
+        mCryptogramIds = new SparseIntArray();
         for (Cryptogram cryptogram : mCryptograms) {
-            if (cryptogram.getId() == 0) {
-                cryptogram.setId(i);
-                i++;
+            int id = cryptogram.getId();
+            if (id == 0) {
+                while (mCryptogramIds.get(nextId, -1) > -1) {
+                    // Locate the next vacant spot
+                    nextId++;
+                }
+                id = nextId;
+                cryptogram.setId(id);
             }
+            mCryptogramIds.put(id, index);
+            index++;
         }
     }
 
@@ -82,10 +92,18 @@ public class CryptogramProvider {
         return mCurrentIndex;
     }
 
+    private int getIndexFromId(int id) {
+        return mCryptogramIds.get(id, -1);
+    }
+
+    private int getIdFromIndex(int index) {
+        return mCryptograms[index].getId();
+    }
+
     @Nullable
     public Cryptogram getCurrent() {
         if (mCurrentIndex < 0) {
-            mCurrentIndex = PrefsUtils.getCurrentId();
+            mCurrentIndex = getIndexFromId(PrefsUtils.getCurrentId());
         }
         if (mCurrentIndex < 0) {
             return getNext();
@@ -93,9 +111,14 @@ public class CryptogramProvider {
         return get(mCurrentIndex);
     }
 
-    public void setCurrent(int index) {
+    public void setCurrentIndex(int index) {
         mCurrentIndex = index;
-        PrefsUtils.setCurrentId(index);
+        PrefsUtils.setCurrentId(getIdFromIndex(index));
+    }
+
+    public void setCurrentId(int id) {
+        mCurrentIndex = getIndexFromId(id);
+        PrefsUtils.setCurrentId(id);
     }
 
     @Nullable
@@ -117,7 +140,7 @@ public class CryptogramProvider {
         if (mCurrentIndex >= getCount()) {
             mCurrentIndex = 0;
         }
-        setCurrent(mCurrentIndex);
+        setCurrentIndex(mCurrentIndex);
         return get(mCurrentIndex);
     }
 
@@ -127,6 +150,16 @@ public class CryptogramProvider {
             return null;
         }
         return mCryptograms[index];
+    }
+
+    @Nullable
+    public Cryptogram getByNumber(int number) {
+        for (Cryptogram cryptogram : mCryptograms) {
+            if (cryptogram.getNumber() == number) {
+                return cryptogram;
+            }
+        }
+        return null;
     }
 
     @NonNull

@@ -32,8 +32,16 @@ public class CryptogramProgress {
     public CryptogramProgress() {
     }
 
-    public CryptogramProgress(int id) {
-        mId = id;
+    public CryptogramProgress(@NonNull Cryptogram cryptogram) {
+        mId = cryptogram.getId();
+        // Apply mappings for any given characters
+        String given = cryptogram.getGiven();
+        if (given != null) {
+            for (int j = 0; j < given.length(); j++) {
+                char c = given.charAt(j);
+                setUserChar(cryptogram, c, c);
+            }
+        }
     }
 
     @SerializedName("id")
@@ -234,7 +242,7 @@ public class CryptogramProgress {
             HashMap<Character, Character> userChars = getUserCharsMapping(cryptogram);
             for (Character character : userChars.keySet()) {
                 // In order to be correct, the key and value must be identical
-                if (character != userChars.get(character)) {
+                if (character != userChars.get(character) && !cryptogram.isGiven(character)) {
                     mCompleted = false;
                     break;
                 }
@@ -287,22 +295,26 @@ public class CryptogramProgress {
     }
 
     private void onStart(Cryptogram cryptogram) {
-        int puzzleId = cryptogram.getId() + 1;
+        int puzzleNumber = cryptogram.getNumber();
         Answers.getInstance().logLevelStart(
                 new LevelStartEvent()
-                        .putLevelName("Puzzle #" + puzzleId));
+                        .putLevelName("Puzzle #" + puzzleNumber));
 
         CryptogramApp.getInstance().getBus().post(
                 new CryptogramEvent.CryptogramStartedEvent(cryptogram));
     }
 
     private void onCompleted(@NonNull Cryptogram cryptogram) {
-        int puzzleId = cryptogram.getId() + 1;
+        int puzzleNumber = cryptogram.getNumber();
+        LevelEndEvent event = new LevelEndEvent()
+                .putLevelName("Puzzle #" + puzzleNumber)
+                .putSuccess(true);
+        Float score = getScore(cryptogram);
+        if (score != null) {
+            event.putScore(score);
+        }
         Answers.getInstance().logLevelEnd(
-                new LevelEndEvent()
-                        .putLevelName("Puzzle #" + puzzleId)
-                        .putScore(getScore(cryptogram))
-                        .putSuccess(true));
+                event);
 
         CryptogramApp.getInstance().getBus().post(
                 new CryptogramEvent.CryptogramCompletedEvent(cryptogram));
@@ -327,11 +339,11 @@ public class CryptogramProgress {
         return System.currentTimeMillis() - mStartTime;
     }
 
-    public float getScore(@NonNull Cryptogram cryptogram) {
-        long duration = getDuration();
+    public Float getScore(@NonNull Cryptogram cryptogram) {
+        long duration = cryptogram.getDuration();
         int excessCount = getExcessCount(cryptogram);
         if (duration == 0 || excessCount < 0) {
-            return -1;
+            return null;
         }
         float score = 1;
         score = addScore(score, (float) duration / 120f);
