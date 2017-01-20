@@ -33,6 +33,7 @@ import com.pixplicity.cryptogram.R;
 import com.pixplicity.cryptogram.adapters.CryptogramAdapter;
 import com.pixplicity.cryptogram.events.CryptogramEvent;
 import com.pixplicity.cryptogram.models.Cryptogram;
+import com.pixplicity.cryptogram.utils.AprilSpecialEdition;
 import com.pixplicity.cryptogram.utils.CryptogramProvider;
 import com.pixplicity.cryptogram.utils.PrefsUtils;
 import com.pixplicity.cryptogram.utils.StringUtils;
@@ -321,6 +322,8 @@ public class CryptogramActivity extends BaseActivity {
     }
 
     private void onCryptogramReady() {
+        AprilSpecialEdition.doSpecialMagicSauce(this);
+
         mCryptogramView.requestFocus();
     }
 

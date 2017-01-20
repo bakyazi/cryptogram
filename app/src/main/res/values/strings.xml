@@ -9,6 +9,11 @@
     <string name="intro_next">Go on…</string>
     <string name="intro_done">Got it!</string>
 
+    <string name="april_dialog_text1">User feedback revealed that the game felt “impersonal” and that the developer was “out of touch” with the players.\n\nSo it’s me, Paul and I’m here to help you with those cryptograms!\n\nHope you enjoy the new look &amp; feel!</string>
+    <string name="april_dialog_done1">Awesome!</string>
+    <string name="april_dialog_text2">Oh, and have a lovely first of April!</string>
+    <string name="april_dialog_done2">D’oh…</string>
+
     <string name="drawer_open">Open drawer</string>
     <string name="drawer_close">Close drawer</string>
 
