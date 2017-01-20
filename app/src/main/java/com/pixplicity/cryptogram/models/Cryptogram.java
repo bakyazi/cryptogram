@@ -3,9 +3,9 @@ package com.pixplicity.cryptogram.models;
 import android.content.Context;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.text.TextUtils;
 
 import com.google.gson.annotations.SerializedName;
-import com.pixplicity.cryptogram.BuildConfig;
 import com.pixplicity.cryptogram.CryptogramApp;
 import com.pixplicity.cryptogram.R;
 import com.pixplicity.cryptogram.utils.CryptogramProvider;
@@ -83,6 +83,8 @@ public class Cryptogram {
     public String getTitle(Context context) {
         if (isInstruction()) {
             return context.getString(R.string.puzzle_number_instruction);
+        } else if (isNoScore()) {
+            return context.getString(R.string.puzzle_number_practice, getNumber());
         }
         return context.getString(R.string.puzzle_number, getNumber());
     }
@@ -102,7 +104,11 @@ public class Cryptogram {
     @NonNull
     public String[] getWords() {
         if (mWords == null) {
-            mWords = mText.split("\\s");
+            if (TextUtils.isEmpty(mText)) {
+                mWords = new String[0];
+            } else {
+                mWords = mText.split("\\s");
+            }
         }
         return mWords;
     }
@@ -148,6 +154,15 @@ public class Cryptogram {
         save();
     }
 
+    public boolean hasUserChars() {
+        for (Character c : getUserChars()) {
+            if (c != 0) {
+                return true;
+            }
+        }
+        return false;
+    }
+
     public boolean isInputChar(char c) {
         return (c >= 'a' && c <= 'z') || (c >= 'A' && c <= 'Z');
     }
@@ -173,7 +188,9 @@ public class Cryptogram {
         if (mGiven != null) {
             for (int j = 0; j < mGiven.length(); j++) {
                 char c = mGiven.charAt(j);
-                if (c == matchChar) return true;
+                if (c == matchChar) {
+                    return true;
+                }
             }
         }
         return false;
@@ -227,6 +244,14 @@ public class Cryptogram {
             return null;
         }
         return getProgress().getScore(this);
+    }
+
+    public void setHadHints(boolean hadHints) {
+        getProgress().setHadHints(hadHints);
+    }
+
+    public boolean hadHints() {
+        return getProgress().hadHints();
     }
 
     public void onResume() {

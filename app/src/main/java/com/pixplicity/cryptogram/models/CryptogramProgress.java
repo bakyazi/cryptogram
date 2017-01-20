@@ -94,6 +94,12 @@ public class CryptogramProgress {
     @SerializedName("completed")
     private Boolean mCompleted;
 
+    /**
+     * Whether this cryptogram was played using hints.
+     */
+    @SerializedName("had_hints")
+    private Boolean mHadHints;
+
     private transient Boolean mPlaying;
 
     public static void setRandomSeed(Long randomSeed) {
@@ -326,6 +332,13 @@ public class CryptogramProgress {
         mStopTime = stopTime;
     }
 
+    public long getStartTime() {
+        if (mStartTime == null || mStartTime == 0) {
+            return 0;
+        }
+        return mStartTime;
+    }
+
     public long getDuration() {
         if (mStartTime == null || mStartTime == 0) {
             return 0;
@@ -339,12 +352,21 @@ public class CryptogramProgress {
         return System.currentTimeMillis() - mStartTime;
     }
 
-    public Float getScore(@NonNull Cryptogram cryptogram) {
+    public boolean hasScore(@NonNull Cryptogram cryptogram) {
         long duration = cryptogram.getDuration();
         int excessCount = getExcessCount(cryptogram);
         if (duration == 0 || excessCount < 0) {
+            return false;
+        }
+        return true;
+    }
+
+    public Float getScore(@NonNull Cryptogram cryptogram) {
+        if (!hasScore(cryptogram)) {
             return null;
         }
+        long duration = getDuration();
+        int excessCount = getExcessCount(cryptogram);
         float score = 1;
         score = addScore(score, (float) duration / 120f);
         score = addScore(score, (6f - getReveals()) / 6f);
@@ -359,6 +381,17 @@ public class CryptogramProgress {
             return score * -addition;
         }
         return score * addition;
+    }
+
+    public void setHadHints(boolean hadHints) {
+        mHadHints = hadHints;
+    }
+
+    public boolean hadHints() {
+        if (mHadHints == null) {
+            mHadHints = false;
+        }
+        return mHadHints;
     }
 
     public void sanitize(@NonNull Cryptogram cryptogram) {

@@ -4,9 +4,17 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <item
+        android:id="@+id/action_google_play_games"
+        android:icon="@drawable/games_controller_white"
+        android:orderInCategory="100"
+        android:title="@string/google_play_games_sign_in"
+        android:visible="false"
+        app:showAsAction="ifRoom"/>
+
+    <item
         android:id="@+id/action_next"
         android:icon="@drawable/ic_next"
-        android:orderInCategory="100"
+        android:orderInCategory="105"
         android:title="@string/next"
         app:showAsAction="ifRoom"/>
 
@@ -15,6 +23,14 @@
         android:icon="@drawable/ic_reveal"
         android:orderInCategory="200"
         android:title="@string/reveal_letter"
+        app:showAsAction="never"/>
+
+    <item
+        android:id="@+id/action_reveal_puzzle"
+        android:icon="@drawable/ic_reveal"
+        android:orderInCategory="201"
+        android:title="@string/reveal_puzzle"
+        android:visible="false"
         app:showAsAction="never"/>
 
     <item

@@ -56,8 +56,10 @@ public class CryptogramProvider {
             readStream(is);
         } else {
             InputStream is = this.getClass().getClassLoader().getResourceAsStream("assets/" + ASSET_FILENAME);
-            readStream(is);
-            is.close();
+            if (is != null) {
+                readStream(is);
+                is.close();
+            }
         }
     }
 
@@ -160,6 +162,21 @@ public class CryptogramProvider {
             }
         }
         return null;
+    }
+
+    public long getTotalScore() {
+        long score = 0;
+        for (Cryptogram cryptogram : mCryptograms) {
+            if (!cryptogram.isCompleted()) {
+                continue;
+            }
+            CryptogramProgress progress = cryptogram.getProgress();
+            if (!progress.hasScore(cryptogram)) {
+                continue;
+            }
+            score += Math.round(100f * progress.getScore(cryptogram));
+        }
+        return score;
     }
 
     @NonNull

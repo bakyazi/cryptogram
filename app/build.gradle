@@ -47,8 +47,8 @@ android {
         applicationId "com.pixplicity.cryptogram"
         minSdkVersion 14
         targetSdkVersion 25
-        versionCode 15
-        versionName "1.5.1"
+        versionCode 164
+        versionName "1.6.2"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
     }
     buildTypes {
@@ -95,6 +95,8 @@ dependencies {
     compile 'com.android.support:support-annotations:25.1.0'
     compile 'com.android.support:design:25.1.0'
     compile 'com.android.support:recyclerview-v7:25.1.0'
+
+    compile 'com.google.android.gms:play-services-games:10.0.1'
 
     compile 'com.jakewharton:butterknife:8.4.0'
     apt 'com.jakewharton:butterknife-compiler:8.4.0'
