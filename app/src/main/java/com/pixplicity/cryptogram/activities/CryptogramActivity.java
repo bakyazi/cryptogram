@@ -481,6 +481,12 @@ public class CryptogramActivity extends BaseActivity {
             }
             return true;
             case R.id.action_go_to: {
+                if (cryptogram == null) {
+                    if (mDrawerLayout != null) {
+                        mDrawerLayout.openDrawer(GravityCompat.START);
+                    }
+                    break;
+                }
                 String currentId = String.valueOf(cryptogram.getId() + 1);
                 new MaterialDialog.Builder(this)
                         .content(R.string.go_to_puzzle_content)
@@ -573,11 +579,9 @@ public class CryptogramActivity extends BaseActivity {
                     long duration = c.getProgress().getDuration();
                     if (c.isCompleted()) {
                         count++;
-                        Float puzzleScore = c.getScore();
-                        if (puzzleScore != null) {
-                            score += puzzleScore;
-                            scoreCount++;
-                        }
+                        float puzzleScore = c.getScore();
+                        score += puzzleScore;
+                        scoreCount++;
                         if (shortestDurationMs == 0 || shortestDurationMs > duration) {
                             shortestDurationMs = duration;
                         }
