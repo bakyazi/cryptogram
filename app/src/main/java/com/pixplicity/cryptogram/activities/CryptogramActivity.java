@@ -322,9 +322,11 @@ public class CryptogramActivity extends BaseActivity {
     }
 
     private void onCryptogramReady() {
-        AprilSpecialEdition.doSpecialMagicSauce(this);
-
-        mCryptogramView.requestFocus();
+        if (AprilSpecialEdition.doSpecialMagicSauce(this)) {
+            mCryptogramView.clearFocus();
+        } else {
+            mCryptogramView.requestFocus();
+        }
     }
 
     public void onCryptogramUpdated(Cryptogram cryptogram) {
