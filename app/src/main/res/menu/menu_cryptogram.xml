@@ -4,17 +4,9 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <item
-        android:id="@+id/action_google_play_games"
-        android:icon="@drawable/games_controller_white"
-        android:orderInCategory="100"
-        android:title="@string/google_play_games_sign_in"
-        android:visible="false"
-        app:showAsAction="ifRoom"/>
-
-    <item
         android:id="@+id/action_next"
         android:icon="@drawable/ic_next"
-        android:orderInCategory="105"
+        android:orderInCategory="100"
         android:title="@string/next"
         app:showAsAction="ifRoom"/>
 
@@ -22,24 +14,30 @@
         android:id="@+id/action_reveal"
         android:icon="@drawable/ic_reveal"
         android:orderInCategory="200"
-        android:title="@string/reveal_letter"
-        app:showAsAction="never"/>
+        android:title="@string/reveal_select"
+        app:showAsAction="never">
 
-    <item
-        android:id="@+id/action_reveal_puzzle"
-        android:icon="@drawable/ic_reveal"
-        android:orderInCategory="201"
-        android:title="@string/reveal_puzzle"
-        android:visible="false"
-        app:showAsAction="never"/>
+        <menu>
 
-    <item
-        android:id="@+id/action_reveal_puzzle"
-        android:icon="@drawable/ic_reveal"
-        android:orderInCategory="201"
-        android:visible="false"
-        android:title="@string/reveal_puzzle"
-        app:showAsAction="never"/>
+            <item
+                android:id="@+id/action_reveal_letter"
+                android:orderInCategory="200"
+                android:title="@string/reveal_letter"/>
+
+            <item
+                android:id="@+id/action_reveal_mistakes"
+                android:orderInCategory="201"
+                android:title="@string/reveal_mistakes"/>
+
+            <item
+                android:id="@+id/action_reveal_puzzle"
+                android:orderInCategory="202"
+                android:visible="false"
+                android:title="@string/reveal_puzzle"/>
+
+        </menu>
+
+    </item>
 
     <item
         android:id="@+id/action_reset"

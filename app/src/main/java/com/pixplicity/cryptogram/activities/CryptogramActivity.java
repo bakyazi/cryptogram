@@ -570,10 +570,6 @@ public class CryptogramActivity extends BaseActivity implements GoogleApiClient.
 
         final Cryptogram cryptogram = mCryptogramView.getCryptogram();
         switch (item.getItemId()) {
-            case R.id.action_google_play_games: {
-                onClickGooglePlayGames();
-            }
-            return true;
             case R.id.action_next: {
                 if (cryptogram == null || cryptogram.isCompleted()) {
                     nextPuzzle();
@@ -595,20 +591,17 @@ public class CryptogramActivity extends BaseActivity implements GoogleApiClient.
                 }
             }
             return true;
-            case R.id.action_reveal: {
+            case R.id.action_reveal_letter: {
                 if (cryptogram == null || !mCryptogramView.hasSelectedCharacter()) {
                     Snackbar.make(mVgContent, "Please select a letter first.", Snackbar.LENGTH_SHORT).show();
                 } else {
                     new AlertDialog.Builder(this)
-                            .setMessage(R.string.reveal_confirmation)
+                            .setMessage(R.string.reveal_letter_confirmation)
                             .setPositiveButton(R.string.reveal, new DialogInterface.OnClickListener() {
                                 @Override
                                 public void onClick(DialogInterface dialogInterface, int i) {
-                                    if (mCryptogramView.revealCharacterMapping(
-                                            mCryptogramView.getSelectedCharacter())) {
-                                        // Answer revealed; clear the selection
-                                        mCryptogramView.setSelectedCharacter((char) 0);
-                                    }
+                                    mCryptogramView.revealCharacterMapping(
+                                            mCryptogramView.getSelectedCharacter());
                                 }
                             })
                             .setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {
@@ -618,6 +611,23 @@ public class CryptogramActivity extends BaseActivity implements GoogleApiClient.
                             })
                             .show();
                 }
+            }
+            return true;
+            case R.id.action_reveal_mistakes: {
+                new AlertDialog.Builder(this)
+                        .setMessage(R.string.reveal_mistakes_confirmation)
+                        .setPositiveButton(R.string.reveal, new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialogInterface, int i) {
+                                mCryptogramView.revealMistakes();
+                            }
+                        })
+                        .setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialogInterface, int i) {
+                            }
+                        })
+                        .show();
             }
             return true;
             case R.id.action_reveal_puzzle: {
