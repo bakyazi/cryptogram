@@ -50,7 +50,7 @@ public class CryptogramTest {
             String text = cryptogram.getText().trim().toLowerCase();
             String author = cryptogram.getAuthor();
             int hash = text.hashCode();
-            System.out.println("cryptogram " + id + ": " + text.length() + " chars, author '" + author + "'");
+            System.out.println("cryptogram id=" + id + ": " + text.length() + " chars, author '" + author + "'");
             // Ensure there's content
             assertNotEquals(0, text.length());
             // Ensure there aren't single quotes (replace with ’)
