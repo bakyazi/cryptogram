@@ -22,44 +22,55 @@ public class AprilSpecialEdition {
 
     public static final boolean TEST = true && BuildConfig.DEBUG;
 
-    private static Calendar sCalSched, sCalNow = new GregorianCalendar();
-    private static long sShownAt;
+    private static Calendar sCalScheduleStart, sCalScheduleEnd, sCalNow = new GregorianCalendar();
 
-    public static boolean doSpecialMagicSauce(Context context) {
+    private static long sShownAt;
+    private static boolean sNotified;
+
+    public static boolean doSpecialMagicSauce(Context context, boolean showDialog) {
         sCalNow.setTimeInMillis(System.currentTimeMillis());
-        if (sCalSched == null) {
-            sCalSched = new GregorianCalendar();
-            sCalSched.set(2017, Calendar.APRIL, 1, 7, 0, 0);
+        if (sCalScheduleStart == null) {
+            sCalScheduleStart = new GregorianCalendar();
+            sCalScheduleStart.set(2017, Calendar.APRIL, 1, 7, 0, 0);
+            sCalScheduleEnd = new GregorianCalendar();
+            sCalScheduleEnd.setTimeInMillis(sCalScheduleStart.getTimeInMillis());
+            sCalScheduleEnd.add(Calendar.HOUR, 13);
             if (TEST) {
-                sCalSched.setTimeInMillis(sCalNow.getTimeInMillis());
-                sCalSched.add(Calendar.SECOND, 1);
+                sCalScheduleStart.setTimeInMillis(sCalNow.getTimeInMillis());
+                sCalScheduleStart.add(Calendar.SECOND, 5);
             }
         }
-        if (sCalSched.before(sCalNow)) {
-            sCalSched.add(Calendar.HOUR, 13);
-            if (sCalSched.after(sCalNow)) {
-                // It's april first
+        if (sCalScheduleStart.before(sCalNow)) {
+            // It's after the scheduled start
+            if (sCalScheduleEnd.after(sCalNow)) {
+                // It's before the scheduled end; therefore April first
                 if (System.currentTimeMillis() - sShownAt > 2 * 60 * 1000) {
-                    sShownAt = System.currentTimeMillis();
-                    View customView = LayoutInflater.from(context).inflate(R.layout.dialog_april, null);
-                    View ivApril = customView.findViewById(R.id.iv_april);
-                    RotateAnimation anim = new RotateAnimation(0, 360, Animation.RELATIVE_TO_SELF, 0.5f, Animation.RELATIVE_TO_SELF, 0.5f);
-                    anim.setRepeatMode(Animation.REVERSE);
-                    anim.setRepeatCount(Animation.INFINITE);
-                    anim.setDuration(2000);
-                    anim.setInterpolator(new AccelerateDecelerateInterpolator());
-                    ivApril.startAnimation(anim);
-                    new MaterialDialog.Builder(context)
-                            .customView(customView, false)
-                            .cancelable(false)
-                            .positiveText(R.string.april_dialog_done1)
-                            .show();
-                    return true;
+                    if (showDialog) {
+                        sShownAt = System.currentTimeMillis();
+                        View customView = LayoutInflater.from(context).inflate(R.layout.dialog_april, null);
+                        View ivApril = customView.findViewById(R.id.iv_april);
+                        RotateAnimation anim = new RotateAnimation(0, 360, Animation.RELATIVE_TO_SELF, 0.5f, Animation.RELATIVE_TO_SELF, 0.5f);
+                        anim.setRepeatMode(Animation.REVERSE);
+                        anim.setRepeatCount(Animation.INFINITE);
+                        anim.setDuration(2000);
+                        anim.setInterpolator(new AccelerateDecelerateInterpolator());
+                        ivApril.startAnimation(anim);
+                        new MaterialDialog.Builder(context)
+                                .customView(customView, false)
+                                .cancelable(false)
+                                .positiveText(R.string.april_dialog_done1)
+                                .show();
+                    } else if (!sNotified) {
+                        NotificationPublisher.notify(context, NotificationPublisher.NOTIFICATION_APRIL_SPECIAL);
+                        sNotified = true;
+                    }
                 }
+                return true;
             }
+            // It's after the scheduled end
         } else {
-            // It's before April first; schedule an alarm
-            long alarmTimestamp = sCalSched.getTimeInMillis();
+            // It's before the scheduled start; schedule an alarm
+            long alarmTimestamp = sCalScheduleStart.getTimeInMillis();
             if (TEST) {
                 alarmTimestamp = sCalNow.getTimeInMillis();
             }
@@ -67,6 +78,7 @@ public class AprilSpecialEdition {
             PendingIntent pi = PendingIntent.getBroadcast(context, 0, notificationIntent, PendingIntent.FLAG_UPDATE_CURRENT);
             AlarmManager am = (AlarmManager) context.getSystemService(Activity.ALARM_SERVICE);
             am.set(AlarmManager.RTC, alarmTimestamp, pi);
+            sNotified = true;
         }
         return false;
     }

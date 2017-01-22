@@ -29,12 +29,12 @@ public class NotificationPublisher extends BroadcastReceiver {
         return notificationIntent;
     }
 
-    @Override
-    public void onReceive(Context context, Intent intent) {
+    public static void clear(Context context, int notificationId) {
         NotificationManager notificationManager = (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
+        notificationManager.cancel(notificationId);
+    }
 
-        int id = intent.getIntExtra(NOTIFICATION_ID, 0);
-
+    public static void notify(Context context, int id) {
         // Some defaults
         NotificationCompat.Builder builder = new NotificationCompat.Builder(context);
         builder.setContentTitle(context.getString(R.string.app_name));
@@ -56,7 +56,14 @@ public class NotificationPublisher extends BroadcastReceiver {
 
         builder.setContentIntent(pi);
         Notification notification = builder.build();
+        NotificationManager notificationManager = (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
         notificationManager.notify(id, notification);
+    }
+
+    @Override
+    public void onReceive(Context context, Intent intent) {
+        int id = intent.getIntExtra(NOTIFICATION_ID, 0);
+        notify(context, id);
     }
 
 }

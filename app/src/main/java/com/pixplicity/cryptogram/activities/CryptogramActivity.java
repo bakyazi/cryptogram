@@ -47,6 +47,7 @@ import com.pixplicity.cryptogram.utils.AprilSpecialEdition;
 import com.pixplicity.cryptogram.utils.AchievementProvider;
 import com.pixplicity.cryptogram.utils.CryptogramProvider;
 import com.pixplicity.cryptogram.utils.LeaderboardProvider;
+import com.pixplicity.cryptogram.utils.NotificationPublisher;
 import com.pixplicity.cryptogram.utils.PrefsUtils;
 import com.pixplicity.cryptogram.utils.StringUtils;
 import com.pixplicity.cryptogram.views.CryptogramView;
@@ -348,8 +349,16 @@ public class CryptogramActivity extends BaseActivity implements GoogleApiClient.
     }
 
     @Override
+    protected void onResume() {
+        super.onResume();
+        NotificationPublisher.clear(this, NotificationPublisher.NOTIFICATION_APRIL_SPECIAL);
+    }
+
+    @Override
     protected void onStop() {
         super.onStop();
+
+        AprilSpecialEdition.doSpecialMagicSauce(this, false);
 
         if (mGoogleApiClient.isConnected()) {
             mGoogleApiClient.disconnect();
@@ -482,7 +491,7 @@ public class CryptogramActivity extends BaseActivity implements GoogleApiClient.
     }
 
     private void onGameplayReady() {
-        if (AprilSpecialEdition.doSpecialMagicSauce(this)) {
+        if (AprilSpecialEdition.doSpecialMagicSauce(this, true)) {
             mIvBackground.setVisibility(View.VISIBLE);
             mCryptogramView.clearFocus();
         } else {
