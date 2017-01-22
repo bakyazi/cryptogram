@@ -70,6 +70,8 @@ public class CryptogramActivity extends BaseActivity implements GoogleApiClient.
     private static final int RC_UNUSED = 1000;
     private static final int RC_SIGN_IN = 1001;
 
+    private static final int ONBOARDING_PAGES = 2;
+
     @BindView(R.id.iv_google_play_games_banner)
     protected ImageView mIvGooglePlayGamesBanner;
 
@@ -90,6 +92,9 @@ public class CryptogramActivity extends BaseActivity implements GoogleApiClient.
 
     @BindView(R.id.rv_drawer)
     protected RecyclerView mRvDrawer;
+
+    @BindView(R.id.iv_background)
+    protected ImageView mIvBackground;
 
     @BindView(R.id.vg_cryptogram)
     protected ViewGroup mVgCryptogram;
@@ -190,9 +195,11 @@ public class CryptogramActivity extends BaseActivity implements GoogleApiClient.
             }
         });
 
-        showOnboarding(0);
-
         updateCryptogram(cryptogramProvider.getCurrent());
+    }
+
+    private boolean hasOnBoardingPages() {
+        return PrefsUtils.getOnboarding() < ONBOARDING_PAGES - 1;
     }
 
     private void showOnboarding(final int page) {
@@ -220,6 +227,7 @@ public class CryptogramActivity extends BaseActivity implements GoogleApiClient.
                 videoW = 1088;
                 videoH = 962;
                 break;
+            case ONBOARDING_PAGES:
             default:
                 onGameplayReady();
                 return;
@@ -314,6 +322,11 @@ public class CryptogramActivity extends BaseActivity implements GoogleApiClient.
     }
 
     @Override
+    protected void onNewIntent(Intent intent) {
+        super.onNewIntent(intent);
+    }
+
+    @Override
     protected void onStart() {
         super.onStart();
 
@@ -326,6 +339,12 @@ public class CryptogramActivity extends BaseActivity implements GoogleApiClient.
         }
 
         CryptogramApp.getInstance().getBus().register(this);
+
+        if (hasOnBoardingPages()) {
+            showOnboarding(0);
+        } else {
+            onGameplayReady();
+        }
     }
 
     @Override
@@ -464,8 +483,10 @@ public class CryptogramActivity extends BaseActivity implements GoogleApiClient.
 
     private void onGameplayReady() {
         if (AprilSpecialEdition.doSpecialMagicSauce(this)) {
+            mIvBackground.setVisibility(View.VISIBLE);
             mCryptogramView.clearFocus();
         } else {
+            mIvBackground.setVisibility(View.GONE);
             mCryptogramView.requestFocus();
         }
     }
