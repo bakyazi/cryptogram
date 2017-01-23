@@ -44,7 +44,7 @@ public class NotificationPublisher extends BroadcastReceiver {
         PendingIntent pi = null;
         switch (id) {
             case NOTIFICATION_APRIL_SPECIAL: {
-                builder.setContentText("Take a look at the April special edition");
+                builder.setContentText(context.getString(R.string.notification_april_special));
                 Intent notificationIntent = new Intent(context, CryptogramActivity.class);
                 notificationIntent.setAction(Intent.ACTION_MAIN);
                 notificationIntent.addCategory(Intent.CATEGORY_LAUNCHER);
