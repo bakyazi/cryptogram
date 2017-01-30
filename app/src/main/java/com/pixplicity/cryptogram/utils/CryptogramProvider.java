@@ -70,7 +70,7 @@ public class CryptogramProvider {
         for (Cryptogram cryptogram : mCryptograms) {
             int id = cryptogram.getId();
             if (id == 0) {
-                while (mCryptogramIds.get(nextId) == null) {
+                while (mCryptogramIds.get(nextId) != null) {
                     // Locate the next vacant spot
                     nextId++;
                 }
