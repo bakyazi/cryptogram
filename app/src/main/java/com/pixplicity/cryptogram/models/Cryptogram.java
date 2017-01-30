@@ -3,7 +3,6 @@ package com.pixplicity.cryptogram.models;
 import android.content.Context;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
-import android.text.TextUtils;
 
 import com.google.gson.annotations.SerializedName;
 import com.pixplicity.cryptogram.CryptogramApp;
@@ -104,7 +103,7 @@ public class Cryptogram {
     @NonNull
     public String[] getWords() {
         if (mWords == null) {
-            if (TextUtils.isEmpty(mText)) {
+            if (mText == null || mText.length() == 0) {
                 mWords = new String[0];
             } else {
                 mWords = mText.split("\\s");

@@ -10,6 +10,7 @@ import com.pixplicity.cryptogram.utils.CryptogramProvider;
 import org.junit.Test;
 
 import java.util.HashMap;
+import java.util.Locale;
 
 /**
  * Example local unit test, which will execute on the development machine (host).
@@ -77,9 +78,16 @@ public class CryptogramTest {
             if (text.contains("...")) {
                 throw new AssertionError("Contains expanded ellipsis; replace with '…': " + cryptogram);
             }
-            // Ensure there's an author
-            if (author.trim().length() == 0) {
-                throw new AssertionError("No author: " + cryptogram);
+            if (!cryptogram.isInstruction()) {
+                // Ensure there's an author
+                if (author == null || author.trim().length() == 0) {
+                    throw new AssertionError("No author: " + cryptogram);
+                }
+            }
+            // Ensure there aren't simple hyphens (replace with —)
+            String given = cryptogram.getGiven();
+            if (given != null && !given.equals(given.toUpperCase(Locale.ENGLISH))) {
+                throw new AssertionError("Contains lowercase given characters: " + cryptogram);
             }
             // Ensure there aren't duplicates
             for (Cryptogram otherCryptogram : hashes.values()) {
