@@ -563,7 +563,7 @@
     "topic": "Science"
   },
   {
-    "text": "Imagination will often carry us to worlds that never were. But without it we go nowhere.",
+    "text": "Imagination will often carry us to worlds that never were, but without it we go nowhere.",
     "author": "Carl Sagan",
     "topic": "Inspirational"
   },
@@ -1803,8 +1803,8 @@
     "topic": "Winter"
   },
   {
-    "text": "Laughter is the sun that drives winter from the human face.",
-    "author": "Victor Hugo",
+    "text": "If we had no winter, the spring would not be so pleasant: if we did not sometimes taste of adversity, prosperity would not be so welcome.",
+    "author": "Anne Bradstreet",
     "topic": "Winter"
   },
   {
@@ -1818,8 +1818,8 @@
     "topic": "Winter"
   },
   {
-    "text": "In the depth of winter I finally learned that there was in me an invincible summer.",
-    "author": "Albert Camus",
+    "text": "It is the life of the crystal, the architect of the flake, the fire of the frost, the soul of the sunbeam. This crisp winter air is full of it.",
+    "author": "John Burroughs",
     "topic": "Winter"
   },
   {
@@ -2015,8 +2015,8 @@
     "topic": "Technology"
   },
   {
-    "text": "Imagination will often carry us to worlds that never were, but without it we go nowhere.",
-    "author": "Carl Sagan",
+    "text": "Anyone who lives within their means suffers from a lack of imagination.",
+    "author": "Oscar Wilde",
     "topic": "Imagination"
   },
   {
@@ -2119,5 +2119,240 @@
     "author": "Holly Black",
     "given": "BW",
     "topic": "Humor"
+  },
+  {
+    "text": "Study hard what interests you the most in the most undisciplined, irreverent and original manner possible",
+    "author": "Richard Feynman",
+    "topic": "Learning"
+  },
+  {
+    "text": "We are, as a species, addicted to story. Even when the body goes to sleep, the mind stays up all night, telling itself stories.",
+    "author": "Jonathan Gottschall",
+    "topic": "Storytelling"
+  },
+  {
+    "text": "Bear the pain of detachment and you will find inner peace.",
+    "author": "Rumi",
+    "topic": "Inspirational"
+  },
+  {
+    "text": "Real giving is when we give to our spouses what’s important to them, whether we understand it, like it, agree with it, or not.",
+    "author": "Michele Weiner-Davis",
+    "topic": "Love"
+  },
+  {
+    "text": "The desire of the man is for the woman, but the desire of the woman is for the desire of the man.",
+    "author": "Madame de Stael",
+    "topic": "Love"
+  },
+  {
+    "text": "Don’t let perfection become procrastination. Do it now.",
+    "author": "Danielle LaPorte",
+    "given": "P",
+    "topic": "Work ethic"
+  },
+  {
+    "text": "We cannot teach people anything. We can only help them discover it within themselves.",
+    "author": "Galileo Galilei",
+    "topic": "Education"
+  },
+  {
+    "text": "Our most basic common link is that we all inhabit this planet. We all breathe the same air. We all cherish our children’s future. And we are all mortal.",
+    "author": "John F. Kennedy",
+    "topic": "Inspirational"
+  },
+  {
+    "text": "If you only walk on sunny days you’ll never reach your destination.",
+    "author": "Paulo Coelho",
+    "topic": "Inspirational"
+  },
+  {
+    "text": "It is the struggle toward an ideal, the constant effort to get higher and further, which develops manhood and character.",
+    "author": "James Terry White",
+    "topic": "Inspirational"
+  },
+  {
+    "text": "Sometimes it falls on a generation to be great. You can be that great generation. Let your greatness blossom.",
+    "author": "Nelson Mandela",
+    "topic": "Inspirational"
+  },
+  {
+    "text": "We can complain because rose bushes have thorns, or rejoice because thorn bushes have roses.",
+    "author": "Abraham Lincoln",
+    "topic": "Beauty"
+  },
+  {
+    "text": "ou can not change what you refuse to confront",
+    "author": "John Spence",
+    "topic": "Change"
+  },
+  {
+    "text": "Books don’t offer real escape, but they can stop a mind scratching itself raw.",
+    "author": "David Mitchell",
+    "topic": "Literacy"
+  },
+  {
+    "text": "Success is liking yourself, liking what you do, and liking how you do it.",
+    "author": "Maya Angelou",
+    "topic": "Success"
+  },
+  {
+    "text": "I don’t want to be at the mercy of my emotions. I want to use them, to enjoy them, and to dominate them.",
+    "author": "Oscar Wilde",
+    "topic": "Inspirational"
+  },
+  {
+    "text": "Once a year, go someplace you’ve never been before.",
+    "author": "Dalai Lama",
+    "given": "ON",
+    "topic": "Exploration"
+  },
+  {
+    "text": "Opportunity is missed by most people because it is dressed in overalls and looks like work.",
+    "author": "Thomas Edison",
+    "topic": "Success"
+  },
+  {
+    "text": "Coming together is a beginning; keeping together is progress; working together is success.",
+    "author": "Henry Ford",
+    "topic": "Success"
+  },
+  {
+    "text": "A business that makes nothing but money is a poor business.",
+    "author": "Henry Ford",
+    "topic": "Business"
+  },
+  {
+    "text": "You have to be burning with an idea, or a problem, or a wrong that you want to right.",
+    "author": "Steve Jobs",
+    "topic": "Business"
+  },
+  {
+    "text": "There’s no luck in business. There’s only drive, determination, and more drive.",
+    "author": "Sophie Kinsella",
+    "topic": "Business"
+  },
+  {
+    "text": "There are no secrets to success. It is the result of preparation, hard work, and learning from failure.",
+    "author": "Colin Powell",
+    "topic": "Business"
+  },
+  {
+    "text": "Great things in business are never done by one person. They’re done by a team of people.",
+    "author": "Steve Jobs",
+    "topic": "Business"
+  },
+  {
+    "text": "In the business world, the rearview mirror is always clearer than the windshield.",
+    "author": "Warren Buffett",
+    "topic": "Business"
+  },
+  {
+    "text": "The most potent muse of all is our own inner child.",
+    "author": "Stephen Nachmanovitch",
+    "given": "M",
+    "topic": "Inspirational"
+  },
+  {
+    "text": "Never be in a hurry; do everything quietly and in a calm spirit. Do not lose your inner peace for anything whatsoever, even if your whole world seems upset.",
+    "author": "Saint Francis de Sales",
+    "topic": "Peace"
+  },
+  {
+    "text": "A friend is what the heart needs all the time.",
+    "author": "Henry Van Dyke",
+    "given": "F",
+    "topic": "Friendship"
+  },
+  {
+    "text": "The work of art is to dominate the spectator. The spectator is not to dominate the work of art.",
+    "author": "Oscar Wilde",
+    "topic": "Art"
+  },
+  {
+    "text": "I learned to give not because I have much, but because I know exactly how it feels to have nothing.",
+    "author": "Anonymous",
+    "topic": "Giving"
+  },
+  {
+    "text": "Over time, the hurt doesn’t hurt. Only regret does.",
+    "author": "Terri Guillemets",
+    "topic": "Inspirational"
+  },
+  {
+    "text": "It does not matter how slowly you go as long as you do not stop.",
+    "author": "Confucius",
+    "topic": "Inspirational"
+  },
+  {
+    "text": "See the world. It’s more fantastic than any dream made or paid for in factories. Ask for no guarantees, ask for no security.",
+    "author": "Ray Bradbury",
+    "topic": "Inspirational"
+  },
+  {
+    "text": "Human beings, who are almost unique in having the ability to learn from the experience of others, are also remarkable for their apparent disinclination to do so.",
+    "author": "Douglas Adams",
+    "topic": "Knowledge"
+  },
+  {
+    "text": "At the touch of love everyone becomes a poet.",
+    "author": "Plato",
+    "given": "A",
+    "topic": "Love"
+  },
+  {
+    "text": "It is not joy that makes us grateful. It is gratitude that makes us joyful.",
+    "author": "David Steindl-Rast",
+    "topic": "Happiness"
+  },
+  {
+    "text": "Every single person has at least one secret that would break your heart. If we could just remember this, I think there would be a lot more compassion and tolerance in the world.",
+    "author": "Frank Warren",
+    "topic": "Tolerance"
+  },
+  {
+    "text": "The world has become so serious that humor is a risky profession.",
+    "author": "Bernardo Erlich",
+    "topic": "Tolerance"
+  },
+  {
+    "text": "The best part of my life is who I share it with.",
+    "author": "Anonymous",
+    "topic": "Life"
+  },
+  {
+    "text": "I will not let anyone walk through my mind with their dirty feet.",
+    "author": "Mahatma Gandhi",
+    "topic": "Objectivity"
+  },
+  {
+    "text": "Unless you try to do something beyond what you have already mastered you will never grow.",
+    "author": "Ralph Waldo Emerson",
+    "topic": "Inspirational"
+  },
+  {
+    "text": "If you have time to whine and complain about something then you have the time to do something about it.",
+    "author": "Anthony J. D’Angelo",
+    "topic": "Optimism"
+  },
+  {
+    "text": "Anything I’ve done that was ultimately worthwhile initially scared me to death.",
+    "author": "Betty Bender",
+    "topic": "Ambition"
+  },
+  {
+    "text": "You have to learn the rules of the game. And then you have to play better than anyone else.",
+    "author": "Albert Einstein",
+    "topic": "Success"
+  },
+  {
+    "text": "Success consists of going from failure to failure without loss of enthusiasm.",
+    "author": "Winston Churchill",
+    "topic": "Success"
+  },
+  {
+    "text": "Our knowledge has made us cynical; our cleverness, hard and unkind. We think too much and feel too little. More than machinery, we need humanity. More than cleverness, we need kindness and gentleness.",
+    "author": "Charlie Chaplin",
+    "topic": "Kindness"
   }
 ]
