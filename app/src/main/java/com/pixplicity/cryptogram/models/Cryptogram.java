@@ -203,4 +203,8 @@ public class Cryptogram {
         }
     }
 
+    @Override
+    public String toString() {
+        return getId() + ": " + getText().length() + " chars, author '" + getAuthor() + "'";
+    }
 }
