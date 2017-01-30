@@ -449,7 +449,7 @@ public class CryptogramActivity extends BaseActivity implements GoogleApiClient.
                 mToolbar.setSubtitle(getString(
                         R.string.puzzle_number_of_total,
                         cryptogram.getNumber(),
-                        provider.getCount()));
+                        provider.getLastNumber()));
             }
             // Invoke various events
             onCryptogramUpdated(cryptogram);
@@ -788,7 +788,7 @@ public class CryptogramActivity extends BaseActivity implements GoogleApiClient.
                     ((TextView) view.findViewById(R.id.tv_value)).setText(
                             getString(R.string.stats_total_completed_value,
                                       count,
-                                      provider.getCount()));
+                                      provider.getLastNumber()));
                     dialogView.addView(view);
                 }
                 {

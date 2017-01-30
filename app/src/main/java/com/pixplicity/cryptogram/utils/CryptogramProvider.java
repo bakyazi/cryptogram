@@ -34,6 +34,8 @@ public class CryptogramProvider {
     private HashMap<Integer, Integer> mCryptogramIds;
     private SparseArray<CryptogramProgress> mCryptogramProgress;
 
+    private int mLastCryptogramId = -1;
+
     private final Gson mGson = new Gson();
     private final Random mRandom = new Random();
 
@@ -77,6 +79,9 @@ public class CryptogramProvider {
                 id = nextId;
                 cryptogram.setId(id);
             }
+            if (id > mLastCryptogramId) {
+                mLastCryptogramId = id;
+            }
             mCryptogramIds.put(id, index);
             index++;
         }
@@ -84,6 +89,13 @@ public class CryptogramProvider {
 
     public Cryptogram[] getAll() {
         return mCryptograms;
+    }
+
+    /**
+     * @return last puzzle ID
+     */
+    public int getLastNumber() {
+        return mLastCryptogramId + 1;
     }
 
     public int getCount() {
