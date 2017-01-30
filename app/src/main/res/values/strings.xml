@@ -33,8 +33,10 @@
 
     <string name="error_no_puzzles">Whoops! Looks like we couldn’t load the puzzle.</string>
 
-    <string name="puzzle_number">Puzzle #%1$d of %2$d</string>
-    <string name="puzzle_number2">Puzzle #%1$d</string>
+    <string name="puzzle_number_instruction">Instructional puzzle</string>
+    <string name="puzzle_number_practice">Puzzle #%1$d (practice)</string>
+    <string name="puzzle_number_of_total">Puzzle #%1$d of %2$d</string>
+    <string name="puzzle_number">Puzzle #%1$d</string>
 
     <string name="puzzle_nonexistant">Puzzle #%1$d doesn’t exist</string>
     <string name="puzzle_completed">Puzzle completed</string>
@@ -44,7 +46,7 @@
     <string name="share_url">https://play.google.com/store/apps/details?id=com.pixplicity.cryptogram</string>
 
     <string name="quote">— %1$s</string>
-    <string name="topic">Topic: %1$s</string>
+    <string name="topic">Topic: “%1$s”</string>
     <string name="not_applicable">N/A</string>
 
     <string name="stats_excess">Number of excess inputs:</string>
@@ -75,6 +77,14 @@
 
     <string name="go_to_puzzle_content">Please enter the puzzle number to go to:</string>
 
+    <string name="google_play_games_welcome">Sign in to Google Play Games to track your progress and achievements</string>
+    <string name="google_play_games_sign_in">Sign in…</string>
+    <string name="google_play_games_leaderboards">Leaderboard</string>
+    <string name="google_play_games_achievements">Achievements</string>
+    <string name="google_play_games_sign_out">Sign out</string>
+
+    <string name="google_play_games_connection_failure">Uh, oh! Looks like we can\'t reach Google Play Games at the moment.\n\nPlease try again later or report this problem (connection failure with code %1$d-%2$d) through the about screen.</string>
+
     <string name="feedback">Send feedback</string>
     <string name="made_by">made by</string>
     <string name="pixplicity_labs">Pixplicity Labs</string>
@@ -82,10 +92,7 @@
     <string name="version" translatable="false">%s (%d)</string>
     <string name="version_long" translatable="false">%s\n%d</string>
 
-    <string name="title_disclaimer">Legal</string>
-    <string name="title_licenses">Licenses</string>
     <string name="title_about">About this app</string>
-
     <string name="about_this_app_1">
         <![CDATA[
             <p>
@@ -110,6 +117,7 @@
             Best of all, it’s completely free, and free of ads! Enjoy!
         ]]>
     </string>
+    <string name="title_disclaimer">Legal</string>
     <string name="disclaimer">
         <![CDATA[
             <p>
@@ -124,6 +132,7 @@
             </p>
         ]]>
     </string>
+    <string name="title_licenses">Licenses</string>
     <string name="licenses">
         <![CDATA[
             This app uses the following libraries, licensed under the Apache License 2.0:
@@ -132,6 +141,15 @@
             • <strong>Butter Knife</strong> by Square Inc.<br />
             • <strong>Material Dialogs</strong> by Aidan Follestad<br />
             • <strong>Easy Video Player</strong> by Aidan Follestad
+            ]]>
+    </string>
+    <string name="title_artwork">Artwork</string>
+    <string name="artwork">
+        <![CDATA[
+            Leaderboard and achievement iconography graciously provided by Oliver Stone:
+            <br /><br />
+            • <a href="http://www.flaticon.com/authors/madebyoliver">madebyoliver on Flaticon</a><br />
+            • <a href="https://twitter.com/madebyoliver">madebyoliver on Twitter</a>
             ]]>
     </string>
     <string name="website">Visit Pixplicity.com</string>

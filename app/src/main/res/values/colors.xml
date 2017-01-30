@@ -3,7 +3,9 @@
 
     <color name="colorPrimary">#3F51B5</color>
     <color name="colorPrimaryDark">#303F9F</color>
+    <color name="colorPrimaryDark_translucent">#80303F9F</color>
     <color name="colorAccent">#FF4081</color>
+    <color name="colorAccentDisabled">#80FF4081</color>
 
     <color name="textLight">#FFFFFF</color>
     <color name="textComplete">#008000</color>
@@ -11,6 +13,7 @@
     <color name="box_highlight">#80808ee0</color>
 
     <color name="white">#ffffff</color>
+    <color name="white_translucent">#80ffffff</color>
 
     <color name="link">#00bcd4</color>
     <color name="error">#c6001e</color>

@@ -32,8 +32,8 @@
             <item
                 android:id="@+id/action_reveal_puzzle"
                 android:orderInCategory="202"
-                android:visible="false"
-                android:title="@string/reveal_puzzle"/>
+                android:title="@string/reveal_puzzle"
+                android:visible="false"/>
 
         </menu>
 
