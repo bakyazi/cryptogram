@@ -25,6 +25,7 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TableLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.afollestad.easyvideoplayer.EasyVideoCallback;
 import com.afollestad.easyvideoplayer.EasyVideoPlayer;
@@ -50,6 +51,7 @@ import com.pixplicity.cryptogram.utils.PrefsUtils;
 import com.pixplicity.cryptogram.utils.StringUtils;
 import com.pixplicity.cryptogram.views.CryptogramView;
 import com.pixplicity.cryptogram.views.HintView;
+import com.pixplicity.easyprefs.library.Prefs;
 import com.pixplicity.generate.Rate;
 import com.squareup.otto.Subscribe;
 
@@ -152,8 +154,15 @@ public class CryptogramActivity extends BaseActivity implements GoogleApiClient.
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_cryptogram);
-
+        boolean mDarkTheme = PrefsUtils.getDarkTheme();
+        if(mDarkTheme)
+        {
+            setTheme(R.style.darkAppTheme);
+            getWindow().setBackgroundDrawableResource(R.drawable.bg_dark_activity);
+            setContentView(R.layout.activity_cryptogram_dark);
+        }
+        else
+            setContentView(R.layout.activity_cryptogram);
         final CryptogramProvider cryptogramProvider = CryptogramProvider.getInstance(this);
 
         // Create the Google Api Client with access to Games
@@ -556,6 +565,10 @@ public class CryptogramActivity extends BaseActivity implements GoogleApiClient.
             item.setChecked(PrefsUtils.getShowHints());
         }
         {
+            MenuItem item = menu.findItem(R.id.action_dark_theme);
+            item.setChecked(PrefsUtils.getDarkTheme());
+        }
+        {
             MenuItem item = menu.findItem(R.id.action_reveal_puzzle);
             item.setVisible(BuildConfig.DEBUG);
         }
@@ -705,6 +718,17 @@ public class CryptogramActivity extends BaseActivity implements GoogleApiClient.
                 PrefsUtils.setShowHints(showHints);
                 item.setChecked(showHints);
                 onCryptogramUpdated(cryptogram);
+            }
+            return true;
+            case R.id.action_dark_theme: {
+                boolean darkTheme = !item.isChecked();
+                PrefsUtils.setDarkTheme(darkTheme);
+                item.setChecked(darkTheme);
+                Toast.makeText(this, "Applying Changes", Toast.LENGTH_SHORT).show();
+                Intent i = getBaseContext().getPackageManager()
+                        .getLaunchIntentForPackage( getBaseContext().getPackageName() );
+                i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                startActivity(i);
             }
             return true;
             case R.id.action_share: {

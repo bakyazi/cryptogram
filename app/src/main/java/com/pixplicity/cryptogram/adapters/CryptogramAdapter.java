@@ -11,6 +11,7 @@ import android.widget.TextView;
 import com.pixplicity.cryptogram.R;
 import com.pixplicity.cryptogram.models.Cryptogram;
 import com.pixplicity.cryptogram.utils.CryptogramProvider;
+import com.pixplicity.cryptogram.utils.PrefsUtils;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -20,6 +21,7 @@ public class CryptogramAdapter extends RecyclerView.Adapter<CryptogramAdapter.Vi
     private static final int TYPE_NORMAL = 0;
     private static final int TYPE_SELECTED = 1;
 
+    boolean mDarkTheme = PrefsUtils.getDarkTheme();
     private final Context mContext;
     private final OnItemClickListener mOnItemClickListener;
     private Cryptogram[] mData;
@@ -38,10 +40,16 @@ public class CryptogramAdapter extends RecyclerView.Adapter<CryptogramAdapter.Vi
         switch (viewType) {
             default:
             case TYPE_NORMAL:
-                layoutResId = R.layout.item_puzzle;
+                if(mDarkTheme)
+                    layoutResId = R.layout.item_puzzle_dark;
+                else
+                    layoutResId = R.layout.item_puzzle;
                 break;
             case TYPE_SELECTED:
-                layoutResId = R.layout.item_puzzle_selected;
+                if(mDarkTheme)
+                    layoutResId = R.layout.item_puzzle_selected_dark;
+                else
+                    layoutResId = R.layout.item_puzzle_selected;
                 break;
         }
         return new ViewHolder(LayoutInflater.from(parent.getContext())

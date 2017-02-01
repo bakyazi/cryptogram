@@ -13,6 +13,7 @@ public class PrefsUtils {
     private static final String KEY_RANDOMIZE = "randomize";
     private static final String KEY_ONBOARDING = "onboarding";
     private static final String KEY_SHOW_HINTS = "show_hints";
+    private static final String KEY_DARK_THEME = "dark_theme";
 
     public static int getCurrentId() {
         return Prefs.getInt(PrefsUtils.KEY_CURRENT_ID, -2);
@@ -58,6 +59,14 @@ public class PrefsUtils {
 
     public static void setShowHints(boolean show) {
         Prefs.putBoolean(KEY_SHOW_HINTS, show);
+    }
+
+    public static void setDarkTheme(boolean theme) {
+        Prefs.putBoolean(KEY_DARK_THEME, theme);
+    }
+
+    public static boolean getDarkTheme() {
+        return Prefs.getBoolean(KEY_DARK_THEME, false);
     }
 
 }
