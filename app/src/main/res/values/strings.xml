@@ -22,6 +22,7 @@
     <string name="go_to_puzzle">Go to puzzle…</string>
     <string name="randomize_puzzles">Randomize puzzles</string>
     <string name="show_hints">Show hints</string>
+    <string name="dark_theme">Dark theme</string>
     <string name="share">Share puzzle…</string>
     <string name="statistics">Statistics</string>
     <string name="about">About</string>

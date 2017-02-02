@@ -19,6 +19,7 @@ import android.view.MenuItem;
 import android.view.View;
 
 import com.pixplicity.cryptogram.R;
+import com.pixplicity.cryptogram.utils.PrefsUtils;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -42,11 +43,19 @@ public abstract class BaseActivity extends AppCompatActivity {
 
     @Override
     public void setContentView(@LayoutRes int layoutResID) {
-        super.setContentView(layoutResID);
-        ButterKnife.bind(this);
-
         // Replace any splash screen image
         getWindow().setBackgroundDrawableResource(R.drawable.bg_activity);
+        Boolean mDarkTheme = PrefsUtils.getDarkTheme();
+        if(mDarkTheme)
+        {
+            setTheme(R.style.darkAppTheme);
+            // Replace any splash screen image
+            getWindow().setBackgroundDrawableResource(R.drawable.bg_dark_activity);
+        }
+        else
+            getWindow().setBackgroundDrawableResource(R.drawable.bg_activity);
+        super.setContentView(layoutResID);
+        ButterKnife.bind(this);
 
         setSupportActionBar(mToolbar);
         mToolbar.setContentInsetStartWithNavigation(0);
@@ -57,7 +66,10 @@ public abstract class BaseActivity extends AppCompatActivity {
         ab.setTitle(R.string.app_name);
         ab.setDisplayShowTitleEnabled(true);
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-            getWindow().setStatusBarColor(ContextCompat.getColor(this, R.color.colorPrimaryDark));
+            if(mDarkTheme)
+                getWindow().setStatusBarColor(ContextCompat.getColor(this, R.color.colorDarkPrimaryDark));
+            else
+                getWindow().setStatusBarColor(ContextCompat.getColor(this, R.color.colorPrimaryDark));
         }
 
         if (mDrawerLayout != null) {

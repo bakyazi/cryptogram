@@ -70,6 +70,14 @@
         app:showAsAction="never"/>
 
     <item
+        android:id="@+id/action_dark_theme"
+        android:checkable="true"
+        android:checked="false"
+        android:orderInCategory="250"
+        android:title="@string/dark_theme"
+        app:showAsAction="never"/>
+
+    <item
         android:id="@+id/action_share"
         android:icon="@drawable/ic_share"
         android:orderInCategory="300"
