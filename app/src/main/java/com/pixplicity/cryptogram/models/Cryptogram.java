@@ -9,6 +9,7 @@ import com.google.gson.annotations.SerializedName;
 import com.pixplicity.cryptogram.CryptogramApp;
 import com.pixplicity.cryptogram.R;
 import com.pixplicity.cryptogram.utils.CryptogramProvider;
+import com.pixplicity.cryptogram.utils.StringUtils;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -104,7 +105,7 @@ public class Cryptogram {
     @NonNull
     public String[] getWords() {
         if (mWords == null) {
-            if (TextUtils.isEmpty(mText)) {
+            if (mText == null || mText.length() == 0) {
                 mWords = new String[0];
             } else {
                 mWords = mText.split("\\s");
@@ -291,6 +292,11 @@ public class Cryptogram {
         if (!mIsMock) {
             CryptogramProvider.getInstance(CryptogramApp.getInstance()).setProgress(getProgress());
         }
+    }
+
+    @Override
+    public String toString() {
+        return getId() + ": " + getText().length() + " chars, author '" + getAuthor() + "' (“" + StringUtils.ellipsize(mText, 40) + "”)";
     }
 
 }

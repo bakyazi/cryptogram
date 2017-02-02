@@ -563,7 +563,7 @@
     "topic": "Science"
   },
   {
-    "text": "Imagination will often carry us to worlds that never were. But without it we go nowhere.",
+    "text": "Imagination will often carry us to worlds that never were, but without it we go nowhere.",
     "author": "Carl Sagan",
     "topic": "Inspirational"
   },
@@ -1409,7 +1409,7 @@
   },
   {
     "text": "You have to learn the rules of the game. And then you have to play better than anyone else.",
-    "author": "Unknown",
+    "author": "Albert Einstein",
     "topic": "Motivational"
   },
   {
@@ -1803,8 +1803,8 @@
     "topic": "Winter"
   },
   {
-    "text": "Laughter is the sun that drives winter from the human face.",
-    "author": "Victor Hugo",
+    "text": "If we had no winter, the spring would not be so pleasant: if we did not sometimes taste of adversity, prosperity would not be so welcome.",
+    "author": "Anne Bradstreet",
     "topic": "Winter"
   },
   {
@@ -1818,8 +1818,8 @@
     "topic": "Winter"
   },
   {
-    "text": "In the depth of winter I finally learned that there was in me an invincible summer.",
-    "author": "Albert Camus",
+    "text": "It is the life of the crystal, the architect of the flake, the fire of the frost, the soul of the sunbeam. This crisp winter air is full of it.",
+    "author": "John Burroughs",
     "topic": "Winter"
   },
   {
@@ -2015,8 +2015,8 @@
     "topic": "Technology"
   },
   {
-    "text": "Imagination will often carry us to worlds that never were, but without it we go nowhere.",
-    "author": "Carl Sagan",
+    "text": "Anyone who lives within their means suffers from a lack of imagination.",
+    "author": "Oscar Wilde",
     "topic": "Imagination"
   },
   {
@@ -2119,5 +2119,442 @@
     "author": "Holly Black",
     "given": "BW",
     "topic": "Humor"
+  },
+  {
+    "text": "Study hard what interests you the most in the most undisciplined, irreverent and original manner possible",
+    "author": "Richard Feynman",
+    "topic": "Learning"
+  },
+  {
+    "text": "We are, as a species, addicted to story. Even when the body goes to sleep, the mind stays up all night, telling itself stories.",
+    "author": "Jonathan Gottschall",
+    "topic": "Storytelling"
+  },
+  {
+    "text": "Bear the pain of detachment and you will find inner peace.",
+    "author": "Rumi",
+    "topic": "Inspirational"
+  },
+  {
+    "text": "Real giving is when we give to our spouses what’s important to them, whether we understand it, like it, agree with it, or not.",
+    "author": "Michele Weiner-Davis",
+    "topic": "Love"
+  },
+  {
+    "text": "The desire of the man is for the woman, but the desire of the woman is for the desire of the man.",
+    "author": "Madame de Stael",
+    "topic": "Love"
+  },
+  {
+    "text": "Don’t let perfection become procrastination. Do it now.",
+    "author": "Danielle LaPorte",
+    "given": "P",
+    "topic": "Work ethic"
+  },
+  {
+    "text": "We cannot teach people anything. We can only help them discover it within themselves.",
+    "author": "Galileo Galilei",
+    "topic": "Education"
+  },
+  {
+    "text": "Our most basic common link is that we all inhabit this planet. We all breathe the same air. We all cherish our children’s future. And we are all mortal.",
+    "author": "John F. Kennedy",
+    "topic": "Inspirational"
+  },
+  {
+    "text": "If you only walk on sunny days you’ll never reach your destination.",
+    "author": "Paulo Coelho",
+    "topic": "Inspirational"
+  },
+  {
+    "text": "It is the struggle toward an ideal, the constant effort to get higher and further, which develops manhood and character.",
+    "author": "James Terry White",
+    "topic": "Inspirational"
+  },
+  {
+    "text": "Sometimes it falls on a generation to be great. You can be that great generation. Let your greatness blossom.",
+    "author": "Nelson Mandela",
+    "topic": "Inspirational"
+  },
+  {
+    "text": "We can complain because rose bushes have thorns, or rejoice because thorn bushes have roses.",
+    "author": "Abraham Lincoln",
+    "topic": "Beauty"
+  },
+  {
+    "text": "You can not change what you refuse to confront.",
+    "author": "John Spence",
+    "topic": "Change"
+  },
+  {
+    "text": "Books don’t offer real escape, but they can stop a mind scratching itself raw.",
+    "author": "David Mitchell",
+    "topic": "Literacy"
+  },
+  {
+    "text": "Success is liking yourself, liking what you do, and liking how you do it.",
+    "author": "Maya Angelou",
+    "topic": "Success"
+  },
+  {
+    "text": "I don’t want to be at the mercy of my emotions. I want to use them, to enjoy them, and to dominate them.",
+    "author": "Oscar Wilde",
+    "topic": "Inspirational"
+  },
+  {
+    "text": "Once a year, go someplace you’ve never been before.",
+    "author": "Dalai Lama",
+    "given": "ON",
+    "topic": "Exploration"
+  },
+  {
+    "text": "Opportunity is missed by most people because it is dressed in overalls and looks like work.",
+    "author": "Thomas Edison",
+    "topic": "Success"
+  },
+  {
+    "text": "Coming together is a beginning; keeping together is progress; working together is success.",
+    "author": "Henry Ford",
+    "topic": "Success"
+  },
+  {
+    "text": "A business that makes nothing but money is a poor business.",
+    "author": "Henry Ford",
+    "topic": "Business"
+  },
+  {
+    "text": "You have to be burning with an idea, or a problem, or a wrong that you want to right.",
+    "author": "Steve Jobs",
+    "topic": "Business"
+  },
+  {
+    "text": "There’s no luck in business. There’s only drive, determination, and more drive.",
+    "author": "Sophie Kinsella",
+    "topic": "Business"
+  },
+  {
+    "text": "There are no secrets to success. It is the result of preparation, hard work, and learning from failure.",
+    "author": "Colin Powell",
+    "topic": "Business"
+  },
+  {
+    "text": "Great things in business are never done by one person. They’re done by a team of people.",
+    "author": "Steve Jobs",
+    "topic": "Business"
+  },
+  {
+    "text": "In the business world, the rearview mirror is always clearer than the windshield.",
+    "author": "Warren Buffett",
+    "topic": "Business"
+  },
+  {
+    "text": "The most potent muse of all is our own inner child.",
+    "author": "Stephen Nachmanovitch",
+    "given": "M",
+    "topic": "Inspirational"
+  },
+  {
+    "text": "Never be in a hurry; do everything quietly and in a calm spirit. Do not lose your inner peace for anything whatsoever, even if your whole world seems upset.",
+    "author": "Saint Francis de Sales",
+    "topic": "Peace"
+  },
+  {
+    "text": "A friend is what the heart needs all the time.",
+    "author": "Henry Van Dyke",
+    "given": "F",
+    "topic": "Friendship"
+  },
+  {
+    "text": "The work of art is to dominate the spectator. The spectator is not to dominate the work of art.",
+    "author": "Oscar Wilde",
+    "topic": "Art"
+  },
+  {
+    "text": "I learned to give not because I have much, but because I know exactly how it feels to have nothing.",
+    "author": "Anonymous",
+    "topic": "Giving"
+  },
+  {
+    "text": "Over time, the hurt doesn’t hurt. Only regret does.",
+    "author": "Terri Guillemets",
+    "topic": "Inspirational"
+  },
+  {
+    "text": "Be yourself; everyone else is already taken.",
+    "author": "Oscar Wilde",
+    "given": "BE",
+    "topic": "Inspirational"
+  },
+  {
+    "text": "See the world. It’s more fantastic than any dream made or paid for in factories. Ask for no guarantees, ask for no security.",
+    "author": "Ray Bradbury",
+    "topic": "Inspirational"
+  },
+  {
+    "text": "Human beings, who are almost unique in having the ability to learn from the experience of others, are also remarkable for their apparent disinclination to do so.",
+    "author": "Douglas Adams",
+    "topic": "Knowledge"
+  },
+  {
+    "text": "At the touch of love everyone becomes a poet.",
+    "author": "Plato",
+    "given": "A",
+    "topic": "Love"
+  },
+  {
+    "text": "It is not joy that makes us grateful. It is gratitude that makes us joyful.",
+    "author": "David Steindl-Rast",
+    "topic": "Happiness"
+  },
+  {
+    "text": "Every single person has at least one secret that would break your heart. If we could just remember this, I think there would be a lot more compassion and tolerance in the world.",
+    "author": "Frank Warren",
+    "topic": "Tolerance"
+  },
+  {
+    "text": "The world has become so serious that humor is a risky profession.",
+    "author": "Bernardo Erlich",
+    "topic": "Tolerance"
+  },
+  {
+    "text": "The best part of my life is who I share it with.",
+    "author": "Anonymous",
+    "topic": "Life"
+  },
+  {
+    "text": "I will not let anyone walk through my mind with their dirty feet.",
+    "author": "Mahatma Gandhi",
+    "topic": "Objectivity"
+  },
+  {
+    "text": "Unless you try to do something beyond what you have already mastered you will never grow.",
+    "author": "Ralph Waldo Emerson",
+    "topic": "Inspirational"
+  },
+  {
+    "text": "If you have time to whine and complain about something then you have the time to do something about it.",
+    "author": "Anthony J. D’Angelo",
+    "topic": "Optimism"
+  },
+  {
+    "text": "Anything I’ve done that was ultimately worthwhile initially scared me to death.",
+    "author": "Betty Bender",
+    "topic": "Ambition"
+  },
+  {
+    "text": "It is better to fail in originality than to succeed in imitation.",
+    "author": "Herman Melville",
+    "topic": "Success"
+  },
+  {
+    "text": "Success consists of going from failure to failure without loss of enthusiasm.",
+    "author": "Winston Churchill",
+    "topic": "Success"
+  },
+  {
+    "text": "Our knowledge has made us cynical; our cleverness, hard and unkind. We think too much and feel too little. More than machinery, we need humanity. More than cleverness, we need kindness and gentleness.",
+    "author": "Charlie Chaplin",
+    "topic": "Kindness"
+  },
+  {
+    "text": "The very essence of romance is uncertainty.",
+    "author": "Oscar Wilde",
+    "topic": "Romance"
+  },
+  {
+    "text": "True love is rare, and it’s the only thing that gives life real meaning.",
+    "author": "Nicholas Sparks",
+    "topic": "Romance"
+  },
+  {
+    "text": "I was smiling yesterday, I am smiling today and I will smile tomorrow. Simply because life is too short to cry for anything.",
+    "author": "Santosh Kalwar",
+    "topic": "Hope"
+  },
+  {
+    "text": "He took her in his arms and kissed her under the sunlit sky, and he cared not that they stood high upon the walls in the sight of many.",
+    "author": "J.R.R. Tolkien",
+    "topic": "Romance"
+  },
+  {
+    "text": "Romance is the glamour which turns the dust of everyday life into a golden haze.",
+    "author": "Elinor Glyn",
+    "topic": "Romance"
+  },
+  {
+    "text": "If music be the food of love, play on,\nGive me excess of it; that surfeiting,\nThe appetite may sicken, and so die.",
+    "author": "William Shakespeare",
+    "topic": "Romance"
+  },
+  {
+    "text": "If you love somebody, let them go, for if they return, they were always yours. If they don’t, they never were.",
+    "author": "Kahlil Gibran",
+    "topic": "Romance"
+  },
+  {
+    "text": "The Very first moment I beheld him, my heart was irrevocably gone.",
+    "author": "Jane Austen",
+    "topic": "Romance"
+  },
+  {
+    "text": "When one is in love, one always begins by deceiving one’s self, and one always ends by deceiving others. That is what the world calls a romance.",
+    "author": "Oscar Wilde",
+    "topic": "Romance"
+  },
+  {
+    "text": "Never close your lips to those whom you have already opened your heart.",
+    "author": "Charles Dickens",
+    "topic": "Romance"
+  },
+  {
+    "text": "In our time together, you claimed a special place in my heart, one I’ll carry with me forever and that no one can ever replace.",
+    "author": "Nicholas Sparks",
+    "topic": "Romance"
+  },
+  {
+    "text": "Romance is thinking about your significant other, when you are supposed to be thinking about something else.",
+    "author": "Nicholas Sparks",
+    "topic": "Romance"
+  },
+  {
+    "text": "Love is a great emotion, but I believe it’s not just about romance; it could be love for nature, people, for relationships.",
+    "author": "Rani Mukerji",
+    "topic": "Romance"
+  },
+  {
+    "text": "In a great romance, each person basically plays a part that the other really likes.",
+    "author": "Elizabeth Ashley",
+    "topic": "Romance"
+  },
+  {
+    "text": "First be faithful to each other. Second, keep the romance going all of your life by courting each other every day.",
+    "author": "Zig Ziglar",
+    "topic": "Romance"
+  },
+  {
+    "text": "Money can buy you a fine dog, but only love can make him wag his tail.",
+    "author": "Kinky Friedman",
+    "topic": "Love"
+  },
+  {
+    "text": "They invented hugs to let people know you love them without saying anything.",
+    "author": "Bil Keane",
+    "topic": "Love"
+  },
+  {
+    "text": "If at first you don’t succeed, try, try again. Then quit. No use being a damn fool about it.",
+    "author": "W.C. Fields",
+    "topic": "Romance"
+  },
+  {
+    "text": "No one can make you feel inferior without your consent.",
+    "author": "Eleanor Roosevelt",
+    "topic": "Inspirational"
+  },
+  {
+    "text": "If you want to leave footprints in the sands of time, don’t drag your feet.",
+    "author": "Arnot L. Sheppard",
+    "topic": "Wisdom"
+  },
+  {
+    "text": "We should not judge people by their peak of excellence; but by the distance they have traveled from the point where they started.",
+    "author": "Henry Ward Beecher",
+    "topic": "Wisdom"
+  },
+  {
+    "text": "Obstacles are those frightful things you see when you take your eyes off your goal.",
+    "author": "Henry Ford",
+    "topic": "Wisdom"
+  },
+  {
+    "text": "Whenever you find yourself on the side of the majority, it is time to pause and reflect.",
+    "author": "Mark Twain",
+    "topic": "Wisdom"
+  },
+  {
+    "text": "The pessimist complains about the wind; the optimist expects it to change; the realist adjusts the sails.",
+    "author": "William Arthur Ward",
+    "topic": "Wisdom"
+  },
+  {
+    "text": "The less you talk, the more you’re listened to.",
+    "author": "Abigail Van Buren",
+    "topic": "Wisdom"
+  },
+  {
+    "text": "Ignorant men raise questions that wise men answered a thousand years ago.",
+    "author": "Johann Wolfgang von Goethe",
+    "topic": "Wisdom"
+  },
+  {
+    "text": "Knowing yourself is the beginning of all wisdom.",
+    "author": "Aristotle",
+    "topic": "Wisdom"
+  },
+  {
+    "text": "The saddest aspect of life right now is that science gathers knowledge faster than society gathers wisdom.",
+    "author": "Isaac Asimov",
+    "topic": "Wisdom"
+  },
+  {
+    "text": "Nothing is more dangerous than an idea, when it’s the only one we have.",
+    "author": "Alain",
+    "topic": "Wisdom"
+  },
+  {
+    "text": "It’s better to be a lion for a day than a sheep all your life.",
+    "author": "Elizabeth Kenny",
+    "topic": "Wisdom"
+  },
+  {
+    "text": "Think before you speak. Read before you think.",
+    "author": "Fran Lebowitz",
+    "given": "TBK",
+    "topic": "Wisdom"
+  },
+  {
+    "text": "The best index to a person’s character is how he treats people who can’t do him any good, and how he treats people who can’t fight back.",
+    "author": "Abigail Van Buren",
+    "topic": "Wisdom"
+  },
+  {
+    "text": "Do not seek to follow in the footsteps of the wise. Seek what they sought.",
+    "author": "Matsuo Basho",
+    "topic": "Wisdom"
+  },
+  {
+    "text": "It is the province of knowledge to speak, and it is the privilege of wisdom to listen.",
+    "author": "Oliver Wendell Holmes",
+    "topic": "Wisdom"
+  },
+  {
+    "text": "A man begins cutting his wisdom teeth the first time he bites off more than he can chew.",
+    "author": "Herb Caen",
+    "topic": "Wisdom"
+  },
+  {
+    "text": "The young man knows the rules, but the old man knows the exceptions.",
+    "author": "Oliver Wendell Holmes",
+    "topic": "Wisdom"
+  },
+  {
+    "text": "When you choose to see the good in others, you end up finding the good in yourself.",
+    "author": "John Spence",
+    "topic": "Wisdom"
+  },
+  {
+    "text": "Nature gave men two ends — one to sit on and one to think with. Ever since then man’s success or failure has been dependent on the one he used most.",
+    "author": "George Ross Kirkpatrick",
+    "topic": "Wisdom"
+  },
+  {
+    "text": "Humility is not thinking less of yourself, it’s thinking of yourself less.",
+    "author": "C. S. Lewis",
+    "topic": "Wisdom"
+  },
+  {
+    "text": "Even when we are quite alone, how often do we think with pleasure or pain of what others think of us — of their imagined approbation or disapprobation.",
+    "author": "Charles Darwin",
+    "topic": "Wisdom"
   }
 ]

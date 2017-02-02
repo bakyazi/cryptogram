@@ -5,7 +5,6 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.util.Log;
 import android.util.SparseArray;
-import android.util.SparseIntArray;
 import android.widget.Toast;
 
 import com.crashlytics.android.Crashlytics;
@@ -17,6 +16,7 @@ import com.pixplicity.cryptogram.models.CryptogramProgress;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.util.HashMap;
 import java.util.LinkedHashSet;
 import java.util.Random;
 import java.util.Set;
@@ -31,8 +31,10 @@ public class CryptogramProvider {
 
     private int mCurrentIndex = -1;
     private Cryptogram[] mCryptograms;
-    private SparseIntArray mCryptogramIds;
+    private HashMap<Integer, Integer> mCryptogramIds;
     private SparseArray<CryptogramProgress> mCryptogramProgress;
+
+    private int mLastCryptogramId = -1;
 
     private final Gson mGson = new Gson();
     private final Random mRandom = new Random();
@@ -66,16 +68,19 @@ public class CryptogramProvider {
     private void readStream(InputStream is) {
         mCryptograms = mGson.fromJson(new InputStreamReader(is), Cryptogram[].class);
         int index = 0, nextId = 0;
-        mCryptogramIds = new SparseIntArray();
+        mCryptogramIds = new HashMap<>();
         for (Cryptogram cryptogram : mCryptograms) {
             int id = cryptogram.getId();
             if (id == 0) {
-                while (mCryptogramIds.get(nextId, -1) > -1) {
+                while (mCryptogramIds.get(nextId) != null) {
                     // Locate the next vacant spot
                     nextId++;
                 }
                 id = nextId;
                 cryptogram.setId(id);
+            }
+            if (id > mLastCryptogramId) {
+                mLastCryptogramId = id;
             }
             mCryptogramIds.put(id, index);
             index++;
@@ -84,6 +89,13 @@ public class CryptogramProvider {
 
     public Cryptogram[] getAll() {
         return mCryptograms;
+    }
+
+    /**
+     * @return last puzzle ID
+     */
+    public int getLastNumber() {
+        return mLastCryptogramId + 1;
     }
 
     public int getCount() {
@@ -95,7 +107,11 @@ public class CryptogramProvider {
     }
 
     private int getIndexFromId(int id) {
-        return mCryptogramIds.get(id, -1);
+        Integer index = mCryptogramIds.get(id);
+        if (index == null) {
+            return -1;
+        }
+        return index;
     }
 
     private int getIdFromIndex(int index) {

@@ -24,6 +24,7 @@ import android.widget.TextView;
 
 import com.pixplicity.cryptogram.R;
 import com.pixplicity.cryptogram.models.Cryptogram;
+import com.pixplicity.cryptogram.utils.PrefsUtils;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -46,6 +47,8 @@ public class CryptogramView extends TextView {
     private Paint mPaint, mLinePaint1, mLinePaint2, mBoxPaint1, mBoxPaint2;
     private TextPaint mTextPaintInput, mTextPaintInputComplete, mTextPaintMapping, mTextPaintMistake;
     private int mBoxInset;
+
+    boolean mDarkTheme = PrefsUtils.getDarkTheme();
 
     private OnCryptogramProgressListener mOnCryptogramProgressListener;
 
@@ -75,7 +78,11 @@ public class CryptogramView extends TextView {
         Resources r = context.getResources();
 
         mPaint = new Paint();
-        mPaint.setColor(Color.BLACK);
+        if (mDarkTheme) {
+            mPaint.setColor(Color.WHITE);
+        } else {
+            mPaint.setColor(Color.BLACK);
+        }
         mPaint.setAntiAlias(true);
 
         mLinePaint1 = new Paint(mPaint);
@@ -85,7 +92,12 @@ public class CryptogramView extends TextView {
         mLinePaint2.setAlpha(96);
 
         mBoxPaint1 = new Paint(mPaint);
-        mBoxPaint1.setColor(ContextCompat.getColor(context, R.color.box_highlight));
+
+        if (mDarkTheme) {
+            mBoxPaint1.setColor(ContextCompat.getColor(context, R.color.white_translucent));
+        } else {
+            mBoxPaint1.setColor(ContextCompat.getColor(context, R.color.box_highlight));
+        }
         mBoxPaint1.setStrokeWidth(r.getDimensionPixelSize(R.dimen.box_highlight_stroke));
         mBoxPaint1.setStyle(Paint.Style.FILL);
         mBoxPaint2 = new Paint(mBoxPaint1);

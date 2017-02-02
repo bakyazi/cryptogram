@@ -156,11 +156,19 @@ public class CryptogramActivity extends BaseActivity implements GoogleApiClient.
 
     private int mLastConnectionError;
 
+    private boolean mDarkTheme;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_cryptogram);
-
+        mDarkTheme = PrefsUtils.getDarkTheme();
+        if (mDarkTheme) {
+            setTheme(R.style.darkAppTheme);
+            getWindow().setBackgroundDrawableResource(R.drawable.bg_dark_activity);
+            setContentView(R.layout.activity_cryptogram_dark);
+        } else {
+            setContentView(R.layout.activity_cryptogram);
+        }
         final CryptogramProvider cryptogramProvider = CryptogramProvider.getInstance(this);
 
         // Create the Google Api Client with access to Games
@@ -478,7 +486,7 @@ public class CryptogramActivity extends BaseActivity implements GoogleApiClient.
                 mToolbar.setSubtitle(getString(
                         R.string.puzzle_number_of_total,
                         cryptogram.getNumber(),
-                        provider.getCount()));
+                        provider.getLastNumber()));
             }
             // Invoke various events
             onCryptogramUpdated(cryptogram);
@@ -591,6 +599,10 @@ public class CryptogramActivity extends BaseActivity implements GoogleApiClient.
             item.setChecked(PrefsUtils.getShowHints());
         }
         {
+            MenuItem item = menu.findItem(R.id.action_dark_theme);
+            item.setChecked(PrefsUtils.getDarkTheme());
+        }
+        {
             MenuItem item = menu.findItem(R.id.action_reveal_puzzle);
             item.setVisible(BuildConfig.DEBUG);
         }
@@ -606,24 +618,7 @@ public class CryptogramActivity extends BaseActivity implements GoogleApiClient.
         final Cryptogram cryptogram = mCryptogramView.getCryptogram();
         switch (item.getItemId()) {
             case R.id.action_next: {
-                if (cryptogram == null || cryptogram.isCompleted()) {
-                    nextPuzzle();
-                } else {
-                    new AlertDialog.Builder(this)
-                            .setMessage(R.string.skip_puzzle)
-                            .setPositiveButton(R.string.next, new DialogInterface.OnClickListener() {
-                                @Override
-                                public void onClick(DialogInterface dialogInterface, int i) {
-                                    nextPuzzle();
-                                }
-                            })
-                            .setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {
-                                @Override
-                                public void onClick(DialogInterface dialogInterface, int i) {
-                                }
-                            })
-                            .show();
-                }
+                nextPuzzle();
             }
             return true;
             case R.id.action_reveal_letter: {
@@ -742,7 +737,7 @@ public class CryptogramActivity extends BaseActivity implements GoogleApiClient.
                                     Cryptogram cryptogram = provider.getByNumber(puzzleNumber);
                                     if (cryptogram == null) {
                                         Snackbar.make(mVgContent, getString(R.string.puzzle_nonexistant, puzzleNumber),
-                                                Snackbar.LENGTH_SHORT).show();
+                                                      Snackbar.LENGTH_SHORT).show();
                                     } else {
                                         updateCryptogram(cryptogram);
                                     }
@@ -763,6 +758,17 @@ public class CryptogramActivity extends BaseActivity implements GoogleApiClient.
                 PrefsUtils.setShowHints(showHints);
                 item.setChecked(showHints);
                 onCryptogramUpdated(cryptogram);
+            }
+            return true;
+            case R.id.action_dark_theme: {
+                mDarkTheme = !mDarkTheme;
+                PrefsUtils.setDarkTheme(mDarkTheme);
+                item.setChecked(mDarkTheme);
+                // Relaunch as though launched from home screen
+                Intent i = getBaseContext().getPackageManager()
+                                           .getLaunchIntentForPackage(getBaseContext().getPackageName());
+                i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                startActivity(i);
             }
             return true;
             case R.id.action_share: {
@@ -827,7 +833,7 @@ public class CryptogramActivity extends BaseActivity implements GoogleApiClient.
                     ((TextView) view.findViewById(R.id.tv_value)).setText(
                             getString(R.string.stats_total_completed_value,
                                       count,
-                                      provider.getCount()));
+                                      provider.getLastNumber()));
                     dialogView.addView(view);
                 }
                 {
