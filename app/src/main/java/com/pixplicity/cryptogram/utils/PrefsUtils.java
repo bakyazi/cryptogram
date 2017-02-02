@@ -3,7 +3,6 @@ package com.pixplicity.cryptogram.utils;
 import com.pixplicity.cryptogram.CryptogramApp;
 import com.pixplicity.easyprefs.library.Prefs;
 
-import java.util.HashSet;
 import java.util.Set;
 
 public class PrefsUtils {

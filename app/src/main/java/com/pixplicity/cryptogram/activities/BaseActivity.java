@@ -45,15 +45,14 @@ public abstract class BaseActivity extends AppCompatActivity {
     public void setContentView(@LayoutRes int layoutResID) {
         // Replace any splash screen image
         getWindow().setBackgroundDrawableResource(R.drawable.bg_activity);
-        Boolean mDarkTheme = PrefsUtils.getDarkTheme();
-        if(mDarkTheme)
-        {
+        boolean mDarkTheme = PrefsUtils.getDarkTheme();
+        if (mDarkTheme) {
             setTheme(R.style.darkAppTheme);
             // Replace any splash screen image
             getWindow().setBackgroundDrawableResource(R.drawable.bg_dark_activity);
-        }
-        else
+        } else {
             getWindow().setBackgroundDrawableResource(R.drawable.bg_activity);
+        }
         super.setContentView(layoutResID);
         ButterKnife.bind(this);
 
@@ -66,10 +65,11 @@ public abstract class BaseActivity extends AppCompatActivity {
         ab.setTitle(R.string.app_name);
         ab.setDisplayShowTitleEnabled(true);
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-            if(mDarkTheme)
+            if (mDarkTheme) {
                 getWindow().setStatusBarColor(ContextCompat.getColor(this, R.color.colorDarkPrimaryDark));
-            else
+            } else {
                 getWindow().setStatusBarColor(ContextCompat.getColor(this, R.color.colorPrimaryDark));
+            }
         }
 
         if (mDrawerLayout != null) {

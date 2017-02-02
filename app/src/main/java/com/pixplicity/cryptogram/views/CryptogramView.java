@@ -78,10 +78,11 @@ public class CryptogramView extends TextView {
         Resources r = context.getResources();
 
         mPaint = new Paint();
-        if(mDarkTheme)
+        if (mDarkTheme) {
             mPaint.setColor(Color.WHITE);
-        else
+        } else {
             mPaint.setColor(Color.BLACK);
+        }
         mPaint.setAntiAlias(true);
 
         mLinePaint1 = new Paint(mPaint);
@@ -92,10 +93,11 @@ public class CryptogramView extends TextView {
 
         mBoxPaint1 = new Paint(mPaint);
 
-        if(mDarkTheme)
+        if (mDarkTheme) {
             mBoxPaint1.setColor(ContextCompat.getColor(context, R.color.white_translucent));
-        else
+        } else {
             mBoxPaint1.setColor(ContextCompat.getColor(context, R.color.box_highlight));
+        }
         mBoxPaint1.setStrokeWidth(r.getDimensionPixelSize(R.dimen.box_highlight_stroke));
         mBoxPaint1.setStyle(Paint.Style.FILL);
         mBoxPaint2 = new Paint(mBoxPaint1);

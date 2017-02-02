@@ -21,7 +21,8 @@ public class LeaderboardProvider {
 
         long score = CryptogramProvider.getInstance(context).getTotalScore();
         Games.Leaderboards.submitScore(googleApiClient,
-                context.getString(R.string.leaderboard_scoreboard), score);
+                                       context.getString(R.string.leaderboard_scoreboard),
+                                       score);
     }
 
 }
