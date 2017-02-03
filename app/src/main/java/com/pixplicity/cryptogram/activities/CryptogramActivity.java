@@ -210,11 +210,12 @@ public class CryptogramActivity extends BaseActivity implements GoogleApiClient.
                             mHighlightedHyphenation = true;
                             Rect viewRect = new Rect();
                             mCryptogramView.getGlobalVisibleRect(viewRect);
-                            int targetX = (int) (point.x + viewRect.left);
-                            int targetY = (int) (point.y + viewRect.top);
+                            //int targetX = (int) (point.x + viewRect.left);
+                            //int targetY = (int) (point.y + viewRect.top);
                             TapTargetView.showFor(
                                     CryptogramActivity.this,
-                                    TapTarget.forBounds(new Rect(targetX - 48, targetY - 48, targetX + 48, targetY + 48),
+                                    //TapTarget.forBounds(new Rect(targetX - 48, targetY - 48, targetX + 48, targetY + 48),
+                                    TapTarget.forView(mCryptogramView,
                                             getString(R.string.highlight_hyphenation_title),
                                             getString(R.string.highlight_hyphenation_description))
                                              .titleTextColor(R.color.white)
