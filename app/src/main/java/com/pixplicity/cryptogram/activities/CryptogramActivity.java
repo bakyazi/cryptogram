@@ -210,12 +210,11 @@ public class CryptogramActivity extends BaseActivity implements GoogleApiClient.
                             mHighlightedHyphenation = true;
                             Rect viewRect = new Rect();
                             mCryptogramView.getGlobalVisibleRect(viewRect);
-                            //int targetX = (int) (point.x + viewRect.left);
-                            //int targetY = (int) (point.y + viewRect.top);
+                            int targetX = (int) (point.x + viewRect.left);
+                            int targetY = (int) (point.y + viewRect.top);
                             TapTargetView.showFor(
                                     CryptogramActivity.this,
-                                    //TapTarget.forBounds(new Rect(targetX - 48, targetY - 48, targetX + 48, targetY + 48),
-                                    TapTarget.forView(mCryptogramView,
+                                    TapTarget.forBounds(new Rect(targetX - 48, targetY - 48, targetX + 48, targetY + 48),
                                             getString(R.string.highlight_hyphenation_title),
                                             getString(R.string.highlight_hyphenation_description))
                                              .titleTextColor(R.color.white)
@@ -228,7 +227,22 @@ public class CryptogramActivity extends BaseActivity implements GoogleApiClient.
                                     new TapTargetView.Listener() {
                                         @Override
                                         public void onTargetClick(TapTargetView view) {
+                                            dismiss(view);
+                                        }
+
+                                        @Override
+                                        public void onOuterCircleClick(TapTargetView view) {
+                                            dismiss(view);
+                                        }
+
+                                        @Override
+                                        public void onTargetCancel(TapTargetView view) {
+                                            dismiss(view);
+                                        }
+
+                                        private void dismiss(TapTargetView view) {
                                             PrefsUtils.setHighlightedHyphenation(true);
+                                            view.dismiss(false);
                                         }
                                     });
                         }
