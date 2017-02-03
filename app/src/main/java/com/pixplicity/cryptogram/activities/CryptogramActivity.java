@@ -215,8 +215,8 @@ public class CryptogramActivity extends BaseActivity implements GoogleApiClient.
                             TapTargetView.showFor(
                                     CryptogramActivity.this,
                                     TapTarget.forBounds(new Rect(targetX - 48, targetY - 48, targetX + 48, targetY + 48),
-                                            "Hyphenation",
-                                            "Watch out, this is a hyphen! The word continues on the next line.")
+                                            getString(R.string.highlight_hyphenation_title),
+                                            getString(R.string.highlight_hyphenation_description))
                                              .titleTextColor(R.color.white)
                                              .descriptionTextColor(R.color.white)
                                              .outerCircleColor(R.color.highlight_color)
