@@ -16,6 +16,7 @@ import com.pixplicity.cryptogram.models.CryptogramProgress;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.util.HashMap;
 import java.util.LinkedHashSet;
 import java.util.Random;
 import java.util.Set;
@@ -30,7 +31,10 @@ public class CryptogramProvider {
 
     private int mCurrentIndex = -1;
     private Cryptogram[] mCryptograms;
+    private HashMap<Integer, Integer> mCryptogramIds;
     private SparseArray<CryptogramProgress> mCryptogramProgress;
+
+    private int mLastCryptogramId = -1;
 
     private final Gson mGson = new Gson();
     private final Random mRandom = new Random();
@@ -54,24 +58,44 @@ public class CryptogramProvider {
             readStream(is);
         } else {
             InputStream is = this.getClass().getClassLoader().getResourceAsStream("assets/" + ASSET_FILENAME);
-            readStream(is);
-            is.close();
+            if (is != null) {
+                readStream(is);
+                is.close();
+            }
         }
     }
 
     private void readStream(InputStream is) {
         mCryptograms = mGson.fromJson(new InputStreamReader(is), Cryptogram[].class);
-        int i = 0;
+        int index = 0, nextId = 0;
+        mCryptogramIds = new HashMap<>();
         for (Cryptogram cryptogram : mCryptograms) {
-            if (cryptogram.getId() == 0) {
-                cryptogram.setId(i);
-                i++;
+            int id = cryptogram.getId();
+            if (id == 0) {
+                while (mCryptogramIds.get(nextId) != null) {
+                    // Locate the next vacant spot
+                    nextId++;
+                }
+                id = nextId;
+                cryptogram.setId(id);
             }
+            if (id > mLastCryptogramId) {
+                mLastCryptogramId = id;
+            }
+            mCryptogramIds.put(id, index);
+            index++;
         }
     }
 
     public Cryptogram[] getAll() {
         return mCryptograms;
+    }
+
+    /**
+     * @return last puzzle ID
+     */
+    public int getLastNumber() {
+        return mLastCryptogramId + 1;
     }
 
     public int getCount() {
@@ -82,10 +106,22 @@ public class CryptogramProvider {
         return mCurrentIndex;
     }
 
+    private int getIndexFromId(int id) {
+        Integer index = mCryptogramIds.get(id);
+        if (index == null) {
+            return -1;
+        }
+        return index;
+    }
+
+    private int getIdFromIndex(int index) {
+        return mCryptograms[index].getId();
+    }
+
     @Nullable
     public Cryptogram getCurrent() {
         if (mCurrentIndex < 0) {
-            mCurrentIndex = PrefsUtils.getCurrentId();
+            mCurrentIndex = getIndexFromId(PrefsUtils.getCurrentId());
         }
         if (mCurrentIndex < 0) {
             return getNext();
@@ -93,9 +129,14 @@ public class CryptogramProvider {
         return get(mCurrentIndex);
     }
 
-    public void setCurrent(int index) {
+    public void setCurrentIndex(int index) {
         mCurrentIndex = index;
-        PrefsUtils.setCurrentId(index);
+        PrefsUtils.setCurrentId(getIdFromIndex(index));
+    }
+
+    public void setCurrentId(int id) {
+        mCurrentIndex = getIndexFromId(id);
+        PrefsUtils.setCurrentId(id);
     }
 
     @Nullable
@@ -117,7 +158,7 @@ public class CryptogramProvider {
         if (mCurrentIndex >= getCount()) {
             mCurrentIndex = 0;
         }
-        setCurrent(mCurrentIndex);
+        setCurrentIndex(mCurrentIndex);
         return get(mCurrentIndex);
     }
 
@@ -127,6 +168,31 @@ public class CryptogramProvider {
             return null;
         }
         return mCryptograms[index];
+    }
+
+    @Nullable
+    public Cryptogram getByNumber(int number) {
+        for (Cryptogram cryptogram : mCryptograms) {
+            if (cryptogram.getNumber() == number) {
+                return cryptogram;
+            }
+        }
+        return null;
+    }
+
+    public long getTotalScore() {
+        long score = 0;
+        for (Cryptogram cryptogram : mCryptograms) {
+            if (!cryptogram.isCompleted()) {
+                continue;
+            }
+            CryptogramProgress progress = cryptogram.getProgress();
+            if (!progress.hasScore(cryptogram)) {
+                continue;
+            }
+            score += Math.round(100f * progress.getScore(cryptogram));
+        }
+        return score;
     }
 
     @NonNull

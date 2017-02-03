@@ -191,13 +191,123 @@
 
             </LinearLayout>
 
-            <android.support.v7.widget.RecyclerView
-                android:id="@+id/rv_drawer"
+            <LinearLayout
                 android:layout_width="@dimen/side_navigation_width"
                 android:layout_height="match_parent"
                 android:layout_gravity="start"
                 android:background="@color/colorPrimaryDark"
-                android:scrollbars="vertical"/>
+                android:orientation="vertical"
+                tools:layout_gravity="">
+
+                <RelativeLayout
+                    android:id="@+id/vg_google_play_games"
+                    android:layout_width="match_parent"
+                    android:layout_height="144dp"
+                    android:clickable="true"
+                    android:foreground="@drawable/ripple_white">
+
+                    <ImageView
+                        android:id="@+id/iv_google_play_games_banner"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:scaleType="centerCrop"
+                        android:src="@drawable/bg_google_play_games"
+                        tools:ignore="ContentDescription"/>
+
+                    <ImageView
+                        android:id="@+id/iv_google_play_games_icon"
+                        android:layout_width="48dp"
+                        android:layout_height="48dp"
+                        android:layout_above="@+id/tv_google_play_games"
+                        android:layout_centerHorizontal="true"
+                        android:layout_marginBottom="8dp"
+                        android:src="@drawable/games_controller_white"
+                        tools:ignore="ContentDescription"
+                        tools:visibility="gone"/>
+
+                    <TextView
+                        android:id="@+id/tv_google_play_games"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentBottom="true"
+                        android:layout_marginBottom="24dp"
+                        android:layout_marginLeft="24dp"
+                        android:layout_marginRight="24dp"
+                        android:text="@string/google_play_games_welcome"
+                        android:textColor="@color/white"
+                        tools:visibility="gone"/>
+
+                    <ImageView
+                        android:id="@+id/iv_google_play_games_avatar"
+                        android:layout_width="72dp"
+                        android:layout_height="72dp"
+                        android:layout_above="@+id/tv_google_play_games_name"
+                        android:layout_marginBottom="4dp"
+                        android:layout_marginLeft="32dp"
+                        android:layout_marginRight="32dp"
+                        android:layout_marginTop="16dp"
+                        android:src="@drawable/im_avatar"
+                        android:visibility="gone"
+                        tools:ignore="ContentDescription"
+                        tools:visibility="visible"/>
+
+                    <TextView
+                        android:id="@+id/tv_google_play_games_name"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentBottom="true"
+                        android:layout_marginBottom="16dp"
+                        android:layout_marginEnd="16dp"
+                        android:layout_marginLeft="32dp"
+                        android:layout_marginRight="16dp"
+                        android:layout_marginStart="32dp"
+                        android:layout_toLeftOf="@+id/vg_google_play_games_actions"
+                        android:layout_toStartOf="@+id/vg_google_play_games_actions"
+                        android:text="@string/google_play_games_welcome"
+                        android:textColor="@color/white"
+                        android:visibility="gone"
+                        tools:visibility="visible"/>
+
+                    <LinearLayout
+                        android:id="@+id/vg_google_play_games_actions"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentBottom="true"
+                        android:layout_alignParentEnd="true"
+                        android:layout_alignParentRight="true"
+                        android:layout_marginBottom="16dp"
+                        android:layout_marginEnd="32dp"
+                        android:layout_marginRight="32dp"
+                        android:orientation="vertical"
+                        android:visibility="gone"
+                        tools:visibility="visible">
+
+                        <ImageView
+                            android:layout_width="32dp"
+                            android:layout_height="32dp"
+                            android:layout_marginBottom="8dp"
+                            android:src="@drawable/games_achievements"
+                            android:tint="@color/white"
+                            tools:ignore="ContentDescription"/>
+
+                        <ImageView
+                            android:layout_width="32dp"
+                            android:layout_height="32dp"
+                            android:src="@drawable/games_leaderboards"
+                            android:tint="@color/white"
+                            tools:ignore="ContentDescription"/>
+
+                    </LinearLayout>
+
+                </RelativeLayout>
+
+                <android.support.v7.widget.RecyclerView
+                    android:id="@+id/rv_drawer"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:scrollbars="vertical"/>
+
+            </LinearLayout>
 
         </android.support.v4.widget.DrawerLayout>
 

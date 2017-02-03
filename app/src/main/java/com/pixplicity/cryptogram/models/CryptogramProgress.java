@@ -32,8 +32,16 @@ public class CryptogramProgress {
     public CryptogramProgress() {
     }
 
-    public CryptogramProgress(int id) {
-        mId = id;
+    public CryptogramProgress(@NonNull Cryptogram cryptogram) {
+        mId = cryptogram.getId();
+        // Apply mappings for any given characters
+        String given = cryptogram.getGiven();
+        if (given != null) {
+            for (int j = 0; j < given.length(); j++) {
+                char c = given.charAt(j);
+                setUserChar(cryptogram, c, c);
+            }
+        }
     }
 
     @SerializedName("id")
@@ -85,6 +93,18 @@ public class CryptogramProgress {
      */
     @SerializedName("completed")
     private Boolean mCompleted;
+
+    /**
+     * Whether this cryptogram was played using hints.
+     */
+    @SerializedName("had_hints")
+    private Boolean mHadHints;
+
+    /**
+     * Total times mistakes were revealed by the user.
+     */
+    @SerializedName("revealed_mistakes")
+    private Integer mRevealedMistakes;
 
     private transient Boolean mPlaying;
 
@@ -234,7 +254,7 @@ public class CryptogramProgress {
             HashMap<Character, Character> userChars = getUserCharsMapping(cryptogram);
             for (Character character : userChars.keySet()) {
                 // In order to be correct, the key and value must be identical
-                if (character != userChars.get(character)) {
+                if (character != userChars.get(character) && !cryptogram.isGiven(character)) {
                     mCompleted = false;
                     break;
                 }
@@ -264,6 +284,18 @@ public class CryptogramProgress {
         return mRevealed == null ? 0 : mRevealed.size();
     }
 
+    public Integer getRevealedMistakes() {
+        return mRevealedMistakes == null ? 0 : mRevealedMistakes;
+    }
+
+    public void incrementRevealedMistakes() {
+        if (mRevealedMistakes == null) {
+            mRevealedMistakes = 1;
+        } else {
+            mRevealedMistakes++;
+        }
+    }
+
     public boolean isPlaying() {
         return mPlaying != null && mPlaying;
     }
@@ -287,22 +319,26 @@ public class CryptogramProgress {
     }
 
     private void onStart(Cryptogram cryptogram) {
-        int puzzleId = cryptogram.getId() + 1;
+        int puzzleNumber = cryptogram.getNumber();
         Answers.getInstance().logLevelStart(
                 new LevelStartEvent()
-                        .putLevelName("Puzzle #" + puzzleId));
+                        .putLevelName("Puzzle #" + puzzleNumber));
 
         CryptogramApp.getInstance().getBus().post(
                 new CryptogramEvent.CryptogramStartedEvent(cryptogram));
     }
 
     private void onCompleted(@NonNull Cryptogram cryptogram) {
-        int puzzleId = cryptogram.getId() + 1;
+        int puzzleNumber = cryptogram.getNumber();
+        LevelEndEvent event = new LevelEndEvent()
+                .putLevelName("Puzzle #" + puzzleNumber)
+                .putSuccess(true);
+        Float score = getScore(cryptogram);
+        if (score != null) {
+            event.putScore(score);
+        }
         Answers.getInstance().logLevelEnd(
-                new LevelEndEvent()
-                        .putLevelName("Puzzle #" + puzzleId)
-                        .putScore(getScore(cryptogram))
-                        .putSuccess(true));
+                event);
 
         CryptogramApp.getInstance().getBus().post(
                 new CryptogramEvent.CryptogramCompletedEvent(cryptogram));
@@ -312,6 +348,13 @@ public class CryptogramProgress {
         long stopTime = System.currentTimeMillis();
         mStartTime = stopTime - getDuration();
         mStopTime = stopTime;
+    }
+
+    public long getStartTime() {
+        if (mStartTime == null || mStartTime == 0) {
+            return 0;
+        }
+        return mStartTime;
     }
 
     public long getDuration() {
@@ -327,14 +370,24 @@ public class CryptogramProgress {
         return System.currentTimeMillis() - mStartTime;
     }
 
-    public float getScore(@NonNull Cryptogram cryptogram) {
-        long duration = getDuration();
+    public boolean hasScore(@NonNull Cryptogram cryptogram) {
+        long duration = cryptogram.getDuration();
         int excessCount = getExcessCount(cryptogram);
         if (duration == 0 || excessCount < 0) {
-            return -1;
+            return false;
         }
+        return true;
+    }
+
+    public Float getScore(@NonNull Cryptogram cryptogram) {
+        if (!hasScore(cryptogram)) {
+            return null;
+        }
+        long duration = getDuration();
+        int excessCount = getExcessCount(cryptogram);
         float score = 1;
         score = addScore(score, (float) duration / 120f);
+        score = addScore(score, (float) Math.pow(0.75f, getRevealedMistakes()));
         score = addScore(score, (6f - getReveals()) / 6f);
         score = addScore(score, (26f - excessCount) / 26f);
         // Never return a score below 0.0% or above 100.0%
@@ -347,6 +400,17 @@ public class CryptogramProgress {
             return score * -addition;
         }
         return score * addition;
+    }
+
+    public void setHadHints(boolean hadHints) {
+        mHadHints = hadHints;
+    }
+
+    public boolean hadHints() {
+        if (mHadHints == null) {
+            mHadHints = false;
+        }
+        return mHadHints;
     }
 
     public void sanitize(@NonNull Cryptogram cryptogram) {

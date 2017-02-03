@@ -26,6 +26,11 @@
         <activity
             android:name=".activities.AboutActivity"/>
 
+        <meta-data android:name="com.google.android.gms.games.APP_ID"
+                   android:value="@string/app_id"/>
+        <meta-data android:name="com.google.android.gms.version"
+                   android:value="@integer/google_play_services_version"/>
+
         <meta-data
             android:name="io.fabric.ApiKey"
             android:value="cb7ab6c28552bf25b9c45e17100b55d0e3a8686a"/>

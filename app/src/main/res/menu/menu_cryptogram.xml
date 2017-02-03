@@ -14,16 +14,30 @@
         android:id="@+id/action_reveal"
         android:icon="@drawable/ic_reveal"
         android:orderInCategory="200"
-        android:title="@string/reveal_letter"
-        app:showAsAction="never"/>
+        android:title="@string/reveal_select"
+        app:showAsAction="never">
 
-    <item
-        android:id="@+id/action_reveal_puzzle"
-        android:icon="@drawable/ic_reveal"
-        android:orderInCategory="201"
-        android:visible="false"
-        android:title="@string/reveal_puzzle"
-        app:showAsAction="never"/>
+        <menu>
+
+            <item
+                android:id="@+id/action_reveal_letter"
+                android:orderInCategory="200"
+                android:title="@string/reveal_letter"/>
+
+            <item
+                android:id="@+id/action_reveal_mistakes"
+                android:orderInCategory="201"
+                android:title="@string/reveal_mistakes"/>
+
+            <item
+                android:id="@+id/action_reveal_puzzle"
+                android:orderInCategory="202"
+                android:title="@string/reveal_puzzle"
+                android:visible="false"/>
+
+        </menu>
+
+    </item>
 
     <item
         android:id="@+id/action_reset"
@@ -53,6 +67,14 @@
         android:checked="false"
         android:orderInCategory="220"
         android:title="@string/show_hints"
+        app:showAsAction="never"/>
+
+    <item
+        android:id="@+id/action_dark_theme"
+        android:checkable="true"
+        android:checked="false"
+        android:orderInCategory="250"
+        android:title="@string/dark_theme"
         app:showAsAction="never"/>
 
     <item

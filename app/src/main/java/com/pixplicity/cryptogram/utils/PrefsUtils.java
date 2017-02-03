@@ -3,7 +3,6 @@ package com.pixplicity.cryptogram.utils;
 import com.pixplicity.cryptogram.CryptogramApp;
 import com.pixplicity.easyprefs.library.Prefs;
 
-import java.util.HashSet;
 import java.util.Set;
 
 public class PrefsUtils {
@@ -13,9 +12,10 @@ public class PrefsUtils {
     private static final String KEY_RANDOMIZE = "randomize";
     private static final String KEY_ONBOARDING = "onboarding";
     private static final String KEY_SHOW_HINTS = "show_hints";
+    private static final String KEY_DARK_THEME = "dark_theme";
 
     public static int getCurrentId() {
-        return Prefs.getInt(PrefsUtils.KEY_CURRENT_ID, -1);
+        return Prefs.getInt(PrefsUtils.KEY_CURRENT_ID, -2);
     }
 
     public static void setCurrentId(int currentId) {
@@ -58,6 +58,14 @@ public class PrefsUtils {
 
     public static void setShowHints(boolean show) {
         Prefs.putBoolean(KEY_SHOW_HINTS, show);
+    }
+
+    public static void setDarkTheme(boolean theme) {
+        Prefs.putBoolean(KEY_DARK_THEME, theme);
+    }
+
+    public static boolean getDarkTheme() {
+        return Prefs.getBoolean(KEY_DARK_THEME, false);
     }
 
 }
