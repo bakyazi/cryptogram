@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.content.IntentSender;
 import android.graphics.Color;
 import android.graphics.PointF;
+import android.graphics.Rect;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -33,6 +34,8 @@ import com.afollestad.materialdialogs.DialogAction;
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.afollestad.materialdialogs.internal.MDButton;
 import com.crashlytics.android.Crashlytics;
+import com.getkeepsafe.taptargetview.TapTarget;
+import com.getkeepsafe.taptargetview.TapTargetView;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.common.images.ImageManager;
@@ -62,9 +65,6 @@ import java.util.concurrent.TimeUnit;
 
 import butterknife.BindView;
 import butterknife.OnClick;
-import co.mobiwise.materialintro.animation.MaterialIntroListener;
-import co.mobiwise.materialintro.shape.ShapeType;
-import co.mobiwise.materialintro.view.MaterialIntroView;
 
 public class CryptogramActivity extends BaseActivity implements GoogleApiClient.ConnectionCallbacks, GoogleApiClient.OnConnectionFailedListener {
 
@@ -105,9 +105,6 @@ public class CryptogramActivity extends BaseActivity implements GoogleApiClient.
 
     @BindView(R.id.cryptogram)
     protected CryptogramView mCryptogramView;
-
-    @BindView(R.id.v_highlight)
-    protected View mVwHighlight;
 
     @BindView(R.id.hint)
     protected HintView mHintView;
@@ -211,22 +208,28 @@ public class CryptogramActivity extends BaseActivity implements GoogleApiClient.
                     case CryptogramView.OnHighlightListener.TYPE_HIGHLIGHT:
                         if (!mHighlightedHyphenation && (!PrefsUtils.getHighlightedHyphenation() || BuildConfig.DEBUG)) {
                             mHighlightedHyphenation = true;
-                            mVwHighlight.setX(point.x - mVwHighlight.getWidth() / 2);
-                            mVwHighlight.setY(point.y - mVwHighlight.getHeight() / 2);
-                            new MaterialIntroView.Builder(CryptogramActivity.this)
-                                    .setInfoText("Watch out, this is a hyphen! The word continues on the next line.")
-                                    .setShape(ShapeType.CIRCLE)
-                                    .setTarget(mVwHighlight)
-                                    .setIdempotent(false)
-                                    .setDelayMillis(1500)
-                                    .enableIcon(false)
-                                    .setListener(new MaterialIntroListener() {
+                            Rect viewRect = new Rect();
+                            mCryptogramView.getGlobalVisibleRect(viewRect);
+                            int targetX = (int) (point.x + viewRect.left);
+                            int targetY = (int) (point.y + viewRect.top);
+                            TapTargetView.showFor(
+                                    CryptogramActivity.this,
+                                    TapTarget.forBounds(new Rect(targetX - 48, targetY - 48, targetX + 48, targetY + 48),
+                                            "Hyphenation",
+                                            "Watch out, this is a hyphen! The word continues on the next line.")
+                                             .titleTextColor(R.color.white)
+                                             .descriptionTextColor(R.color.white)
+                                             .outerCircleColor(R.color.highlight_color)
+                                             .targetRadius(72)
+                                             .cancelable(true)
+                                             .tintTarget(false)
+                                             .transparentTarget(true),
+                                    new TapTargetView.Listener() {
                                         @Override
-                                        public void onUserClicked(String s) {
+                                        public void onTargetClick(TapTargetView view) {
                                             PrefsUtils.setHighlightedHyphenation(true);
                                         }
-                                    })
-                                    .show();
+                                    });
                         }
                 }
             }

@@ -85,9 +85,6 @@ repositories {
     maven { url "https://dl.bintray.com/pixplicity/maven" }
     maven { url "https://dl.bintray.com/drummer-aidan/maven" }
     maven { url 'https://maven.fabric.io/public' }
-    maven {
-        url "https://jitpack.io"
-    }
 }
 
 dependencies {
@@ -118,7 +115,7 @@ dependencies {
     compile 'com.pixplicity.generate:library:1.0'
     compile 'com.google.code.gson:gson:2.8.0'
 
-    compile 'com.github.iammert:MaterialIntroView:1.6.0'
+    compile 'com.getkeepsafe.taptargetview:taptargetview:1.7.0'
 
     androidTestCompile('com.android.support.test.espresso:espresso-core:2.2.2', {
         exclude group: 'com.android.support', module: 'support-annotations'

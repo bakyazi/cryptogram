@@ -378,22 +378,8 @@ public class CryptogramView extends android.support.v7.widget.AppCompatTextView 
         int height;
 
         if (mCryptogram != null) {
-            // Compute the height that works for this width
             float offsetY = mBoxH / 4;
-            float x = 0, y = mBoxH;
-            for (String word : mCryptogram.getWords()) {
-                float w = word.length() * mBoxW;
-                if (x + w > width) {
-                    x = 0;
-                    y += mBoxH * 2 + offsetY * 2;
-                }
-                for (int i = 0; i < word.length(); i++) {
-                    // Box width
-                    x += mBoxW;
-                }
-                // Trailing space
-                x += mBoxW;
-            }
+            float y = drawOrMeasure(width, null);
             desiredHeight = (int) (y + mBoxH + offsetY * 2);
         }
 
@@ -421,6 +407,13 @@ public class CryptogramView extends android.support.v7.widget.AppCompatTextView 
             return;
         }
 
+        drawOrMeasure(canvas.getWidth(), canvas);
+    }
+
+    private float drawOrMeasure(float width, @Nullable Canvas canvas) {
+        if (mCryptogram == null) {
+            return 0;
+        }
         HashMap<Character, Character> charMapping;
         if (isInEditMode()) {
             charMapping = null;
@@ -445,15 +438,16 @@ public class CryptogramView extends android.support.v7.widget.AppCompatTextView 
         for (String word : mCryptogram.getWords()) {
             String displayWord = word.replace(SOFT_HYPHEN, "");
             float w = displayWord.length() * mBoxW;
-            if (x + w > canvas.getWidth()) {
+            if (x + w > width) {
                 // Check if we can use a soft hyphen
                 int index = word.lastIndexOf(SOFT_HYPHEN);
+                boolean needsLineBreak = true;
                 while (index > -1) {
                     Log.d(TAG, "soft hyphen at index " + index);
-                    if (x + index + 1 <= canvas.getWidth()) {
+                    if (x + (index + 1) * mBoxW <= width) {
                         // It fits with a soft hyphen; draw this segment
-                        if (hyphenHighlight == null) {
-                            hyphenHighlight = new PointF(x + index * mBoxW + mBoxW / 2, y - mBoxH / 2);
+                        if (hyphenHighlight == null && canvas != null) {
+                            hyphenHighlight = new PointF(x + index * mBoxW - mBoxW / 2, y - mBoxH / 2);
                             if (mOnHighlightListener != null) {
                                 mOnHighlightListener.onHighlight(OnHighlightListener.TYPE_HIGHLIGHT, hyphenHighlight);
                             }
@@ -465,14 +459,28 @@ public class CryptogramView extends android.support.v7.widget.AppCompatTextView 
                         Log.d(TAG, "soft hyphen: " + wordSegment + " // " + word);
                         // Reset the search
                         index = word.lastIndexOf(SOFT_HYPHEN);
+                        // Manually add a line break since nothing else will fit
+                        x = 0;
+                        y += mBoxH * 2 + offsetY * 2;
+                        needsLineBreak = false;
                     } else {
                         // It doesn't fit; look for a previous soft hyphen
                         index = word.lastIndexOf(SOFT_HYPHEN, index - 1);
                     }
+                    if (index == -1 && x > 0) {
+                        // Start on the next line
+                        x = 0;
+                        y += mBoxH * 2 + offsetY * 2;
+                        needsLineBreak = false;
+                        // Restart the search
+                        index = word.lastIndexOf(SOFT_HYPHEN);
+                    }
                 }
                 word = word.replace(SOFT_HYPHEN, "");
-                x = 0;
-                y += mBoxH * 2 + offsetY * 2;
+                if (needsLineBreak) {
+                    x = 0;
+                    y += mBoxH * 2 + offsetY * 2;
+                }
             } else {
                 word = displayWord;
             }
@@ -480,9 +488,13 @@ public class CryptogramView extends android.support.v7.widget.AppCompatTextView 
             // Trailing space
             x += mBoxW;
         }
+        return y;
     }
 
-    private float drawWord(Canvas canvas, HashMap<Character, Character> charMapping, TextPaint textPaintUser, Paint linePaint, float offsetX1, float offsetX2, float offsetY, float x, float y, String word) {
+    private float drawWord(@Nullable Canvas canvas, HashMap<Character, Character> charMapping, TextPaint textPaintUser, Paint linePaint, float offsetX1, float offsetX2, float offsetY, float x, float y, String word) {
+        if (canvas == null) {
+            return x + mBoxW * word.length();
+        }
         for (int i = 0; i < word.length(); i++) {
             char c = Character.toUpperCase(word.charAt(i));
             String chr;
