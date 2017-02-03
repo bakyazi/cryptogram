@@ -64,11 +64,23 @@
                         android:paddingRight="@dimen/activity_horizontal_margin"
                         android:paddingTop="@dimen/activity_vertical_margin">
 
-                        <com.pixplicity.cryptogram.views.CryptogramView
-                            android:id="@+id/cryptogram"
+                        <FrameLayout
                             android:layout_width="match_parent"
-                            android:layout_height="0dp"
-                            android:layout_weight="1"/>
+                            android:layout_height="wrap_content"
+                            android:clipChildren="false">
+
+                            <com.pixplicity.cryptogram.views.CryptogramView
+                                android:id="@+id/cryptogram"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"/>
+
+                            <View
+                                android:id="@+id/v_highlight"
+                                android:layout_width="@dimen/highlight_size"
+                                android:layout_height="@dimen/highlight_size"
+                                android:visibility="invisible"/>
+
+                        </FrameLayout>
 
                         <TextView
                             android:id="@+id/tv_author"
@@ -196,8 +208,7 @@
                 android:layout_height="match_parent"
                 android:layout_gravity="start"
                 android:background="@color/colorPrimaryDark"
-                android:orientation="vertical"
-                tools:layout_gravity="">
+                android:orientation="vertical">
 
                 <RelativeLayout
                     android:id="@+id/vg_google_play_games"

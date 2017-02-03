@@ -13,6 +13,7 @@ public class PrefsUtils {
     private static final String KEY_ONBOARDING = "onboarding";
     private static final String KEY_SHOW_HINTS = "show_hints";
     private static final String KEY_DARK_THEME = "dark_theme";
+    private static final String KEY_HIGHLIGHTED_HYPHENATION = "highlighted_hyphenation";
 
     public static int getCurrentId() {
         return Prefs.getInt(PrefsUtils.KEY_CURRENT_ID, -2);
@@ -66,6 +67,14 @@ public class PrefsUtils {
 
     public static boolean getDarkTheme() {
         return Prefs.getBoolean(KEY_DARK_THEME, false);
+    }
+
+    public static boolean getHighlightedHyphenation() {
+        return Prefs.getBoolean(KEY_HIGHLIGHTED_HYPHENATION, false);
+    }
+
+    public static void setHighlightedHyphenation(boolean highlighted) {
+        Prefs.edit().putBoolean(KEY_HIGHLIGHTED_HYPHENATION, highlighted);
     }
 
 }

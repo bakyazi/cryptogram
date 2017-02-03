@@ -1,11 +1,11 @@
 package com.pixplicity.cryptogram.views;
 
-import android.annotation.TargetApi;
 import android.content.Context;
 import android.content.res.Resources;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
+import android.graphics.PointF;
 import android.graphics.Rect;
 import android.graphics.Typeface;
 import android.os.Build;
@@ -14,13 +14,14 @@ import android.support.v4.content.ContextCompat;
 import android.text.InputType;
 import android.text.TextPaint;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.view.KeyEvent;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.inputmethod.BaseInputConnection;
 import android.view.inputmethod.EditorInfo;
 import android.view.inputmethod.InputConnection;
 import android.view.inputmethod.InputMethodManager;
-import android.widget.TextView;
 
 import com.pixplicity.cryptogram.R;
 import com.pixplicity.cryptogram.models.Cryptogram;
@@ -30,12 +31,13 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 
-public class CryptogramView extends TextView {
+public class CryptogramView extends android.support.v7.widget.AppCompatTextView {
 
     private static final String TAG = CryptogramView.class.getSimpleName();
 
     public static final int INPUT_TYPE = InputType.TYPE_TEXT_VARIATION_VISIBLE_PASSWORD |
             InputType.TYPE_TEXT_FLAG_NO_SUGGESTIONS;
+    public static final String SOFT_HYPHEN = "\u00AD";
 
     @Nullable
     private Cryptogram mCryptogram;
@@ -51,30 +53,25 @@ public class CryptogramView extends TextView {
     boolean mDarkTheme = PrefsUtils.getDarkTheme();
 
     private OnCryptogramProgressListener mOnCryptogramProgressListener;
+    private OnHighlightListener mOnHighlightListener;
 
 
     public CryptogramView(Context context) {
         super(context);
-        init(context, null, 0, 0);
+        init(context, null, 0);
     }
 
     public CryptogramView(Context context, AttributeSet attrs) {
         super(context, attrs);
-        init(context, attrs, 0, 0);
+        init(context, attrs, 0);
     }
 
     public CryptogramView(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
-        init(context, attrs, defStyleAttr, 0);
+        init(context, attrs, defStyleAttr);
     }
 
-    @TargetApi(Build.VERSION_CODES.LOLLIPOP)
-    public CryptogramView(Context context, AttributeSet attrs, int defStyleAttr, int defStyleRes) {
-        super(context, attrs, defStyleAttr, defStyleRes);
-        init(context, attrs, defStyleAttr, defStyleRes);
-    }
-
-    private void init(Context context, AttributeSet attrs, int defStyleAttr, int defStyleRes) {
+    private void init(Context context, AttributeSet attrs, int defStyleAttr) {
         Resources r = context.getResources();
 
         mPaint = new Paint();
@@ -439,56 +436,100 @@ public class CryptogramView extends TextView {
         mTextPaintMapping.setAlpha(completed ? 96 : 255);
         Paint linePaint = completed ? mLinePaint2 : mLinePaint1;
 
+        PointF hyphenHighlight = null;
+
         float offsetX1 = (mBoxW - mCharW1) / 4;
         float offsetX2 = (mBoxW - mCharW2) / 4;
         float offsetY = mBoxH / 4;
         float x = 0, y = mBoxH;
         for (String word : mCryptogram.getWords()) {
-            float w = word.length() * mBoxW;
+            String displayWord = word.replace(SOFT_HYPHEN, "");
+            float w = displayWord.length() * mBoxW;
             if (x + w > canvas.getWidth()) {
+                // Check if we can use a soft hyphen
+                int index = word.lastIndexOf(SOFT_HYPHEN);
+                while (index > -1) {
+                    Log.d(TAG, "soft hyphen at index " + index);
+                    if (x + index + 1 <= canvas.getWidth()) {
+                        // It fits with a soft hyphen; draw this segment
+                        if (hyphenHighlight == null) {
+                            hyphenHighlight = new PointF(x + index * mBoxW + mBoxW / 2, y - mBoxH / 2);
+                            if (mOnHighlightListener != null) {
+                                mOnHighlightListener.onHighlight(OnHighlightListener.TYPE_HIGHLIGHT, hyphenHighlight);
+                            }
+                        }
+                        String wordSegment = word.substring(0, index).replace(SOFT_HYPHEN, "") + "-";
+                        x = drawWord(canvas, charMapping, textPaintUser, linePaint, offsetX1, offsetX2, offsetY, x, y, wordSegment);
+                        // Remainder of the word
+                        word = word.substring(index + 1);
+                        Log.d(TAG, "soft hyphen: " + wordSegment + " // " + word);
+                        // Reset the search
+                        index = word.lastIndexOf(SOFT_HYPHEN);
+                    } else {
+                        // It doesn't fit; look for a previous soft hyphen
+                        index = word.lastIndexOf(SOFT_HYPHEN, index - 1);
+                    }
+                }
+                word = word.replace(SOFT_HYPHEN, "");
                 x = 0;
                 y += mBoxH * 2 + offsetY * 2;
+            } else {
+                word = displayWord;
             }
-            for (int i = 0; i < word.length(); i++) {
-                char c = Character.toUpperCase(word.charAt(i));
-                String chr;
-                Character mappedChar = charMapping == null ? null : charMapping.get(c);
-                if (mSelectedCharacter == c) {
-                    // The user is inputting this character; highlight it
-                    canvas.drawRect(x + mBoxInset, y - mBoxH + mBoxInset, x + mBoxW - mBoxInset, y + offsetY - mBoxInset, mBoxPaint1);
-                    canvas.drawRect(x + mBoxInset, y - mBoxH + mBoxInset, x + mBoxW - mBoxInset, y + offsetY - mBoxInset, mBoxPaint2);
-                    //canvas.drawRect(x, y - mBoxH, x + mBoxW, y + offsetY, mBoxPaint2);
-                }
-                if (mappedChar != null) {
-                    chr = String.valueOf(mappedChar);
-                    canvas.drawText(chr, x + offsetX2, y + mBoxH + offsetY, mTextPaintMapping);
-                }
-                if (mCryptogram.isRevealed(c)) {
-                    // This box has already been revealed to the user
-                    canvas.drawLine(x + offsetX1, y + offsetY, x + mBoxW - offsetX1, y + offsetY, mLinePaint2);
-                } else if (mCryptogram.isInputChar(c)) {
-                    // This is a box the user has to fill to complete the puzzle
-                    canvas.drawLine(x + offsetX1, y + offsetY, x + mBoxW - offsetX1, y + offsetY, linePaint);
-                    c = getUserInput(c);
-                }
-                if (c > 0) {
-                    TextPaint textPaint = textPaintUser;
-                    if (mHighlightMistakes) {
-                        Character correctMapping = mCryptogram.getCharacterForMapping(c);
-                        if (mappedChar != correctMapping) {
-                            textPaint = mTextPaintMistake;
-                        }
-                    }
-                    // The character should be drawn in place
-                    chr = String.valueOf(c);
-                    canvas.drawText(chr, x + offsetX1, y, textPaint);
-                }
-                // Box width
-                x += mBoxW;
-            }
+            x = drawWord(canvas, charMapping, textPaintUser, linePaint, offsetX1, offsetX2, offsetY, x, y, word);
             // Trailing space
             x += mBoxW;
         }
+    }
+
+    private float drawWord(Canvas canvas, HashMap<Character, Character> charMapping, TextPaint textPaintUser, Paint linePaint, float offsetX1, float offsetX2, float offsetY, float x, float y, String word) {
+        for (int i = 0; i < word.length(); i++) {
+            char c = Character.toUpperCase(word.charAt(i));
+            String chr;
+            Character mappedChar = charMapping == null ? null : charMapping.get(c);
+            if (mSelectedCharacter == c) {
+                // The user is inputting this character; highlight it
+                canvas.drawRect(x + mBoxInset, y - mBoxH + mBoxInset, x + mBoxW - mBoxInset, y + offsetY - mBoxInset, mBoxPaint1);
+                canvas.drawRect(x + mBoxInset, y - mBoxH + mBoxInset, x + mBoxW - mBoxInset, y + offsetY - mBoxInset, mBoxPaint2);
+                //canvas.drawRect(x, y - mBoxH, x + mBoxW, y + offsetY, mBoxPaint2);
+            }
+            if (mappedChar != null) {
+                chr = String.valueOf(mappedChar);
+                canvas.drawText(chr, x + offsetX2, y + mBoxH + offsetY, mTextPaintMapping);
+            }
+            if (mCryptogram.isRevealed(c)) {
+                // This box has already been revealed to the user
+                canvas.drawLine(x + offsetX1, y + offsetY, x + mBoxW - offsetX1, y + offsetY, mLinePaint2);
+            } else if (mCryptogram.isInputChar(c)) {
+                // This is a box the user has to fill to complete the puzzle
+                canvas.drawLine(x + offsetX1, y + offsetY, x + mBoxW - offsetX1, y + offsetY, linePaint);
+                c = getUserInput(c);
+            }
+            if (c > 0) {
+                TextPaint textPaint = textPaintUser;
+                if (mHighlightMistakes) {
+                    Character correctMapping = mCryptogram.getCharacterForMapping(c);
+                    if (mappedChar != correctMapping) {
+                        textPaint = mTextPaintMistake;
+                    }
+                }
+                // The character should be drawn in place
+                chr = String.valueOf(c);
+                canvas.drawText(chr, x + offsetX1, y, textPaint);
+            }
+            // Box width
+            x += mBoxW;
+        }
+        return x;
+    }
+
+    @Override
+    public boolean onTouchEvent(MotionEvent event) {
+        switch (event.getAction()) {
+            case KeyEvent.ACTION_DOWN:
+                break;
+        }
+        return super.onTouchEvent(event);
     }
 
     private char getUserInput(char c) {
@@ -505,9 +546,21 @@ public class CryptogramView extends TextView {
         mOnCryptogramProgressListener = onCryptogramProgressListener;
     }
 
+    public void setOnHighlightListener(OnHighlightListener onHighlightListener) {
+        mOnHighlightListener = onHighlightListener;
+    }
+
     public interface OnCryptogramProgressListener {
 
         void onCryptogramProgress(Cryptogram cryptogram);
+
+    }
+
+    public interface OnHighlightListener {
+
+        int TYPE_HIGHLIGHT = 0;
+
+        void onHighlight(int type, PointF point);
 
     }
 

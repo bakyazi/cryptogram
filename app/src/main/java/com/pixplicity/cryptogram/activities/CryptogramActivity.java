@@ -4,6 +4,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.IntentSender;
 import android.graphics.Color;
+import android.graphics.PointF;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -61,6 +62,9 @@ import java.util.concurrent.TimeUnit;
 
 import butterknife.BindView;
 import butterknife.OnClick;
+import co.mobiwise.materialintro.animation.MaterialIntroListener;
+import co.mobiwise.materialintro.shape.ShapeType;
+import co.mobiwise.materialintro.view.MaterialIntroView;
 
 public class CryptogramActivity extends BaseActivity implements GoogleApiClient.ConnectionCallbacks, GoogleApiClient.OnConnectionFailedListener {
 
@@ -101,6 +105,9 @@ public class CryptogramActivity extends BaseActivity implements GoogleApiClient.
 
     @BindView(R.id.cryptogram)
     protected CryptogramView mCryptogramView;
+
+    @BindView(R.id.v_highlight)
+    protected View mVwHighlight;
 
     @BindView(R.id.hint)
     protected HintView mHintView;
@@ -150,6 +157,7 @@ public class CryptogramActivity extends BaseActivity implements GoogleApiClient.
     private int mLastConnectionError;
 
     private boolean mDarkTheme;
+    private boolean mHighlightedHyphenation;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -194,6 +202,33 @@ public class CryptogramActivity extends BaseActivity implements GoogleApiClient.
             @Override
             public void onCryptogramProgress(Cryptogram cryptogram) {
                 onCryptogramUpdated(cryptogram);
+            }
+        });
+        mCryptogramView.setOnHighlightListener(new CryptogramView.OnHighlightListener() {
+            @Override
+            public void onHighlight(int type, PointF point) {
+                switch (type) {
+                    case CryptogramView.OnHighlightListener.TYPE_HIGHLIGHT:
+                        if (!mHighlightedHyphenation && (!PrefsUtils.getHighlightedHyphenation() || BuildConfig.DEBUG)) {
+                            mHighlightedHyphenation = true;
+                            mVwHighlight.setX(point.x - mVwHighlight.getWidth() / 2);
+                            mVwHighlight.setY(point.y - mVwHighlight.getHeight() / 2);
+                            new MaterialIntroView.Builder(CryptogramActivity.this)
+                                    .setInfoText("Watch out, this is a hyphen! The word continues on the next line.")
+                                    .setShape(ShapeType.CIRCLE)
+                                    .setTarget(mVwHighlight)
+                                    .setIdempotent(false)
+                                    .setDelayMillis(1500)
+                                    .enableIcon(false)
+                                    .setListener(new MaterialIntroListener() {
+                                        @Override
+                                        public void onUserClicked(String s) {
+                                            PrefsUtils.setHighlightedHyphenation(true);
+                                        }
+                                    })
+                                    .show();
+                        }
+                }
             }
         });
 
@@ -696,7 +731,7 @@ public class CryptogramActivity extends BaseActivity implements GoogleApiClient.
                                     Cryptogram cryptogram = provider.getByNumber(puzzleNumber);
                                     if (cryptogram == null) {
                                         Snackbar.make(mVgContent, getString(R.string.puzzle_nonexistant, puzzleNumber),
-                                                      Snackbar.LENGTH_SHORT).show();
+                                                Snackbar.LENGTH_SHORT).show();
                                     } else {
                                         updateCryptogram(cryptogram);
                                     }
@@ -793,8 +828,8 @@ public class CryptogramActivity extends BaseActivity implements GoogleApiClient.
                     ((TextView) view.findViewById(R.id.tv_label)).setText(R.string.stats_total_completed_label);
                     ((TextView) view.findViewById(R.id.tv_value)).setText(
                             getString(R.string.stats_total_completed_value,
-                                      count,
-                                      provider.getLastNumber()));
+                                    count,
+                                    provider.getLastNumber()));
                     dialogView.addView(view);
                 }
                 {
@@ -802,7 +837,7 @@ public class CryptogramActivity extends BaseActivity implements GoogleApiClient.
                     ((TextView) view.findViewById(R.id.tv_label)).setText(R.string.stats_average_score_label);
                     ((TextView) view.findViewById(R.id.tv_value)).setText(
                             getString(R.string.stats_average_score_value,
-                                      scoreAverageText));
+                                    scoreAverageText));
                     dialogView.addView(view);
                 }
                 {
@@ -810,7 +845,7 @@ public class CryptogramActivity extends BaseActivity implements GoogleApiClient.
                     ((TextView) view.findViewById(R.id.tv_label)).setText(R.string.stats_cumulative_score_label);
                     ((TextView) view.findViewById(R.id.tv_value)).setText(
                             getString(R.string.stats_cumulative_score_value,
-                                      scoreCumulativeText));
+                                    scoreCumulativeText));
                     dialogView.addView(view);
                 }
                 {
@@ -818,7 +853,7 @@ public class CryptogramActivity extends BaseActivity implements GoogleApiClient.
                     ((TextView) view.findViewById(R.id.tv_label)).setText(R.string.stats_fastest_completion_label);
                     ((TextView) view.findViewById(R.id.tv_value)).setText(
                             getString(R.string.stats_fastest_completion_value,
-                                      fastestCompletion));
+                                    fastestCompletion));
                     dialogView.addView(view);
                 }
                 {
@@ -826,7 +861,7 @@ public class CryptogramActivity extends BaseActivity implements GoogleApiClient.
                     ((TextView) view.findViewById(R.id.tv_label)).setText(R.string.stats_total_time_spent_label);
                     ((TextView) view.findViewById(R.id.tv_value)).setText(
                             getString(R.string.stats_total_time_spent_value,
-                                      StringUtils.getDurationString(totalDurationMs)));
+                                    StringUtils.getDurationString(totalDurationMs)));
                     dialogView.addView(view);
                 }
                 {
@@ -834,8 +869,8 @@ public class CryptogramActivity extends BaseActivity implements GoogleApiClient.
                     ((TextView) view.findViewById(R.id.tv_label)).setText(R.string.stats_longest_streak_label);
                     ((TextView) view.findViewById(R.id.tv_value)).setText(
                             getString(R.string.stats_longest_streak_value,
-                                      longestStreak,
-                                      getResources().getQuantityString(R.plurals.days, longestStreak)));
+                                    longestStreak,
+                                    getResources().getQuantityString(R.plurals.days, longestStreak)));
                     dialogView.addView(view);
                 }
                 new AlertDialog.Builder(this)
