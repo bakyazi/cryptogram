@@ -205,19 +205,15 @@ public class CryptogramActivity extends BaseActivity implements GoogleApiClient.
         mCryptogramView.setOnHighlightListener(new CryptogramView.OnHighlightListener() {
             @Override
             public void onHighlight(int type, PointF point) {
-                switch (type) {
-                    case CryptogramView.OnHighlightListener.TYPE_HIGHLIGHT:
-                        if (!mHighlightedHyphenation && (!PrefsUtils.getHighlightedHyphenation() || BuildConfig.DEBUG)) {
-                            mHighlightedHyphenation = true;
-                            Rect viewRect = new Rect();
-                            mCryptogramView.getGlobalVisibleRect(viewRect);
-                            showHighlight((int) (point.x + viewRect.left),
-                                          (int) (point.y + viewRect.top),
-                                          getString(R.string.highlight_hyphenation_title),
-                                          getString(R.string.highlight_hyphenation_description),
-                                          1200
-                            );
-                        }
+                if (!mHighlightedHyphenation && (!PrefsUtils.getHighlighted(type) || BuildConfig.DEBUG)) {
+                    mHighlightedHyphenation = true;
+                    Rect viewRect = new Rect();
+                    mCryptogramView.getGlobalVisibleRect(viewRect);
+                    showHighlight(type, point,
+                                  getString(R.string.highlight_hyphenation_title),
+                                  getString(R.string.highlight_hyphenation_description),
+                                  1200
+                    );
                 }
             }
         });
@@ -227,7 +223,12 @@ public class CryptogramActivity extends BaseActivity implements GoogleApiClient.
         updateCryptogram(cryptogramProvider.getCurrent());
     }
 
-    private void showHighlight(final int targetX, final int targetY, final String title, final String description, int delayMillis) {
+    private void showHighlight(final int type, PointF point, final String title, final String description, int delayMillis) {
+        Rect viewRect = new Rect();
+        mCryptogramView.getGlobalVisibleRect(viewRect);
+        final int targetX = (int) (point.x + viewRect.left);
+        final int targetY = (int) (point.y + viewRect.top);
+        final int targetRadius = 48;
         Handler handler = new Handler();
         handler.postDelayed(new Runnable() {
             @Override
@@ -235,12 +236,11 @@ public class CryptogramActivity extends BaseActivity implements GoogleApiClient.
                 final long showTime = System.currentTimeMillis();
                 TapTargetView.showFor(
                         CryptogramActivity.this,
-                        TapTarget.forBounds(new Rect(targetX - 48, targetY - 48, targetX + 48, targetY + 48),
+                        TapTarget.forBounds(new Rect(targetX - targetRadius, targetY - targetRadius, targetX + targetRadius, targetY + targetRadius),
                                             title, description)
                                  .titleTextColor(R.color.white)
                                  .descriptionTextColor(R.color.white)
                                  .outerCircleColor(R.color.highlight_color)
-                                 .targetRadius(72)
                                  .cancelable(true)
                                  .tintTarget(false)
                                  .transparentTarget(true),
@@ -263,7 +263,7 @@ public class CryptogramActivity extends BaseActivity implements GoogleApiClient.
                             private void dismiss(TapTargetView view) {
                                 if (System.currentTimeMillis() - showTime >= 2000) {
                                     // Ensure that the user saw the message
-                                    PrefsUtils.setHighlightedHyphenation(true);
+                                    PrefsUtils.setHighlighted(type, true);
                                     view.dismiss(false);
                                 }
                             }

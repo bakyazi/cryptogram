@@ -15,6 +15,9 @@ public class PrefsUtils {
     private static final String KEY_DARK_THEME = "dark_theme";
     private static final String KEY_HIGHLIGHTED_HYPHENATION = "highlighted_hyphenation";
 
+    public static final int TYPE_HIGHLIGHT_HYPHENATION = 0;
+
+
     public static int getCurrentId() {
         return Prefs.getInt(PrefsUtils.KEY_CURRENT_ID, -2);
     }
@@ -69,12 +72,28 @@ public class PrefsUtils {
         return Prefs.getBoolean(KEY_DARK_THEME, false);
     }
 
-    public static boolean getHighlightedHyphenation() {
-        return Prefs.getBoolean(KEY_HIGHLIGHTED_HYPHENATION, false);
+    public static boolean getHighlighted(int type) {
+        String key;
+        switch (type) {
+            case TYPE_HIGHLIGHT_HYPHENATION:
+                key = KEY_HIGHLIGHTED_HYPHENATION;
+                break;
+            default:
+                return false;
+        }
+        return Prefs.getBoolean(key, false);
     }
 
-    public static void setHighlightedHyphenation(boolean highlighted) {
-        Prefs.edit().putBoolean(KEY_HIGHLIGHTED_HYPHENATION, highlighted);
+    public static void setHighlighted(int type, boolean highlighted) {
+        String key;
+        switch (type) {
+            case TYPE_HIGHLIGHT_HYPHENATION:
+                key = KEY_HIGHLIGHTED_HYPHENATION;
+                break;
+            default:
+                return;
+        }
+        Prefs.edit().putBoolean(key, highlighted);
     }
 
 }

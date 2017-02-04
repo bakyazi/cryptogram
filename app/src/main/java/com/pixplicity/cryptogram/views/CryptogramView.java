@@ -449,7 +449,7 @@ public class CryptogramView extends android.support.v7.widget.AppCompatTextView 
                         if (hyphenHighlight == null && canvas != null) {
                             hyphenHighlight = new PointF(x + index * mBoxW - mBoxW / 2, y - mBoxH / 2);
                             if (mOnHighlightListener != null) {
-                                mOnHighlightListener.onHighlight(OnHighlightListener.TYPE_HIGHLIGHT, hyphenHighlight);
+                                mOnHighlightListener.onHighlight(PrefsUtils.TYPE_HIGHLIGHT_HYPHENATION, hyphenHighlight);
                             }
                         }
                         String wordSegment = word.substring(0, index).replace(SOFT_HYPHEN, "") + "-";
@@ -569,8 +569,6 @@ public class CryptogramView extends android.support.v7.widget.AppCompatTextView 
     }
 
     public interface OnHighlightListener {
-
-        int TYPE_HIGHLIGHT = 0;
 
         void onHighlight(int type, PointF point);
 
