@@ -163,12 +163,10 @@ public class CryptogramActivity extends BaseActivity implements GoogleApiClient.
         super.onCreate(savedInstanceState);
         mDarkTheme = PrefsUtils.getDarkTheme();
         if (mDarkTheme) {
-            setTheme(R.style.darkAppTheme);
-            getWindow().setBackgroundDrawableResource(R.drawable.bg_dark_activity);
-            setContentView(R.layout.activity_cryptogram_dark);
-        } else {
-            setContentView(R.layout.activity_cryptogram);
+            setTheme(R.style.AppTheme_Dark);
+            getWindow().setBackgroundDrawableResource(R.drawable.bg_activity_dark);
         }
+        setContentView(R.layout.activity_cryptogram);
         final CryptogramProvider cryptogramProvider = CryptogramProvider.getInstance(this);
 
         // Create the Google Api Client with access to Games

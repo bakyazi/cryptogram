@@ -11,7 +11,7 @@
         <item name="drawerArrowStyle">@style/DrawerArrowStyle</item>
     </style>
 
-    <style name="darkAppTheme" parent="Theme.AppCompat.NoActionBar">
+    <style name="AppTheme.Dark" parent="AppTheme">
         <item name="colorPrimary">@color/colorDarkPrimary</item>
         <item name="colorPrimaryDark">@color/colorDarkPrimaryDark</item>
         <item name="colorAccent">@color/colorDarkAccent</item>
@@ -23,11 +23,6 @@
     <style name="DrawerArrowStyle" parent="Widget.AppCompat.DrawerArrowToggle">
         <item name="spinBars">true</item>
         <item name="color">@color/white</item>
-    </style>
-
-    <style name="SplashTheme" parent="AppTheme">
-        <item name="colorPrimaryDark">@color/white</item>
-        <item name="android:windowBackground">@drawable/bg_splash</item>
     </style>
 
     <style name="ToolbarStyle" parent="ThemeOverlay.AppCompat.ActionBar">
