@@ -43,9 +43,11 @@ import com.pixplicity.cryptogram.R;
 import com.pixplicity.cryptogram.adapters.CryptogramAdapter;
 import com.pixplicity.cryptogram.events.CryptogramEvent;
 import com.pixplicity.cryptogram.models.Cryptogram;
+import com.pixplicity.cryptogram.utils.AprilSpecialEdition;
 import com.pixplicity.cryptogram.utils.AchievementProvider;
 import com.pixplicity.cryptogram.utils.CryptogramProvider;
 import com.pixplicity.cryptogram.utils.LeaderboardProvider;
+import com.pixplicity.cryptogram.utils.NotificationPublisher;
 import com.pixplicity.cryptogram.utils.PrefsUtils;
 import com.pixplicity.cryptogram.utils.StringUtils;
 import com.pixplicity.cryptogram.views.CryptogramView;
@@ -69,6 +71,8 @@ public class CryptogramActivity extends BaseActivity implements GoogleApiClient.
     private static final int RC_UNUSED = 1000;
     private static final int RC_SIGN_IN = 1001;
 
+    private static final int ONBOARDING_PAGES = 2;
+
     @BindView(R.id.iv_google_play_games_banner)
     protected ImageView mIvGooglePlayGamesBanner;
 
@@ -89,6 +93,9 @@ public class CryptogramActivity extends BaseActivity implements GoogleApiClient.
 
     @BindView(R.id.rv_drawer)
     protected RecyclerView mRvDrawer;
+
+    @BindView(R.id.iv_background)
+    protected ImageView mIvBackground;
 
     @BindView(R.id.vg_cryptogram)
     protected ViewGroup mVgCryptogram;
@@ -197,9 +204,11 @@ public class CryptogramActivity extends BaseActivity implements GoogleApiClient.
             }
         });
 
-        showOnboarding(0);
-
         updateCryptogram(cryptogramProvider.getCurrent());
+    }
+
+    private boolean hasOnBoardingPages() {
+        return PrefsUtils.getOnboarding() < ONBOARDING_PAGES - 1;
     }
 
     private void showOnboarding(final int page) {
@@ -227,6 +236,7 @@ public class CryptogramActivity extends BaseActivity implements GoogleApiClient.
                 videoW = 1088;
                 videoH = 962;
                 break;
+            case ONBOARDING_PAGES:
             default:
                 onGameplayReady();
                 return;
@@ -321,6 +331,11 @@ public class CryptogramActivity extends BaseActivity implements GoogleApiClient.
     }
 
     @Override
+    protected void onNewIntent(Intent intent) {
+        super.onNewIntent(intent);
+    }
+
+    @Override
     protected void onStart() {
         super.onStart();
 
@@ -333,11 +348,25 @@ public class CryptogramActivity extends BaseActivity implements GoogleApiClient.
         }
 
         CryptogramApp.getInstance().getBus().register(this);
+
+        if (hasOnBoardingPages()) {
+            showOnboarding(0);
+        } else {
+            onGameplayReady();
+        }
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        NotificationPublisher.clear(this, NotificationPublisher.NOTIFICATION_APRIL_SPECIAL);
     }
 
     @Override
     protected void onStop() {
         super.onStop();
+
+        AprilSpecialEdition.doSpecialMagicSauce(this, false);
 
         if (mGoogleApiClient.isConnected()) {
             mGoogleApiClient.disconnect();
@@ -470,7 +499,13 @@ public class CryptogramActivity extends BaseActivity implements GoogleApiClient.
     }
 
     private void onGameplayReady() {
-        mCryptogramView.requestFocus();
+        if (AprilSpecialEdition.doSpecialMagicSauce(this, true)) {
+            mIvBackground.setVisibility(View.VISIBLE);
+            mCryptogramView.clearFocus();
+        } else {
+            mIvBackground.setVisibility(View.GONE);
+            mCryptogramView.requestFocus();
+        }
     }
 
     public void onCryptogramUpdated(Cryptogram cryptogram) {
@@ -658,6 +693,12 @@ public class CryptogramActivity extends BaseActivity implements GoogleApiClient.
             }
             return true;
             case R.id.action_go_to: {
+                if (cryptogram == null) {
+                    if (mDrawerLayout != null) {
+                        mDrawerLayout.openDrawer(GravityCompat.START);
+                    }
+                    break;
+                }
                 String currentId = String.valueOf(cryptogram.getNumber());
                 new MaterialDialog.Builder(this)
                         .content(R.string.go_to_puzzle_content)
@@ -761,11 +802,9 @@ public class CryptogramActivity extends BaseActivity implements GoogleApiClient.
                     long duration = c.getProgress().getDuration();
                     if (c.isCompleted()) {
                         count++;
-                        Float puzzleScore = c.getScore();
-                        if (puzzleScore != null) {
-                            score += puzzleScore;
-                            scoreCount++;
-                        }
+                        float puzzleScore = c.getScore();
+                        score += puzzleScore;
+                        scoreCount++;
                         if (shortestDurationMs == 0 || shortestDurationMs > duration) {
                             shortestDurationMs = duration;
                         }

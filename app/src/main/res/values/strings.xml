@@ -9,6 +9,11 @@
     <string name="intro_next">Go on…</string>
     <string name="intro_done">Got it!</string>
 
+    <string name="april_dialog_text1">User feedback revealed that the game felt “impersonal” and that the developer was “out of touch” with the players.\n\nSo it’s me, Paul and I’m here to help you with those cryptograms!\n\nHope you enjoy the new look &amp; feel!</string>
+    <string name="april_dialog_done1">Awesome!</string>
+    <string name="april_dialog_text2">Oh, and have a lovely first of April!</string>
+    <string name="april_dialog_done2">D’oh…</string>
+
     <string name="drawer_open">Open drawer</string>
     <string name="drawer_close">Close drawer</string>
 
@@ -85,6 +90,8 @@
     <string name="google_play_games_sign_out">Sign out</string>
 
     <string name="google_play_games_connection_failure">Uh, oh! Looks like we can\'t reach Google Play Games at the moment.\n\nPlease try again later or report this problem (connection failure with code %1$d-%2$d) through the about screen.</string>
+
+    <string name="notification_april_special">Check out the April special edition</string>
 
     <string name="feedback">Send feedback</string>
     <string name="made_by">made by</string>
