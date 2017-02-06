@@ -6,6 +6,7 @@ import android.content.IntentSender;
 import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.design.widget.Snackbar;
@@ -96,6 +97,9 @@ public class CryptogramActivity extends BaseActivity implements GoogleApiClient.
 
     @BindView(R.id.iv_background)
     protected ImageView mIvBackground;
+
+    @BindView(R.id.bt_april_nonsense)
+    protected Button mBtAprilNonsense;
 
     @BindView(R.id.vg_cryptogram)
     protected ViewGroup mVgCryptogram;
@@ -503,9 +507,18 @@ public class CryptogramActivity extends BaseActivity implements GoogleApiClient.
             } else {
                 mIvBackground.setImageResource(R.drawable.bg_april);
             }
+            new Handler().postDelayed(new Runnable() {
+                @Override
+                public void run() {
+                    if (!isFinishing()) {
+                        mBtAprilNonsense.setVisibility(View.VISIBLE);
+                    }
+                }
+            }, 8000);
             mIvBackground.setVisibility(View.VISIBLE);
             mCryptogramView.clearFocus();
         } else {
+            mBtAprilNonsense.setVisibility(View.GONE);
             mIvBackground.setVisibility(View.GONE);
             mCryptogramView.requestFocus();
         }
@@ -897,6 +910,12 @@ public class CryptogramActivity extends BaseActivity implements GoogleApiClient.
             return true;
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    @OnClick(R.id.bt_april_nonsense)
+    protected void onClickAprilNonsense() {
+        AprilSpecialEdition.end();
+        onGameplayReady();
     }
 
     private void nextPuzzle() {

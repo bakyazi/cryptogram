@@ -26,8 +26,12 @@ public class AprilSpecialEdition {
 
     private static long sShownAt;
     private static boolean sNotified;
+    private static boolean mUndesired;
 
     public static boolean doSpecialMagicSauce(Context context, boolean showDialog) {
+        if (mUndesired) {
+            return false;
+        }
         sCalNow.setTimeInMillis(System.currentTimeMillis());
         if (sCalScheduleStart == null) {
             sCalScheduleStart = new GregorianCalendar();
@@ -81,6 +85,10 @@ public class AprilSpecialEdition {
             sNotified = true;
         }
         return false;
+    }
+
+    public static void end() {
+        mUndesired = true;
     }
 
 }
