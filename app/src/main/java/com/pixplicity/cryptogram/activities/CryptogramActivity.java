@@ -498,6 +498,11 @@ public class CryptogramActivity extends BaseActivity implements GoogleApiClient.
 
     private void onGameplayReady() {
         if (AprilSpecialEdition.doSpecialMagicSauce(this, true)) {
+            if (mDarkTheme) {
+                mIvBackground.setImageResource(R.drawable.bg_april_dark);
+            } else {
+                mIvBackground.setImageResource(R.drawable.bg_april);
+            }
             mIvBackground.setVisibility(View.VISIBLE);
             mCryptogramView.clearFocus();
         } else {
@@ -735,7 +740,7 @@ public class CryptogramActivity extends BaseActivity implements GoogleApiClient.
                                     Cryptogram cryptogram = provider.getByNumber(puzzleNumber);
                                     if (cryptogram == null) {
                                         Snackbar.make(mVgContent, getString(R.string.puzzle_nonexistant, puzzleNumber),
-                                                      Snackbar.LENGTH_SHORT).show();
+                                                Snackbar.LENGTH_SHORT).show();
                                     } else {
                                         updateCryptogram(cryptogram);
                                     }
@@ -830,8 +835,8 @@ public class CryptogramActivity extends BaseActivity implements GoogleApiClient.
                     ((TextView) view.findViewById(R.id.tv_label)).setText(R.string.stats_total_completed_label);
                     ((TextView) view.findViewById(R.id.tv_value)).setText(
                             getString(R.string.stats_total_completed_value,
-                                      count,
-                                      provider.getLastNumber()));
+                                    count,
+                                    provider.getLastNumber()));
                     dialogView.addView(view);
                 }
                 {
@@ -839,7 +844,7 @@ public class CryptogramActivity extends BaseActivity implements GoogleApiClient.
                     ((TextView) view.findViewById(R.id.tv_label)).setText(R.string.stats_average_score_label);
                     ((TextView) view.findViewById(R.id.tv_value)).setText(
                             getString(R.string.stats_average_score_value,
-                                      scoreAverageText));
+                                    scoreAverageText));
                     dialogView.addView(view);
                 }
                 {
@@ -847,7 +852,7 @@ public class CryptogramActivity extends BaseActivity implements GoogleApiClient.
                     ((TextView) view.findViewById(R.id.tv_label)).setText(R.string.stats_cumulative_score_label);
                     ((TextView) view.findViewById(R.id.tv_value)).setText(
                             getString(R.string.stats_cumulative_score_value,
-                                      scoreCumulativeText));
+                                    scoreCumulativeText));
                     dialogView.addView(view);
                 }
                 {
@@ -855,7 +860,7 @@ public class CryptogramActivity extends BaseActivity implements GoogleApiClient.
                     ((TextView) view.findViewById(R.id.tv_label)).setText(R.string.stats_fastest_completion_label);
                     ((TextView) view.findViewById(R.id.tv_value)).setText(
                             getString(R.string.stats_fastest_completion_value,
-                                      fastestCompletion));
+                                    fastestCompletion));
                     dialogView.addView(view);
                 }
                 {
@@ -863,7 +868,7 @@ public class CryptogramActivity extends BaseActivity implements GoogleApiClient.
                     ((TextView) view.findViewById(R.id.tv_label)).setText(R.string.stats_total_time_spent_label);
                     ((TextView) view.findViewById(R.id.tv_value)).setText(
                             getString(R.string.stats_total_time_spent_value,
-                                      StringUtils.getDurationString(totalDurationMs)));
+                                    StringUtils.getDurationString(totalDurationMs)));
                     dialogView.addView(view);
                 }
                 {
@@ -871,8 +876,8 @@ public class CryptogramActivity extends BaseActivity implements GoogleApiClient.
                     ((TextView) view.findViewById(R.id.tv_label)).setText(R.string.stats_longest_streak_label);
                     ((TextView) view.findViewById(R.id.tv_value)).setText(
                             getString(R.string.stats_longest_streak_value,
-                                      longestStreak,
-                                      getResources().getQuantityString(R.plurals.days, longestStreak)));
+                                    longestStreak,
+                                    getResources().getQuantityString(R.plurals.days, longestStreak)));
                     dialogView.addView(view);
                 }
                 new AlertDialog.Builder(this)
