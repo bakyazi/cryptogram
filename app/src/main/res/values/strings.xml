@@ -91,6 +91,7 @@
     <string name="google_play_games_sign_out">Sign out</string>
 
     <string name="google_play_games_connection_failure">Uh, oh! Looks like we can\'t reach Google Play Games at the moment.\n\nPlease try again later or report this problem (connection failure with code %1$d-%2$d) through the about screen.</string>
+    <string name="google_play_games_not_installed">Google Play Games doesn\'t appear to be installed</string>
 
     <string name="notification_april_special">Check out the April special edition</string>
 

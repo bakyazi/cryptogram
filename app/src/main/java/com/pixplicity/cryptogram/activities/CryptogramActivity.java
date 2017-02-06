@@ -1,5 +1,6 @@
 package com.pixplicity.cryptogram.activities;
 
+import android.content.ActivityNotFoundException;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.IntentSender;
@@ -26,6 +27,7 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TableLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.afollestad.easyvideoplayer.EasyVideoCallback;
 import com.afollestad.easyvideoplayer.EasyVideoPlayer;
@@ -420,9 +422,13 @@ public class CryptogramActivity extends BaseActivity implements GoogleApiClient.
                 @Override
                 public void onClick(View view) {
                     dialog.dismiss();
-                    startActivityForResult(
-                            Games.Leaderboards.getLeaderboardIntent(mGoogleApiClient, getString(R.string.leaderboard_scoreboard)),
-                            RC_UNUSED);
+                    try {
+                        startActivityForResult(
+                                Games.Leaderboards.getLeaderboardIntent(mGoogleApiClient, getString(R.string.leaderboard_scoreboard)),
+                                RC_UNUSED);
+                    } catch (ActivityNotFoundException e) {
+                        Toast.makeText(CryptogramActivity.this, R.string.google_play_games_not_installed, Toast.LENGTH_LONG).show();
+                    }
                 }
             });
 
@@ -431,9 +437,13 @@ public class CryptogramActivity extends BaseActivity implements GoogleApiClient.
                 @Override
                 public void onClick(View view) {
                     dialog.dismiss();
-                    startActivityForResult(
-                            Games.Achievements.getAchievementsIntent(mGoogleApiClient),
-                            RC_UNUSED);
+                    try {
+                        startActivityForResult(
+                                Games.Achievements.getAchievementsIntent(mGoogleApiClient),
+                                RC_UNUSED);
+                    } catch (ActivityNotFoundException e) {
+                        Toast.makeText(CryptogramActivity.this, R.string.google_play_games_not_installed, Toast.LENGTH_LONG).show();
+                    }
                 }
             });
 
