@@ -1,6 +1,5 @@
 package com.pixplicity.cryptogram.views;
 
-import android.annotation.TargetApi;
 import android.content.Context;
 import android.content.res.Resources;
 import android.graphics.Canvas;
@@ -20,7 +19,6 @@ import android.view.inputmethod.BaseInputConnection;
 import android.view.inputmethod.EditorInfo;
 import android.view.inputmethod.InputConnection;
 import android.view.inputmethod.InputMethodManager;
-import android.widget.TextView;
 
 import com.pixplicity.cryptogram.R;
 import com.pixplicity.cryptogram.models.Cryptogram;
@@ -30,7 +28,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 
-public class CryptogramView extends TextView {
+public class CryptogramView extends android.support.v7.widget.AppCompatTextView {
 
     private static final String TAG = CryptogramView.class.getSimpleName();
 
@@ -55,26 +53,20 @@ public class CryptogramView extends TextView {
 
     public CryptogramView(Context context) {
         super(context);
-        init(context, null, 0, 0);
+        init(context, null, 0);
     }
 
     public CryptogramView(Context context, AttributeSet attrs) {
         super(context, attrs);
-        init(context, attrs, 0, 0);
+        init(context, attrs, 0);
     }
 
     public CryptogramView(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
-        init(context, attrs, defStyleAttr, 0);
+        init(context, attrs, defStyleAttr);
     }
 
-    @TargetApi(Build.VERSION_CODES.LOLLIPOP)
-    public CryptogramView(Context context, AttributeSet attrs, int defStyleAttr, int defStyleRes) {
-        super(context, attrs, defStyleAttr, defStyleRes);
-        init(context, attrs, defStyleAttr, defStyleRes);
-    }
-
-    private void init(Context context, AttributeSet attrs, int defStyleAttr, int defStyleRes) {
+    private void init(Context context, AttributeSet attrs, int defStyleAttr) {
         Resources r = context.getResources();
 
         mPaint = new Paint();
@@ -117,7 +109,13 @@ public class CryptogramView extends TextView {
         mTextPaintMapping.setTextSize(r.getDimensionPixelSize(R.dimen.puzzle_hint_size));
 
         mTextPaintInputComplete = new TextPaint(mTextPaintInput);
-        mTextPaintInputComplete.setColor(ContextCompat.getColor(context, R.color.textComplete));
+        int textCompleteColorResId;
+        if (mDarkTheme) {
+            textCompleteColorResId = R.color.textCompleteDark;
+        } else {
+            textCompleteColorResId = R.color.textComplete;
+        }
+        mTextPaintInputComplete.setColor(ContextCompat.getColor(context, textCompleteColorResId));
 
         mTextPaintMistake = new TextPaint(mTextPaintInput);
         mTextPaintMistake.setColor(ContextCompat.getColor(context, R.color.textMistake));

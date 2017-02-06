@@ -16,6 +16,7 @@
 
     <color name="textLight">#FFFFFF</color>
     <color name="textComplete">#008000</color>
+    <color name="textCompleteDark">#00a000</color>
     <color name="textMistake">#c6001e</color>
     <color name="box_highlight">#80808ee0</color>
 
