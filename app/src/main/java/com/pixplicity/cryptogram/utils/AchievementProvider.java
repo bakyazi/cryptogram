@@ -4,8 +4,6 @@ import android.content.Context;
 import android.os.AsyncTask;
 import android.support.annotation.NonNull;
 import android.util.Log;
-import android.view.Gravity;
-import android.widget.Toast;
 
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.games.Games;
@@ -242,9 +240,6 @@ public class AchievementProvider {
         if (BuildConfig.DEBUG) {
             String message = "unlocked " + context.getResources().getResourceEntryName(achievementResId);
             Log.i(TAG, message);
-            Toast toast = Toast.makeText(context, message, Toast.LENGTH_LONG);
-            toast.setGravity(Gravity.TOP, 0, 0);
-            toast.show();
         }
     }
 
