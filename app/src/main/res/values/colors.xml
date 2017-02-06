@@ -6,13 +6,14 @@
     <color name="colorPrimaryDark_translucent">#80303F9F</color>
     <color name="colorAccent">#FF4081</color>
     <color name="colorAccentDisabled">#80FF4081</color>
+    <color name="colorTextPrimary">#000000</color>
 
     <!--Dark Theme -->
-    <color name="colorDarkPrimary">#424242</color>
-    <color name="colorDarkPrimaryDark">#212121</color>
-    <color name="colorDarkPrimaryDark_translucent">#80212121</color>
-    <color name="colorDarkAccent">#d9d9d9</color>
-    <color name="colorDarkAccentDisabled">#80FF4081</color>
+    <color name="colorDarkPrimary">#505050</color>
+    <color name="colorDarkPrimaryDark">#202020</color>
+    <color name="colorDarkPrimaryDark_translucent">#80202020</color>
+    <color name="colorDarkAccent">#e0e0e0</color>
+    <color name="colorDarkTextPrimary">#d0d0d0</color>
 
     <color name="textLight">#FFFFFF</color>
     <color name="textComplete">#008000</color>
