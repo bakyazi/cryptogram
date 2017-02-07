@@ -233,6 +233,10 @@ public class CryptogramActivity extends BaseActivity implements GoogleApiClient.
         handler.postDelayed(new Runnable() {
             @Override
             public void run() {
+                if (mDrawerLayout != null) {
+                    // Ensure the drawer is closed
+                    mDrawerLayout.closeDrawer(GravityCompat.START);
+                }
                 final long showTime = System.currentTimeMillis();
                 TapTargetView.showFor(
                         CryptogramActivity.this,
