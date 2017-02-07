@@ -205,7 +205,7 @@ public class CryptogramActivity extends BaseActivity implements GoogleApiClient.
         mCryptogramView.setOnHighlightListener(new CryptogramView.OnHighlightListener() {
             @Override
             public void onHighlight(int type, PointF point) {
-                if (!mHighlightedHyphenation && (!PrefsUtils.getHighlighted(type) || BuildConfig.DEBUG)) {
+                if (!mHighlightedHyphenation && !PrefsUtils.getHighlighted(type)) {
                     mHighlightedHyphenation = true;
                     Rect viewRect = new Rect();
                     mCryptogramView.getGlobalVisibleRect(viewRect);
