@@ -296,7 +296,7 @@ public class Cryptogram {
 
     @Override
     public String toString() {
-        return getId() + ": " + getText().length() + " chars, author '" + getAuthor() + "' (“" + StringUtils.ellipsize(mText, 40) + "”)";
+        return "#" + getId() + ": " + getText().length() + " chars, author '" + getAuthor() + "' (“" + StringUtils.ellipsize(mText.replace("\u00AD", ""), 40) + "”)";
     }
 
 }
