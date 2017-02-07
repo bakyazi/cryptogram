@@ -3,7 +3,6 @@ package com.pixplicity.cryptogram.views;
 import android.content.Context;
 import android.content.res.Resources;
 import android.graphics.Canvas;
-import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.PointF;
 import android.graphics.Rect;
@@ -74,12 +73,21 @@ public class CryptogramView extends android.support.v7.widget.AppCompatTextView 
     private void init(Context context, AttributeSet attrs, int defStyleAttr) {
         Resources r = context.getResources();
 
-        mPaint = new Paint();
+        int colorText, colorHighlight, colorComplete, colorMistake;
         if (mDarkTheme) {
-            mPaint.setColor(Color.WHITE);
+            colorText = R.color.colorDarkPuzzleText;
+            colorHighlight = R.color.colorDarkPuzzleHighlight;
+            colorComplete = R.color.colorDarkPuzzleComplete;
+            colorMistake = R.color.colorDarkPuzzleMistake;
         } else {
-            mPaint.setColor(Color.BLACK);
+            colorText = R.color.colorPuzzleText;
+            colorHighlight = R.color.colorPuzzleHighlight;
+            colorComplete = R.color.colorPuzzleComplete;
+            colorMistake = R.color.colorPuzzleMistake;
         }
+
+        mPaint = new Paint();
+        mPaint.setColor(ContextCompat.getColor(context, colorText));
         mPaint.setAntiAlias(true);
 
         mLinePaint1 = new Paint(mPaint);
@@ -90,11 +98,7 @@ public class CryptogramView extends android.support.v7.widget.AppCompatTextView 
 
         mBoxPaint1 = new Paint(mPaint);
 
-        if (mDarkTheme) {
-            mBoxPaint1.setColor(ContextCompat.getColor(context, R.color.white_translucent));
-        } else {
-            mBoxPaint1.setColor(ContextCompat.getColor(context, R.color.box_highlight));
-        }
+        mBoxPaint1.setColor(ContextCompat.getColor(context, colorHighlight));
         mBoxPaint1.setStrokeWidth(r.getDimensionPixelSize(R.dimen.box_highlight_stroke));
         mBoxPaint1.setStyle(Paint.Style.FILL);
         mBoxPaint2 = new Paint(mBoxPaint1);
@@ -114,10 +118,10 @@ public class CryptogramView extends android.support.v7.widget.AppCompatTextView 
         mTextPaintMapping.setTextSize(r.getDimensionPixelSize(R.dimen.puzzle_hint_size));
 
         mTextPaintInputComplete = new TextPaint(mTextPaintInput);
-        mTextPaintInputComplete.setColor(ContextCompat.getColor(context, R.color.textComplete));
+        mTextPaintInputComplete.setColor(ContextCompat.getColor(context, colorComplete));
 
         mTextPaintMistake = new TextPaint(mTextPaintInput);
-        mTextPaintMistake.setColor(ContextCompat.getColor(context, R.color.textMistake));
+        mTextPaintMistake.setColor(ContextCompat.getColor(context, colorMistake));
 
         // Compute size of a single char (assumes monospaced font!)
         Rect bounds = new Rect();
@@ -467,13 +471,9 @@ public class CryptogramView extends android.support.v7.widget.AppCompatTextView 
                         // It doesn't fit; look for a previous soft hyphen
                         index = word.lastIndexOf(SOFT_HYPHEN, index - 1);
                     }
-                    if (index == -1 && x > 0) {
-                        // Start on the next line
-                        x = 0;
-                        y += mBoxH * 2 + offsetY * 2;
-                        needsLineBreak = false;
-                        // Restart the search
-                        index = word.lastIndexOf(SOFT_HYPHEN);
+                    if (x + word.length() * mBoxW < width) {
+                        // The entire remaining word fits
+                        break;
                     }
                 }
                 word = word.replace(SOFT_HYPHEN, "");

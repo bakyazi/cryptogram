@@ -6,6 +6,10 @@
     <color name="colorPrimaryDark_translucent">#80303F9F</color>
     <color name="colorAccent">#FF4081</color>
     <color name="colorAccentDisabled">#80FF4081</color>
+    <color name="colorPuzzleText">#000000</color>
+    <color name="colorPuzzleComplete">#009000</color>
+    <color name="colorPuzzleMistake">#c6001e</color>
+    <color name="colorPuzzleHighlight">#80808ee0</color>
 
     <!--Dark Theme -->
     <color name="colorDarkPrimary">#424242</color>
@@ -13,11 +17,13 @@
     <color name="colorDarkPrimaryDark_translucent">#80212121</color>
     <color name="colorDarkAccent">#d9d9d9</color>
     <color name="colorDarkAccentDisabled">#80FF4081</color>
+    <color name="colorDarkPuzzleText">@color/textLight</color>
+    <color name="colorDarkPuzzleComplete">#00d000</color>
+    <color name="colorDarkPuzzleMistake">#c6001e</color>
+    <color name="colorDarkPuzzleHighlight">#80ffffff</color>
 
-    <color name="textLight">#FFFFFF</color>
-    <color name="textComplete">#008000</color>
-    <color name="textMistake">#c6001e</color>
-    <color name="box_highlight">#80808ee0</color>
+    <color name="textLight">#ffffff</color>
+    <color name="textHighlight">#fefefe</color>
 
     <color name="white">#ffffff</color>
     <color name="white_translucent">#80ffffff</color>

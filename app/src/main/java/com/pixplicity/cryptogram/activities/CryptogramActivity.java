@@ -242,8 +242,8 @@ public class CryptogramActivity extends BaseActivity implements GoogleApiClient.
                         CryptogramActivity.this,
                         TapTarget.forBounds(new Rect(targetX - targetRadius, targetY - targetRadius, targetX + targetRadius, targetY + targetRadius),
                                             title, description)
-                                 .titleTextColor(R.color.white)
-                                 .descriptionTextColor(R.color.white)
+                                 .titleTextColor(R.color.textHighlight)
+                                 .descriptionTextColor(R.color.textHighlight)
                                  .outerCircleColor(R.color.highlight_color)
                                  .cancelable(true)
                                  .tintTarget(false)
