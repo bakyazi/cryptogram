@@ -12,6 +12,14 @@
     <string name="highlight_hyphenation_title">Hyphenation</string>
     <string name="highlight_hyphenation_description">Watch out for the hyphen! The word continues on the next line.</string>
 
+    <string name="notification_april_special">Check out the April special edition</string>
+
+    <string name="april_dialog_text1">User feedback revealed that the game felt “impersonal” and that the developer was “out of touch” with the players.\n\nSo it’s me, Paul and I’m here to help you with those cryptograms!\n\nHope you enjoy the new look &amp; feel!</string>
+    <string name="april_dialog_done1">Awesome!</string>
+    <string name="april_dialog_text2">Oh, and have a lovely first of April!</string>
+    <string name="april_dialog_done2">D’oh…</string>
+    <string name="april_mode_end">Enough with this April Fools\' nonsense!</string>
+
     <string name="drawer_open">Open drawer</string>
     <string name="drawer_close">Close drawer</string>
 
@@ -88,6 +96,7 @@
     <string name="google_play_games_sign_out">Sign out</string>
 
     <string name="google_play_games_connection_failure">Uh, oh! Looks like we can\'t reach Google Play Games at the moment.\n\nPlease try again later or report this problem (connection failure with code %1$d-%2$d) through the about screen.</string>
+    <string name="google_play_games_not_installed">Google Play Games doesn\'t appear to be installed</string>
 
     <string name="feedback">Send feedback</string>
     <string name="made_by">made by</string>

@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
+    <color name="colorTextPrimary">#000000</color>
     <color name="colorPrimary">#3F51B5</color>
     <color name="colorPrimaryDark">#303F9F</color>
     <color name="colorPrimaryDark_translucent">#80303F9F</color>
@@ -12,9 +13,10 @@
     <color name="colorPuzzleHighlight">#80808ee0</color>
 
     <!--Dark Theme -->
-    <color name="colorDarkPrimary">#424242</color>
-    <color name="colorDarkPrimaryDark">#212121</color>
-    <color name="colorDarkPrimaryDark_translucent">#80212121</color>
+    <color name="colorDarkTextPrimary">#d0d0d0</color>
+    <color name="colorDarkPrimary">#505050</color>
+    <color name="colorDarkPrimaryDark">#202020</color>
+    <color name="colorDarkPrimaryDark_translucent">#80202020</color>
     <color name="colorDarkAccent">#d9d9d9</color>
     <color name="colorDarkAccentDisabled">#80FF4081</color>
     <color name="colorDarkPuzzleText">@color/textLight</color>
@@ -23,7 +25,9 @@
     <color name="colorDarkPuzzleHighlight">#80ffffff</color>
 
     <color name="textLight">#ffffff</color>
+
     <color name="textHighlight">#fefefe</color>
+    <color name="highlight_color">@color/colorPrimaryDark</color>
 
     <color name="white">#ffffff</color>
     <color name="white_translucent">#80ffffff</color>
@@ -31,6 +35,5 @@
     <color name="link">#00bcd4</color>
     <color name="error">#c6001e</color>
     <color name="success">#28c600</color>
-    <color name="highlight_color">@color/colorPrimaryDark</color>
 
 </resources>
