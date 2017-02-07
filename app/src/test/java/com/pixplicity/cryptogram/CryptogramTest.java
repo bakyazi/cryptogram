@@ -70,6 +70,10 @@ public class CryptogramTest {
             if (text.indexOf('\'') >= 0) {
                 throw new AssertionError("Contains single quote; replace with '’': " + cryptogram);
             }
+            // Ensure there aren't single quotes (replace with “/”)
+            if (text.indexOf('"') >= 0) {
+                throw new AssertionError("Contains single quote; replace with '“' or '”': " + cryptogram);
+            }
             // Ensure there aren't simple hyphens (replace with —)
             if (text.contains(" - ")) {
                 throw new AssertionError("Contains simple hyphen; replace with '—': " + cryptogram);
