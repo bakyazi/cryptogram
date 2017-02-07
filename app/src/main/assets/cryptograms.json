@@ -1,19 +1,19 @@
 [
   {
-    "text": "Complete the puzzle by filling in the missing characters.",
+    "text": "Complete the puzzle by filling in the missing charac­ters.",
     "id": -2,
     "given": "COMPLEBFNGHS",
     "noscore": true
   },
   {
-    "text": "Remember, the topic can sometimes help you along.",
+    "text": "Remember, the topic can some­times help you along.",
     "topic": "Remember",
     "id": -1,
     "given": "TOPICHANG",
     "noscore": true
   },
   {
-    "text": "Start by doing what’s necessary; then do what’s possible; and suddenly you are doing the impossible.",
+    "text": "Start by doing what’s neces­sary; then do what’s pos­sible; and sudden­ly you are doing the impos­sible.",
     "author": "Francis of Assisi",
     "topic": "Inspirational",
     "given": "STARBYHEN",
@@ -22,7 +22,7 @@
     "id": 11
   },
   {
-    "text": "My mission in life is not merely to survive, but to thrive; and to do so with some passion, some compassion, some humor, and some style.",
+    "text": "My mission in life is not merely to survive, but to thrive; and to do so with some passion, some compas­sion, some humor, and some style.",
     "author": "Maya Angelou",
     "topic": "Life",
     "given": "SOME",
@@ -39,7 +39,7 @@
     "id": 0
   },
   {
-    "text": "Life is really simple, but we insist on making it complicated.",
+    "text": "Life is really simple, but we insist on making it complic­ated.",
     "author": "Confucius",
     "topic": "Life",
     "given": "S",
@@ -47,28 +47,28 @@
     "id": 1
   },
   {
-    "text": "Do not dwell in the past, do not dream of the future, concentrate the mind on the present moment.",
+    "text": "Do not dwell in the past, do not dream of the future, concen­trate the mind on the present moment.",
     "author": "Buddha",
     "topic": "Life",
     "number": 5,
     "id": 2
   },
   {
-    "text": "Life isn’t about finding yourself. Life is about creating yourself.",
+    "text": "Life isn’t about finding your­self. Life is about creating your­self.",
     "author": "George Bernard Shaw",
     "topic": "Life",
     "number": 6,
     "id": 3
   },
   {
-    "text": "The most important thing is to enjoy your life — to be happy — it’s all that matters.",
+    "text": "The most impor­tant thing is to enjoy your life — to be happy — it’s all that matters.",
     "author": "Audrey Hepburn",
     "topic": "Life",
     "number": 7,
     "id": 4
   },
   {
-    "text": "We do not remember days, we remember moments.",
+    "text": "We do not remember days, we remem­ber moments.",
     "author": "Cesare Pavese",
     "topic": "Life",
     "given": "NS",
@@ -83,14 +83,14 @@
     "id": 6
   },
   {
-    "text": "Nothing is impossible, the word itself says “I’m possible”!",
+    "text": "Nothing is impos­sible, the word itself says “I’m pos­sible”!",
     "author": "Audrey Hepburn",
     "topic": "Inspirational",
     "number": 10,
     "id": 8
   },
   {
-    "text": "The best preparation for tomorrow is doing your best today.",
+    "text": "The best pre­paration for tomor­row is doing your best today.",
     "author": "H. Jackson Brown, Jr.",
     "topic": "Inspirational",
     "number": 11,
@@ -104,7 +104,7 @@
     "id": 10
   },
   {
-    "text": "The best and most beautiful things in the world cannot be seen or even touched — they must be felt with the heart.",
+    "text": "The best and most beau­tiful things in the world cannot be seen or even touched — they must be felt with the heart.",
     "author": "Helen Keller",
     "topic": "Inspirational"
   },
@@ -114,7 +114,7 @@
     "topic": "Inspirational"
   },
   {
-    "text": "I can’t change the direction of the wind, but I can adjust my sails to always reach my destination.",
+    "text": "I can’t change the direc­tion of the wind, but I can adjust my sails to always reach my destin­ation.",
     "author": "Jimmy Dean",
     "topic": "Inspirational"
   },
@@ -135,7 +135,7 @@
     "topic": "Inspirational"
   },
   {
-    "text": "Health is the greatest gift, contentment the greatest wealth, faithful­ness the best relation­ship.",
+    "text": "Health is the greatest gift, content­ment the greatest wealth, faithful­ness the best relation­ship.",
     "author": "Buddha",
     "topic": "Inspirational"
   },
@@ -155,32 +155,32 @@
     "topic": "Love"
   },
   {
-    "text": "There can be no deep disappoint­ment where there is not deep love.",
+    "text": "There can be no deep disap­point­ment where there is not deep love.",
     "author": "Martin Luther King, Jr.",
     "topic": "Love"
   },
   {
-    "text": "We’re born alone, we live alone, we die alone. Only through our love and friendship can we create the illusion for the moment that we’re not alone.",
+    "text": "We’re born alone, we live alone, we die alone. Only through our love and friend­ship can we create the illusion for the moment that we’re not alone.",
     "author": "Orson Welles",
     "topic": "Love"
   },
   {
-    "text": "Love is when the other person’s happiness is more important than your own.",
+    "text": "Love is when the other person’s happi­ness is more impor­tant than your own.",
     "author": "H. Jackson Brown, Jr.",
     "topic": "Love"
   },
   {
-    "text": "Let us always meet each other with smile, for the smile is the beginning of love.",
+    "text": "Let us always meet each other with smile, for the smile is the begin­ning of love.",
     "author": "Mother Teresa",
     "topic": "Love"
   },
   {
-    "text": "Kindness in words creates confidence. Kindness in thinking creates profound­ness. Kindness in giving creates love.",
+    "text": "Kindness in words creates confi­dence. Kindness in thinking creates profound­ness. Kindness in giving creates love.",
     "author": "Lao Tzu",
     "topic": "Love"
   },
   {
-    "text": "Sometimes the heart sees what is invisible to the eye.",
+    "text": "Some­times the heart sees what is invis­ible to the eye.",
     "author": "H. Jackson Brown, Jr.",
     "topic": "Love"
   },
@@ -201,7 +201,7 @@
     "topic": "Love"
   },
   {
-    "text": "Love is composed of a single soul inhabiting two bodies.",
+    "text": "Love is composed of a single soul inhabit­ing two bodies.",
     "author": "Aristotle",
     "topic": "Love"
   },
@@ -216,22 +216,22 @@
     "topic": "Love"
   },
   {
-    "text": "Always remember that you are absolutely unique. Just like everyone else.",
+    "text": "Always remember that you are abso­lutely unique. Just like everyone else.",
     "author": "Margaret Mead",
     "topic": "Funny"
   },
   {
-    "text": "People who think they know everything are a great annoyance to those of us who do.",
+    "text": "People who think they know every­thing are a great annoy­ance to those of us who do.",
     "author": "Isaac Asimov",
     "topic": "Funny"
   },
   {
-    "text": "No man has a good enough memory to be a successful liar.",
+    "text": "No man has a good enough memory to be a success­ful liar.",
     "author": "Abraham Lincoln",
     "topic": "Funny"
   },
   {
-    "text": "I can resist everything except temptation.",
+    "text": "I can resist every­thing except temp­tation.",
     "author": "Oscar Wilde",
     "topic": "Funny"
   },
@@ -251,7 +251,7 @@
     "topic": "Funny"
   },
   {
-    "text": "I love deadlines. I like the whooshing sound they make as they fly by.",
+    "text": "I love dead­lines. I like the whoo­shing sound they make as they fly by.",
     "author": "Douglas Adams",
     "topic": "Funny"
   },
@@ -267,12 +267,12 @@
     "topic": "Funny"
   },
   {
-    "text": "All generaliza­tions are false, including this one.",
+    "text": "All gene­raliza­tions are false, inclu­ding this one.",
     "author": "Mark Twain",
     "topic": "Funny"
   },
   {
-    "text": "It’s amazing that the amount of news that happens in the world every day always just exactly fits the newspaper.",
+    "text": "It’s amazing that the amount of news that happens in the world every day always just exactly fits the news­paper.",
     "author": "Jerry Seinfeld",
     "topic": "Funny"
   },
@@ -292,7 +292,7 @@
     "topic": "Funny"
   },
   {
-    "text": "Mistakes are always forgivable, if one has the courage to admit them.",
+    "text": "Mistakes are always forgiv­able, if one has the courage to admit them.",
     "author": "Bruce Lee",
     "given": "MH",
     "topic": "Forgiveness"
@@ -313,7 +313,7 @@
     "topic": "Success"
   },
   {
-    "text": "Success is not the key to happiness. Happiness is the key to success. If you love what you are doing, you will be successful.",
+    "text": "Success is not the key to happi­ness. Happi­ness is the key to success. If you love what you are doing, you will be success­ful.",
     "author": "Albert Schweitzer",
     "topic": "Success"
   },
@@ -323,17 +323,17 @@
     "topic": "Success"
   },
   {
-    "text": "However difficult life may seem, there is always something you can do and succeed at.",
+    "text": "However diffi­cult life may seem, there is always some­thing you can do and succeed at.",
     "author": "Stephen Hawking",
     "topic": "Success"
   },
   {
-    "text": "All you need in this life is ignorance and confidence, and then success is sure.",
+    "text": "All you need in this life is ignor­ance and confi­dence, and then success is sure.",
     "author": "Mark Twain",
     "topic": "Success"
   },
   {
-    "text": "Happiness lies in the joy of achievement and the thrill of creative effort.",
+    "text": "Happi­ness lies in the joy of achieve­ment and the thrill of creative effort.",
     "author": "Franklin D. Roosevelt",
     "topic": "Success"
   },
@@ -348,12 +348,12 @@
     "topic": "Success"
   },
   {
-    "text": "Happiness is having a large, loving, caring, close-knit family in another city.",
+    "text": "Happi­ness is having a large, loving, caring, close-knit family in another city.",
     "author": "George Burns",
     "topic": "Funny"
   },
   {
-    "text": "A pessimist is a person who has had to listen to too many optimists.",
+    "text": "A pessi­mist is a person who has had to listen to too many opti­mists.",
     "author": "Don Marquis",
     "topic": "Funny"
   },
@@ -363,32 +363,32 @@
     "topic": "Funny"
   },
   {
-    "text": "Never have more children than you have car windows.",
+    "text": "Never have more child­ren than you have car windows.",
     "author": "Erma Bombeck",
     "topic": "Funny"
   },
   {
-    "text": "It is easy for me to love myself, but for ladies to do it is another question altogether.",
+    "text": "It is easy for me to love myself, but for ladies to do it is another question altoge­ther.",
     "author": "Johnny Vegas",
     "topic": "Funny"
   },
   {
-    "text": "The reports of my death have been greatly exaggerated.",
+    "text": "The reports of my death have been greatly exagger­ated.",
     "author": "Mark Twain",
     "topic": "Funny"
   },
   {
-    "text": "What contempt­ible scoundrel has stolen the cork to my lunch?",
+    "text": "What contempt­ible scound­rel has stolen the cork to my lunch?",
     "author": "W. Clement Stone",
     "topic": "Funny"
   },
   {
-    "text": "Prejudice is a great time saver. You can form opinions without having to get the facts.",
+    "text": "Prejud­ice is a great time saver. You can form opinions without having to get the facts.",
     "author": "E. B. White",
     "topic": "Funny"
   },
   {
-    "text": "Rice is great if you’re really hungry and want to eat two thousand of something.",
+    "text": "Rice is great if you’re really hungry and want to eat two thousand of some­thing.",
     "author": "Mitch Hedberg",
     "topic": "Funny"
   },
@@ -398,7 +398,7 @@
     "topic": "Funny"
   },
   {
-    "text": "I don’t have a girlfriend. But I do know a woman who’d be mad at me for saying that.",
+    "text": "I don’t have a girl­friend. But I do know a woman who’d be mad at me for saying that.",
     "author": "Mitch Hedberg",
     "topic": "Funny"
   },
@@ -418,7 +418,7 @@
     "topic": "Love"
   },
   {
-    "text": "A tramp, a gentleman, a poet, a dreamer, a lonely fellow, always hopeful of romance and adventure.",
+    "text": "A tramp, a gentle­man, a poet, a dreamer, a lonely fellow, always hopeful of romance and adven­ture.",
     "author": "Charlie Chaplin",
     "topic": "Love"
   },
@@ -433,12 +433,12 @@
     "topic": "Love"
   },
   {
-    "text": "Your big opportunity may be right where you are now.",
+    "text": "Your big opportu­nity may be right where you are now.",
     "author": "Napoleon Hill",
     "topic": "Inspirational"
   },
   {
-    "text": "Happiness resides not in possessions, and not in gold, happiness dwells in the soul.",
+    "text": "Happi­ness resides not in posses­sions, and not in gold, happi­ness dwells in the soul.",
     "author": "Democritus",
     "topic": "Inspirational"
   },
@@ -453,27 +453,27 @@
     "topic": "Inspirational"
   },
   {
-    "text": "What lies behind you and what lies in front of you, pales in comparison to what lies inside of you.",
+    "text": "What lies behind you and what lies in front of you, pales in compari­son to what lies inside of you.",
     "author": "Ralph Waldo Emerson",
     "topic": "Inspirational"
   },
   {
-    "text": "It is always the simple that produces the marvelous.",
+    "text": "It is always the simple that produces the marve­lous.",
     "author": "Amelia Barr",
     "topic": "Inspirational"
   },
   {
-    "text": "Do your little bit of good where you are; it’s those little bits of good put together that overwhelm the world.",
+    "text": "Do your little bit of good where you are; it’s those little bits of good put together that over­whelm the world.",
     "author": "Desmond Tutu",
     "topic": "Inspirational"
   },
   {
-    "text": "The world is full of magical things patiently waiting for our wits to grow sharper.",
+    "text": "The world is full of magical things patient­ly waiting for our wits to grow sharper.",
     "author": "Bertrand Russell",
     "topic": "Inspirational"
   },
   {
-    "text": "All you need is the plan, the road map, and the courage to press on to your destination.",
+    "text": "All you need is the plan, the road map, and the courage to press on to your desti­nation.",
     "author": "Earl Nightingale",
     "topic": "Inspirational"
   },
@@ -503,7 +503,7 @@
     "topic": "Inspirational"
   },
   {
-    "text": "Wonder rather than doubt is the root of all knowledge.",
+    "text": "Wonder rather than doubt is the root of all know­ledge.",
     "author": "Abraham Joshua Heschel",
     "topic": "Inspirational"
   },
@@ -513,22 +513,22 @@
     "topic": "Love"
   },
   {
-    "text": "Let us make our future now, and let us make our dreams tomorrow’s reality.",
+    "text": "Let us make our future now, and let us make our dreams tomor­row’s reality.",
     "author": "Malala Yousafzai",
     "topic": "Inspirational"
   },
   {
-    "text": "The power of imagination makes us infinite.",
+    "text": "The power of imagi­nation makes us infinite.",
     "author": "John Muir",
     "topic": "Inspirational"
   },
   {
-    "text": "If we did all the things we are capable of, we would literally astound ourselves.",
+    "text": "If we did all the things we are capable of, we would literal­ly astound our­selves.",
     "author": "Thomas A. Edison",
     "topic": "Inspirational"
   },
   {
-    "text": "It is not in the stars to hold our destiny but in ourselves.",
+    "text": "It is not in the stars to hold our destiny but in our­selves.",
     "author": "William Shakespeare",
     "topic": "Inspirational"
   },
@@ -538,67 +538,67 @@
     "topic": "Inspirational"
   },
   {
-    "text": "The Milky Way is nothing else but a mass of innumerable stars planted together in clusters.",
+    "text": "The Milky Way is nothing else but a mass of innumer­able stars planted together in clusters.",
     "author": "Galileo Galilei",
     "topic": "Science"
   },
   {
-    "text": "In questions of science, the authority of a thousand is not worth the humble reasoning of a single individual.",
+    "text": "In ques­tions of science, the author­ity of a thousand is not worth the humble reason­ing of a single indi­vidual.",
     "author": "Galileo Galilei",
     "topic": "Science"
   },
   {
-    "text": "Measure what is measurable, and make measurable what is not so.",
+    "text": "Measure what is measur­able, and make measur­able what is not so.",
     "author": "Galileo Galilei",
     "topic": "Science"
   },
   {
-    "text": "Only two things are infinite, the universe and human stupidity, and I’m not sure about the former.",
+    "text": "Only two things are infi­nite, the universe and human stupi­dity, and I’m not sure about the former.",
     "author": "Albert Einstein",
     "topic": "Funny"
   },
   {
-    "text": "Science is a way of thinking much more than it is a body of knowledge.",
+    "text": "Science is a way of think­ing much more than it is a body of know­ledge.",
     "author": "Carl Sagan",
     "topic": "Science"
   },
   {
-    "text": "Imagination will often carry us to worlds that never were, but without it we go nowhere.",
+    "text": "Imagi­nation will often carry us to worlds that never were, but without it we go nowhere.",
     "author": "Carl Sagan",
     "topic": "Inspirational"
   },
   {
-    "text": "I am often amazed at how much more capability and enthusiasm for science there is among elementary school youngsters than among college students.",
+    "text": "I am often amazed at how much more capabi­lity and enthus­iasm for science there is among elemen­tary school young­sters than among college students.",
     "author": "Carl Sagan",
     "topic": "Science"
   },
   {
-    "text": "Our species needs, and deserves, a citizenry with minds wide awake and a basic under­standing of how the world works.",
+    "text": "Our species needs, and deserves, a citizen­ry with minds wide awake and a basic under­standing of how the world works.",
     "author": "Carl Sagan",
     "topic": "Science"
   },
   {
-    "text": "The universe seems neither benign nor hostile, merely indifferent.",
+    "text": "The universe seems neither benign nor hostile, merely indif­ferent.",
     "author": "Carl Sagan",
     "topic": "Science"
   },
   {
-    "text": "We’ve arranged a civili­zation in which most crucial elements profoundly depend on science and technology.",
+    "text": "We’ve arranged a civili­zation in which most crucial elements profound­ly depend on science and techno­logy.",
     "author": "Carl Sagan",
     "topic": "Science"
   },
   {
-    "text": "The science of today is the technology of tomorrow.",
+    "text": "The science of today is the techno­logy of tomor­row.",
     "author": "Edward Teller",
     "topic": "Science"
   },
   {
-    "text": "Science is simply common sense at its best, that is, rigidly accurate in observation, and merciless to fallacy in logic.",
+    "text": "Science is simply common sense at its best, that is, rigidly accurate in observa­tion, and merci­less to fallacy in logic.",
     "author": "Thomas Huxley",
     "topic": "Science"
   },
   {
-    "text": "The most exciting phrase to hear in science, the one that heralds new discoveries, is not “Eureka!” but “That’s funny…”",
+    "text": "The most exciting phrase to hear in science, the one that heralds new disco­veries, is not “Eureka!” but “That’s funny…”",
     "author": "Isaac Asimov",
     "topic": "Science"
   },
@@ -608,17 +608,17 @@
     "topic": "Science"
   },
   {
-    "text": "By denying scientific principles, one may maintain any paradox.",
+    "text": "By denying scien­tific princi­ples, one may maintain any paradox.",
     "author": "Galileo Galilei",
     "topic": "Science"
   },
   {
-    "text": "Together let us explore the stars, conquer the deserts, eradicate disease, tap the ocean depths, and encourage the arts and commerce.",
+    "text": "Together let us explore the stars, conquer the deserts, eradi­cate disease, tap the ocean depths, and encour­age the arts and commerce.",
     "author": "John F. Kennedy",
     "topic": "Science"
   },
   {
-    "text": "Problems are not stop signs, they are guidelines.",
+    "text": "Problems are not stop signs, they are guide­lines.",
     "author": "Robert H. Schuller",
     "topic": "Inspirational"
   },
@@ -648,7 +648,7 @@
     "topic": "Inspirational"
   },
   {
-    "text": "It always seems impossible until it’s done.",
+    "text": "It always seems impos­sible until it’s done.",
     "author": "Nelson Mandela",
     "topic": "Inspirational"
   },
@@ -668,7 +668,7 @@
     "topic": "Inspirational"
   },
   {
-    "text": "A creative man is motivated by the desire to achieve, not by the desire to beat others.",
+    "text": "A creative man is moti­vated by the desire to achieve, not by the desire to beat others.",
     "author": "Ayn Rand",
     "topic": "Inspirational"
   },
@@ -678,7 +678,7 @@
     "topic": "From literature"
   },
   {
-    "text": "There is some good in this world, and it’s worth fighting for.",
+    "text": "There is some good in this world, and it’s worth fight­ing for.",
     "author": "J.R.R. Tolkien",
     "topic": "From literature"
   },
@@ -695,6 +695,7 @@
   {
     "text": "Well-behaved women seldom make history.",
     "author": "Laurel Thatcher Ulrich",
+    "given": "W",
     "topic": "From literature"
   },
   {
@@ -708,7 +709,7 @@
     "topic": "From literature"
   },
   {
-    "text": "It is our choices that show what we truly are, far more than our abilities.",
+    "text": "It is our choices that show what we truly are, far more than our abili­ties.",
     "author": "J.K. Rowling",
     "topic": "From literature"
   },
@@ -723,12 +724,12 @@
     "topic": "From literature"
   },
   {
-    "text": "The goal isn’t to live forever, the goal is to create something that will.",
+    "text": "The goal isn’t to live forever, the goal is to create some­thing that will.",
     "author": "Chuck Palahniuk",
     "topic": "From literature"
   },
   {
-    "text": "It’s only after we’ve lost everything that we’re free to do anything.",
+    "text": "It’s only after we’ve lost every­thing that we’re free to do anything.",
     "author": "Chuck Palahniuk",
     "topic": "From literature"
   },
@@ -748,7 +749,7 @@
     "topic": "From literature"
   },
   {
-    "text": "All endings are also beginnings. We just don’t know it at the time.",
+    "text": "All endings are also begin­nings. We just don’t know it at the time.",
     "author": "Mitch Albom",
     "topic": "From literature"
   },
@@ -763,17 +764,17 @@
     "topic": "From literature"
   },
   {
-    "text": "When you want something, all the universe conspires in helping you to achieve it.",
+    "text": "When you want some­thing, all the universe cons­pires in helping you to achieve it.",
     "author": "Paulo Coelho",
     "topic": "From literature"
   },
   {
-    "text": "It’s no use going back to yesterday, because I was a different person then.",
+    "text": "It’s no use going back to yester­day, because I was a differ­ent person then.",
     "author": "Lewis Carroll",
     "topic": "From literature"
   },
   {
-    "text": "The only limits for tomorrow are the doubts we have today.",
+    "text": "The only limits for tomor­row are the doubts we have today.",
     "author": "Pittacus Lore",
     "topic": "From literature"
   },
@@ -793,17 +794,17 @@
     "topic": "From literature"
   },
   {
-    "text": "When you are imagining, you might as well imagine something worth while.",
+    "text": "When you are imag­ining, you might as well imagine some­thing worth while.",
     "author": "Lucy Maud Montgomery",
     "topic": "From literature"
   },
   {
-    "text": "The worst enemy to creativity is self-doubt.",
+    "text": "The worst enemy to crea­tivity is self-doubt.",
     "author": "Sylvia Plath",
     "topic": "From literature"
   },
   {
-    "text": "Yes: I am a dreamer. For a dreamer is one who can only find his way by moonlight, and his punishment is that he sees the dawn before the rest of the world.",
+    "text": "Yes: I am a dreamer. For a dreamer is one who can only find his way by moon­light, and his punish­ment is that he sees the dawn before the rest of the world.",
     "author": "Oscar Wilde",
     "topic": "From literature"
   },
@@ -813,12 +814,12 @@
     "topic": "From literature"
   },
   {
-    "text": "I dream. Sometimes I think that’s the only right thing to do.",
+    "text": "I dream. Some­times I think that’s the only right thing to do.",
     "author": "Haruki Murakami",
     "topic": "From literature"
   },
   {
-    "text": "Pain is inevitable. Suffering is optional.",
+    "text": "Pain is inevi­table. Suffer­ing is optional.",
     "author": "Haruki Murakami",
     "topic": "From literature"
   },
@@ -828,12 +829,12 @@
     "topic": "From literature"
   },
   {
-    "text": "It is sometimes an appropriate response to reality to go insane.",
+    "text": "It is some­times an appro­priate response to reality to go insane.",
     "author": "Philip K. Dick",
     "topic": "From literature"
   },
   {
-    "text": "If you’re making mistakes it means you’re out there doing something.",
+    "text": "If you’re making mistakes it means you’re out there doing some­thing.",
     "author": "Neil Gaiman",
     "topic": "From literature"
   },
@@ -843,7 +844,7 @@
     "topic": "From literature"
   },
   {
-    "text": "Art enables us to find ourselves and lose ourselves at the same time.",
+    "text": "Art enables us to find our­selves and lose our­selves at the same time.",
     "author": "Thomas Merton",
     "topic": "From literature"
   },
@@ -853,7 +854,7 @@
     "topic": "From literature"
   },
   {
-    "text": "Everything is possible. The impossible just takes longer.",
+    "text": "Every­thing is possible. The impos­sible just takes longer.",
     "author": "Dan Brown",
     "topic": "From literature"
   },
@@ -863,12 +864,12 @@
     "topic": "From literature"
   },
   {
-    "text": "Some infinities are bigger than other infinities.",
+    "text": "Some infini­ties are bigger than other infini­ties.",
     "author": "John Green",
     "topic": "From literature"
   },
   {
-    "text": "So many things are possible just as long as you don’t know they’re impossible.",
+    "text": "So many things are possible just as long as you don’t know they’re impos­sible.",
     "author": "Norton Juster",
     "topic": "From literature"
   },
@@ -878,7 +879,7 @@
     "topic": "From literature"
   },
   {
-    "text": "Nothing that’s worthwhile is ever easy.",
+    "text": "Nothing that’s worth­while is ever easy.",
     "author": "Nicholas Sparks",
     "topic": "From literature"
   },
@@ -903,7 +904,7 @@
     "topic": "From literature"
   },
   {
-    "text": "Anything worth dying for is certainly worth living for.",
+    "text": "Anything worth dying for is certain­ly worth living for.",
     "author": "Joseph Heller",
     "topic": "From literature"
   },
@@ -913,12 +914,12 @@
     "topic": "Inspirational"
   },
   {
-    "text": "I have just three things to teach: simplicity, patience, compassion. These three are your greatest treasures.",
+    "text": "I have just three things to teach: simpli­city, patience, compas­sion. These three are your greatest treas­ures.",
     "author": "Lao Tzu",
     "topic": "Inspirational"
   },
   {
-    "text": "Knowing others is wisdom, knowing yourself is enlighten­ment.",
+    "text": "Knowing others is wisdom, knowing yourself is enlight­en­ment.",
     "author": "Lao Tzu",
     "topic": "Inspirational"
   },
@@ -943,7 +944,7 @@
     "topic": "Inspirational"
   },
   {
-    "text": "A good head and a good heart are always a formidable combination.",
+    "text": "A good head and a good heart are always a formi­dable combi­nation.",
     "author": "Nelson Mandela",
     "topic": "Inspirational"
   },
@@ -963,7 +964,7 @@
     "topic": "Inspirational"
   },
   {
-    "text": "The greater danger for most of us lies not in setting our aim too high and falling short; but in setting our aim too low, and achieving our mark.",
+    "text": "The greater danger for most of us lies not in setting our aim too high and falling short; but in setting our aim too low, and achiev­ing our mark.",
     "author": "Michelangelo",
     "topic": "Inspirational"
   },
@@ -983,7 +984,7 @@
     "topic": "Film"
   },
   {
-    "text": "You don’t understand! I coulda had class. I coulda been a contender. I could’ve been somebody, instead of a bum, which is what I am.",
+    "text": "You don’t under­stand! I coulda had class. I coulda been a conten­der. I could’ve been somebody, instead of a bum, which is what I am.",
     "author": "On the Waterfront",
     "topic": "Film"
   },
@@ -993,12 +994,12 @@
     "topic": "Film"
   },
   {
-    "text": "Fasten your seatbelts. It’s going to be a bumpy night.",
+    "text": "Fasten your seat­belts. It’s going to be a bumpy night.",
     "author": "All About Eve",
     "topic": "Film"
   },
   {
-    "text": "What we’ve got here is failure to communicate.",
+    "text": "What we’ve got here is failure to communi­cate.",
     "author": "Cool Hand Luke",
     "topic": "Film"
   },
@@ -1023,7 +1024,7 @@
     "topic": "Film"
   },
   {
-    "text": "Louis, I think this is the beginning of a beautiful friendship.",
+    "text": "Louis, I think this is the begin­ning of a beauti­ful friend­ship.",
     "author": "Casablanca",
     "topic": "Film"
   },
@@ -1058,7 +1059,7 @@
     "topic": "Film"
   },
   {
-    "text": "My mama always said life was like a box of chocolates. You never know what you’re gonna get.",
+    "text": "My mama always said life was like a box of choco­lates. You never know what you’re gonna get.",
     "author": "Forrest Gump",
     "topic": "Film"
   },
@@ -1103,7 +1104,7 @@
     "topic": "Film"
   },
   {
-    "text": "Gentlemen, you can’t fight in here! This is the War Room!",
+    "text": "Gentle­men, you can’t fight in here! This is the War Room!",
     "author": "Dr. Strangelove",
     "topic": "Film"
   },
@@ -1128,12 +1129,12 @@
     "topic": "Film"
   },
   {
-    "text": "Oh, no, it wasn’t the airplanes. It was Beauty killed the Beast.",
+    "text": "Oh, no, it wasn’t the air­planes. It was Beauty killed the Beast.",
     "author": "King Kong",
     "topic": "Film"
   },
   {
-    "text": "Sawyer, you’re going out a youngster, but you’ve got to come back a star!",
+    "text": "Sawyer, you’re going out a young­ster, but you’ve got to come back a star!",
     "author": "42nd Street",
     "topic": "Film"
   },
@@ -1158,7 +1159,7 @@
     "topic": "Film"
   },
   {
-    "text": "The secret to happiness is burying all your true feelings and living a life of bland compromise.",
+    "text": "The secret to happi­ness is burying all your true feelings and living a life of bland compro­mise.",
     "author": "Lois Griffin, Family Guy",
     "topic": "Funny"
   },
@@ -1168,7 +1169,7 @@
     "topic": "Funny"
   },
   {
-    "text": "Kids, your grandfather’s ears are not gross and they are certainly not an enchanted forest.",
+    "text": "Kids, your grand­father’s ears are not gross and they are certain­ly not an enchan­ted forest.",
     "author": "Lois Griffin, Family Guy",
     "topic": "Funny"
   },
@@ -1193,7 +1194,7 @@
     "topic": "Funny"
   },
   {
-    "text": "Joe, I’ve had new neighbors before, but none of them were half the man you are. Since you’re half a man already, that splits them into some kind of fraction I can’t even measure.",
+    "text": "Joe, I’ve had new neigh­bors before, but none of them were half the man you are. Since you’re half a man already, that splits them into some kind of fraction I can’t even measure.",
     "author": "Peter Griffin, Family Guy",
     "topic": "Funny"
   },
@@ -1203,7 +1204,7 @@
     "topic": "Funny"
   },
   {
-    "text": "Hey, Peter, it’s seven o’clock and you’ve still got your pants on. What’s the occassion?",
+    "text": "Hey, Peter, it’s seven o’clock and you’ve still got your pants on. What’s the occa­sion?",
     "author": "Brian Griffin, Family Guy",
     "topic": "Funny"
   },
@@ -1213,27 +1214,27 @@
     "topic": "Funny"
   },
   {
-    "text": "If you’re walking down the right path and you’re willing to keep walking, eventually you’ll make progress.",
+    "text": "If you’re walking down the right path and you’re willing to keep walking, eventual­ly you’ll make progress.",
     "author": "Barack Obama",
     "topic": "Inspirational"
   },
   {
-    "text": "My fellow Americans, we are and always will be a nation of immigrants. We were strangers once, too.",
+    "text": "My fellow Ameri­cans, we are and always will be a nation of immig­rants. We were stran­gers once, too.",
     "author": "Barack Obama",
     "topic": "Politics"
   },
   {
-    "text": "Money is not the only answer, but it makes a difference.",
+    "text": "Money is not the only answer, but it makes a differ­ence.",
     "author": "Barack Obama",
     "topic": "Politics"
   },
   {
-    "text": "We want everybody to act like adults, quit playing games, realize that it’s not just my way or the highway.",
+    "text": "We want every­body to act like adults, quit playing games, realize that it’s not just my way or the highway.",
     "author": "Barack Obama",
     "topic": "Politics"
   },
   {
-    "text": "That’s the good thing about being president, I can do whatever I want.",
+    "text": "That’s the good thing about being presi­dent, I can do whatever I want.",
     "author": "Barack Obama",
     "topic": "Politics"
   },
@@ -1243,7 +1244,7 @@
     "topic": "Politics"
   },
   {
-    "text": "Anyone who is capable of getting themselves made President should on no account be allowed to do the job.",
+    "text": "Anyone who is capable of getting them­selves made Presi­dent should on no account be allowed to do the job.",
     "author": "Douglas Adams",
     "topic": "Funny"
   },
@@ -1253,12 +1254,12 @@
     "topic": "Inspirational"
   },
   {
-    "text": "The pleasures of love are always in proportion to our fears.",
+    "text": "The pleas­ures of love are always in propor­tion to our fears.",
     "author": "Stendhal",
     "topic": "Love"
   },
   {
-    "text": "In the world of words, the imagination is one of the forces of nature.",
+    "text": "In the world of words, the imagi­nation is one of the forces of nature.",
     "author": "Wallace Stevens",
     "topic": "Inspirational"
   },
@@ -1288,7 +1289,7 @@
     "topic": "Funny"
   },
   {
-    "text": "How beautiful the leaves grow old. How full of light and color are their last days.",
+    "text": "How beau­tiful the leaves grow old. How full of light and color are their last days.",
     "author": "John Burroughs",
     "topic": "Beauty"
   },
@@ -1298,22 +1299,22 @@
     "topic": "Beauty"
   },
   {
-    "text": "One of the most beautiful qualities of true friendship is to understand and to be understood.",
+    "text": "One of the most beau­tiful quali­ties of true friend­ship is to under­stand and to be under­stood.",
     "author": "Lucius Annaeus Seneca",
     "topic": "Beauty"
   },
   {
-    "text": "I know who I am. I am not perfect. I’m not the most beautiful woman in the world. But I’m one of them.",
+    "text": "I know who I am. I am not perfect. I’m not the most beau­tiful woman in the world. But I’m one of them.",
     "author": "Mary J. Blige",
     "topic": "Beauty"
   },
   {
-    "text": "For beautiful eyes, look for the good in others; for beautiful lips, speak only words of kindness; and for poise, walk with the knowledge that you are never alone.",
+    "text": "For beau­tiful eyes, look for the good in others; for beau­tiful lips, speak only words of kindness; and for poise, walk with the know­ledge that you are never alone.",
     "author": "Audrey Hepburn",
     "topic": "Beauty"
   },
   {
-    "text": "Beauty is when you can appreciate yourself. When you love yourself, that’s when you’re most beautiful.",
+    "text": "Beauty is when you can appre­ciate yourself. When you love yourself, that’s when you’re most beau­tiful.",
     "author": "Zoe Kravitz",
     "topic": "Beauty"
   },
@@ -1323,17 +1324,17 @@
     "topic": "Funny"
   },
   {
-    "text": "We are all born for love. It is the principle of existence, and its only end.",
+    "text": "We are all born for love. It is the princi­ple of exist­ence, and its only end.",
     "author": "Benjamin Disraeli",
     "topic": "Love"
   },
   {
-    "text": "Education is the most powerful weapon which you can use to change the world.",
+    "text": "Educa­tion is the most power­ful weapon which you can use to change the world.",
     "author": "Nelson Mandela",
     "topic": "Education"
   },
   {
-    "text": "There is nothing like returning to a place that remains unchanged to find the ways in which you yourself have altered.",
+    "text": "There is nothing like return­ing to a place that remains unchan­ged to find the ways in which you yourself have altered.",
     "author": "Nelson Mandela",
     "topic": "Inspirational"
   },
@@ -1343,12 +1344,12 @@
     "topic": "Courage"
   },
   {
-    "text": "As long as poverty, injustice and gross inequality persist in our world, none of us can truly rest.",
+    "text": "As long as poverty, injust­ice and gross inequal­ity persist in our world, none of us can truly rest.",
     "author": "Nelson Mandela",
     "topic": "Inspirational"
   },
   {
-    "text": "It is better to lead from behind and to put others in front, especially when you celebrate victory when nice things occur. You take the front line when there is danger. Then people will appreciate your leadership.",
+    "text": "It is better to lead from behind and to put others in front, espe­cially when you cele­brate victory when nice things occur. You take the front line when there is danger. Then people will appre­ciate your leader­ship.",
     "author": "Nelson Mandela",
     "topic": "Leadership"
   },
@@ -1383,7 +1384,7 @@
     "topic": "Motivational"
   },
   {
-    "text": "Strength does not come from physical capacity. It comes from an indomitable will.",
+    "text": "Strength does not come from physical capacity. It comes from an indomi­table will.",
     "author": "Mahatma Gandhi",
     "topic": "Motivational"
   },
@@ -1393,17 +1394,17 @@
     "topic": "Inspirational"
   },
   {
-    "text": "Gratitude can transform common days into thanks­givings, turn routine jobs into joy, and change ordinary opportu­nities into blessings.",
+    "text": "Grati­tude can trans­form common days into thanks­givings, turn routine jobs into joy, and change ordinary opportu­nities into bless­ings.",
     "author": "William Arthur Ward",
     "topic": "Thanksgiving"
   },
   {
-    "text": "It is very important to know who you are. To make decisions. To show who you are.",
+    "text": "It is very import­ant to know who you are. To make deci­sions. To show who you are.",
     "author": "Malala Yousafzai",
     "topic": "Motivational"
   },
   {
-    "text": "When you fail you learn from the mistakes you made and it motivates you to work even harder.",
+    "text": "When you fail you learn from the mistakes you made and it moti­vates you to work even harder.",
     "author": "Natalie Gulbis",
     "topic": "Motivational"
   },
@@ -1413,12 +1414,12 @@
     "topic": "Motivational"
   },
   {
-    "text": "Success is the only motiva­tional factor that a boy with character needs.",
+    "text": "Success is the only motiva­tional factor that a boy with charac­ter needs.",
     "author": "Woody Hayes",
     "topic": "Motivational"
   },
   {
-    "text": "I really believe that everyone has a talent, ability, or skill that he can mine to support himself and to succeed in life.",
+    "text": "I really believe that every­one has a talent, ability, or skill that he can mine to support himself and to succeed in life.",
     "author": "Dean Koontz",
     "topic": "Motivational"
   },
@@ -1428,17 +1429,17 @@
     "topic": "Motivational"
   },
   {
-    "text": "How do you know you’re going to do something, until you do it?",
+    "text": "How do you know you’re going to do some­thing, until you do it?",
     "author": "J. D. Salinger",
     "topic": "Motivational"
   },
   {
-    "text": "Your heaviest artillery will be your will to live. Keep that big gun going.",
+    "text": "Your heaviest artil­lery will be your will to live. Keep that big gun going.",
     "author": "Norman Cousins",
     "topic": "Motivational"
   },
   {
-    "text": "Set yourself earnestly to see what you are made to do, and then set yourself earnestly to do it.",
+    "text": "Set yourself earnest­ly to see what you are made to do, and then set yourself earnest­ly to do it.",
     "author": "Phillips Brooks",
     "topic": "Motivational"
   },
@@ -1448,32 +1449,32 @@
     "topic": "Motivational"
   },
   {
-    "text": "To be wholly devoted to some intellec­tual exercise is to have succeeded in life.",
+    "text": "To be wholly devoted to some intellec­tual exercise is to have succeed­ed in life.",
     "author": "Robert Louis Stevenson",
     "topic": "Motivational"
   },
   {
-    "text": "Be thankful for what you have; you’ll end up having more. If you concentrate on what you don’t have, you will never, ever have enough.",
+    "text": "Be thankful for what you have; you’ll end up having more. If you concen­trate on what you don’t have, you will never, ever have enough.",
     "author": "Oprah Winfrey",
     "topic": "Thanksgiving"
   },
   {
-    "text": "I am grateful for what I am and have. My thanks­giving is perpetual.",
+    "text": "I am grateful for what I am and have. My thanks­giving is perpet­ual.",
     "author": "Henry David Thoreau",
     "topic": "Thanksgiving"
   },
   {
-    "text": "Even though we’re a week and a half away from Thanks­giving, it’s beginning to look a lot like Christmas.",
+    "text": "Even though we’re a week and a half away from Thanks­giving, it’s begin­ning to look a lot like Christ­mas.",
     "author": "Richard Roeper",
     "topic": "Thanksgiving"
   },
   {
-    "text": "Gratitude is the inward feeling of kindness received. Thankful­ness is the natural impulse to express that feeling. Thanks­giving is the following of that impulse.",
+    "text": "Grati­tude is the inward feeling of kindness received. Thankful­ness is the natural impulse to express that feeling. Thanks­giving is the follow­ing of that impulse.",
     "author": "Henry Van Dyke",
     "topic": "Thanksgiving"
   },
   {
-    "text": "I love Thanks­giving because it’s a holiday that is centered around food and family, two things that are of utmost importance to me.",
+    "text": "I love Thanks­giving because it’s a holiday that is centered around food and family, two things that are of utmost impor­tance to me.",
     "author": "Marcus Samuelsson",
     "topic": "Thanksgiving"
   },
@@ -1483,22 +1484,22 @@
     "topic": "Thanksgiving"
   },
   {
-    "text": "Thanks­giving just gets me all warm and tingly and all kinds of wonderful inside.",
+    "text": "Thanks­giving just gets me all warm and tingly and all kinds of wonder­ful inside.",
     "author": "Willard Scott",
     "topic": "Thanksgiving"
   },
   {
-    "text": "Thanks­giving is one of my favorite days of the year because it reminds us to give thanks and to count our blessings. Suddenly, so many things become so little when we realize how blessed and lucky we are.",
+    "text": "Thanks­giving is one of my favorite days of the year because it reminds us to give thanks and to count our bless­ings. Suddenly, so many things become so little when we realize how blessed and lucky we are.",
     "author": "Joyce Giraud",
     "topic": "Thanksgiving"
   },
   {
-    "text": "There is no racial or ethnic involvement in Thanks­giving, and people who may be very distant from the Christian system can see the beauty and the positive spirit that comes from the holiday.",
+    "text": "There is no racial or ethnic involve­ment in Thanks­giving, and people who may be very distant from the Christ­ian system can see the beauty and the positive spirit that comes from the holiday.",
     "author": "John Clayton",
     "topic": "Thanksgiving"
   },
   {
-    "text": "Tell me and I forget. Teach me and I remember. Involve me and I learn.",
+    "text": "Tell me and I forget. Teach me and I remem­ber. Involve me and I learn.",
     "author": "Benjamin Franklin",
     "topic": "Inspirational"
   },
@@ -1508,7 +1509,7 @@
     "topic": "Knowledge"
   },
   {
-    "text": "Without continual growth and progress, such words as improvement, achievement, and success have no meaning.",
+    "text": "Without contin­ual growth and progress, such words as improve­ment, achieve­ment, and success have no meaning.",
     "author": "Benjamin Franklin",
     "topic": "Success"
   },
@@ -1518,12 +1519,12 @@
     "topic": "Success"
   },
   {
-    "text": "Money has never made man happy, nor will it, there is nothing in its nature to produce happiness. The more of it one has the more one wants.",
+    "text": "Money has never made man happy, nor will it, there is nothing in its nature to produce happi­ness. The more of it one has the more one wants.",
     "author": "Benjamin Franklin",
     "topic": "Success"
   },
   {
-    "text": "Any fool can criticize, condemn and complain — and most fools do.",
+    "text": "Any fool can criti­cize, condemn and com­plain — and most fools do.",
     "author": "Benjamin Franklin",
     "topic": "Motivational"
   },
@@ -1538,7 +1539,7 @@
     "topic": "Love"
   },
   {
-    "text": "To live is to suffer, to survive is to find some meaning in the suffering.",
+    "text": "To live is to suffer, to survive is to find some meaning in the suffer­ing.",
     "author": "Friedrich Nietzsche",
     "topic": "Life"
   },
@@ -1553,7 +1554,7 @@
     "topic": "Motivational"
   },
   {
-    "text": "All things are subject to interpre­tation. Whichever interpre­tation prevails at a given time is a function of power and not truth.",
+    "text": "All things are subject to interpre­tation. Which­ever interpre­tation prevails at a given time is a function of power and not truth.",
     "author": "Friedrich Nietzsche",
     "topic": "Power"
   },
@@ -1563,47 +1564,47 @@
     "topic": "Motivational"
   },
   {
-    "text": "Those who cannot understand how to put their thoughts on ice should not enter into the heat of debate.",
+    "text": "Those who cannot under­stand how to put their thoughts on ice should not enter into the heat of debate.",
     "author": "Friedrich Nietzsche",
     "topic": "Thoughts"
   },
   {
-    "text": "On the mountains of truth you can never climb in vain: either you will reach a point higher up today, or you will be training your powers so that you will be able to climb higher tomorrow.",
+    "text": "On the moun­tains of truth you can never climb in vain: either you will reach a point higher up today, or you will be training your powers so that you will be able to climb higher tomor­row.",
     "author": "Friedrich Nietzsche",
     "topic": "Thoughts"
   },
   {
-    "text": "God gave us the gift of life; it is up to us to give ourselves the gift of living well.",
+    "text": "God gave us the gift of life; it is up to us to give our­selves the gift of living well.",
     "author": "Voltaire",
     "topic": "Life"
   },
   {
-    "text": "Apprecia­tion is a wonderful thing: It makes what is excellent in others belong to us as well.",
+    "text": "Apprecia­tion is a wonder­ful thing: It makes what is excel­lent in others belong to us as well.",
     "author": "Voltaire",
     "topic": "Inspirational"
   },
   {
-    "text": "Those who can make you believe absurdities can make you commit atrocities.",
+    "text": "Those who can make you believe absurd­ities can make you commit atro­cities.",
     "author": "Voltaire",
     "topic": "Power"
   },
   {
-    "text": "Think for yourselves and let others enjoy the privilege to do so, too.",
+    "text": "Think for your­selves and let others enjoy the privi­lege to do so, too.",
     "author": "Voltaire",
     "topic": "Thoughts"
   },
   {
-    "text": "No problem can withstand the assault of sustained thinking.",
+    "text": "No problem can with­stand the assault of sus­tained thinking.",
     "author": "Voltaire",
     "topic": "Thoughts"
   },
   {
-    "text": "It is not sufficient to see and to know the beauty of a work. We must feel and be affected by it.",
+    "text": "It is not suffi­cient to see and to know the beauty of a work. We must feel and be affected by it.",
     "author": "Voltaire",
     "topic": "Beauty"
   },
   {
-    "text": "Perfection is attained by slow degrees; it requires the hand of time.",
+    "text": "Perfec­tion is attained by slow degrees; it requires the hand of time.",
     "author": "Voltaire",
     "topic": "Beauty"
   },
@@ -1618,67 +1619,67 @@
     "topic": "Life"
   },
   {
-    "text": "Christmas is the spirit of giving without a thought of getting. It is happiness because we see joy in people. It is forgetting self and finding time for others. It is discarding the meaningless and stressing the true values.",
+    "text": "Christ­mas is the spirit of giving without a thought of getting. It is happi­ness because we see joy in people. It is forget­ting self and finding time for others. It is discard­ing the meaning­less and stress­ing the true values.",
     "author": "Thomas S. Monson",
     "topic": "Christmas"
   },
   {
-    "text": "Christmas waves a magic wand over this world, and behold, everything is softer and more beautiful.",
+    "text": "Christ­mas waves a magic wand over this world, and behold, every­thing is softer and more beau­tiful.",
     "author": "Norman Vincent Peale",
     "topic": "Christmas"
   },
   {
-    "text": "He who has not Christmas in his heart will never find it under a tree.",
+    "text": "He who has not Christ­mas in his heart will never find it under a tree.",
     "author": "Roy L. Smith",
     "topic": "Christmas"
   },
   {
-    "text": "Christmas is not a time nor a season, but a state of mind. To cherish peace and goodwill, to be plenteous in mercy, is to have the real spirit of Christmas.",
+    "text": "Christ­mas is not a time nor a season, but a state of mind. To cherish peace and goodwill, to be plent­eous in mercy, is to have the real spirit of Christ­mas.",
     "author": "Calvin Coolidge",
     "topic": "Christmas"
   },
   {
-    "text": "Christmas gives us the opportunity to pause and reflect on the important things around us — a time when we can look back on the year that has passed and prepare for the year ahead.",
+    "text": "Christ­mas gives us the opportu­nity to pause and reflect on the import­ant things around us — a time when we can look back on the year that has passed and prepare for the year ahead.",
     "author": "David Cameron",
     "topic": "Christmas"
   },
   {
-    "text": "God never gives someone a gift they are not capable of receiving. If he gives us the gift of Christmas, it is because we all have the ability to understand and receive it.",
+    "text": "God never gives someone a gift they are not capable of receiv­ing. If he gives us the gift of Christ­mas, it is because we all have the ability to under­stand and receive it.",
     "author": "Pope Francis",
     "topic": "Christmas"
   },
   {
-    "text": "Happy, happy Christmas, that can win us back to the delusions of our childhood days, recall to the old man the pleasures of his youth, and transport the traveler back to his own fireside and quiet home!",
+    "text": "Happy, happy Christ­mas, that can win us back to the delu­sions of our child­hood days, recall to the old man the pleas­ures of his youth, and trans­port the traveler back to his own fireside and quiet home!",
     "author": "Charles Dickens",
     "topic": "Christmas"
   },
   {
-    "text": "When you look back on all the Christmases in your life, you’ll find you’ve created family traditions and lasting memories. Those memories, good and bad, are really what help to keep a family together over the long haul.",
+    "text": "When you look back on all the Christ­mases in your life, you’ll find you’ve created family tradi­tions and lasting memories. Those memories, good and bad, are really what help to keep a family together over the long haul.",
     "author": "Caroline Kennedy",
     "topic": "Christmas"
   },
   {
-    "text": "One of the most glorious messes in the world is the mess created in the living room on Christmas day. Don’t clean it up too quickly.",
+    "text": "One of the most glorious messes in the world is the mess created in the living room on Christ­mas day. Don’t clean it up too quickly.",
     "author": "Andy Rooney",
     "topic": "Christmas"
   },
   {
-    "text": "Christmas is far and away my favorite holiday. I love everything about it, from the event that inspired it, hoping for a white one, to wrapping presents. But mostly I love having family and friends gathered, and sharing traditions.",
+    "text": "Christ­mas is far and away my favorite holiday. I love every­thing about it, from the event that inspired it, hoping for a white one, to wrapping presents. But mostly I love having family and friends gathered, and sharing tradi­tions.",
     "author": "Ellen Hopkins",
     "topic": "Christmas"
   },
   {
-    "text": "At Christmas play and make good cheer, for Christmas comes but once a year.",
+    "text": "At Christ­mas play and make good cheer, for Christ­mas comes but once a year.",
     "author": "Thomas Tusser",
     "topic": "Christmas"
   },
   {
-    "text": "Once again, we come to the Holiday Season, a deeply religious time that each of us observes, in his own way, by going to the mall of his choice.",
+    "text": "Once again, we come to the Holiday Season, a deeply reli­gious time that each of us observes, in his own way, by going to the mall of his choice.",
     "author": "Dave Barry",
     "topic": "Christmas"
   },
   {
-    "text": "Christmas is a tonic for our souls. It moves us to think of others rather than of ourselves. It directs our thoughts to giving.",
+    "text": "Christ­mas is a tonic for our souls. It moves us to think of others rather than of our­selves. It directs our thoughts to giving.",
     "author": "B. C. Forbes",
     "topic": "Christmas"
   },
@@ -1688,27 +1689,27 @@
     "topic": "Christmas"
   },
   {
-    "text": "Christmas and the holidays are the season of giving. It’s a time when people are more kind and open-hearted.",
+    "text": "Christ­mas and the holidays are the season of giving. It’s a time when people are more kind and open-hearted.",
     "author": "Gisele Bundchen",
     "topic": "Christmas"
   },
   {
-    "text": "When you give up yourself, that’s when you will feel the true spirit of Christmas. And that’s giving that’s serving others and that’s when you feel fulfilled.",
+    "text": "When you give up yourself, that’s when you will feel the true spirit of Christ­mas. And that’s giving that’s serving others and that’s when you feel ful­filled.",
     "author": "Joel Osteen",
     "topic": "Christmas"
   },
   {
-    "text": "Christmas is a season for kindling the fire for hospitality in the hall, the genial flame of charity in the heart.",
+    "text": "Christ­mas is a season for kindling the fire for hospi­tality in the hall, the genial flame of charity in the heart.",
     "author": "Washington Irving",
     "topic": "Christmas"
   },
   {
-    "text": "I love the excitement, the childlike spirit of innocence and just about everything that goes along with Christmas.",
+    "text": "I love the excite­ment, the child­like spirit of inno­cence and just about every­thing that goes along with Christ­mas.",
     "author": "Hillary Scott",
     "topic": "Christmas"
   },
   {
-    "text": "Throughout history, Hanukkah was a relatively minor festival, but it’s become very popular in America due to its proximity to Christmas.",
+    "text": "Through­out history, Hanukkah was a rela­tively minor festival, but it’s become very popular in America due to its proxi­mity to Christ­mas.",
     "author": "Gil Marks",
     "topic": "Hanukkah"
   },
@@ -1728,72 +1729,72 @@
     "topic": "Hanukkah"
   },
   {
-    "text": "A thousand candles can be lit from the flame of one candle, and the life of the candle will not be shortened. Happiness can be spread without diminishing that of yourself.",
+    "text": "A thousand candles can be lit from the flame of one candle, and the life of the candle will not be short­ened. Happi­ness can be spread without dimini­shing that of yourself.",
     "author": "Buddha",
     "topic": "Hanukkah"
   },
   {
-    "text": "The love of family and the admiration of friends is much more important than wealth and privilege.",
+    "text": "The love of family and the admir­ation of friends is much more import­ant than wealth and privi­lege.",
     "author": "Charles Kuralt",
     "topic": "Family"
   },
   {
-    "text": "Positive feelings come from being honest about yourself and accepting your personality, and physical character­istics, warts and all; and, from belonging to a family that accepts you without question.",
+    "text": "Positive feelings come from being honest about yourself and accept­ing your person­ality, and physical charac­ter­istics, warts and all; and, from belong­ing to a family that accepts you without question.",
     "author": "Willard Scott",
     "topic": "Family"
   },
   {
-    "text": "The only rock I know that stays steady, the only institution I know that works, is the family.",
+    "text": "The only rock I know that stays steady, the only insti­tution I know that works, is the family.",
     "author": "Lee Iacocca",
     "topic": "Family"
   },
   {
-    "text": "My family is everything. I am what I am thanks to my mother, my father, my brother, my sister… because they have given me everything. The education I have is thanks to them.",
+    "text": "My family is every­thing. I am what I am thanks to my mother, my father, my brother, my sister… because they have given me every­thing. The educa­tion I have is thanks to them.",
     "author": "Ronaldinho",
     "topic": "Family"
   },
   {
-    "text": "I love spending time with my friends and family. The simplest things in life give me the most pleasure: cooking a good meal, enjoying my friends.",
+    "text": "I love spending time with my friends and family. The simplest things in life give me the most plea­sure: cooking a good meal, enjoying my friends.",
     "author": "Cindy Morgan",
     "topic": "Family"
   },
   {
-    "text": "I wanted to say thanks… and share my gratitude for everything I’ve been blessed with. Family, friends, and continued support from everyone.",
+    "text": "I wanted to say thanks… and share my grati­tude for every­thing I’ve been blessed with. Family, friends, and contin­ued support from everyone.",
     "author": "Travis Barker",
     "topic": "Family"
   },
   {
-    "text": "I’m surrounded by great friends and family. I don’t know what I would do without them.",
+    "text": "I’m surround­ed by great friends and family. I don’t know what I would do without them.",
     "author": "Emma Roberts",
     "topic": "Family"
   },
   {
-    "text": "The most important thing in the world is family and love.",
+    "text": "The most import­ant thing in the world is family and love.",
     "author": "John Wooden",
     "topic": "Family"
   },
   {
-    "text": "For last year’s words belong to last year’s language\nAnd next year’s words await another voice.\nAnd to make an end is to make a beginning.",
+    "text": "For last year’s words belong to last year’s language\nAnd next year’s words await another voice.\nAnd to make an end is to make a begin­ning.",
     "author": "T.S. Eliot",
     "topic": "New year"
   },
   {
-    "text": "Tomorrow, is the first blank page of a 365 page book. Write a good one.",
+    "text": "Tomor­row, is the first blank page of a 365 page book. Write a good one.",
     "author": "Brad Paisley",
     "topic": "New year"
   },
   {
-    "text": "Departure of a year welcomes so many new memories.",
+    "text": "Depart­ure of a year welcomes so many new memories.",
     "author": "Munia Khan",
     "topic": "New year"
   },
   {
-    "text": "New Year — a new chapter, new verse, or just the same old story? Ultimately we write it. The choice is ours.",
+    "text": "New Year — a new chapter, new verse, or just the same old story? Ulti­mately we write it. The choice is ours.",
     "author": "Alex Morritt",
     "topic": "New year"
   },
   {
-    "text": "In the depth of winter I finally learned that there was in me an invincible summer.",
+    "text": "In the depth of winter I finally learned that there was in me an invin­cible summer.",
     "author": "Albert Camus",
     "topic": "Winter"
   },
@@ -1803,27 +1804,27 @@
     "topic": "Winter"
   },
   {
-    "text": "If we had no winter, the spring would not be so pleasant: if we did not sometimes taste of adversity, prosperity would not be so welcome.",
+    "text": "If we had no winter, the spring would not be so pleasant: if we did not some­times taste of adver­sity, pros­perity would not be so welcome.",
     "author": "Anne Bradstreet",
     "topic": "Winter"
   },
   {
-    "text": "He who marvels at the beauty of the world in summer will find equal cause for wonder and admiration in winter.",
+    "text": "He who marvels at the beauty of the world in summer will find equal cause for wonder and admi­ration in winter.",
     "author": "John Burroughs",
     "topic": "Winter"
   },
   {
-    "text": "While I relish our warm months, winter forms our character and brings out our best.",
+    "text": "While I relish our warm months, winter forms our char­acter and brings out our best.",
     "author": "Tom Allen",
     "topic": "Winter"
   },
   {
-    "text": "It is the life of the crystal, the architect of the flake, the fire of the frost, the soul of the sunbeam. This crisp winter air is full of it.",
+    "text": "It is the life of the crystal, the archi­tect of the flake, the fire of the frost, the soul of the sunbeam. This crisp winter air is full of it.",
     "author": "John Burroughs",
     "topic": "Winter"
   },
   {
-    "text": "Never cut a tree down in the wintertime. Never make a negative decision in the low time. Never make your most important decisions when you are in your worst moods. Wait. Be patient. The storm will pass. The spring will come.",
+    "text": "Never cut a tree down in the winter­time. Never make a negative decision in the low time. Never make your most import­ant deci­sions when you are in your worst moods. Wait. Be patient. The storm will pass. The spring will come.",
     "author": "Robert H. Schuller",
     "topic": "Winter"
   },
@@ -1833,7 +1834,7 @@
     "topic": "Spring"
   },
   {
-    "text": "Spring is proof that there is beauty in new beginnings.",
+    "text": "Spring is proof that there is beauty in new begin­nings.",
     "author": "Matshona Dhliwayo",
     "topic": "Spring"
   },
@@ -1848,7 +1849,7 @@
     "topic": "Spring"
   },
   {
-    "text": "The beautiful spring came; and when Nature resumes her loveliness, the human soul is apt to revive also.",
+    "text": "The beau­tiful spring came; and when Nature resumes her loveli­ness, the human soul is apt to revive also.",
     "author": "Harriet Ann Jacobs",
     "topic": "Spring"
   },
@@ -1858,12 +1859,12 @@
     "topic": "Spring"
   },
   {
-    "text": "It is only the farmer who faithfully plants seeds in the Spring, who reaps a harvest in the Autumn.",
+    "text": "It is only the farmer who faith­fully plants seeds in the Spring, who reaps a harvest in the Autumn.",
     "author": "B. C. Forbes",
     "topic": "Spring"
   },
   {
-    "text": "Fall gives us a premonition of winter, but then, winter, will be forced to relent, once again, to the new beginnings of soft greens, longer light, and the sweet air of spring.",
+    "text": "Fall gives us a premo­nition of winter, but then, winter, will be forced to relent, once again, to the new begin­nings of soft greens, longer light, and the sweet air of spring.",
     "author": "Madeleine M. Kunin",
     "topic": "Spring"
   },
@@ -1873,17 +1874,17 @@
     "topic": "Summer"
   },
   {
-    "text": "There is no real need for decorations when throwing a barbecue party — let the summer garden, in all its vibrant and luscious splendour, speak for itself.",
+    "text": "There is no real need for decora­tions when throwing a barbecue party — let the summer garden, in all its vibrant and luscious splen­dor, speak for itself.",
     "author": "Pippa Middleton",
     "topic": "Summer"
   },
   {
-    "text": "What good is the warmth of summer, without the cold of winter to give it sweetness.",
+    "text": "What good is the warmth of summer, without the cold of winter to give it sweet­ness.",
     "author": "John Steinbeck",
     "topic": "Summer"
   },
   {
-    "text": "Summer afternoon; to me those have always been the two most beautiful words in the English language.",
+    "text": "Summer after­noon; to me those have always been the two most beau­tiful words in the English language.",
     "author": "Henry James",
     "topic": "Summer"
   },
@@ -1898,7 +1899,7 @@
     "topic": "Summer"
   },
   {
-    "text": "Summer ends, and autumn comes, and he who would have it otherwise would have high tide always and a full moon every night.",
+    "text": "Summer ends, and autumn comes, and he who would have it other­wise would have high tide always and a full moon every night.",
     "author": "Hal Borland",
     "topic": "Autumn"
   },
@@ -1918,7 +1919,7 @@
     "topic": "Autumn"
   },
   {
-    "text": "No man can taste the fruits of autumn while he is delighting his scent with the flowers of spring.",
+    "text": "No man can taste the fruits of autumn while he is delight­ing his scent with the flowers of spring.",
     "author": "Samuel Johnson",
     "topic": "Autumn"
   },
@@ -1928,37 +1929,37 @@
     "topic": "Autumn"
   },
   {
-    "text": "Any sufficient­ly advanced technology is indistin­guishable from magic.",
+    "text": "Any suffi­cient­ly advanced techno­logy is indistin­guish­able from magic.",
     "author": "Arthur C. Clarke",
     "topic": "Technology"
   },
   {
-    "text": "The only way of discovering the limits of the possible is to venture a little way past them into the impossible.",
+    "text": "The only way of discover­ing the limits of the possible is to venture a little way past them into the impos­sible.",
     "author": "Arthur C. Clarke",
     "topic": "Technology"
   },
   {
-    "text": "You never change things by fighting the existing reality. To change something, build a new model that makes the existing model obsolete.",
+    "text": "You never change things by fighting the existing reality. To change some­thing, build a new model that makes the existing model obsolete.",
     "author": "R. Buckminster Fuller",
     "topic": "Technology"
   },
   {
-    "text": "We are stuck with technology when what we really want is just stuff that works.",
+    "text": "We are stuck with techno­logy when what we really want is just stuff that works.",
     "author": "Douglas Adams",
     "topic": "Technology"
   },
   {
-    "text": "Computers are useless. They can only give you answers.",
+    "text": "Comput­ers are useless. They can only give you answers.",
     "author": "Pablo Picasso",
     "topic": "Technology"
   },
   {
-    "text": "Techno­logical progress has merely provided us with more efficient means for going backwards.",
+    "text": "Techno­logical progress has merely provided us with more effi­cient means for going back­wards.",
     "author": "Aldous Huxley",
     "topic": "Technology"
   },
   {
-    "text": "Even the technology that promises to unite us, divides us. Each of us is now electro­nically connected to the globe, and yet we feel utterly alone.",
+    "text": "Even the techno­logy that promises to unite us, divides us. Each of us is now electro­nically connect­ed to the globe, and yet we feel utterly alone.",
     "author": "Dan Brown",
     "topic": "Technology"
   },
@@ -1969,7 +1970,7 @@
     "topic": "Technology"
   },
   {
-    "text": "Technology is the knack of so arranging the world that we do not experience it.",
+    "text": "Techno­logy is the knack of so arrang­ing the world that we do not experi­ence it.",
     "author": "Rollo May",
     "topic": "Technology"
   },
@@ -1979,48 +1980,48 @@
     "topic": "Technology"
   },
   {
-    "text": "Be a surfer. Watch the ocean. Figure out where the big waves are breaking and adjust accordingly.",
+    "text": "Be a surfer. Watch the ocean. Figure out where the big waves are breaking and adjust accord­ingly.",
     "author": "Jason Fried and Heinemeier David Hansson",
     "topic": "Technology"
   },
   {
-    "text": "We’ve arranged a civili­zation in which most crucial elements profoundly depend on science and technology. We have also arranged things so that almost no one understands science and technology. This is a prescrip­tion for disaster.",
+    "text": "We’ve arranged a civili­zation in which most crucial elements profound­ly depend on science and techno­logy. We have also arranged things so that almost no one under­stands science and techno­logy. This is a prescrip­tion for disaster.",
     "author": "Carl Sagan",
     "topic": "Technology"
   },
   {
-    "text": "Somewhere, something incredible is waiting to be known.",
+    "text": "Some­where, some­thing incred­ible is waiting to be known.",
     "author": "Carl Sagan",
     "topic": "Technology"
   },
   {
-    "text": "Technology is just a tool. In terms of getting the kids working together and motivating them, the teacher is the most important.",
+    "text": "Techno­logy is just a tool. In terms of getting the kids working together and moti­vating them, the teacher is the most import­ant.",
     "author": "Bill Gates",
     "topic": "Technology"
   },
   {
-    "text": "Man is a slow, sloppy, and brilliant thinker; computers are fast, accurate, and stupid.",
+    "text": "Man is a slow, sloppy, and bril­liant thinker; comput­ers are fast, accurate, and stupid.",
     "author": "John Pfeiffer",
     "topic": "Technology"
   },
   {
-    "text": "Some of the greatest discoveries consist mainly in the clearing away of psycho­logical roadblocks which obstruct the approach to reality; which is why, post factum, they appear so obvious.",
+    "text": "Some of the greatest dis­coveries consist mainly in the clearing away of psycho­logical road­blocks which obstruct the approach to reality; which is why, post factum, they appear so obvious.",
     "author": "Arthur Koestler",
     "given": "FACTUM",
     "topic": "Technology"
   },
   {
-    "text": "What a computer is to me is the most remarkable tool that we have ever come up with. It’s the equivalent of a bicycle for our minds.",
+    "text": "What a computer is to me is the most remark­able tool that we have ever come up with. It’s the equiva­lent of a bicycle for our minds.",
     "author": "Steve Jobs",
     "topic": "Technology"
   },
   {
-    "text": "Anyone who lives within their means suffers from a lack of imagination.",
+    "text": "Anyone who lives within their means suffers from a lack of imagi­nation.",
     "author": "Oscar Wilde",
     "topic": "Imagination"
   },
   {
-    "text": "Sometimes life’s going to hit you in the head with a brick. Don’t lose faith. I’m convinced that the only thing that kept me going was that I loved what I did.",
+    "text": "Some­times life’s going to hit you in the head with a brick. Don’t lose faith. I’m con­vinced that the only thing that kept me going was that I loved what I did.",
     "author": "Steve Jobs",
     "topic": "Inspirational"
   },
@@ -2030,7 +2031,7 @@
     "topic": "Inspirational"
   },
   {
-    "text": "If you wish to make an apple pie from scratch, you must first invent the universe.",
+    "text": "If you wish to make an apple pie from scratch, you must first invent the uni­verse.",
     "author": "Carl Sagan",
     "topic": "Science"
   },
@@ -2040,12 +2041,12 @@
     "topic": "Science"
   },
   {
-    "text": "We can judge our progress by the courage of our questions and the depth of our answers, our willingness to embrace what is true rather than what feels good.",
+    "text": "We can judge our progress by the courage of our ques­tions and the depth of our answers, our willing­ness to embrace what is true rather than what feels good.",
     "author": "Carl Sagan",
     "topic": "Science"
   },
   {
-    "text": "I’m sure the universe is full of intelligent life. It’s just been too intelligent to come here.",
+    "text": "I’m sure the universe is full of intelli­gent life. It’s just been too intelli­gent to come here.",
     "author": "Arthur C. Clarke",
     "topic": "Universe"
   },
@@ -2075,12 +2076,12 @@
     "topic": "Inspirational"
   },
   {
-    "text": "Yesterday is dead, tomorrow hasn’t arrived yet. I have just one day, and I’m going to be happy in it.",
+    "text": "Yester­day is dead, tomor­row hasn’t arrived yet. I have just one day, and I’m going to be happy in it.",
     "author": "Groucho Marx",
     "topic": "Inspirational"
   },
   {
-    "text": "I’m killing time while I wait for life to shower me with meaning and happiness.",
+    "text": "I’m killing time while I wait for life to shower me with meaning and happi­ness.",
     "author": "Bill Watterson",
     "topic": "Humor"
   },
@@ -2090,7 +2091,7 @@
     "topic": "Humor"
   },
   {
-    "text": "In my opinion, we don’t devote nearly enough scientific research to finding a cure for jerks.",
+    "text": "In my opinion, we don’t devote nearly enough scien­tific research to finding a cure for jerks.",
     "author": "Bill Watterson",
     "topic": "Humor"
   },
@@ -2110,18 +2111,18 @@
     "topic": "Humor"
   },
   {
-    "text": "If at first you don’t succeed then skydiving definitely isn’t for you.",
+    "text": "If at first you don’t succeed then sky­diving defi­nitely isn’t for you.",
     "author": "Steven Wright",
     "topic": "Humor"
   },
   {
-    "text": "Coffee. The sweet balm by which we shall accomplish today’s tasks.",
+    "text": "Coffee. The sweet balm by which we shall accom­plish today’s tasks.",
     "author": "Holly Black",
     "given": "BW",
     "topic": "Humor"
   },
   {
-    "text": "Study hard what interests you the most in the most undisciplined, irreverent and original manner possible",
+    "text": "Study hard what inter­ests you the most in the most undisci­plined, irrever­ent and original manner possible",
     "author": "Richard Feynman",
     "topic": "Learning"
   },
@@ -2131,12 +2132,12 @@
     "topic": "Storytelling"
   },
   {
-    "text": "Bear the pain of detachment and you will find inner peace.",
+    "text": "Bear the pain of detach­ment and you will find inner peace.",
     "author": "Rumi",
     "topic": "Inspirational"
   },
   {
-    "text": "Real giving is when we give to our spouses what’s important to them, whether we understand it, like it, agree with it, or not.",
+    "text": "Real giving is when we give to our spouses what’s import­ant to them, whether we under­stand it, like it, agree with it, or not.",
     "author": "Michele Weiner-Davis",
     "topic": "Love"
   },
@@ -2146,38 +2147,38 @@
     "topic": "Love"
   },
   {
-    "text": "Don’t let perfection become procrastination. Do it now.",
+    "text": "Don’t let perfec­tion become pro­crasti­nation. Do it now.",
     "author": "Danielle LaPorte",
     "given": "P",
     "topic": "Work ethic"
   },
   {
-    "text": "We cannot teach people anything. We can only help them discover it within themselves.",
+    "text": "We cannot teach people anything. We can only help them discover it within them­selves.",
     "author": "Galileo Galilei",
     "topic": "Education"
   },
   {
-    "text": "Our most basic common link is that we all inhabit this planet. We all breathe the same air. We all cherish our children’s future. And we are all mortal.",
+    "text": "Our most basic common link is that we all inhabit this planet. We all breathe the same air. We all cherish our chil­dren’s future. And we are all mortal.",
     "author": "John F. Kennedy",
     "topic": "Inspirational"
   },
   {
-    "text": "If you only walk on sunny days you’ll never reach your destination.",
+    "text": "If you only walk on sunny days you’ll never reach your desti­nation.",
     "author": "Paulo Coelho",
     "topic": "Inspirational"
   },
   {
-    "text": "It is the struggle toward an ideal, the constant effort to get higher and further, which develops manhood and character.",
+    "text": "It is the struggle toward an ideal, the constant effort to get higher and further, which develops manhood and char­acter.",
     "author": "James Terry White",
     "topic": "Inspirational"
   },
   {
-    "text": "Sometimes it falls on a generation to be great. You can be that great generation. Let your greatness blossom.",
+    "text": "Some­times it falls on a gener­ation to be great. You can be that great gener­ation. Let your great­ness blossom.",
     "author": "Nelson Mandela",
     "topic": "Inspirational"
   },
   {
-    "text": "We can complain because rose bushes have thorns, or rejoice because thorn bushes have roses.",
+    "text": "We can com­plain because rose bushes have thorns, or rejoice because thorn bushes have roses.",
     "author": "Abraham Lincoln",
     "topic": "Beauty"
   },
@@ -2187,7 +2188,7 @@
     "topic": "Change"
   },
   {
-    "text": "Books don’t offer real escape, but they can stop a mind scratching itself raw.",
+    "text": "Books don’t offer real escape, but they can stop a mind scratch­ing itself raw.",
     "author": "David Mitchell",
     "topic": "Literacy"
   },
@@ -2202,18 +2203,18 @@
     "topic": "Inspirational"
   },
   {
-    "text": "Once a year, go someplace you’ve never been before.",
+    "text": "Once a year, go some­place you’ve never been before.",
     "author": "Dalai Lama",
     "given": "ON",
     "topic": "Exploration"
   },
   {
-    "text": "Opportunity is missed by most people because it is dressed in overalls and looks like work.",
+    "text": "Opportu­nity is missed by most people because it is dressed in overalls and looks like work.",
     "author": "Thomas Edison",
     "topic": "Success"
   },
   {
-    "text": "Coming together is a beginning; keeping together is progress; working together is success.",
+    "text": "Coming together is a begin­ning; keeping together is prog­ress; working together is success.",
     "author": "Henry Ford",
     "topic": "Success"
   },
@@ -2228,12 +2229,12 @@
     "topic": "Business"
   },
   {
-    "text": "There’s no luck in business. There’s only drive, determination, and more drive.",
+    "text": "There’s no luck in business. There’s only drive, determi­nation, and more drive.",
     "author": "Sophie Kinsella",
     "topic": "Business"
   },
   {
-    "text": "There are no secrets to success. It is the result of preparation, hard work, and learning from failure.",
+    "text": "There are no secrets to success. It is the result of prepa­ration, hard work, and learning from failure.",
     "author": "Colin Powell",
     "topic": "Business"
   },
@@ -2243,7 +2244,7 @@
     "topic": "Business"
   },
   {
-    "text": "In the business world, the rearview mirror is always clearer than the windshield.",
+    "text": "In the business world, the rear­view mirror is always clearer than the wind­shield.",
     "author": "Warren Buffett",
     "topic": "Business"
   },
@@ -2254,7 +2255,7 @@
     "topic": "Inspirational"
   },
   {
-    "text": "Never be in a hurry; do everything quietly and in a calm spirit. Do not lose your inner peace for anything whatsoever, even if your whole world seems upset.",
+    "text": "Never be in a hurry; do every­thing quietly and in a calm spirit. Do not lose your inner peace for anything whatso­ever, even if your whole world seems upset.",
     "author": "Saint Francis de Sales",
     "topic": "Peace"
   },
@@ -2265,7 +2266,7 @@
     "topic": "Friendship"
   },
   {
-    "text": "The work of art is to dominate the spectator. The spectator is not to dominate the work of art.",
+    "text": "The work of art is to dominate the spec­tator. The spec­tator is not to dominate the work of art.",
     "author": "Oscar Wilde",
     "topic": "Art"
   },
@@ -2286,33 +2287,33 @@
     "topic": "Inspirational"
   },
   {
-    "text": "See the world. It’s more fantastic than any dream made or paid for in factories. Ask for no guarantees, ask for no security.",
+    "text": "See the world. It’s more fantas­tic than any dream made or paid for in fac­tories. Ask for no guaran­tees, ask for no security.",
     "author": "Ray Bradbury",
     "topic": "Inspirational"
   },
   {
-    "text": "Human beings, who are almost unique in having the ability to learn from the experience of others, are also remarkable for their apparent disinclination to do so.",
+    "text": "Human beings, who are almost unique in having the ability to learn from the expe­rience of others, are also remark­able for their apparent dis­incli­nation to do so.",
     "author": "Douglas Adams",
     "topic": "Knowledge"
   },
   {
-    "text": "At the touch of love everyone becomes a poet.",
+    "text": "At the touch of love every­one becomes a poet.",
     "author": "Plato",
     "given": "A",
     "topic": "Love"
   },
   {
-    "text": "It is not joy that makes us grateful. It is gratitude that makes us joyful.",
+    "text": "It is not joy that makes us grateful. It is grati­tude that makes us joyful.",
     "author": "David Steindl-Rast",
     "topic": "Happiness"
   },
   {
-    "text": "Every single person has at least one secret that would break your heart. If we could just remember this, I think there would be a lot more compassion and tolerance in the world.",
+    "text": "Every single person has at least one secret that would break your heart. If we could just remember this, I think there would be a lot more com­passion and toler­ance in the world.",
     "author": "Frank Warren",
     "topic": "Tolerance"
   },
   {
-    "text": "The world has become so serious that humor is a risky profession.",
+    "text": "The world has become so serious that humor is a risky profes­sion.",
     "author": "Bernardo Erlich",
     "topic": "Tolerance"
   },
@@ -2327,37 +2328,37 @@
     "topic": "Objectivity"
   },
   {
-    "text": "Unless you try to do something beyond what you have already mastered you will never grow.",
+    "text": "Unless you try to do some­thing beyond what you have already mastered you will never grow.",
     "author": "Ralph Waldo Emerson",
     "topic": "Inspirational"
   },
   {
-    "text": "If you have time to whine and complain about something then you have the time to do something about it.",
+    "text": "If you have time to whine and com­plain about some­thing then you have the time to do some­thing about it.",
     "author": "Anthony J. D’Angelo",
     "topic": "Optimism"
   },
   {
-    "text": "Anything I’ve done that was ultimately worthwhile initially scared me to death.",
+    "text": "Anything I’ve done that was ulti­mately worth­while ini­tially scared me to death.",
     "author": "Betty Bender",
     "topic": "Ambition"
   },
   {
-    "text": "It is better to fail in originality than to succeed in imitation.",
+    "text": "It is better to fail in origi­nality than to succeed in imita­tion.",
     "author": "Herman Melville",
     "topic": "Success"
   },
   {
-    "text": "Success consists of going from failure to failure without loss of enthusiasm.",
+    "text": "Success consists of going from failure to failure without loss of enthu­siasm.",
     "author": "Winston Churchill",
     "topic": "Success"
   },
   {
-    "text": "Our knowledge has made us cynical; our cleverness, hard and unkind. We think too much and feel too little. More than machinery, we need humanity. More than cleverness, we need kindness and gentleness.",
+    "text": "Our know­ledge has made us cynical; our clever­ness, hard and unkind. We think too much and feel too little. More than machin­ery, we need humanity. More than clever­ness, we need kind­ness and gentle­ness.",
     "author": "Charlie Chaplin",
     "topic": "Kindness"
   },
   {
-    "text": "The very essence of romance is uncertainty.",
+    "text": "The very essence of romance is uncer­tainty.",
     "author": "Oscar Wilde",
     "topic": "Romance"
   },
@@ -2367,7 +2368,7 @@
     "topic": "Romance"
   },
   {
-    "text": "I was smiling yesterday, I am smiling today and I will smile tomorrow. Simply because life is too short to cry for anything.",
+    "text": "I was smiling yester­day, I am smiling today and I will smile tomor­row. Simply because life is too short to cry for anything.",
     "author": "Santosh Kalwar",
     "topic": "Hope"
   },
@@ -2377,12 +2378,12 @@
     "topic": "Romance"
   },
   {
-    "text": "Romance is the glamour which turns the dust of everyday life into a golden haze.",
+    "text": "Romance is the glamour which turns the dust of every­day life into a golden haze.",
     "author": "Elinor Glyn",
     "topic": "Romance"
   },
   {
-    "text": "If music be the food of love, play on,\nGive me excess of it; that surfeiting,\nThe appetite may sicken, and so die.",
+    "text": "If music be the food of love, play on,\nGive me excess of it; that sur­feiting,\nThe appetite may sicken, and so die.",
     "author": "William Shakespeare",
     "topic": "Romance"
   },
@@ -2392,12 +2393,12 @@
     "topic": "Romance"
   },
   {
-    "text": "The Very first moment I beheld him, my heart was irrevocably gone.",
+    "text": "The Very first moment I beheld him, my heart was irrev­ocably gone.",
     "author": "Jane Austen",
     "topic": "Romance"
   },
   {
-    "text": "When one is in love, one always begins by deceiving one’s self, and one always ends by deceiving others. That is what the world calls a romance.",
+    "text": "When one is in love, one always begins by deceiv­ing one’s self, and one always ends by deceiv­ing others. That is what the world calls a romance.",
     "author": "Oscar Wilde",
     "topic": "Romance"
   },
@@ -2412,17 +2413,17 @@
     "topic": "Romance"
   },
   {
-    "text": "Romance is thinking about your significant other, when you are supposed to be thinking about something else.",
+    "text": "Romance is thinking about your signifi­cant other, when you are supposed to be thinking about some­thing else.",
     "author": "Nicholas Sparks",
     "topic": "Romance"
   },
   {
-    "text": "Love is a great emotion, but I believe it’s not just about romance; it could be love for nature, people, for relationships.",
+    "text": "Love is a great emotion, but I believe it’s not just about romance; it could be love for nature, people, for relation­ships.",
     "author": "Rani Mukerji",
     "topic": "Romance"
   },
   {
-    "text": "In a great romance, each person basically plays a part that the other really likes.",
+    "text": "In a great romance, each person basi­cally plays a part that the other really likes.",
     "author": "Elizabeth Ashley",
     "topic": "Romance"
   },
@@ -2452,17 +2453,17 @@
     "topic": "Inspirational"
   },
   {
-    "text": "If you want to leave footprints in the sands of time, don’t drag your feet.",
+    "text": "If you want to leave foot­prints in the sands of time, don’t drag your feet.",
     "author": "Arnot L. Sheppard",
     "topic": "Wisdom"
   },
   {
-    "text": "We should not judge people by their peak of excellence; but by the distance they have traveled from the point where they started.",
+    "text": "We should not judge people by their peak of excel­lence; but by the distance they have traveled from the point where they started.",
     "author": "Henry Ward Beecher",
     "topic": "Wisdom"
   },
   {
-    "text": "Obstacles are those frightful things you see when you take your eyes off your goal.",
+    "text": "Obsta­cles are those fright­ful things you see when you take your eyes off your goal.",
     "author": "Henry Ford",
     "topic": "Wisdom"
   },
@@ -2472,7 +2473,7 @@
     "topic": "Wisdom"
   },
   {
-    "text": "The pessimist complains about the wind; the optimist expects it to change; the realist adjusts the sails.",
+    "text": "The pessi­mist com­plains about the wind; the optimist expects it to change; the realist adjusts the sails.",
     "author": "William Arthur Ward",
     "topic": "Wisdom"
   },
@@ -2482,22 +2483,22 @@
     "topic": "Wisdom"
   },
   {
-    "text": "Ignorant men raise questions that wise men answered a thousand years ago.",
+    "text": "Ignorant men raise ques­tions that wise men answered a thousand years ago.",
     "author": "Johann Wolfgang von Goethe",
     "topic": "Wisdom"
   },
   {
-    "text": "Knowing yourself is the beginning of all wisdom.",
+    "text": "Knowing yourself is the begin­ning of all wisdom.",
     "author": "Aristotle",
     "topic": "Wisdom"
   },
   {
-    "text": "The saddest aspect of life right now is that science gathers knowledge faster than society gathers wisdom.",
+    "text": "The saddest aspect of life right now is that science gathers know­ledge faster than society gathers wisdom.",
     "author": "Isaac Asimov",
     "topic": "Wisdom"
   },
   {
-    "text": "Nothing is more dangerous than an idea, when it’s the only one we have.",
+    "text": "Nothing is more danger­ous than an idea, when it’s the only one we have.",
     "author": "Alain",
     "topic": "Wisdom"
   },
@@ -2513,17 +2514,17 @@
     "topic": "Wisdom"
   },
   {
-    "text": "The best index to a person’s character is how he treats people who can’t do him any good, and how he treats people who can’t fight back.",
+    "text": "The best index to a person’s charac­ter is how he treats people who can’t do him any good, and how he treats people who can’t fight back.",
     "author": "Abigail Van Buren",
     "topic": "Wisdom"
   },
   {
-    "text": "Do not seek to follow in the footsteps of the wise. Seek what they sought.",
+    "text": "Do not seek to follow in the foot­steps of the wise. Seek what they sought.",
     "author": "Matsuo Basho",
     "topic": "Wisdom"
   },
   {
-    "text": "It is the province of knowledge to speak, and it is the privilege of wisdom to listen.",
+    "text": "It is the province of know­ledge to speak, and it is the privi­lege of wisdom to listen.",
     "author": "Oliver Wendell Holmes",
     "topic": "Wisdom"
   },
@@ -2533,7 +2534,7 @@
     "topic": "Wisdom"
   },
   {
-    "text": "The young man knows the rules, but the old man knows the exceptions.",
+    "text": "The young man knows the rules, but the old man knows the excep­tions.",
     "author": "Oliver Wendell Holmes",
     "topic": "Wisdom"
   },
@@ -2543,7 +2544,7 @@
     "topic": "Wisdom"
   },
   {
-    "text": "Nature gave men two ends — one to sit on and one to think with. Ever since then man’s success or failure has been dependent on the one he used most.",
+    "text": "Nature gave men two ends — one to sit on and one to think with. Ever since then man’s success or failure has been depen­dent on the one he used most.",
     "author": "George Ross Kirkpatrick",
     "topic": "Wisdom"
   },
@@ -2553,7 +2554,7 @@
     "topic": "Wisdom"
   },
   {
-    "text": "Even when we are quite alone, how often do we think with pleasure or pain of what others think of us — of their imagined approbation or disapprobation.",
+    "text": "Even when we are quite alone, how often do we think with pleas­ure or pain of what others think of us — of their imagined appro­bation or disappro­bation.",
     "author": "Charles Darwin",
     "topic": "Wisdom"
   }
