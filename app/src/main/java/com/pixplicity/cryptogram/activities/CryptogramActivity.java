@@ -273,7 +273,7 @@ public class CryptogramActivity extends BaseActivity implements GoogleApiClient.
                             }
 
                             private void dismiss(TapTargetView view) {
-                                if (System.currentTimeMillis() - showTime >= 2000) {
+                                if (System.currentTimeMillis() - showTime >= 1300) {
                                     // Ensure that the user saw the message
                                     PrefsUtils.setHighlighted(type, true);
                                     view.dismiss(false);
@@ -586,7 +586,7 @@ public class CryptogramActivity extends BaseActivity implements GoogleApiClient.
     private void onGameplayReady() {
         if (AprilSpecialEdition.doSpecialMagicSauce(this, true)) {
             if (mDarkTheme) {
-                mIvBackground.setImageResource(R.drawable.bg_april_dark);
+                mIvBackground.setImageResource(R.drawable.bg_april_dark_MISSING);
             } else {
                 mIvBackground.setImageResource(R.drawable.bg_april);
             }
