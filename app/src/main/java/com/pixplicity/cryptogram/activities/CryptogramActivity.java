@@ -725,18 +725,20 @@ public class CryptogramActivity extends BaseActivity implements GoogleApiClient.
                     }
                     break;
                 }
-                String currentId = String.valueOf(cryptogram.getNumber());
+                String prefilledText = null;
+                int currentId = cryptogram.getNumber();
+                if (currentId > 0) {
+                    prefilledText = String.valueOf(currentId);
+                }
                 new MaterialDialog.Builder(this)
                         .content(R.string.go_to_puzzle_content)
                         .inputType(InputType.TYPE_CLASS_NUMBER)
-                        .input(null, currentId, new MaterialDialog.InputCallback() {
+                        .input(null, prefilledText, new MaterialDialog.InputCallback() {
                             @Override
                             public void onInput(MaterialDialog dialog, CharSequence input) {
                                 MDButton button = dialog.getActionButton(DialogAction.POSITIVE);
                                 try {
-                                    //noinspection ResultOfMethodCallIgnored
-                                    Integer.parseInt(input.toString());
-                                    button.setEnabled(true);
+                                    button.setEnabled(Integer.parseInt(input.toString()) > 0);
                                 } catch (NumberFormatException ignored) {
                                     button.setEnabled(false);
                                 }
