@@ -471,8 +471,7 @@ public class CryptogramActivity extends BaseActivity implements GoogleApiClient.
         if (cryptogram != null) {
             CryptogramProvider provider = CryptogramProvider.getInstance(this);
             provider.setCurrentId(cryptogram.getId());
-            mRvDrawer.smoothScrollToPosition(
-                    provider.getCurrentIndex());
+            mRvDrawer.scrollToPosition(provider.getCurrentIndex());
             mTvError.setVisibility(View.GONE);
             mVgCryptogram.setVisibility(View.VISIBLE);
             // Apply the puzzle to the CryptogramView
