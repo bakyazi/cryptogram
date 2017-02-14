@@ -18,6 +18,7 @@ Best of all, it's completely free, and free of ads! Enjoy!
 ## Contributors
 
 * [Paul Lammertsma](https://github.com/pflammertsma)
+* [Chinmay Pai](https://github.com/Thunderbottom)
 
 ## License
 
