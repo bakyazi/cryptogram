@@ -16,7 +16,10 @@ import com.pixplicity.cryptogram.models.CryptogramProgress;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.LinkedHashSet;
 import java.util.Random;
 import java.util.Set;
@@ -38,6 +41,7 @@ public class CryptogramProvider {
 
     private final Gson mGson = new Gson();
     private final Random mRandom = new Random();
+    private ArrayList<Integer> mRandomIndices;
 
     @NonNull
     public static CryptogramProvider getInstance(Context context) {
@@ -141,24 +145,46 @@ public class CryptogramProvider {
 
     @Nullable
     public Cryptogram getNext() {
-        int oldId = mCurrentIndex;
+        int oldIndex = mCurrentIndex;
+        int newIndex = -1;
         int count = getCount();
         if (count == 0) {
             return null;
         }
         if (PrefsUtils.getRandomize()) {
-            mCurrentIndex = mRandom.nextInt(count);
-        } else {
-            mCurrentIndex++;
+            if (mRandomIndices == null) {
+                mRandomIndices = new ArrayList<>();
+                for (int i = 0; i < getAll().length; i++) {
+                    mRandomIndices.add(i);
+                }
+                Collections.shuffle(mRandomIndices, mRandom);
+            }
+            boolean chooseNext = false;
+            Iterator<Integer> iter = mRandomIndices.iterator();
+            while (iter.hasNext()) {
+                Integer index = iter.next();
+                Cryptogram cryptogram = get(index);
+                if (cryptogram == null || cryptogram.isCompleted()) {
+                    // No good; eliminate this candidate and find the next
+                    iter.remove();
+                    cryptogram = null;
+                }
+                if (oldIndex == index) {
+                    chooseNext = true;
+                } else if (chooseNext && cryptogram != null) {
+                    newIndex = index;
+                    break;
+                }
+            }
+            if (newIndex < 0 && !mRandomIndices.isEmpty()) {
+                newIndex = mRandomIndices.get(0);
+            }
+        } else if (mCurrentIndex + 1 < getCount()) {
+            newIndex = mCurrentIndex + 1;
         }
-        if (mCurrentIndex == oldId) {
-            // If the puzzle didn't change, simply take the next puzzle
-            mCurrentIndex = oldId + 1;
+        if (newIndex > -1) {
+            setCurrentIndex(newIndex);
         }
-        if (mCurrentIndex >= getCount()) {
-            mCurrentIndex = 0;
-        }
-        setCurrentIndex(mCurrentIndex);
         return get(mCurrentIndex);
     }
 
