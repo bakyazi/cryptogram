@@ -1,5 +1,7 @@
 package com.pixplicity.cryptogram.utils;
 
+import android.os.AsyncTask;
+
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.games.Games;
 import com.pixplicity.cryptogram.CryptogramApp;
@@ -16,13 +18,26 @@ public class LeaderboardProvider {
         return sInstance;
     }
 
-    public void submit(GoogleApiClient googleApiClient) {
-        CryptogramApp context = CryptogramApp.getInstance();
+    public void submit(final GoogleApiClient googleApiClient) {
+        final CryptogramApp context = CryptogramApp.getInstance();
+        new AsyncTask<Void, Void, Long>() {
+            @Override
+            protected Long doInBackground(Void... voids) {
+                synchronized (LeaderboardProvider.this) {
+                    return CryptogramProvider.getInstance(context).getTotalScore();
+                }
+            }
 
-        long score = CryptogramProvider.getInstance(context).getTotalScore();
-        Games.Leaderboards.submitScore(googleApiClient,
-                                       context.getString(R.string.leaderboard_scoreboard),
-                                       score);
+            @Override
+            protected void onPostExecute(Long score) {
+                if (!googleApiClient.isConnected()) {
+                    return;
+                }
+                Games.Leaderboards.submitScore(googleApiClient,
+                        context.getString(R.string.leaderboard_scoreboard),
+                        score);
+            }
+        }.execute();
     }
 
 }
