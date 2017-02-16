@@ -181,11 +181,13 @@ public class CryptogramProgress {
             for (String word : cryptogram.getWords()) {
                 for (int i = 0; i < word.length(); i++) {
                     char c = Character.toUpperCase(word.charAt(i));
-                    if (cryptogram.isInputChar(c) && !mCharMapping.containsKey(c)) {
+                    if (cryptogram.isInputChar(c)) {
                         if (resetCharMapping) {
                             mCharMapping.put(c, (char) 0);
                         }
-                        mCharacterList.add(c);
+                        if (!mCharacterList.contains(c)) {
+                            mCharacterList.add(c);
+                        }
                     }
                 }
             }
