@@ -3,7 +3,6 @@ package com.pixplicity.cryptogram.models;
 import android.content.Context;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
-import android.text.TextUtils;
 
 import com.google.gson.annotations.SerializedName;
 import com.pixplicity.cryptogram.CryptogramApp;
@@ -40,6 +39,7 @@ public class Cryptogram {
     @SerializedName("noscore")
     protected boolean mNoScore;
 
+    private transient String mRawText;
     private transient String[] mWords;
 
     private CryptogramProgress mProgress;
@@ -91,7 +91,10 @@ public class Cryptogram {
     }
 
     public String getText() {
-        return mText;
+        if (mRawText == null) {
+            mRawText = mText.replaceAll("\\[\\]", "");
+        }
+        return mRawText;
     }
 
     public String getAuthor() {
@@ -105,10 +108,11 @@ public class Cryptogram {
     @NonNull
     public String[] getWords() {
         if (mWords == null) {
-            if (mText == null || mText.length() == 0) {
+            String text = getText();
+            if (text == null || text.length() == 0) {
                 mWords = new String[0];
             } else {
-                mWords = mText.split("\\s");
+                mWords = text.split("\\s");
             }
         }
         return mWords;
@@ -223,11 +227,12 @@ public class Cryptogram {
         save();
     }
 
+    public boolean isRevealed(int index) {
+        return false;
+    }
+
     public boolean isRevealed(char c) {
-        if (mGiven != null && mGiven.indexOf(c) > -1) {
-            return true;
-        }
-        return getProgress().isRevealed(c);
+        return mGiven != null && mGiven.indexOf(c) > -1 || getProgress().isRevealed(c);
     }
 
     public int getReveals() {
@@ -296,7 +301,7 @@ public class Cryptogram {
 
     @Override
     public String toString() {
-        return getId() + ": " + getText().length() + " chars, author '" + getAuthor() + "' (“" + StringUtils.ellipsize(mText, 40) + "”)";
+        return getId() + ": " + getText().length() + " chars, author '" + getAuthor() + "' (“" + StringUtils.ellipsize(getText(), 40) + "”)";
     }
 
 }

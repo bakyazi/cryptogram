@@ -1,5 +1,6 @@
 package com.pixplicity.cryptogram.utils;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -69,6 +70,7 @@ public class CryptogramProvider {
         }
     }
 
+    @SuppressLint("UseSparseArrays")
     private void readStream(InputStream is) {
         mCryptograms = mGson.fromJson(new InputStreamReader(is), Cryptogram[].class);
         int index = 0, nextId = 0;
@@ -133,7 +135,7 @@ public class CryptogramProvider {
         return get(mCurrentIndex);
     }
 
-    public void setCurrentIndex(int index) {
+    private void setCurrentIndex(int index) {
         mCurrentIndex = index;
         PrefsUtils.setCurrentId(getIdFromIndex(index));
     }

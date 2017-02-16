@@ -441,6 +441,7 @@ public class CryptogramView extends android.support.v7.widget.AppCompatTextView 
         float offsetX2 = (mBoxW - mCharW2) / 4;
         float offsetY = mBoxH / 4;
         float x = 0, y = mBoxH;
+        int index = 0;
         for (String word : mCryptogram.getWords()) {
             float w = word.length() * mBoxW;
             if (x + w > canvas.getWidth()) {
@@ -461,7 +462,7 @@ public class CryptogramView extends android.support.v7.widget.AppCompatTextView 
                     chr = String.valueOf(mappedChar);
                     canvas.drawText(chr, x + offsetX2, y + mBoxH + offsetY, mTextPaintMapping);
                 }
-                if (mCryptogram.isRevealed(c)) {
+                if (mCryptogram.isRevealed(index) || mCryptogram.isRevealed(c)) {
                     // This box has already been revealed to the user
                     canvas.drawLine(x + offsetX1, y + offsetY, x + mBoxW - offsetX1, y + offsetY, mLinePaint2);
                 } else if (mCryptogram.isInputChar(c)) {
@@ -483,9 +484,11 @@ public class CryptogramView extends android.support.v7.widget.AppCompatTextView 
                 }
                 // Box width
                 x += mBoxW;
+                index++;
             }
             // Trailing space
             x += mBoxW;
+            index++;
         }
     }
 
