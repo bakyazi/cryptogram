@@ -59,6 +59,7 @@ import com.pixplicity.cryptogram.utils.PrefsUtils;
 import com.pixplicity.cryptogram.utils.StringUtils;
 import com.pixplicity.cryptogram.views.CryptogramView;
 import com.pixplicity.cryptogram.views.HintView;
+import com.pixplicity.cryptogram.views.CryptogramLayout;
 import com.pixplicity.generate.Rate;
 import com.squareup.otto.Subscribe;
 
@@ -108,7 +109,7 @@ public class CryptogramActivity extends BaseActivity implements GoogleApiClient.
     protected Button mBtAprilNonsense;
 
     @BindView(R.id.vg_cryptogram)
-    protected ViewGroup mVgCryptogram;
+    protected CryptogramLayout mVgCryptogram;
 
     @BindView(R.id.tv_author)
     protected TextView mTvAuthor;
@@ -205,6 +206,7 @@ public class CryptogramActivity extends BaseActivity implements GoogleApiClient.
         });
         mRvDrawer.setAdapter(mAdapter);
 
+        mVgCryptogram.setCrytogramView(mCryptogramView);
         mCryptogramView.setOnCryptogramProgressListener(new CryptogramView.OnCryptogramProgressListener() {
             @Override
             public void onCryptogramProgress(Cryptogram cryptogram) {
@@ -656,7 +658,7 @@ public class CryptogramActivity extends BaseActivity implements GoogleApiClient.
             return true;
             case R.id.action_reveal_letter: {
                 if (cryptogram == null || !mCryptogramView.hasSelectedCharacter()) {
-                    Snackbar.make(mVgContent, "Please select a letter first.", Snackbar.LENGTH_SHORT).show();
+                    Snackbar.make(mVgRoot, "Please select a letter first.", Snackbar.LENGTH_SHORT).show();
                 } else {
                     new AlertDialog.Builder(this)
                             .setMessage(R.string.reveal_letter_confirmation)
@@ -771,7 +773,7 @@ public class CryptogramActivity extends BaseActivity implements GoogleApiClient.
                                             .getInstance(CryptogramActivity.this);
                                     Cryptogram cryptogram = provider.getByNumber(puzzleNumber);
                                     if (cryptogram == null) {
-                                        Snackbar.make(mVgContent, getString(R.string.puzzle_nonexistant, puzzleNumber),
+                                        Snackbar.make(mVgRoot, getString(R.string.puzzle_nonexistant, puzzleNumber),
                                                 Snackbar.LENGTH_SHORT).show();
                                     } else {
                                         updateCryptogram(cryptogram);

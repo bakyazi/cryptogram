@@ -14,7 +14,6 @@ import android.text.InputType;
 import android.text.TextPaint;
 import android.util.AttributeSet;
 import android.view.KeyEvent;
-import android.view.View;
 import android.view.inputmethod.BaseInputConnection;
 import android.view.inputmethod.EditorInfo;
 import android.view.inputmethod.InputConnection;
@@ -133,12 +132,6 @@ public class CryptogramView extends android.support.v7.widget.AppCompatTextView 
             setCryptogram(new Cryptogram());
         }
 
-        setOnClickListener(new OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                showSoftInput();
-            }
-        });
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             setShowSoftInputOnFocus(true);
         }
@@ -151,18 +144,18 @@ public class CryptogramView extends android.support.v7.widget.AppCompatTextView 
     protected void onFocusChanged(boolean focused, int direction, Rect previouslyFocusedRect) {
         super.onFocusChanged(focused, direction, previouslyFocusedRect);
         if (focused) {
-            if (mCryptogram != null && !mCryptogram.isCompleted()) {
-                showSoftInput();
-            }
+            showSoftInput();
         } else {
             hideSoftInput();
         }
     }
 
     public void showSoftInput() {
-        InputMethodManager inputMethodManager = (InputMethodManager) getContext().getSystemService(Context.INPUT_METHOD_SERVICE);
-        if (inputMethodManager != null) {
-            inputMethodManager.showSoftInput(this, InputMethodManager.SHOW_IMPLICIT);
+        if (mCryptogram != null && !mCryptogram.isCompleted()) {
+            InputMethodManager inputMethodManager = (InputMethodManager) getContext().getSystemService(Context.INPUT_METHOD_SERVICE);
+            if (inputMethodManager != null) {
+                inputMethodManager.showSoftInput(this, InputMethodManager.SHOW_IMPLICIT);
+            }
         }
     }
 
