@@ -8,6 +8,7 @@
         android:layout_gravity="start"
         android:background="@color/colorPrimaryDark"
         android:orientation="vertical"
+        tools:visibility="gone"
         tools:layout_gravity="">
 
         <RelativeLayout

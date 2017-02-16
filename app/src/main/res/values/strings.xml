@@ -52,7 +52,8 @@
     <string name="share_partial">I’m working on a quote by %1$s!\n\nDecipher cryptograms to reveal quotes like these! %2$s</string>
     <string name="share_url">https://play.google.com/store/apps/details?id=com.pixplicity.cryptogram</string>
 
-    <string name="quote">— %1$s</string>
+    <!-- followed by a hair space as otherwise text is clipped when italic -->
+    <string name="quote">— %1$s&#x200A;</string>
     <string name="topic">Topic: “%1$s”</string>
     <string name="not_applicable">N/A</string>
 
