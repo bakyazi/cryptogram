@@ -4,6 +4,9 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 
+import com.crashlytics.android.answers.Answers;
+import com.crashlytics.android.answers.ContentViewEvent;
+import com.pixplicity.cryptogram.CryptogramApp;
 import com.pixplicity.cryptogram.R;
 
 public class AboutActivity extends BaseActivity {
@@ -20,6 +23,8 @@ public class AboutActivity extends BaseActivity {
         mToolbar.setTitle(R.string.about);
 
         setHomeButtonEnabled(true);
+
+        Answers.getInstance().logContentView(new ContentViewEvent().putContentName(CryptogramApp.CONTENT_ABOUT));
     }
 
 }

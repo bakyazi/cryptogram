@@ -35,12 +35,16 @@ import com.afollestad.materialdialogs.DialogAction;
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.afollestad.materialdialogs.internal.MDButton;
 import com.crashlytics.android.Crashlytics;
+import com.crashlytics.android.answers.Answers;
+import com.crashlytics.android.answers.ContentViewEvent;
+import com.crashlytics.android.answers.LoginEvent;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.common.images.ImageManager;
 import com.google.android.gms.games.Games;
 import com.google.android.gms.games.Player;
 import com.pixplicity.cryptogram.BuildConfig;
+import com.pixplicity.cryptogram.CryptogramApp;
 import com.pixplicity.cryptogram.R;
 import com.pixplicity.cryptogram.adapters.CryptogramAdapter;
 import com.pixplicity.cryptogram.events.CryptogramEvent;
@@ -400,7 +404,9 @@ public class CryptogramActivity extends BaseActivity implements GoogleApiClient.
         if (requestCode == RC_SIGN_IN) {
             mSignInClicked = false;
             mResolvingConnectionFailure = false;
-            if (resultCode == RESULT_OK) {
+            boolean success = resultCode == RESULT_OK;
+            Answers.getInstance().logLogin(new LoginEvent().putSuccess(success));
+            if (success) {
                 mGoogleApiClient.connect();
             } else {
                 showGmsError(resultCode);
@@ -422,6 +428,7 @@ public class CryptogramActivity extends BaseActivity implements GoogleApiClient.
                 @Override
                 public void onClick(View view) {
                     dialog.dismiss();
+                    Answers.getInstance().logContentView(new ContentViewEvent().putContentName(CryptogramApp.CONTENT_LEADERBOARDS));
                     try {
                         startActivityForResult(
                                 Games.Leaderboards.getLeaderboardIntent(mGoogleApiClient, getString(R.string.leaderboard_scoreboard)),
@@ -437,6 +444,7 @@ public class CryptogramActivity extends BaseActivity implements GoogleApiClient.
                 @Override
                 public void onClick(View view) {
                     dialog.dismiss();
+                    Answers.getInstance().logContentView(new ContentViewEvent().putContentName(CryptogramApp.CONTENT_ACHIEVEMENTS));
                     try {
                         startActivityForResult(
                                 Games.Achievements.getAchievementsIntent(mGoogleApiClient),
@@ -817,6 +825,7 @@ public class CryptogramActivity extends BaseActivity implements GoogleApiClient.
             }
             return true;
             case R.id.action_stats: {
+                Answers.getInstance().logContentView(new ContentViewEvent().putContentName(CryptogramApp.CONTENT_STATISTICS));
                 TableLayout dialogView = (TableLayout) LayoutInflater.from(this).inflate(R.layout.dialog_statistics, null);
                 if (cryptogram != null) {
                     cryptogram.save();
