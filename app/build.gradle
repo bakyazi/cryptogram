@@ -42,7 +42,7 @@ android {
         }
     }
     compileSdkVersion 25
-    buildToolsVersion "25.0.0"
+    buildToolsVersion "25.0.2"
     defaultConfig {
         applicationId "com.pixplicity.cryptogram"
         minSdkVersion 14
@@ -64,11 +64,14 @@ android {
     }
 }
 
-task copyTestAssets(type: Copy){
+task deleteTestResources(type: Delete) {
+    delete "${projectDir}/src/test/resources/assets", "${projectDir}/src/test/resources/res"
+}
+task copyTestAssets(type: Copy) {
     from "${projectDir}/src/main/assets"
     into "${projectDir}/src/test/resources/assets"
 }
-task copyTestResources(type: Copy){
+task copyTestResources(type: Copy) {
     from "${projectDir}/src/main/res"
     into "${projectDir}/src/test/resources/res"
 }
@@ -76,6 +79,7 @@ task copyTestResources(type: Copy){
 tasks.whenTaskAdded { task ->
     println 'task check: ' + task.getName()
     if (task.name == 'assembleDebug' || task.name == 'assembleRelease') {
+        deleteTestResources.execute()
         copyTestAssets.execute()
         copyTestResources.execute()
     }
