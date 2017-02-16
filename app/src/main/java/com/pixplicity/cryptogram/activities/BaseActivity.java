@@ -26,8 +26,8 @@ import butterknife.ButterKnife;
 
 public abstract class BaseActivity extends AppCompatActivity {
 
-    @BindView(R.id.content)
-    protected View mVgContent;
+    @BindView(R.id.vg_root)
+    protected View mVgRoot;
 
     @BindView(R.id.coordinator)
     protected View mVgCoordinator;
