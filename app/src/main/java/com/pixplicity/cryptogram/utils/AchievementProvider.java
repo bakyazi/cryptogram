@@ -257,7 +257,7 @@ public class AchievementProvider {
         public AchievementStats() {
         }
 
-        public void calculate(Context context) {
+        public synchronized void calculate(Context context) {
             mTimes.clear();
             mCompleted = 0;
             mPerfectScore = 0;
@@ -356,7 +356,7 @@ public class AchievementProvider {
             return calendar;
         }
 
-        public boolean hasSeries(int length, int seriesDuration) {
+        public synchronized boolean hasSeries(int length, int seriesDuration) {
             Long[] keys = new Long[mTimes.size()];
             mTimes.keySet().toArray(keys);
             for (int i = length; i < mTimes.size(); i++) {
