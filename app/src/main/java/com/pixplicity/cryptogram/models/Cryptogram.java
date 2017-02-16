@@ -254,6 +254,7 @@ public class Cryptogram {
         return getProgress().getDuration();
     }
 
+    @Nullable
     public Float getScore() {
         if (isInstruction()) {
             return null;
