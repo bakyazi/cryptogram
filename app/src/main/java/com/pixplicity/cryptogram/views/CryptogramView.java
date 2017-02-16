@@ -46,7 +46,7 @@ public class CryptogramView extends android.support.v7.widget.AppCompatTextView 
     private TextPaint mTextPaintInput, mTextPaintInputComplete, mTextPaintMapping, mTextPaintMistake;
     private int mBoxInset;
 
-    boolean mDarkTheme = PrefsUtils.getDarkTheme();
+    private boolean mDarkTheme;
 
     private OnCryptogramProgressListener mOnCryptogramProgressListener;
 
@@ -68,6 +68,10 @@ public class CryptogramView extends android.support.v7.widget.AppCompatTextView 
 
     private void init(Context context, AttributeSet attrs, int defStyleAttr) {
         Resources r = context.getResources();
+
+        if (!isInEditMode()) {
+            mDarkTheme = PrefsUtils.getDarkTheme();
+        }
 
         mPaint = new Paint();
         if (mDarkTheme) {
