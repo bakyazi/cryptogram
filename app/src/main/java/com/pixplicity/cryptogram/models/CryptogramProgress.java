@@ -8,8 +8,8 @@ import com.crashlytics.android.answers.Answers;
 import com.crashlytics.android.answers.LevelEndEvent;
 import com.crashlytics.android.answers.LevelStartEvent;
 import com.google.gson.annotations.SerializedName;
-import com.pixplicity.cryptogram.CryptogramApp;
 import com.pixplicity.cryptogram.events.CryptogramEvent;
+import com.pixplicity.cryptogram.utils.EventProvider;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -326,7 +326,7 @@ public class CryptogramProgress {
                 new LevelStartEvent()
                         .putLevelName("Puzzle #" + puzzleNumber));
 
-        CryptogramApp.getInstance().getBus().post(
+        EventProvider.postEvent(
                 new CryptogramEvent.CryptogramStartedEvent(cryptogram));
     }
 
@@ -342,7 +342,7 @@ public class CryptogramProgress {
         Answers.getInstance().logLevelEnd(
                 event);
 
-        CryptogramApp.getInstance().getBus().post(
+        EventProvider.postEvent(
                 new CryptogramEvent.CryptogramCompletedEvent(cryptogram));
     }
 
