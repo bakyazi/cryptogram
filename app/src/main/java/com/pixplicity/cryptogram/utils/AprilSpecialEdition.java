@@ -20,7 +20,7 @@ import java.util.GregorianCalendar;
 
 public class AprilSpecialEdition {
 
-    public static final boolean TEST = true && BuildConfig.DEBUG;
+    public static final boolean TEST = false && BuildConfig.DEBUG;
 
     private static Calendar sCalScheduleStart, sCalScheduleEnd, sCalNow = new GregorianCalendar();
 
