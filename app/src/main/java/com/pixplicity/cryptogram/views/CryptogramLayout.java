@@ -2,7 +2,9 @@ package com.pixplicity.cryptogram.views;
 
 import android.content.Context;
 import android.support.annotation.Nullable;
+import android.support.v4.view.GestureDetectorCompat;
 import android.util.AttributeSet;
+import android.view.GestureDetector;
 import android.view.MotionEvent;
 import android.widget.LinearLayout;
 
@@ -10,6 +12,7 @@ import android.widget.LinearLayout;
 public class CryptogramLayout extends LinearLayout {
 
     private CryptogramView mCryptogramView;
+    private GestureDetectorCompat mGestureDetector;
 
     public CryptogramLayout(Context context) {
         super(context);
@@ -28,6 +31,15 @@ public class CryptogramLayout extends LinearLayout {
 
     private void init(Context context) {
         setClickable(true);
+        mGestureDetector = new GestureDetectorCompat(context, new GestureDetector.SimpleOnGestureListener() {
+            @Override
+            public boolean onSingleTapUp(MotionEvent motionEvent) {
+                if (mCryptogramView != null) {
+                    mCryptogramView.showSoftInput();
+                }
+                return false;
+            }
+        });
     }
 
     public void setCrytogramView(CryptogramView view) {
@@ -35,15 +47,9 @@ public class CryptogramLayout extends LinearLayout {
     }
 
     @Override
-    public boolean onInterceptTouchEvent(MotionEvent ev) {
-        switch (ev.getAction()) {
-            case MotionEvent.ACTION_DOWN:
-                if (mCryptogramView != null) {
-                    mCryptogramView.showSoftInput();
-                }
-                break;
-        }
-        return super.onInterceptTouchEvent(ev);
+    public boolean dispatchTouchEvent(MotionEvent ev) {
+        mGestureDetector.onTouchEvent(ev);
+        return super.dispatchTouchEvent(ev);
     }
 
 }

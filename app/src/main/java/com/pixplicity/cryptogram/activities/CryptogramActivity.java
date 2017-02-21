@@ -57,9 +57,9 @@ import com.pixplicity.cryptogram.utils.LeaderboardProvider;
 import com.pixplicity.cryptogram.utils.NotificationPublisher;
 import com.pixplicity.cryptogram.utils.PrefsUtils;
 import com.pixplicity.cryptogram.utils.StringUtils;
+import com.pixplicity.cryptogram.views.CryptogramLayout;
 import com.pixplicity.cryptogram.views.CryptogramView;
 import com.pixplicity.cryptogram.views.HintView;
-import com.pixplicity.cryptogram.views.CryptogramLayout;
 import com.pixplicity.generate.Rate;
 import com.squareup.otto.Subscribe;
 
@@ -217,6 +217,82 @@ public class CryptogramActivity extends BaseActivity implements GoogleApiClient.
         updateCryptogram(cryptogramProvider.getCurrent());
     }
 
+    @Override
+    protected void onNewIntent(Intent intent) {
+        super.onNewIntent(intent);
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+
+        mGoogleApiClient.connect();
+
+        final CryptogramProvider cryptogramProvider = CryptogramProvider.getInstance(this);
+        Cryptogram cryptogram = cryptogramProvider.getCurrent();
+        if (cryptogram != null) {
+            cryptogram.onResume();
+        }
+
+        EventProvider.getBus().register(this);
+
+        if (hasOnBoardingPages()) {
+            showOnboarding(0);
+        } else {
+            onGameplayReady();
+        }
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        NotificationPublisher.clear(this, NotificationPublisher.NOTIFICATION_APRIL_SPECIAL);
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+
+        AprilSpecialEdition.doSpecialMagicSauce(this, false);
+
+        if (mGoogleApiClient.isConnected()) {
+            mGoogleApiClient.disconnect();
+        }
+
+        final CryptogramProvider cryptogramProvider = CryptogramProvider.getInstance(this);
+        Cryptogram cryptogram = cryptogramProvider.getCurrent();
+        if (cryptogram != null) {
+            cryptogram.onPause();
+        }
+
+        EventProvider.getBus().unregister(this);
+    }
+
+    @Override
+    public void onBackPressed() {
+        if (mDrawerLayout != null && mDrawerLayout.isDrawerOpen(GravityCompat.START)) {
+            mDrawerLayout.closeDrawer(GravityCompat.START);
+            return;
+        }
+        super.onBackPressed();
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent intent) {
+        super.onActivityResult(requestCode, resultCode, intent);
+        if (requestCode == RC_SIGN_IN) {
+            mSignInClicked = false;
+            mResolvingConnectionFailure = false;
+            boolean success = resultCode == RESULT_OK;
+            Answers.getInstance().logLogin(new LoginEvent().putSuccess(success));
+            if (success) {
+                mGoogleApiClient.connect();
+            } else {
+                showGmsError(resultCode);
+            }
+        }
+    }
+
     private boolean hasOnBoardingPages() {
         return PrefsUtils.getOnboarding() < ONBOARDING_PAGES - 1;
     }
@@ -338,82 +414,6 @@ public class CryptogramActivity extends BaseActivity implements GoogleApiClient.
                     }
                 })
                 .show();
-    }
-
-    @Override
-    protected void onNewIntent(Intent intent) {
-        super.onNewIntent(intent);
-    }
-
-    @Override
-    protected void onStart() {
-        super.onStart();
-
-        mGoogleApiClient.connect();
-
-        final CryptogramProvider cryptogramProvider = CryptogramProvider.getInstance(this);
-        Cryptogram cryptogram = cryptogramProvider.getCurrent();
-        if (cryptogram != null) {
-            cryptogram.onResume();
-        }
-
-        EventProvider.getBus().register(this);
-
-        if (hasOnBoardingPages()) {
-            showOnboarding(0);
-        } else {
-            onGameplayReady();
-        }
-    }
-
-    @Override
-    protected void onResume() {
-        super.onResume();
-        NotificationPublisher.clear(this, NotificationPublisher.NOTIFICATION_APRIL_SPECIAL);
-    }
-
-    @Override
-    protected void onStop() {
-        super.onStop();
-
-        AprilSpecialEdition.doSpecialMagicSauce(this, false);
-
-        if (mGoogleApiClient.isConnected()) {
-            mGoogleApiClient.disconnect();
-        }
-
-        final CryptogramProvider cryptogramProvider = CryptogramProvider.getInstance(this);
-        Cryptogram cryptogram = cryptogramProvider.getCurrent();
-        if (cryptogram != null) {
-            cryptogram.onPause();
-        }
-
-        EventProvider.getBus().unregister(this);
-    }
-
-    @Override
-    public void onBackPressed() {
-        if (mDrawerLayout != null && mDrawerLayout.isDrawerOpen(GravityCompat.START)) {
-            mDrawerLayout.closeDrawer(GravityCompat.START);
-            return;
-        }
-        super.onBackPressed();
-    }
-
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent intent) {
-        super.onActivityResult(requestCode, resultCode, intent);
-        if (requestCode == RC_SIGN_IN) {
-            mSignInClicked = false;
-            mResolvingConnectionFailure = false;
-            boolean success = resultCode == RESULT_OK;
-            Answers.getInstance().logLogin(new LoginEvent().putSuccess(success));
-            if (success) {
-                mGoogleApiClient.connect();
-            } else {
-                showGmsError(resultCode);
-            }
-        }
     }
 
     @OnClick(R.id.vg_google_play_games)
