@@ -7,11 +7,10 @@ import android.content.Context;
 import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.view.animation.AccelerateDecelerateInterpolator;
-import android.view.animation.Animation;
-import android.view.animation.RotateAnimation;
+import android.widget.ImageView;
 
 import com.afollestad.materialdialogs.MaterialDialog;
+import com.bumptech.glide.Glide;
 import com.pixplicity.cryptogram.BuildConfig;
 import com.pixplicity.cryptogram.R;
 
@@ -20,7 +19,7 @@ import java.util.GregorianCalendar;
 
 public class AprilSpecialEdition {
 
-    public static final boolean TEST = false && BuildConfig.DEBUG;
+    private static final boolean TEST = false && BuildConfig.DEBUG;
 
     private static Calendar sCalScheduleStart, sCalScheduleEnd, sCalNow = new GregorianCalendar();
 
@@ -41,7 +40,7 @@ public class AprilSpecialEdition {
             sCalScheduleEnd.add(Calendar.HOUR, 13);
             if (TEST) {
                 sCalScheduleStart.setTimeInMillis(sCalNow.getTimeInMillis());
-                sCalScheduleStart.add(Calendar.SECOND, 5);
+                sCalScheduleStart.add(Calendar.SECOND, -5);
             }
         }
         if (sCalScheduleStart.before(sCalNow)) {
@@ -52,13 +51,12 @@ public class AprilSpecialEdition {
                     if (showDialog) {
                         sShownAt = System.currentTimeMillis();
                         View customView = LayoutInflater.from(context).inflate(R.layout.dialog_april, null);
-                        View ivApril = customView.findViewById(R.id.iv_april);
-                        RotateAnimation anim = new RotateAnimation(0, 360, Animation.RELATIVE_TO_SELF, 0.5f, Animation.RELATIVE_TO_SELF, 0.5f);
-                        anim.setRepeatMode(Animation.REVERSE);
-                        anim.setRepeatCount(Animation.INFINITE);
-                        anim.setDuration(2000);
-                        anim.setInterpolator(new AccelerateDecelerateInterpolator());
-                        ivApril.startAnimation(anim);
+                        ImageView ivApril = (ImageView) customView.findViewById(R.id.iv_april);
+                        Glide.with(context)
+                             .load(R.drawable.im_april)
+                             .placeholder(R.drawable.im_april_still)
+                             .crossFade(0)
+                             .fitCenter().into(ivApril);
                         new MaterialDialog.Builder(context)
                                 .customView(customView, false)
                                 .cancelable(false)
