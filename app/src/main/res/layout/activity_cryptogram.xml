@@ -51,7 +51,7 @@
                     android:id="@+id/hint"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:background="@color/colorPrimaryDark"
+                    android:background="?attr/colorPrimary"
                     android:elevation="4dp"
                     android:padding="8dp"
                     android:textColor="@color/textLight"
