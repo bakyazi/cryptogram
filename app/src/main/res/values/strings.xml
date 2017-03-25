@@ -37,6 +37,7 @@
     <string name="reveal_letter_confirmation">Are you sure you’d like to reveal the selected letter? This affects your score.</string>
     <string name="reveal_mistakes_confirmation">Are you sure you’d like to highlight all mistakes in the puzzle? This affects your score.</string>
     <string name="reset_puzzle">Are you sure you’d like to reset this puzzle?</string>
+    <string name="never_ask_again">Never ask again</string>
 
     <string name="error_no_puzzles">Whoops! Looks like we couldn’t load the puzzle.</string>
 

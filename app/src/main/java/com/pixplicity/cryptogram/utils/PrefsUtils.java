@@ -13,6 +13,8 @@ public class PrefsUtils {
     private static final String KEY_ONBOARDING = "onboarding";
     private static final String KEY_SHOW_HINTS = "show_hints";
     private static final String KEY_DARK_THEME = "dark_theme";
+    private static final String KEY_NEVER_ASK_REVEAL_LETTER = "never_ask_reveal_letter";
+    private static final String KEY_NEVER_ASK_REVEAL_MISTAKES = "never_ask_reveal_mistakes";
 
     public static int getCurrentId() {
         return Prefs.getInt(PrefsUtils.KEY_CURRENT_ID, -2);
@@ -66,6 +68,22 @@ public class PrefsUtils {
 
     public static boolean getDarkTheme() {
         return Prefs.getBoolean(KEY_DARK_THEME, false);
+    }
+
+    public static void setNeverAskRevealMistakes(boolean neverAsk) {
+        Prefs.putBoolean(KEY_NEVER_ASK_REVEAL_MISTAKES, neverAsk);
+    }
+
+    public static boolean getNeverAskRevealMistakes() {
+        return Prefs.getBoolean(KEY_NEVER_ASK_REVEAL_MISTAKES, false);
+    }
+
+    public static void setNeverAskRevealLetter(boolean neverAsk) {
+        Prefs.putBoolean(KEY_NEVER_ASK_REVEAL_LETTER, neverAsk);
+    }
+
+    public static boolean getNeverAskRevealLetter() {
+        return Prefs.getBoolean(KEY_NEVER_ASK_REVEAL_LETTER, false);
     }
 
 }
