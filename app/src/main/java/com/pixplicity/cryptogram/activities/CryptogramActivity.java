@@ -24,7 +24,6 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.CompoundButton;
 import android.widget.ImageView;
 import android.widget.TableLayout;
 import android.widget.TextView;
@@ -81,6 +80,8 @@ public class CryptogramActivity extends BaseActivity implements GoogleApiClient.
     private static final int RC_SIGN_IN = 1001;
 
     private static final int ONBOARDING_PAGES = 2;
+
+    public static final String EXTRA_LAUNCH_SETTINGS = "launch_settings";
 
     @BindView(R.id.iv_google_play_games_banner)
     protected ImageView mIvGooglePlayGamesBanner;
@@ -216,6 +217,13 @@ public class CryptogramActivity extends BaseActivity implements GoogleApiClient.
         });
 
         updateCryptogram(cryptogramProvider.getCurrent());
+
+        Intent intent = getIntent();
+        if (intent != null) {
+            if (intent.getBooleanExtra(EXTRA_LAUNCH_SETTINGS, false)) {
+                startActivity(SettingsActivity.create(this));
+            }
+        }
     }
 
     @Override
@@ -935,6 +943,10 @@ public class CryptogramActivity extends BaseActivity implements GoogleApiClient.
                             }
                         })
                         .show();
+            }
+            return true;
+            case R.id.action_settings: {
+                startActivity(SettingsActivity.create(this));
             }
             return true;
             case R.id.action_about: {

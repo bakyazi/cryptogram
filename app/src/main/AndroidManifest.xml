@@ -25,6 +25,9 @@
         <activity
             android:name=".activities.AboutActivity"/>
 
+        <activity
+            android:name=".activities.SettingsActivity"/>
+
         <receiver android:name=".utils.NotificationPublisher" />
 
         <meta-data android:name="com.google.android.gms.games.APP_ID"
