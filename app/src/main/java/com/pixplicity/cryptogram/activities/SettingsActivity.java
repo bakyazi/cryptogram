@@ -24,7 +24,7 @@ public class SettingsActivity extends BaseActivity {
 
         setHomeButtonEnabled(true);
 
-        Answers.getInstance().logContentView(new ContentViewEvent().putContentName(CryptogramApp.CONTENT_ABOUT));
+        Answers.getInstance().logContentView(new ContentViewEvent().putContentName(CryptogramApp.CONTENT_SETTINGS));
     }
 
 }
