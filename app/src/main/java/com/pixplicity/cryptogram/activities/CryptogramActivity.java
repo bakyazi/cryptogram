@@ -7,7 +7,6 @@ import android.content.IntentSender;
 import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
-import android.os.Handler;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.design.widget.Snackbar;
@@ -50,11 +49,9 @@ import com.pixplicity.cryptogram.adapters.CryptogramAdapter;
 import com.pixplicity.cryptogram.events.CryptogramEvent;
 import com.pixplicity.cryptogram.models.Cryptogram;
 import com.pixplicity.cryptogram.utils.AchievementProvider;
-import com.pixplicity.cryptogram.utils.AprilSpecialEdition;
 import com.pixplicity.cryptogram.utils.CryptogramProvider;
 import com.pixplicity.cryptogram.utils.EventProvider;
 import com.pixplicity.cryptogram.utils.LeaderboardProvider;
-import com.pixplicity.cryptogram.utils.NotificationPublisher;
 import com.pixplicity.cryptogram.utils.PrefsUtils;
 import com.pixplicity.cryptogram.utils.StringUtils;
 import com.pixplicity.cryptogram.views.CryptogramLayout;
@@ -101,12 +98,6 @@ public class CryptogramActivity extends BaseActivity implements GoogleApiClient.
 
     @BindView(R.id.rv_drawer)
     protected RecyclerView mRvDrawer;
-
-    @BindView(R.id.iv_background)
-    protected ImageView mIvBackground;
-
-    @BindView(R.id.bt_april_nonsense)
-    protected Button mBtAprilNonsense;
 
     @BindView(R.id.vg_cryptogram)
     protected CryptogramLayout mVgCryptogram;
@@ -244,16 +235,8 @@ public class CryptogramActivity extends BaseActivity implements GoogleApiClient.
     }
 
     @Override
-    protected void onResume() {
-        super.onResume();
-        NotificationPublisher.clear(this, NotificationPublisher.NOTIFICATION_APRIL_SPECIAL);
-    }
-
-    @Override
     protected void onStop() {
         super.onStop();
-
-        AprilSpecialEdition.doSpecialMagicSauce(this, false);
 
         if (mGoogleApiClient.isConnected()) {
             mGoogleApiClient.disconnect();
@@ -408,7 +391,8 @@ public class CryptogramActivity extends BaseActivity implements GoogleApiClient.
                 })
                 .onAny(new MaterialDialog.SingleButtonCallback() {
                     @Override
-                    public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
+                    public void onClick(@NonNull MaterialDialog dialog,
+                                        @NonNull DialogAction which) {
                         PrefsUtils.setOnboarding(page);
                         showOnboarding(page + 1);
                     }
@@ -520,27 +504,7 @@ public class CryptogramActivity extends BaseActivity implements GoogleApiClient.
     }
 
     private void onGameplayReady() {
-        if (AprilSpecialEdition.doSpecialMagicSauce(this, true)) {
-            if (mDarkTheme) {
-                mIvBackground.setImageResource(R.drawable.bg_april_dark);
-            } else {
-                mIvBackground.setImageResource(R.drawable.bg_april);
-            }
-            new Handler().postDelayed(new Runnable() {
-                @Override
-                public void run() {
-                    if (!isFinishing()) {
-                        mBtAprilNonsense.setVisibility(View.VISIBLE);
-                    }
-                }
-            }, 8000);
-            mIvBackground.setVisibility(View.VISIBLE);
-            mCryptogramView.clearFocus();
-        } else {
-            mBtAprilNonsense.setVisibility(View.GONE);
-            mIvBackground.setVisibility(View.GONE);
-            mCryptogramView.requestFocus();
-        }
+        mCryptogramView.requestFocus();
     }
 
     public void onCryptogramUpdated(Cryptogram cryptogram) {
@@ -764,7 +728,8 @@ public class CryptogramActivity extends BaseActivity implements GoogleApiClient.
                         })
                         .onPositive(new MaterialDialog.SingleButtonCallback() {
                             @Override
-                            public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
+                            public void onClick(@NonNull MaterialDialog dialog,
+                                                @NonNull DialogAction which) {
                                 //noinspection ConstantConditions
                                 Editable input = dialog.getInputEditText().getText();
                                 try {
@@ -935,12 +900,6 @@ public class CryptogramActivity extends BaseActivity implements GoogleApiClient.
             return true;
         }
         return super.onOptionsItemSelected(item);
-    }
-
-    @OnClick(R.id.bt_april_nonsense)
-    protected void onClickAprilNonsense() {
-        AprilSpecialEdition.end();
-        onGameplayReady();
     }
 
     private void nextPuzzle() {

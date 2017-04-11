@@ -22,14 +22,6 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent">
 
-            <ImageView
-                android:id="@+id/iv_background"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:scaleType="centerCrop"
-                android:visibility="gone"
-                tools:ignore="ContentDescription"/>
-
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
@@ -192,20 +184,6 @@
                             </TableRow>
 
                         </TableLayout>
-
-                        <Space
-                            android:layout_width="0dp"
-                            android:layout_height="0dp"
-                            android:layout_weight="1"/>
-
-                        <android.support.v7.widget.AppCompatButton
-                            android:id="@+id/bt_april_nonsense"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_marginTop="8dp"
-                            android:text="@string/april_mode_end"
-                            android:textSize="12sp"
-                            android:visibility="gone"/>
 
                     </com.pixplicity.cryptogram.views.CryptogramLayout>
 

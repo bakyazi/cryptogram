@@ -51,25 +51,24 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
             android:gravity="center_horizontal"
-            android:text="@string/made_by"
+            android:text="@string/made_with_love_by"
             android:textSize="14sp"/>
 
         <ImageView
-            android:id="@+id/iv_labs"
+            android:id="@+id/iv_pixplicity"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_height="96dp"
             android:layout_gravity="center_horizontal"
             android:adjustViewBounds="true"
-            android:contentDescription="@string/pixplicity_labs"
+            android:contentDescription="@string/pixplicity"
             android:scaleType="centerInside"
-            android:src="@drawable/pixplicity_labs"/>
+            android:src="@drawable/im_pixplicity_color"/>
 
         <TextView
             android:id="@+id/tv_about_this_app_2"
             style="@style/InfoTextView"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="16dp"
             android:text="@string/about_this_app_2"
             android:textSize="15sp"/>
 

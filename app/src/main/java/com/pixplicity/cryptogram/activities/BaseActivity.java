@@ -41,11 +41,13 @@ public abstract class BaseActivity extends AppCompatActivity {
 
     protected ActionBarDrawerToggle mDrawerToggle;
 
+    protected boolean mDarkTheme;
+
     @Override
     public void setContentView(@LayoutRes int layoutResID) {
         // Replace any splash screen image
         getWindow().setBackgroundDrawableResource(R.drawable.bg_activity);
-        boolean mDarkTheme = PrefsUtils.getDarkTheme();
+        mDarkTheme = PrefsUtils.getDarkTheme();
         if (mDarkTheme) {
             setTheme(R.style.AppTheme_Dark);
             // Replace any splash screen image
@@ -190,4 +192,9 @@ public abstract class BaseActivity extends AppCompatActivity {
         }
         return super.onOptionsItemSelected(item);
     }
+
+    public boolean isDarkTheme() {
+        return mDarkTheme;
+    }
+
 }
