@@ -1409,7 +1409,7 @@
   },
   {
     "text": "You have to learn the rules of the game. And then you have to play better than anyone else.",
-    "author": "Unknown",
+    "author": "Albert Einstein",
     "topic": "Motivational"
   },
   {
@@ -1984,7 +1984,7 @@
     "topic": "Technology"
   },
   {
-    "text": "We’ve arranged a civili­zation in which most crucial elements profoundly depend on science and technology. We have also arranged things so that almost no one understands science and technology. This is a prescrip­tion for disaster.",
+    "text": "We have arranged things so that almost no one understands science and technology. This is a prescrip­tion for disaster.",
     "author": "Carl Sagan",
     "topic": "Technology"
   },
@@ -2182,7 +2182,7 @@
     "topic": "Beauty"
   },
   {
-    "text": "ou can not change what you refuse to confront",
+    "text": "You can not change what you refuse to confront.",
     "author": "John Spence",
     "topic": "Change"
   },
@@ -2280,8 +2280,9 @@
     "topic": "Inspirational"
   },
   {
-    "text": "It does not matter how slowly you go as long as you do not stop.",
-    "author": "Confucius",
+    "text": "Be yourself; everyone else is already taken.",
+    "author": "Oscar Wilde",
+    "given": "BE",
     "topic": "Inspirational"
   },
   {
@@ -2341,8 +2342,8 @@
     "topic": "Ambition"
   },
   {
-    "text": "You have to learn the rules of the game. And then you have to play better than anyone else.",
-    "author": "Albert Einstein",
+    "text": "It is better to fail in originality than to succeed in imitation.",
+    "author": "Herman Melville",
     "topic": "Success"
   },
   {
@@ -2361,7 +2362,7 @@
     "topic": "Romance"
   },
   {
-    "text": "True love is rare, and it's the only thing that gives life real meaning.",
+    "text": "True love is rare, and it’s the only thing that gives life real meaning.",
     "author": "Nicholas Sparks",
     "topic": "Romance"
   },
@@ -2379,6 +2380,540 @@
     "text": "Romance is the glamour which turns the dust of everyday life into a golden haze.",
     "author": "Elinor Glyn",
     "topic": "Romance"
+  },
+  {
+    "text": "If music be the food of love, play on,\nGive me excess of it; that surfeiting,\nThe appetite may sicken, and so die.",
+    "author": "William Shakespeare",
+    "topic": "Romance"
+  },
+  {
+    "text": "If you love somebody, let them go, for if they return, they were always yours. If they don’t, they never were.",
+    "author": "Kahlil Gibran",
+    "topic": "Romance"
+  },
+  {
+    "text": "The Very first moment I beheld him, my heart was irrevocably gone.",
+    "author": "Jane Austen",
+    "topic": "Romance"
+  },
+  {
+    "text": "When one is in love, one always begins by deceiving one’s self, and one always ends by deceiving others. That is what the world calls a romance.",
+    "author": "Oscar Wilde",
+    "topic": "Romance"
+  },
+  {
+    "text": "Never close your lips to those whom you have already opened your heart.",
+    "author": "Charles Dickens",
+    "topic": "Romance"
+  },
+  {
+    "text": "In our time together, you claimed a special place in my heart, one I’ll carry with me forever and that no one can ever replace.",
+    "author": "Nicholas Sparks",
+    "topic": "Romance"
+  },
+  {
+    "text": "Romance is thinking about your significant other, when you are supposed to be thinking about something else.",
+    "author": "Nicholas Sparks",
+    "topic": "Romance"
+  },
+  {
+    "text": "Love is a great emotion, but I believe it’s not just about romance; it could be love for nature, people, for relationships.",
+    "author": "Rani Mukerji",
+    "topic": "Romance"
+  },
+  {
+    "text": "In a great romance, each person basically plays a part that the other really likes.",
+    "author": "Elizabeth Ashley",
+    "topic": "Romance"
+  },
+  {
+    "text": "First be faithful to each other. Second, keep the romance going all of your life by courting each other every day.",
+    "author": "Zig Ziglar",
+    "topic": "Romance"
+  },
+  {
+    "text": "Money can buy you a fine dog, but only love can make him wag his tail.",
+    "author": "Kinky Friedman",
+    "topic": "Love"
+  },
+  {
+    "text": "They invented hugs to let people know you love them without saying anything.",
+    "author": "Bil Keane",
+    "topic": "Love"
+  },
+  {
+    "text": "If at first you don’t succeed, try, try again. Then quit. No use being a damn fool about it.",
+    "author": "W.C. Fields",
+    "topic": "Romance"
+  },
+  {
+    "text": "No one can make you feel inferior without your consent.",
+    "author": "Eleanor Roosevelt",
+    "topic": "Inspirational"
+  },
+  {
+    "text": "If you want to leave footprints in the sands of time, don’t drag your feet.",
+    "author": "Arnot L. Sheppard",
+    "topic": "Wisdom"
+  },
+  {
+    "text": "We should not judge people by their peak of excellence; but by the distance they have traveled from the point where they started.",
+    "author": "Henry Ward Beecher",
+    "topic": "Wisdom"
+  },
+  {
+    "text": "Obstacles are those frightful things you see when you take your eyes off your goal.",
+    "author": "Henry Ford",
+    "topic": "Wisdom"
+  },
+  {
+    "text": "Whenever you find yourself on the side of the majority, it is time to pause and reflect.",
+    "author": "Mark Twain",
+    "topic": "Wisdom"
+  },
+  {
+    "text": "The pessimist complains about the wind; the optimist expects it to change; the realist adjusts the sails.",
+    "author": "William Arthur Ward",
+    "topic": "Wisdom"
+  },
+  {
+    "text": "The less you talk, the more you’re listened to.",
+    "author": "Abigail Van Buren",
+    "topic": "Wisdom"
+  },
+  {
+    "text": "Ignorant men raise questions that wise men answered a thousand years ago.",
+    "author": "Johann Wolfgang von Goethe",
+    "topic": "Wisdom"
+  },
+  {
+    "text": "Knowing yourself is the beginning of all wisdom.",
+    "author": "Aristotle",
+    "topic": "Wisdom"
+  },
+  {
+    "text": "The saddest aspect of life right now is that science gathers knowledge faster than society gathers wisdom.",
+    "author": "Isaac Asimov",
+    "topic": "Wisdom"
+  },
+  {
+    "text": "Nothing is more dangerous than an idea, when it’s the only one we have.",
+    "author": "Alain",
+    "topic": "Wisdom"
+  },
+  {
+    "text": "It’s better to be a lion for a day than a sheep all your life.",
+    "author": "Elizabeth Kenny",
+    "topic": "Wisdom"
+  },
+  {
+    "text": "Think before you speak. Read before you think.",
+    "author": "Fran Lebowitz",
+    "given": "TBK",
+    "topic": "Wisdom"
+  },
+  {
+    "text": "The best index to a person’s character is how he treats people who can’t do him any good, and how he treats people who can’t fight back.",
+    "author": "Abigail Van Buren",
+    "topic": "Wisdom"
+  },
+  {
+    "text": "Do not seek to follow in the footsteps of the wise. Seek what they sought.",
+    "author": "Matsuo Basho",
+    "topic": "Wisdom"
+  },
+  {
+    "text": "It is the province of knowledge to speak, and it is the privilege of wisdom to listen.",
+    "author": "Oliver Wendell Holmes",
+    "topic": "Wisdom"
+  },
+  {
+    "text": "A man begins cutting his wisdom teeth the first time he bites off more than he can chew.",
+    "author": "Herb Caen",
+    "topic": "Wisdom"
+  },
+  {
+    "text": "The young man knows the rules, but the old man knows the exceptions.",
+    "author": "Oliver Wendell Holmes",
+    "topic": "Wisdom"
+  },
+  {
+    "text": "When you choose to see the good in others, you end up finding the good in yourself.",
+    "author": "John Spence",
+    "topic": "Wisdom"
+  },
+  {
+    "text": "Nature gave men two ends — one to sit on and one to think with. Ever since then man’s success or failure has been dependent on the one he used most.",
+    "author": "George Ross Kirkpatrick",
+    "topic": "Wisdom"
+  },
+  {
+    "text": "Humility is not thinking less of yourself, it’s thinking of yourself less.",
+    "author": "C. S. Lewis",
+    "topic": "Wisdom"
+  },
+  {
+    "text": "Even when we are quite alone, how often do we think with pleasure or pain of what others think of us — of their imagined approbation or disapprobation.",
+    "author": "Charles Darwin",
+    "topic": "Wisdom"
+  },
+  {
+    "text": "The greatest tragedy in mankind’s entire history may be the hijacking of morality by religion.",
+    "author": "Arthur C. Clarke",
+    "topic": "Morality"
+  },
+  {
+    "text": "It is curious that physical courage should be so common in the world and moral courage so rare.",
+    "author": "Mark Twain",
+    "topic": "Morality"
+  },
+  {
+    "text": "Respect for ourselves guides our morals, respect for others guides our manners.",
+    "author": "Laurence Sterne",
+    "topic": "Morality"
+  },
+  {
+    "text": "The purpose of morality is to teach you, not to suffer and die, but to enjoy yourself and live.",
+    "author": "Ayn Rand",
+    "topic": "Morality"
+  },
+  {
+    "text": "Only morality in our actions can give beauty and dignity to life.",
+    "author": "Albert Einstein",
+    "topic": "Morality"
+  },
+  {
+    "text": "Reverence for life affords me my fundamental principle of morality.",
+    "author": "Albert Schweitzer",
+    "topic": "Morality"
+  },
+  {
+    "text": "We do not inherit the earth from our ancestors; we borrow it from our children.",
+    "author": "Chief Seattle",
+    "topic": "Morality"
+  },
+  {
+    "text": "A nation, as a society, forms a moral person, and every member of it is personally responsible for his society.",
+    "author": "Thomas Jefferson",
+    "topic": "Morality"
+  },
+  {
+    "text": "The young do not know enough to be prudent, and therefore they attempt the impossible ― and achieve it, generation after generation.",
+    "author": "Pearl S. Buck",
+    "topic": "Success"
+  },
+  {
+    "text": "The mediocre teacher tells. The good teacher explains. The superior teacher demonstrates. The great teacher inspires.",
+    "author": "William Arthur Ward",
+    "topic": "Teaching"
+  },
+  {
+    "text": "Those who know, do. Those that understand, teach.",
+    "given": "O",
+    "author": "Aristotle",
+    "topic": "Teaching"
+  },
+  {
+    "text": "The true teacher defends his pupils against his own personal influence.",
+    "author": "Amos Bronson Alcott",
+    "topic": "Teaching"
+  },
+  {
+    "text": "I never teach my pupils, I only attempt to provide the conditions in which they can learn.",
+    "author": "Albert Einstein",
+    "topic": "Teaching"
+  },
+  {
+    "text": "You cannot teach a man anything, you can only help him find it within himself.",
+    "author": "Galileo Galilei",
+    "topic": "Teaching"
+  },
+  {
+    "text": "Knowledge can be communicated, but not wisdom. One can find it, live it, do wonders through it, but one cannot communicate and teach it.” ",
+    "author": "Hermann Hesse",
+    "topic": "Wisdom"
+  },
+  {
+    "text": "Share your knowledge. It is a way to achieve immortality.",
+    "author": "Dalai Lama XIV",
+    "topic": "Knowledge"
+  },
+  {
+    "text": "It is the mark of an educated mind to be able to entertain a thought without accepting it.",
+    "author": "Aristotle",
+    "topic": "Wisdom"
+  },
+  {
+    "text": "Any fool can know. The point is to understand.",
+    "given": "C",
+    "author": "Albert Einstein",
+    "topic": "Wisdom"
+  },
+  {
+    "text": "It is amazing how complete is the delusion that beauty is goodness.",
+    "author": "Leo Tolstoy",
+    "topic": "Goodness"
+  },
+  {
+    "text": "Life becomes easier and more beautiful when we can see the good in other people.",
+    "author": "Roy T. Bennett",
+    "topic": "Goodness"
+  },
+  {
+    "text": "How far that little candle throws his beams! So shines a good deed in a weary world.",
+    "author": "William Shakespeare",
+    "topic": "Goodness"
+  },
+  {
+    "text": "When I was young, my ambition was to be one of the people who made a difference in this world. My hope is to leave the world a little better for having been there.",
+    "author": "Jim Henson",
+    "topic": "Goodness"
+  },
+  {
+    "text": "I admire those who do good and expect nothing in return.",
+    "author": "Roy T. Bennett",
+    "topic": "Goodness"
+  },
+  {
+    "text": "Feeling gratitude and not expressing it is like wrapping a present and not giving it.",
+    "author": "William Arthur Ward",
+    "topic": "Gratitude"
+  },
+  {
+    "text": "Even the darkest night will end and the sun will rise.",
+    "author": "Victor Hugo",
+    "topic": "Motivational"
+  },
+  {
+    "text": "A life lived without forgiveness is a prison.",
+    "author": "William Arthur Ward",
+    "topic": "Forgiveness"
+  },
+  {
+    "text": "One of the keys to happiness is a bad memory.",
+    "author": "Rita Mae Brown",
+    "topic": "Forgiveness"
+  },
+  {
+    "text": "Forgiveness is not an occasional act, it is a constant attitude.",
+    "author": "Martin Luther King Jr.",
+    "topic": "Forgiveness"
+  },
+  {
+    "text": "Forgiveness is the fragrance that the violet sheds on the heel that has crushed it.",
+    "author": "Mark Twain",
+    "topic": "Forgiveness"
+  },
+  {
+    "text": "Hold fast to dreams,\nFor if dreams die\nLife is a broken-winged bird,\nThat cannot fly.",
+    "author": "Langston Hughes",
+    "topic": "Motivational"
+  },
+  {
+    "text": "When a man starts out to build a world,\nHe starts first with himself.",
+    "author": "Langston Hughes",
+    "topic": "Motivational"
+  },
+  {
+    "text": "Humor is laughing at what you haven’t got when you ought to have it.",
+    "author": "Langston Hughes",
+    "topic": "Humor"
+  },
+  {
+    "text": "Life is what happens to us while we are making other plans.",
+    "author": "Allen Saunders",
+    "topic": "Life"
+  },
+  {
+    "text": "Good friends, good books, and a sleepy conscience: this is the ideal life.",
+    "author": "Mark Twain",
+    "topic": "Life"
+  },
+  {
+    "text": "It is one of the blessings of old friends that you can afford to be stupid with them.",
+    "author": "Ralph Waldo Emerson",
+    "topic": "Friendship"
+  },
+  {
+    "text": "A best friend is the only one that walks into your life when the world has walked out.",
+    "author": "Shannon L. Alder",
+    "topic": "Friendship"
+  },
+  {
+    "text": "Even when a river of tears courses through this body, the flame of love cannot be quenched.",
+    "author": "Izumi Shikibu",
+    "topic": "Love"
+  },
+  {
+    "text": "There is no greater sorrow then to recall our times of joy in wretchedness.",
+    "author": "Dante Alighieri",
+    "topic": "Sorrow"
+  },
+  {
+    "text": "Give sorrow words; the grief that does not speak knits up the overwrought heart and bids it break.",
+    "author": "William Shakespeare",
+    "topic": "Sorrow"
+  },
+  {
+    "text": "Though sorrow may impede my heart,\nIt is of great love to have known you.",
+    "author": "C. Elizabeth",
+    "topic": "Sorrow"
+  },
+  {
+    "text": "When you are joyous, look deep into your heart and you shall find it is only that which has given you sorrow that is giving you joy.",
+    "author": "Kahlil Gibran",
+    "topic": "Happiness"
+  },
+  {
+    "text": "When you are sorrowful look again in your heart, and you shall see that in truth you are weeping for that which has been your delight.",
+    "author": "Kahlil Gibran",
+    "topic": "Sorrow"
+  },
+  {
+    "text": "The difference between a successful person and others is not a lack of strength, not a lack of knowledge, but rather a lack in will.",
+    "author": "Vince Lombardi Jr.",
+    "topic": "Determination"
+  },
+  {
+    "text": "In nothing, great or small, large or petty — never give in, except to convictions of honour and good sense.",
+    "author": "Winston Churchill",
+    "topic": "Determination"
+  },
+  {
+    "text": "He that can have patience can have what he will.",
+    "author": "Benjamin Franklin",
+    "topic": "Determination"
+  },
+  {
+    "text": "I have discovered in life that there are ways of getting almost anywhere you want to go, if you really want to go.",
+    "author": "Langston Hughes",
+    "topic": "Determination"
+  },
+  {
+    "text": "You cannot swim for new horizons until you have courage to lose sight of the shore.",
+    "author": "William Faulkner",
+    "topic": "Determination"
+  },
+  {
+    "text": "Don’t wait for good things to happen to you. If you go out and make some good things happen, you will fill the world with hope, you will fill yourself with hope.",
+    "author": "Barack Obama",
+    "topic": "Determination"
+  },
+  {
+    "text": "What happens to a dream deferred?\nDoes it dry up like a raisin in the sun?",
+    "author": "Langston Hughes",
+    "topic": "Inspirational"
+  },
+  {
+    "text": "Life is for the living.\nDeath is for the dead.\nLet life be like music.\nAnd death a note unsaid.",
+    "author": "Langston Hughes",
+    "topic": "Life"
+  },
+  {
+    "text": "The very concept of objective truth is fading out of the world. Lies will pass into history.",
+    "author": "George Orwell",
+    "topic": "Dishonesty"
+  },
+  {
+    "text": "The more people rationalize cheating, the more it becomes a culture of dishonesty. And that can become a vicious, downward cycle. Because suddenly, if everyone else is cheating, you feel a need to cheat, too.",
+    "author": "Stephen Covey",
+    "topic": "Dishonesty"
+  },
+  {
+    "text": "There are some things that we know are just not as pleasant as the lies that we tell ourselves, and in that sense in order to endure existence everyone endures a certain amount of dishonesty in their everyday lives.",
+    "author": "Todd Rundgren",
+    "topic": "Dishonesty"
+  },
+  {
+    "text": "To be without guile is to be free of deceit, cunning, hypocrisy, and dishonesty in thought or action.",
+    "author": "Joseph B. Wirthlin",
+    "topic": "Dishonesty"
+  },
+  {
+    "text": "Time will inevitably uncover dishonesty and lies; history has no place for them.",
+    "author": "Norodom Sihanouk",
+    "topic": "Dishonesty"
+  },
+  {
+    "text": "As I obsess about my ancient problems, I feel more like I’m sinking in quicksand than lighting a torch. I’m creating neither heat nor light, just the icky, perversely pleasurable squish of self-pity between my toes. My only defense is that I’m not the only one down here in the muck — our whole culture is doting on tales of personal tragedy.",
+    "author": "Martha Beck",
+    "topic": "Tragedy"
+  },
+  {
+    "text": "French culture is known for many great attributes, some of which probably have nothing to do with food, wine, and romance.",
+    "author": "Leonard Mlodinow",
+    "topic": "Culture"
+  },
+  {
+    "text": "A people without the knowledge of their past history, origin and culture is like a tree without roots.",
+    "author": "Marcus Garvey",
+    "topic": "Culture"
+  },
+  {
+    "text": "Any good teacher knows how important it is to connect with students and understand our culture.",
+    "author": "Adora Svitak",
+    "topic": "Culture"
+  },
+  {
+    "text": "Preservation of one’s own culture does not require contempt or disrespect for other cultures.",
+    "author": "Cesar Chavez",
+    "topic": "Culture"
+  },
+  {
+    "text": "Culture is the widening of the mind and of the spirit.",
+    "author": "Jawaharlal Nehru",
+    "given": "O",
+    "topic": "Culture"
+  },
+  {
+    "text": "Culture is the intersection of people and life itself. It’s how we deal with life, love, death, birth, disappointment… all of that is expressed in culture.",
+    "author": "Wendell Pierce",
+    "topic": "Culture"
+  },
+  {
+    "text": "I think music in itself is healing. It’s an explosive expression of humanity. It’s something we are all touched by. No matter what culture we’re from, everyone loves music.",
+    "author": "Billy Joel",
+    "topic": "Culture"
+  },
+  {
+    "text": "Change is the only constant, whether it’s in music, culture, dance or fashion.",
+    "author": "Sonu Nigam",
+    "topic": "Culture"
+  },
+  {
+    "text": "Observe good faith and justice toward all nations. Cultivate peace and harmony with all.",
+    "author": "George Washington",
+    "topic": "History"
+  },
+  {
+    "text": "Those who do not remember the past are condemned to repeat it.",
+    "author": "George Santayana",
+    "topic": "History"
+  },
+  {
+    "text": "Books are the carriers of civilization. Without books, history is silent, literature dumb, science crippled, thought and speculation at a standstill.",
+    "author": "Barbara Tuchman",
+    "topic": "History"
+  },
+  {
+    "text": "History, despite its wrenching pain, cannot be unlived, but if faced with courage, need not be lived again.",
+    "author": "Maya Angelou",
+    "topic": "History"
+  },
+  {
+    "text": "Geography has made us neighbors. History has made us friends. Economics has made us partners, and necessity has made us allies. Those whom God has so joined together, let no man put asunder.",
+    "author": "John F. Kennedy",
+    "topic": "History"
+  },
+  {
+    "text": "History repeats itself, first as tragedy, second as farce.",
+    "author": "Karl Marx",
+    "topic": "History"
+  },
+  {
+    "text": "All good is hard. All evil is easy. Dying, losing, cheating, and mediocrity is easy. Stay away from easy.",
+    "author": "Scott Alexander",
+    "topic": "Motivational"
   },
   {
     "text": "AAAAAAAA­BBB­CCCCCCC­DDDDDDDDD­EEEE­FFFFFFFFFFFFF­GGGG­HHHHHHHHHH­IIIIII.",

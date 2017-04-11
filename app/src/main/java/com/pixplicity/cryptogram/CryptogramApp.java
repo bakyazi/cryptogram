@@ -5,16 +5,19 @@ import android.content.ContextWrapper;
 
 import com.crashlytics.android.Crashlytics;
 import com.pixplicity.easyprefs.library.Prefs;
-import com.squareup.otto.Bus;
 
 import io.fabric.sdk.android.Fabric;
 
 
 public class CryptogramApp extends Application {
 
-    private static CryptogramApp sInstance;
+    public static final String CONTENT_ACHIEVEMENTS = "achievements";
+    public static final String CONTENT_LEADERBOARDS = "leaderboards";
+    public static final String CONTENT_STATISTICS = "statistics";
+    public static final String CONTENT_SETTINGS = "settings";
+    public static final String CONTENT_ABOUT = "about";
 
-    private Bus mBus;
+    private static CryptogramApp sInstance;
 
     public CryptogramApp() {
         super();
@@ -29,8 +32,6 @@ public class CryptogramApp extends Application {
     public void onCreate() {
         super.onCreate();
 
-        mBus = new Bus();
-
         // Initialize Crashlytics
         Fabric.with(this, new Crashlytics());
 
@@ -41,10 +42,6 @@ public class CryptogramApp extends Application {
                 .setPrefsName(getPackageName())
                 .setUseDefaultSharedPreference(true)
                 .build();
-    }
-
-    public Bus getBus() {
-        return mBus;
     }
 
 }

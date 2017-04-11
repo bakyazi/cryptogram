@@ -1,7 +1,9 @@
 package com.pixplicity.cryptogram.utils;
 
 import android.content.Context;
+import android.os.AsyncTask;
 import android.support.annotation.NonNull;
+import android.util.Log;
 
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.games.Games;
@@ -98,122 +100,137 @@ public class AchievementProvider {
         check(googleApiClient);
     }
 
-    public void check(GoogleApiClient googleApiClient) {
-        CryptogramApp context = CryptogramApp.getInstance();
-        mAchievementStats.calculate(context);
+    public void check(final GoogleApiClient googleApiClient) {
+        final CryptogramApp context = CryptogramApp.getInstance();
 
-        for (int achievementResId : ACHIEVEMENTS) {
-            switch (achievementResId) {
-                case R.string.achievement_wet_feet: {
-                    // Finish the instructional puzzles.
-                    if (mAchievementStats.isUnlockedWetFeet()) {
-                        unlock(context, googleApiClient, achievementResId);
-                    }
+        new AsyncTask<Void, Void, Void>() {
+            @Override
+            protected Void doInBackground(Void... voids) {
+                synchronized (AchievementProvider.this) {
+                    mAchievementStats.calculate(context);
                 }
-                break;
-                case R.string.achievement_boned_up: {
-                    // Complete your first puzzle to figure out how cryptograms work by trial and error.
-                    if (mAchievementStats.getCompleted() >= 1) {
-                        unlock(context, googleApiClient, achievementResId);
-                    }
-                }
-                break;
-                case R.string.achievement_bookworm: {
-                    // Complete ten puzzles.
-                    if (mAchievementStats.getCompleted() >= 10) {
-                        unlock(context, googleApiClient, achievementResId);
-                    }
-                }
-                break;
-                case R.string.achievement_whizkid: {
-                    // Complete twenty puzzles.
-                    if (mAchievementStats.getCompleted() >= 20) {
-                        unlock(context, googleApiClient, achievementResId);
-                    }
-                }
-                break;
-                case R.string.achievement_flight_mode: {
-                    // Solve a puzzle in airplane mode. Isn't this the perfect game for a long flight?
-                    if (mUnlockedFlightMode) {
-                        unlock(context, googleApiClient, achievementResId);
-                    }
-                }
-                break;
-                case R.string.achievement_its_the_bees_knees: {
-                    // Score a perfect 100%.
-                    if (mAchievementStats.getPerfectScore() >= 1) {
-                        unlock(context, googleApiClient, achievementResId);
-                    }
-                }
-                break;
-                case R.string.achievement_cream_of_the_crop: {
-                    // Secure ten perfect scores.
-                    if (mAchievementStats.getPerfectScore() >= 10) {
-                        unlock(context, googleApiClient, achievementResId);
-                    }
-                }
-                break;
-                case R.string.achievement_jack_of_all_trades: {
-                    // Solve a puzzle with no reveals or excess inputs—and without using the hint bar.
-                    if (mAchievementStats.isUnlockedJackOfAllTrades()) {
-                        unlock(context, googleApiClient, achievementResId);
-                    }
-                }
-                break;
-                case R.string.achievement_nobrainer: {
-                    // Breeze through a puzzle in 45 seconds or less.
-                    if (mAchievementStats.isUnlockedNoBrainer()) {
-                        unlock(context, googleApiClient, achievementResId);
-                    }
-                }
-                break;
-                case R.string.achievement_hope_youre_comfortable: {
-                    // Complete five puzzles in ten minutes.
-                    if (mAchievementStats.hasSeries(5, 10 * 60 * 1000)) {
-                        unlock(context, googleApiClient, achievementResId);
-                    }
-                }
-                break;
-                case R.string.achievement_hope_youre_really_comfortable: {
-                    // Complete ten puzzles in thirty minutes.
-                    if (mAchievementStats.hasSeries(10, 30 * 60 * 1000)) {
-                        unlock(context, googleApiClient, achievementResId);
-                    }
-                }
-                break;
-                case R.string.achievement_zen_master: {
-                    // Complete twenty puzzles in an hour.
-                    if (mAchievementStats.hasSeries(20, 60 * 60 * 1000)) {
-                        unlock(context, googleApiClient, achievementResId);
-                    }
-                }
-                break;
-                case R.string.achievement_twoday_streak: {
-                    // Play for two consecutive days.
-                    if (mAchievementStats.getLongestStreak() >= 2) {
-                        unlock(context, googleApiClient, achievementResId);
-                    }
-                }
-                break;
-                case R.string.achievement_threeday_streak: {
-                    // Play for three consecutive days.
-                    if (mAchievementStats.getLongestStreak() >= 3) {
-                        unlock(context, googleApiClient, achievementResId);
-                    }
-                }
-                break;
-                case R.string.achievement_fiveday_streak: {
-                    // Play for five consecutive days.
-                    if (mAchievementStats.getLongestStreak() >= 5) {
-                        unlock(context, googleApiClient, achievementResId);
-                    }
-                }
-                break;
-                default:
-                    String achievementId = CryptogramApp.getInstance().getString(achievementResId);
-                    throw new IllegalStateException("unknown achievement " + achievementId);
+                return null;
             }
-        }
+
+            @Override
+            protected void onPostExecute(Void aVoid) {
+                if (!googleApiClient.isConnected()) {
+                    return;
+                }
+                for (int achievementResId : ACHIEVEMENTS) {
+                    switch (achievementResId) {
+                        case R.string.achievement_wet_feet: {
+                            // Finish the instructional puzzles.
+                            if (mAchievementStats.isUnlockedWetFeet()) {
+                                unlock(context, googleApiClient, achievementResId);
+                            }
+                        }
+                        break;
+                        case R.string.achievement_boned_up: {
+                            // Complete your first puzzle to figure out how cryptograms work by trial and error.
+                            if (mAchievementStats.getCompleted() >= 1) {
+                                unlock(context, googleApiClient, achievementResId);
+                            }
+                        }
+                        break;
+                        case R.string.achievement_bookworm: {
+                            // Complete ten puzzles.
+                            if (mAchievementStats.getCompleted() >= 10) {
+                                unlock(context, googleApiClient, achievementResId);
+                            }
+                        }
+                        break;
+                        case R.string.achievement_whizkid: {
+                            // Complete twenty puzzles.
+                            if (mAchievementStats.getCompleted() >= 20) {
+                                unlock(context, googleApiClient, achievementResId);
+                            }
+                        }
+                        break;
+                        case R.string.achievement_flight_mode: {
+                            // Solve a puzzle in airplane mode. Isn't this the perfect game for a long flight?
+                            if (mUnlockedFlightMode) {
+                                unlock(context, googleApiClient, achievementResId);
+                            }
+                        }
+                        break;
+                        case R.string.achievement_its_the_bees_knees: {
+                            // Score a perfect 100%.
+                            if (mAchievementStats.getPerfectScore() >= 1) {
+                                unlock(context, googleApiClient, achievementResId);
+                            }
+                        }
+                        break;
+                        case R.string.achievement_cream_of_the_crop: {
+                            // Secure ten perfect scores.
+                            if (mAchievementStats.getPerfectScore() >= 10) {
+                                unlock(context, googleApiClient, achievementResId);
+                            }
+                        }
+                        break;
+                        case R.string.achievement_jack_of_all_trades: {
+                            // Solve a puzzle with no reveals or excess inputs—and without using the hint bar.
+                            if (mAchievementStats.isUnlockedJackOfAllTrades()) {
+                                unlock(context, googleApiClient, achievementResId);
+                            }
+                        }
+                        break;
+                        case R.string.achievement_nobrainer: {
+                            // Breeze through a puzzle in 45 seconds or less.
+                            if (mAchievementStats.isUnlockedNoBrainer()) {
+                                unlock(context, googleApiClient, achievementResId);
+                            }
+                        }
+                        break;
+                        case R.string.achievement_hope_youre_comfortable: {
+                            // Complete five puzzles in ten minutes.
+                            if (mAchievementStats.hasSeries(5, 10 * 60 * 1000)) {
+                                unlock(context, googleApiClient, achievementResId);
+                            }
+                        }
+                        break;
+                        case R.string.achievement_hope_youre_really_comfortable: {
+                            // Complete ten puzzles in thirty minutes.
+                            if (mAchievementStats.hasSeries(10, 30 * 60 * 1000)) {
+                                unlock(context, googleApiClient, achievementResId);
+                            }
+                        }
+                        break;
+                        case R.string.achievement_zen_master: {
+                            // Complete twenty puzzles in an hour.
+                            if (mAchievementStats.hasSeries(20, 60 * 60 * 1000)) {
+                                unlock(context, googleApiClient, achievementResId);
+                            }
+                        }
+                        break;
+                        case R.string.achievement_twoday_streak: {
+                            // Play for two consecutive days.
+                            if (mAchievementStats.getLongestStreak() >= 2) {
+                                unlock(context, googleApiClient, achievementResId);
+                            }
+                        }
+                        break;
+                        case R.string.achievement_threeday_streak: {
+                            // Play for three consecutive days.
+                            if (mAchievementStats.getLongestStreak() >= 3) {
+                                unlock(context, googleApiClient, achievementResId);
+                            }
+                        }
+                        break;
+                        case R.string.achievement_fiveday_streak: {
+                            // Play for five consecutive days.
+                            if (mAchievementStats.getLongestStreak() >= 5) {
+                                unlock(context, googleApiClient, achievementResId);
+                            }
+                        }
+                        break;
+                        default:
+                            String achievementId = CryptogramApp.getInstance().getString(achievementResId);
+                            throw new IllegalStateException("unknown achievement " + achievementId);
+                    }
+                }
+            }
+        }.execute();
     }
 
     private void unlock(Context context, GoogleApiClient googleApiClient, int achievementResId) {
@@ -235,7 +252,7 @@ public class AchievementProvider {
         public AchievementStats() {
         }
 
-        public void calculate(Context context) {
+        public synchronized void calculate(Context context) {
             mTimes.clear();
             mCompleted = 0;
             mPerfectScore = 0;
@@ -334,7 +351,7 @@ public class AchievementProvider {
             return calendar;
         }
 
-        public boolean hasSeries(int length, int seriesDuration) {
+        public synchronized boolean hasSeries(int length, int seriesDuration) {
             Long[] keys = new Long[mTimes.size()];
             mTimes.keySet().toArray(keys);
             for (int i = length; i < mTimes.size(); i++) {

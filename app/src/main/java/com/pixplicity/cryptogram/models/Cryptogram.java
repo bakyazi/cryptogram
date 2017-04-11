@@ -3,11 +3,13 @@ package com.pixplicity.cryptogram.models;
 import android.content.Context;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.text.TextUtils;
 
 import com.google.gson.annotations.SerializedName;
 import com.pixplicity.cryptogram.CryptogramApp;
 import com.pixplicity.cryptogram.R;
 import com.pixplicity.cryptogram.utils.CryptogramProvider;
+import com.pixplicity.cryptogram.utils.StringUtils;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -247,6 +249,7 @@ public class Cryptogram {
         return getProgress().getDuration();
     }
 
+    @Nullable
     public Float getScore() {
         if (isInstruction()) {
             return null;
@@ -294,6 +297,7 @@ public class Cryptogram {
 
     @Override
     public String toString() {
-        return getId() + ": " + getText().length() + " chars, author '" + getAuthor() + "'";
+        return getId() + ": " + getText().length() + " chars, author '" + getAuthor() + "' (“" + StringUtils.ellipsize(mText, 40) + "”)";
     }
+
 }

@@ -11,13 +11,11 @@ import android.graphics.Typeface;
 import android.os.Build;
 import android.support.annotation.Nullable;
 import android.support.v4.content.ContextCompat;
-import android.text.InputType;
 import android.text.TextPaint;
 import android.util.AttributeSet;
 import android.util.Log;
 import android.view.KeyEvent;
 import android.view.MotionEvent;
-import android.view.View;
 import android.view.inputmethod.BaseInputConnection;
 import android.view.inputmethod.EditorInfo;
 import android.view.inputmethod.InputConnection;
@@ -35,8 +33,6 @@ public class CryptogramView extends android.support.v7.widget.AppCompatTextView 
 
     private static final String TAG = CryptogramView.class.getSimpleName();
 
-    public static final int INPUT_TYPE = InputType.TYPE_TEXT_VARIATION_VISIBLE_PASSWORD |
-            InputType.TYPE_TEXT_FLAG_NO_SUGGESTIONS;
     public static final String SOFT_HYPHEN = "\u00AD";
 
     @Nullable
@@ -50,7 +46,7 @@ public class CryptogramView extends android.support.v7.widget.AppCompatTextView 
     private TextPaint mTextPaintInput, mTextPaintInputComplete, mTextPaintMapping, mTextPaintMistake;
     private int mBoxInset;
 
-    boolean mDarkTheme = PrefsUtils.getDarkTheme();
+    private boolean mDarkTheme;
 
     private OnCryptogramProgressListener mOnCryptogramProgressListener;
     private OnHighlightListener mOnHighlightListener;
@@ -73,6 +69,10 @@ public class CryptogramView extends android.support.v7.widget.AppCompatTextView 
 
     private void init(Context context, AttributeSet attrs, int defStyleAttr) {
         Resources r = context.getResources();
+
+        if (!isInEditMode()) {
+            mDarkTheme = PrefsUtils.getDarkTheme();
+        }
 
         mPaint = new Paint();
         if (mDarkTheme) {
@@ -114,7 +114,13 @@ public class CryptogramView extends android.support.v7.widget.AppCompatTextView 
         mTextPaintMapping.setTextSize(r.getDimensionPixelSize(R.dimen.puzzle_hint_size));
 
         mTextPaintInputComplete = new TextPaint(mTextPaintInput);
-        mTextPaintInputComplete.setColor(ContextCompat.getColor(context, R.color.textComplete));
+        int textCompleteColorResId;
+        if (mDarkTheme) {
+            textCompleteColorResId = R.color.textCompleteDark;
+        } else {
+            textCompleteColorResId = R.color.textComplete;
+        }
+        mTextPaintInputComplete.setColor(ContextCompat.getColor(context, textCompleteColorResId));
 
         mTextPaintMistake = new TextPaint(mTextPaintInput);
         mTextPaintMistake.setColor(ContextCompat.getColor(context, R.color.textMistake));
@@ -128,12 +134,6 @@ public class CryptogramView extends android.support.v7.widget.AppCompatTextView 
             setCryptogram(new Cryptogram());
         }
 
-        setOnClickListener(new OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                showSoftInput();
-            }
-        });
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             setShowSoftInputOnFocus(true);
         }
@@ -146,18 +146,18 @@ public class CryptogramView extends android.support.v7.widget.AppCompatTextView 
     protected void onFocusChanged(boolean focused, int direction, Rect previouslyFocusedRect) {
         super.onFocusChanged(focused, direction, previouslyFocusedRect);
         if (focused) {
-            if (mCryptogram != null && !mCryptogram.isCompleted()) {
-                showSoftInput();
-            }
+            showSoftInput();
         } else {
             hideSoftInput();
         }
     }
 
     public void showSoftInput() {
-        InputMethodManager inputMethodManager = (InputMethodManager) getContext().getSystemService(Context.INPUT_METHOD_SERVICE);
-        if (inputMethodManager != null) {
-            inputMethodManager.showSoftInput(this, InputMethodManager.SHOW_IMPLICIT);
+        if (mCryptogram != null && !mCryptogram.isCompleted()) {
+            InputMethodManager inputMethodManager = (InputMethodManager) getContext().getSystemService(Context.INPUT_METHOD_SERVICE);
+            if (inputMethodManager != null) {
+                inputMethodManager.showSoftInput(this, InputMethodManager.SHOW_IMPLICIT);
+            }
         }
     }
 
@@ -173,7 +173,7 @@ public class CryptogramView extends android.support.v7.widget.AppCompatTextView 
         switch (keyCode) {
             case KeyEvent.KEYCODE_BACK:
                 // Don't consume
-                return false;
+                return super.onKeyUp(keyCode, event);
             case KeyEvent.KEYCODE_ENTER:
             case KeyEvent.KEYCODE_NAVIGATE_NEXT:
                 if (mCryptogram != null) {
@@ -199,10 +199,13 @@ public class CryptogramView extends android.support.v7.widget.AppCompatTextView 
                 }
                 return true;
         }
-        return onKeyPress((char) event.getUnicodeChar());
+        if (onKeyPress((char) event.getUnicodeChar())) {
+            return true;
+        }
+        return super.onKeyUp(keyCode, event);
     }
 
-    private boolean onKeyPress(char c) {
+    public boolean onKeyPress(char c) {
         if (mCryptogram != null && !mCryptogram.isCompleted()) {
             if (setUserChar(getSelectedCharacter(), c)) {
                 // Answer filled in; clear the selection
@@ -218,32 +221,14 @@ public class CryptogramView extends android.support.v7.widget.AppCompatTextView 
 
     @Override
     public int getInputType() {
-        return INPUT_TYPE;
+        return SimpleInputConnection.INPUT_TYPE;
     }
 
     @Override
     public InputConnection onCreateInputConnection(EditorInfo outAttrs) {
-        outAttrs.inputType = INPUT_TYPE;
+        outAttrs.inputType = SimpleInputConnection.INPUT_TYPE;
         outAttrs.imeOptions = EditorInfo.IME_ACTION_NEXT | EditorInfo.IME_FLAG_NO_EXTRACT_UI;
-        return new BaseInputConnection(this, true) {
-            @Override
-            public boolean deleteSurroundingText(int beforeLength, int afterLength) {
-                onKeyPress((char) 0);
-                return false;
-            }
-
-            @Override
-            public boolean commitText(CharSequence text, int newCursorPosition) {
-                String input = text.toString().trim();
-                if (input.length() > 0) {
-                    onKeyPress(input.charAt(0));
-                } else {
-                    onKeyPress((char) 0);
-                }
-                finishComposingText();
-                return true;
-            }
-        };
+        return new SimpleInputConnection(this);
     }
 
     @Override

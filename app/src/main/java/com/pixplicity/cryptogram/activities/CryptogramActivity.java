@@ -1,5 +1,6 @@
 package com.pixplicity.cryptogram.activities;
 
+import android.content.ActivityNotFoundException;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.IntentSender;
@@ -28,6 +29,7 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TableLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.afollestad.easyvideoplayer.EasyVideoCallback;
 import com.afollestad.easyvideoplayer.EasyVideoPlayer;
@@ -35,6 +37,9 @@ import com.afollestad.materialdialogs.DialogAction;
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.afollestad.materialdialogs.internal.MDButton;
 import com.crashlytics.android.Crashlytics;
+import com.crashlytics.android.answers.Answers;
+import com.crashlytics.android.answers.ContentViewEvent;
+import com.crashlytics.android.answers.LoginEvent;
 import com.getkeepsafe.taptargetview.TapTarget;
 import com.getkeepsafe.taptargetview.TapTargetView;
 import com.google.android.gms.common.ConnectionResult;
@@ -50,9 +55,11 @@ import com.pixplicity.cryptogram.events.CryptogramEvent;
 import com.pixplicity.cryptogram.models.Cryptogram;
 import com.pixplicity.cryptogram.utils.AchievementProvider;
 import com.pixplicity.cryptogram.utils.CryptogramProvider;
+import com.pixplicity.cryptogram.utils.EventProvider;
 import com.pixplicity.cryptogram.utils.LeaderboardProvider;
 import com.pixplicity.cryptogram.utils.PrefsUtils;
 import com.pixplicity.cryptogram.utils.StringUtils;
+import com.pixplicity.cryptogram.views.CryptogramLayout;
 import com.pixplicity.cryptogram.views.CryptogramView;
 import com.pixplicity.cryptogram.views.HintView;
 import com.pixplicity.generate.Rate;
@@ -73,6 +80,10 @@ public class CryptogramActivity extends BaseActivity implements GoogleApiClient.
 
     private static final int RC_UNUSED = 1000;
     private static final int RC_SIGN_IN = 1001;
+
+    private static final int ONBOARDING_PAGES = 2;
+
+    public static final String EXTRA_LAUNCH_SETTINGS = "launch_settings";
 
     @BindView(R.id.iv_google_play_games_banner)
     protected ImageView mIvGooglePlayGamesBanner;
@@ -96,7 +107,7 @@ public class CryptogramActivity extends BaseActivity implements GoogleApiClient.
     protected RecyclerView mRvDrawer;
 
     @BindView(R.id.vg_cryptogram)
-    protected ViewGroup mVgCryptogram;
+    protected CryptogramLayout mVgCryptogram;
 
     @BindView(R.id.tv_author)
     protected TextView mTvAuthor;
@@ -162,12 +173,14 @@ public class CryptogramActivity extends BaseActivity implements GoogleApiClient.
         super.onCreate(savedInstanceState);
         mDarkTheme = PrefsUtils.getDarkTheme();
         if (mDarkTheme) {
-            setTheme(R.style.darkAppTheme);
-            getWindow().setBackgroundDrawableResource(R.drawable.bg_dark_activity);
-            setContentView(R.layout.activity_cryptogram_dark);
-        } else {
-            setContentView(R.layout.activity_cryptogram);
+            setTheme(R.style.AppTheme_Dark);
+            getWindow().setBackgroundDrawableResource(R.drawable.bg_activity_dark);
         }
+        setContentView(R.layout.activity_cryptogram);
+        if (mDarkTheme) {
+            mVgStats.setBackgroundResource(R.drawable.bg_statistics_dark);
+        }
+
         final CryptogramProvider cryptogramProvider = CryptogramProvider.getInstance(this);
 
         // Create the Google Api Client with access to Games
@@ -196,6 +209,7 @@ public class CryptogramActivity extends BaseActivity implements GoogleApiClient.
         });
         mRvDrawer.setAdapter(mAdapter);
 
+        mVgCryptogram.setCrytogramView(mCryptogramView);
         mCryptogramView.setOnCryptogramProgressListener(new CryptogramView.OnCryptogramProgressListener() {
             @Override
             public void onCryptogramProgress(Cryptogram cryptogram) {
@@ -218,9 +232,86 @@ public class CryptogramActivity extends BaseActivity implements GoogleApiClient.
             }
         });
 
-        showOnboarding(0);
-
         updateCryptogram(cryptogramProvider.getCurrent());
+
+        Intent intent = getIntent();
+        if (intent != null) {
+            if (intent.getBooleanExtra(EXTRA_LAUNCH_SETTINGS, false)) {
+                startActivity(SettingsActivity.create(this));
+            }
+        }
+    }
+
+    @Override
+    protected void onNewIntent(Intent intent) {
+        super.onNewIntent(intent);
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+
+        mGoogleApiClient.connect();
+
+        final CryptogramProvider cryptogramProvider = CryptogramProvider.getInstance(this);
+        Cryptogram cryptogram = cryptogramProvider.getCurrent();
+        if (cryptogram != null) {
+            cryptogram.onResume();
+        }
+
+        EventProvider.getBus().register(this);
+
+        if (hasOnBoardingPages()) {
+            showOnboarding(0);
+        } else {
+            onGameplayReady();
+        }
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+
+        if (mGoogleApiClient.isConnected()) {
+            mGoogleApiClient.disconnect();
+        }
+
+        final CryptogramProvider cryptogramProvider = CryptogramProvider.getInstance(this);
+        Cryptogram cryptogram = cryptogramProvider.getCurrent();
+        if (cryptogram != null) {
+            cryptogram.onPause();
+        }
+
+        EventProvider.getBus().unregister(this);
+    }
+
+    @Override
+    public void onBackPressed() {
+        if (mDrawerLayout != null && mDrawerLayout.isDrawerOpen(GravityCompat.START)) {
+            mDrawerLayout.closeDrawer(GravityCompat.START);
+            return;
+        }
+        super.onBackPressed();
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent intent) {
+        super.onActivityResult(requestCode, resultCode, intent);
+        if (requestCode == RC_SIGN_IN) {
+            mSignInClicked = false;
+            mResolvingConnectionFailure = false;
+            boolean success = resultCode == RESULT_OK;
+            Answers.getInstance().logLogin(new LoginEvent().putSuccess(success));
+            if (success) {
+                mGoogleApiClient.connect();
+            } else {
+                showGmsError(resultCode);
+            }
+        }
+    }
+
+    private boolean hasOnBoardingPages() {
+        return PrefsUtils.getOnboarding() < ONBOARDING_PAGES - 1;
     }
 
     private void showHighlight(final int type, PointF point, final String title, final String description, int delayMillis) {
@@ -297,6 +388,7 @@ public class CryptogramActivity extends BaseActivity implements GoogleApiClient.
                 videoW = 1088;
                 videoH = 962;
                 break;
+            case ONBOARDING_PAGES:
             default:
                 onGameplayReady();
                 return;
@@ -382,67 +474,13 @@ public class CryptogramActivity extends BaseActivity implements GoogleApiClient.
                 })
                 .onAny(new MaterialDialog.SingleButtonCallback() {
                     @Override
-                    public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
+                    public void onClick(@NonNull MaterialDialog dialog,
+                                        @NonNull DialogAction which) {
                         PrefsUtils.setOnboarding(page);
                         showOnboarding(page + 1);
                     }
                 })
                 .show();
-    }
-
-    @Override
-    protected void onStart() {
-        super.onStart();
-
-        mGoogleApiClient.connect();
-
-        final CryptogramProvider cryptogramProvider = CryptogramProvider.getInstance(this);
-        Cryptogram cryptogram = cryptogramProvider.getCurrent();
-        if (cryptogram != null) {
-            cryptogram.onResume();
-        }
-
-        CryptogramApp.getInstance().getBus().register(this);
-    }
-
-    @Override
-    protected void onStop() {
-        super.onStop();
-
-        if (mGoogleApiClient.isConnected()) {
-            mGoogleApiClient.disconnect();
-        }
-
-        final CryptogramProvider cryptogramProvider = CryptogramProvider.getInstance(this);
-        Cryptogram cryptogram = cryptogramProvider.getCurrent();
-        if (cryptogram != null) {
-            cryptogram.onPause();
-        }
-
-        CryptogramApp.getInstance().getBus().unregister(this);
-    }
-
-    @Override
-    public void onBackPressed() {
-        if (mDrawerLayout != null && mDrawerLayout.isDrawerOpen(GravityCompat.START)) {
-            mDrawerLayout.closeDrawer(GravityCompat.START);
-            return;
-        }
-        super.onBackPressed();
-    }
-
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent intent) {
-        super.onActivityResult(requestCode, resultCode, intent);
-        if (requestCode == RC_SIGN_IN) {
-            mSignInClicked = false;
-            mResolvingConnectionFailure = false;
-            if (resultCode == RESULT_OK) {
-                mGoogleApiClient.connect();
-            } else {
-                showGmsError(resultCode);
-            }
-        }
     }
 
     @OnClick(R.id.vg_google_play_games)
@@ -459,9 +497,14 @@ public class CryptogramActivity extends BaseActivity implements GoogleApiClient.
                 @Override
                 public void onClick(View view) {
                     dialog.dismiss();
-                    startActivityForResult(
-                            Games.Leaderboards.getLeaderboardIntent(mGoogleApiClient, getString(R.string.leaderboard_scoreboard)),
-                            RC_UNUSED);
+                    Answers.getInstance().logContentView(new ContentViewEvent().putContentName(CryptogramApp.CONTENT_LEADERBOARDS));
+                    try {
+                        startActivityForResult(
+                                Games.Leaderboards.getLeaderboardIntent(mGoogleApiClient, getString(R.string.leaderboard_scoreboard)),
+                                RC_UNUSED);
+                    } catch (ActivityNotFoundException e) {
+                        Toast.makeText(CryptogramActivity.this, R.string.google_play_games_not_installed, Toast.LENGTH_LONG).show();
+                    }
                 }
             });
 
@@ -470,9 +513,14 @@ public class CryptogramActivity extends BaseActivity implements GoogleApiClient.
                 @Override
                 public void onClick(View view) {
                     dialog.dismiss();
-                    startActivityForResult(
-                            Games.Achievements.getAchievementsIntent(mGoogleApiClient),
-                            RC_UNUSED);
+                    Answers.getInstance().logContentView(new ContentViewEvent().putContentName(CryptogramApp.CONTENT_ACHIEVEMENTS));
+                    try {
+                        startActivityForResult(
+                                Games.Achievements.getAchievementsIntent(mGoogleApiClient),
+                                RC_UNUSED);
+                    } catch (ActivityNotFoundException e) {
+                        Toast.makeText(CryptogramActivity.this, R.string.google_play_games_not_installed, Toast.LENGTH_LONG).show();
+                    }
                 }
             });
 
@@ -500,8 +548,7 @@ public class CryptogramActivity extends BaseActivity implements GoogleApiClient.
         if (cryptogram != null) {
             CryptogramProvider provider = CryptogramProvider.getInstance(this);
             provider.setCurrentId(cryptogram.getId());
-            mRvDrawer.smoothScrollToPosition(
-                    provider.getCurrentIndex());
+            mRvDrawer.scrollToPosition(provider.getCurrentIndex());
             mTvError.setVisibility(View.GONE);
             mVgCryptogram.setVisibility(View.VISIBLE);
             // Apply the puzzle to the CryptogramView
@@ -658,41 +705,48 @@ public class CryptogramActivity extends BaseActivity implements GoogleApiClient.
             return true;
             case R.id.action_reveal_letter: {
                 if (cryptogram == null || !mCryptogramView.hasSelectedCharacter()) {
-                    Snackbar.make(mVgContent, "Please select a letter first.", Snackbar.LENGTH_SHORT).show();
+                    Snackbar.make(mVgRoot, "Please select a letter first.", Snackbar.LENGTH_SHORT).show();
                 } else {
-                    new AlertDialog.Builder(this)
-                            .setMessage(R.string.reveal_letter_confirmation)
-                            .setPositiveButton(R.string.reveal, new DialogInterface.OnClickListener() {
-                                @Override
-                                public void onClick(DialogInterface dialogInterface, int i) {
-                                    mCryptogramView.revealCharacterMapping(
-                                            mCryptogramView.getSelectedCharacter());
-                                }
-                            })
-                            .setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {
-                                @Override
-                                public void onClick(DialogInterface dialogInterface, int i) {
-                                }
-                            })
-                            .show();
+                    if (PrefsUtils.getNeverAskRevealLetter()) {
+                        mCryptogramView.revealCharacterMapping(
+                                mCryptogramView.getSelectedCharacter());
+                    } else {
+                        new MaterialDialog.Builder(this)
+                                .content(R.string.reveal_letter_confirmation)
+                                .checkBoxPromptRes(R.string.never_ask_again, false, null)
+                                .positiveText(R.string.reveal)
+                                .onPositive(new MaterialDialog.SingleButtonCallback() {
+                                    @Override
+                                    public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
+                                        PrefsUtils.setNeverAskRevealLetter(dialog.isPromptCheckBoxChecked());
+                                        mCryptogramView.revealCharacterMapping(
+                                                mCryptogramView.getSelectedCharacter());
+                                    }
+                                })
+                                .negativeText(R.string.cancel)
+                                .show();
+                    }
                 }
             }
             return true;
             case R.id.action_reveal_mistakes: {
-                new AlertDialog.Builder(this)
-                        .setMessage(R.string.reveal_mistakes_confirmation)
-                        .setPositiveButton(R.string.reveal, new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialogInterface, int i) {
-                                mCryptogramView.revealMistakes();
-                            }
-                        })
-                        .setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialogInterface, int i) {
-                            }
-                        })
-                        .show();
+                if (PrefsUtils.getNeverAskRevealMistakes()) {
+                    mCryptogramView.revealMistakes();
+                } else {
+                    new MaterialDialog.Builder(this)
+                            .content(R.string.reveal_mistakes_confirmation)
+                            .checkBoxPromptRes(R.string.never_ask_again, false, null)
+                            .positiveText(R.string.reveal)
+                            .onPositive(new MaterialDialog.SingleButtonCallback() {
+                                @Override
+                                public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
+                                    PrefsUtils.setNeverAskRevealMistakes(dialog.isPromptCheckBoxChecked());
+                                    mCryptogramView.revealMistakes();
+                                }
+                            })
+                            .negativeText(R.string.cancel)
+                            .show();
+                }
             }
             return true;
             case R.id.action_reveal_puzzle: {
@@ -728,18 +782,26 @@ public class CryptogramActivity extends BaseActivity implements GoogleApiClient.
             }
             return true;
             case R.id.action_go_to: {
-                String currentId = String.valueOf(cryptogram.getNumber());
+                if (cryptogram == null) {
+                    if (mDrawerLayout != null) {
+                        mDrawerLayout.openDrawer(GravityCompat.START);
+                    }
+                    break;
+                }
+                String prefilledText = null;
+                int currentId = cryptogram.getNumber();
+                if (currentId > 0) {
+                    prefilledText = String.valueOf(currentId);
+                }
                 new MaterialDialog.Builder(this)
                         .content(R.string.go_to_puzzle_content)
                         .inputType(InputType.TYPE_CLASS_NUMBER)
-                        .input(null, currentId, new MaterialDialog.InputCallback() {
+                        .input(null, prefilledText, new MaterialDialog.InputCallback() {
                             @Override
                             public void onInput(MaterialDialog dialog, CharSequence input) {
                                 MDButton button = dialog.getActionButton(DialogAction.POSITIVE);
                                 try {
-                                    //noinspection ResultOfMethodCallIgnored
-                                    Integer.parseInt(input.toString());
-                                    button.setEnabled(true);
+                                    button.setEnabled(Integer.parseInt(input.toString()) > 0);
                                 } catch (NumberFormatException ignored) {
                                     button.setEnabled(false);
                                 }
@@ -756,7 +818,8 @@ public class CryptogramActivity extends BaseActivity implements GoogleApiClient.
                         })
                         .onPositive(new MaterialDialog.SingleButtonCallback() {
                             @Override
-                            public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
+                            public void onClick(@NonNull MaterialDialog dialog,
+                                                @NonNull DialogAction which) {
                                 //noinspection ConstantConditions
                                 Editable input = dialog.getInputEditText().getText();
                                 try {
@@ -765,7 +828,7 @@ public class CryptogramActivity extends BaseActivity implements GoogleApiClient.
                                             .getInstance(CryptogramActivity.this);
                                     Cryptogram cryptogram = provider.getByNumber(puzzleNumber);
                                     if (cryptogram == null) {
-                                        Snackbar.make(mVgContent, getString(R.string.puzzle_nonexistant, puzzleNumber),
+                                        Snackbar.make(mVgRoot, getString(R.string.puzzle_nonexistant, puzzleNumber),
                                                       Snackbar.LENGTH_SHORT).show();
                                     } else {
                                         updateCryptogram(cryptogram);
@@ -819,6 +882,7 @@ public class CryptogramActivity extends BaseActivity implements GoogleApiClient.
             }
             return true;
             case R.id.action_stats: {
+                Answers.getInstance().logContentView(new ContentViewEvent().putContentName(CryptogramApp.CONTENT_STATISTICS));
                 TableLayout dialogView = (TableLayout) LayoutInflater.from(this).inflate(R.layout.dialog_statistics, null);
                 if (cryptogram != null) {
                     cryptogram.save();
@@ -829,13 +893,14 @@ public class CryptogramActivity extends BaseActivity implements GoogleApiClient.
                 long shortestDurationMs = 0, totalDurationMs = 0;
                 for (Cryptogram c : provider.getAll()) {
                     long duration = c.getProgress().getDuration();
-                    if (c.isCompleted()) {
+                    if (!c.isInstruction() && c.isCompleted()) {
                         count++;
                         Float puzzleScore = c.getScore();
-                        if (puzzleScore != null) {
-                            score += puzzleScore;
-                            scoreCount++;
+                        if (puzzleScore == null) {
+                            continue;
                         }
+                        score += puzzleScore;
+                        scoreCount++;
                         if (shortestDurationMs == 0 || shortestDurationMs > duration) {
                             shortestDurationMs = duration;
                         }
@@ -917,6 +982,10 @@ public class CryptogramActivity extends BaseActivity implements GoogleApiClient.
                             }
                         })
                         .show();
+            }
+            return true;
+            case R.id.action_settings: {
+                startActivity(SettingsActivity.create(this));
             }
             return true;
             case R.id.action_about: {
