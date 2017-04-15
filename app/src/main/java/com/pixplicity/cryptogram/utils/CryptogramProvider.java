@@ -13,15 +13,18 @@ import com.google.gson.JsonSyntaxException;
 import com.pixplicity.cryptogram.BuildConfig;
 import com.pixplicity.cryptogram.models.Cryptogram;
 import com.pixplicity.cryptogram.models.CryptogramProgress;
+import com.pixplicity.cryptogram.views.CryptogramView;
 
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.LinkedHashSet;
+import java.util.LinkedList;
 import java.util.Random;
 import java.util.Set;
 
@@ -75,18 +78,17 @@ public class CryptogramProvider {
         int index = 0, nextId = 0;
         mCryptogramIds = new HashMap<>();
         if (BuildConfig.DEBUG) {
-            Cryptogram[] cryptograms = new Cryptogram[mCryptograms.length + 2];
-            int i = 0;
-            cryptograms[i++] = new Cryptogram.Mock(
-                    "AAAAAAAA\u00ADBBB\u00ADCCCCCCC\u00ADDDDDDDDDD\u00ADEEEE\u00ADFFFFFFFFFFFFF\u00ADGGGG\u00ADHHHHHHHHHH\u00ADIIIIII.",
-                    null, null);
-            cryptograms[i++] = new Cryptogram.Mock(
-                    "JJJJJJJJ KKK LLLLLLL MMMMMMMMM NNNN OOOOOOOOOOOOO PPPP\u00ADQQQQQQQQQQ\u00ADRRRRRR.",
-                    null, null);
-            for (int j = 0; j < mCryptograms.length; j++) {
-                cryptograms[j + i] = mCryptograms[j];
+            LinkedList<Cryptogram> cryptograms = new LinkedList<>();
+            if (CryptogramView.ENABLE_HYPHENATION) {
+                cryptograms.add(new Cryptogram.Mock(
+                        "AAAAAAAA\u00ADBBB\u00ADCCCCCCC\u00ADDDDDDDDDD\u00ADEEEE\u00ADFFFFFFFFFFFFF\u00ADGGGG\u00ADHHHHHHHHHH\u00ADIIIIII.",
+                        null, null));
+                cryptograms.add(new Cryptogram.Mock(
+                        "JJJJJJJJ KKK LLLLLLL MMMMMMMMM NNNN OOOOOOOOOOOOO PPPP\u00ADQQQQQQQQQQ\u00ADRRRRRR.",
+                        null, null));
             }
-            mCryptograms = cryptograms;
+            cryptograms.addAll(Arrays.asList(mCryptograms));
+            mCryptograms = cryptograms.toArray(new Cryptogram[cryptograms.size()]);
         }
         for (Cryptogram cryptogram : mCryptograms) {
             int id = cryptogram.getId();

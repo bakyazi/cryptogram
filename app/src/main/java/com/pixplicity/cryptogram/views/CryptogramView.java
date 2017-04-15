@@ -32,7 +32,7 @@ public class CryptogramView extends android.support.v7.widget.AppCompatTextView 
     private static final String TAG = CryptogramView.class.getSimpleName();
 
     private static final String SOFT_HYPHEN = "\u00AD";
-    private static final boolean ENABLE_HYPHENATION = false;
+    public static final boolean ENABLE_HYPHENATION = false;
     private static final boolean ENABLE_TOUCH_SELECTION = true;
 
     @Nullable
