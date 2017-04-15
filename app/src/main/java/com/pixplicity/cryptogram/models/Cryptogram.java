@@ -3,7 +3,6 @@ package com.pixplicity.cryptogram.models;
 import android.content.Context;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
-import android.text.TextUtils;
 
 import com.google.gson.annotations.SerializedName;
 import com.pixplicity.cryptogram.CryptogramApp;
@@ -14,6 +13,7 @@ import com.pixplicity.cryptogram.utils.StringUtils;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
+import java.util.LinkedList;
 
 public class Cryptogram {
 
@@ -112,6 +112,17 @@ public class Cryptogram {
             }
         }
         return mWords;
+    }
+
+    @NonNull
+    public String[] getWordsForLineWidth(int lineWidthInChars) {
+        LinkedList<String> wordParts = new LinkedList<>();
+        Word[] words = Word.from(getWords());
+        int lineRemaining = lineWidthInChars;
+        for (Word word : words) {
+            lineRemaining = word.fillForSpace(wordParts, lineRemaining, lineWidthInChars);
+        }
+        return wordParts.toArray(new String[wordParts.size()]);
     }
 
     public CryptogramProgress getProgress() {

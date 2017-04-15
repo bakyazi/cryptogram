@@ -15,7 +15,6 @@ import android.util.AttributeSet;
 import android.util.Log;
 import android.view.KeyEvent;
 import android.view.MotionEvent;
-import android.view.inputmethod.BaseInputConnection;
 import android.view.inputmethod.EditorInfo;
 import android.view.inputmethod.InputConnection;
 import android.view.inputmethod.InputMethodManager;
@@ -423,6 +422,7 @@ public class CryptogramView extends android.support.v7.widget.AppCompatTextView 
             String displayWord = word.replace(SOFT_HYPHEN, "");
             float w = displayWord.length() * mBoxW;
             if (x + w > width) {
+                // Whole word would exceed boundary
                 // Check if we can use a soft hyphen
                 int index = word.lastIndexOf(SOFT_HYPHEN);
                 boolean needsLineBreak = true;
@@ -462,6 +462,7 @@ public class CryptogramView extends android.support.v7.widget.AppCompatTextView 
                     y += mBoxH * 2 + offsetY * 2;
                 }
             } else {
+                // Whole word fits; draw it
                 word = displayWord;
             }
             x = drawWord(canvas, charMapping, textPaintUser, linePaint, offsetX1, offsetX2, offsetY, x, y, word);
@@ -471,7 +472,9 @@ public class CryptogramView extends android.support.v7.widget.AppCompatTextView 
         return y;
     }
 
-    private float drawWord(@Nullable Canvas canvas, HashMap<Character, Character> charMapping, TextPaint textPaintUser, Paint linePaint, float offsetX1, float offsetX2, float offsetY, float x, float y, String word) {
+    private float drawWord(@Nullable Canvas canvas, HashMap<Character, Character> charMapping,
+                           TextPaint textPaintUser, Paint linePaint, float offsetX1, float offsetX2,
+                           float offsetY, float x, float y, String word) {
         if (canvas == null) {
             return x + mBoxW * word.length();
         }
@@ -534,7 +537,8 @@ public class CryptogramView extends android.support.v7.widget.AppCompatTextView 
         return 0;
     }
 
-    public void setOnCryptogramProgressListener(OnCryptogramProgressListener onCryptogramProgressListener) {
+    public void setOnCryptogramProgressListener(
+            OnCryptogramProgressListener onCryptogramProgressListener) {
         mOnCryptogramProgressListener = onCryptogramProgressListener;
     }
 

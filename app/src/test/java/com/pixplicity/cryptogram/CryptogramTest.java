@@ -123,4 +123,17 @@ public class CryptogramTest {
         }
     }
 
+    @Test
+    public void hyphenation() {
+        Cryptogram cryptogram = CryptogramProvider.getInstance(null).get(0);
+        int lineWidthInChars = 12;
+        for (int i = 0; i < lineWidthInChars; i++) {
+            System.out.print('=');
+        }
+        System.out.println();
+        for (String wordPart : cryptogram.getWordsForLineWidth(lineWidthInChars)) {
+            System.out.println(wordPart);
+        }
+    }
+
 }
