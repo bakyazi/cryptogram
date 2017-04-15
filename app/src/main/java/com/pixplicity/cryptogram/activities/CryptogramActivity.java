@@ -219,7 +219,7 @@ public class CryptogramActivity extends BaseActivity implements GoogleApiClient.
         mCryptogramView.setOnHighlightListener(new CryptogramView.OnHighlightListener() {
             @Override
             public void onHighlight(int type, PointF point) {
-                if (!mHighlightedHyphenation && (!PrefsUtils.getHighlighted(type) || BuildConfig.DEBUG)) {
+                if (!mHighlightedHyphenation && !PrefsUtils.getHighlighted(type)) {
                     mHighlightedHyphenation = true;
                     Rect viewRect = new Rect();
                     mCryptogramView.getGlobalVisibleRect(viewRect);
@@ -240,11 +240,6 @@ public class CryptogramActivity extends BaseActivity implements GoogleApiClient.
                 startActivity(SettingsActivity.create(this));
             }
         }
-    }
-
-    @Override
-    protected void onNewIntent(Intent intent) {
-        super.onNewIntent(intent);
     }
 
     @Override
@@ -310,10 +305,6 @@ public class CryptogramActivity extends BaseActivity implements GoogleApiClient.
         }
     }
 
-    private boolean hasOnBoardingPages() {
-        return PrefsUtils.getOnboarding() < ONBOARDING_PAGES - 1;
-    }
-
     private void showHighlight(final int type, PointF point, final String title, final String description, int delayMillis) {
         Rect viewRect = new Rect();
         mCryptogramView.getGlobalVisibleRect(viewRect);
@@ -324,13 +315,17 @@ public class CryptogramActivity extends BaseActivity implements GoogleApiClient.
         handler.postDelayed(new Runnable() {
             @Override
             public void run() {
+                if (mDrawerLayout != null) {
+                    // Ensure the drawer is closed
+                    mDrawerLayout.closeDrawer(GravityCompat.START);
+                }
                 final long showTime = System.currentTimeMillis();
                 TapTargetView.showFor(
                         CryptogramActivity.this,
                         TapTarget.forBounds(new Rect(targetX - targetRadius, targetY - targetRadius, targetX + targetRadius, targetY + targetRadius),
                                             title, description)
-                                 .titleTextColor(R.color.white)
-                                 .descriptionTextColor(R.color.white)
+                                 .titleTextColor(R.color.textHighlight)
+                                 .descriptionTextColor(R.color.textHighlight)
                                  .outerCircleColor(R.color.highlight_color)
                                  .cancelable(true)
                                  .tintTarget(false)
@@ -352,7 +347,7 @@ public class CryptogramActivity extends BaseActivity implements GoogleApiClient.
                             }
 
                             private void dismiss(TapTargetView view) {
-                                if (System.currentTimeMillis() - showTime >= 2000) {
+                                if (System.currentTimeMillis() - showTime >= 1300) {
                                     // Ensure that the user saw the message
                                     PrefsUtils.setHighlighted(type, true);
                                     view.dismiss(false);
@@ -361,6 +356,10 @@ public class CryptogramActivity extends BaseActivity implements GoogleApiClient.
                         });
             }
         }, delayMillis);
+    }
+
+    private boolean hasOnBoardingPages() {
+        return PrefsUtils.getOnboarding() < ONBOARDING_PAGES - 1;
     }
 
     private void showOnboarding(final int page) {

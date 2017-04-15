@@ -59,6 +59,7 @@ public class CryptogramTest {
             int id = cryptogram.getId();
             String text = cryptogram.getText();
             String author = cryptogram.getAuthor();
+            String topic = cryptogram.getTopic();
             if (VERBOSE) {
                 System.out.println("cryptogram " + cryptogram);
             }
@@ -78,6 +79,10 @@ public class CryptogramTest {
             if (text.contains(" - ")) {
                 throw new AssertionError("Contains simple hyphen; replace with '—': " + cryptogram);
             }
+            // Ensure em dashes are surrounded with spaces
+            if (text.replaceAll("[\\w]—", "").replaceAll("—[\\w]", "").length() < text.length()) {
+                throw new AssertionError("Contains em dash without surrounding spaces: " + cryptogram);
+            }
             // Ensure there aren't simple hyphens (replace with —)
             if (text.contains("...")) {
                 throw new AssertionError("Contains expanded ellipsis; replace with '…': " + cryptogram);
@@ -87,6 +92,12 @@ public class CryptogramTest {
                 if (author == null || author.trim().length() == 0) {
                     throw new AssertionError("No author: " + cryptogram);
                 }
+            }
+            if (author != null && author.contains("[^\\s\\w]")) {
+                throw new AssertionError("Contains invalid character in author");
+            }
+            if (topic != null && topic.contains("[^\\s\\w]")) {
+                throw new AssertionError("Contains invalid character in topic");
             }
             // Ensure there aren't simple hyphens (replace with —)
             String given = cryptogram.getGiven();
@@ -98,6 +109,14 @@ public class CryptogramTest {
                 double distance = levenshtein.distance(text, otherCryptogram.getText());
                 if (distance < 10) {
                     throw new AssertionError("Levenshtein distance of " + cryptogram + " is " + distance + " to " + otherCryptogram);
+                }
+            }
+            for (String word : cryptogram.getWords()) {
+                word = word.replaceAll("[^a-zA-Z\u00AD\\-]", "");
+                for (String wordPart : word.split("[\u00AD\\-]")) {
+                    if (wordPart.length() > 8) {
+                        throw new AssertionError("Contains word of length >8 without hyphen or soft-hyphen ('\u00AD'): '" + word + "' in " + cryptogram);
+                    }
                 }
             }
             hashes.put(id, cryptogram);
