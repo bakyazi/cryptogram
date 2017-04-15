@@ -54,9 +54,15 @@ public class Cryptogram {
          * Creates a mock cryptogram.
          */
         public Mock() {
-            mText = "Bright vixens jump; dozy fowl quack.";
-            mAuthor = "Paul Lammertsma";
-            mTopic = "Other";
+            this("Bright vixens jump; dozy fowl quack.",
+                    "Paul Lammertsma",
+                    "Other");
+        }
+
+        public Mock(String text, String author, String topic) {
+            mText = text;
+            mAuthor = author;
+            mTopic = topic;
             mIsMock = true;
         }
 

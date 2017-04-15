@@ -10,6 +10,7 @@ import android.widget.Toast;
 import com.crashlytics.android.Crashlytics;
 import com.google.gson.Gson;
 import com.google.gson.JsonSyntaxException;
+import com.pixplicity.cryptogram.BuildConfig;
 import com.pixplicity.cryptogram.models.Cryptogram;
 import com.pixplicity.cryptogram.models.CryptogramProgress;
 
@@ -73,6 +74,20 @@ public class CryptogramProvider {
         mCryptograms = mGson.fromJson(new InputStreamReader(is), Cryptogram[].class);
         int index = 0, nextId = 0;
         mCryptogramIds = new HashMap<>();
+        if (BuildConfig.DEBUG) {
+            Cryptogram[] cryptograms = new Cryptogram[mCryptograms.length + 2];
+            int i = 0;
+            cryptograms[i++] = new Cryptogram.Mock(
+                    "AAAAAAAA\u00ADBBB\u00ADCCCCCCC\u00ADDDDDDDDDD\u00ADEEEE\u00ADFFFFFFFFFFFFF\u00ADGGGG\u00ADHHHHHHHHHH\u00ADIIIIII.",
+                    null, null);
+            cryptograms[i++] = new Cryptogram.Mock(
+                    "JJJJJJJJ KKK LLLLLLL MMMMMMMMM NNNN OOOOOOOOOOOOO PPPP\u00ADQQQQQQQQQQ\u00ADRRRRRR.",
+                    null, null);
+            for (int j = 0; j < mCryptograms.length; j++) {
+                cryptograms[j + i] = mCryptograms[j];
+            }
+            mCryptograms = cryptograms;
+        }
         for (Cryptogram cryptogram : mCryptograms) {
             int id = cryptogram.getId();
             if (id == 0) {
