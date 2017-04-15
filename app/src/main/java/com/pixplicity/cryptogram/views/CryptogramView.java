@@ -38,7 +38,7 @@ public class CryptogramView extends android.support.v7.widget.AppCompatTextView 
     @Nullable
     private Cryptogram mCryptogram;
 
-    private char mSelectedCharacter, mSelectedCharacterLast;
+    private char mSelectedCharacter, mSelectedCharacterLast, mSelectedCharacterBeforeTouch;
     private boolean mHighlightMistakes;
 
     private float mBoxW, mBoxH, mCharW1;
@@ -261,11 +261,15 @@ public class CryptogramView extends android.support.v7.widget.AppCompatTextView 
     }
 
     public boolean setSelectedCharacter(char c) {
+        if (mCryptogram == null || mCryptogram.isCompleted()) {
+            mSelectedCharacter = 0;
+            return false;
+        }
         // Stop highlighting mistakes
         mHighlightMistakes = false;
         // Character does not occur in the mapping
         mSelectedCharacter = 0;
-        if (mCryptogram != null && mCryptogram.isInputChar(c)) {
+        if (mCryptogram.isInputChar(c)) {
             c = Character.toUpperCase(c);
             HashMap<Character, Character> charMapping = mCryptogram.getCharMapping();
             for (Character chrOrig : charMapping.keySet()) {
@@ -551,8 +555,16 @@ public class CryptogramView extends android.support.v7.widget.AppCompatTextView 
     public boolean onTouchEvent(MotionEvent event) {
         switch (event.getAction()) {
             case MotionEvent.ACTION_DOWN:
-            case MotionEvent.ACTION_MOVE:
+                if (ENABLE_TOUCH_SELECTION) {
+                    if (mCryptogram != null) {
+                        Character characterForMapping = mCryptogram.getCharacterForMapping(mSelectedCharacter);
+                        mSelectedCharacterBeforeTouch = characterForMapping == null
+                                ? 0 : characterForMapping;
+                    }
+                    return true;
+                }
                 break;
+            case MotionEvent.ACTION_MOVE:
             case MotionEvent.ACTION_UP:
                 if (ENABLE_TOUCH_SELECTION) {
                     int y = (int) ((event.getY() - mBoxPadding) / mLineHeight);
@@ -563,7 +575,17 @@ public class CryptogramView extends android.support.v7.widget.AppCompatTextView 
                             selected = mCharMap[y][x];
                         }
                     }
-                    setSelectedCharacter(selected);
+                    if (event.getAction() == MotionEvent.ACTION_MOVE && selected == 0) {
+                        // Skip drag events for unselected characters
+                    } else {
+                        setSelectedCharacter(selected);
+                    }
+                    return true;
+                }
+                break;
+            case MotionEvent.ACTION_CANCEL:
+                if (ENABLE_TOUCH_SELECTION) {
+                    setSelectedCharacter(mSelectedCharacterBeforeTouch);
                     return true;
                 }
                 break;
