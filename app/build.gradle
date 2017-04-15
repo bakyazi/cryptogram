@@ -124,7 +124,7 @@ dependencies {
 
     compile 'com.getkeepsafe.taptargetview:taptargetview:1.7.0'
 
-    compile('com.crashlytics.sdk.android:crashlytics:2.6.5@aar') {
+    compile('com.crashlytics.sdk.android:crashlytics:2.6.7@aar') {
         transitive = true;
     }
 
