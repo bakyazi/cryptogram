@@ -74,7 +74,11 @@ public class CryptogramProvider {
     }
 
     private void readStream(InputStream is) {
+        long start = System.nanoTime();
         mCryptograms = mGson.fromJson(new InputStreamReader(is), Cryptogram[].class);
+        if (BuildConfig.DEBUG) {
+            Log.d(TAG, String.format("readStream: finished in %.2fms", (System.nanoTime() - start) / 1000000f));
+        }
         int index = 0, nextId = 0;
         mCryptogramIds = new HashMap<>();
         if (BuildConfig.DEBUG) {
