@@ -32,7 +32,8 @@ public class CryptogramView extends android.support.v7.widget.AppCompatTextView 
     private static final String TAG = CryptogramView.class.getSimpleName();
 
     private static final String SOFT_HYPHEN = "\u00AD";
-    private static final boolean DISABLE_HYPHENATION = true;
+    private static final boolean ENABLE_HYPHENATION = false;
+    private static final boolean ENABLE_TOUCH_SELECTION = true;
 
     @Nullable
     private Cryptogram mCryptogram;
@@ -40,7 +41,9 @@ public class CryptogramView extends android.support.v7.widget.AppCompatTextView 
     private char mSelectedCharacter, mSelectedCharacterLast;
     private boolean mHighlightMistakes;
 
-    private float mBoxW, mBoxH, mCharW1, mCharW2;
+    private float mBoxW, mBoxH, mCharW1;
+    private float mBoxPadding;
+    private float mLineHeight;
     private Paint mPaint, mLinePaint1, mLinePaint2, mBoxPaint1, mBoxPaint2;
     private TextPaint mTextPaintInput, mTextPaintInputComplete, mTextPaintMapping, mTextPaintMistake;
     private int mBoxInset;
@@ -49,6 +52,7 @@ public class CryptogramView extends android.support.v7.widget.AppCompatTextView 
 
     private OnCryptogramProgressListener mOnCryptogramProgressListener;
     private OnHighlightListener mOnHighlightListener;
+    private char[][] mCharMap;
 
 
     public CryptogramView(Context context) {
@@ -115,6 +119,8 @@ public class CryptogramView extends android.support.v7.widget.AppCompatTextView 
         // Compute size of each box
         mBoxW = r.getDimensionPixelSize(R.dimen.puzzle_box_width);
         mBoxH = r.getDimensionPixelSize(R.dimen.puzzle_box_height);
+        mBoxPadding = mBoxH / 4;
+        mLineHeight = mBoxH * 2 + mBoxPadding * 2;
         mTextPaintInput.setTextSize(r.getDimensionPixelSize(R.dimen.puzzle_text_size));
         mTextPaintMapping.setTextSize(r.getDimensionPixelSize(R.dimen.puzzle_hint_size));
 
@@ -415,13 +421,13 @@ public class CryptogramView extends android.support.v7.widget.AppCompatTextView 
 
         PointF hyphenHighlight = null;
 
+        mCharMap = new char[(int) (width / mBoxW)][100];
+
         float offsetX1 = (mBoxW - mCharW1) / 4;
-        float offsetX2 = (mBoxW - mCharW2) / 4;
-        float offsetY = mBoxH / 4;
         float x = 0, y = mBoxH;
         for (String word : mCryptogram.getWords()) {
             String displayWord = word.replace(SOFT_HYPHEN, "");
-            if (DISABLE_HYPHENATION) {
+            if (!ENABLE_HYPHENATION) {
                 word = displayWord;
             }
             float w = displayWord.length() * mBoxW;
@@ -441,7 +447,7 @@ public class CryptogramView extends android.support.v7.widget.AppCompatTextView 
                             }
                         }
                         String wordSegment = word.substring(0, index).replace(SOFT_HYPHEN, "") + "-";
-                        x = drawWord(canvas, charMapping, textPaintUser, linePaint, offsetX1, offsetX2, offsetY, x, y, wordSegment);
+                        x = drawWord(canvas, charMapping, textPaintUser, linePaint, offsetX1, x, y, wordSegment);
                         // Remainder of the word
                         word = word.substring(index + 1);
                         Log.d(TAG, "soft hyphen: " + wordSegment + " // " + word);
@@ -449,7 +455,7 @@ public class CryptogramView extends android.support.v7.widget.AppCompatTextView 
                         index = word.lastIndexOf(SOFT_HYPHEN);
                         // Manually add a line break since nothing else will fit
                         x = 0;
-                        y += mBoxH * 2 + offsetY * 2;
+                        y += mLineHeight;
                         needsLineBreak = false;
                     } else {
                         // It doesn't fit; look for a previous soft hyphen
@@ -463,13 +469,13 @@ public class CryptogramView extends android.support.v7.widget.AppCompatTextView 
                 word = word.replace(SOFT_HYPHEN, "");
                 if (needsLineBreak) {
                     x = 0;
-                    y += mBoxH * 2 + offsetY * 2;
+                    y += mLineHeight;
                 }
             } else {
                 // Whole word fits; draw it
                 word = displayWord;
             }
-            x = drawWord(canvas, charMapping, textPaintUser, linePaint, offsetX1, offsetX2, offsetY, x, y, word);
+            x = drawWord(canvas, charMapping, textPaintUser, linePaint, offsetX1, x, y, word);
             // Trailing space
             x += mBoxW;
         }
@@ -477,9 +483,9 @@ public class CryptogramView extends android.support.v7.widget.AppCompatTextView 
     }
 
     private float drawWord(@Nullable Canvas canvas, HashMap<Character, Character> charMapping,
-                           TextPaint textPaintUser, Paint linePaint, float offsetX1, float offsetX2,
-                           float offsetY, float x, float y, String word) {
-        if (canvas == null) {
+                           TextPaint textPaintUser, Paint linePaint, float offsetX,
+                           float x, float y, String word) {
+        if (canvas == null || mCryptogram == null) {
             return x + mBoxW * word.length();
         }
         for (int i = 0; i < word.length(); i++) {
@@ -488,20 +494,23 @@ public class CryptogramView extends android.support.v7.widget.AppCompatTextView 
             Character mappedChar = charMapping == null ? null : charMapping.get(c);
             if (mSelectedCharacter == c) {
                 // The user is inputting this character; highlight it
-                canvas.drawRect(x + mBoxInset, y - mBoxH + mBoxInset, x + mBoxW - mBoxInset, y + offsetY - mBoxInset, mBoxPaint1);
-                canvas.drawRect(x + mBoxInset, y - mBoxH + mBoxInset, x + mBoxW - mBoxInset, y + offsetY - mBoxInset, mBoxPaint2);
-                //canvas.drawRect(x, y - mBoxH, x + mBoxW, y + offsetY, mBoxPaint2);
+                canvas.drawRect(x + mBoxInset, y - mBoxH + mBoxInset, x + mBoxW - mBoxInset, y + mBoxPadding - mBoxInset, mBoxPaint1);
+                canvas.drawRect(x + mBoxInset, y - mBoxH + mBoxInset, x + mBoxW - mBoxInset, y + mBoxPadding - mBoxInset, mBoxPaint2);
+                //canvas.drawRect(x, y - mBoxH, x + mBoxW, y + mBoxPadding, mBoxPaint2);
             }
             if (mappedChar != null) {
                 chr = String.valueOf(mappedChar);
-                canvas.drawText(chr, x + offsetX2, y + mBoxH + offsetY, mTextPaintMapping);
+                canvas.drawText(chr, x + mBoxPadding, y + mBoxH + mBoxPadding, mTextPaintMapping);
+                int xPos = (int) (x / mBoxW);
+                int yPos = (int) (y / mLineHeight);
+                mCharMap[yPos][xPos] = mappedChar;
             }
             if (mCryptogram.isRevealed(c)) {
                 // This box has already been revealed to the user
-                canvas.drawLine(x + offsetX1, y + offsetY, x + mBoxW - offsetX1, y + offsetY, mLinePaint2);
+                canvas.drawLine(x + offsetX, y + mBoxPadding, x + mBoxW - offsetX, y + mBoxPadding, mLinePaint2);
             } else if (mCryptogram.isInputChar(c)) {
                 // This is a box the user has to fill to complete the puzzle
-                canvas.drawLine(x + offsetX1, y + offsetY, x + mBoxW - offsetX1, y + offsetY, linePaint);
+                canvas.drawLine(x + offsetX, y + mBoxPadding, x + mBoxW - offsetX, y + mBoxPadding, linePaint);
                 c = getUserInput(c);
             }
             if (c > 0) {
@@ -514,7 +523,7 @@ public class CryptogramView extends android.support.v7.widget.AppCompatTextView 
                 }
                 // The character should be drawn in place
                 chr = String.valueOf(c);
-                canvas.drawText(chr, x + offsetX1, y, textPaint);
+                canvas.drawText(chr, x + offsetX, y, textPaint);
             }
             // Box width
             x += mBoxW;
@@ -522,10 +531,41 @@ public class CryptogramView extends android.support.v7.widget.AppCompatTextView 
         return x;
     }
 
+    private String toString(char[][] array) {
+        StringBuilder sb = new StringBuilder();
+        for (char[] row : array) {
+            for (char c : row) {
+                if (c == 0) {
+                    sb.append(' ');
+                } else {
+                    sb.append(c);
+                }
+                sb.append(' ');
+            }
+            sb.append("\n");
+        }
+        return sb.toString();
+    }
+
     @Override
     public boolean onTouchEvent(MotionEvent event) {
         switch (event.getAction()) {
-            case KeyEvent.ACTION_DOWN:
+            case MotionEvent.ACTION_DOWN:
+            case MotionEvent.ACTION_MOVE:
+                break;
+            case MotionEvent.ACTION_UP:
+                if (ENABLE_TOUCH_SELECTION) {
+                    int y = (int) ((event.getY() - mBoxPadding) / mLineHeight);
+                    int x = (int) ((event.getX() - mBoxPadding) / mBoxW);
+                    char selected = 0;
+                    if (y >= 0 && y < mCharMap.length) {
+                        if (x >= 0 && x < mCharMap[y].length) {
+                            selected = mCharMap[y][x];
+                        }
+                    }
+                    setSelectedCharacter(selected);
+                    return true;
+                }
                 break;
         }
         return super.onTouchEvent(event);
