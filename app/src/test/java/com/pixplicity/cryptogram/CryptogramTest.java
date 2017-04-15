@@ -6,6 +6,7 @@ import com.pixplicity.cryptogram.models.Cryptogram;
 import com.pixplicity.cryptogram.models.CryptogramProgress;
 import com.pixplicity.cryptogram.stringsimilarity.Levenshtein;
 import com.pixplicity.cryptogram.utils.CryptogramProvider;
+import com.pixplicity.cryptogram.views.CryptogramView;
 
 import org.junit.Test;
 
@@ -111,11 +112,13 @@ public class CryptogramTest {
                     throw new AssertionError("Levenshtein distance of " + cryptogram + " is " + distance + " to " + otherCryptogram);
                 }
             }
-            for (String word : cryptogram.getWords()) {
-                word = word.replaceAll("[^a-zA-Z\u00AD\\-]", "");
-                for (String wordPart : word.split("[\u00AD\\-]")) {
-                    if (wordPart.length() > 8) {
-                        throw new AssertionError("Contains word of length >8 without hyphen or soft-hyphen ('\u00AD'): '" + word + "' in " + cryptogram);
+            if (CryptogramView.ENABLE_HYPHENATION) {
+                for (String word : cryptogram.getWords()) {
+                    word = word.replaceAll("[^a-zA-Z\u00AD\\-]", "");
+                    for (String wordPart : word.split("[\u00AD\\-]")) {
+                        if (wordPart.length() > 8) {
+                            throw new AssertionError("Contains word of length >8 without hyphen or soft-hyphen ('\u00AD'): '" + word + "' in " + cryptogram);
+                        }
                     }
                 }
             }
