@@ -31,7 +31,8 @@ public class CryptogramView extends android.support.v7.widget.AppCompatTextView 
 
     private static final String TAG = CryptogramView.class.getSimpleName();
 
-    public static final String SOFT_HYPHEN = "\u00AD";
+    private static final String SOFT_HYPHEN = "\u00AD";
+    private static final boolean DISABLE_HYPHENATION = true;
 
     @Nullable
     private Cryptogram mCryptogram;
@@ -420,6 +421,9 @@ public class CryptogramView extends android.support.v7.widget.AppCompatTextView 
         float x = 0, y = mBoxH;
         for (String word : mCryptogram.getWords()) {
             String displayWord = word.replace(SOFT_HYPHEN, "");
+            if (DISABLE_HYPHENATION) {
+                word = displayWord;
+            }
             float w = displayWord.length() * mBoxW;
             if (x + w > width) {
                 // Whole word would exceed boundary
