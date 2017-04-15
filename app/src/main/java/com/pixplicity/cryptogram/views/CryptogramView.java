@@ -33,7 +33,6 @@ public class CryptogramView extends android.support.v7.widget.AppCompatTextView 
 
     private static final String SOFT_HYPHEN = "\u00AD";
     public static final boolean ENABLE_HYPHENATION = false;
-    private static final boolean ENABLE_TOUCH_SELECTION = true;
 
     @Nullable
     private Cryptogram mCryptogram;
@@ -260,10 +259,10 @@ public class CryptogramView extends android.support.v7.widget.AppCompatTextView 
         return mSelectedCharacter;
     }
 
-    public boolean setSelectedCharacter(char c) {
+    public void setSelectedCharacter(char c) {
         if (mCryptogram == null || mCryptogram.isCompleted()) {
             mSelectedCharacter = 0;
-            return false;
+            return;
         }
         // Stop highlighting mistakes
         mHighlightMistakes = false;
@@ -283,7 +282,6 @@ public class CryptogramView extends android.support.v7.widget.AppCompatTextView 
             }
         }
         invalidate();
-        return mSelectedCharacter != 0;
     }
 
     public boolean setUserChar(char selectedChar, char userChar) {
@@ -535,60 +533,38 @@ public class CryptogramView extends android.support.v7.widget.AppCompatTextView 
         return x;
     }
 
-    private String toString(char[][] array) {
-        StringBuilder sb = new StringBuilder();
-        for (char[] row : array) {
-            for (char c : row) {
-                if (c == 0) {
-                    sb.append(' ');
-                } else {
-                    sb.append(c);
-                }
-                sb.append(' ');
-            }
-            sb.append("\n");
-        }
-        return sb.toString();
-    }
-
     @Override
     public boolean onTouchEvent(MotionEvent event) {
         switch (event.getAction()) {
             case MotionEvent.ACTION_DOWN:
-                if (ENABLE_TOUCH_SELECTION) {
-                    if (mCryptogram != null) {
-                        Character characterForMapping = mCryptogram.getCharacterForMapping(mSelectedCharacter);
-                        mSelectedCharacterBeforeTouch = characterForMapping == null
-                                ? 0 : characterForMapping;
-                    }
-                    return true;
+                if (mCryptogram != null) {
+                    Character characterForMapping = mCryptogram.getCharacterForMapping(mSelectedCharacter);
+                    mSelectedCharacterBeforeTouch = characterForMapping == null
+                            ? 0 : characterForMapping;
                 }
-                break;
+                return true;
             case MotionEvent.ACTION_MOVE:
             case MotionEvent.ACTION_UP:
-                if (ENABLE_TOUCH_SELECTION) {
-                    int y = (int) ((event.getY() - mBoxPadding) / mLineHeight);
-                    int x = (int) ((event.getX() - mBoxPadding) / mBoxW);
-                    char selected = 0;
-                    if (y >= 0 && y < mCharMap.length) {
-                        if (x >= 0 && x < mCharMap[y].length) {
-                            selected = mCharMap[y][x];
-                        }
+                int y = (int) ((event.getY() - mBoxPadding) / mLineHeight);
+                int x = (int) ((event.getX() - mBoxPadding) / mBoxW);
+                char selected = 0;
+                if (y >= 0 && y < mCharMap.length) {
+                    if (x >= 0 && x < mCharMap[y].length) {
+                        selected = mCharMap[y][x];
                     }
-                    if (event.getAction() == MotionEvent.ACTION_MOVE && selected == 0) {
-                        // Skip drag events for unselected characters
-                    } else {
-                        setSelectedCharacter(selected);
-                    }
-                    return true;
                 }
-                break;
+                if (event.getAction() == MotionEvent.ACTION_MOVE && selected == 0) {
+                    // Skip drag events for unselected characters
+                } else {
+                    setSelectedCharacter(selected);
+                }
+                if (event.getAction() == MotionEvent.ACTION_UP) {
+                    performClick();
+                }
+                return true;
             case MotionEvent.ACTION_CANCEL:
-                if (ENABLE_TOUCH_SELECTION) {
-                    setSelectedCharacter(mSelectedCharacterBeforeTouch);
-                    return true;
-                }
-                break;
+                setSelectedCharacter(mSelectedCharacterBeforeTouch);
+                return true;
         }
         return super.onTouchEvent(event);
     }
