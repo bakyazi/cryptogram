@@ -225,7 +225,7 @@ public class CryptogramActivity extends BaseActivity implements GoogleApiClient.
                 if (mHighlights.get(type, false)) {
                     return;
                 }
-                if (PrefsUtils.getHighlighted(PrefsUtils.TYPE_HIGHLIGHT_TOUCH_INPUT) && !BuildConfig.DEBUG) {
+                if (PrefsUtils.getHighlighted(type) && !BuildConfig.DEBUG) {
                     return;
                 }
                 mHighlights.put(type, true);
