@@ -50,6 +50,7 @@
     "text": "Do not dwell in the past, do not dream of the future, concen­trate the mind on the present moment.",
     "author": "Buddha",
     "topic": "Life",
+    "given": "O",
     "number": 5,
     "id": 2
   },
@@ -57,6 +58,7 @@
     "text": "Life isn’t about finding your­self. Life is about creating your­self.",
     "author": "George Bernard Shaw",
     "topic": "Life",
+    "given": "I",
     "number": 6,
     "id": 3
   },
@@ -64,6 +66,7 @@
     "text": "The most impor­tant thing is to enjoy your life — to be happy — it’s all that matters.",
     "author": "Audrey Hepburn",
     "topic": "Life",
+    "given": "M",
     "number": 7,
     "id": 4
   },
@@ -2616,8 +2619,8 @@
   },
   {
     "text": "Those who know, do. Those that understand, teach.",
-    "given": "O",
     "author": "Aristotle",
+    "given": "O",
     "topic": "Teaching"
   },
   {
@@ -2652,8 +2655,8 @@
   },
   {
     "text": "Any fool can know. The point is to understand.",
-    "given": "C",
     "author": "Albert Einstein",
+    "given": "C",
     "topic": "Wisdom"
   },
   {
@@ -2924,8 +2927,8 @@
   },
   {
     "text": "Those who believe in telekinetics, raise my hand.",
-    "given": "IT",
     "author": "Kurt Vonnegut",
+    "given": "IT",
     "topic": "Funny"
   },
   {
@@ -2955,8 +2958,8 @@
   },
   {
     "text": "Procrastination is the art of keeping up with yesterday.",
-    "given": "I",
     "author": "Don Marquis",
+    "given": "I",
     "topic": "Funny"
   },
   {
