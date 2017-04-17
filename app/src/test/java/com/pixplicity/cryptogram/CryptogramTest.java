@@ -1,6 +1,7 @@
 package com.pixplicity.cryptogram;
 
 import android.annotation.SuppressLint;
+import android.util.Log;
 
 import com.pixplicity.cryptogram.models.Cryptogram;
 import com.pixplicity.cryptogram.models.CryptogramProgress;
@@ -8,7 +9,12 @@ import com.pixplicity.cryptogram.stringsimilarity.Levenshtein;
 import com.pixplicity.cryptogram.utils.CryptogramProvider;
 import com.pixplicity.cryptogram.views.CryptogramView;
 
+import org.junit.Before;
 import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.powermock.api.mockito.PowerMockito;
+import org.powermock.core.classloader.annotations.PrepareForTest;
+import org.powermock.modules.junit4.PowerMockRunner;
 
 import java.util.HashMap;
 import java.util.Locale;
@@ -18,9 +24,16 @@ import java.util.Locale;
  *
  * @see <a href="http://d.android.com/tools/testing">Testing documentation</a>
  */
+@RunWith(PowerMockRunner.class)
+@PrepareForTest({Log.class})
 public class CryptogramTest {
 
     private static final boolean VERBOSE = false;
+
+    @Before
+    public void setup() {
+        PowerMockito.mockStatic(Log.class);
+    }
 
     @Test
     public void validProvider() throws Exception {
@@ -128,14 +141,16 @@ public class CryptogramTest {
 
     @Test
     public void hyphenation() {
-        Cryptogram cryptogram = CryptogramProvider.getInstance(null).get(0);
-        int lineWidthInChars = 12;
-        for (int i = 0; i < lineWidthInChars; i++) {
-            System.out.print('=');
-        }
-        System.out.println();
-        for (String wordPart : cryptogram.getWordsForLineWidth(lineWidthInChars)) {
-            System.out.println(wordPart);
+        if (CryptogramView.ENABLE_HYPHENATION) {
+            Cryptogram cryptogram = CryptogramProvider.getInstance(null).get(0);
+            int lineWidthInChars = 12;
+            for (int i = 0; i < lineWidthInChars; i++) {
+                System.out.print('=');
+            }
+            System.out.println();
+            for (String wordPart : cryptogram.getWordsForLineWidth(lineWidthInChars)) {
+                System.out.println(wordPart);
+            }
         }
     }
 
