@@ -20,6 +20,7 @@ import android.support.v7.widget.RecyclerView;
 import android.text.Editable;
 import android.text.InputType;
 import android.util.Log;
+import android.util.SparseBooleanArray;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -166,7 +167,7 @@ public class CryptogramActivity extends BaseActivity implements GoogleApiClient.
     private int mLastConnectionError;
 
     private boolean mDarkTheme;
-    private boolean mHighlightedHyphenation;
+    private boolean mFreshInstall;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -217,17 +218,36 @@ public class CryptogramActivity extends BaseActivity implements GoogleApiClient.
             }
         });
         mCryptogramView.setOnHighlightListener(new CryptogramView.OnHighlightListener() {
+            private SparseBooleanArray mHighlights = new SparseBooleanArray();
+
             @Override
             public void onHighlight(int type, PointF point) {
-                if (!mHighlightedHyphenation && (!PrefsUtils.getHighlighted(type) || BuildConfig.DEBUG)) {
-                    mHighlightedHyphenation = true;
-                    Rect viewRect = new Rect();
-                    mCryptogramView.getGlobalVisibleRect(viewRect);
-                    showHighlight(type, point,
-                                  getString(R.string.highlight_hyphenation_title),
-                                  getString(R.string.highlight_hyphenation_description),
-                                  1200
-                    );
+                if (mHighlights.get(type, false)) {
+                    return;
+                }
+                if (PrefsUtils.getHighlighted(PrefsUtils.TYPE_HIGHLIGHT_TOUCH_INPUT) && !BuildConfig.DEBUG) {
+                    return;
+                }
+                mHighlights.put(type, true);
+                switch (type) {
+                    case PrefsUtils.TYPE_HIGHLIGHT_HYPHENATION:
+                        showHighlight(type, point,
+                                getString(R.string.highlight_hyphenation_title),
+                                getString(R.string.highlight_hyphenation_description),
+                                1200
+                        );
+                        break;
+                    case PrefsUtils.TYPE_HIGHLIGHT_TOUCH_INPUT:
+                        if (mFreshInstall) {
+                            PrefsUtils.setHighlighted(type, true);
+                        } else {
+                            showHighlight(PrefsUtils.TYPE_HIGHLIGHT_TOUCH_INPUT, point,
+                                    getString(R.string.highlight_touch_input_title),
+                                    getString(R.string.highlight_touch_input_description),
+                                    1200
+                            );
+                        }
+                        break;
                 }
             }
         });
@@ -314,7 +334,8 @@ public class CryptogramActivity extends BaseActivity implements GoogleApiClient.
         return PrefsUtils.getOnboarding() < ONBOARDING_PAGES - 1;
     }
 
-    private void showHighlight(final int type, PointF point, final String title, final String description, int delayMillis) {
+    private void showHighlight(final int type, PointF point, final String title,
+                               final String description, int delayMillis) {
         Rect viewRect = new Rect();
         mCryptogramView.getGlobalVisibleRect(viewRect);
         final int targetX = (int) (point.x + viewRect.left);
@@ -328,7 +349,7 @@ public class CryptogramActivity extends BaseActivity implements GoogleApiClient.
                 TapTargetView.showFor(
                         CryptogramActivity.this,
                         TapTarget.forBounds(new Rect(targetX - targetRadius, targetY - targetRadius, targetX + targetRadius, targetY + targetRadius),
-                                            title, description)
+                                title, description)
                                  .titleTextColor(R.color.white)
                                  .descriptionTextColor(R.color.white)
                                  .outerCircleColor(R.color.highlight_color)
@@ -394,7 +415,11 @@ public class CryptogramActivity extends BaseActivity implements GoogleApiClient.
                 return;
         }
 
-        if (PrefsUtils.getOnboarding() >= page) {
+        int onboarding = PrefsUtils.getOnboarding();
+        if (onboarding == -1) {
+            mFreshInstall = true;
+        }
+        if (onboarding >= page) {
             showOnboarding(page + 1);
             return;
         }
@@ -717,7 +742,8 @@ public class CryptogramActivity extends BaseActivity implements GoogleApiClient.
                                 .positiveText(R.string.reveal)
                                 .onPositive(new MaterialDialog.SingleButtonCallback() {
                                     @Override
-                                    public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
+                                    public void onClick(@NonNull MaterialDialog dialog,
+                                                        @NonNull DialogAction which) {
                                         PrefsUtils.setNeverAskRevealLetter(dialog.isPromptCheckBoxChecked());
                                         mCryptogramView.revealCharacterMapping(
                                                 mCryptogramView.getSelectedCharacter());
@@ -739,7 +765,8 @@ public class CryptogramActivity extends BaseActivity implements GoogleApiClient.
                             .positiveText(R.string.reveal)
                             .onPositive(new MaterialDialog.SingleButtonCallback() {
                                 @Override
-                                public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
+                                public void onClick(@NonNull MaterialDialog dialog,
+                                                    @NonNull DialogAction which) {
                                     PrefsUtils.setNeverAskRevealMistakes(dialog.isPromptCheckBoxChecked());
                                     mCryptogramView.revealMistakes();
                                 }
@@ -829,7 +856,7 @@ public class CryptogramActivity extends BaseActivity implements GoogleApiClient.
                                     Cryptogram cryptogram = provider.getByNumber(puzzleNumber);
                                     if (cryptogram == null) {
                                         Snackbar.make(mVgRoot, getString(R.string.puzzle_nonexistant, puzzleNumber),
-                                                      Snackbar.LENGTH_SHORT).show();
+                                                Snackbar.LENGTH_SHORT).show();
                                     } else {
                                         updateCryptogram(cryptogram);
                                     }
@@ -928,8 +955,8 @@ public class CryptogramActivity extends BaseActivity implements GoogleApiClient.
                     ((TextView) view.findViewById(R.id.tv_label)).setText(R.string.stats_total_completed_label);
                     ((TextView) view.findViewById(R.id.tv_value)).setText(
                             getString(R.string.stats_total_completed_value,
-                                      count,
-                                      provider.getLastNumber()));
+                                    count,
+                                    provider.getLastNumber()));
                     dialogView.addView(view);
                 }
                 {
@@ -937,7 +964,7 @@ public class CryptogramActivity extends BaseActivity implements GoogleApiClient.
                     ((TextView) view.findViewById(R.id.tv_label)).setText(R.string.stats_average_score_label);
                     ((TextView) view.findViewById(R.id.tv_value)).setText(
                             getString(R.string.stats_average_score_value,
-                                      scoreAverageText));
+                                    scoreAverageText));
                     dialogView.addView(view);
                 }
                 {
@@ -945,7 +972,7 @@ public class CryptogramActivity extends BaseActivity implements GoogleApiClient.
                     ((TextView) view.findViewById(R.id.tv_label)).setText(R.string.stats_cumulative_score_label);
                     ((TextView) view.findViewById(R.id.tv_value)).setText(
                             getString(R.string.stats_cumulative_score_value,
-                                      scoreCumulativeText));
+                                    scoreCumulativeText));
                     dialogView.addView(view);
                 }
                 {
@@ -953,7 +980,7 @@ public class CryptogramActivity extends BaseActivity implements GoogleApiClient.
                     ((TextView) view.findViewById(R.id.tv_label)).setText(R.string.stats_fastest_completion_label);
                     ((TextView) view.findViewById(R.id.tv_value)).setText(
                             getString(R.string.stats_fastest_completion_value,
-                                      fastestCompletion));
+                                    fastestCompletion));
                     dialogView.addView(view);
                 }
                 {
@@ -961,7 +988,7 @@ public class CryptogramActivity extends BaseActivity implements GoogleApiClient.
                     ((TextView) view.findViewById(R.id.tv_label)).setText(R.string.stats_total_time_spent_label);
                     ((TextView) view.findViewById(R.id.tv_value)).setText(
                             getString(R.string.stats_total_time_spent_value,
-                                      StringUtils.getDurationString(totalDurationMs)));
+                                    StringUtils.getDurationString(totalDurationMs)));
                     dialogView.addView(view);
                 }
                 {
@@ -969,8 +996,8 @@ public class CryptogramActivity extends BaseActivity implements GoogleApiClient.
                     ((TextView) view.findViewById(R.id.tv_label)).setText(R.string.stats_longest_streak_label);
                     ((TextView) view.findViewById(R.id.tv_value)).setText(
                             getString(R.string.stats_longest_streak_value,
-                                      longestStreak,
-                                      getResources().getQuantityString(R.plurals.days, longestStreak)));
+                                    longestStreak,
+                                    getResources().getQuantityString(R.plurals.days, longestStreak)));
                     dialogView.addView(view);
                 }
                 new AlertDialog.Builder(this)

@@ -477,6 +477,14 @@ public class CryptogramView extends android.support.v7.widget.AppCompatTextView 
                 // Whole word fits; draw it
                 word = displayWord;
             }
+            if (x > 0 && y > mBoxH * 8) {
+                // Take a more centered word
+                if (mOnHighlightListener != null) {
+                    PointF point = new PointF(x + mBoxW - mBoxW / 2, y);
+                    mOnHighlightListener.onHighlight(PrefsUtils.TYPE_HIGHLIGHT_TOUCH_INPUT,
+                            point);
+                }
+            }
             x = drawWord(canvas, charMapping, textPaintUser, linePaint, offsetX1, x, y, word);
             // Trailing space
             x += mBoxW;

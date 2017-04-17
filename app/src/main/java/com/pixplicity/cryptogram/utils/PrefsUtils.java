@@ -16,8 +16,10 @@ public class PrefsUtils {
     private static final String KEY_NEVER_ASK_REVEAL_LETTER = "never_ask_reveal_letter";
     private static final String KEY_NEVER_ASK_REVEAL_MISTAKES = "never_ask_reveal_mistakes";
     private static final String KEY_HIGHLIGHTED_HYPHENATION = "highlighted_hyphenation";
+    private static final String KEY_HIGHLIGHTED_TOUCH_INPUT = "highlighted_touch_input";
 
     public static final int TYPE_HIGHLIGHT_HYPHENATION = 0;
+    public static final int TYPE_HIGHLIGHT_TOUCH_INPUT = 1;
 
 
     public static int getCurrentId() {
@@ -90,28 +92,30 @@ public class PrefsUtils {
         return Prefs.getBoolean(KEY_NEVER_ASK_REVEAL_LETTER, false);
     }
 
-    public static boolean getHighlighted(int type) {
-        String key;
+    private static String getHighlightKey(int type) {
         switch (type) {
             case TYPE_HIGHLIGHT_HYPHENATION:
-                key = KEY_HIGHLIGHTED_HYPHENATION;
-                break;
+                return KEY_HIGHLIGHTED_HYPHENATION;
+            case TYPE_HIGHLIGHT_TOUCH_INPUT:
+                return KEY_HIGHLIGHTED_TOUCH_INPUT;
             default:
-                return false;
+                return null;
+        }
+    }
+
+    public static boolean getHighlighted(int type) {
+        String key = getHighlightKey(type);
+        if (key == null) {
+            return false;
         }
         return Prefs.getBoolean(key, false);
     }
 
     public static void setHighlighted(int type, boolean highlighted) {
-        String key;
-        switch (type) {
-            case TYPE_HIGHLIGHT_HYPHENATION:
-                key = KEY_HIGHLIGHTED_HYPHENATION;
-                break;
-            default:
-                return;
+        String key = getHighlightKey(type);
+        if (key != null) {
+            Prefs.edit().putBoolean(key, highlighted);
         }
-        Prefs.edit().putBoolean(key, highlighted);
     }
 
 }
