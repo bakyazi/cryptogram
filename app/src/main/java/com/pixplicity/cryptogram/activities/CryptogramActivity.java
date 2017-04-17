@@ -41,6 +41,7 @@ import com.crashlytics.android.Crashlytics;
 import com.crashlytics.android.answers.Answers;
 import com.crashlytics.android.answers.ContentViewEvent;
 import com.crashlytics.android.answers.LoginEvent;
+import com.crashlytics.android.answers.ShareEvent;
 import com.getkeepsafe.taptargetview.TapTarget;
 import com.getkeepsafe.taptargetview.TapTargetView;
 import com.google.android.gms.common.ConnectionResult;
@@ -893,23 +894,34 @@ public class CryptogramActivity extends BaseActivity implements GoogleApiClient.
             case R.id.action_share: {
                 Intent intent = new Intent(Intent.ACTION_SEND);
                 intent.setType("text/plain");
+                String text;
                 if (cryptogram != null && cryptogram.isCompleted()) {
-                    intent.putExtra(Intent.EXTRA_TEXT, getString(
+                    text = getString(
                             R.string.share_full,
                             cryptogram.getText(),
                             cryptogram.getAuthor(),
-                            getString(R.string.share_url)));
+                            getString(R.string.share_url));
                 } else {
-                    intent.putExtra(Intent.EXTRA_TEXT, getString(
+                    text = getString(
                             R.string.share_partial,
                             cryptogram.getAuthor(),
-                            getString(R.string.share_url)));
+                            getString(R.string.share_url));
                 }
+                intent.putExtra(Intent.EXTRA_TEXT, text);
                 startActivity(Intent.createChooser(intent, getString(R.string.share)));
+                // Log the event
+                Answers.getInstance().logShare(
+                        new ShareEvent()
+                                .putContentId(String.valueOf(cryptogram.getId()))
+                                .putContentType("puzzle")
+                                .putContentName(text)
+                );
             }
             return true;
             case R.id.action_stats: {
+                // Log the event
                 Answers.getInstance().logContentView(new ContentViewEvent().putContentName(CryptogramApp.CONTENT_STATISTICS));
+                // Compose the dialog
                 TableLayout dialogView = (TableLayout) LayoutInflater.from(this).inflate(R.layout.dialog_statistics, null);
                 if (cryptogram != null) {
                     cryptogram.save();
