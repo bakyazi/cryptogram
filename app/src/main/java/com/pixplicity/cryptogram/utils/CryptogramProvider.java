@@ -77,7 +77,8 @@ public class CryptogramProvider {
         long start = System.nanoTime();
         mCryptograms = mGson.fromJson(new InputStreamReader(is), Cryptogram[].class);
         if (BuildConfig.DEBUG) {
-            Log.d(TAG, String.format("readStream: finished in %.2fms", (System.nanoTime() - start) / 1000000f));
+            Log.d(TAG, String.format("readStream: parsed Json in %.2fms", (System.nanoTime() - start) / 1000000f));
+            start = System.nanoTime();
         }
         int index = 0, nextId = 0;
         mCryptogramIds = new HashMap<>();
@@ -93,6 +94,10 @@ public class CryptogramProvider {
             }
             cryptograms.addAll(Arrays.asList(mCryptograms));
             mCryptograms = cryptograms.toArray(new Cryptogram[cryptograms.size()]);
+            if (BuildConfig.DEBUG) {
+                Log.d(TAG, String.format("readStream: added test puzzles in %.2fms", (System.nanoTime() - start) / 1000000f));
+                start = System.nanoTime();
+            }
         }
         for (Cryptogram cryptogram : mCryptograms) {
             int id = cryptogram.getId();
@@ -109,6 +114,9 @@ public class CryptogramProvider {
             }
             mCryptogramIds.put(id, index);
             index++;
+        }
+        if (BuildConfig.DEBUG) {
+            Log.d(TAG, String.format("readStream: performed ID mapping in %.2fms", (System.nanoTime() - start) / 1000000f));
         }
     }
 
