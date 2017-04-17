@@ -2159,6 +2159,11 @@
     "topic": "Education"
   },
   {
+    "text": "Education is a progressive discovery of our own ignorance.",
+    "author": "Will Durant",
+    "topic": "Education"
+  },
+  {
     "text": "Our most basic common link is that we all inhabit this planet. We all breathe the same air. We all cherish our chil­dren’s future. And we are all mortal.",
     "author": "John F. Kennedy",
     "topic": "Inspirational"
@@ -2918,81 +2923,210 @@
     "topic": "Motivational"
   },
   {
-    "text": "Listen, Morty, I hate to break it to you but what people call “love” is just a chemical reaction that compels animals to breed.",
-    "author": "Rick Sanchez, Rick and Morty",
+    "text": "Those who believe in telekinetics, raise my hand.",
+    "given": "IT",
+    "author": "Kurt Vonnegut",
     "topic": "Funny"
   },
   {
-    "text": "Nobody exists on purpose. Nobody belongs anywhere. We’re all going to die. Come watch TV.",
-    "author": "Morty Smith, Rick and Morty",
+    "text": "If at first you don’t succeed… so much for skydiving.",
+    "author": "Henny Youngman",
     "topic": "Funny"
   },
   {
-    "text": "What about the reality where Hitler cured cancer, Morty? The answer is: Don’t think about it.",
-    "author": "Rick Sanchez, Rick and Morty",
+    "text": "Age is something that doesn’t matter, unless you are a cheese.",
+    "author": "Luis Bunuel",
     "topic": "Funny"
   },
   {
-    "text": "He’s not a hot girl. He can’t just bail on his life and set up shop in someone else’s.",
-    "given": "H",
-    "author": "Beth Smith, Rick and Morty",
+    "text": "We are all here on earth to help others; what on earth the others are here for I don’t know.",
+    "author": "W. H. Auden",
     "topic": "Funny"
   },
   {
-    "text": "That’s planning for failure, Morty. Even dumber than regular planning.",
-    "author": "Rick Sanchez, Rick and Morty",
+    "text": "If you’re going to do something tonight that you’ll be sorry for tomorrow morning, sleep late.",
+    "author": "Henny Youngman",
     "topic": "Funny"
   },
   {
-    "text": "Get off the high road Summer. We all got pink eye because you wouldn’t stop texting on the toilet.",
-    "author": "Rick Sanchez, Rick and Morty",
+    "text": "I always wanted to be somebody, but now I realize I should have been more specific.",
+    "author": "Lily Tomlin",
     "topic": "Funny"
   },
   {
-    "text": "I’m not looking for judgement, just a yes or no. Can you assimilate a giraffe?",
-    "author": "Rick Sanchez, Rick and Morty",
+    "text": "Procrastination is the art of keeping up with yesterday.",
+    "given": "I",
+    "author": "Don Marquis",
     "topic": "Funny"
   },
   {
-    "text": "It’s fine, everything’s fine. There’s an infinite number of realities, Morty, and in a few dozens of those I got lucky and turned everything back to normal.",
-    "author": "Rick Sanchez, Rick and Morty",
-    "topic": "Funny"
+    "text": "Nature has everywhere written her protest against idleness; everything which ceases to struggle, which remains inactive, rapidly deteriorates.",
+    "author": "James Terry White",
+    "topic": "Motivational"
   },
   {
-    "text": "You’re not gonna believe this, because it usually never happens, but I made a mistake.",
-    "author": "Rick Sanchez, Rick and Morty",
-    "topic": "Funny"
+    "text": "It ain’t what you don’t know that gets you into trouble. It’s what you know for sure that just ain’t so.",
+    "author": "Mark Twain",
+    "topic": "Truth"
   },
   {
-    "text": "If I’ve learned one thing, it’s that before you get anywhere in life, you gotta stop listening to yourself.",
-    "author": "Jerry Smith, Rick and Morty",
-    "topic": "Funny"
+    "text": "In the end, always laugh. And do not lose this strange habit of having faith in life.",
+    "author": "Daniel C. L.",
+    "topic": "Motivational"
   },
   {
-    "text": "Uncertainty is inherently unsustainable. Eventually, everything either is or isn’t.",
-    "author": "Rick Sanchez, Rick and Morty",
-    "topic": "Funny"
+    "text": "The most sophisticated people I know--inside they are all children.",
+    "author": "Jim Henson",
+    "topic": "Happiness"
   },
   {
-    "text": "What, so everyone’s supposed to sleep every single night now? You realize that nighttime makes up half of all time?",
-    "author": "Rick Sanchez, Rick and Morty",
-    "topic": "Funny"
+    "text": "When you train your eyes to see the magic and the miracles in little things, you open the door for your whole life to shift.",
+    "author": "Carol Woodliff",
+    "topic": "Inspirational"
   },
   {
-    "text": "What’s wrong Rick? Is it the quantum carburetor or something?",
-    "given": "Q",
-    "author": "Morty Smith, Rick and Morty",
-    "topic": "Funny"
+    "text": "A dream is what makes people love life even when it is painful",
+    "author": "Theodore Zeldin",
+    "topic": "Inspirational"
   },
   {
-    "text": "Morty, you can’t just add a sci-fi word to a car word and hope it means something. Looks like something’s wrong with the micro-verse battery.",
-    "author": "Rick Sanchez, Rick and Morty",
-    "topic": "Funny"
+    "text": "Sometimes the bad things that happen in our lives put us directly on the path to the best things that will ever happen to us.",
+    "author": "Nicole Reed",
+    "topic": "Inspirational"
   },
   {
-    "text": "Little tip, Morty. Never clean DNA vials with your spit.",
-    "given": "DNA",
-    "author": "Rick Sanchez, Rick and Morty",
-    "topic": "Funny"
+    "text": "Don’t quit. Suffer now and live the rest of your life as a champion.",
+    "author": "Muhammad Ali",
+    "topic": "Inspirational"
+  },
+  {
+    "text": "Don’t miss out on something that could be amazing just because it could also be difficult.",
+    "author": "Anonymous",
+    "topic": "Inspirational"
+  },
+  {
+    "text": "Though nobody can go back and make a new beginning… Anyone can start over and make a new ending.",
+    "author": "Chico Xavier",
+    "topic": "Inspirational"
+  },
+  {
+    "text": "Don’t grieve. Anything you lose comes around in another form.",
+    "author": "Rumi",
+    "topic": "Inspirational"
+  },
+  {
+    "text": "Instead of worrying about what you cannot control, shift your energy to what you can create.",
+    "author": "Roy T. Bennett",
+    "topic": "Inspirational"
+  },
+  {
+    "text": "Life is about accepting the challenges along the way, choosing to keep moving forward, and savoring the journey.",
+    "author": "Roy T. Bennett",
+    "topic": "Inspirational"
+  },
+  {
+    "text": "Some beautiful paths can’t be discovered without getting lost.",
+    "author": "Erol Ozan",
+    "topic": "Inspirational"
+  },
+  {
+    "text": "The more difficult the victory, the greater the happiness in winning.",
+    "author": "Pele",
+    "topic": "Inspirational"
+  },
+  {
+    "text": "No matter who tries to teach you lessons about life, you won’t understand it until you go through it on your own.",
+    "author": "Anonymous",
+    "topic": "Inspirational"
+  },
+  {
+    "text": "Sometimes the greatest thing to come out of all your hard work isn’t what you get for it, but what you become for it.",
+    "author": "Steve Maraboli",
+    "topic": "Inspirational"
+  },
+  {
+    "text": "Be in love with your life. Every minute of it.",
+    "author": "Jack Kerouac",
+    "topic": "Inspirational"
+  },
+  {
+    "text": "I am not someone who is ashamed of my past. I’m actually really proud. I know I made a lot of mistakes, but they, in turn, were my life lessons.",
+    "author": "Drew Barrymore",
+    "topic": "Inspirational"
+  },
+  {
+    "text": "Too often we underestimate the power of a touch, a smile, a kind word, a listening ear, an honest compliment, or the smallest act of caring, all of which have the potential to turn a life around.",
+    "author": "Leo Buscaglia",
+    "topic": "Inspirational"
+  },
+  {
+    "text": "Mistakes are a part of being human. Appreciate your mistakes for what they are: precious life lessons that can only be learned the hard way.",
+    "author": "Al Franken",
+    "topic": "Inspirational"
+  },
+  {
+    "text": "“There is hope and a kind of beauty in there somewhere, if you look for it.",
+    "author": "H. R. Giger",
+    "topic": "Inspirational"
+  },
+  {
+    "text": "In my life, I’ve lived, I’ve loved, I’ve lost, I’ve missed, I’ve hurt, I’ve trusted, I’ve made mistakes, but most of all, I’ve learned.",
+    "author": "Anonymous",
+    "topic": "Inspirational"
+  },
+  {
+    "text": "There’s beauty everywhere. There are amazing things happening everywhere, you just have to be able to open your eyes and witness it. Some days, that’s harder than others.",
+    "author": "Sarah McLachian",
+    "topic": "Inspirational"
+  },
+  {
+    "text": "Enjoy the little things in life because one day you`ll look back and realize they were the big things.",
+    "author": "Kurt Vonnegut",
+    "topic": "Inspirational"
+  },
+  {
+    "text": "Appreciate every little beautiful moment in every day of your life. Give it a try and you’ll see the world from another perspective.",
+    "author": "Thea Kristine May",
+    "topic": "Inspirational"
+  },
+  {
+    "text": "Let us come alive to the splendor that is all around us, and see the beauty in ordinary things.",
+    "author": "Thomas Merton",
+    "topic": "Beauty"
+  },
+  {
+    "text": "The simple things are also the most extraordinary things, and only the wise can see them.",
+    "author": "Paulo Coelho",
+    "topic": "Inspirational"
+  },
+  {
+    "text": "When you do something you love, life gets to be a little bit easier and enjoyable. I just want people to follow their dreams.",
+    "author": "Tika Sumpter",
+    "topic": "Inspirational"
+  },
+  {
+    "text": "Of all the words of mice and men, the saddest are, “It might have been.”",
+    "author": "Kurt Vonnegut",
+    "topic": "Inspirational"
+  },
+  {
+    "text": "Your life as a teacher begins the day you realize that you are always a learner.",
+    "author": "Robert John Meechan",
+    "topic": "Education"
+  },
+  {
+    "text": "Never allow waiting to become a habit. Live your dreams and take risks. Life is happening now.",
+    "author": "Paulo Coelho",
+    "topic": "Life"
+  },
+  {
+    "text": "Don’t be pushed around by fears in your mind. Be led by the dreams in your heart.",
+    "author": "Roy T. Bennett",
+    "topic": "Inspirational"
+  },
+  {
+    "text": "The beauty of life is, while we cannot undo what is done, we can see it, understand it, learn from it and change so that every new moment is spent not in regret, guilt, fear or anger but in wisdom, understanding and love.",
+    "author": "Jennifer Edwards",
+    "topic": "Inspirational"
   }
 ]
