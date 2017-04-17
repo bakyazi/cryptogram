@@ -1020,6 +1020,7 @@
   {
     "text": "The stuff that dreams are made of.",
     "author": "The Maltese Falcon",
+    "given": "F",
     "topic": "Film"
   },
   {
@@ -3131,5 +3132,142 @@
     "text": "The beauty of life is, while we cannot undo what is done, we can see it, understand it, learn from it and change so that every new moment is spent not in regret, guilt, fear or anger but in wisdom, understanding and love.",
     "author": "Jennifer Edwards",
     "topic": "Inspirational"
+  },
+  {
+    "text": "One day, you'll be just a memory for some people. Do your best to be a good one.",
+    "author": "Anonymous",
+    "topic": "Inspirational"
+  },
+  {
+    "text": "Whether pleasure or pain; every situation in your life serves a purpose. It is up to us to recognize what that purpose could be.",
+    "author": "Steve Maraboli",
+    "topic": "Inspirational"
+  },
+  {
+    "text": "If you were born with the ability to change someone’s perspective or emotions, never waste that gift.",
+    "author": "Shannon L. Alder",
+    "topic": "Altruism"
+  },
+  {
+    "text": "I slept and I dreamed that life is all joy. I woke and I saw that life is all service. I served and I saw that service is joy.",
+    "author": "Kahlil Gibran",
+    "topic": "Altruism"
+  },
+  {
+    "text": "Love only grows by sharing. You can only have more for yourself by giving it away to others.",
+    "author": "Brian Tracy",
+    "topic": "Altruism"
+  },
+  {
+    "text": "We have so far to go to realize our human potential for compassion, altruism, and love.",
+    "author": "Jane Goodall",
+    "topic": "Altruism"
+  },
+  {
+    "text": "Loving others is the greatest gift we can give ourselves. Altruism that rewards one's self.",
+    "author": "Allan Lokos",
+    "topic": "Altruism"
+  },
+  {
+    "text": "Practice kindness all day to everybody and you will realize you’re already in heaven now.",
+    "author": "Jack Kerouac",
+    "topic": "Altruism"
+  },
+  {
+    "text": "To live for others was to live fully; to live only for yourself, a cold kind of death.",
+    "author": "Joe Hill",
+    "topic": "Altruism"
+  },
+  {
+    "text": "The ultimate altruism is nothing but the sacrifice of one’s self for the benefit of others. Love yourself but never forget to be altruistic to others in need.",
+    "author": "Debasish Mridha",
+    "topic": "Altruism"
+  },
+  {
+    "text": "Making the choice to exercise compassion is an expression of Love for Humanity and Life itself.",
+    "author": "Aberjhani",
+    "topic": "Compassion"
+  },
+  {
+    "text": "Be kind, for everyone you meet is fighting a harder battle.",
+    "author": "Plato",
+    "topic": "Compassion"
+  },
+  {
+    "text": "The only way out of the labyrinth of suffering is to forgive.",
+    "author": "John Green",
+    "topic": "Compassion"
+  },
+  {
+    "text": "All I ever wanted was to reach out and touch another human being not just with my hands but with my heart.",
+    "author": "Tahereh Mafi",
+    "topic": "Compassion"
+  },
+  {
+    "text": "I am driven by two main philosophies: know more today about the world than I knew yesterday and lessen the suffering of others. You'd be surprised how far that gets you.",
+    "author": "Neil deGrasse Tyson",
+    "topic": "Compassion"
+  },
+  {
+    "text": "Love and compassion are necessities, not luxuries. Without them, humanity cannot survive.",
+    "author": "Dalai Lama XIV",
+    "topic": "Compassion"
+  },
+  {
+    "text": "There is no exercise better for the heart than reaching down and lifting people up.",
+    "author": "John Holmes",
+    "topic": "Compassion"
+  },
+  {
+    "text": "No act of kindness, no matter how small, is ever wasted.",
+    "author": "Aesop",
+    "given": "S",
+    "topic": "Compassion"
+  },
+  {
+    "text": "When we give cheerfully and accept gratefully, everyone is blessed.",
+    "author": "Maya Angelou",
+    "given": "W",
+    "topic": "Compassion"
+  },
+  {
+    "text": "Teach the children compassion and empathy, for all creatures are born selfish.",
+    "author": "Abhijit Naskar",
+    "topic": "Education"
+  },
+  {
+    "text": "Do not indoctrinate your children. Teach them how to think for themselves, how to evaluate evidence, and how to disagree with you.",
+    "author": "Richard Dawkins",
+    "topic": "Education"
+  },
+  {
+    "text": "The sense of alienation that inspires wonder, awe and fear in us is enough of a proof that life does not belong to the planet Earth.",
+    "author": "Raheel Farooq",
+    "topic": "Life"
+  },
+  {
+    "text": "If you ever start taking things too seriously, just remember that we are talking monkeys on an organic spaceship flying through the universe.",
+    "author": "Joe Rogan",
+    "topic": "Life"
+  },
+  {
+    "text": "Extinction is the rule. Survival is the exception.",
+    "author": "Carl Sagan",
+    "topic": "Science"
+  },
+  {
+    "text": "There's real poetry in the real world. Science is the poetry of reality.",
+    "author": "Richard Dawkins",
+    "topic": "Science"
+  },
+  {
+    "text": "The cosmos is within us. We are made of star-stuff. We are a way for the universe to know itself.",
+    "author": "Carl Sagan",
+    "topic": "Science"
+  },
+  {
+    "text": "The chicken is only an egg’s way for making another egg.",
+    "author": "Richard Dawkins",
+    "topic": "Science"
   }
 ]
