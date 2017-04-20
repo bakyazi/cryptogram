@@ -513,7 +513,11 @@ public class CryptogramView extends android.support.v7.widget.AppCompatTextView 
                 canvas.drawText(chr, x + mBoxPadding, y + mBoxH + mBoxPadding, mTextPaintMapping);
                 int xPos = (int) (x / mBoxW);
                 int yPos = (int) (y / mLineHeight);
-                mCharMap[yPos][xPos] = mappedChar;
+                if (yPos >= 0 && yPos < mCharMap.length) {
+                    if (xPos >= 0 && xPos < mCharMap[yPos].length) {
+                        mCharMap[yPos][xPos] = mappedChar;
+                    }
+                }
             }
             if (mCryptogram.isRevealed(c)) {
                 // This box has already been revealed to the user
