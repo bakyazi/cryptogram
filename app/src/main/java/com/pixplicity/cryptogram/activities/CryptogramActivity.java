@@ -48,6 +48,7 @@ import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.common.images.ImageManager;
 import com.google.android.gms.games.Games;
+import com.google.android.gms.games.GamesActivityResultCodes;
 import com.google.android.gms.games.Player;
 import com.pixplicity.cryptogram.BuildConfig;
 import com.pixplicity.cryptogram.CryptogramApp;
@@ -81,7 +82,7 @@ public class CryptogramActivity extends BaseActivity implements GoogleApiClient.
     private static final String TAG = CryptogramActivity.class.getSimpleName();
 
     private static final int RC_UNUSED = 1000;
-    private static final int RC_SIGN_IN = 1001;
+    private static final int RC_PLAY_GAMES = 1001;
 
     private static final int ONBOARDING_PAGES = 2;
 
@@ -318,16 +319,35 @@ public class CryptogramActivity extends BaseActivity implements GoogleApiClient.
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent intent) {
         super.onActivityResult(requestCode, resultCode, intent);
-        if (requestCode == RC_SIGN_IN) {
-            mSignInClicked = false;
-            mResolvingConnectionFailure = false;
-            boolean success = resultCode == RESULT_OK;
-            Answers.getInstance().logLogin(new LoginEvent().putSuccess(success));
-            if (success) {
-                mGoogleApiClient.connect();
-            } else {
-                showGmsError(resultCode);
+        switch (requestCode) {
+            case RC_PLAY_GAMES: {
+                mSignInClicked = false;
+                mResolvingConnectionFailure = false;
+                switch (resultCode) {
+                    case RESULT_OK: {
+                        // Logged in
+                        Answers.getInstance().logLogin(new LoginEvent().putSuccess(true));
+                        mGoogleApiClient.connect();
+                    }
+                    break;
+                    case GamesActivityResultCodes.RESULT_RECONNECT_REQUIRED: {
+                        // Logged out
+                        if (mGoogleApiClient.isConnected()) {
+                            mGoogleApiClient.disconnect();
+                        }
+                    }
+                    break;
+                    case RESULT_CANCELED: {
+                        // Canceled; do nothing
+                    }
+                    break;
+                    default: {
+                        // Assume some error
+                        showGmsError(resultCode);
+                    }
+                }
             }
+            break;
         }
     }
 
@@ -1078,7 +1098,7 @@ public class CryptogramActivity extends BaseActivity implements GoogleApiClient.
             mSignInClicked = false;
             mResolvingConnectionFailure = true;
             try {
-                connectionResult.startResolutionForResult(this, RC_SIGN_IN);
+                connectionResult.startResolutionForResult(this, RC_PLAY_GAMES);
             } catch (IntentSender.SendIntentException e) {
                 Crashlytics.logException(e);
                 showGmsError(0);
