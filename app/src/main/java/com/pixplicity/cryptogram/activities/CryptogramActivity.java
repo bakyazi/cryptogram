@@ -220,17 +220,17 @@ public class CryptogramActivity extends BaseActivity implements GoogleApiClient.
             }
         });
         mCryptogramView.setOnHighlightListener(new CryptogramView.OnHighlightListener() {
-            private SparseBooleanArray mHighlights = new SparseBooleanArray();
+            private SparseBooleanArray mHighlightShown = new SparseBooleanArray();
 
             @Override
             public void onHighlight(int type, PointF point) {
-                if (mHighlights.get(type, false)) {
+                if (mHighlightShown.get(type, false)) {
                     return;
                 }
-                if (PrefsUtils.getHighlighted(type) && !BuildConfig.DEBUG) {
+                if (PrefsUtils.getHighlighted(type)) {
                     return;
                 }
-                mHighlights.put(type, true);
+                mHighlightShown.put(type, true);
                 switch (type) {
                     case PrefsUtils.TYPE_HIGHLIGHT_HYPHENATION:
                         showHighlight(type, point,

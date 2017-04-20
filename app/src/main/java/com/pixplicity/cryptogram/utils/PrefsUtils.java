@@ -114,7 +114,7 @@ public class PrefsUtils {
     public static void setHighlighted(int type, boolean highlighted) {
         String key = getHighlightKey(type);
         if (key != null) {
-            Prefs.edit().putBoolean(key, highlighted);
+            Prefs.putBoolean(key, highlighted);
         }
     }
 
