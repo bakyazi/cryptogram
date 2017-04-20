@@ -132,8 +132,8 @@ public class AboutFragment extends BaseFragment {
                 Intent emailIntent = new Intent(Intent.ACTION_SENDTO, Uri.fromParts(
                         "mailto", FEEDBACK_EMAIL, null));
                 emailIntent.putExtra(Intent.EXTRA_EMAIL, new String[]{FEEDBACK_EMAIL});
-                emailIntent.putExtra(Intent.EXTRA_SUBJECT, "Feedback on Cryptogram");
-                emailIntent.putExtra(Intent.EXTRA_TEXT, "Hi Paul,\n\nHere's my some feedback on Cryptogram...\n\nI'm using Cryptogram version " + getVersionString() + ".");
+                emailIntent.putExtra(Intent.EXTRA_SUBJECT, getString(R.string.feedback_subject));
+                emailIntent.putExtra(Intent.EXTRA_TEXT, getString(R.string.feedback_body, getVersionString()));
                 emailIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                 startActivity(emailIntent);
             }
