@@ -24,8 +24,8 @@ android {
                 storePassword(props['DEBUG_STORE_PASSWORD'])
                 keyAlias(props['DEBUG_KEY_ALIAS'])
                 keyPassword(props['DEBUG_KEY_PASSWORD'])
-            } catch (IOException e) {
-                // Ignore
+            } catch (IOException ignore) {
+                // Ignore; use local default
             }
         }
         release {
@@ -37,7 +37,8 @@ android {
                 keyAlias(props['RELEASE_KEY_ALIAS'])
                 keyPassword(props['RELEASE_KEY_PASSWORD'])
             } catch (IOException e) {
-                // Ignore
+                println "WARNING: Missing release keystore and properties"
+                println e
             }
         }
     }
@@ -47,8 +48,8 @@ android {
         applicationId "com.pixplicity.cryptogram"
         minSdkVersion 14
         targetSdkVersion 25
-        versionCode 173
-        versionName "1.7.0"
+        versionCode 174
+        versionName "1.7.1"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
     }
     buildTypes {
