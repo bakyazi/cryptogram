@@ -3,10 +3,12 @@ package com.pixplicity.cryptogram.fragments;
 import android.content.Intent;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
+import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.v4.content.ContextCompat;
 import android.text.method.LinkMovementMethod;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -51,7 +53,7 @@ public class AboutFragment extends BaseFragment {
     @BindView(R.id.bt_website)
     protected Button mBtWebsite;
 
-    @BindView(R.id.iv_labs)
+    @BindView(R.id.iv_pixplicity)
     protected ImageView mIvLabs;
 
     @Override
@@ -99,6 +101,15 @@ public class AboutFragment extends BaseFragment {
         mTvArtwork.setMovementMethod(LinkMovementMethod.getInstance());
         mTvArtwork.setText(
                 HtmlCompat.fromHtml(getString(R.string.artwork)));
+
+        int drawableId = isDarkTheme()
+                ? R.drawable.im_pixplicity_white
+                : R.drawable.im_pixplicity_color;
+
+        Drawable drawable = ContextCompat.getDrawable(getContext(), drawableId);
+        // drawable = VectorDrawableCompat.create(getResources(), drawableId, getActivity().getTheme());
+
+        mIvLabs.setImageDrawable(drawable);
 
         // Website
         final View.OnClickListener launchWebsite = new View.OnClickListener() {

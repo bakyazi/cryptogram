@@ -9,10 +9,13 @@ import android.content.Intent;
 import android.support.v4.app.NotificationCompat;
 
 import com.pixplicity.cryptogram.R;
-import com.pixplicity.cryptogram.activities.CryptogramActivity;
 
 public class NotificationPublisher extends BroadcastReceiver {
 
+    /**
+     * Previously used for April Fools'.
+     */
+    @Deprecated
     public static final int NOTIFICATION_APRIL_SPECIAL = 2001;
 
     private static final String NOTIFICATION_ID = "notification_id";
@@ -20,11 +23,7 @@ public class NotificationPublisher extends BroadcastReceiver {
     public static Intent getIntent(Context context, int notificationType) {
         Intent notificationIntent = null;
         switch (notificationType) {
-            case NOTIFICATION_APRIL_SPECIAL: {
-                notificationIntent = new Intent(context, NotificationPublisher.class);
-                notificationIntent.putExtra(NotificationPublisher.NOTIFICATION_ID, NOTIFICATION_APRIL_SPECIAL);
-            }
-            break;
+            // TODO
         }
         return notificationIntent;
     }
@@ -43,15 +42,7 @@ public class NotificationPublisher extends BroadcastReceiver {
 
         PendingIntent pi = null;
         switch (id) {
-            case NOTIFICATION_APRIL_SPECIAL: {
-                builder.setContentText(context.getString(R.string.notification_april_special));
-                Intent notificationIntent = new Intent(context, CryptogramActivity.class);
-                notificationIntent.setAction(Intent.ACTION_MAIN);
-                notificationIntent.addCategory(Intent.CATEGORY_LAUNCHER);
-                notificationIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                pi = PendingIntent.getActivity(context, id, notificationIntent, PendingIntent.FLAG_UPDATE_CURRENT);
-            }
-            break;
+            // TODO
         }
 
         builder.setContentIntent(pi);
