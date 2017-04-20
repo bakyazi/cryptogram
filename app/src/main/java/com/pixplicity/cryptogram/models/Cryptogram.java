@@ -161,7 +161,7 @@ public class Cryptogram {
 
     public boolean hasUserChars() {
         for (Character c : getUserChars()) {
-            if (c != 0) {
+            if (c != null && c != 0) {
                 return true;
             }
         }
