@@ -225,7 +225,10 @@ public class CryptogramProgress {
     }
 
     public synchronized void setUserChar(@NonNull Cryptogram cryptogram, char selectedCharacter, char c) {
-        char previousChar = getUserCharsMapping(cryptogram).get(selectedCharacter);
+        Character previousChar = getUserCharsMapping(cryptogram).get(selectedCharacter);
+        if (previousChar == null) {
+            previousChar = 0;
+        }
         char userChar = Character.toUpperCase(c);
         if (previousChar != userChar && userChar != 0) {
             if (mInputs == null) {
@@ -244,7 +247,7 @@ public class CryptogramProgress {
         // Start with total number of inputs
         int count = mInputs;
         for (Character c : getUserCharsMapping(cryptogram).values()) {
-            if (c != 0) {
+            if (c != null && c != 0) {
                 // Subtract any filled in characters
                 count--;
             }
@@ -258,7 +261,7 @@ public class CryptogramProgress {
             HashMap<Character, Character> userChars = getUserCharsMapping(cryptogram);
             for (Character character : userChars.keySet()) {
                 // In order to be correct, the key and value must be identical
-                if (character != userChars.get(character) && !cryptogram.isGiven(character)) {
+                if (character != null && character != userChars.get(character) && !cryptogram.isGiven(character)) {
                     mCompleted = false;
                     break;
                 }
@@ -426,7 +429,7 @@ public class CryptogramProgress {
         Iterator<Character> i = getUserCharsMapping(cryptogram).keySet().iterator();
         while (i.hasNext()) {
             Character c = i.next();
-            if (!cryptogram.isInputChar(c)) {
+            if (c == null || !cryptogram.isInputChar(c)) {
                 i.remove();
             }
         }
