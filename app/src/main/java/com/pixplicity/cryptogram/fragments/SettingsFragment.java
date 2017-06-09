@@ -13,6 +13,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
+import android.widget.RadioButton;
 
 import com.pixplicity.cryptogram.R;
 import com.pixplicity.cryptogram.activities.CryptogramActivity;
@@ -24,16 +25,20 @@ import butterknife.OnClick;
 
 public class SettingsFragment extends BaseFragment {
 
-    private static final String TAG = SettingsFragment.class.getSimpleName();
+    @BindView(R.id.rb_theme_light)
+    protected RadioButton mRbThemeLight;
+
+    @BindView(R.id.rb_theme_dark)
+    protected RadioButton mRbThemeDark;
 
     @BindView(R.id.cb_randomize)
     protected CheckBox mCbRandomize;
 
-    @BindView(R.id.cb_hints)
+    @BindView(R.id.cb_show_hints)
     protected CheckBox mCbHints;
 
-    @BindView(R.id.cb_dark_theme)
-    protected CheckBox mCbDarkTheme;
+    @BindView(R.id.cb_auto_advance)
+    protected CheckBox mCbAutoAdvance;
 
     @BindView(R.id.bt_reset_dialogs)
     protected Button mBtResetDialogs;
@@ -63,42 +68,73 @@ public class SettingsFragment extends BaseFragment {
         update();
     }
 
+    @OnClick(R.id.iv_theme_light)
+    protected void onClickIvThemeLight() {
+        mRbThemeLight.setChecked(true);
+    }
+
+    @OnClick(R.id.iv_theme_dark)
+    protected void onClickIvThemeDark() {
+        mRbThemeDark.setChecked(true);
+    }
+
     private void update() {
-        updateCheckBox(mCbRandomize, PrefsUtils.getRandomize(), new CompoundButton.OnCheckedChangeListener() {
+        updateCompoundButton(mRbThemeLight, !PrefsUtils.getDarkTheme(), new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton compoundButton, boolean checked) {
+                PrefsUtils.setDarkTheme(!checked);
+                if (checked) {
+                    relaunch();
+                }
+            }
+        });
+        updateCompoundButton(mRbThemeDark, PrefsUtils.getDarkTheme(), new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton compoundButton, boolean checked) {
+                PrefsUtils.setDarkTheme(checked);
+                if (checked) {
+                    relaunch();
+                }
+            }
+        });
+        updateCompoundButton(mCbRandomize, PrefsUtils.getRandomize(), new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton compoundButton, boolean checked) {
                 PrefsUtils.setRandomize(checked);
             }
         });
-        updateCheckBox(mCbHints, PrefsUtils.getShowHints(), new CompoundButton.OnCheckedChangeListener() {
+        updateCompoundButton(mCbHints, PrefsUtils.getShowHints(), new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton compoundButton, boolean checked) {
                 PrefsUtils.setShowHints(checked);
             }
         });
-        updateCheckBox(mCbDarkTheme, PrefsUtils.getDarkTheme(), new CompoundButton.OnCheckedChangeListener() {
+        updateCompoundButton(mCbAutoAdvance, PrefsUtils.getAutoAdvance(), new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton compoundButton, boolean checked) {
-                PrefsUtils.setDarkTheme(checked);
-
-                // Relaunch as though launched from home screen
-                Context context = getActivity().getBaseContext();
-                Intent i = context.getPackageManager()
-                                  .getLaunchIntentForPackage(context.getPackageName());
-                i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                i.putExtra(CryptogramActivity.EXTRA_LAUNCH_SETTINGS, true);
-                startActivity(i);
-                getActivity().finish();
+                PrefsUtils.setAutoAdvance(checked);
             }
         });
 
         mBtResetDialogs.setEnabled(PrefsUtils.getNeverAskRevealLetter() || PrefsUtils.getNeverAskRevealMistakes());
     }
 
-    private void updateCheckBox(CheckBox checkBox, boolean checked, CompoundButton.OnCheckedChangeListener listener) {
-        checkBox.setOnCheckedChangeListener(null);
-        checkBox.setChecked(checked);
-        checkBox.setOnCheckedChangeListener(listener);
+    private void relaunch() {
+        // Relaunch as though launched from home screen
+        Context context = getActivity().getBaseContext();
+        Intent i = context.getPackageManager()
+                          .getLaunchIntentForPackage(context.getPackageName());
+        i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+        i.putExtra(CryptogramActivity.EXTRA_LAUNCH_SETTINGS, true);
+        startActivity(i);
+        getActivity().finish();
+    }
+
+    private void updateCompoundButton(CompoundButton compoundButton, boolean checked,
+                                      CompoundButton.OnCheckedChangeListener listener) {
+        compoundButton.setOnCheckedChangeListener(null);
+        compoundButton.setChecked(checked);
+        compoundButton.setOnCheckedChangeListener(listener);
     }
 
     @Override

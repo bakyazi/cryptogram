@@ -180,27 +180,7 @@ public class CryptogramView extends android.support.v7.widget.AppCompatTextView 
                 return super.onKeyUp(keyCode, event);
             case KeyEvent.KEYCODE_ENTER:
             case KeyEvent.KEYCODE_NAVIGATE_NEXT:
-                if (mCryptogram != null) {
-                    ArrayList<Character> charMapping = mCryptogram.getCharacterList();
-                    int index = 0;
-                    if (mSelectedCharacter == 0) {
-                        mSelectedCharacter = mSelectedCharacterLast;
-                    }
-                    if (mSelectedCharacter != 0) {
-                        index = charMapping.indexOf(mSelectedCharacter) + 1;
-                    }
-                    if (index >= charMapping.size()) {
-                        index = 0;
-                    }
-                    if (charMapping.size() > index) {
-                        char c = charMapping.get(index);
-                        setSelectedCharacter(mCryptogram.getCharMapping().get(c));
-                    } else {
-                        setSelectedCharacter((char) 0);
-                    }
-                } else {
-                    setSelectedCharacter((char) 0);
-                }
+                selectNextCharacter();
                 return true;
         }
         if (onKeyPress((char) event.getUnicodeChar())) {
@@ -209,11 +189,41 @@ public class CryptogramView extends android.support.v7.widget.AppCompatTextView 
         return super.onKeyUp(keyCode, event);
     }
 
+    private void selectNextCharacter() {
+        if (mCryptogram != null) {
+            ArrayList<Character> charMapping = mCryptogram.getCharacterList();
+            int index = 0;
+            if (mSelectedCharacter == 0) {
+                mSelectedCharacter = mSelectedCharacterLast;
+            }
+            if (mSelectedCharacter != 0) {
+                index = charMapping.indexOf(mSelectedCharacter) + 1;
+            }
+            if (index >= charMapping.size()) {
+                index = 0;
+            }
+            if (charMapping.size() > index) {
+                char c = charMapping.get(index);
+                setSelectedCharacter(mCryptogram.getCharMapping().get(c));
+            } else {
+                setSelectedCharacter((char) 0);
+            }
+        } else {
+            setSelectedCharacter((char) 0);
+        }
+    }
+
     public boolean onKeyPress(char c) {
         if (mCryptogram != null && !mCryptogram.isCompleted()) {
             if (setUserChar(getSelectedCharacter(), c)) {
-                // Answer filled in; clear the selection
-                setSelectedCharacter((char) 0);
+                // User filled this cell
+                if (PrefsUtils.getAutoAdvance()) {
+                    // Automatically advance to the next character
+                    selectNextCharacter();
+                } else {
+                    // Clear the selection
+                    setSelectedCharacter((char) 0);
+                }
             } else {
                 // Make a selection
                 setSelectedCharacter(c);

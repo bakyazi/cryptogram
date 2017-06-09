@@ -95,9 +95,10 @@
     <string name="google_play_games_not_installed">Google Play Games doesn\'t appear to be installed</string>
 
     <!-- Settings -->
+    <string name="theme">Theme:</string>
     <string name="randomize_puzzles">Randomize puzzles</string>
     <string name="show_hints">Show used letters</string>
-    <string name="dark_theme">Dark theme</string>
+    <string name="auto_advance">Advance to next cell when filled</string>
 
     <string name="feedback">Send feedback</string>
     <string name="made_with_love_by">MADE WITH LOVE BY</string>
