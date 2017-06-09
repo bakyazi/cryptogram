@@ -288,6 +288,8 @@ public class CryptogramActivity extends BaseActivity implements GoogleApiClient.
         } else {
             onGameplayReady();
         }
+
+        mHintView.setVisibility(PrefsUtils.getShowHints() ? View.VISIBLE : View.GONE);
     }
 
     @Override
