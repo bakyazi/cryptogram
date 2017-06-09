@@ -96,7 +96,7 @@
 
     <!-- Settings -->
     <string name="randomize_puzzles">Randomize puzzles</string>
-    <string name="show_hints">Show hints</string>
+    <string name="show_hints">Show used letters</string>
     <string name="dark_theme">Dark theme</string>
 
     <string name="feedback">Send feedback</string>
