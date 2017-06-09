@@ -23,6 +23,7 @@
         <RadioGroup
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginBottom="16dp"
             android:orientation="horizontal">
 
             <RadioButton
@@ -34,25 +35,25 @@
             <ImageView
                 android:id="@+id/iv_theme_light"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
+                android:layout_height="128dp"
+                android:paddingLeft="8dp"
+                android:paddingRight="8dp"
                 android:src="@drawable/im_theme_light"/>
-
-            <Space
-                android:layout_width="48dp"
-                android:layout_height="0dp"/>
 
             <RadioButton
                 android:id="@+id/rb_theme_dark"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_gravity="center"/>
+                android:layout_gravity="center"
+                android:layout_marginLeft="16dp"
+                android:layout_marginStart="16dp"/>
 
             <ImageView
                 android:id="@+id/iv_theme_dark"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
+                android:layout_height="128dp"
+                android:paddingLeft="8dp"
+                android:paddingRight="8dp"
                 android:src="@drawable/im_theme_dark"/>
 
         </RadioGroup>
@@ -62,6 +63,8 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="16dp"
+            android:paddingLeft="8dp"
+            android:paddingRight="8dp"
             android:text="@string/randomize_puzzles"/>
 
         <android.support.v7.widget.AppCompatCheckBox
@@ -69,6 +72,8 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="16dp"
+            android:paddingLeft="8dp"
+            android:paddingRight="8dp"
             android:text="@string/show_hints"/>
 
         <android.support.v7.widget.AppCompatCheckBox
@@ -76,6 +81,8 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="16dp"
+            android:paddingLeft="8dp"
+            android:paddingRight="8dp"
             android:text="@string/auto_advance"/>
 
         <Space
