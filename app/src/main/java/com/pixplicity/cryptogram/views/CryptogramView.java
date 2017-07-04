@@ -217,7 +217,7 @@ public class CryptogramView extends android.support.v7.widget.AppCompatTextView 
         if (mCryptogram != null && !mCryptogram.isCompleted()) {
             if (setUserChar(getSelectedCharacter(), c)) {
                 // User filled this cell
-                if (PrefsUtils.getAutoAdvance()) {
+                if (mCryptogram.isInputChar(c) && PrefsUtils.getAutoAdvance()) {
                     // Automatically advance to the next character
                     selectNextCharacter();
                 } else {
@@ -304,15 +304,12 @@ public class CryptogramView extends android.support.v7.widget.AppCompatTextView 
                 mCryptogram.setUserChar(selectedChar, selectedChar);
                 return true;
             }
-            boolean wasCompleted = mCryptogram.isCompleted();
-            boolean progressChange = wasCompleted;
+            // Check for completion state
+            mCryptogram.isCompleted();
             if (mCryptogram.isInputChar(userChar)) {
                 // Enter the user's mapping
                 mCryptogram.setUserChar(selectedChar, Character.toUpperCase(userChar));
                 if (mCryptogram.isCompleted()) {
-                    if (!wasCompleted) {
-                        progressChange = true;
-                    }
                     hideSoftInput();
                 }
             } else {
