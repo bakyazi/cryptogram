@@ -16,6 +16,7 @@ import org.powermock.api.mockito.PowerMockito;
 import org.powermock.core.classloader.annotations.PrepareForTest;
 import org.powermock.modules.junit4.PowerMockRunner;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Locale;
 
@@ -69,6 +70,7 @@ public class CryptogramTest {
     public void noEmptyOrDuplicateCryptograms() throws Exception {
         Levenshtein levenshtein = new Levenshtein();
         @SuppressLint("UseSparseArrays") HashMap<Integer, Cryptogram> hashes = new HashMap<>();
+        ArrayList<String> errors = new ArrayList<>();
         for (Cryptogram cryptogram : CryptogramProvider.getInstance(null).getAll()) {
             int id = cryptogram.getId();
             String text = cryptogram.getText();
@@ -79,63 +81,73 @@ public class CryptogramTest {
             }
             // Ensure there's content
             if (text.trim().length() == 0) {
-                throw new AssertionError("No content: " + cryptogram);
-            }
-            // Ensure there aren't single quotes (replace with ’)
-            if (text.indexOf('\'') >= 0) {
-                throw new AssertionError("Contains single quote; replace with '’': " + cryptogram);
-            }
-            // Ensure there aren't single quotes (replace with “/”)
-            if (text.indexOf('"') >= 0) {
-                throw new AssertionError("Contains single quote; replace with '“' or '”': " + cryptogram);
-            }
-            // Ensure there aren't simple hyphens (replace with —)
-            if (text.contains(" - ")) {
-                throw new AssertionError("Contains simple hyphen; replace with '—': " + cryptogram);
-            }
-            // Ensure em dashes are surrounded with spaces
-            if (text.replaceAll("[\\w]—", "").replaceAll("—[\\w]", "").length() < text.length()) {
-                throw new AssertionError("Contains em dash without surrounding spaces: " + cryptogram);
-            }
-            // Ensure there aren't simple hyphens (replace with —)
-            if (text.contains("...")) {
-                throw new AssertionError("Contains expanded ellipsis; replace with '…': " + cryptogram);
-            }
-            if (!cryptogram.isInstruction()) {
-                // Ensure there's an author
-                if (author == null || author.trim().length() == 0) {
-                    throw new AssertionError("No author: " + cryptogram);
+                errors.add("No content: " + cryptogram);
+            } else {
+                // Ensure there aren't single quotes (replace with ’)
+                if (text.indexOf('\'') >= 0) {
+                    errors.add("Contains single quote; replace with '’': " + cryptogram);
                 }
-            }
-            if (author != null && author.contains("[^\\s\\w]")) {
-                throw new AssertionError("Contains invalid character in author");
-            }
-            if (topic != null && topic.contains("[^\\s\\w]")) {
-                throw new AssertionError("Contains invalid character in topic");
-            }
-            // Ensure there aren't simple hyphens (replace with —)
-            String given = cryptogram.getGiven();
-            if (given != null && !given.equals(given.toUpperCase(Locale.ENGLISH))) {
-                throw new AssertionError("Contains lowercase given characters: " + cryptogram);
-            }
-            // Ensure there aren't duplicates
-            for (Cryptogram otherCryptogram : hashes.values()) {
-                double distance = levenshtein.distance(text, otherCryptogram.getText());
-                if (distance < 10) {
-                    throw new AssertionError("Levenshtein distance of " + cryptogram + " is " + distance + " to " + otherCryptogram);
+                // Ensure there aren't single quotes (replace with “/”)
+                if (text.indexOf('"') >= 0) {
+                    errors.add("Contains single quote; replace with '“' or '”': " + cryptogram);
                 }
-            }
-            if (CryptogramView.ENABLE_HYPHENATION) {
-                for (String word : cryptogram.getWords()) {
-                    word = word.replaceAll("[^a-zA-Z\u00AD\\-]", "");
-                    for (String wordPart : word.split("[\u00AD\\-]")) {
-                        if (wordPart.length() > 8) {
-                            throw new AssertionError("Contains word of length >8 without hyphen or soft-hyphen ('\u00AD'): '" + word + "' in " + cryptogram);
+                // Ensure there aren't simple hyphens (replace with —)
+                if (text.contains(" - ")) {
+                    errors.add("Contains simple hyphen; replace with '—': " + cryptogram);
+                }
+                // Ensure em dashes are surrounded with spaces
+                if (text.replaceAll("[\\w]—", "").replaceAll("—[\\w]", "").length() < text.length()) {
+                    errors.add("Contains em dash without surrounding spaces: " + cryptogram);
+                }
+                // Ensure there aren't simple hyphens (replace with —)
+                if (text.contains("...")) {
+                    errors.add("Contains expanded ellipsis; replace with '…': " + cryptogram);
+                }
+                // Ensure there aren't simple hyphens (replace with —)
+                String given = cryptogram.getGiven();
+                if (given != null && !given.equals(given.toUpperCase(Locale.ENGLISH))) {
+                    errors.add("Contains lowercase given characters: " + cryptogram);
+                }
+                // Ensure there aren't duplicates
+                for (Cryptogram otherCryptogram : hashes.values()) {
+                    double distance = levenshtein.distance(text, otherCryptogram.getText());
+                    if (distance < 10) {
+                        errors.add("Levenshtein distance of " + cryptogram + " is " + distance + " to " + otherCryptogram);
+                    }
+                }
+                if (CryptogramView.ENABLE_HYPHENATION) {
+                    for (String word : cryptogram.getWords()) {
+                        word = word.replaceAll("[^a-zA-Z\u00AD\\-]", "");
+                        for (String wordPart : word.split("[\u00AD\\-]")) {
+                            if (wordPart.length() > 8) {
+                                errors.add("Contains word of length >8 without hyphen or soft-hyphen ('\u00AD'): '" + word + "' in " + cryptogram);
+                            }
                         }
                     }
                 }
             }
+            if (!cryptogram.isInstruction()) {
+                // Ensure there's an author
+                if (author == null || author.trim().length() == 0) {
+                    errors.add("No author: " + cryptogram);
+                }
+            }
+            if (author != null && author.contains("[^\\s\\w]")) {
+                errors.add("Contains invalid character in author");
+            }
+            if (topic != null && topic.contains("[^\\s\\w]")) {
+                errors.add("Contains invalid character in topic");
+            }
             hashes.put(id, cryptogram);
+        }
+        if (errors.size() > 0) {
+            for (int i = 0; i < Math.min(10, errors.size()); i++) {
+                System.err.println("-\t" + errors.get(i));
+            }
+            if (errors.size() > 10) {
+                System.err.println("-\t(and " + errors.size() + " more)");
+            }
+            throw new AssertionError(errors.size() + " errors regarding puzzle quality");
         }
     }
 
