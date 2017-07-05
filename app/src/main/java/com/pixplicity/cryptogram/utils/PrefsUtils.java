@@ -12,6 +12,7 @@ public class PrefsUtils {
     private static final String KEY_RANDOMIZE = "randomize";
     private static final String KEY_ONBOARDING = "onboarding";
     private static final String KEY_SHOW_HINTS = "show_hints";
+    private static final String KEY_SHOW_TOPIC = "show_topic";
     private static final String KEY_DARK_THEME = "dark_theme";
     private static final String KEY_AUTO_ADVANCE = "auto_advance";
     private static final String KEY_NEVER_ASK_REVEAL_LETTER = "never_ask_reveal_letter";
@@ -67,6 +68,14 @@ public class PrefsUtils {
 
     public static void setShowHints(boolean show) {
         Prefs.putBoolean(KEY_SHOW_HINTS, show);
+    }
+
+    public static boolean getShowTopic() {
+        return Prefs.getBoolean(KEY_SHOW_TOPIC, true);
+    }
+
+    public static void setShowTopic(boolean show) {
+        Prefs.putBoolean(KEY_SHOW_TOPIC, show);
     }
 
     public static void setDarkTheme(boolean theme) {

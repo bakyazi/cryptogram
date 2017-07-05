@@ -35,7 +35,10 @@ public class SettingsFragment extends BaseFragment {
     protected CheckBox mCbRandomize;
 
     @BindView(R.id.cb_show_hints)
-    protected CheckBox mCbHints;
+    protected CheckBox mCbShowHints;
+
+    @BindView(R.id.cb_show_topic)
+    protected CheckBox mCbShowTopic;
 
     @BindView(R.id.cb_auto_advance)
     protected CheckBox mCbAutoAdvance;
@@ -103,10 +106,16 @@ public class SettingsFragment extends BaseFragment {
                 PrefsUtils.setRandomize(checked);
             }
         });
-        updateCompoundButton(mCbHints, PrefsUtils.getShowHints(), new CompoundButton.OnCheckedChangeListener() {
+        updateCompoundButton(mCbShowHints, PrefsUtils.getShowHints(), new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton compoundButton, boolean checked) {
                 PrefsUtils.setShowHints(checked);
+            }
+        });
+        updateCompoundButton(mCbShowTopic, PrefsUtils.getShowTopic(), new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton compoundButton, boolean checked) {
+                PrefsUtils.setShowTopic(checked);
             }
         });
         updateCompoundButton(mCbAutoAdvance, PrefsUtils.getAutoAdvance(), new CompoundButton.OnCheckedChangeListener() {

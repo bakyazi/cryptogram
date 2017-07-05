@@ -77,6 +77,15 @@
             android:text="@string/show_hints"/>
 
         <android.support.v7.widget.AppCompatCheckBox
+            android:id="@+id/cb_show_topic"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:paddingLeft="8dp"
+            android:paddingRight="8dp"
+            android:text="@string/show_topic"/>
+
+        <android.support.v7.widget.AppCompatCheckBox
             android:id="@+id/cb_auto_advance"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"

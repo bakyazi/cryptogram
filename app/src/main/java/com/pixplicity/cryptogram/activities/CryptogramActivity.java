@@ -610,7 +610,7 @@ public class CryptogramActivity extends BaseActivity implements GoogleApiClient.
                 mTvAuthor.setText(getString(R.string.quote, author));
             }
             String topic = cryptogram.getTopic();
-            if (topic == null) {
+            if ((!PrefsUtils.getShowTopic() && !cryptogram.isCompleted()) || topic == null) {
                 mTvTopic.setVisibility(View.GONE);
             } else {
                 mTvTopic.setVisibility(View.VISIBLE);
@@ -688,6 +688,8 @@ public class CryptogramActivity extends BaseActivity implements GoogleApiClient.
 
     @Subscribe
     public void onCryptogramCompleted(CryptogramEvent.CryptogramCompletedEvent event) {
+        updateCryptogram(event.getCryptogram());
+
         // Increment the trigger for displaying the rating dialog
         mRate.launched();
 

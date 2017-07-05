@@ -98,6 +98,7 @@
     <string name="theme">Theme:</string>
     <string name="randomize_puzzles">Randomize puzzles</string>
     <string name="show_hints">Show used letters</string>
+    <string name="show_topic">Show puzzle topics</string>
     <string name="auto_advance">Advance to next cell when filled</string>
 
     <string name="feedback">Send feedback</string>
