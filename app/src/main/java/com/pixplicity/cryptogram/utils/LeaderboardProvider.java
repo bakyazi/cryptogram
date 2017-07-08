@@ -24,7 +24,7 @@ public class LeaderboardProvider {
             @Override
             protected Long doInBackground(Void... voids) {
                 synchronized (LeaderboardProvider.this) {
-                    return CryptogramProvider.getInstance(context).getTotalScore();
+                    return PuzzleProvider.getInstance(context).getTotalScore();
                 }
             }
 
