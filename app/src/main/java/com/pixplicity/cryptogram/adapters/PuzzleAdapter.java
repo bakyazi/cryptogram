@@ -9,30 +9,30 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.pixplicity.cryptogram.R;
-import com.pixplicity.cryptogram.models.Cryptogram;
-import com.pixplicity.cryptogram.utils.CryptogramProvider;
+import com.pixplicity.cryptogram.models.Puzzle;
+import com.pixplicity.cryptogram.utils.PuzzleProvider;
 import com.pixplicity.cryptogram.utils.PrefsUtils;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-public class CryptogramAdapter extends RecyclerView.Adapter<CryptogramAdapter.ViewHolder> {
+public class PuzzleAdapter extends RecyclerView.Adapter<PuzzleAdapter.ViewHolder> {
 
     private static final int TYPE_NORMAL = 0;
     private static final int TYPE_SELECTED = 1;
 
     private final Context mContext;
     private final OnItemClickListener mOnItemClickListener;
-    private Cryptogram[] mData;
+    private Puzzle[] mPuzzles;
 
     private boolean mDarkTheme = PrefsUtils.getDarkTheme();
 
-    public CryptogramAdapter(Context context, OnItemClickListener onItemClickListener) {
+    public PuzzleAdapter(Context context, OnItemClickListener onItemClickListener) {
         mContext = context;
         mOnItemClickListener = onItemClickListener;
 
-        CryptogramProvider provider = CryptogramProvider.getInstance(mContext);
-        mData = provider.getAll();
+        PuzzleProvider provider = PuzzleProvider.getInstance(mContext);
+        mPuzzles = provider.getAll();
     }
 
     @Override
@@ -61,7 +61,7 @@ public class CryptogramAdapter extends RecyclerView.Adapter<CryptogramAdapter.Vi
 
     @Override
     public int getItemViewType(int position) {
-        if (CryptogramProvider.getInstance(mContext).getCurrentIndex() == position) {
+        if (PuzzleProvider.getInstance(mContext).getCurrentIndex() == position) {
             return TYPE_SELECTED;
         }
         return TYPE_NORMAL;
@@ -69,22 +69,22 @@ public class CryptogramAdapter extends RecyclerView.Adapter<CryptogramAdapter.Vi
 
     @Override
     public void onBindViewHolder(ViewHolder vh, int position) {
-        Cryptogram cryptogram = mData[position];
+        Puzzle puzzle = mPuzzles[position];
         vh.setPosition(position);
-        vh.tvPuzzleId.setText(cryptogram.getTitle(mContext));
-        String author = cryptogram.getAuthor();
+        vh.tvPuzzleId.setText(puzzle.getTitle(mContext));
+        String author = puzzle.getAuthor();
         if (author == null) {
             vh.tvAuthor.setVisibility(View.GONE);
         } else {
             vh.tvAuthor.setVisibility(View.VISIBLE);
             vh.tvAuthor.setText(author);
         }
-        vh.ivCompleted.setVisibility(cryptogram.isCompleted() ? View.VISIBLE : View.GONE);
+        vh.ivCompleted.setVisibility(puzzle.isCompleted() ? View.VISIBLE : View.GONE);
     }
 
     @Override
     public int getItemCount() {
-        return mData.length;
+        return mPuzzles.length;
     }
 
     public interface OnItemClickListener {

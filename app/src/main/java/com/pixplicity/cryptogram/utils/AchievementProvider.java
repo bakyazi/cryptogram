@@ -3,13 +3,12 @@ package com.pixplicity.cryptogram.utils;
 import android.content.Context;
 import android.os.AsyncTask;
 import android.support.annotation.NonNull;
-import android.util.Log;
 
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.games.Games;
 import com.pixplicity.cryptogram.CryptogramApp;
 import com.pixplicity.cryptogram.R;
-import com.pixplicity.cryptogram.models.Cryptogram;
+import com.pixplicity.cryptogram.models.Puzzle;
 import com.pixplicity.easyprefs.library.Prefs;
 
 import java.util.Calendar;
@@ -259,30 +258,30 @@ public class AchievementProvider {
             mUnlockedWetFeet = true;
             mUnlockedJackOfAllTrades = false;
             mUnlockedNoBrainer = false;
-            for (Cryptogram cryptogram : CryptogramProvider.getInstance(context).getAll()) {
-                if (!cryptogram.isCompleted()) {
+            for (Puzzle puzzle : PuzzleProvider.getInstance(context).getAll()) {
+                if (!puzzle.isCompleted()) {
                     // Puzzle was not completed
-                    if (cryptogram.isInstruction()) {
+                    if (puzzle.isInstruction()) {
                         mUnlockedWetFeet = false;
                     }
                     continue;
                 }
-                if (cryptogram.isNoScore()) {
+                if (puzzle.isNoScore()) {
                     // Puzzle does not qualify for achievements
                     continue;
                 }
                 mCompleted++;
-                Float score = cryptogram.getScore();
+                Float score = puzzle.getScore();
                 if (score != null && score >= 1f) {
                     mPerfectScore++;
                 }
-                if (cryptogram.getExcessCount() == 0 && cryptogram.getReveals() == 0 && !cryptogram.hadHints()) {
+                if (puzzle.getExcessCount() == 0 && puzzle.getReveals() == 0 && !puzzle.hadHints()) {
                     mUnlockedJackOfAllTrades = true;
                 }
-                long startTime = cryptogram.getProgress().getStartTime();
+                long startTime = puzzle.getProgress().getStartTime();
                 if (startTime > 0) {
-                    long duration = cryptogram.getProgress().getDuration();
-                    if (!cryptogram.isCompleted()) {
+                    long duration = puzzle.getProgress().getDuration();
+                    if (!puzzle.isCompleted()) {
                         duration = 0;
                     }
                     if (duration > 0 && duration <= 45 * 1000) {

@@ -3,10 +3,10 @@ package com.pixplicity.cryptogram;
 import android.annotation.SuppressLint;
 import android.util.Log;
 
-import com.pixplicity.cryptogram.models.Cryptogram;
-import com.pixplicity.cryptogram.models.CryptogramProgress;
+import com.pixplicity.cryptogram.models.Puzzle;
+import com.pixplicity.cryptogram.models.PuzzleProgress;
 import com.pixplicity.cryptogram.stringsimilarity.Levenshtein;
-import com.pixplicity.cryptogram.utils.CryptogramProvider;
+import com.pixplicity.cryptogram.utils.PuzzleProvider;
 import com.pixplicity.cryptogram.views.CryptogramView;
 
 import org.junit.Before;
@@ -27,7 +27,7 @@ import java.util.Locale;
  */
 @RunWith(PowerMockRunner.class)
 @PrepareForTest({Log.class})
-public class CryptogramTest {
+public class PuzzleTest {
 
     private static final boolean VERBOSE = false;
 
@@ -38,7 +38,7 @@ public class CryptogramTest {
 
     @Test
     public void validProvider() throws Exception {
-        System.out.println("Total puzzles: " + CryptogramProvider.getInstance(null).getCount());
+        System.out.println("Total puzzles: " + PuzzleProvider.getInstance(null).getCount());
     }
 
     @Test
@@ -47,10 +47,10 @@ public class CryptogramTest {
             if (VERBOSE) {
                 System.out.print("seed " + seed + ":");
             }
-            CryptogramProgress.setRandomSeed(seed);
-            Cryptogram cryptogram = new Cryptogram.Mock();
-            CryptogramProgress progress = new CryptogramProgress();
-            HashMap<Character, Character> mapping = progress.getCharMapping(cryptogram);
+            PuzzleProgress.setRandomSeed(seed);
+            Puzzle puzzle = new Puzzle.Mock();
+            PuzzleProgress progress = new PuzzleProgress();
+            HashMap<Character, Character> mapping = progress.getCharMapping(puzzle);
             for (Character key : mapping.keySet()) {
                 Character value = mapping.get(key);
                 if (VERBOSE) {
@@ -69,67 +69,67 @@ public class CryptogramTest {
     @Test
     public void noEmptyOrDuplicateCryptograms() throws Exception {
         Levenshtein levenshtein = new Levenshtein();
-        @SuppressLint("UseSparseArrays") HashMap<Integer, Cryptogram> hashes = new HashMap<>();
+        @SuppressLint("UseSparseArrays") HashMap<Integer, Puzzle> hashes = new HashMap<>();
         ArrayList<String> errors = new ArrayList<>();
-        for (Cryptogram cryptogram : CryptogramProvider.getInstance(null).getAll()) {
-            int id = cryptogram.getId();
-            String text = cryptogram.getText();
-            String author = cryptogram.getAuthor();
-            String topic = cryptogram.getTopic();
+        for (Puzzle puzzle : PuzzleProvider.getInstance(null).getAll()) {
+            int id = puzzle.getId();
+            String text = puzzle.getText();
+            String author = puzzle.getAuthor();
+            String topic = puzzle.getTopic();
             if (VERBOSE) {
-                System.out.println("cryptogram " + cryptogram);
+                System.out.println("puzzle " + puzzle);
             }
             // Ensure there's content
             if (text.trim().length() == 0) {
-                errors.add("No content: " + cryptogram);
+                errors.add("No content: " + puzzle);
             } else {
                 // Ensure there aren't single quotes (replace with ’)
                 if (text.indexOf('\'') >= 0) {
-                    errors.add("Contains single quote; replace with '’': " + cryptogram);
+                    errors.add("Contains single quote; replace with '’': " + puzzle);
                 }
                 // Ensure there aren't single quotes (replace with “/”)
                 if (text.indexOf('"') >= 0) {
-                    errors.add("Contains single quote; replace with '“' or '”': " + cryptogram);
+                    errors.add("Contains single quote; replace with '“' or '”': " + puzzle);
                 }
                 // Ensure there aren't simple hyphens (replace with —)
                 if (text.contains(" - ")) {
-                    errors.add("Contains simple hyphen; replace with '—': " + cryptogram);
+                    errors.add("Contains simple hyphen; replace with '—': " + puzzle);
                 }
                 // Ensure em dashes are surrounded with spaces
                 if (text.replaceAll("[\\w]—", "").replaceAll("—[\\w]", "").length() < text.length()) {
-                    errors.add("Contains em dash without surrounding spaces: " + cryptogram);
+                    errors.add("Contains em dash without surrounding spaces: " + puzzle);
                 }
                 // Ensure there aren't simple hyphens (replace with —)
                 if (text.contains("...")) {
-                    errors.add("Contains expanded ellipsis; replace with '…': " + cryptogram);
+                    errors.add("Contains expanded ellipsis; replace with '…': " + puzzle);
                 }
                 // Ensure there aren't simple hyphens (replace with —)
-                String given = cryptogram.getGiven();
+                String given = puzzle.getGiven();
                 if (given != null && !given.equals(given.toUpperCase(Locale.ENGLISH))) {
-                    errors.add("Contains lowercase given characters: " + cryptogram);
+                    errors.add("Contains lowercase given characters: " + puzzle);
                 }
                 // Ensure there aren't duplicates
-                for (Cryptogram otherCryptogram : hashes.values()) {
-                    double distance = levenshtein.distance(text, otherCryptogram.getText());
+                for (Puzzle otherPuzzle : hashes.values()) {
+                    double distance = levenshtein.distance(text, otherPuzzle.getText());
                     if (distance < 10) {
-                        errors.add("Levenshtein distance of " + cryptogram + " is " + distance + " to " + otherCryptogram);
+                        errors.add("Levenshtein distance of " + puzzle + " is " + distance + " to " + otherPuzzle);
                     }
                 }
                 if (CryptogramView.ENABLE_HYPHENATION) {
-                    for (String word : cryptogram.getWords()) {
+                    for (String word : puzzle.getWords()) {
                         word = word.replaceAll("[^a-zA-Z\u00AD\\-]", "");
                         for (String wordPart : word.split("[\u00AD\\-]")) {
                             if (wordPart.length() > 8) {
-                                errors.add("Contains word of length >8 without hyphen or soft-hyphen ('\u00AD'): '" + word + "' in " + cryptogram);
+                                errors.add("Contains word of length >8 without hyphen or soft-hyphen ('\u00AD'): '" + word + "' in " + puzzle);
                             }
                         }
                     }
                 }
             }
-            if (!cryptogram.isInstruction()) {
+            if (!puzzle.isInstruction()) {
                 // Ensure there's an author
                 if (author == null || author.trim().length() == 0) {
-                    errors.add("No author: " + cryptogram);
+                    errors.add("No author: " + puzzle);
                 }
             }
             if (author != null && author.contains("[^\\s\\w]")) {
@@ -138,7 +138,7 @@ public class CryptogramTest {
             if (topic != null && topic.contains("[^\\s\\w]")) {
                 errors.add("Contains invalid character in topic");
             }
-            hashes.put(id, cryptogram);
+            hashes.put(id, puzzle);
         }
         if (errors.size() > 0) {
             for (int i = 0; i < Math.min(10, errors.size()); i++) {
@@ -154,13 +154,13 @@ public class CryptogramTest {
     @Test
     public void hyphenation() {
         if (CryptogramView.ENABLE_HYPHENATION) {
-            Cryptogram cryptogram = CryptogramProvider.getInstance(null).get(0);
+            Puzzle puzzle = PuzzleProvider.getInstance(null).get(0);
             int lineWidthInChars = 12;
             for (int i = 0; i < lineWidthInChars; i++) {
                 System.out.print('=');
             }
             System.out.println();
-            for (String wordPart : cryptogram.getWordsForLineWidth(lineWidthInChars)) {
+            for (String wordPart : puzzle.getWordsForLineWidth(lineWidthInChars)) {
                 System.out.println(wordPart);
             }
         }
