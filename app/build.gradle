@@ -46,8 +46,8 @@ android {
         applicationId "com.pixplicity.cryptogram"
         minSdkVersion 14
         targetSdkVersion 25
-        versionCode 176
-        versionName "1.7.3"
+        versionCode 177
+        versionName "1.7.4"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
     }
     buildTypes {
@@ -103,8 +103,10 @@ dependencies {
 
     compile 'com.google.android.gms:play-services-games:11.0.1'
 
+    compile 'com.google.firebase:firebase-database:11.0.1'
+
     compile 'com.jakewharton:butterknife:8.6.0'
-    annotationProcessor  'com.jakewharton:butterknife-compiler:8.6.0'
+    annotationProcessor 'com.jakewharton:butterknife-compiler:8.6.0'
 
     compile 'com.afollestad:easyvideoplayer:0.2.13'
 
@@ -124,7 +126,7 @@ dependencies {
     compile 'com.getkeepsafe.taptargetview:taptargetview:1.9.1'
 
     compile('com.crashlytics.sdk.android:crashlytics:2.6.7@aar') {
-        transitive = true;
+        transitive = true
     }
 
     androidTestCompile('com.android.support.test.espresso:espresso-core:2.2.2', {
@@ -138,3 +140,5 @@ dependencies {
     testCompile 'org.powermock:powermock-module-junit4-rule:1.6.6'
     testCompile 'org.powermock:powermock-module-junit4:1.6.6'
 }
+
+apply plugin: 'com.google.gms.google-services'
