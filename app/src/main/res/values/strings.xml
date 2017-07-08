@@ -85,6 +85,7 @@
 
     <string name="go_to_puzzle_content">Please enter the puzzle number to go to:</string>
 
+    <!-- Google Play Games -->
     <string name="google_play_games_welcome">Sign in to Google Play Games to track your progress and achievements</string>
     <string name="google_play_games_sign_in">Sign in…</string>
     <string name="google_play_games_leaderboards">Leaderboard</string>
@@ -94,6 +95,21 @@
     <string name="google_play_games_connection_failure">Uh, oh! Looks like we can\'t reach Google Play Games at the moment.\n\nPlease try again later or report this problem (connection failure with code %1$d-%2$d) through the about screen.</string>
     <string name="google_play_games_not_installed">Google Play Games doesn\'t appear to be installed</string>
 
+    <!-- Contribute -->
+    <string name="contribute"><![CDATA[Suggest & review]]></string>
+    <string name="contribute_suggest">Suggest a puzzle</string>
+    <string name="contribute_suggest_description">Got an inspirational quote, funny play on words or some other bit of text that players would enjoy uncovering?</string>
+    <string name="contribute_review">Review puzzles</string>
+    <string name="contribute_review_description">Help determine which contributed puzzles are fun to play! With your feedback, you\'ll help determine the difficulty level.</string>
+
+    <string name="hint_puzzle_text">Puzzle text</string>
+    <string name="hint_puzzle_author">Puzzle author</string>
+    <string name="hint_puzzle_topic">Puzzle topic</string>
+    <string name="language">Language:</string>
+    <string name="explicit_content">Explicit or otherwise inappropriate for children</string>
+    <string name="submission_agreement">I understand that I won\'t get credit for my suggestions</string>
+    <string name="submit_suggestion">Submit this suggestion</string>
+
     <!-- Settings -->
     <string name="theme">Theme:</string>
     <string name="randomize_puzzles">Randomize puzzles</string>
@@ -101,6 +117,7 @@
     <string name="show_topic">Show puzzle topics</string>
     <string name="auto_advance">Advance to next cell when filled</string>
 
+    <!-- About -->
     <string name="feedback">Send feedback</string>
     <string name="made_with_love_by">MADE WITH LOVE BY</string>
     <string name="pixplicity">Pixplicity</string>

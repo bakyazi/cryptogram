@@ -95,16 +95,23 @@
         app:showAsAction="never"/>
 
     <item
+        android:id="@+id/action_contribute"
+        android:icon="@drawable/ic_contribute_review"
+        android:orderInCategory="310"
+        android:title="@string/contribute"
+        app:showAsAction="never"/>
+
+    <item
         android:id="@+id/action_settings"
         android:icon="@drawable/ic_settings"
-        android:orderInCategory="310"
+        android:orderInCategory="315"
         android:title="@string/settings"
         app:showAsAction="never"/>
 
     <item
         android:id="@+id/action_about"
         android:icon="@drawable/ic_info"
-        android:orderInCategory="310"
+        android:orderInCategory="320"
         android:title="@string/about"
         app:showAsAction="never"/>
 

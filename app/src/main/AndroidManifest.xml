@@ -23,10 +23,13 @@
         </activity>
 
         <activity
-            android:name=".activities.AboutActivity"/>
+            android:name=".activities.ContributeActivity"/>
 
         <activity
             android:name=".activities.SettingsActivity"/>
+
+        <activity
+            android:name=".activities.AboutActivity"/>
 
         <receiver android:name=".utils.NotificationPublisher" />
 

@@ -4,6 +4,7 @@ import android.content.Context;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 
+import com.google.firebase.database.Exclude;
 import com.google.gson.annotations.SerializedName;
 import com.pixplicity.cryptogram.CryptogramApp;
 import com.pixplicity.cryptogram.R;
@@ -16,8 +17,6 @@ import java.util.HashMap;
 import java.util.LinkedList;
 
 public class Puzzle {
-
-    protected boolean mIsMock;
 
     @SerializedName("id")
     protected int mId;
@@ -40,12 +39,47 @@ public class Puzzle {
     @SerializedName("noscore")
     protected boolean mNoScore;
 
+    @Exclude
     private transient String[] mWords;
 
-    private PuzzleProgress mProgress;
-    private boolean mLoadedProgress;
+    @Exclude
+    protected transient boolean mIsMock;
+
+    @Exclude
+    private transient PuzzleProgress mProgress;
+
+    @Exclude
+    private transient boolean mLoadedProgress;
 
     public Puzzle() {
+    }
+
+
+    public static class Suggestion extends Puzzle {
+
+        @SuppressWarnings("unused")
+        public Suggestion() {
+            // Empty constructor for Firebase
+        }
+
+        public Suggestion(String text, String author, String topic) {
+            mText = text;
+            mAuthor = author;
+            mTopic = topic;
+        }
+
+        public void setText(String text) {
+            mText = text;
+        }
+
+        public void setAuthor(String author) {
+            mAuthor = author;
+        }
+
+        public void setTopic(String topic) {
+            mTopic = topic;
+        }
+
     }
 
     public static class Mock extends Puzzle {
@@ -55,8 +89,8 @@ public class Puzzle {
          */
         public Mock() {
             this("Bright vixens jump; dozy fowl quack.",
-                    "Paul Lammertsma",
-                    "Other");
+                 "Paul Lammertsma",
+                 "Other");
         }
 
         public Mock(String text, String author, String topic) {
@@ -97,6 +131,9 @@ public class Puzzle {
     }
 
     public String getText() {
+        if (mText == null) {
+            mText = "";
+        }
         return mText;
     }
 
@@ -108,6 +145,7 @@ public class Puzzle {
         return mTopic;
     }
 
+    @Exclude
     @NonNull
     public String[] getWords() {
         if (mWords == null) {
@@ -120,6 +158,7 @@ public class Puzzle {
         return mWords;
     }
 
+    @Exclude
     @NonNull
     public String[] getWordsForLineWidth(int lineWidthInChars) {
         LinkedList<String> wordParts = new LinkedList<>();
@@ -131,6 +170,7 @@ public class Puzzle {
         return wordParts.toArray(new String[wordParts.size()]);
     }
 
+    @Exclude
     public PuzzleProgress getProgress() {
         // Ensure we've attempted to load the data
         load();
@@ -140,19 +180,23 @@ public class Puzzle {
         return mProgress;
     }
 
+    @Exclude
     @NonNull
     public HashMap<Character, Character> getCharMapping() {
         return getProgress().getCharMapping(this);
     }
 
+    @Exclude
     public ArrayList<Character> getCharacterList() {
         return getProgress().getCharacterList(this);
     }
 
+    @Exclude
     public Character getCharacterForMapping(char mappedChar) {
         return getCharMapping().get(mappedChar);
     }
 
+    @Exclude
     public Character getMappedCharacter(char inputChar) {
         HashMap<Character, Character> charMapping = getCharMapping();
         for (Character character : charMapping.keySet()) {
@@ -163,19 +207,23 @@ public class Puzzle {
         return null;
     }
 
+    @Exclude
     public Collection<Character> getUserChars() {
         return getProgress().getUserChars(this);
     }
 
+    @Exclude
     public Character getUserChar(char c) {
         return getProgress().getUserChar(this, c);
     }
 
+    @Exclude
     public void setUserChar(char selectedCharacter, char c) {
         getProgress().setUserChar(this, selectedCharacter, c);
         save();
     }
 
+    @Exclude
     public boolean hasUserChars() {
         for (Character c : getUserChars()) {
             if (c != null && c != 0) {
@@ -185,27 +233,33 @@ public class Puzzle {
         return false;
     }
 
+    @Exclude
     public boolean isInputChar(char c) {
         return (c >= 'a' && c <= 'z') || (c >= 'A' && c <= 'Z');
     }
 
+    @Exclude
     public boolean isInstruction() {
         return mId < 0;
     }
 
+    @Exclude
     public boolean isCompleted() {
         return getProgress().isCompleted(this);
     }
 
+    @Exclude
     public boolean isNoScore() {
         return mNoScore;
     }
 
+    @Exclude
     @Nullable
     public String getGiven() {
         return mGiven;
     }
 
+    @Exclude
     public boolean isGiven(char matchChar) {
         if (mGiven != null) {
             for (int j = 0; j < mGiven.length(); j++) {
@@ -247,10 +301,12 @@ public class Puzzle {
         return getProgress().isRevealed(c);
     }
 
+    @Exclude
     public int getReveals() {
         return getProgress().getReveals();
     }
 
+    @Exclude
     public int getExcessCount() {
         return getProgress().getExcessCount(this);
     }
@@ -258,6 +314,7 @@ public class Puzzle {
     /**
      * Returns the duration of the user's play time on this puzzle in milliseconds.
      */
+    @Exclude
     public long getDuration() {
         if (isNoScore()) {
             // Don't measure the duration for puzzles with given characters
@@ -266,6 +323,7 @@ public class Puzzle {
         return getProgress().getDuration();
     }
 
+    @Exclude
     @Nullable
     public Float getScore() {
         if (isInstruction()) {
@@ -274,10 +332,12 @@ public class Puzzle {
         return getProgress().getScore(this);
     }
 
+    @Exclude
     public void setHadHints(boolean hadHints) {
         getProgress().setHadHints(hadHints);
     }
 
+    @Exclude
     public boolean hadHints() {
         return getProgress().hadHints();
     }

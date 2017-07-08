@@ -721,7 +721,7 @@ public class CryptogramActivity extends BaseActivity implements GoogleApiClient.
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_cryptogram, menu);
+        getMenuInflater().inflate(R.menu.menu_main, menu);
         {
             MenuItem item = menu.findItem(R.id.action_randomize);
             item.setChecked(PrefsUtils.getRandomize());
@@ -1045,6 +1045,10 @@ public class CryptogramActivity extends BaseActivity implements GoogleApiClient.
                             }
                         })
                         .show();
+            }
+            return true;
+            case R.id.action_contribute: {
+                startActivity(ContributeActivity.create(this, ContributeActivity.MODE_SELECT));
             }
             return true;
             case R.id.action_settings: {

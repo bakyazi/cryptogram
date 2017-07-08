@@ -18,8 +18,12 @@ public class Database {
         mDbPuzzles = database.getReference("puzzles");
     }
 
-    public DatabaseReference getPuzzles() {
+    private DatabaseReference getPuzzles() {
         return mDbPuzzles;
+    }
+
+    public DatabaseReference getSuggestions() {
+        return getPuzzles().child("suggestions");
     }
 
 }
