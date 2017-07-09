@@ -35,6 +35,7 @@
                 android:layout_height="wrap_content"
                 android:gravity="bottom"
                 android:hint="@string/hint_puzzle_text"
+                android:inputType="text|textCapSentences|textMultiLine"
                 android:lines="4"/>
 
             <android.support.v7.widget.AppCompatEditText
@@ -43,6 +44,7 @@
                 android:layout_height="wrap_content"
                 android:gravity="bottom"
                 android:hint="@string/hint_puzzle_author"
+                android:inputType="text|textPersonName"
                 android:lines="1"
                 android:maxLines="1"/>
 
@@ -52,6 +54,7 @@
                 android:layout_height="wrap_content"
                 android:gravity="bottom"
                 android:hint="@string/hint_puzzle_topic"
+                android:inputType="text|textCapWords"
                 android:lines="1"
                 android:maxLines="1"/>
 

@@ -11,6 +11,7 @@
         android:layout_weight="1"/>
 
     <TextView
+        android:id="@+id/tv_suggest"
         style="@style/InfoTextView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -36,6 +37,7 @@
         android:layout_weight="1"/>
 
     <TextView
+        android:id="@+id/tv_review"
         style="@style/InfoTextView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
