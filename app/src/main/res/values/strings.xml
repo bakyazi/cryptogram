@@ -100,7 +100,7 @@
     <string name="contribute_suggest">Suggest a puzzle</string>
     <string name="contribute_suggest_description">Got an inspirational quote, funny play on words or some other bit of text that players would enjoy uncovering?</string>
     <string name="contribute_review">Review puzzles</string>
-    <string name="contribute_review_description">Help determine which contributed puzzles are fun to play! With your feedback, you\'ll help determine the difficulty level.</string>
+    <string name="contribute_review_description">Help decide which contributed puzzles are fun to play! With your feedback, you\'ll also determine the difficulty level.</string>
 
     <string name="hint_puzzle_text">Puzzle text</string>
     <string name="hint_puzzle_author">Puzzle author</string>
