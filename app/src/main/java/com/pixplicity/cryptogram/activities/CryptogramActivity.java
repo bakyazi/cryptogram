@@ -200,7 +200,6 @@ public class CryptogramActivity extends BaseActivity implements GoogleApiClient.
                 .setFeedbackAction(Uri.parse("mailto:paul@pixplicity.com"))
                 .build();
 
-        mRvDrawer.setLayoutManager(new LinearLayoutManager(this));
         mAdapter = new PuzzleAdapter(this, new PuzzleAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(int position) {

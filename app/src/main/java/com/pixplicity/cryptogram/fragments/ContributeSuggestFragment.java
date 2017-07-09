@@ -4,6 +4,9 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
@@ -13,7 +16,6 @@ import com.pixplicity.cryptogram.models.Puzzle;
 import com.pixplicity.cryptogram.utils.Database;
 
 import butterknife.BindView;
-import butterknife.OnClick;
 
 
 public class ContributeSuggestFragment extends BaseFragment {
@@ -45,8 +47,24 @@ public class ContributeSuggestFragment extends BaseFragment {
         return inflater.inflate(R.layout.fragment_contribute_suggest, container, false);
     }
 
-    @OnClick(R.id.bt_submit)
-    protected void onClickSubmit() {
+    @Override
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+        inflater.inflate(R.menu.menu_suggest, menu);
+        super.onCreateOptionsMenu(menu, inflater);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.action_feedback: {
+                onSubmit();
+            }
+            return true;
+        }
+        return super.onOptionsItemSelected(item);
+    }
+
+    private void onSubmit() {
         Puzzle puzzle = new Puzzle.Suggestion(
                 mEtText.getText().toString(),
                 mEtAuthor.getText().toString(),

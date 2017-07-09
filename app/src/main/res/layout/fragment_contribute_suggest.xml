@@ -64,15 +64,4 @@
 
     </ScrollView>
 
-    <android.support.v7.widget.AppCompatCheckBox
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="@string/submission_agreement"/>
-
-    <android.support.v7.widget.AppCompatButton
-        android:id="@+id/bt_submit"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="@string/submit_suggestion"/>
-
 </LinearLayout>

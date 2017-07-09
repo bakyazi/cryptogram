@@ -1,6 +1,7 @@
 package com.pixplicity.cryptogram.adapters;
 
 import android.content.Context;
+import android.support.annotation.Nullable;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -10,81 +11,104 @@ import android.widget.TextView;
 
 import com.pixplicity.cryptogram.R;
 import com.pixplicity.cryptogram.models.Puzzle;
-import com.pixplicity.cryptogram.utils.PuzzleProvider;
 import com.pixplicity.cryptogram.utils.PrefsUtils;
+import com.pixplicity.cryptogram.utils.PuzzleProvider;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
 public class PuzzleAdapter extends RecyclerView.Adapter<PuzzleAdapter.ViewHolder> {
 
-    private static final int TYPE_NORMAL = 0;
-    private static final int TYPE_SELECTED = 1;
+    protected static final int TYPE_NORMAL = 0;
+    protected static final int TYPE_SELECTED = 1;
 
     private final Context mContext;
     private final OnItemClickListener mOnItemClickListener;
-    private Puzzle[] mPuzzles;
+    protected Puzzle[] mPuzzles;
 
     private boolean mDarkTheme = PrefsUtils.getDarkTheme();
 
     public PuzzleAdapter(Context context, OnItemClickListener onItemClickListener) {
         mContext = context;
         mOnItemClickListener = onItemClickListener;
-
-        PuzzleProvider provider = PuzzleProvider.getInstance(mContext);
-        mPuzzles = provider.getAll();
     }
 
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        int layoutResId;
-        switch (viewType) {
-            default:
-            case TYPE_NORMAL:
-                if (mDarkTheme) {
-                    layoutResId = R.layout.item_puzzle_dark;
-                } else {
-                    layoutResId = R.layout.item_puzzle;
-                }
-                break;
-            case TYPE_SELECTED:
-                if (mDarkTheme) {
-                    layoutResId = R.layout.item_puzzle_selected_dark;
-                } else {
-                    layoutResId = R.layout.item_puzzle_selected;
-                }
-                break;
-        }
         return new ViewHolder(LayoutInflater.from(parent.getContext())
-                                            .inflate(layoutResId, parent, false));
+                                            .inflate(getLayoutResId(viewType), parent, false));
+    }
+
+    protected int getLayoutResId(int viewType) {
+        switch (viewType) {
+            case TYPE_NORMAL:
+                if (isDarkTheme()) {
+                    return R.layout.item_puzzle_dark;
+                } else {
+                    return R.layout.item_puzzle;
+                }
+            case TYPE_SELECTED:
+                if (isDarkTheme()) {
+                    return R.layout.item_puzzle_selected_dark;
+                } else {
+                    return R.layout.item_puzzle_selected;
+                }
+        }
+        throw new IllegalStateException("Unexpected view type " + viewType);
+    }
+
+    protected boolean isDarkTheme() {
+        return mDarkTheme;
     }
 
     @Override
     public int getItemViewType(int position) {
-        if (PuzzleProvider.getInstance(mContext).getCurrentIndex() == position) {
+        if (getSelection() == position) {
             return TYPE_SELECTED;
         }
         return TYPE_NORMAL;
     }
 
+    protected int getSelection() {
+        return PuzzleProvider.getInstance(mContext).getCurrentIndex();
+    }
+
     @Override
     public void onBindViewHolder(ViewHolder vh, int position) {
-        Puzzle puzzle = mPuzzles[position];
-        vh.setPosition(position);
-        vh.tvPuzzleId.setText(puzzle.getTitle(mContext));
-        String author = puzzle.getAuthor();
-        if (author == null) {
-            vh.tvAuthor.setVisibility(View.GONE);
-        } else {
-            vh.tvAuthor.setVisibility(View.VISIBLE);
-            vh.tvAuthor.setText(author);
+        Puzzle[] puzzles = getPuzzles();
+        if (puzzles != null) {
+            Puzzle puzzle = puzzles[position];
+            vh.setPosition(position);
+            vh.tvPuzzleId.setText(puzzle.getTitle(mContext));
+            String author = puzzle.getAuthor();
+            if (author == null) {
+                vh.tvAuthor.setVisibility(View.GONE);
+            } else {
+                vh.tvAuthor.setVisibility(View.VISIBLE);
+                vh.tvAuthor.setText(author);
+            }
+            vh.ivCompleted.setVisibility(puzzle.isCompleted() ? View.VISIBLE : View.GONE);
         }
-        vh.ivCompleted.setVisibility(puzzle.isCompleted() ? View.VISIBLE : View.GONE);
     }
 
     @Override
     public int getItemCount() {
-        return mPuzzles.length;
+        Puzzle[] puzzles = getPuzzles();
+        if (puzzles == null) {
+            return 0;
+        }
+        return puzzles.length;
+    }
+
+    public void setPuzzles(@Nullable Puzzle[] puzzles) {
+        throw new IllegalStateException("This implementation obtains puzzles from the PuzzleProvider");
+    }
+
+    @Nullable
+    public Puzzle[] getPuzzles() {
+        PuzzleProvider provider = PuzzleProvider.getInstance(mContext);
+        mPuzzles = provider.getAll();
+        return mPuzzles;
     }
 
     public interface OnItemClickListener {

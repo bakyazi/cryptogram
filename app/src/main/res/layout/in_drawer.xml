@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <merge xmlns:android="http://schemas.android.com/apk/res/android"
+       xmlns:app="http://schemas.android.com/apk/res-auto"
        xmlns:tools="http://schemas.android.com/tools">
 
     <LinearLayout
@@ -8,8 +9,8 @@
         android:layout_gravity="start"
         android:background="?attr/colorPrimary"
         android:orientation="vertical"
-        tools:visibility="gone"
-        tools:layout_gravity="">
+        tools:layout_gravity=""
+        tools:visibility="gone">
 
         <RelativeLayout
             android:id="@+id/vg_google_play_games"
@@ -117,7 +118,8 @@
             android:id="@+id/rv_drawer"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:scrollbars="vertical"/>
+            android:scrollbars="vertical"
+            app:layoutManager="android.support.v7.widget.LinearLayoutManager"/>
 
     </LinearLayout>
 
