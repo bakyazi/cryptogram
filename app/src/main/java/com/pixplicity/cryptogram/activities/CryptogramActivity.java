@@ -1,5 +1,6 @@
 package com.pixplicity.cryptogram.activities;
 
+import android.app.Activity;
 import android.content.ActivityNotFoundException;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -77,7 +78,8 @@ import java.util.concurrent.TimeUnit;
 import butterknife.BindView;
 import butterknife.OnClick;
 
-public class CryptogramActivity extends BaseActivity implements GoogleApiClient.ConnectionCallbacks, GoogleApiClient.OnConnectionFailedListener {
+public class CryptogramActivity extends BaseActivity implements
+        GoogleApiClient.ConnectionCallbacks, GoogleApiClient.OnConnectionFailedListener {
 
     private static final String TAG = CryptogramActivity.class.getSimpleName();
 
@@ -261,6 +263,12 @@ public class CryptogramActivity extends BaseActivity implements GoogleApiClient.
                 startActivity(SettingsActivity.create(this));
             }
         }
+    }
+
+    @NonNull
+    @Override
+    protected Class<? extends Activity> getHierarchicalParent() {
+        return CryptogramActivity.class;
     }
 
     @Override

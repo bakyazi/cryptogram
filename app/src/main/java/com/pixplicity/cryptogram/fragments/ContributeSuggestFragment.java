@@ -56,7 +56,7 @@ public class ContributeSuggestFragment extends BaseFragment {
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
-            case R.id.action_feedback: {
+            case R.id.action_submit: {
                 onSubmit();
             }
             return true;

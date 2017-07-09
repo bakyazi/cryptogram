@@ -18,24 +18,31 @@ import java.util.LinkedList;
 
 public class Puzzle {
 
+    @Exclude
     @SerializedName("id")
     protected int mId;
 
+    @Exclude
     @SerializedName("number")
     protected Integer mNumber;
 
+    @Exclude
     @SerializedName("text")
     protected String mText;
 
+    @Exclude
     @SerializedName("author")
     protected String mAuthor;
 
+    @Exclude
     @SerializedName("topic")
     protected String mTopic;
 
+    @Exclude
     @SerializedName("given")
     protected String mGiven;
 
+    @Exclude
     @SerializedName("noscore")
     protected boolean mNoScore;
 

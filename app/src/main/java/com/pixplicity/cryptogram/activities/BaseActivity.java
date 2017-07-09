@@ -1,5 +1,6 @@
 package com.pixplicity.cryptogram.activities;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.content.res.Configuration;
 import android.os.Build;
@@ -178,7 +179,7 @@ public abstract class BaseActivity extends AppCompatActivity {
         }
         switch (item.getItemId()) {
             case android.R.id.home: {
-                Intent up = new Intent(BaseActivity.this, CryptogramActivity.class);
+                Intent up = new Intent(BaseActivity.this, getHierarchicalParent());
                 if (NavUtils.shouldUpRecreateTask(BaseActivity.this, up)) {
                     TaskStackBuilder.create(BaseActivity.this)
                                     .addNextIntent(up)
@@ -192,6 +193,9 @@ public abstract class BaseActivity extends AppCompatActivity {
         }
         return super.onOptionsItemSelected(item);
     }
+
+    @NonNull
+    protected abstract Class<? extends Activity> getHierarchicalParent();
 
     public boolean isDarkTheme() {
         return mDarkTheme;
