@@ -110,6 +110,8 @@
     <string name="hint_puzzle_topic">Puzzle topic</string>
     <string name="language">Language:</string>
     <string name="explicit_content">Explicit or otherwise inappropriate for children</string>
+    <string name="error_min_characters">The %1$s must be at least %2$d characters.</string>
+    <string name="error_max_characters">The %1$s must be at most %2$d characters.</string>
     <string name="submit_puzzle">Submit</string>
     <string name="submitting_puzzle">Submitting…</string>
 

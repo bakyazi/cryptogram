@@ -80,15 +80,15 @@ public class ContributeSuggestFragment extends BaseFragment {
 
     private void onSubmit() {
         String text = mEtText.getText().toString();
-        if (!confirmLength(text, "Puzzle text", 10, 200)) {
+        if (!confirmLength(text, "puzzle text", 10, 200)) {
             return;
         }
         String author = mEtAuthor.getText().toString();
-        if (!confirmLength(author, "Puzzle author", 3, 40)) {
+        if (!confirmLength(author, "puzzle author", 3, 40)) {
             return;
         }
         String topic = mEtTopic.getText().toString();
-        if (!confirmLength(topic, "Puzzle topic", 3, 40)) {
+        if (!confirmLength(topic, "puzzle topic", 3, 40)) {
             return;
         }
         final ProgressDialog pd = new ProgressDialog(getContext());
@@ -125,11 +125,11 @@ public class ContributeSuggestFragment extends BaseFragment {
 
     private boolean confirmLength(String text, String fieldName, int min, int max) {
         if (text.length() < min) {
-            showError(fieldName + " must be at least " + min + " characters.");
+            showError(getString(R.string.error_min_characters, fieldName, min));
             return false;
         }
         if (text.length() > max) {
-            showError(fieldName + " must be at most " + max + " characters.");
+            showError(getString(R.string.error_max_characters, fieldName, min));
             return false;
         }
         return true;
