@@ -15,6 +15,7 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.pixplicity.cryptogram.CryptogramApp;
 import com.pixplicity.cryptogram.R;
+import com.pixplicity.cryptogram.events.SubmissionEvent;
 import com.pixplicity.cryptogram.fragments.ContributeFragment;
 import com.pixplicity.cryptogram.fragments.ContributeReviewFragment;
 import com.pixplicity.cryptogram.fragments.ContributeSuggestFragment;
@@ -87,6 +88,11 @@ public class ContributeActivity extends BaseActivity {
         // Check if user is signed in (non-null) and update UI accordingly
         FirebaseUser currentUser = mAuth.getCurrentUser();
         updateUI(currentUser);
+    }
+
+    @Subscribe
+    public void onSubmissionEvent(SubmissionEvent event) {
+        finish();
     }
 
     private void updateUI(FirebaseUser user) {

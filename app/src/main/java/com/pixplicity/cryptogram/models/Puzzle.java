@@ -47,6 +47,10 @@ public class Puzzle {
     protected boolean mNoScore;
 
     @Exclude
+    @SerializedName("explicit")
+    protected boolean mIsExplicit;
+
+    @Exclude
     private transient String[] mWords;
 
     @Exclude
@@ -69,10 +73,11 @@ public class Puzzle {
             // Empty constructor for Firebase
         }
 
-        public Suggestion(String text, String author, String topic) {
+        public Suggestion(String text, String author, String topic, boolean isExplicit) {
             mText = text;
             mAuthor = author;
             mTopic = topic;
+            mIsExplicit = isExplicit;
         }
 
         public void setText(String text) {
@@ -150,6 +155,10 @@ public class Puzzle {
 
     public String getTopic() {
         return mTopic;
+    }
+
+    public boolean isExplicit() {
+        return mIsExplicit;
     }
 
     @Exclude

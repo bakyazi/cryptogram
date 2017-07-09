@@ -1,7 +1,10 @@
 package com.pixplicity.cryptogram.fragments;
 
+import android.app.ProgressDialog;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -9,11 +12,16 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.CheckBox;
 import android.widget.EditText;
 
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.pixplicity.cryptogram.R;
+import com.pixplicity.cryptogram.events.SubmissionEvent;
 import com.pixplicity.cryptogram.models.Puzzle;
 import com.pixplicity.cryptogram.utils.Database;
+import com.pixplicity.cryptogram.utils.EventProvider;
 
 import butterknife.BindView;
 
@@ -21,6 +29,9 @@ import butterknife.BindView;
 public class ContributeSuggestFragment extends BaseFragment {
 
     private static final String TAG = ContributeSuggestFragment.class.getSimpleName();
+
+    @BindView(R.id.vg_root)
+    protected ViewGroup mVgRoot;
 
     @BindView(R.id.et_text)
     protected EditText mEtText;
@@ -30,6 +41,9 @@ public class ContributeSuggestFragment extends BaseFragment {
 
     @BindView(R.id.et_topic)
     protected EditText mEtTopic;
+
+    @BindView(R.id.cb_explicit)
+    protected CheckBox mCbExplicit;
 
     public static Fragment create() {
         return new ContributeSuggestFragment();
@@ -65,14 +79,61 @@ public class ContributeSuggestFragment extends BaseFragment {
     }
 
     private void onSubmit() {
+        String text = mEtText.getText().toString();
+        if (!confirmLength(text, "Puzzle text", 10, 200)) {
+            return;
+        }
+        String author = mEtAuthor.getText().toString();
+        if (!confirmLength(author, "Puzzle author", 3, 40)) {
+            return;
+        }
+        String topic = mEtTopic.getText().toString();
+        if (!confirmLength(topic, "Puzzle topic", 3, 40)) {
+            return;
+        }
+        final ProgressDialog pd = new ProgressDialog(getContext());
+        pd.setIndeterminate(true);
+        pd.setMessage(getString(R.string.submitting_puzzle));
+        pd.show();
         Puzzle puzzle = new Puzzle.Suggestion(
-                mEtText.getText().toString(),
-                mEtAuthor.getText().toString(),
-                mEtTopic.getText().toString());
+                text,
+                author,
+                topic,
+                mCbExplicit.isChecked());
         Database.getInstance()
                 .getSuggestions()
                 .push()
-                .setValue(puzzle);
+                .setValue(puzzle)
+                .addOnSuccessListener(new OnSuccessListener<Void>() {
+                    @Override
+                    public void onSuccess(Void aVoid) {
+                        pd.dismiss();
+                        EventProvider.postEvent(new SubmissionEvent());
+                    }
+                })
+                .addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        pd.dismiss();
+                        showError(e.getMessage());
+                    }
+                });
+    }
+
+    private boolean confirmLength(String text, String fieldName, int min, int max) {
+        if (text.length() < min) {
+            showError(fieldName + " must be at least " + min + " characters.");
+            return false;
+        }
+        if (text.length() > max) {
+            showError(fieldName + " must be at most " + max + " characters.");
+            return false;
+        }
+        return true;
+    }
+
+    private void showError(String message) {
+        Snackbar.make(mVgRoot, message, Snackbar.LENGTH_SHORT).show();
     }
 
 }

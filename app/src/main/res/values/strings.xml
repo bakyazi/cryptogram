@@ -110,8 +110,8 @@
     <string name="hint_puzzle_topic">Puzzle topic</string>
     <string name="language">Language:</string>
     <string name="explicit_content">Explicit or otherwise inappropriate for children</string>
-    <string name="submission_agreement">I understand that I won\'t get credit for my suggestions</string>
-    <string name="submit_suggestion">Submit</string>
+    <string name="submit_puzzle">Submit</string>
+    <string name="submitting_puzzle">Submitting…</string>
 
     <!-- Settings -->
     <string name="theme">Theme:</string>
