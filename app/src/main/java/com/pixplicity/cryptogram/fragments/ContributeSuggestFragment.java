@@ -94,12 +94,15 @@ public class ContributeSuggestFragment extends BaseFragment {
         final ProgressDialog pd = new ProgressDialog(getContext());
         pd.setIndeterminate(true);
         pd.setMessage(getString(R.string.submitting_puzzle));
+        pd.setCancelable(false);
         pd.show();
+        // Create the puzzle
         Puzzle puzzle = new Puzzle.Suggestion(
                 text,
                 author,
                 topic,
                 mCbExplicit.isChecked());
+        // Submit it
         Database.getInstance()
                 .getSuggestions()
                 .push()
