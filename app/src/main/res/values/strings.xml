@@ -38,7 +38,8 @@
     <string name="never_ask_again">Never ask again</string>
     <string name="reset_dialogs">Reset all suppressed  dialogs</string>
 
-    <string name="error_no_puzzles">Whoops! Looks like we couldn’t load the puzzle.</string>
+    <string name="error_bad_puzzle">Whoops! Looks like we couldn’t load the puzzle.</string>
+    <string name="error_no_puzzles">Whoops! Looks like we couldn’t load the puzzles.</string>
 
     <string name="puzzle_number_instruction">Instructional puzzle</string>
     <string name="puzzle_number_practice">Puzzle #%1$d (practice)</string>

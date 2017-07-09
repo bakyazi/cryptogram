@@ -5,15 +5,14 @@ import android.support.annotation.Nullable;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ProgressBar;
 
+import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
-import com.google.firebase.database.ValueEventListener;
 import com.pixplicity.cryptogram.R;
 import com.pixplicity.cryptogram.adapters.PuzzleAdapter;
 import com.pixplicity.cryptogram.adapters.SuggestionsAdapter;
@@ -48,24 +47,53 @@ public class ContributeReviewFragment extends BaseFragment {
         super.onCreate(savedInstanceState);
         setHasOptionsMenu(true);
 
-        Database.getInstance().getSuggestions().addValueEventListener(new ValueEventListener() {
+        Database.getInstance().getSuggestions().addChildEventListener(new ChildEventListener() {
             @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
-                // This method is called once with the initial value and again
-                // whenever data at this location is updated.
+            public void onChildAdded(DataSnapshot dataSnapshot, String s) {
                 mPuzzlesLoaded = true;
-                for (DataSnapshot puzzles : dataSnapshot.getChildren()) {
-                    Puzzle.Suggestion puzzle = puzzles.getValue(Puzzle.Suggestion.class);
-                    Log.d(TAG, "Value is: " + puzzle);
+                Puzzle.Suggestion puzzle = dataSnapshot.getValue(Puzzle.Suggestion.class);
+                if (puzzle != null) {
+                    puzzle.setFirebaseId(dataSnapshot.getKey());
                     mPuzzleList.add(puzzle);
                 }
                 updateAdapter();
             }
 
             @Override
-            public void onCancelled(DatabaseError error) {
+            public void onChildChanged(DataSnapshot dataSnapshot, String s) {
+                Puzzle.Suggestion puzzle = dataSnapshot.getValue(Puzzle.Suggestion.class);
+                if (puzzle != null) {
+                    puzzle.setFirebaseId(dataSnapshot.getKey());
+                    for (int i = 0; i < mPuzzleList.size(); i++) {
+                        if (puzzle.equals(mPuzzleList.get(i))) {
+                            mPuzzleList.remove(i);
+                            mPuzzleList.add(i, puzzle);
+                        }
+                    }
+                }
+                updateAdapter();
+            }
+
+            @Override
+            public void onChildRemoved(DataSnapshot dataSnapshot) {
+                Puzzle.Suggestion puzzle = dataSnapshot.getValue(Puzzle.Suggestion.class);
+                if (puzzle != null) {
+                    puzzle.setFirebaseId(dataSnapshot.getKey());
+                    mPuzzleList.remove(puzzle);
+                }
+                updateAdapter();
+            }
+
+            @Override
+            public void onChildMoved(DataSnapshot dataSnapshot, String s) {
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
                 // Failed to read value
-                Log.w(TAG, "Failed to read value.", error.toException());
+                mPuzzlesLoaded = true;
+                Snackbar.make(mRvPuzzles, R.string.error_no_puzzles, Snackbar.LENGTH_SHORT).show();
+                updateAdapter();
             }
         });
     }

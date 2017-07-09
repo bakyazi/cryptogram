@@ -23,6 +23,9 @@ public class Puzzle {
     protected int mId;
 
     @Exclude
+    protected transient String mFirebaseId;
+
+    @Exclude
     @SerializedName("number")
     protected Integer mNumber;
 
@@ -51,6 +54,10 @@ public class Puzzle {
     protected boolean mIsExplicit;
 
     @Exclude
+    @SerializedName("language")
+    protected String mLanguage;
+
+    @Exclude
     private transient String[] mWords;
 
     @Exclude
@@ -73,10 +80,11 @@ public class Puzzle {
             // Empty constructor for Firebase
         }
 
-        public Suggestion(String text, String author, String topic, boolean isExplicit) {
+        public Suggestion(String text, String author, String topic, String language, boolean isExplicit) {
             mText = text;
             mAuthor = author;
             mTopic = topic;
+            mLanguage = language;
             mIsExplicit = isExplicit;
         }
 
@@ -122,6 +130,14 @@ public class Puzzle {
         mId = id;
     }
 
+    public String getFirebaseId() {
+        return mFirebaseId;
+    }
+
+    public void setFirebaseId(String firebaseId) {
+        mFirebaseId = firebaseId;
+    }
+
     public int getNumber() {
         if (mNumber == null) {
             return mId + 1;
@@ -142,6 +158,7 @@ public class Puzzle {
         return context.getString(R.string.puzzle_number, getNumber());
     }
 
+    @SuppressWarnings("unused")
     public String getText() {
         if (mText == null) {
             mText = "";
@@ -149,16 +166,24 @@ public class Puzzle {
         return mText;
     }
 
+    @SuppressWarnings("unused")
     public String getAuthor() {
         return mAuthor;
     }
 
+    @SuppressWarnings("unused")
     public String getTopic() {
         return mTopic;
     }
 
+    @SuppressWarnings("unused")
     public boolean isExplicit() {
         return mIsExplicit;
+    }
+
+    @SuppressWarnings("unused")
+    public String getLanguage() {
+        return mLanguage;
     }
 
     @Exclude
@@ -386,6 +411,32 @@ public class Puzzle {
         if (!mIsMock) {
             PuzzleProvider.getInstance(CryptogramApp.getInstance()).setProgress(getProgress());
         }
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) {
+            return true;
+        }
+        if (!(o instanceof Puzzle)) {
+            return false;
+        }
+
+        Puzzle puzzle = (Puzzle) o;
+
+        if (mId != puzzle.mId) {
+            return false;
+        }
+        return mFirebaseId != null
+                ? mFirebaseId.equals(puzzle.mFirebaseId)
+                : puzzle.mFirebaseId == null;
+    }
+
+    @Override
+    public int hashCode() {
+        int result = mId;
+        result = 31 * result + (mFirebaseId != null ? mFirebaseId.hashCode() : 0);
+        return result;
     }
 
     @Override

@@ -91,6 +91,9 @@ public class ContributeSuggestFragment extends BaseFragment {
         if (!confirmLength(topic, "puzzle topic", 3, 40)) {
             return;
         }
+        // TODO
+        String language = null;
+        // Show progress
         final ProgressDialog pd = new ProgressDialog(getContext());
         pd.setIndeterminate(true);
         pd.setMessage(getString(R.string.submitting_puzzle));
@@ -101,6 +104,7 @@ public class ContributeSuggestFragment extends BaseFragment {
                 text,
                 author,
                 topic,
+                language,
                 mCbExplicit.isChecked());
         // Submit it
         Database.getInstance()
