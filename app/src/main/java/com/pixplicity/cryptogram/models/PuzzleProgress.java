@@ -224,13 +224,22 @@ public class PuzzleProgress {
         return getUserCharsMapping(puzzle).get(c);
     }
 
-    public synchronized void setUserChar(@NonNull Puzzle puzzle, char selectedCharacter, char c) {
+    /**
+     * Sets a selected hint to a character.
+     * @return If the character was changed from a previous assignment; i.e. 'corrected' by the user.
+     */
+    public synchronized boolean setUserChar(@NonNull Puzzle puzzle, char selectedCharacter, char c) {
+        boolean changed = false;
         Character previousChar = getUserCharsMapping(puzzle).get(selectedCharacter);
         if (previousChar == null) {
             previousChar = 0;
         }
         char userChar = Character.toUpperCase(c);
         if (previousChar != userChar && userChar != 0) {
+            if (previousChar != 0) {
+                // User made a correction
+                changed = true;
+            }
             if (mInputs == null) {
                 mInputs = 1;
             } else {
@@ -238,6 +247,7 @@ public class PuzzleProgress {
             }
         }
         getUserCharsMapping(puzzle).put(selectedCharacter, userChar);
+        return changed;
     }
 
     public synchronized int getExcessCount(@NonNull Puzzle puzzle) {
