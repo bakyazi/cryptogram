@@ -396,11 +396,11 @@ public class CryptogramActivity extends BaseActivity implements GoogleApiClient.
                             }
 
                             private void dismiss(TapTargetView view) {
-                                if (System.currentTimeMillis() - showTime >= 2000) {
+                                if (System.currentTimeMillis() - showTime >= 1500) {
                                     // Ensure that the user saw the message
                                     PrefsUtils.setHighlighted(type, true);
-                                    view.dismiss(false);
                                 }
+                                view.dismiss(false);
                             }
                         });
             }
