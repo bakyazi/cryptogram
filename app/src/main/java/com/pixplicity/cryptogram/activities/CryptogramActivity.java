@@ -620,9 +620,8 @@ public class CryptogramActivity extends BaseActivity implements GoogleApiClient.
                 mToolbar.setSubtitle(puzzle.getTitle(this));
             } else {
                 mToolbar.setSubtitle(getString(
-                        R.string.puzzle_number_of_total,
-                        puzzle.getNumber(),
-                        provider.getLastNumber()));
+                        R.string.puzzle_number,
+                        puzzle.getNumber()));
             }
             // Invoke various events
             onCryptogramUpdated(puzzle);
