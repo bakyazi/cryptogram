@@ -6,6 +6,7 @@ import android.content.ContextWrapper;
 import com.crashlytics.android.Crashlytics;
 import com.pixplicity.easyprefs.library.Prefs;
 
+import butterknife.ButterKnife;
 import io.fabric.sdk.android.Fabric;
 
 

@@ -20,7 +20,7 @@ import android.view.inputmethod.InputConnection;
 import android.view.inputmethod.InputMethodManager;
 
 import com.pixplicity.cryptogram.R;
-import com.pixplicity.cryptogram.models.Cryptogram;
+import com.pixplicity.cryptogram.models.Puzzle;
 import com.pixplicity.cryptogram.utils.PrefsUtils;
 
 import java.util.ArrayList;
@@ -35,7 +35,7 @@ public class CryptogramView extends android.support.v7.widget.AppCompatTextView 
     public static final boolean ENABLE_HYPHENATION = false;
 
     @Nullable
-    private Cryptogram mCryptogram;
+    private Puzzle mPuzzle;
 
     private char mSelectedCharacter, mSelectedCharacterLast, mSelectedCharacterBeforeTouch;
     private boolean mHighlightMistakes;
@@ -49,7 +49,7 @@ public class CryptogramView extends android.support.v7.widget.AppCompatTextView 
 
     private boolean mDarkTheme;
 
-    private OnCryptogramProgressListener mOnCryptogramProgressListener;
+    private OnPuzzleProgressListener mOnPuzzleProgressListener;
     private OnHighlightListener mOnHighlightListener;
     private char[][] mCharMap;
 
@@ -135,7 +135,7 @@ public class CryptogramView extends android.support.v7.widget.AppCompatTextView 
         mCharW1 = bounds.width();
 
         if (isInEditMode()) {
-            setCryptogram(new Cryptogram());
+            setPuzzle(new Puzzle());
         }
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
@@ -157,7 +157,7 @@ public class CryptogramView extends android.support.v7.widget.AppCompatTextView 
     }
 
     public void showSoftInput() {
-        if (mCryptogram != null && !mCryptogram.isCompleted()) {
+        if (mPuzzle != null && !mPuzzle.isCompleted()) {
             InputMethodManager inputMethodManager = (InputMethodManager) getContext().getSystemService(Context.INPUT_METHOD_SERVICE);
             if (inputMethodManager != null) {
                 inputMethodManager.showSoftInput(this, InputMethodManager.SHOW_IMPLICIT);
@@ -180,27 +180,7 @@ public class CryptogramView extends android.support.v7.widget.AppCompatTextView 
                 return super.onKeyUp(keyCode, event);
             case KeyEvent.KEYCODE_ENTER:
             case KeyEvent.KEYCODE_NAVIGATE_NEXT:
-                if (mCryptogram != null) {
-                    ArrayList<Character> charMapping = mCryptogram.getCharacterList();
-                    int index = 0;
-                    if (mSelectedCharacter == 0) {
-                        mSelectedCharacter = mSelectedCharacterLast;
-                    }
-                    if (mSelectedCharacter != 0) {
-                        index = charMapping.indexOf(mSelectedCharacter) + 1;
-                    }
-                    if (index >= charMapping.size()) {
-                        index = 0;
-                    }
-                    if (charMapping.size() > index) {
-                        char c = charMapping.get(index);
-                        setSelectedCharacter(mCryptogram.getCharMapping().get(c));
-                    } else {
-                        setSelectedCharacter((char) 0);
-                    }
-                } else {
-                    setSelectedCharacter((char) 0);
-                }
+                selectNextCharacter();
                 return true;
         }
         if (onKeyPress((char) event.getUnicodeChar())) {
@@ -209,11 +189,41 @@ public class CryptogramView extends android.support.v7.widget.AppCompatTextView 
         return super.onKeyUp(keyCode, event);
     }
 
-    public boolean onKeyPress(char c) {
-        if (mCryptogram != null && !mCryptogram.isCompleted()) {
-            if (setUserChar(getSelectedCharacter(), c)) {
-                // Answer filled in; clear the selection
+    private void selectNextCharacter() {
+        if (mPuzzle != null) {
+            ArrayList<Character> charMapping = mPuzzle.getCharacterList();
+            int index = 0;
+            if (mSelectedCharacter == 0) {
+                mSelectedCharacter = mSelectedCharacterLast;
+            }
+            if (mSelectedCharacter != 0) {
+                index = charMapping.indexOf(mSelectedCharacter) + 1;
+            }
+            if (index >= charMapping.size()) {
+                index = 0;
+            }
+            if (charMapping.size() > index) {
+                char c = charMapping.get(index);
+                setSelectedCharacter(mPuzzle.getCharMapping().get(c));
+            } else {
                 setSelectedCharacter((char) 0);
+            }
+        } else {
+            setSelectedCharacter((char) 0);
+        }
+    }
+
+    public boolean onKeyPress(char c) {
+        if (mPuzzle != null && !mPuzzle.isCompleted()) {
+            if (setUserChar(getSelectedCharacter(), c)) {
+                // User filled this cell
+                if (mPuzzle.isInputChar(c) && PrefsUtils.getAutoAdvance()) {
+                    // Automatically advance to the next character
+                    selectNextCharacter();
+                } else {
+                    // Clear the selection
+                    setSelectedCharacter((char) 0);
+                }
             } else {
                 // Make a selection
                 setSelectedCharacter(c);
@@ -241,12 +251,12 @@ public class CryptogramView extends android.support.v7.widget.AppCompatTextView 
     }
 
     @Nullable
-    public Cryptogram getCryptogram() {
-        return mCryptogram;
+    public Puzzle getPuzzle() {
+        return mPuzzle;
     }
 
-    public void setCryptogram(@Nullable Cryptogram cryptogram) {
-        mCryptogram = cryptogram;
+    public void setPuzzle(@Nullable Puzzle puzzle) {
+        mPuzzle = puzzle;
         mSelectedCharacter = mSelectedCharacterLast = 0;
         requestLayout();
     }
@@ -260,7 +270,7 @@ public class CryptogramView extends android.support.v7.widget.AppCompatTextView 
     }
 
     public void setSelectedCharacter(char c) {
-        if (mCryptogram == null || mCryptogram.isCompleted()) {
+        if (mPuzzle == null || mPuzzle.isCompleted()) {
             mSelectedCharacter = 0;
             return;
         }
@@ -268,9 +278,9 @@ public class CryptogramView extends android.support.v7.widget.AppCompatTextView 
         mHighlightMistakes = false;
         // Character does not occur in the mapping
         mSelectedCharacter = 0;
-        if (mCryptogram.isInputChar(c)) {
+        if (mPuzzle.isInputChar(c)) {
             c = Character.toUpperCase(c);
-            HashMap<Character, Character> charMapping = mCryptogram.getCharMapping();
+            HashMap<Character, Character> charMapping = mPuzzle.getCharMapping();
             for (Character chrOrig : charMapping.keySet()) {
                 Character chrMapped = charMapping.get(chrOrig);
                 if (chrMapped == c) {
@@ -288,29 +298,26 @@ public class CryptogramView extends android.support.v7.widget.AppCompatTextView 
         // Stop highlighting mistakes
         mHighlightMistakes = false;
         // Map the currently selected character to what the user inputs
-        if (selectedChar != 0 && mCryptogram != null) {
-            if (mCryptogram.isRevealed(selectedChar)) {
+        if (selectedChar != 0 && mPuzzle != null) {
+            if (mPuzzle.isRevealed(selectedChar)) {
                 // This character was already revealed; don't allow the user to alter it
-                mCryptogram.setUserChar(selectedChar, selectedChar);
+                mPuzzle.setUserChar(selectedChar, selectedChar);
                 return true;
             }
-            boolean wasCompleted = mCryptogram.isCompleted();
-            boolean progressChange = wasCompleted;
-            if (mCryptogram.isInputChar(userChar)) {
+            // Check for completion state
+            mPuzzle.isCompleted();
+            if (mPuzzle.isInputChar(userChar)) {
                 // Enter the user's mapping
-                mCryptogram.setUserChar(selectedChar, Character.toUpperCase(userChar));
-                if (mCryptogram.isCompleted()) {
-                    if (!wasCompleted) {
-                        progressChange = true;
-                    }
+                mPuzzle.setUserChar(selectedChar, Character.toUpperCase(userChar));
+                if (mPuzzle.isCompleted()) {
                     hideSoftInput();
                 }
             } else {
                 // Clear it
-                mCryptogram.setUserChar(selectedChar, (char) 0);
+                mPuzzle.setUserChar(selectedChar, (char) 0);
             }
-            if (mOnCryptogramProgressListener != null) {
-                mOnCryptogramProgressListener.onCryptogramProgress(mCryptogram);
+            if (mOnPuzzleProgressListener != null) {
+                mOnPuzzleProgressListener.onPuzzleProgress(mPuzzle);
             }
             invalidate();
             return true;
@@ -319,8 +326,8 @@ public class CryptogramView extends android.support.v7.widget.AppCompatTextView 
     }
 
     public void revealCharacterMapping(char c) {
-        if (mCryptogram != null) {
-            mCryptogram.reveal(c);
+        if (mPuzzle != null) {
+            mPuzzle.reveal(c);
         }
         if (setUserChar(c, c)) {
             // Answer revealed; clear the selection
@@ -329,11 +336,11 @@ public class CryptogramView extends android.support.v7.widget.AppCompatTextView 
     }
 
     public void revealMistakes() {
-        if (mCryptogram == null) {
+        if (mPuzzle == null) {
             return;
         }
         if (!mHighlightMistakes) {
-            mCryptogram.revealedMistakes();
+            mPuzzle.revealedMistakes();
             mHighlightMistakes = true;
         }
         invalidate();
@@ -369,7 +376,7 @@ public class CryptogramView extends android.support.v7.widget.AppCompatTextView 
         int desiredHeight = 0;
         int height;
 
-        if (mCryptogram != null) {
+        if (mPuzzle != null) {
             float offsetY = mBoxH / 4;
             float y = drawOrMeasure(width, null);
             desiredHeight = (int) (y + mBoxH + offsetY * 2);
@@ -394,7 +401,7 @@ public class CryptogramView extends android.support.v7.widget.AppCompatTextView 
     protected void onDraw(Canvas canvas) {
         super.onDraw(canvas);
 
-        if (mCryptogram == null) {
+        if (mPuzzle == null) {
             // Nothing to do
             return;
         }
@@ -403,18 +410,18 @@ public class CryptogramView extends android.support.v7.widget.AppCompatTextView 
     }
 
     private float drawOrMeasure(float width, @Nullable Canvas canvas) {
-        if (mCryptogram == null) {
+        if (mPuzzle == null) {
             return 0;
         }
         HashMap<Character, Character> charMapping;
         if (isInEditMode()) {
             charMapping = null;
         } else {
-            charMapping = mCryptogram.getCharMapping();
+            charMapping = mPuzzle.getCharMapping();
         }
 
         boolean completed = false;
-        if (!isInEditMode() && mCryptogram.isCompleted()) {
+        if (!isInEditMode() && mPuzzle.isCompleted()) {
             completed = true;
         }
         TextPaint textPaintUser = completed ? mTextPaintInputComplete : mTextPaintInput;
@@ -427,7 +434,7 @@ public class CryptogramView extends android.support.v7.widget.AppCompatTextView 
 
         float offsetX1 = (mBoxW - mCharW1) / 4;
         float x = 0, y = mBoxH;
-        for (String word : mCryptogram.getWords()) {
+        for (String word : mPuzzle.getWords()) {
             String displayWord = word.replace(SOFT_HYPHEN, "");
             if (!ENABLE_HYPHENATION) {
                 word = displayWord;
@@ -495,7 +502,7 @@ public class CryptogramView extends android.support.v7.widget.AppCompatTextView 
     private float drawWord(@Nullable Canvas canvas, HashMap<Character, Character> charMapping,
                            TextPaint textPaintUser, Paint linePaint, float offsetX,
                            float x, float y, String word) {
-        if (canvas == null || mCryptogram == null) {
+        if (canvas == null || mPuzzle == null) {
             return x + mBoxW * word.length();
         }
         for (int i = 0; i < word.length(); i++) {
@@ -519,10 +526,10 @@ public class CryptogramView extends android.support.v7.widget.AppCompatTextView 
                     }
                 }
             }
-            if (mCryptogram.isRevealed(c)) {
+            if (mPuzzle.isRevealed(c)) {
                 // This box has already been revealed to the user
                 canvas.drawLine(x + offsetX, y + mBoxPadding, x + mBoxW - offsetX, y + mBoxPadding, mLinePaint2);
-            } else if (mCryptogram.isInputChar(c)) {
+            } else if (mPuzzle.isInputChar(c)) {
                 // This is a box the user has to fill to complete the puzzle
                 canvas.drawLine(x + offsetX, y + mBoxPadding, x + mBoxW - offsetX, y + mBoxPadding, linePaint);
                 c = getUserInput(c);
@@ -530,7 +537,7 @@ public class CryptogramView extends android.support.v7.widget.AppCompatTextView 
             if (c > 0) {
                 TextPaint textPaint = textPaintUser;
                 if (mHighlightMistakes) {
-                    Character correctMapping = mCryptogram.getCharacterForMapping(c);
+                    Character correctMapping = mPuzzle.getCharacterForMapping(c);
                     if (mappedChar != correctMapping) {
                         textPaint = mTextPaintMistake;
                     }
@@ -549,8 +556,8 @@ public class CryptogramView extends android.support.v7.widget.AppCompatTextView 
     public boolean onTouchEvent(MotionEvent event) {
         switch (event.getAction()) {
             case MotionEvent.ACTION_DOWN:
-                if (mCryptogram != null) {
-                    Character characterForMapping = mCryptogram.getCharacterForMapping(mSelectedCharacter);
+                if (mPuzzle != null) {
+                    Character characterForMapping = mPuzzle.getCharacterForMapping(mSelectedCharacter);
                     mSelectedCharacterBeforeTouch = characterForMapping == null
                             ? 0 : characterForMapping;
                 }
@@ -582,8 +589,8 @@ public class CryptogramView extends android.support.v7.widget.AppCompatTextView 
     }
 
     private char getUserInput(char c) {
-        if (mCryptogram != null) {
-            Character input = mCryptogram.getUserChar(c);
+        if (mPuzzle != null) {
+            Character input = mPuzzle.getUserChar(c);
             if (input != null) {
                 return input;
             }
@@ -591,18 +598,18 @@ public class CryptogramView extends android.support.v7.widget.AppCompatTextView 
         return 0;
     }
 
-    public void setOnCryptogramProgressListener(
-            OnCryptogramProgressListener onCryptogramProgressListener) {
-        mOnCryptogramProgressListener = onCryptogramProgressListener;
+    public void setOnPuzzleProgressListener(
+            OnPuzzleProgressListener onPuzzleProgressListener) {
+        mOnPuzzleProgressListener = onPuzzleProgressListener;
     }
 
     public void setOnHighlightListener(OnHighlightListener onHighlightListener) {
         mOnHighlightListener = onHighlightListener;
     }
 
-    public interface OnCryptogramProgressListener {
+    public interface OnPuzzleProgressListener {
 
-        void onCryptogramProgress(Cryptogram cryptogram);
+        void onPuzzleProgress(Puzzle puzzle);
 
     }
 

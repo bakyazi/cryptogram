@@ -12,7 +12,9 @@ public class PrefsUtils {
     private static final String KEY_RANDOMIZE = "randomize";
     private static final String KEY_ONBOARDING = "onboarding";
     private static final String KEY_SHOW_HINTS = "show_hints";
+    private static final String KEY_SHOW_TOPIC = "show_topic";
     private static final String KEY_DARK_THEME = "dark_theme";
+    private static final String KEY_AUTO_ADVANCE = "auto_advance";
     private static final String KEY_NEVER_ASK_REVEAL_LETTER = "never_ask_reveal_letter";
     private static final String KEY_NEVER_ASK_REVEAL_MISTAKES = "never_ask_reveal_mistakes";
     private static final String KEY_HIGHLIGHTED_HYPHENATION = "highlighted_hyphenation";
@@ -68,6 +70,14 @@ public class PrefsUtils {
         Prefs.putBoolean(KEY_SHOW_HINTS, show);
     }
 
+    public static boolean getShowTopic() {
+        return Prefs.getBoolean(KEY_SHOW_TOPIC, true);
+    }
+
+    public static void setShowTopic(boolean show) {
+        Prefs.putBoolean(KEY_SHOW_TOPIC, show);
+    }
+
     public static void setDarkTheme(boolean theme) {
         Prefs.putBoolean(KEY_DARK_THEME, theme);
     }
@@ -75,6 +85,15 @@ public class PrefsUtils {
     public static boolean getDarkTheme() {
         return Prefs.getBoolean(KEY_DARK_THEME, false);
     }
+
+    public static boolean getAutoAdvance() {
+        return Prefs.getBoolean(KEY_AUTO_ADVANCE, false);
+    }
+
+    public static void setAutoAdvance(boolean show) {
+        Prefs.putBoolean(KEY_AUTO_ADVANCE, show);
+    }
+
 
     public static void setNeverAskRevealMistakes(boolean neverAsk) {
         Prefs.putBoolean(KEY_NEVER_ASK_REVEAL_MISTAKES, neverAsk);

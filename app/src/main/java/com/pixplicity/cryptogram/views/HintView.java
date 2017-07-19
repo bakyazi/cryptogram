@@ -13,7 +13,7 @@ import android.util.AttributeSet;
 import android.widget.TextView;
 
 import com.pixplicity.cryptogram.R;
-import com.pixplicity.cryptogram.models.Cryptogram;
+import com.pixplicity.cryptogram.models.Puzzle;
 
 import java.util.Collection;
 
@@ -23,7 +23,7 @@ public class HintView extends TextView {
     private static final String TAG = HintView.class.getSimpleName();
 
     @Nullable
-    private Cryptogram mCryptogram;
+    private Puzzle mPuzzle;
 
     private float mBoxW, mCharH, mCharW;
     private TextPaint mTextPaint;
@@ -69,17 +69,17 @@ public class HintView extends TextView {
         mCharH = bounds.height();
 
         if (isInEditMode()) {
-            setCryptogram(new Cryptogram());
+            setPuzzle(new Puzzle());
         }
     }
 
     @Nullable
-    public Cryptogram getCryptogram() {
-        return mCryptogram;
+    public Puzzle getPuzzle() {
+        return mPuzzle;
     }
 
-    public void setCryptogram(Cryptogram cryptogram) {
-        mCryptogram = cryptogram;
+    public void setPuzzle(Puzzle puzzle) {
+        mPuzzle = puzzle;
         requestLayout();
     }
 
@@ -145,8 +145,8 @@ public class HintView extends TextView {
 
         int desiredHeight = getPaddingTop();
 
-        if (mCryptogram != null) {
-            Collection<Character> userChars = mCryptogram.getUserChars();
+        if (mPuzzle != null) {
+            Collection<Character> userChars = mPuzzle.getUserChars();
             // Compute the height that works for this width
             float offsetY = mCharH / 2;
             float offsetX = (boxW / 2) - (mCharW / 2);

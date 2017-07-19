@@ -2756,7 +2756,7 @@
     "topic": "Love"
   },
   {
-    "text": "There is no greater sorrow then to recall our times of joy in wretchedness.",
+    "text": "There is no greater sorrow than to recall our times of joy in wretchedness.",
     "author": "Dante Alighieri",
     "topic": "Sorrow"
   },
@@ -2969,9 +2969,9 @@
     "topic": "Motivational"
   },
   {
-    "text": "It ain’t what you don’t know that gets you into trouble. It’s what you know for sure that just ain’t so.",
-    "author": "Mark Twain",
-    "topic": "Truth"
+    "text": "I honestly believe it is better to know nothing than to know what ain’t so.",
+    "author": "Josh Billings",
+    "topic": "Knowledge"
   },
   {
     "text": "In the end, always laugh. And do not lose this strange habit of having faith in life.",
@@ -3134,7 +3134,7 @@
     "topic": "Inspirational"
   },
   {
-    "text": "One day, you'll be just a memory for some people. Do your best to be a good one.",
+    "text": "One day, you’ll be just a memory for some people. Do your best to be a good one.",
     "author": "Anonymous",
     "topic": "Inspirational"
   },
@@ -3144,9 +3144,9 @@
     "topic": "Inspirational"
   },
   {
-    "text": "If you were born with the ability to change someone’s perspective or emotions, never waste that gift.",
-    "author": "Shannon L. Alder",
-    "topic": "Altruism"
+    "text": "Of all forms of caution, caution in love is perhaps the most fatal to true happiness.",
+    "author": "Bertrand Russell",
+    "topic": "Happiness"
   },
   {
     "text": "I slept and I dreamed that life is all joy. I woke and I saw that life is all service. I served and I saw that service is joy.",
@@ -3164,7 +3164,7 @@
     "topic": "Altruism"
   },
   {
-    "text": "Loving others is the greatest gift we can give ourselves. Altruism that rewards one's self.",
+    "text": "Loving others is the greatest gift we can give ourselves. Altruism that rewards one’s self.",
     "author": "Allan Lokos",
     "topic": "Altruism"
   },
@@ -3184,7 +3184,7 @@
     "topic": "Altruism"
   },
   {
-    "text": "Making the choice to exercise compassion is an expression of Love for Humanity and Life itself.",
+    "text": "Making the choice to exercise compassion is an expression of love for humanity and life itself.",
     "author": "Aberjhani",
     "topic": "Compassion"
   },
@@ -3204,7 +3204,7 @@
     "topic": "Compassion"
   },
   {
-    "text": "I am driven by two main philosophies: know more today about the world than I knew yesterday and lessen the suffering of others. You'd be surprised how far that gets you.",
+    "text": "I am driven by two main philosophies: know more today about the world than I knew yesterday and lessen the suffering of others. You’d be surprised how far that gets you.",
     "author": "Neil deGrasse Tyson",
     "topic": "Compassion"
   },
@@ -3256,7 +3256,7 @@
     "topic": "Science"
   },
   {
-    "text": "There's real poetry in the real world. Science is the poetry of reality.",
+    "text": "There’s real poetry in the real world. Science is the poetry of reality.",
     "author": "Richard Dawkins",
     "topic": "Science"
   },
@@ -3271,7 +3271,7 @@
     "topic": "Science"
   },
   {
-    "text": "If you were born with the ability to change someone’s perspective or emotions, never waste that gift. It is one of the most powerful gifts—the ability to influence.",
+    "text": "If you were born with the ability to change someone’s perspective or emotions, never waste that gift. It is one of the most powerful gifts — the ability to influence.",
     "author": "Shannon L. Alder",
     "topic": "Inspirational"
   },
@@ -3281,7 +3281,7 @@
     "topic": "Reasoning"
   },
   {
-    "text": "Here is a thing about equality: everyone's equal when they're dead.",
+    "text": "Here is a thing about equality: everyone’s equal when they’re dead.",
     "author": "Gavroche Thénardier (Les Miserables)",
     "topic": "Equality"
   },
@@ -3306,7 +3306,7 @@
     "topic": "Discrimination"
   },
   {
-    "text": "Race, gender, religion, sexuality, we are all people and that's it. We're all people. We're all equal.",
+    "text": "Race, gender, religion, sexuality, we are all people and that’s it. We’re all people. We’re all equal.",
     "author": "Connor Franta",
     "topic": "Discrimination"
   },
@@ -3316,8 +3316,276 @@
     "topic": "Discrimination"
   },
   {
-    "text": "",
-    "author": "",
-    "topic": "Discrimination"
+    "text": "An eye for an eye will only make the whole world blind.",
+    "author": "Mahatma Gandhi",
+    "topic": "Violence",
+    "given": "A"
+  },
+  {
+    "text": "Violence is a disease, a disease that corrupts all who use it regardless of the cause.",
+    "author": "Chris Hedges",
+    "topic": "Violence"
+  },
+  {
+    "text": "Thou shalt not be a victim, thou shalt not be a perpetrator, but, above all, thou shalt not be a bystander.",
+    "author": "Yehuda Bauer",
+    "topic": "Violence",
+    "given": "OU"
+  },
+  {
+    "text": "I object to violence because when it appears to do good, the good is only temporary; the evil it does is permanent.",
+    "author": "Mahatma Gandhi",
+    "topic": "Violence"
+  },
+  {
+    "text": "Every man has his secret sorrows which the world knows not; and often times we call a man cold when he is only sad.",
+    "author": "Henry Wadsworth Longfellow",
+    "topic": "Sorrow"
+  },
+  {
+    "text": "Heaven knows we need never be ashamed of our tears, for they are rain upon the blinding dust of earth, overlying our hard hearts.",
+    "author": "Charles Dickens",
+    "topic": "Sorrow"
+  },
+  {
+    "text": "Some of you say, “Joy is greater than sorrow,” and others say, “Nay, sorrow is the greater.” But I say unto you, they are inseparable. Together they come, and when one sits alone with you at your board, remember that the other is asleep upon your bed.",
+    "author": "Kahlil Gibran",
+    "topic": "Sorrow"
+  },
+  {
+    "text": "Solitude has soft, silky hands, but with strong fingers it grasps the heart and makes it ache with sorrow.",
+    "author": "Kahlil Gibran",
+    "topic": "Sorrow"
+  },
+  {
+    "text": "Parting is such sweet sorrow that I shall say goodnight till it be morrow.",
+    "author": "William Shakespeare",
+    "topic": "Sorrow"
+  },
+  {
+    "text": "Given the choice between the experience of pain and nothing, I would choose pain.",
+    "author": "William Faulkner",
+    "topic": "Sorrow"
+  },
+  {
+    "text": "Sorrow comes in great waves… but rolls over us, and though it may almost smother us, it leaves us. And we know that if it is strong, we are stronger, inasmuch as it passes and we remain.",
+    "author": "Henry James",
+    "topic": "Sorrow"
+  },
+  {
+    "text": "There’s a sorrow and pain in everyone’s life, but every now and then there’s a ray of light that melts the loneliness in your heart and brings comfort like hot soup and a soft bed.",
+    "author": "Hubert Selby Jr.",
+    "topic": "Sorrow"
+  },
+  {
+    "text": "Love is that condition in which the happiness of another person is essential to your own.",
+    "author": "Robert A. Heinlein",
+    "topic": "Love"
+  },
+  {
+    "text": "For every minute you are angry you lose sixty seconds of happiness.",
+    "author": "Ralph Waldo Emerson",
+    "topic": "Happiness"
+  },
+  {
+    "text": "Folks are usually about as happy as they make their minds up to be.",
+    "author": "Abraham Lincoln",
+    "topic": "Happiness"
+  },
+  {
+    "text": "It’s so hard to forget pain, but it’s even harder to remember sweetness. We have no scar to show for happiness. We learn so little from peace.",
+    "author": "Chuck Palahniuk",
+    "topic": "Happiness"
+  },
+  {
+    "text": "Happiness is when what you think, what you say, and what you do are in harmony.",
+    "author": "Mahatma Gandhi",
+    "topic": "Happiness"
+  },
+  {
+    "text": "You will never be happy if you continue to search for what happiness consists of. You will never live if you are looking for the meaning of life.",
+    "author": "Albert Camus",
+    "topic": "Happiness"
+  },
+  {
+    "text": "Happiness is the consequence of personal effort. You fight for it, strive for it, insist upon it, and sometimes even travel around the world looking for it.",
+    "author": "Elizabeth Gilbert",
+    "topic": "Happiness"
+  },
+  {
+    "text": "Success is getting what you want, happiness is wanting what you get.",
+    "author": "W.P. Kinsella",
+    "topic": "Happiness"
+  },
+  {
+    "text": "Let us be grateful to the people who make us happy; they are the charming gardeners who make our souls blossom.",
+    "author": "Marcel Proust",
+    "topic": "Happiness"
+  },
+  {
+    "text": "It isn’t what you have or who you are or where you are or what you are doing that makes you happy or unhappy. It is what you think about it.",
+    "author": "Dale Carnegie",
+    "topic": "Happiness"
+  },
+  {
+    "text": "I think and think and think, I‘ve thought myself out of happiness one million times, but never once into it.",
+    "author": "Jonathan Safran Foer",
+    "topic": "Happiness"
+  },
+  {
+    "text": "Hope smiles from the threshold of the year to come, whispering “it will be happier”.",
+    "author": "Alfred Tennyson",
+    "topic": "Happiness",
+    "given": "H"
+  },
+  {
+    "text": "I slept and dreamt that life was joy. I awoke and saw that life was service. I acted and behold, service was joy.",
+    "author": "Rabindranath Tagore",
+    "topic": "Joy"
+  },
+  {
+    "text": "I don’t think of all the misery, but of the beauty that still remains.",
+    "author": "Anne Frank",
+    "topic": "Joy"
+  },
+  {
+    "text": "Sometimes your joy is the source of your smile, but sometimes your smile can be the source of your joy.",
+    "author": "Thich Nhat Hanh",
+    "topic": "Joy"
+  },
+  {
+    "text": "One can never consent to creep when one feels an impulse to soar.",
+    "author": "Helen Keller",
+    "topic": "Joy"
+  },
+  {
+    "text": "To get the full value of joy you must have someone to divide it with.",
+    "author": "Mark Twain",
+    "topic": "Joy"
+  },
+  {
+    "text": "If I can see pain in your eyes then share with me your tears. If I can see joy in your eyes then share with me your smile.",
+    "author": "Santosh Kalwar",
+    "topic": "Joy"
+  },
+  {
+    "text": "They say a person needs just three things to be truly happy in this world: someone to love, something to do, and something to hope for.",
+    "author": "Tom Bodett",
+    "topic": "Joy"
+  },
+  {
+    "text": "It is not for me to judge another man’s life. I must judge, I must choose, I must spurn, purely for myself. For myself, alone.",
+    "author": "Hermann Hesse",
+    "topic": "Humility"
+  },
+  {
+    "text": "The smallest act of kindness is worth more than the greatest intention.",
+    "author": "Kahlil Gibran",
+    "topic": "Kindness"
+  },
+  {
+    "text": "We choose our joys and sorrows long before we experience them.",
+    "author": "Kahlil Gibran",
+    "topic": "Life"
+  },
+  {
+    "text": "You talk when you cease to be at peace with your thoughts.",
+    "author": "Kahlil Gibran",
+    "topic": "Thoughtfulness"
+  },
+  {
+    "text": "Ever has it been that love knows not its own depth until the hour of separation.",
+    "author": "Kahlil Gibran",
+    "topic": "Sorrow"
+  },
+  {
+    "text": "Tenderness and kindness are not signs of weakness and despair, but manifestations of strength and resolution.",
+    "author": "Kahlil Gibran",
+    "topic": "Kindness"
+  },
+  {
+    "text": "I am ignorant of absolute truth. But I am humble before my ignorance and therein lies my honor and my reward.",
+    "author": "Kahlil Gibran",
+    "topic": "Truth"
+  },
+  {
+    "text": "Your pain is the breaking of the shell that encloses your understanding… And could you keep your heart in wonder at the daily miracles of your life, your pain would not seem less wondrous than your joy.",
+    "author": "Kahlil Gibran",
+    "topic": "Sorrow"
+  },
+  {
+    "text": "It is wrong to think that love comes from long companionship and persevering courtship. Love is the offspring of spiritual affinity and unless that affinity is created in a moment, it will not be created for years or even generations.",
+    "author": "Kahlil Gibran",
+    "topic": "Love"
+  },
+  {
+    "text": "If you have some respect for people as they are, you can be more effective in helping them to become better than they are.",
+    "author": "John W. Gardner",
+    "topic": "Respect"
+  },
+  {
+    "text": "It is not our purpose to become each other; it is to recognize each other, to learn to see the other and honor him for what he is: each the other’s opposite and complement.",
+    "author": "Hermann Hesse",
+    "topic": "Respect"
+  },
+  {
+    "text": "What would life be if we had no courage to attempt anything?",
+    "author": "Vincent van Gogh",
+    "topic": "Inaction"
+  },
+  {
+    "text": "The only man who never makes mistakes is the man who never does anything.",
+    "author": "Theodore Roosevelt",
+    "topic": "Inaction"
+  },
+  {
+    "text": "A person may cause evil to others not only by his actions but by his inaction, and in either case he is justly accountable to them for the injury.",
+    "author": "John Stuart Mill",
+    "topic": "Inaction"
+  },
+  {
+    "text": "There is always a strong case for doing nothing, especially for doing nothing yourself.",
+    "author": "Winston Churchill",
+    "topic": "Inaction"
+  },
+  {
+    "text": "Truth is incontrovertible. Panic may resent it, ignorance may deride it, malice may distort it, but there it is.",
+    "author": "Winston Churchill",
+    "topic": "Truth"
+  },
+  {
+    "text": "What is the use of living, if it be not to strive for noble causes and to make this muddled world a better place for those who will live in it after we are gone?",
+    "author": "Winston Churchill",
+    "topic": "Inspirational"
+  },
+  {
+    "text": "Behind every exquisite thing that existed, there was something tragic.",
+    "author": "Oscar Wilde",
+    "topic": "Appreciation"
+  },
+  {
+    "text": "Only the dead have seen the end of war.",
+    "author": "George Santayana",
+    "topic": "War"
+  },
+  {
+    "text": "History teaches us that men and nations behave wisely once they have exhausted all other alternatives.",
+    "author": "Abba Eban",
+    "topic": "War"
+  },
+  {
+    "text": "The statesman who yields to war fever must realise that once the signal is given, he is no longer the master of policy but the slave of unforeseeable and uncontrollable events.",
+    "author": "Winston Churchill",
+    "topic": "War"
+  },
+  {
+    "text": "If we open a quarrel between the past and the present, we shall find that we have lost the future.",
+    "author": "Winston Churchill",
+    "topic": "Future"
+  },
+  {
+    "text": "We must all turn our backs upon the horrors of the past. We must look to the future. We cannot afford to drag forward cross the years that are to come the hatreds and revenges which have sprung from the injuries of the past.",
+    "author": "Winston Churchill",
+    "topic": "Future"
   }
 ]

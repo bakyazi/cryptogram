@@ -7,7 +7,7 @@ import android.support.annotation.Nullable;
 import com.google.gson.annotations.SerializedName;
 import com.pixplicity.cryptogram.CryptogramApp;
 import com.pixplicity.cryptogram.R;
-import com.pixplicity.cryptogram.utils.CryptogramProvider;
+import com.pixplicity.cryptogram.utils.PuzzleProvider;
 import com.pixplicity.cryptogram.utils.StringUtils;
 
 import java.util.ArrayList;
@@ -15,7 +15,7 @@ import java.util.Collection;
 import java.util.HashMap;
 import java.util.LinkedList;
 
-public class Cryptogram {
+public class Puzzle {
 
     protected boolean mIsMock;
 
@@ -42,13 +42,13 @@ public class Cryptogram {
 
     private transient String[] mWords;
 
-    private CryptogramProgress mProgress;
+    private PuzzleProgress mProgress;
     private boolean mLoadedProgress;
 
-    public Cryptogram() {
+    public Puzzle() {
     }
 
-    public static class Mock extends Cryptogram {
+    public static class Mock extends Puzzle {
 
         /**
          * Creates a mock cryptogram.
@@ -131,11 +131,11 @@ public class Cryptogram {
         return wordParts.toArray(new String[wordParts.size()]);
     }
 
-    public CryptogramProgress getProgress() {
+    public PuzzleProgress getProgress() {
         // Ensure we've attempted to load the data
         load();
         if (mProgress == null) {
-            mProgress = new CryptogramProgress(this);
+            mProgress = new PuzzleProgress(this);
         }
         return mProgress;
     }
@@ -293,7 +293,7 @@ public class Cryptogram {
 
     private void load() {
         if (!mLoadedProgress && !mIsMock) {
-            mProgress = CryptogramProvider.getInstance(CryptogramApp.getInstance()).getProgress().get(mId);
+            mProgress = PuzzleProvider.getInstance(CryptogramApp.getInstance()).getProgress().get(mId);
             if (mProgress != null) {
                 mProgress.sanitize(this);
             }
@@ -308,7 +308,7 @@ public class Cryptogram {
 
     public void save() {
         if (!mIsMock) {
-            CryptogramProvider.getInstance(CryptogramApp.getInstance()).setProgress(getProgress());
+            PuzzleProvider.getInstance(CryptogramApp.getInstance()).setProgress(getProgress());
         }
     }
 

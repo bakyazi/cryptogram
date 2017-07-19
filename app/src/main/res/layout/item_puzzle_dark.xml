@@ -1,24 +1,39 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
+<RelativeLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:clickable="true"
+    android:focusable="true"
     android:foreground="@drawable/ripple_white"
     android:minHeight="48dp"
-    android:orientation="horizontal"
     android:paddingBottom="6dp"
     android:paddingLeft="16dp"
     android:paddingRight="16dp"
     android:paddingTop="6dp"
     tools:background="@color/colorDarkPrimaryDark">
 
+    <ImageView
+        android:id="@+id/iv_completed"
+        android:layout_width="24dp"
+        android:layout_height="24dp"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentRight="true"
+        android:layout_centerVertical="true"
+        android:layout_marginLeft="16dp"
+        android:layout_marginStart="16dp"
+        android:contentDescription="@string/puzzle_completed"
+        android:src="@drawable/ic_check"
+        android:visibility="gone"
+        tools:visibility="visible"/>
+
     <LinearLayout
-        android:layout_width="0dp"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_gravity="center_vertical"
-        android:layout_weight="1"
+        android:layout_centerVertical="true"
+        android:layout_toLeftOf="@id/iv_completed"
+        android:layout_toStartOf="@id/iv_completed"
         android:orientation="vertical">
 
         <TextView
@@ -44,16 +59,4 @@
 
     </LinearLayout>
 
-    <ImageView
-        android:id="@+id/iv_completed"
-        android:layout_width="24dp"
-        android:layout_height="24dp"
-        android:layout_gravity="center_vertical"
-        android:layout_marginLeft="16dp"
-        android:layout_marginStart="16dp"
-        android:contentDescription="@string/puzzle_completed"
-        android:src="@drawable/ic_check"
-        android:visibility="gone"
-        tools:visibility="visible"/>
-
-</LinearLayout>
+</RelativeLayout>

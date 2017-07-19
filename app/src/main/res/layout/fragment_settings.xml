@@ -1,9 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.v4.widget.NestedScrollView
+<ScrollView
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:layout_gravity="fill_vertical"
+    android:fillViewport="true">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -11,25 +13,91 @@
         android:orientation="vertical"
         android:padding="16dp">
 
+        <TextView
+            android:id="@+id/cb_dark_theme"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="8dp"
+            android:text="@string/theme"/>
+
+        <RadioGroup
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="16dp"
+            android:orientation="horizontal">
+
+            <RadioButton
+                android:id="@+id/rb_theme_light"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"/>
+
+            <ImageView
+                android:id="@+id/iv_theme_light"
+                android:layout_width="wrap_content"
+                android:layout_height="128dp"
+                android:paddingLeft="8dp"
+                android:paddingRight="8dp"
+                android:src="@drawable/im_theme_light"/>
+
+            <RadioButton
+                android:id="@+id/rb_theme_dark"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginLeft="16dp"
+                android:layout_marginStart="16dp"/>
+
+            <ImageView
+                android:id="@+id/iv_theme_dark"
+                android:layout_width="wrap_content"
+                android:layout_height="128dp"
+                android:paddingLeft="8dp"
+                android:paddingRight="8dp"
+                android:src="@drawable/im_theme_dark"/>
+
+        </RadioGroup>
+
         <android.support.v7.widget.AppCompatCheckBox
             android:id="@+id/cb_randomize"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:paddingLeft="8dp"
+            android:paddingRight="8dp"
             android:text="@string/randomize_puzzles"/>
 
         <android.support.v7.widget.AppCompatCheckBox
-            android:id="@+id/cb_hints"
+            android:id="@+id/cb_show_hints"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="16dp"
+            android:paddingLeft="8dp"
+            android:paddingRight="8dp"
             android:text="@string/show_hints"/>
 
         <android.support.v7.widget.AppCompatCheckBox
-            android:id="@+id/cb_dark_theme"
+            android:id="@+id/cb_show_topic"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="16dp"
-            android:text="@string/dark_theme"/>
+            android:paddingLeft="8dp"
+            android:paddingRight="8dp"
+            android:text="@string/show_topic"/>
+
+        <android.support.v7.widget.AppCompatCheckBox
+            android:id="@+id/cb_auto_advance"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:paddingLeft="8dp"
+            android:paddingRight="8dp"
+            android:text="@string/auto_advance"/>
+
+        <Space
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_weight="1"/>
 
         <android.support.v7.widget.AppCompatButton
             android:id="@+id/bt_reset_dialogs"
@@ -46,4 +114,4 @@
 
     </LinearLayout>
 
-</android.support.v4.widget.NestedScrollView>
+</ScrollView>

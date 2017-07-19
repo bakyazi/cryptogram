@@ -11,8 +11,8 @@ import com.crashlytics.android.Crashlytics;
 import com.google.gson.Gson;
 import com.google.gson.JsonSyntaxException;
 import com.pixplicity.cryptogram.BuildConfig;
-import com.pixplicity.cryptogram.models.Cryptogram;
-import com.pixplicity.cryptogram.models.CryptogramProgress;
+import com.pixplicity.cryptogram.models.Puzzle;
+import com.pixplicity.cryptogram.models.PuzzleProgress;
 import com.pixplicity.cryptogram.views.CryptogramView;
 
 import java.io.IOException;
@@ -28,39 +28,39 @@ import java.util.LinkedList;
 import java.util.Random;
 import java.util.Set;
 
-public class CryptogramProvider {
+public class PuzzleProvider {
 
-    private static final String TAG = CryptogramProvider.class.getSimpleName();
+    private static final String TAG = PuzzleProvider.class.getSimpleName();
 
     private static final String ASSET_FILENAME = "cryptograms.json";
 
-    private static CryptogramProvider sInstance;
+    private static PuzzleProvider sInstance;
 
     private int mCurrentIndex = -1;
-    private Cryptogram[] mCryptograms;
-    private HashMap<Integer, Integer> mCryptogramIds;
-    private SparseArray<CryptogramProgress> mCryptogramProgress;
+    private Puzzle[] mPuzzles;
+    private HashMap<Integer, Integer> mPuzzleIds;
+    private SparseArray<PuzzleProgress> mPuzzleProgress;
 
-    private int mLastCryptogramId = -1;
+    private int mLastPuzzleId = -1;
 
     private final Gson mGson = new Gson();
     private final Random mRandom = new Random();
     private ArrayList<Integer> mRandomIndices;
 
     @NonNull
-    public static CryptogramProvider getInstance(Context context) {
+    public static PuzzleProvider getInstance(Context context) {
         if (sInstance == null) {
             try {
-                sInstance = new CryptogramProvider(context);
+                sInstance = new PuzzleProvider(context);
             } catch (IOException e) {
-                Log.e(TAG, "could not read cryptogram file", e);
-                Toast.makeText(context, "Could not find any cryptograms", Toast.LENGTH_LONG).show();
+                Log.e(TAG, "could not read puzzle file", e);
+                Toast.makeText(context, "Could not find any puzzles", Toast.LENGTH_LONG).show();
             }
         }
         return sInstance;
     }
 
-    private CryptogramProvider(@Nullable Context context) throws IOException {
+    private PuzzleProvider(@Nullable Context context) throws IOException {
         if (context != null) {
             InputStream is = context.getAssets().open(ASSET_FILENAME);
             readStream(is);
@@ -75,44 +75,44 @@ public class CryptogramProvider {
 
     private void readStream(InputStream is) {
         long start = System.nanoTime();
-        mCryptograms = mGson.fromJson(new InputStreamReader(is), Cryptogram[].class);
+        mPuzzles = mGson.fromJson(new InputStreamReader(is), Puzzle[].class);
         if (BuildConfig.DEBUG) {
             Log.d(TAG, String.format("readStream: parsed Json in %.2fms", (System.nanoTime() - start) / 1000000f));
             start = System.nanoTime();
         }
         int index = 0, nextId = 0;
-        mCryptogramIds = new HashMap<>();
+        mPuzzleIds = new HashMap<>();
         if (BuildConfig.DEBUG) {
-            LinkedList<Cryptogram> cryptograms = new LinkedList<>();
+            LinkedList<Puzzle> puzzles = new LinkedList<>();
             if (CryptogramView.ENABLE_HYPHENATION) {
-                cryptograms.add(new Cryptogram.Mock(
+                puzzles.add(new Puzzle.Mock(
                         "AAAAAAAA\u00ADBBB\u00ADCCCCCCC\u00ADDDDDDDDDD\u00ADEEEE\u00ADFFFFFFFFFFFFF\u00ADGGGG\u00ADHHHHHHHHHH\u00ADIIIIII.",
                         null, null));
-                cryptograms.add(new Cryptogram.Mock(
+                puzzles.add(new Puzzle.Mock(
                         "JJJJJJJJ KKK LLLLLLL MMMMMMMMM NNNN OOOOOOOOOOOOO PPPP\u00ADQQQQQQQQQQ\u00ADRRRRRR.",
                         null, null));
             }
-            cryptograms.addAll(Arrays.asList(mCryptograms));
-            mCryptograms = cryptograms.toArray(new Cryptogram[cryptograms.size()]);
+            puzzles.addAll(Arrays.asList(mPuzzles));
+            mPuzzles = puzzles.toArray(new Puzzle[puzzles.size()]);
             if (BuildConfig.DEBUG) {
                 Log.d(TAG, String.format("readStream: added test puzzles in %.2fms", (System.nanoTime() - start) / 1000000f));
                 start = System.nanoTime();
             }
         }
-        for (Cryptogram cryptogram : mCryptograms) {
-            int id = cryptogram.getId();
+        for (Puzzle puzzle : mPuzzles) {
+            int id = puzzle.getId();
             if (id == 0) {
-                while (mCryptogramIds.get(nextId) != null) {
+                while (mPuzzleIds.get(nextId) != null) {
                     // Locate the next vacant spot
                     nextId++;
                 }
                 id = nextId;
-                cryptogram.setId(id);
+                puzzle.setId(id);
             }
-            if (id > mLastCryptogramId) {
-                mLastCryptogramId = id;
+            if (id > mLastPuzzleId) {
+                mLastPuzzleId = id;
             }
-            mCryptogramIds.put(id, index);
+            mPuzzleIds.put(id, index);
             index++;
         }
         if (BuildConfig.DEBUG) {
@@ -120,15 +120,15 @@ public class CryptogramProvider {
         }
     }
 
-    public Cryptogram[] getAll() {
-        return mCryptograms;
+    public Puzzle[] getAll() {
+        return mPuzzles;
     }
 
     /**
      * @return last puzzle ID
      */
     public int getLastNumber() {
-        return mLastCryptogramId + 1;
+        return mLastPuzzleId + 1;
     }
 
     public int getCount() {
@@ -140,7 +140,7 @@ public class CryptogramProvider {
     }
 
     private int getIndexFromId(int id) {
-        Integer index = mCryptogramIds.get(id);
+        Integer index = mPuzzleIds.get(id);
         if (index == null) {
             return -1;
         }
@@ -148,11 +148,11 @@ public class CryptogramProvider {
     }
 
     private int getIdFromIndex(int index) {
-        return mCryptograms[index].getId();
+        return mPuzzles[index].getId();
     }
 
     @Nullable
-    public Cryptogram getCurrent() {
+    public Puzzle getCurrent() {
         if (mCurrentIndex < 0) {
             mCurrentIndex = getIndexFromId(PrefsUtils.getCurrentId());
         }
@@ -173,7 +173,7 @@ public class CryptogramProvider {
     }
 
     @Nullable
-    public Cryptogram getNext() {
+    public Puzzle getNext() {
         int oldIndex = mCurrentIndex;
         int newIndex = -1;
         int count = getCount();
@@ -192,15 +192,15 @@ public class CryptogramProvider {
             Iterator<Integer> iter = mRandomIndices.iterator();
             while (iter.hasNext()) {
                 Integer index = iter.next();
-                Cryptogram cryptogram = get(index);
-                if (cryptogram == null || cryptogram.isCompleted()) {
+                Puzzle puzzle = get(index);
+                if (puzzle == null || puzzle.isCompleted()) {
                     // No good; eliminate this candidate and find the next
                     iter.remove();
-                    cryptogram = null;
+                    puzzle = null;
                 }
                 if (oldIndex == index) {
                     chooseNext = true;
-                } else if (chooseNext && cryptogram != null) {
+                } else if (chooseNext && puzzle != null) {
                     newIndex = index;
                     break;
                 }
@@ -218,18 +218,18 @@ public class CryptogramProvider {
     }
 
     @Nullable
-    public Cryptogram get(int index) {
-        if (index < 0 || index >= mCryptograms.length) {
+    public Puzzle get(int index) {
+        if (index < 0 || index >= mPuzzles.length) {
             return null;
         }
-        return mCryptograms[index];
+        return mPuzzles[index];
     }
 
     @Nullable
-    public Cryptogram getByNumber(int number) {
-        for (Cryptogram cryptogram : mCryptograms) {
-            if (cryptogram.getNumber() == number) {
-                return cryptogram;
+    public Puzzle getByNumber(int number) {
+        for (Puzzle puzzle : mPuzzles) {
+            if (puzzle.getNumber() == number) {
+                return puzzle;
             }
         }
         return null;
@@ -237,30 +237,30 @@ public class CryptogramProvider {
 
     public long getTotalScore() {
         long score = 0;
-        for (Cryptogram cryptogram : mCryptograms) {
-            if (!cryptogram.isCompleted()) {
+        for (Puzzle puzzle : mPuzzles) {
+            if (!puzzle.isCompleted()) {
                 continue;
             }
-            CryptogramProgress progress = cryptogram.getProgress();
-            if (!progress.hasScore(cryptogram)) {
+            PuzzleProgress progress = puzzle.getProgress();
+            if (!progress.hasScore(puzzle)) {
                 continue;
             }
-            score += Math.round(100f * progress.getScore(cryptogram));
+            score += Math.round(100f * progress.getScore(puzzle));
         }
         return score;
     }
 
     @NonNull
-    public SparseArray<CryptogramProgress> getProgress() {
-        if (mCryptogramProgress == null) {
+    public SparseArray<PuzzleProgress> getProgress() {
+        if (mPuzzleProgress == null) {
             int failures = 0;
-            mCryptogramProgress = new SparseArray<>();
+            mPuzzleProgress = new SparseArray<>();
             Set<String> progressStrSet = PrefsUtils.getProgress();
             if (progressStrSet != null) {
                 for (String progressStr : progressStrSet) {
                     try {
-                        CryptogramProgress progress = mGson.fromJson(progressStr, CryptogramProgress.class);
-                        mCryptogramProgress.put(progress.getId(), progress);
+                        PuzzleProgress progress = mGson.fromJson(progressStr, PuzzleProgress.class);
+                        mPuzzleProgress.put(progress.getId(), progress);
                     } catch (JsonSyntaxException e) {
                         Crashlytics.setString("progressStr", progressStr);
                         Crashlytics.logException(new RuntimeException("Failed reading progress string", e));
@@ -274,11 +274,11 @@ public class CryptogramProvider {
                 PrefsUtils.setProgress(progressStrSet);
             }
         }
-        return mCryptogramProgress;
+        return mPuzzleProgress;
     }
 
-    public void setProgress(CryptogramProgress progress) {
-        SparseArray<CryptogramProgress> progressList = getProgress();
+    public void setProgress(PuzzleProgress progress) {
+        SparseArray<PuzzleProgress> progressList = getProgress();
         progressList.put(progress.getId(), progress);
 
         // Now store everything

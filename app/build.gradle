@@ -5,14 +5,12 @@ buildscript {
     }
     dependencies {
         // the latest version of the android-apt plugin
-        classpath 'com.neenbedankt.gradle.plugins:android-apt:1.8'
         classpath 'io.fabric.tools:gradle:1.+'
     }
 }
 
 apply plugin: 'com.android.application'
 apply plugin: 'io.fabric'
-apply plugin: 'com.neenbedankt.android-apt'
 
 android {
     signingConfigs {
@@ -48,8 +46,8 @@ android {
         applicationId "com.pixplicity.cryptogram"
         minSdkVersion 14
         targetSdkVersion 26
-        versionCode 175
-        versionName "1.7.2"
+        versionCode 177
+        versionName "1.7.4"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
     }
     buildTypes {
@@ -103,7 +101,7 @@ dependencies {
     implementation 'com.android.support:design:26.0.0-beta2'
     implementation 'com.android.support:recyclerview-v7:26.0.0-beta2'
 
-    implementation 'com.google.android.gms:play-services-games:10.2.1'
+    implementation 'com.google.android.gms:play-services-games:11.0.2'
 
     implementation 'com.jakewharton:butterknife:8.7.0'
     annotationProcessor 'com.jakewharton:butterknife-compiler:8.7.0'

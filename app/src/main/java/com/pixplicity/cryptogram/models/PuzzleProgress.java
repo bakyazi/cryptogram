@@ -8,7 +8,7 @@ import com.crashlytics.android.answers.Answers;
 import com.crashlytics.android.answers.LevelEndEvent;
 import com.crashlytics.android.answers.LevelStartEvent;
 import com.google.gson.annotations.SerializedName;
-import com.pixplicity.cryptogram.events.CryptogramEvent;
+import com.pixplicity.cryptogram.events.PuzzleEvent;
 import com.pixplicity.cryptogram.utils.EventProvider;
 
 import java.util.ArrayList;
@@ -18,9 +18,9 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Random;
 
-public class CryptogramProgress {
+public class PuzzleProgress {
 
-    private static final String TAG = CryptogramProgress.class.getSimpleName();
+    private static final String TAG = PuzzleProgress.class.getSimpleName();
 
     private static final List<Character> ALPHABET = new ArrayList<>(26);
 
@@ -32,17 +32,17 @@ public class CryptogramProgress {
 
     private static Long sRandomSeed;
 
-    public CryptogramProgress() {
+    public PuzzleProgress() {
     }
 
-    public CryptogramProgress(@NonNull Cryptogram cryptogram) {
-        mId = cryptogram.getId();
+    public PuzzleProgress(@NonNull Puzzle puzzle) {
+        mId = puzzle.getId();
         // Apply mappings for any given characters
-        String given = cryptogram.getGiven();
+        String given = puzzle.getGiven();
         if (given != null) {
             for (int j = 0; j < given.length(); j++) {
                 char c = given.charAt(j);
-                setUserChar(cryptogram, c, c);
+                setUserChar(puzzle, c, c);
             }
         }
     }
@@ -121,11 +121,11 @@ public class CryptogramProgress {
     }
 
     @NonNull
-    public synchronized HashMap<Character, Character> getCharMapping(@NonNull Cryptogram cryptogram) {
+    public synchronized HashMap<Character, Character> getCharMapping(@NonNull Puzzle puzzle) {
         // Ensure we've attempted to load the data
         if (mCharMapping == null) {
             // Populate from the character list
-            getCharacterList(cryptogram);
+            getCharacterList(puzzle);
             Random r;
             if (sRandomSeed == null) {
                 r = new Random();
@@ -164,12 +164,12 @@ public class CryptogramProgress {
                 remaining--;
             }
             // We've generated the mappings, save it
-            cryptogram.save();
+            puzzle.save();
         }
         return mCharMapping;
     }
 
-    public synchronized ArrayList<Character> getCharacterList(@NonNull Cryptogram cryptogram) {
+    public synchronized ArrayList<Character> getCharacterList(@NonNull Puzzle puzzle) {
         if (mCharacterList == null || mCharMapping == null) {
             // May need to be regenerated as the field is transient
             boolean resetCharMapping = false;
@@ -178,10 +178,10 @@ public class CryptogramProgress {
                 resetCharMapping = true;
             }
             mCharacterList = new ArrayList<>();
-            for (String word : cryptogram.getWords()) {
+            for (String word : puzzle.getWords()) {
                 for (int i = 0; i < word.length(); i++) {
                     char c = Character.toUpperCase(word.charAt(i));
-                    if (cryptogram.isInputChar(c)) {
+                    if (puzzle.isInputChar(c)) {
                         if (resetCharMapping) {
                             mCharMapping.put(c, (char) 0);
                         }
@@ -200,13 +200,13 @@ public class CryptogramProgress {
     }
 
     @NonNull
-    private synchronized HashMap<Character, Character> getUserCharsMapping(@NonNull Cryptogram cryptogram) {
+    private synchronized HashMap<Character, Character> getUserCharsMapping(@NonNull Puzzle puzzle) {
         if (mUserChars == null) {
             mUserChars = new HashMap<>();
-            for (String word : cryptogram.getWords()) {
+            for (String word : puzzle.getWords()) {
                 for (int i = 0; i < word.length(); i++) {
                     char c = Character.toUpperCase(word.charAt(i));
-                    if (cryptogram.isInputChar(c)) {
+                    if (puzzle.isInputChar(c)) {
                         mUserChars.put(c, (char) 0);
                     }
                 }
@@ -215,17 +215,17 @@ public class CryptogramProgress {
         return mUserChars;
     }
 
-    public synchronized Collection<Character> getUserChars(@NonNull Cryptogram cryptogram) {
-        return getUserCharsMapping(cryptogram).values();
+    public synchronized Collection<Character> getUserChars(@NonNull Puzzle puzzle) {
+        return getUserCharsMapping(puzzle).values();
     }
 
     @Nullable
-    public synchronized Character getUserChar(@NonNull Cryptogram cryptogram, char c) {
-        return getUserCharsMapping(cryptogram).get(c);
+    public synchronized Character getUserChar(@NonNull Puzzle puzzle, char c) {
+        return getUserCharsMapping(puzzle).get(c);
     }
 
-    public synchronized void setUserChar(@NonNull Cryptogram cryptogram, char selectedCharacter, char c) {
-        Character previousChar = getUserCharsMapping(cryptogram).get(selectedCharacter);
+    public synchronized void setUserChar(@NonNull Puzzle puzzle, char selectedCharacter, char c) {
+        Character previousChar = getUserCharsMapping(puzzle).get(selectedCharacter);
         if (previousChar == null) {
             previousChar = 0;
         }
@@ -237,16 +237,16 @@ public class CryptogramProgress {
                 mInputs++;
             }
         }
-        getUserCharsMapping(cryptogram).put(selectedCharacter, userChar);
+        getUserCharsMapping(puzzle).put(selectedCharacter, userChar);
     }
 
-    public synchronized int getExcessCount(@NonNull Cryptogram cryptogram) {
+    public synchronized int getExcessCount(@NonNull Puzzle puzzle) {
         if (mInputs == null) {
             return -1;
         }
         // Start with total number of inputs
         int count = mInputs;
-        for (Character c : getUserCharsMapping(cryptogram).values()) {
+        for (Character c : getUserCharsMapping(puzzle).values()) {
             if (c != null && c != 0) {
                 // Subtract any filled in characters
                 count--;
@@ -255,19 +255,19 @@ public class CryptogramProgress {
         return count;
     }
 
-    public synchronized boolean isCompleted(@NonNull Cryptogram cryptogram) {
+    public synchronized boolean isCompleted(@NonNull Puzzle puzzle) {
         if (mCompleted == null || !mCompleted) {
             mCompleted = true;
-            HashMap<Character, Character> userChars = getUserCharsMapping(cryptogram);
+            HashMap<Character, Character> userChars = getUserCharsMapping(puzzle);
             for (Character character : userChars.keySet()) {
                 // In order to be correct, the key and value must be identical
-                if (character != null && character != userChars.get(character) && !cryptogram.isGiven(character)) {
+                if (character != null && character != userChars.get(character) && !puzzle.isGiven(character)) {
                     mCompleted = false;
                     break;
                 }
             }
             if (mCompleted) {
-                onCompleted(cryptogram);
+                onCompleted(puzzle);
                 onPause();
             }
         }
@@ -307,10 +307,10 @@ public class CryptogramProgress {
         return mPlaying != null && mPlaying;
     }
 
-    public synchronized void onResume(Cryptogram cryptogram) {
-        if (!isPlaying() && !isCompleted(cryptogram)) {
+    public synchronized void onResume(Puzzle puzzle) {
+        if (!isPlaying() && !isCompleted(puzzle)) {
             if (mStartTime == null || mStartTime == 0) {
-                onStart(cryptogram);
+                onStart(puzzle);
             }
             // Only resume playing if the puzzle wasn't completed
             setTimes();
@@ -325,22 +325,22 @@ public class CryptogramProgress {
         }
     }
 
-    private synchronized void onStart(Cryptogram cryptogram) {
-        int puzzleNumber = cryptogram.getNumber();
+    private synchronized void onStart(Puzzle puzzle) {
+        int puzzleNumber = puzzle.getNumber();
         Answers.getInstance().logLevelStart(
                 new LevelStartEvent()
                         .putLevelName("Puzzle #" + puzzleNumber));
 
         EventProvider.postEvent(
-                new CryptogramEvent.CryptogramStartedEvent(cryptogram));
+                new PuzzleEvent.PuzzleStartedEvent(puzzle));
     }
 
-    private synchronized void onCompleted(@NonNull Cryptogram cryptogram) {
-        int puzzleNumber = cryptogram.getNumber();
+    private synchronized void onCompleted(@NonNull Puzzle puzzle) {
+        int puzzleNumber = puzzle.getNumber();
         LevelEndEvent event = new LevelEndEvent()
                 .putLevelName("Puzzle #" + puzzleNumber)
                 .putSuccess(true);
-        Float score = getScore(cryptogram);
+        Float score = getScore(puzzle);
         if (score != null) {
             event.putScore(score);
         }
@@ -348,7 +348,7 @@ public class CryptogramProgress {
                 event);
 
         EventProvider.postEvent(
-                new CryptogramEvent.CryptogramCompletedEvent(cryptogram));
+                new PuzzleEvent.PuzzleCompletedEvent(puzzle));
     }
 
     private synchronized void setTimes() {
@@ -377,21 +377,21 @@ public class CryptogramProgress {
         return System.currentTimeMillis() - mStartTime;
     }
 
-    public synchronized boolean hasScore(@NonNull Cryptogram cryptogram) {
-        long duration = cryptogram.getDuration();
-        int excessCount = getExcessCount(cryptogram);
+    public synchronized boolean hasScore(@NonNull Puzzle puzzle) {
+        long duration = puzzle.getDuration();
+        int excessCount = getExcessCount(puzzle);
         if (duration == 0 || excessCount < 0) {
             return false;
         }
         return true;
     }
 
-    public synchronized Float getScore(@NonNull Cryptogram cryptogram) {
-        if (!hasScore(cryptogram)) {
+    public synchronized Float getScore(@NonNull Puzzle puzzle) {
+        if (!hasScore(puzzle)) {
             return null;
         }
         long duration = getDuration();
-        int excessCount = getExcessCount(cryptogram);
+        int excessCount = getExcessCount(puzzle);
         float score = 1;
         score = addScore(score, (float) duration / 120f);
         score = addScore(score, (float) Math.pow(0.75f, getRevealedMistakes()));
@@ -420,41 +420,41 @@ public class CryptogramProgress {
         return mHadHints;
     }
 
-    public synchronized void sanitize(@NonNull Cryptogram cryptogram) {
+    public synchronized void sanitize(@NonNull Puzzle puzzle) {
         if (mSanitized) {
             return;
         }
         mSanitized = true;
         // Ensure that only input characters have user mappings
-        Iterator<Character> i = getUserCharsMapping(cryptogram).keySet().iterator();
+        Iterator<Character> i = getUserCharsMapping(puzzle).keySet().iterator();
         while (i.hasNext()) {
             Character c = i.next();
-            if (c == null || !cryptogram.isInputChar(c)) {
+            if (c == null || !puzzle.isInputChar(c)) {
                 i.remove();
             }
         }
-        ArrayList<Character> characterList = getCharacterList(cryptogram);
-        HashMap<Character, Character> charMapping = getCharMapping(cryptogram);
-        Log.w(TAG, "check for invalid mappings in " + cryptogram);
+        ArrayList<Character> characterList = getCharacterList(puzzle);
+        HashMap<Character, Character> charMapping = getCharMapping(puzzle);
+        Log.w(TAG, "check for invalid mappings in " + puzzle);
         for (Character c : characterList) {
             if (charMapping.get(c) == null || charMapping.get(c) == 0) {
                 // Whoops! Puzzle has a broken character mapping
                 mUserChars = null;
                 mCharMapping = null;
-                getCharMapping(cryptogram);
-                Log.w(TAG, "invalid character mapping for " + cryptogram + "; reset mappings");
+                getCharMapping(puzzle);
+                Log.w(TAG, "invalid character mapping for " + puzzle + "; reset mappings");
                 break;
             }
         }
         // Apply mappings for any revealed characters
         if (mRevealed != null) {
             for (Character c : mRevealed) {
-                setUserChar(cryptogram, c, c);
+                setUserChar(puzzle, c, c);
             }
         }
     }
 
-    public synchronized void reset(@NonNull Cryptogram cryptogram) {
+    public synchronized void reset(@NonNull Puzzle puzzle) {
         mUserChars = null;
         mCharMapping = null;
         mStartTime = null;
@@ -462,9 +462,9 @@ public class CryptogramProgress {
         mCompleted = null;
         if (isPlaying()) {
             mPlaying = null;
-            onResume(cryptogram);
+            onResume(puzzle);
         }
-        sanitize(cryptogram);
+        sanitize(puzzle);
     }
 
 }
