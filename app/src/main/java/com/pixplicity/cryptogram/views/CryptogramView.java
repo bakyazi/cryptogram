@@ -10,6 +10,7 @@ import android.graphics.Typeface;
 import android.os.Build;
 import android.support.annotation.Nullable;
 import android.support.v4.content.ContextCompat;
+import android.support.v7.widget.AppCompatTextView;
 import android.text.TextPaint;
 import android.util.AttributeSet;
 import android.util.Log;
@@ -27,7 +28,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 
-public class CryptogramView extends android.support.v7.widget.AppCompatTextView {
+public class CryptogramView extends AppCompatTextView {
 
     private static final String TAG = CryptogramView.class.getSimpleName();
 

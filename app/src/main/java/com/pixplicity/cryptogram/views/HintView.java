@@ -1,16 +1,14 @@
 package com.pixplicity.cryptogram.views;
 
-import android.annotation.TargetApi;
 import android.content.Context;
 import android.content.res.Resources;
 import android.graphics.Canvas;
 import android.graphics.Rect;
 import android.graphics.Typeface;
-import android.os.Build;
 import android.support.annotation.Nullable;
+import android.support.v7.widget.AppCompatTextView;
 import android.text.TextPaint;
 import android.util.AttributeSet;
-import android.widget.TextView;
 
 import com.pixplicity.cryptogram.R;
 import com.pixplicity.cryptogram.models.Puzzle;
@@ -18,39 +16,35 @@ import com.pixplicity.cryptogram.models.Puzzle;
 import java.util.Collection;
 
 
-public class HintView extends TextView {
+public class HintView extends AppCompatTextView {
 
     private static final String TAG = HintView.class.getSimpleName();
 
     @Nullable
     private Puzzle mPuzzle;
 
-    private float mBoxW, mCharH, mCharW;
+    private int mCharsPerRow = 1;
+
+    private float mMinBoxW, mBoxW, mCharH, mCharW;
     private TextPaint mTextPaint;
 
 
     public HintView(Context context) {
         super(context);
-        init(context, null, 0, 0);
+        init(context, null, 0);
     }
 
     public HintView(Context context, AttributeSet attrs) {
         super(context, attrs);
-        init(context, attrs, 0, 0);
+        init(context, attrs, 0);
     }
 
     public HintView(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
-        init(context, attrs, defStyleAttr, 0);
+        init(context, attrs, defStyleAttr);
     }
 
-    @TargetApi(Build.VERSION_CODES.LOLLIPOP)
-    public HintView(Context context, AttributeSet attrs, int defStyleAttr, int defStyleRes) {
-        super(context, attrs, defStyleAttr, defStyleRes);
-        init(context, attrs, defStyleAttr, defStyleRes);
-    }
-
-    private void init(Context context, AttributeSet attrs, int defStyleAttr, int defStyleRes) {
+    private void init(Context context, AttributeSet attrs, int defStyleAttr) {
         Resources r = context.getResources();
 
         mTextPaint = new TextPaint();
@@ -59,7 +53,7 @@ public class HintView extends TextView {
         mTextPaint.setTypeface(Typeface.MONOSPACE);
 
         // Compute size of each box
-        mBoxW = r.getDimensionPixelSize(R.dimen.puzzle_box_width);
+        mMinBoxW = r.getDimensionPixelSize(R.dimen.puzzle_box_width);
         mTextPaint.setTextSize(r.getDimensionPixelSize(R.dimen.puzzle_hint_size));
 
         // Compute size of a single char (assumes monospaced font!)
@@ -120,6 +114,16 @@ public class HintView extends TextView {
             height = desiredHeight;
         }
 
+        // Pack the most number of characters in the bar
+        int innerBox = width - getPaddingLeft();
+        for (int i = 1; i < 26; i++) {
+            mCharsPerRow = (int) Math.ceil(26f / i);
+            mBoxW = innerBox / mCharsPerRow;
+            if (mBoxW >= mMinBoxW) {
+                break;
+            }
+        }
+
         setMeasuredDimension(width, height);
     }
 
@@ -132,35 +136,27 @@ public class HintView extends TextView {
     }
 
     private int drawChars(@Nullable Canvas canvas, int width) {
-        int charsPerRow = 1;
-        int innerBox = width - getPaddingLeft();
-        float boxW = mBoxW;
-        for (int i = 1; i < 26; i++) {
-            charsPerRow = (int) Math.ceil(26f / i);
-            boxW = innerBox / charsPerRow;
-            if (boxW >= mBoxW) {
-                break;
-            }
-        }
-
         int desiredHeight = getPaddingTop();
 
         if (mPuzzle != null) {
             Collection<Character> userChars = mPuzzle.getUserChars();
             // Compute the height that works for this width
             float offsetY = mCharH / 2;
-            float offsetX = (boxW / 2) - (mCharW / 2);
-            float x = getPaddingLeft(), y = getPaddingTop() + mCharH;
+            float offsetX = (mBoxW / 2) - (mCharW / 2);
+            float x = getPaddingLeft();
+            // First row
+            float y = getPaddingTop() + mCharH;
             char c = 'A';
             for (int i = 0; i < 26; i++) {
-                if (i % charsPerRow == 0) {
+                if (i % mCharsPerRow == 0) {
                     x = getPaddingLeft();
                     if (i > 0) {
+                        // Another row
                         y += mCharH + offsetY;
                     }
                 } else {
                     // Box width
-                    x += boxW;
+                    x += mBoxW;
                 }
                 if (canvas != null) {
                     String chr = String.valueOf(c);
