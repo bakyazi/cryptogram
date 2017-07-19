@@ -2189,7 +2189,7 @@
   },
   {
     "text": "We can com­plain because rose bushes have thorns, or rejoice because thorn bushes have roses.",
-    "author": "Abraham Lincoln",
+    "author": "Alphonse Karr",
     "topic": "Beauty"
   },
   {
@@ -2485,7 +2485,7 @@
   {
     "text": "The pessi­mist com­plains about the wind; the optimist expects it to change; the realist adjusts the sails.",
     "author": "William Arthur Ward",
-    "topic": "Wisdom"
+    "topic": "Optimism"
   },
   {
     "text": "The less you talk, the more you’re listened to.",
@@ -3566,7 +3566,8 @@
   {
     "text": "Only the dead have seen the end of war.",
     "author": "George Santayana",
-    "topic": "War"
+    "topic": "War",
+    "given": "H"
   },
   {
     "text": "History teaches us that men and nations behave wisely once they have exhausted all other alternatives.",
@@ -3587,5 +3588,168 @@
     "text": "We must all turn our backs upon the horrors of the past. We must look to the future. We cannot afford to drag forward cross the years that are to come the hatreds and revenges which have sprung from the injuries of the past.",
     "author": "Winston Churchill",
     "topic": "Future"
+  },
+  {
+    "text": "Have patience with every one, but especially with yourself.",
+    "author": "St. Francis de Sales",
+    "topic": "Inspirational",
+    "given": "H"
+  },
+  {
+    "text": "Never confuse your mistakes with your value as a human being. You are perfectly valuable, creative, worthwhile person simply because you exist. And no amount of triumphs or tribulations can ever change that.",
+    "author": "Michael LeBoeuf",
+    "topic": "Inspirational"
+  },
+  {
+    "text": "If we don’t believe in freedom of expression for people we despise, we don’t believe in it at all.",
+    "author": "Noam Chomsky",
+    "topic": "Freedom"
+  },
+  {
+    "text": "Optimism is a strategy for making a better future. Because unless you believe that the future can be better, you are unlikely to step up and take responsibility for making it so.",
+    "author": "Noam Chomsky",
+    "topic": "Optimism"
+  },
+  {
+    "text": "How wonderful it is that nobody need wait a single moment before starting to improve the world.",
+    "author": "Anne Frank",
+    "topic": "Optimism"
+  },
+  {
+    "text": "“What day is it?”\n“It’s today,” squeaked Piglet.\n“My favorite day,” said Pooh.",
+    "author": "A.A. Milne",
+    "topic": "Optimism",
+    "given": "P"
+  },
+  {
+    "text": "Part of being optimistic is keeping one’s head pointed toward the sun, one’s feet moving forward. There were many dark moments when my faith in humanity was sorely tested, but I would not and could not give myself up to despair.",
+    "author": "Nelson Mandela",
+    "topic": "Optimism"
+  },
+  {
+    "text": "You’ll never find a rainbow if you’re looking down.",
+    "author": "Charlie Chaplin",
+    "topic": "Optimism"
+  },
+  {
+    "text": "Human history is a history not only of cruelty, but also of compassion, sacrifice, courage, kindness. What we choose to emphasize in this complex history will determine our lives.",
+    "author": "Howard Zinn",
+    "topic": "Optimism"
+  },
+  {
+    "text": "I am so far from being a pessimist; on the contrary, in spite of my scars, I am tickled to death at life.",
+    "author": "Eugene O’Neill",
+    "topic": "Optimism"
+  },
+  {
+    "text": "Finish every day and be done with it.\nYou have done what you could.\nSome blunders and absurdities, no doubt crept in.\nForget them as soon as you can, tomorrow is a new day.",
+    "author": "Ralph Waldo Emerson",
+    "topic": "Optimism"
+  },
+  {
+    "text": "Great things happen to those who don’t stop believing, trying, learning, and being grateful.",
+    "author": "Roy T. Bennett",
+    "topic": "Optimism"
+  },
+  {
+    "text": "Attitude is a choice. Happiness is a choice. Optimism is a choice. Kindness is a choice. Giving is a choice. Respect is a choice. Whatever choice you make makes you. Choose wisely.",
+    "author": "Roy T. Bennett",
+    "topic": "Choice"
+  },
+  {
+    "text": "Life is too short to waste your time on people who don’t respect, appreciate, and value you.",
+    "author": "Roy T. Bennett",
+    "topic": "Respect"
+  },
+  {
+    "text": "A random act of kindness, no matter how small, can make a tremendous impact on someone else’s life.",
+    "author": "Roy T. Bennett",
+    "topic": "Kindness"
+  },
+  {
+    "text": "It’s only after you’ve stepped outside your comfort zone that you begin to change, grow, and transform.",
+    "author": "Roy T. Bennett",
+    "topic": "Change"
+  },
+  {
+    "text": "Be brave enough to live the life of your dreams according to your vision and purpose instead of the expectations and opinions of others.",
+    "author": "Roy T. Bennett",
+    "topic": "Purpose"
+  },
+  {
+    "text": "Take responsibility of your own happiness, never put it in other people’s hands.",
+    "author": "Roy T. Bennett",
+    "topic": "Happiness"
+  },
+  {
+    "text": "Be the reason someone smiles. Be the reason someone feels loved and believes in the goodness in people.",
+    "author": "Roy T. Bennett",
+    "topic": "Love"
+  },
+  {
+    "text": "Always remember people who have helped you along the way, and don’t forget to lift someone up.",
+    "author": "Roy T. Bennett",
+    "topic": "Gratitude"
+  },
+  {
+    "text": "I was never aware of any other option but to question everything.",
+    "author": "Noam Chomsky",
+    "topic": "Scepticism"
+  },
+  {
+    "text": "I think it only makes sense to seek out and identify structures of authority, hierarchy, and domination in every aspect of life, and to challenge them; unless a justification for them can be given, they are illegitimate, and should be dismantled, to increase the scope of human freedom.",
+    "author": "Noam Chomsky",
+    "topic": "Scepticism"
+  },
+  {
+    "text": "Cynicism is a self-imposed blindness, a rejection of the world because we are afraid it will hurt us or disappoint us.",
+    "author": "Stephen Colbert",
+    "topic": "Fear"
+  },
+  {
+    "text": "There’s an old saying about those who forget history. I don’t remember it, but it’s good.",
+    "author": "Stephen Colbert",
+    "topic": "Funny"
+  },
+  {
+    "text": "Wikipedia is the first place I go when I’m looking for knowledge… or when I want to create some.",
+    "author": "Stephen Colbert",
+    "topic": "Funny",
+    "given": "W"
+  },
+  {
+    "text": "Twenty-two astronauts were born in Ohio. What is it about that state that makes people want to flee the Earth?",
+    "author": "Stephen Colbert",
+    "topic": "Funny"
+  },
+  {
+    "text": "I believe that the government that governs best is a government that governs least, and by these standards we have set up a fabulous government in Iraq.",
+    "author": "Stephen Colbert",
+    "topic": "Funny"
+  },
+  {
+    "text": "You cannot correct an old person every time they say something offensive. You would never make it through Thanksgiving dinner!",
+    "author": "Stephen Colbert",
+    "topic": "Funny"
+  },
+  {
+    "text": "Why were you happier when you were a kid? Because you didn’t know anything. The more you know, the sadder you get.",
+    "author": "Stephen Colbert",
+    "topic": "Funny"
+  },
+  {
+    "text": "The pen is mightier than the sword, if you shoot that pen out of a gun.",
+    "author": "Stephen Colbert",
+    "topic": "Funny"
+  },
+  {
+    "text": "Take it from me, there’s nothing like a job well done. Except the quiet enveloping darkness at the bottom of a bottle of Jim Beam after a job done any way at all.",
+    "author": "Stephen Colbert",
+    "topic": "Funny"
+  },
+  {
+    "text": "My character is self-important, poorly informed, well-intentioned but an idiot… So we said, “Let’s give him a promotion.”",
+    "author": "Stephen Colbert",
+    "topic": "Funny"
   }
 ]
