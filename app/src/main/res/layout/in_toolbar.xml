@@ -16,7 +16,6 @@
         android:gravity="center_vertical"
         android:theme="@style/ThemeOverlay.AppCompat.ActionBar"
         app:layout_scrollFlags="scroll|enterAlways"
-        app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
         app:subtitleTextColor="@color/textLight"
         app:titleTextColor="@color/textLight"
         tools:ignore="UnusedAttribute"/>
