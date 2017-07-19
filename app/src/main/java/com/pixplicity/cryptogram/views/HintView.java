@@ -12,6 +12,7 @@ import android.util.AttributeSet;
 
 import com.pixplicity.cryptogram.R;
 import com.pixplicity.cryptogram.models.Puzzle;
+import com.pixplicity.cryptogram.utils.StyleUtils;
 
 import java.util.Collection;
 
@@ -45,7 +46,7 @@ public class HintView extends AppCompatTextView {
     }
 
     private void init(Context context, AttributeSet attrs, int defStyleAttr) {
-        Resources r = context.getResources();
+        Resources res = context.getResources();
 
         mTextPaint = new TextPaint();
         mTextPaint.setColor(getCurrentTextColor());
@@ -53,8 +54,8 @@ public class HintView extends AppCompatTextView {
         mTextPaint.setTypeface(Typeface.MONOSPACE);
 
         // Compute size of each box
-        mMinBoxW = r.getDimensionPixelSize(R.dimen.puzzle_box_width);
-        mTextPaint.setTextSize(r.getDimensionPixelSize(R.dimen.puzzle_hint_size));
+        mMinBoxW = StyleUtils.getSize(res, R.dimen.puzzle_box_width);
+        mTextPaint.setTextSize(StyleUtils.getSize(res, R.dimen.puzzle_hint_size));
 
         // Compute size of a single char (assumes monospaced font!)
         Rect bounds = new Rect();

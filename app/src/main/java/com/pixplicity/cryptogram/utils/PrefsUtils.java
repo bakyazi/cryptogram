@@ -14,6 +14,7 @@ public class PrefsUtils {
     private static final String KEY_SHOW_HINTS = "show_hints";
     private static final String KEY_SHOW_TOPIC = "show_topic";
     private static final String KEY_DARK_THEME = "dark_theme";
+    private static final String KEY_TEXT_SIZE = "text_size";
     private static final String KEY_AUTO_ADVANCE = "auto_advance";
     private static final String KEY_NEVER_ASK_REVEAL_LETTER = "never_ask_reveal_letter";
     private static final String KEY_NEVER_ASK_REVEAL_MISTAKES = "never_ask_reveal_mistakes";
@@ -78,12 +79,20 @@ public class PrefsUtils {
         Prefs.putBoolean(KEY_SHOW_TOPIC, show);
     }
 
+    public static boolean getDarkTheme() {
+        return Prefs.getBoolean(KEY_DARK_THEME, false);
+    }
+
     public static void setDarkTheme(boolean theme) {
         Prefs.putBoolean(KEY_DARK_THEME, theme);
     }
 
-    public static boolean getDarkTheme() {
-        return Prefs.getBoolean(KEY_DARK_THEME, false);
+    public static int getTextSize() {
+        return Prefs.getInt(KEY_TEXT_SIZE, 0);
+    }
+
+    public static void setTextSize(int textSize) {
+        Prefs.putInt(KEY_TEXT_SIZE, textSize);
     }
 
     public static boolean getAutoAdvance() {

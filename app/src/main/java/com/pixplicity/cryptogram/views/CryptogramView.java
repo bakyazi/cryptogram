@@ -23,6 +23,7 @@ import android.view.inputmethod.InputMethodManager;
 import com.pixplicity.cryptogram.R;
 import com.pixplicity.cryptogram.models.Puzzle;
 import com.pixplicity.cryptogram.utils.PrefsUtils;
+import com.pixplicity.cryptogram.utils.StyleUtils;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -44,7 +45,10 @@ public class CryptogramView extends AppCompatTextView {
     private float mBoxW, mBoxH, mCharW1;
     private float mBoxPadding;
     private float mLineHeight;
-    private Paint mPaint, mLinePaint1, mLinePaint2, mBoxPaint1, mBoxPaint2;
+    private Paint mLinePaint1;
+    private Paint mLinePaint2;
+    private Paint mBoxPaint1;
+    private Paint mBoxPaint2;
     private TextPaint mTextPaintInput, mTextPaintInputComplete, mTextPaintMapping, mTextPaintMistake;
     private int mBoxInset;
 
@@ -71,13 +75,12 @@ public class CryptogramView extends AppCompatTextView {
     }
 
     private void init(Context context, AttributeSet attrs, int defStyleAttr) {
-        Resources r = context.getResources();
+        Resources res = getResources();
 
         if (!isInEditMode()) {
             mDarkTheme = PrefsUtils.getDarkTheme();
         }
 
-        mPaint = new Paint();
         int colorText, colorHighlight, colorComplete, colorMistake;
         if (mDarkTheme) {
             colorText = R.color.colorDarkPuzzleText;
@@ -91,38 +94,38 @@ public class CryptogramView extends AppCompatTextView {
             colorMistake = R.color.colorPuzzleMistake;
         }
 
-        mPaint = new Paint();
-        mPaint.setColor(ContextCompat.getColor(context, colorText));
-        mPaint.setAntiAlias(true);
+        Paint paint = new Paint();
+        paint.setColor(ContextCompat.getColor(context, colorText));
+        paint.setAntiAlias(true);
 
-        mLinePaint1 = new Paint(mPaint);
-        mLinePaint1.setStrokeWidth(r.getDimensionPixelSize(R.dimen.puzzle_line_height));
+        mLinePaint1 = new Paint(paint);
+        mLinePaint1.setStrokeWidth(res.getDimensionPixelSize(R.dimen.puzzle_line_height));
         mLinePaint1.setStrokeCap(Paint.Cap.ROUND);
         mLinePaint2 = new Paint(mLinePaint1);
         mLinePaint2.setAlpha(96);
 
-        mBoxPaint1 = new Paint(mPaint);
+        mBoxPaint1 = new Paint(paint);
 
         mBoxPaint1.setColor(ContextCompat.getColor(context, colorHighlight));
-        mBoxPaint1.setStrokeWidth(r.getDimensionPixelSize(R.dimen.box_highlight_stroke));
+        mBoxPaint1.setStrokeWidth(res.getDimensionPixelSize(R.dimen.box_highlight_stroke));
         mBoxPaint1.setStyle(Paint.Style.FILL);
         mBoxPaint2 = new Paint(mBoxPaint1);
         mBoxPaint2.setStyle(Paint.Style.STROKE);
 
-        mBoxInset = r.getDimensionPixelSize(R.dimen.box_highlight_stroke) / 2;
+        mBoxInset = res.getDimensionPixelSize(R.dimen.box_highlight_stroke) / 2;
 
-        mTextPaintInput = new TextPaint(mPaint);
+        mTextPaintInput = new TextPaint(paint);
         mTextPaintInput.setTypeface(Typeface.MONOSPACE);
 
         mTextPaintMapping = new TextPaint(mTextPaintInput);
 
         // Compute size of each box
-        mBoxW = r.getDimensionPixelSize(R.dimen.puzzle_box_width);
-        mBoxH = r.getDimensionPixelSize(R.dimen.puzzle_box_height);
+        mBoxW = StyleUtils.getSize(res, R.dimen.puzzle_box_width);
+        mBoxH = StyleUtils.getSize(res, R.dimen.puzzle_box_height);
         mBoxPadding = mBoxH / 4;
         mLineHeight = mBoxH * 2 + mBoxPadding * 2;
-        mTextPaintInput.setTextSize(r.getDimensionPixelSize(R.dimen.puzzle_text_size));
-        mTextPaintMapping.setTextSize(r.getDimensionPixelSize(R.dimen.puzzle_hint_size));
+        mTextPaintInput.setTextSize(StyleUtils.getSize(res, R.dimen.puzzle_text_size));
+        mTextPaintMapping.setTextSize(StyleUtils.getSize(res, R.dimen.puzzle_hint_size));
 
         mTextPaintInputComplete = new TextPaint(mTextPaintInput);
         mTextPaintInputComplete.setColor(ContextCompat.getColor(context, colorComplete));

@@ -679,7 +679,13 @@ public class CryptogramActivity extends BaseActivity implements GoogleApiClient.
     }
 
     @Subscribe
-    public void onCryptogramStarted(PuzzleEvent.PuzzleStartedEvent event) {
+    public void onPuzzleStyleChanged(PuzzleEvent.PuzzleStyleChanged event) {
+        // Just recreate the activity
+        recreate();
+    }
+
+    @Subscribe
+    public void onPuzzleStarted(PuzzleEvent.PuzzleStartedEvent event) {
         if (mGoogleApiClient.isConnected()) {
             // Submit any achievements
             AchievementProvider.getInstance().onCryptogramStart(mGoogleApiClient);
@@ -687,7 +693,7 @@ public class CryptogramActivity extends BaseActivity implements GoogleApiClient.
     }
 
     @Subscribe
-    public void onCryptogramCompleted(PuzzleEvent.PuzzleCompletedEvent event) {
+    public void onPuzzleCompleted(PuzzleEvent.PuzzleCompletedEvent event) {
         updateCryptogram(event.getPuzzle());
 
         // Increment the trigger for displaying the rating dialog
