@@ -27,9 +27,6 @@
         <item name="color">@color/white</item>
     </style>
 
-    <style name="ToolbarStyle" parent="ThemeOverlay.AppCompat.ActionBar">
-    </style>
-
     <style name="OverflowButtonStyle" parent="Widget.AppCompat.ActionButton.Overflow">
         <item name="android:src">@drawable/ic_overflow</item>
     </style>
