@@ -30,14 +30,18 @@ public class EventProvider {
         if (Looper.myLooper() == Looper.getMainLooper()) {
             getBus().post(event);
         } else {
-            getInstance().mHandler.post(new Runnable() {
-                @Override
-                public void run() {
-                    getBus().post(event);
-
-                }
-            });
+            postEventDelayed(event);
         }
+    }
+
+    public static boolean postEventDelayed(final Object event) {
+        return getInstance().mHandler.post(new Runnable() {
+            @Override
+            public void run() {
+                getBus().post(event);
+
+            }
+        });
     }
 
 }

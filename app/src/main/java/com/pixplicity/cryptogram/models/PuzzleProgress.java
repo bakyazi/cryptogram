@@ -347,7 +347,7 @@ public class PuzzleProgress {
         Answers.getInstance().logLevelEnd(
                 event);
 
-        EventProvider.postEvent(
+        EventProvider.postEventDelayed(
                 new PuzzleEvent.PuzzleCompletedEvent(puzzle));
     }
 
