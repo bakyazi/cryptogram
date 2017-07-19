@@ -131,7 +131,8 @@ dependencies {
     })
 
     testImplementation 'junit:junit:4.12'
-    testImplementation 'org.mockito:mockito-core:2.7.22'
+    // FIXME only upgrade this to Mockito 2.* once Powermock 1.7.0 or later is out
+    testImplementation 'org.mockito:mockito-core:1.10.19'
     testImplementation 'org.powermock:powermock-api-mockito:1.6.6'
     testImplementation 'org.powermock:powermock-module-junit4-rule-agent:1.6.6'
     testImplementation 'org.powermock:powermock-module-junit4-rule:1.6.6'
