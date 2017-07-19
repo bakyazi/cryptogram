@@ -100,6 +100,16 @@ public class HintView extends AppCompatTextView {
             width = desiredWidth;
         }
 
+        // Pack the most number of characters in the bar
+        int innerBox = width - getPaddingLeft();
+        for (int i = 1; i < 26; i++) {
+            mCharsPerRow = (int) Math.ceil(26f / i);
+            mBoxW = innerBox / mCharsPerRow;
+            if (mBoxW >= mMinBoxW) {
+                break;
+            }
+        }
+
         int desiredHeight = drawChars(null, width);
 
         int height;
@@ -113,16 +123,6 @@ public class HintView extends AppCompatTextView {
         } else {
             //Be whatever you want
             height = desiredHeight;
-        }
-
-        // Pack the most number of characters in the bar
-        int innerBox = width - getPaddingLeft();
-        for (int i = 1; i < 26; i++) {
-            mCharsPerRow = (int) Math.ceil(26f / i);
-            mBoxW = innerBox / mCharsPerRow;
-            if (mBoxW >= mMinBoxW) {
-                break;
-            }
         }
 
         setMeasuredDimension(width, height);
