@@ -10,6 +10,7 @@ import android.graphics.Rect;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
+import android.support.annotation.ColorInt;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.design.widget.Snackbar;
@@ -57,11 +58,12 @@ import com.pixplicity.cryptogram.adapters.PuzzleAdapter;
 import com.pixplicity.cryptogram.events.PuzzleEvent;
 import com.pixplicity.cryptogram.models.Puzzle;
 import com.pixplicity.cryptogram.utils.AchievementProvider;
-import com.pixplicity.cryptogram.utils.PuzzleProvider;
 import com.pixplicity.cryptogram.utils.EventProvider;
 import com.pixplicity.cryptogram.utils.LeaderboardProvider;
 import com.pixplicity.cryptogram.utils.PrefsUtils;
+import com.pixplicity.cryptogram.utils.PuzzleProvider;
 import com.pixplicity.cryptogram.utils.StringUtils;
+import com.pixplicity.cryptogram.utils.StyleUtils;
 import com.pixplicity.cryptogram.views.CryptogramLayout;
 import com.pixplicity.cryptogram.views.CryptogramView;
 import com.pixplicity.cryptogram.views.HintView;
@@ -197,7 +199,7 @@ public class CryptogramActivity extends BaseActivity implements GoogleApiClient.
                 .setTriggerCount(10)
                 .setMinimumInstallTime((int) TimeUnit.DAYS.toMillis(2))
                 .setMessage(getString(R.string.rating, getString(R.string.app_name)))
-                .setFeedbackAction(Uri.parse("mailto:paul@pixplicity.com"))
+                .setFeedbackAction(Uri.parse("mailto:paul+cryptogram@pixplicity.com"))
                 .build();
 
         mRvDrawer.setLayoutManager(new LinearLayoutManager(this));
@@ -760,7 +762,7 @@ public class CryptogramActivity extends BaseActivity implements GoogleApiClient.
             return true;
             case R.id.action_reveal_letter: {
                 if (puzzle == null || !mCryptogramView.hasSelectedCharacter()) {
-                    Snackbar.make(mVgRoot, "Please select a letter first.", Snackbar.LENGTH_SHORT).show();
+                    showSnackbar(getString(R.string.reveal_letter_instruction));
                 } else {
                     if (PrefsUtils.getNeverAskRevealLetter()) {
                         mCryptogramView.revealCharacterMapping(
@@ -885,8 +887,7 @@ public class CryptogramActivity extends BaseActivity implements GoogleApiClient.
                                             .getInstance(CryptogramActivity.this);
                                     Puzzle puzzle = provider.getByNumber(puzzleNumber);
                                     if (puzzle == null) {
-                                        Snackbar.make(mVgRoot, getString(R.string.puzzle_nonexistant, puzzleNumber),
-                                                Snackbar.LENGTH_SHORT).show();
+                                        showSnackbar(getString(R.string.puzzle_nonexistant, puzzleNumber));
                                     } else {
                                         updateCryptogram(puzzle);
                                     }
@@ -1062,6 +1063,22 @@ public class CryptogramActivity extends BaseActivity implements GoogleApiClient.
             return true;
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    private void showSnackbar(String text) {
+        final Snackbar snackbar = Snackbar.make(mVgRoot, text, Snackbar.LENGTH_SHORT);
+        View snackBarView = snackbar.getView();
+
+        // Set background
+        @ColorInt int colorPrimary = StyleUtils.getColor(this, R.attr.colorPrimary);
+        snackBarView.setBackgroundColor(colorPrimary);
+
+        // Set foreground
+        @ColorInt int textColor = StyleUtils.getColor(this, R.attr.textColorOnPrimary);
+        TextView textView = snackBarView.findViewById(android.support.design.R.id.snackbar_text);
+        textView.setTextColor(textColor);
+
+        snackbar.show();
     }
 
     private void nextPuzzle() {

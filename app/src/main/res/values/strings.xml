@@ -40,6 +40,8 @@
 
     <string name="error_no_puzzles">Whoops! Looks like we couldn’t load the puzzle.</string>
 
+    <string name="reveal_letter_instruction">Please select a letter first.</string>
+
     <string name="puzzle_number_instruction">Instructional puzzle</string>
     <string name="puzzle_number_practice">Puzzle #%1$d (practice)</string>
     <string name="puzzle_number">Puzzle #%1$d</string>
