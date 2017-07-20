@@ -39,6 +39,19 @@
         android:layout_weight="1">
 
         <android.support.v7.widget.AppCompatButton
+            android:id="@+id/bt_restore_saved_games"
+            style="@style/Widget.AppCompat.Button.Borderless"
+            android:layout_height="wrap_content"
+            android:layout_span="2"
+            android:text="@string/google_play_games_saved_games"/>
+
+    </TableRow>
+
+    <TableRow
+        android:layout_height="match_parent"
+        android:layout_weight="1">
+
+        <android.support.v7.widget.AppCompatButton
             android:id="@+id/bt_sign_out"
             style="@style/Widget.AppCompat.Button.Borderless"
             android:layout_height="wrap_content"
