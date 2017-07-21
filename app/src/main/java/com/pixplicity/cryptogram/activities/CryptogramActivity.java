@@ -8,7 +8,6 @@ import android.graphics.Color;
 import android.graphics.PointF;
 import android.graphics.Rect;
 import android.net.Uri;
-import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.annotation.ColorInt;
@@ -53,7 +52,6 @@ import com.google.android.gms.drive.Drive;
 import com.google.android.gms.games.Games;
 import com.google.android.gms.games.GamesActivityResultCodes;
 import com.google.android.gms.games.Player;
-import com.google.android.gms.games.snapshot.Snapshot;
 import com.google.android.gms.games.snapshot.SnapshotMetadata;
 import com.google.android.gms.games.snapshot.Snapshots;
 import com.pixplicity.cryptogram.BuildConfig;
@@ -366,38 +364,37 @@ public class CryptogramActivity extends BaseActivity implements GoogleApiClient.
                     if (intent.hasExtra(Snapshots.EXTRA_SNAPSHOT_METADATA)) {
                         // Load a snapshot.
                         final SnapshotMetadata snapshotMetadata = intent.getParcelableExtra(Snapshots.EXTRA_SNAPSHOT_METADATA);
-                        new AsyncTask<Void, Void, Snapshot>() {
+                        PuzzleProvider.getInstance(this).load(mGoogleApiClient, snapshotMetadata,
+                                new SavegameManager.OnLoadResult() {
+                                    @Override
+                                    public void onLoadSuccess() {
+                                        final Puzzle puzzle = PuzzleProvider.getInstance(CryptogramActivity.this)
+                                                                             .getCurrent();
+                                        if (puzzle != null) {
+                                            puzzle.unload();
+                                        }
+                                        updateCryptogram(puzzle);
+                                        showSnackbar("Game loaded.");
+                                    }
 
-                            @Override
-                            protected Snapshot doInBackground(Void... voids) {
-                                return SavegameManager.load(mGoogleApiClient, snapshotMetadata.getUniqueName());
-                            }
-
-                            @Override
-                            protected void onPostExecute(Snapshot snapshot) {
-                                showSnackbar("Game loaded.");
-                            }
-
-                        }.execute();
+                                    @Override
+                                    public void onLoadFailure() {
+                                        showSnackbar("Sorry, the game state couldn't be restored.");
+                                    }
+                                });
                     } else if (intent.hasExtra(Snapshots.EXTRA_SNAPSHOT_NEW)) {
-                        // Create a new snapshot named with a unique string
-                        new AsyncTask<Void, Void, SnapshotMetadata>() {
+                        PuzzleProvider.getInstance(this).save(mGoogleApiClient,
+                                new SavegameManager.OnSaveResult() {
+                                    @Override
+                                    public void onSaveSuccess() {
+                                        showSnackbar("Game saved.");
+                                    }
 
-                            @Override
-                            protected SnapshotMetadata doInBackground(Void... voids) {
-                                return SavegameManager.save(mGoogleApiClient);
-                            }
-
-                            @Override
-                            protected void onPostExecute(SnapshotMetadata snapshot) {
-                                if (snapshot == null) {
-                                    showSnackbar("Game couldn't be saved at this time.");
-                                } else {
-                                    showSnackbar("Game saved.");
-                                }
-                            }
-
-                        }.execute();
+                                    @Override
+                                    public void onSaveFailure() {
+                                        showSnackbar("Game couldn't be saved at this time.");
+                                    }
+                                });
                     }
                 }
                 break;
@@ -771,6 +768,9 @@ public class CryptogramActivity extends BaseActivity implements GoogleApiClient.
             // Submit any achievements
             AchievementProvider.getInstance().onCryptogramCompleted(mGoogleApiClient);
         }
+
+        // Attempt to save the game to Google Play Saved Games
+        PuzzleProvider.getInstance(this).save(mGoogleApiClient, null);
     }
 
     @Override

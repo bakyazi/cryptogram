@@ -291,6 +291,10 @@ public class Puzzle {
         save();
     }
 
+    public void unload() {
+        mLoadedProgress = false;
+    }
+
     private void load() {
         if (!mLoadedProgress && !mIsMock) {
             mProgress = PuzzleProvider.getInstance(CryptogramApp.getInstance()).getProgress().get(mId);
@@ -308,7 +312,12 @@ public class Puzzle {
 
     public void save() {
         if (!mIsMock) {
-            PuzzleProvider.getInstance(CryptogramApp.getInstance()).setProgress(getProgress());
+            final PuzzleProvider puzzleProvider = PuzzleProvider.getInstance(CryptogramApp.getInstance());
+            final PuzzleProgress progress = getProgress();
+            if (progress != null) {
+                puzzleProvider.setProgress(progress.getId(), progress);
+                puzzleProvider.saveLocal();
+            }
         }
     }
 

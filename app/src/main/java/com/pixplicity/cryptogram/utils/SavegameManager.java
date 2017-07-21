@@ -1,7 +1,9 @@
 package com.pixplicity.cryptogram.utils;
 
+import android.content.Context;
 import android.support.annotation.NonNull;
 
+import com.crashlytics.android.Crashlytics;
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.games.Games;
 import com.google.android.gms.games.snapshot.Snapshot;
@@ -10,11 +12,22 @@ import com.google.android.gms.games.snapshot.SnapshotMetadataChange;
 import com.google.android.gms.games.snapshot.Snapshots;
 import com.pixplicity.cryptogram.R;
 
+import java.io.IOException;
 import java.math.BigInteger;
 import java.util.Random;
 import java.util.concurrent.TimeUnit;
 
 public class SavegameManager {
+
+    public interface OnSaveResult {
+        void onSaveSuccess();
+        void onSaveFailure();
+    }
+
+    public interface OnLoadResult {
+        void onLoadSuccess();
+        void onLoadFailure();
+    }
 
     private static Snapshot getSnapshot(GoogleApiClient googleApiClient,
                                         String snapshotName,
@@ -41,7 +54,15 @@ public class SavegameManager {
                                 String snapshotName) {
         final Snapshot snapshot = getSnapshot(googleApiClient, snapshotName, false);
         if (snapshot != null) {
-            PrefsUtils.setLastSavegameName(snapshotName);
+            final Context context = googleApiClient.getContext();
+            try {
+                final String progressJson = new String(snapshot.getSnapshotContents().readFully());
+                PuzzleProvider.getInstance(context).setProgressFromJson(progressJson);
+                PrefsUtils.setLastSavegameName(snapshotName);
+            } catch (IOException e) {
+                Crashlytics.logException(e);
+                return null;
+            }
         }
         return snapshot;
     }
@@ -57,13 +78,16 @@ public class SavegameManager {
             return null;
         }
 
+        final Context context = googleApiClient.getContext();
+
         // Set the data payload for the snapshot
-        final byte[] data = new byte[0];
+        String progressJson = PuzzleProvider.getInstance(context).getProgressJson();
+        final byte[] data = progressJson.getBytes();
         snapshot.getSnapshotContents().writeBytes(data);
 
         // Create the change operation
         SnapshotMetadataChange metadataChange = new SnapshotMetadataChange.Builder()
-                .setDescription(googleApiClient.getContext().getString(R.string.savegame_name, SystemUtils.getDeviceName()))
+                .setDescription(context.getString(R.string.savegame_name, SystemUtils.getDeviceName()))
                 .build();
 
         // Commit the operation
