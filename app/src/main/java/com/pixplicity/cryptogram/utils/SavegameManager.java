@@ -87,7 +87,7 @@ public class SavegameManager {
 
         // Create the change operation
         SnapshotMetadataChange metadataChange = new SnapshotMetadataChange.Builder()
-                .setDescription(context.getString(R.string.savegame_name, SystemUtils.getDeviceName()))
+                .setDescription(context.getString(R.string.saved_game_name, SystemUtils.getDeviceName()))
                 .build();
 
         // Commit the operation
