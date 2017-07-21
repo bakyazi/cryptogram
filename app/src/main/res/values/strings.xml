@@ -90,7 +90,7 @@
     <string name="google_play_games_sign_in">Sign in…</string>
     <string name="google_play_games_leaderboards">Leaderboard</string>
     <string name="google_play_games_achievements">Achievements</string>
-    <string name="google_play_games_saved_games">Restore saved games</string>
+    <string name="google_play_games_saved_games">Saved games</string>
     <string name="google_play_games_sign_out">Sign out</string>
     <string name="google_play_games_player_unknown">Anonymous</string>
 

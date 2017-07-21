@@ -1,5 +1,6 @@
 package com.pixplicity.cryptogram.activities;
 
+import android.app.ProgressDialog;
 import android.content.ActivityNotFoundException;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -360,26 +361,30 @@ public class CryptogramActivity extends BaseActivity implements GoogleApiClient.
                 }
             }
             case RC_SAVED_GAMES:
+                if (mDrawerLayout != null) {
+                    mDrawerLayout.closeDrawers();
+                }
                 if (intent != null) {
                     if (intent.hasExtra(Snapshots.EXTRA_SNAPSHOT_METADATA)) {
                         // Load a snapshot.
+                        final ProgressDialog pd = new ProgressDialog(this);
+                        pd.setMessage("Loading saved game...");
+                        pd.show();
                         final SnapshotMetadata snapshotMetadata = intent.getParcelableExtra(Snapshots.EXTRA_SNAPSHOT_METADATA);
                         PuzzleProvider.getInstance(this).load(mGoogleApiClient, snapshotMetadata,
                                 new SavegameManager.OnLoadResult() {
                                     @Override
                                     public void onLoadSuccess() {
-                                        final Puzzle puzzle = PuzzleProvider.getInstance(CryptogramActivity.this)
-                                                                             .getCurrent();
-                                        if (puzzle != null) {
-                                            puzzle.unload();
-                                        }
-                                        updateCryptogram(puzzle);
+                                        updateCryptogram(PuzzleProvider.getInstance(CryptogramActivity.this)
+                                                                       .getCurrent());
                                         showSnackbar("Game loaded.");
+                                        pd.dismiss();
                                     }
 
                                     @Override
                                     public void onLoadFailure() {
                                         showSnackbar("Sorry, the game state couldn't be restored.");
+                                        pd.dismiss();
                                     }
                                 });
                     } else if (intent.hasExtra(Snapshots.EXTRA_SNAPSHOT_NEW)) {
@@ -625,7 +630,7 @@ public class CryptogramActivity extends BaseActivity implements GoogleApiClient.
                 @Override
                 public void onClick(View view) {
                     dialog.dismiss();
-                    int maxNumberOfSavedGamesToShow = 1;
+                    int maxNumberOfSavedGamesToShow = 5;
                     Intent savedGamesIntent = Games.Snapshots.getSelectSnapshotIntent(mGoogleApiClient,
                             "See My Saves", true, true, maxNumberOfSavedGamesToShow);
                     startActivityForResult(savedGamesIntent, RC_SAVED_GAMES);

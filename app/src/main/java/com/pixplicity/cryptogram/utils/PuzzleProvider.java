@@ -17,7 +17,7 @@ import com.google.gson.JsonSyntaxException;
 import com.pixplicity.cryptogram.BuildConfig;
 import com.pixplicity.cryptogram.models.Puzzle;
 import com.pixplicity.cryptogram.models.PuzzleProgress;
-import com.pixplicity.cryptogram.models.PuzzleProgressList;
+import com.pixplicity.cryptogram.models.PuzzleProgressState;
 import com.pixplicity.cryptogram.views.CryptogramView;
 
 import java.io.IOException;
@@ -355,18 +355,34 @@ public class PuzzleProvider {
 
     public String getProgressJson() {
         SparseArray<PuzzleProgress> progressList = getProgress();
-        PuzzleProgressList resultList = new PuzzleProgressList();
+        PuzzleProgressState resultList = new PuzzleProgressState();
         for (int i = 0; i < progressList.size(); i++) {
-            resultList.add(progressList.valueAt(i));
+            resultList.addProgress(progressList.valueAt(i));
         }
+        resultList.setCurrentId(getIdFromIndex(getCurrentIndex()));
         return mGson.toJson(resultList);
     }
 
     public void setProgressFromJson(String json) {
-        PuzzleProgressList progressList = mGson.fromJson(json, PuzzleProgressList.class);
-        for (PuzzleProgress puzzleProgress : progressList) {
-            if (puzzleProgress != null) {
-                setProgress(puzzleProgress.getId(), puzzleProgress);
+        PuzzleProgressState state = mGson.fromJson(json, PuzzleProgressState.class);
+        if (state != null) {
+            for (PuzzleProgress puzzleProgress : state.getProgress()) {
+                if (puzzleProgress != null) {
+                    final int puzzleId = puzzleProgress.getId();
+                    setProgress(puzzleId, puzzleProgress);
+                    int index = getIndexFromId(puzzleId);
+                    if (index >= 0) {
+                        mPuzzles[index].unload();
+                    }
+                }
+            }
+            final Integer currentId = state.getCurrentId();
+            if (currentId != null) {
+                // Select the current puzzle by its ID
+                setCurrentId(currentId);
+            } else {
+                // Select the first puzzle
+                setCurrentIndex(0);
             }
         }
         saveLocal();
