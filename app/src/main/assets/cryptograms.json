@@ -82,6 +82,7 @@
     "text": "In the end, it’s not the years in your life that count. It’s the life in your years.",
     "author": "Abraham Lincoln",
     "topic": "Life",
+    "given": "L",
     "number": 9,
     "id": 6
   },
@@ -89,6 +90,7 @@
     "text": "Nothing is impos­sible, the word itself says “I’m pos­sible”!",
     "author": "Audrey Hepburn",
     "topic": "Inspirational",
+    "given": "S",
     "number": 10,
     "id": 8
   },
@@ -96,6 +98,7 @@
     "text": "The best pre­paration for tomor­row is doing your best today.",
     "author": "H. Jackson Brown, Jr.",
     "topic": "Inspirational",
+    "given": "A",
     "number": 11,
     "id": 9
   },
@@ -103,13 +106,15 @@
     "text": "Put your heart, mind, and soul into even your smallest acts. This is the secret of success.",
     "author": "Swami Sivananda",
     "topic": "Inspirational",
+    "given": "I",
     "number": 12,
     "id": 10
   },
   {
     "text": "The best and most beau­tiful things in the world cannot be seen or even touched — they must be felt with the heart.",
     "author": "Helen Keller",
-    "topic": "Inspirational"
+    "topic": "Inspirational",
+    "given": "B"
   },
   {
     "text": "Change your thoughts and you change your world.",
@@ -135,7 +140,8 @@
   {
     "text": "Believe you can and you’re halfway there.",
     "author": "Theodore Roosevelt",
-    "topic": "Inspirational"
+    "topic": "Inspirational",
+    "given": "V"
   },
   {
     "text": "Health is the greatest gift, content­ment the greatest wealth, faithful­ness the best relation­ship.",
