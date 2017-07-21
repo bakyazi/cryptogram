@@ -288,8 +288,16 @@ public class PuzzleProvider {
         mPuzzleProgress.put(puzzleId, progress);
     }
 
-    public void load(final GoogleApiClient googleApiClient, final SnapshotMetadata snapshotMetadata,
-                     final SavegameManager.OnLoadResult onLoadResult) {
+    public void load(@Nullable final GoogleApiClient googleApiClient,
+                     @NonNull final SnapshotMetadata snapshotMetadata,
+                     @Nullable final SavegameManager.OnLoadResult onLoadResult) {
+        if (googleApiClient == null || !googleApiClient.isConnected()) {
+            // No connection; cannot load
+            if (onLoadResult != null) {
+                onLoadResult.onLoadFailure();
+            }
+            return;
+        }
         new AsyncTask<Void, Void, Snapshot>() {
 
             @Override
@@ -315,8 +323,15 @@ public class PuzzleProvider {
         }.execute();
     }
 
-    public void save(final GoogleApiClient googleApiClient,
-                     final SavegameManager.OnSaveResult onSaveResult) {
+    public void save(@Nullable final GoogleApiClient googleApiClient,
+                     @Nullable final SavegameManager.OnSaveResult onSaveResult) {
+        if (googleApiClient == null || !googleApiClient.isConnected()) {
+            // No connection; cannot save
+            if (onSaveResult != null) {
+                onSaveResult.onSaveFailure();
+            }
+            return;
+        }
         // Create a new snapshot named with a unique string
         new AsyncTask<Void, Void, SnapshotMetadata>() {
 
