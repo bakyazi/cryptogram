@@ -10,7 +10,7 @@
     <string name="intro_done">Got it!</string>
 
     <string name="highlight_touch_input_title">Tap to input</string>
-    <string name="highlight_touch_input_description">You can now simply tap the puzzle to select a hint.</string>
+    <string name="highlight_touch_input_description">You can simply tap the puzzle to select a hint.</string>
 
     <string name="highlight_hyphenation_title">Hyphenation</string>
     <string name="highlight_hyphenation_description">Watch out for the hyphen! The word continues on the next line.</string>
@@ -62,6 +62,7 @@
     <string name="stats_time">Time elapsed:</string>
     <string name="stats_reveals">Characters revealed:</string>
     <string name="stats_score">Score:</string>
+    <string name="stats_practice">Practice puzzles don’t count towards your score or achievements.</string>
 
     <string name="stats_average_score_format" translatable="false">%1$.1f%%</string>
     <string name="stats_cumulative_score_format" translatable="false">%1$.0f</string>

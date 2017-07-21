@@ -183,6 +183,21 @@
 
                             </TableRow>
 
+                            <TableRow
+                                android:id="@+id/vg_stats_practice"
+                                android:layout_marginTop="8dp"
+                                android:visibility="gone">
+
+                                <android.support.v7.widget.AppCompatTextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_span="2"
+                                    android:text="@string/stats_practice"
+                                    android:textColor="@color/textLight"
+                                    android:textStyle="italic"/>
+
+                            </TableRow>
+
                         </TableLayout>
 
                     </com.pixplicity.cryptogram.views.CryptogramLayout>
@@ -191,7 +206,9 @@
 
             </LinearLayout>
 
-            <include layout="@layout/in_drawer"/>
+            <include
+                layout="@layout/in_drawer"
+                tools:visibility="gone"/>
 
         </android.support.v4.widget.DrawerLayout>
 

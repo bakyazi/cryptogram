@@ -153,6 +153,9 @@ public class CryptogramActivity extends BaseActivity implements GoogleApiClient.
     @BindView(R.id.tv_stats_score)
     protected TextView mTvStatsScore;
 
+    @BindView(R.id.vg_stats_practice)
+    protected ViewGroup mVgStatsPractice;
+
     private PuzzleAdapter mAdapter;
 
     private Rate mRate;
@@ -661,14 +664,17 @@ public class CryptogramActivity extends BaseActivity implements GoogleApiClient.
                 mTvStatsExcess.setText(String.valueOf(excessCount));
             }
             mTvStatsReveals.setText(String.valueOf(puzzle.getReveals()));
-            mVgStatsScore.setVisibility(View.GONE);
             Float score = puzzle.getScore();
             if (score != null) {
+                mVgStatsPractice.setVisibility(View.GONE);
                 mVgStatsScore.setVisibility(View.VISIBLE);
                 mTvStatsScore.setText(String.format(
                         Locale.ENGLISH,
                         "%.1f%%",
                         score * 100));
+            } else {
+                mVgStatsScore.setVisibility(View.GONE);
+                mVgStatsPractice.setVisibility(puzzle.isNoScore() ? View.VISIBLE : View.GONE);
             }
         } else {
             if (PrefsUtils.getShowHints() && puzzle.hasUserChars()) {
