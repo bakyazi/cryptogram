@@ -1,5 +1,6 @@
 package com.pixplicity.cryptogram.activities;
 
+import android.app.PendingIntent;
 import android.app.ProgressDialog;
 import android.content.ActivityNotFoundException;
 import android.content.DialogInterface;
@@ -46,8 +47,14 @@ import com.crashlytics.android.answers.LoginEvent;
 import com.crashlytics.android.answers.ShareEvent;
 import com.getkeepsafe.taptargetview.TapTarget;
 import com.getkeepsafe.taptargetview.TapTargetView;
+import com.google.android.gms.auth.api.Auth;
+import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
+import com.google.android.gms.auth.api.signin.GoogleSignInResult;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.api.GoogleApiClient;
+import com.google.android.gms.common.api.OptionalPendingResult;
+import com.google.android.gms.common.api.ResultCallback;
+import com.google.android.gms.common.api.Status;
 import com.google.android.gms.common.images.ImageManager;
 import com.google.android.gms.drive.Drive;
 import com.google.android.gms.games.Games;
@@ -84,13 +91,15 @@ import java.util.concurrent.TimeUnit;
 import butterknife.BindView;
 import butterknife.OnClick;
 
-public class CryptogramActivity extends BaseActivity implements GoogleApiClient.ConnectionCallbacks, GoogleApiClient.OnConnectionFailedListener {
+public class CryptogramActivity extends BaseActivity implements
+        GoogleApiClient.ConnectionCallbacks, GoogleApiClient.OnConnectionFailedListener {
 
     private static final String TAG = CryptogramActivity.class.getSimpleName();
 
     private static final int RC_UNUSED = 1000;
     private static final int RC_PLAY_GAMES = 1001;
     private static final int RC_SAVED_GAMES = 1002;
+    private static final int RC_SIGN_IN = 1003;
 
     private static final int ONBOARDING_PAGES = 2;
 
@@ -194,12 +203,18 @@ public class CryptogramActivity extends BaseActivity implements GoogleApiClient.
 
         final PuzzleProvider puzzleProvider = PuzzleProvider.getInstance(this);
 
+        // Basic Google sign-in
+        GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
+                .requestScopes(Games.SCOPE_GAMES, Drive.SCOPE_APPFOLDER)
+                .build();
+
         // Create the Google Api Client with access to Games
         mGoogleApiClient = new GoogleApiClient.Builder(this)
                 .addConnectionCallbacks(this)
                 .addOnConnectionFailedListener(this)
-                .addApi(Games.API).addScope(Games.SCOPE_GAMES)
-                .addApi(Drive.API).addScope(Drive.SCOPE_APPFOLDER)
+                .addApi(Auth.GOOGLE_SIGN_IN_API, gso)
+                .addApi(Games.API)
+                .addApi(Drive.API)
                 .build();
 
         mRate = new Rate.Builder(this)
@@ -282,7 +297,21 @@ public class CryptogramActivity extends BaseActivity implements GoogleApiClient.
     protected void onStart() {
         super.onStart();
 
-        mGoogleApiClient.connect();
+        if (true) {
+            OptionalPendingResult<GoogleSignInResult> opr = Auth.GoogleSignInApi.silentSignIn(mGoogleApiClient);
+            if (opr.isDone()) {
+                onGoogleSignInResult(opr.get());
+            } else {
+                opr.setResultCallback(new ResultCallback<GoogleSignInResult>() {
+                    @Override
+                    public void onResult(@NonNull GoogleSignInResult googleSignInResult) {
+                        onGoogleSignInResult(googleSignInResult);
+                    }
+                });
+            }
+        } else {
+            onGoogleSignIn(false);
+        }
 
         final PuzzleProvider puzzleProvider = PuzzleProvider.getInstance(this);
         Puzzle puzzle = puzzleProvider.getCurrent();
@@ -328,19 +357,28 @@ public class CryptogramActivity extends BaseActivity implements GoogleApiClient.
     }
 
     @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent intent) {
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         Log.d(TAG, "onActivityResult: " + requestCode);
-        super.onActivityResult(requestCode, resultCode, intent);
+        super.onActivityResult(requestCode, resultCode, data);
         switch (requestCode) {
+            case RC_SIGN_IN: {
+                GoogleSignInResult result = Auth.GoogleSignInApi.getSignInResultFromIntent(data);
+                if (result.isSuccess()) {
+                    // Note that we can obtain some basic account info here, but we're not interested in doing so
+                    onGoogleSignIn(mSignInClicked);
+                }
+            }
+            break;
             case RC_PLAY_GAMES: {
                 Log.d(TAG, "onActivityResult: resolution result");
+                boolean throughUi = mSignInClicked;
                 mSignInClicked = false;
                 mResolvingConnectionFailure = false;
                 switch (resultCode) {
                     case RESULT_OK: {
                         // Logged in
                         Answers.getInstance().logLogin(new LoginEvent().putSuccess(true));
-                        mGoogleApiClient.connect();
+                        onGoogleSignIn(throughUi);
                     }
                     break;
                     case GamesActivityResultCodes.RESULT_RECONNECT_REQUIRED: {
@@ -359,18 +397,20 @@ public class CryptogramActivity extends BaseActivity implements GoogleApiClient.
                         showGmsError(resultCode);
                     }
                 }
+                updateGooglePlayGames();
             }
-            case RC_SAVED_GAMES:
+            break;
+            case RC_SAVED_GAMES: {
                 if (mDrawerLayout != null) {
                     mDrawerLayout.closeDrawers();
                 }
-                if (intent != null) {
-                    if (intent.hasExtra(Snapshots.EXTRA_SNAPSHOT_METADATA)) {
+                if (data != null) {
+                    if (data.hasExtra(Snapshots.EXTRA_SNAPSHOT_METADATA)) {
                         // Load a snapshot.
                         final ProgressDialog pd = new ProgressDialog(this);
-                        pd.setMessage("Loading saved game...");
+                        pd.setMessage(getString(R.string.saved_game_loading));
                         pd.show();
-                        final SnapshotMetadata snapshotMetadata = intent.getParcelableExtra(Snapshots.EXTRA_SNAPSHOT_METADATA);
+                        final SnapshotMetadata snapshotMetadata = data.getParcelableExtra(Snapshots.EXTRA_SNAPSHOT_METADATA);
                         PuzzleProvider.getInstance(this).load(mGoogleApiClient, snapshotMetadata,
                                 new SavegameManager.OnLoadResult() {
                                     @Override
@@ -387,7 +427,7 @@ public class CryptogramActivity extends BaseActivity implements GoogleApiClient.
                                         pd.dismiss();
                                     }
                                 });
-                    } else if (intent.hasExtra(Snapshots.EXTRA_SNAPSHOT_NEW)) {
+                    } else if (data.hasExtra(Snapshots.EXTRA_SNAPSHOT_NEW)) {
                         PuzzleProvider.getInstance(this).save(mGoogleApiClient,
                                 new SavegameManager.OnSaveResult() {
                                     @Override
@@ -402,7 +442,8 @@ public class CryptogramActivity extends BaseActivity implements GoogleApiClient.
                                 });
                     }
                 }
-                break;
+            }
+            break;
         }
     }
 
@@ -586,7 +627,7 @@ public class CryptogramActivity extends BaseActivity implements GoogleApiClient.
 
     @OnClick(R.id.vg_google_play_games)
     protected void onClickGooglePlayGames() {
-        if (mGoogleApiClient.isConnected()) {
+        if (hasGooglePlayGames()) {
             // Connected; show gameplay options
             View dialogView = LayoutInflater.from(this).inflate(R.layout.dialog_google_play_games, null);
             final AlertDialog dialog = new AlertDialog.Builder(this)
@@ -653,7 +694,8 @@ public class CryptogramActivity extends BaseActivity implements GoogleApiClient.
         } else {
             // start the sign-in flow
             mSignInClicked = true;
-            mGoogleApiClient.connect();
+            Intent signInIntent = Auth.GoogleSignInApi.getSignInIntent(mGoogleApiClient);
+            startActivityForResult(signInIntent, RC_SIGN_IN);
         }
     }
 
@@ -750,7 +792,7 @@ public class CryptogramActivity extends BaseActivity implements GoogleApiClient.
 
     @Subscribe
     public void onPuzzleStarted(PuzzleEvent.PuzzleStartedEvent event) {
-        if (mGoogleApiClient.isConnected()) {
+        if (hasGooglePlayGames()) {
             // Submit any achievements
             AchievementProvider.getInstance().onCryptogramStart(mGoogleApiClient);
         }
@@ -766,7 +808,7 @@ public class CryptogramActivity extends BaseActivity implements GoogleApiClient.
         // Allow the rating dialog to appear if needed
         mRate.check();
 
-        if (mGoogleApiClient.isConnected()) {
+        if (hasGooglePlayGames()) {
             // Submit score
             LeaderboardProvider.getInstance().submit(mGoogleApiClient);
 
@@ -1152,6 +1194,26 @@ public class CryptogramActivity extends BaseActivity implements GoogleApiClient.
         updateCryptogram(puzzle);
     }
 
+    private void onGoogleSignIn(boolean throughUi) {
+        if (throughUi) {
+            if (mDrawerLayout != null) {
+                mDrawerLayout.openDrawer(GravityCompat.START);
+            }
+        }
+        mGoogleApiClient.connect(GoogleApiClient.SIGN_IN_MODE_OPTIONAL);
+        updateGooglePlayGames();
+    }
+
+    private void onGoogleSignInResult(@NonNull GoogleSignInResult googleSignInResult) {
+        if (googleSignInResult.isSuccess()) {
+            // Now attempt to connect APIs
+            onGoogleSignIn(false);
+        } else {
+            final Status status = googleSignInResult.getStatus();
+            onConnectionFailed(status.getStatusCode(), status.hasResolution(), status.getResolution());
+        }
+    }
+
     // Google Play Services
     @Override
     public void onConnected(@Nullable Bundle bundle) {
@@ -1160,7 +1222,7 @@ public class CryptogramActivity extends BaseActivity implements GoogleApiClient.
 
         updateGooglePlayGames();
 
-        if (mGoogleApiClient.isConnected()) {
+        if (hasGooglePlayGames()) {
             // Submit score
             LeaderboardProvider.getInstance().submit(mGoogleApiClient);
 
@@ -1173,27 +1235,33 @@ public class CryptogramActivity extends BaseActivity implements GoogleApiClient.
     @Override
     public void onConnectionSuspended(int i) {
         Log.d(TAG, "onConnectionSuspended(): attempting to connect");
-        mGoogleApiClient.connect();
+        onGoogleSignIn(false);
     }
 
     @Override
     public void onConnectionFailed(@NonNull ConnectionResult connectionResult) {
-        Log.d(TAG, "onConnectionFailed: attempting to resolve");
+        Log.d(TAG, "onConnectionFailed: " + connectionResult);
+        onConnectionFailed(connectionResult.getErrorCode(), connectionResult.hasResolution(), connectionResult.getResolution());
+    }
+
+    private void onConnectionFailed(int errorCode, boolean hasResolution,
+                                    @Nullable PendingIntent pendingIntent) {
+        Log.d(TAG, "onConnectionFailed: attempting to resolve " + errorCode);
         if (mResolvingConnectionFailure) {
             Log.d(TAG, "onConnectionFailed: already resolving");
             return;
         }
 
-        mLastConnectionError = connectionResult.getErrorCode();
+        mLastConnectionError = errorCode;
         if (mSignInClicked || mAutoStartSignInFlow) {
             mAutoStartSignInFlow = false;
             mSignInClicked = false;
             mResolvingConnectionFailure = true;
             boolean noResolution = true;
-            if (connectionResult.hasResolution()) {
+            if (hasResolution && pendingIntent != null) {
                 try {
                     Log.d(TAG, "onConnectionFailed: offering resolution");
-                    connectionResult.startResolutionForResult(this, RC_PLAY_GAMES);
+                    startIntentSenderForResult(pendingIntent.getIntentSender(), RC_PLAY_GAMES, (Intent) null, 0, 0, 0);
                     noResolution = false;
                 } catch (IntentSender.SendIntentException e) {
                     Crashlytics.logException(e);
@@ -1201,7 +1269,7 @@ public class CryptogramActivity extends BaseActivity implements GoogleApiClient.
                 }
             }
             if (noResolution) {
-                Log.e(TAG, "onConnectionFailed: no resolution for: " + connectionResult.toString());
+                Log.e(TAG, "onConnectionFailed: no resolution for: " + errorCode);
                 mResolvingConnectionFailure = false;
                 showGmsError(0);
             }
@@ -1210,7 +1278,7 @@ public class CryptogramActivity extends BaseActivity implements GoogleApiClient.
     }
 
     private void updateGooglePlayGames() {
-        if (mGoogleApiClient.isConnected()) {
+        if (hasGooglePlayGames()) {
             // Set the greeting appropriately on main menu
             Player p = Games.Players.getCurrentPlayer(mGoogleApiClient);
             String displayName;
@@ -1239,6 +1307,10 @@ public class CryptogramActivity extends BaseActivity implements GoogleApiClient.
             mTvGooglePlayGamesName.setVisibility(View.GONE);
             mVgGooglePlayGamesActions.setVisibility(View.GONE);
         }
+    }
+
+    private boolean hasGooglePlayGames() {
+        return mGoogleApiClient.isConnected() && mGoogleApiClient.hasConnectedApi(Games.API);
     }
 
     private void showGmsError(int errorCode) {
