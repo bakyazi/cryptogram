@@ -259,6 +259,9 @@ public class PuzzleProgress {
         if (mCompleted == null || !mCompleted) {
             mCompleted = true;
             HashMap<Character, Character> userChars = getUserCharsMapping(puzzle);
+            if (userChars.size() <= 5) {
+                throw new IllegalStateException("User character mapping has an unexpectedly small size (that's what she said)");
+            }
             for (Character character : userChars.keySet()) {
                 // In order to be correct, the key and value must be identical
                 if (character != null && character != userChars.get(character) && !puzzle.isGiven(character)) {
@@ -433,6 +436,10 @@ public class PuzzleProgress {
                 i.remove();
             }
         }
+        if (mStartTime == null || mStopTime == null) {
+            // This is a hacky fix for dealing with broken completion states
+            mCompleted = false;
+        }
         ArrayList<Character> characterList = getCharacterList(puzzle);
         HashMap<Character, Character> charMapping = getCharMapping(puzzle);
         Log.w(TAG, "check for invalid mappings in " + puzzle);
@@ -441,6 +448,7 @@ public class PuzzleProgress {
                 // Whoops! Puzzle has a broken character mapping
                 mUserChars = null;
                 mCharMapping = null;
+                mCompleted = false;
                 getCharMapping(puzzle);
                 Log.w(TAG, "invalid character mapping for " + puzzle + "; reset mappings");
                 break;
