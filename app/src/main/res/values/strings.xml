@@ -86,7 +86,7 @@
 
     <string name="go_to_puzzle_content">Please enter the puzzle number to go to:</string>
 
-    <string name="google_play_games_welcome">Sign in to Google Play Games to track your progress and achievements</string>
+    <string name="google_play_games_welcome">Sign in to Google Play Games to save your progress and compare leaderboards and achievements</string>
     <string name="google_play_games_sign_in">Sign in…</string>
     <string name="google_play_games_leaderboards">Leaderboard</string>
     <string name="google_play_games_achievements">Achievements</string>
