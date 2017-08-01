@@ -260,13 +260,16 @@ public class PuzzleProgress {
             mCompleted = true;
             HashMap<Character, Character> userChars = getUserCharsMapping(puzzle);
             if (userChars.size() <= 5) {
-                throw new IllegalStateException("User character mapping has an unexpectedly small size (that's what she said)");
-            }
-            for (Character character : userChars.keySet()) {
-                // In order to be correct, the key and value must be identical
-                if (character != null && character != userChars.get(character) && !puzzle.isGiven(character)) {
-                    mCompleted = false;
-                    break;
+                Log.w(TAG, "User character mapping has an unexpectedly small size (that's what she said)");
+                userChars.clear();
+                mCompleted = false;
+            } else {
+                for (Character character : userChars.keySet()) {
+                    // In order to be correct, the key and value must be identical
+                    if (character != null && character != userChars.get(character) && !puzzle.isGiven(character)) {
+                        mCompleted = false;
+                        break;
+                    }
                 }
             }
             if (mCompleted) {
