@@ -11,6 +11,7 @@ import com.crashlytics.android.Crashlytics;
 import com.google.gson.Gson;
 import com.google.gson.JsonSyntaxException;
 import com.pixplicity.cryptogram.BuildConfig;
+import com.pixplicity.cryptogram.R;
 import com.pixplicity.cryptogram.models.Puzzle;
 import com.pixplicity.cryptogram.models.PuzzleProgress;
 import com.pixplicity.cryptogram.utils.PrefsUtils;
@@ -29,7 +30,7 @@ import java.util.LinkedList;
 import java.util.Random;
 import java.util.Set;
 
-public class PuzzleProvider {
+public class PuzzleProvider extends AssetProvider {
 
     private static final String TAG = PuzzleProvider.class.getSimpleName();
 
@@ -44,39 +45,37 @@ public class PuzzleProvider {
 
     private int mLastPuzzleId = -1;
 
-    private final Gson mGson = new Gson();
+    private static final Gson mGson = new Gson();
     private final Random mRandom = new Random();
     private ArrayList<Integer> mRandomIndices;
 
     @NonNull
     public static PuzzleProvider getInstance(Context context) {
         if (sInstance == null) {
-            try {
-                sInstance = new PuzzleProvider(context);
-            } catch (IOException e) {
-                Log.e(TAG, "could not read puzzle file", e);
-                Toast.makeText(context, "Could not find any puzzles", Toast.LENGTH_LONG).show();
-            }
+            sInstance = new PuzzleProvider(context);
         }
         return sInstance;
     }
 
-    private PuzzleProvider(@Nullable Context context) throws IOException {
-        if (context != null) {
-            InputStream is = context.getAssets().open(ASSET_FILENAME);
-            readStream(is);
-        } else {
-            InputStream is = this.getClass().getClassLoader().getResourceAsStream("assets/" + ASSET_FILENAME);
-            if (is != null) {
-                readStream(is);
-                is.close();
-            }
-        }
+    private PuzzleProvider(@Nullable Context context) {
+        super(context);
     }
 
-    private void readStream(InputStream is) {
+    @NonNull
+    @Override
+    public String getAssetFilename() {
+        return ASSET_FILENAME;
+    }
+
+    @Override
+    protected void onLoadFailure(Context context, IOException e) {
+        Toast.makeText(context, R.string.error_puzzles_load_failure, Toast.LENGTH_LONG).show();
+    }
+
+    @Override
+    protected void onLoad(Context context, InputStream is) {
         long start = System.nanoTime();
-        mPuzzles = mGson.fromJson(new InputStreamReader(is), Puzzle[].class);
+        mPuzzles = GsonProvider.getGson().fromJson(new InputStreamReader(is), Puzzle[].class);
         if (BuildConfig.DEBUG) {
             Log.d(TAG, String.format("readStream: parsed Json in %.2fms", (System.nanoTime() - start) / 1000000f));
             start = System.nanoTime();
