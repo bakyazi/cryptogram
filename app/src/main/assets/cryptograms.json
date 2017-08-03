@@ -3434,7 +3434,7 @@
     "topic": "Happiness"
   },
   {
-    "text": "I think and think and think, I‘ve thought myself out of happiness one million times, but never once into it.",
+    "text": "I think and think and think, I’ve thought myself out of happiness one million times, but never once into it.",
     "author": "Jonathan Safran Foer",
     "topic": "Happiness"
   },
@@ -3858,5 +3858,132 @@
     "text": "In whose delusional mind is democracy made better by letting wealthier people control more of it?",
     "author": "Jon Stewart",
     "topic": "Governance"
+  },
+  {
+    "text": "Everybody is identical in their secret unspoken belief that way deep down they are different from everyone else.",
+    "author": "David Foster Wallace",
+    "topic": "Individuality"
+  },
+  {
+    "text": "You will become way less concerned with what other people think of you when you realize how seldom they do.",
+    "author": "David Foster Wallace",
+    "topic": "Anxiety"
+  },
+  {
+    "text": "Worrying is carrying tomorrow’s load with today’s strength- carrying two days at once. Worrying doesn’t empty tomorrow of its sorrow, it empties today of its strength.",
+    "author": "Corrie ten Boom",
+    "topic": "Anxiety"
+  },
+  {
+    "text": "If you meet a loner, no matter what they tell you, it’s not because they enjoy solitude. It’s because they have tried to blend into the world before, and people continue to disappoint them.",
+    "author": "Jodi Picoult",
+    "topic": "Loneliness"
+  },
+  {
+    "text": "The loneliest moment in someone’s life is when they are watching their whole world fall apart, and all they can do is stare blankly.",
+    "author": "F. Scott Fitzgerald",
+    "topic": "Loneliness"
+  },
+  {
+    "text": "It has not been in the pursuit of pleasure that I have periled life and reputation and reason. It has been the desperate attempt to escape from torturing memories, from a sense of insupportable loneliness and a dread of some strange impending doom.",
+    "author": "Edgar Allan Poe",
+    "topic": "Loneliness"
+  },
+  {
+    "text": "The most terrible poverty is loneliness, and the feeling of being unloved.",
+    "author": "Mother Teresa",
+    "topic": "Loneliness"
+  },
+  {
+    "text": "Life is loneliness, despite all the opiates, despite the shrill tinsel gaiety of ‘parties’ with no purpose, despite the false grinning faces we all wear.",
+    "author": "Sylvia Plath",
+    "topic": "Loneliness"
+  },
+  {
+    "text": "The loneliness of the soul in its appalling self-consciousness is horrible and overpowering.",
+    "author": "Sylvia Plath",
+    "topic": "Loneliness"
+  },
+  {
+    "text": "When you’re surrounded by all these people, it can be lonelier than when you’re by yourself. You can be in a huge crowd, but if you don’t feel like you can trust anyone or talk to anybody, you feel like you’re really alone.",
+    "author": "Fiona Apple",
+    "topic": "Loneliness"
+  },
+  {
+    "text": "Blessed is he who expects nothing, for he shall never be disappointed.",
+    "author": "Alexander Pope",
+    "topic": "Disappointment",
+    "given": "H"
+  },
+  {
+    "text": "Twenty years from now you will be more disappointed by the things that you didn’t do than by the ones you did do. So throw off the bowlines. Sail away from the safe harbor. Catch the trade winds in your sails. Explore. Dream. Discover.",
+    "author": "H. Jackson Brown Jr.",
+    "topic": "Dreaming"
+  },
+  {
+    "text": "There comes a time when you look into the mirror and you realize that what you see is all that you will ever be. And then you accept it. Or you kill yourself. Or you stop looking in mirrors.",
+    "author": "Tennessee Williams",
+    "topic": "Acceptance"
+  },
+  {
+    "text": "The sun was shining, the sky a merciless blue. It was only eleven in the morning but I had been awake since three twenty. I was in bed because, as usual, I could think of nowhere else to go. I said that I was feeling low. Low is the depressive’s euphemism for despair.",
+    "author": "Sally Brampton",
+    "topic": "Despair"
+  },
+  {
+    "text": "Where is home? I feel a sense, always, of trying to find my way back to a place that doesn’t exist.",
+    "author": "Sally Brampton",
+    "topic": "Depression"
+  },
+  {
+    "text": "Why would anyone want us? We don’t even want ourselves. Sometimes, we try to drive the people who love us away. Not because we don’t want them with us, but because we cannot bear for them to see what we have become.",
+    "author": "Sally Brampton",
+    "topic": "Depression"
+  },
+  {
+    "text": "What do you do with a self that is no longer your self? If you don’t know who you are, how do you go on living? If you cannot live as yourself, who and what is it that you are living for?",
+    "author": "Sally Brampton",
+    "topic": "Depression"
+  },
+  {
+    "text": "The greatest danger, that of losing one’s own self, may pass off as quietly as if it were nothing; every other loss, that of an arm, a leg, five dollars, a wife, is sure to be noticed.",
+    "author": "Søren Kierkegaard",
+    "topic": "Despair"
+  },
+  {
+    "text": "A human being can survive almost anything, as long as she sees the end in sight. But depression is so insidious, and it compounds daily, that it’s impossible to ever see the end.",
+    "author": "Elizabeth Wurtzel",
+    "topic": "Despair"
+  },
+  {
+    "text": "Let them think what they liked, but I didn’t mean to drown myself. I meant to swim till I sank -- but that’s not the same thing.",
+    "author": "Joseph Conrad",
+    "topic": "Despair"
+  },
+  {
+    "text": "There is nothing in this world to which every man has a more unassailable title than to his own life and person.",
+    "author": "Arthur Schopenhauer",
+    "topic": "Despair"
+  },
+  {
+    "text": "Depression is a paralysis of hope. Try never to abandon hope for if you do, hope will surely try to abandon you.",
+    "author": "Sally Brampton",
+    "topic": "Hope",
+    "given": "T"
+  },
+  {
+    "text": "When you have spent long years in the dark, there is joy in seeing the light and pleasure, above all, in the ordinary.",
+    "author": "Sally Brampton",
+    "topic": "Joy"
+  },
+  {
+    "text": "I often find myself grateful for the comfort of strangers; a man who gave up his seat for me on the bus, a woman who helped me out with a heavy shopping bag. Remembering small acts of kindness puts the world in a finer, sweeter order.",
+    "author": "Sally Brampton",
+    "topic": "Kindness"
+  },
+  {
+    "text": "If what I feel were equally distributed to the whole human family, there would not be a cheerful face on earth. Whether I shall ever be better I cannot tell; I awfully forbode I shall not. To remain as I am is impossible. I must die or be better.",
+    "author": "Sally Brampton",
+    "topic": "Depression"
   }
 ]
