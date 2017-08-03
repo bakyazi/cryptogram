@@ -6,7 +6,7 @@ import android.util.Log;
 import com.pixplicity.cryptogram.models.Puzzle;
 import com.pixplicity.cryptogram.models.PuzzleProgress;
 import com.pixplicity.cryptogram.stringsimilarity.Levenshtein;
-import com.pixplicity.cryptogram.utils.PuzzleProvider;
+import com.pixplicity.cryptogram.providers.PuzzleProvider;
 import com.pixplicity.cryptogram.views.CryptogramView;
 
 import org.junit.Before;

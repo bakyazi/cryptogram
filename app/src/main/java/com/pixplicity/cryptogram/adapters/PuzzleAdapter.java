@@ -10,7 +10,7 @@ import android.widget.TextView;
 
 import com.pixplicity.cryptogram.R;
 import com.pixplicity.cryptogram.models.Puzzle;
-import com.pixplicity.cryptogram.utils.PuzzleProvider;
+import com.pixplicity.cryptogram.providers.PuzzleProvider;
 import com.pixplicity.cryptogram.utils.PrefsUtils;
 
 import butterknife.BindView;

@@ -1,4 +1,4 @@
-package com.pixplicity.cryptogram.utils;
+package com.pixplicity.cryptogram.providers;
 
 import android.content.Context;
 import android.support.annotation.NonNull;
@@ -13,6 +13,7 @@ import com.google.gson.JsonSyntaxException;
 import com.pixplicity.cryptogram.BuildConfig;
 import com.pixplicity.cryptogram.models.Puzzle;
 import com.pixplicity.cryptogram.models.PuzzleProgress;
+import com.pixplicity.cryptogram.utils.PrefsUtils;
 import com.pixplicity.cryptogram.views.CryptogramView;
 
 import java.io.IOException;

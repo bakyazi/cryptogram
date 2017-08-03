@@ -9,6 +9,7 @@ import com.google.android.gms.games.Games;
 import com.pixplicity.cryptogram.CryptogramApp;
 import com.pixplicity.cryptogram.R;
 import com.pixplicity.cryptogram.models.Puzzle;
+import com.pixplicity.cryptogram.providers.PuzzleProvider;
 import com.pixplicity.easyprefs.library.Prefs;
 
 import java.util.Calendar;

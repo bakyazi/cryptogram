@@ -6,6 +6,7 @@ import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.games.Games;
 import com.pixplicity.cryptogram.CryptogramApp;
 import com.pixplicity.cryptogram.R;
+import com.pixplicity.cryptogram.providers.PuzzleProvider;
 
 public class LeaderboardProvider {
 

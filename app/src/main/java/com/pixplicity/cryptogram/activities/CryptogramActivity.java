@@ -61,7 +61,7 @@ import com.pixplicity.cryptogram.utils.AchievementProvider;
 import com.pixplicity.cryptogram.utils.EventProvider;
 import com.pixplicity.cryptogram.utils.LeaderboardProvider;
 import com.pixplicity.cryptogram.utils.PrefsUtils;
-import com.pixplicity.cryptogram.utils.PuzzleProvider;
+import com.pixplicity.cryptogram.providers.PuzzleProvider;
 import com.pixplicity.cryptogram.utils.StringUtils;
 import com.pixplicity.cryptogram.utils.StyleUtils;
 import com.pixplicity.cryptogram.views.CryptogramLayout;

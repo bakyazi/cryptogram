@@ -1,0 +1,22 @@
+[
+  {
+    "name": "Inspirational & motivational",
+    "description": "Impel and motivate yourself with inspirational and motivational words from those who have experienced life.",
+    "topics": "inspirational|motivational|life"
+  },
+  {
+    "name": "Inspirational & motivational",
+    "description": "Whether it brings happiness and meaning or anguish and pain, love is an essential part of living. Love gives our lives contrast, for without it, life is a dull shade of grey. These quotes are spoken from both those in its warm embrace, and those in the sorrow of its departure.",
+    "topics": "love"
+  },
+  {
+    "name": "Optimism",
+    "description": "A positive outlook on life is key to overcoming hurdles and finding long-lasting happiness. Whether finding yourself in the service of others, seeking joy in small things or enjoying the beauty of the world and the kindness of others, these quotes inspire optimism.",
+    "topics": "optimism|joy|beauty|kindness"
+  },
+  {
+    "name": "Depression & despair",
+    "description": "Depression is a mental illness often gone undiagnosed and untreated. Once it grasps you, you're sucked in to a whirlpool of despair. If you identify with these thoughts, take action to talk to somebody. Sally Brampton's <em>Shoot the Damn Dog: A Memoir of Depression<em> is a fantastic read to take consolation that you're not alone in your feelings and there is hope for an escape.",
+    "topics": "depression|despair|loneliness"
+  }
+]

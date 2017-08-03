@@ -7,7 +7,7 @@ import android.support.annotation.Nullable;
 import com.google.gson.annotations.SerializedName;
 import com.pixplicity.cryptogram.CryptogramApp;
 import com.pixplicity.cryptogram.R;
-import com.pixplicity.cryptogram.utils.PuzzleProvider;
+import com.pixplicity.cryptogram.providers.PuzzleProvider;
 import com.pixplicity.cryptogram.utils.StringUtils;
 
 import java.util.ArrayList;
