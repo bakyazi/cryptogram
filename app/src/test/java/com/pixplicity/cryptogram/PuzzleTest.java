@@ -92,7 +92,7 @@ public class PuzzleTest {
                     errors.add("Contains single quote; replace with '“' or '”': " + puzzle);
                 }
                 // Ensure there aren't simple hyphens (replace with —)
-                if (text.contains(" - ")) {
+                if (text.contains(" - ") || text.contains("--")) {
                     errors.add("Contains simple hyphen; replace with '—': " + puzzle);
                 }
                 // Ensure em dashes are surrounded with spaces
