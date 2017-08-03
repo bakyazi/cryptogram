@@ -85,7 +85,7 @@ public class PuzzleTest {
             } else {
                 // Ensure there aren't single quotes (replace with ’)
                 if (text.indexOf('\'') >= 0) {
-                    errors.add("Contains single quote; replace with '’': " + puzzle);
+                    errors.add("Contains single quote; replace with '‘' or '’': " + puzzle);
                 }
                 // Ensure there aren't single quotes (replace with “/”)
                 if (text.indexOf('"') >= 0) {
