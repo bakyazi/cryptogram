@@ -119,23 +119,26 @@
   {
     "text": "Change your thoughts and you change your world.",
     "author": "Norman Vincent Peale",
-    "topic": "Inspirational"
+    "topic": "Inspirational",
+    "given": "AY"
   },
   {
     "text": "I can’t change the direc­tion of the wind, but I can adjust my sails to always reach my destin­ation.",
     "author": "Jimmy Dean",
-    "topic": "Inspirational"
+    "topic": "Inspirational",
+    "given": "Y"
   },
   {
     "text": "What we think, we become.",
     "author": "Buddha",
-    "given": "W",
-    "topic": "Inspirational"
+    "topic": "Inspirational",
+    "given": "W"
   },
   {
     "text": "It is during our darkest moments that we must focus to see the light.",
     "author": "Aristotle Onassis",
-    "topic": "Inspirational"
+    "topic": "Inspirational",
+    "given": "E"
   },
   {
     "text": "Believe you can and you’re halfway there.",
@@ -146,22 +149,26 @@
   {
     "text": "Health is the greatest gift, content­ment the greatest wealth, faithful­ness the best relation­ship.",
     "author": "Buddha",
-    "topic": "Inspirational"
+    "topic": "Inspirational",
+    "given": "H"
   },
   {
     "text": "A flower cannot blossom without sunshine, and man cannot live without love.",
     "author": "Max Muller",
-    "topic": "Love"
+    "topic": "Love",
+    "given": "A"
   },
   {
     "text": "We waste time looking for the perfect lover, instead of creating the perfect love.",
     "author": "Tom Robbins",
-    "topic": "Love"
+    "topic": "Love",
+    "given": "H"
   },
   {
     "text": "’Tis better to have loved and lost than never to have loved at all.",
     "author": "Alfred Lord Tennyson",
-    "topic": "Love"
+    "topic": "Love",
+    "given": "IT"
   },
   {
     "text": "There can be no deep disap­point­ment where there is not deep love.",
@@ -2985,7 +2992,7 @@
     "topic": "Motivational"
   },
   {
-    "text": "The most sophisticated people I know--inside they are all children.",
+    "text": "The most sophisticated people I know — inside they are all children.",
     "author": "Jim Henson",
     "topic": "Happiness"
   },
@@ -3452,7 +3459,7 @@
   {
     "text": "I don’t think of all the misery, but of the beauty that still remains.",
     "author": "Anne Frank",
-    "topic": "Joy"
+    "topic": "Optimism"
   },
   {
     "text": "Sometimes your joy is the source of your smile, but sometimes your smile can be the source of your joy.",
@@ -3956,7 +3963,7 @@
     "topic": "Despair"
   },
   {
-    "text": "Let them think what they liked, but I didn’t mean to drown myself. I meant to swim till I sank -- but that’s not the same thing.",
+    "text": "Let them think what they liked, but I didn’t mean to drown myself. I meant to swim till I sank — but that’s not the same thing.",
     "author": "Joseph Conrad",
     "topic": "Despair"
   },
@@ -3968,7 +3975,7 @@
   {
     "text": "Depression is a paralysis of hope. Try never to abandon hope for if you do, hope will surely try to abandon you.",
     "author": "Sally Brampton",
-    "topic": "Hope",
+    "topic": "Depression",
     "given": "T"
   },
   {
@@ -3984,6 +3991,26 @@
   {
     "text": "If what I feel were equally distributed to the whole human family, there would not be a cheerful face on earth. Whether I shall ever be better I cannot tell; I awfully forbode I shall not. To remain as I am is impossible. I must die or be better.",
     "author": "Sally Brampton",
+    "topic": "Depression"
+  },
+  {
+    "text": "The decision-making of daily life involves not, as in normal affairs, shifting from one annoying situation to another less annoying- or from discomfort to relative comfort, or from boredom to activity- but moving from pain to pain. One does not abandon, even briefly, one’s bed of nails, but is attached to it wherever one goes.",
+    "author": "William Styron",
+    "topic": "Depression"
+  },
+  {
+    "text": "The pain is unrelenting, and what makes the condition intolerable is the foreknowledge that no remedy will come — not in a day, an hour, a month, or a minute. If there is mild relief, one knows that it is only temporary; more pain will follow.",
+    "author": "William Styron",
+    "topic": "Depression"
+  },
+  {
+    "text": "There he must, despite the anguish devouring his brain, present a face approximating the one that is associated with ordinary events and companionship. He must try to utter small talk, and be responsive to questions, and knowingly nod and frown and, God help him, even smile.",
+    "author": "William Styron",
+    "topic": "Depression"
+  },
+  {
+    "text": "My brain had begun to endure its familiar siege: panic and dislocation, and a sense that my thought processes were being engulfed by a toxic and unnameable tide that obliterated any enjoyable response to the living world.",
+    "author": "William Styron",
     "topic": "Depression"
   }
 ]
