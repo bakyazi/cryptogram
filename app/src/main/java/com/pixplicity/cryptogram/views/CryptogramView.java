@@ -245,7 +245,16 @@ public class CryptogramView extends AppCompatTextView {
     @Override
     public InputConnection onCreateInputConnection(EditorInfo outAttrs) {
         outAttrs.inputType = SimpleInputConnection.INPUT_TYPE;
+        if (SimpleInputConnection.hasFaultyIme(getContext())) {
+            outAttrs.inputType |= SimpleInputConnection.INPUT_TYPE_FOR_FAULTY_IME;
+        }
         outAttrs.imeOptions = EditorInfo.IME_ACTION_NEXT | EditorInfo.IME_FLAG_NO_EXTRACT_UI;
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
+            outAttrs.imeOptions |= EditorInfo.IME_FLAG_FORCE_ASCII;
+        }
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            outAttrs.imeOptions |= EditorInfo.IME_FLAG_NO_PERSONALIZED_LEARNING;
+        }
         return new SimpleInputConnection(this);
     }
 

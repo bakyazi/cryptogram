@@ -67,6 +67,7 @@
 
                         <com.pixplicity.cryptogram.views.CryptogramView
                             android:id="@+id/cryptogram"
+                            android:inputType="text|textNoSuggestions"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"/>
 

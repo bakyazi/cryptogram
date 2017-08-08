@@ -18,6 +18,7 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.inputmethod.InputMethodInfo;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -25,6 +26,7 @@ import android.widget.Toast;
 
 import com.pixplicity.cryptogram.R;
 import com.pixplicity.cryptogram.utils.HtmlCompat;
+import com.pixplicity.cryptogram.views.SimpleInputConnection;
 
 import butterknife.BindView;
 
@@ -150,7 +152,9 @@ public class AboutFragment extends BaseFragment {
                         "mailto", FEEDBACK_EMAIL, null));
                 intent.putExtra(Intent.EXTRA_EMAIL, new String[]{FEEDBACK_EMAIL});
                 intent.putExtra(Intent.EXTRA_SUBJECT, getString(R.string.feedback_subject));
-                intent.putExtra(Intent.EXTRA_TEXT, getString(R.string.feedback_body, getVersionString()));
+                final InputMethodInfo ime = SimpleInputConnection.getIme(getContext());
+                String keyboardPackageName = ime == null ? "unknown" : ime.getPackageName();
+                intent.putExtra(Intent.EXTRA_TEXT, getString(R.string.feedback_body, getVersionString(), keyboardPackageName));
                 intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                 try {
                     startActivity(intent);
