@@ -39,7 +39,7 @@
     <string name="reset_dialogs">Reset all suppressed  dialogs</string>
 
     <string name="error_no_puzzles">Whoops! Looks like we couldn’t load the puzzle.</string>
-    <string name="error_no_activity">Whoops! Looks like there aren\'t any apps installed to do that.</string>
+    <string name="error_no_activity">Whoops! Looks like there aren’t any apps installed to do that.</string>
 
     <string name="reveal_letter_instruction">Please select a letter first.</string>
 
@@ -94,8 +94,8 @@
     <string name="google_play_games_achievements">Achievements</string>
     <string name="google_play_games_sign_out">Sign out</string>
 
-    <string name="google_play_games_connection_failure">Uh, oh! Looks like we can\'t reach Google Play Games at the moment.\n\nPlease try again later or report this problem (connection failure with code %1$d-%2$d) through the about screen.</string>
-    <string name="google_play_games_not_installed">Google Play Games doesn\'t appear to be installed</string>
+    <string name="google_play_games_connection_failure">Uh, oh! Looks like we can’t reach Google Play Games at the moment.\n\nPlease try again later or report this problem (connection failure with code %1$d-%2$d) through the about screen.</string>
+    <string name="google_play_games_not_installed">Google Play Games doesn’t appear to be installed</string>
 
     <!-- Settings -->
     <string name="theme">Theme:</string>
@@ -175,10 +175,10 @@
     <string name="url_pixplicity">https://pixplicity.com/?utm_source=component_app&amp;utm_medium=android-app&amp;utm_content=en&amp;utm_campaign=component_app</string>
     <string name="url_beta">https://play.google.com/apps/testing/com.pixplicity.cryptogram</string>
 
-    <string name="rating">Nice, you\'re solving some cryptograms!\n\nWould you mind visiting the Play store to give %1$s a rating? It would help in sharing the fun!\n\nInstead, if you\'re experiencing problems, please give me some feedback so I can improve. Thanks!</string>
+    <string name="rating">Nice, you’re solving some cryptograms!\n\nWould you mind visiting the Play store to give %1$s a rating? It would help in sharing the fun!\n\nInstead, if you’re experiencing problems, please give me some feedback so I can improve. Thanks!</string>
 
     <string name="feedback_subject">Feedback on Cryptogram</string>
-    <string name="feedback_body">Hi Paul, \n\nI\'m using Cryptogram version %1$s and my keyboard is "%2$s". \n\nHere\'s my feedback on Cryptogram: </string>
+    <string name="feedback_body">Hi Paul, \n\nI’m using Cryptogram version %1$s and my keyboard is "%2$s". \n\nHere’s my feedback on Cryptogram: \n\n</string>
     <string name="text_size">Text size:</string>
     <string name="text_size_small">Small</string>
     <string name="text_size_normal">Normal</string>
