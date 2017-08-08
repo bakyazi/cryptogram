@@ -109,7 +109,8 @@
     <string name="show_topic">Show puzzle topics</string>
     <string name="auto_advance">Advance to next cell when filled</string>
 
-    <string name="feedback">Send feedback</string>
+    <string name="join_beta">Join beta</string>
+    <string name="send_feedback">Send feedback</string>
     <string name="made_with_love_by">MADE WITH LOVE BY</string>
     <string name="pixplicity">Pixplicity</string>
 
@@ -176,12 +177,13 @@
             ]]>
     </string>
     <string name="website">Visit Pixplicity.com</string>
-    <string name="url">https://pixplicity.com/?utm_source=component_app&amp;utm_medium=android-app&amp;utm_content=en&amp;utm_campaign=component_app</string>
+    <string name="url_pixplicity">https://pixplicity.com/?utm_source=component_app&amp;utm_medium=android-app&amp;utm_content=en&amp;utm_campaign=component_app</string>
+    <string name="url_beta">https://play.google.com/apps/testing/com.pixplicity.cryptogram</string>
 
     <string name="rating">Nice, you’re solving some cryptograms!\n\nWould you mind visiting the Play store to give %1$s a rating? It would help in sharing the fun!\n\nInstead, if you’re experiencing problems, please give me some feedback so I can improve. Thanks!</string>
 
     <string name="feedback_subject">Feedback on Cryptogram</string>
-    <string name="feedback_body">Hi Paul,  Here’s my feedback on Cryptogram…  I’m using Cryptogram version %1$s.</string>
+    <string name="feedback_body">Hi Paul, \n\nI’m using Cryptogram version %1$s and my keyboard is "%2$s". \n\nHere’s my feedback on Cryptogram: </string>
     <string name="text_size">Text size:</string>
     <string name="text_size_small">Small</string>
     <string name="text_size_normal">Normal</string>
