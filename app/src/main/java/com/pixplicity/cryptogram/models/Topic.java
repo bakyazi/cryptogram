@@ -4,6 +4,9 @@ import com.google.gson.annotations.SerializedName;
 
 public class Topic {
 
+    @SerializedName("id")
+    protected String mId;
+
     @SerializedName("name")
     protected String mName;
 
@@ -14,6 +17,10 @@ public class Topic {
     protected String mTopics;
 
     private transient String[] mTopicNames;
+
+    public String getId() {
+        return mId;
+    }
 
     public String getName() {
         return mName;
@@ -28,6 +35,30 @@ public class Topic {
             mTopicNames = mTopics.split("[|]");
         }
         return mTopicNames;
+    }
+
+    @Override
+    public String toString() {
+        return mName;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
+
+        Topic topic = (Topic) o;
+
+        return mId != null ? mId.equals(topic.mId) : topic.mId == null;
+    }
+
+    @Override
+    public int hashCode() {
+        return mId != null ? mId.hashCode() : 0;
     }
 
 }

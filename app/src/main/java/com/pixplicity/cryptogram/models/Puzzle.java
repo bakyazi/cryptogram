@@ -14,6 +14,7 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.LinkedList;
+import java.util.Locale;
 
 public class Puzzle {
 
@@ -106,6 +107,22 @@ public class Puzzle {
 
     public String getTopic() {
         return mTopic;
+    }
+
+    public boolean hasTopic(@Nullable Topic topic) {
+        if (topic == null) {
+            return true;
+        }
+        if (mTopic == null) {
+            return false;
+        }
+        String puzzleTopic = mTopic.toLowerCase(Locale.ENGLISH);
+        for (String topicName : topic.getTopics()) {
+            if (topicName.equals(puzzleTopic)) {
+                return true;
+            }
+        }
+        return false;
     }
 
     @NonNull

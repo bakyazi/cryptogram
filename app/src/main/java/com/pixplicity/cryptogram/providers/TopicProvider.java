@@ -50,4 +50,16 @@ public class TopicProvider extends AssetProvider {
         return mTopics;
     }
 
+    @Nullable
+    public Topic getTopicById(@Nullable String topicId) {
+        if (topicId != null) {
+            for (Topic topic : getTopics()) {
+                if (topicId.equals(topic.getId())) {
+                    return topic;
+                }
+            }
+        }
+        return null;
+    }
+
 }

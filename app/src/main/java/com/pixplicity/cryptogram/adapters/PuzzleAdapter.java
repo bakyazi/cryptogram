@@ -10,7 +10,7 @@ import android.widget.TextView;
 
 import com.pixplicity.cryptogram.R;
 import com.pixplicity.cryptogram.models.Puzzle;
-import com.pixplicity.cryptogram.providers.PuzzleProvider;
+import com.pixplicity.cryptogram.models.PuzzleList;
 import com.pixplicity.cryptogram.utils.PrefsUtils;
 
 import butterknife.BindView;
@@ -23,16 +23,14 @@ public class PuzzleAdapter extends RecyclerView.Adapter<PuzzleAdapter.ViewHolder
 
     private final Context mContext;
     private final OnItemClickListener mOnItemClickListener;
-    private Puzzle[] mPuzzles;
+    private PuzzleList mPuzzles;
 
     private boolean mDarkTheme = PrefsUtils.getDarkTheme();
 
-    public PuzzleAdapter(Context context, OnItemClickListener onItemClickListener) {
+    public PuzzleAdapter(Context context, OnItemClickListener onItemClickListener, PuzzleList puzzleList) {
         mContext = context;
         mOnItemClickListener = onItemClickListener;
-
-        PuzzleProvider provider = PuzzleProvider.getInstance(mContext);
-        mPuzzles = provider.getAll();
+        mPuzzles = puzzleList;
     }
 
     @Override
@@ -61,7 +59,7 @@ public class PuzzleAdapter extends RecyclerView.Adapter<PuzzleAdapter.ViewHolder
 
     @Override
     public int getItemViewType(int position) {
-        if (PuzzleProvider.getInstance(mContext).getCurrentIndex() == position) {
+        if (mPuzzles.getCurrentIndex() == position) {
             return TYPE_SELECTED;
         }
         return TYPE_NORMAL;
@@ -69,7 +67,7 @@ public class PuzzleAdapter extends RecyclerView.Adapter<PuzzleAdapter.ViewHolder
 
     @Override
     public void onBindViewHolder(ViewHolder vh, int position) {
-        Puzzle puzzle = mPuzzles[position];
+        Puzzle puzzle = mPuzzles.get(position);
         vh.setPosition(position);
         vh.tvPuzzleId.setText(puzzle.getTitle(mContext));
         String author = puzzle.getAuthor();
@@ -84,7 +82,12 @@ public class PuzzleAdapter extends RecyclerView.Adapter<PuzzleAdapter.ViewHolder
 
     @Override
     public int getItemCount() {
-        return mPuzzles.length;
+        return mPuzzles.getCount();
+    }
+
+    public void setPuzzleList(PuzzleList puzzleList) {
+        mPuzzles = puzzleList;
+        notifyDataSetChanged();
     }
 
     public interface OnItemClickListener {

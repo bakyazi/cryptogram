@@ -1,6 +1,9 @@
 <resources>
 
+    <attr name="colorPrimary" format="color"/>
+    <attr name="colorPrimaryDark" format="color"/>
     <attr name="textColorOnPrimary" format="color"/>
+    <attr name="textColorInverse" format="color"/>
 
     <!-- Base application theme. -->
     <style name="AppTheme" parent="Theme.AppCompat.Light.NoActionBar">
@@ -12,6 +15,7 @@
         <item name="actionOverflowButtonStyle">@style/OverflowButtonStyle</item>
         <item name="drawerArrowStyle">@style/DrawerArrowStyle</item>
         <item name="android:textColor">@color/colorTextPrimary</item>
+        <item name="textColorInverse">@color/colorDarkTextPrimary</item>
         <item name="textColorOnPrimary">@color/textLight</item>
     </style>
 
@@ -23,6 +27,7 @@
         <item name="actionOverflowButtonStyle">@style/OverflowButtonStyle</item>
         <item name="drawerArrowStyle">@style/DrawerArrowStyle</item>
         <item name="android:textColor">@color/colorDarkTextPrimary</item>
+        <item name="textColorInverse">@color/colorTextPrimary</item>
         <item name="textColorOnPrimary">@color/textLight</item>
     </style>
 

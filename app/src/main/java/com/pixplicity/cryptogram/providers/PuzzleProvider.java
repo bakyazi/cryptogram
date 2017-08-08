@@ -13,7 +13,9 @@ import com.google.gson.JsonSyntaxException;
 import com.pixplicity.cryptogram.BuildConfig;
 import com.pixplicity.cryptogram.R;
 import com.pixplicity.cryptogram.models.Puzzle;
+import com.pixplicity.cryptogram.models.PuzzleList;
 import com.pixplicity.cryptogram.models.PuzzleProgress;
+import com.pixplicity.cryptogram.models.Topic;
 import com.pixplicity.cryptogram.utils.PrefsUtils;
 import com.pixplicity.cryptogram.views.CryptogramView;
 
@@ -22,12 +24,9 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Collections;
 import java.util.HashMap;
-import java.util.Iterator;
 import java.util.LinkedHashSet;
 import java.util.LinkedList;
-import java.util.Random;
 import java.util.Set;
 
 public class PuzzleProvider extends AssetProvider {
@@ -38,7 +37,6 @@ public class PuzzleProvider extends AssetProvider {
 
     private static PuzzleProvider sInstance;
 
-    private int mCurrentIndex = -1;
     private Puzzle[] mPuzzles;
     private HashMap<Integer, Integer> mPuzzleIds;
     private SparseArray<PuzzleProgress> mPuzzleProgress;
@@ -46,8 +44,6 @@ public class PuzzleProvider extends AssetProvider {
     private int mLastPuzzleId = -1;
 
     private static final Gson mGson = new Gson();
-    private final Random mRandom = new Random();
-    private ArrayList<Integer> mRandomIndices;
 
     @NonNull
     public static PuzzleProvider getInstance(Context context) {
@@ -124,6 +120,19 @@ public class PuzzleProvider extends AssetProvider {
         return mPuzzles;
     }
 
+    public Puzzle[] getAllForTopic(@Nullable Topic topic) {
+        if (topic == null) {
+            return getAll();
+        }
+        ArrayList<Puzzle> puzzles = new ArrayList<>();
+        for (Puzzle puzzle : mPuzzles) {
+            if (puzzle.hasTopic(topic)) {
+                puzzles.add(puzzle);
+            }
+        }
+        return puzzles.toArray(new Puzzle[puzzles.size()]);
+    }
+
     /**
      * @return last puzzle ID
      */
@@ -135,86 +144,13 @@ public class PuzzleProvider extends AssetProvider {
         return getAll().length;
     }
 
-    public int getCurrentIndex() {
-        return mCurrentIndex;
-    }
-
-    private int getIndexFromId(int id) {
-        Integer index = mPuzzleIds.get(id);
-        if (index == null) {
-            return -1;
-        }
-        return index;
-    }
-
-    private int getIdFromIndex(int index) {
+    public int getIdFromIndex(int index) {
         return mPuzzles[index].getId();
     }
 
     @Nullable
-    public Puzzle getCurrent() {
-        if (mCurrentIndex < 0) {
-            mCurrentIndex = getIndexFromId(PrefsUtils.getCurrentId());
-        }
-        if (mCurrentIndex < 0) {
-            return getNext();
-        }
-        return get(mCurrentIndex);
-    }
-
-    public void setCurrentIndex(int index) {
-        mCurrentIndex = index;
-        PrefsUtils.setCurrentId(getIdFromIndex(index));
-    }
-
-    public void setCurrentId(int id) {
-        mCurrentIndex = getIndexFromId(id);
-        PrefsUtils.setCurrentId(id);
-    }
-
-    @Nullable
-    public Puzzle getNext() {
-        int oldIndex = mCurrentIndex;
-        int newIndex = -1;
-        int count = getCount();
-        if (count == 0) {
-            return null;
-        }
-        if (PrefsUtils.getRandomize()) {
-            if (mRandomIndices == null) {
-                mRandomIndices = new ArrayList<>();
-                for (int i = 0; i < getAll().length; i++) {
-                    mRandomIndices.add(i);
-                }
-                Collections.shuffle(mRandomIndices, mRandom);
-            }
-            boolean chooseNext = false;
-            Iterator<Integer> iter = mRandomIndices.iterator();
-            while (iter.hasNext()) {
-                Integer index = iter.next();
-                Puzzle puzzle = get(index);
-                if (puzzle == null || puzzle.isCompleted()) {
-                    // No good; eliminate this candidate and find the next
-                    iter.remove();
-                    puzzle = null;
-                }
-                if (oldIndex == index) {
-                    chooseNext = true;
-                } else if (chooseNext && puzzle != null) {
-                    newIndex = index;
-                    break;
-                }
-            }
-            if (newIndex < 0 && !mRandomIndices.isEmpty()) {
-                newIndex = mRandomIndices.get(0);
-            }
-        } else if (mCurrentIndex + 1 < getCount()) {
-            newIndex = mCurrentIndex + 1;
-        }
-        if (newIndex > -1) {
-            setCurrentIndex(newIndex);
-        }
-        return get(mCurrentIndex);
+    public Puzzle getCurrent(final PuzzleList puzzlesList) {
+        return puzzlesList.get(puzzlesList.getCurrentIndex());
     }
 
     @Nullable

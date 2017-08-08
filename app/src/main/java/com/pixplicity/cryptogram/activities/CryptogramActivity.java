@@ -27,8 +27,11 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.Spinner;
 import android.widget.TableLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -57,11 +60,14 @@ import com.pixplicity.cryptogram.R;
 import com.pixplicity.cryptogram.adapters.PuzzleAdapter;
 import com.pixplicity.cryptogram.events.PuzzleEvent;
 import com.pixplicity.cryptogram.models.Puzzle;
+import com.pixplicity.cryptogram.models.PuzzleList;
+import com.pixplicity.cryptogram.models.Topic;
+import com.pixplicity.cryptogram.providers.PuzzleProvider;
+import com.pixplicity.cryptogram.providers.TopicProvider;
 import com.pixplicity.cryptogram.utils.AchievementProvider;
 import com.pixplicity.cryptogram.utils.EventProvider;
 import com.pixplicity.cryptogram.utils.LeaderboardProvider;
 import com.pixplicity.cryptogram.utils.PrefsUtils;
-import com.pixplicity.cryptogram.providers.PuzzleProvider;
 import com.pixplicity.cryptogram.utils.StringUtils;
 import com.pixplicity.cryptogram.utils.StyleUtils;
 import com.pixplicity.cryptogram.views.CryptogramLayout;
@@ -107,6 +113,9 @@ public class CryptogramActivity extends BaseActivity implements GoogleApiClient.
 
     @BindView(R.id.vg_google_play_games_actions)
     protected ViewGroup mVgGooglePlayGamesActions;
+
+    @BindView(R.id.sp_categories)
+    protected Spinner mSpCategories;
 
     @BindView(R.id.rv_drawer)
     protected RecyclerView mRvDrawer;
@@ -156,7 +165,8 @@ public class CryptogramActivity extends BaseActivity implements GoogleApiClient.
     @BindView(R.id.vg_stats_practice)
     protected ViewGroup mVgStatsPractice;
 
-    private PuzzleAdapter mAdapter;
+    private PuzzleList mPuzzles;
+    private PuzzleAdapter mPuzzleAdapter;
 
     private Rate mRate;
 
@@ -206,16 +216,39 @@ public class CryptogramActivity extends BaseActivity implements GoogleApiClient.
                 .build();
 
         mRvDrawer.setLayoutManager(new LinearLayoutManager(this));
-        mAdapter = new PuzzleAdapter(this, new PuzzleAdapter.OnItemClickListener() {
+
+        final String topicId = PrefsUtils.getCurrentTopic();
+        Topic topic = TopicProvider.getInstance(this).getTopicById(topicId);
+        PuzzleProvider provider = PuzzleProvider.getInstance(CryptogramActivity.this);
+        mPuzzles = new PuzzleList(provider.getAllForTopic(topic));
+        mPuzzleAdapter = new PuzzleAdapter(this, new PuzzleAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(int position) {
                 if (mDrawerLayout != null) {
                     mDrawerLayout.closeDrawers();
                 }
-                updateCryptogram(puzzleProvider.get(position));
+                updateCryptogram(mPuzzles.get(position));
+            }
+        }, mPuzzles);
+        mRvDrawer.setAdapter(mPuzzleAdapter);
+
+        final ArrayAdapter<Topic> topicAdapter = new TopicAdapter(this);
+        mSpCategories.setAdapter(topicAdapter);
+        mSpCategories.setSelection(topicAdapter.getPosition(topic));
+        mSpCategories.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+                final Topic topic = topicAdapter.getItem(i);
+                PuzzleProvider provider = PuzzleProvider.getInstance(CryptogramActivity.this);
+                mPuzzles = new PuzzleList(provider.getAllForTopic(topic));
+                mPuzzleAdapter.setPuzzleList(mPuzzles);
+                PrefsUtils.setCurrentTopic(topic);
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> adapterView) {
             }
         });
-        mRvDrawer.setAdapter(mAdapter);
 
         mVgCryptogram.setCrytogramView(mCryptogramView);
         mCryptogramView.setOnPuzzleProgressListener(new CryptogramView.OnPuzzleProgressListener() {
@@ -259,7 +292,7 @@ public class CryptogramActivity extends BaseActivity implements GoogleApiClient.
             }
         });
 
-        updateCryptogram(puzzleProvider.getCurrent());
+        updateCryptogram(puzzleProvider.getCurrent(mPuzzles));
 
         Intent intent = getIntent();
         if (intent != null) {
@@ -281,7 +314,7 @@ public class CryptogramActivity extends BaseActivity implements GoogleApiClient.
         mGoogleApiClient.connect();
 
         final PuzzleProvider puzzleProvider = PuzzleProvider.getInstance(this);
-        Puzzle puzzle = puzzleProvider.getCurrent();
+        Puzzle puzzle = puzzleProvider.getCurrent(mPuzzles);
         if (puzzle != null) {
             puzzle.onResume();
         }
@@ -306,7 +339,7 @@ public class CryptogramActivity extends BaseActivity implements GoogleApiClient.
         }
 
         final PuzzleProvider puzzleProvider = PuzzleProvider.getInstance(this);
-        Puzzle puzzle = puzzleProvider.getCurrent();
+        Puzzle puzzle = puzzleProvider.getCurrent(mPuzzles);
         if (puzzle != null) {
             puzzle.onPause();
         }
@@ -599,9 +632,8 @@ public class CryptogramActivity extends BaseActivity implements GoogleApiClient.
 
     private void updateCryptogram(Puzzle puzzle) {
         if (puzzle != null) {
-            PuzzleProvider provider = PuzzleProvider.getInstance(this);
-            provider.setCurrentId(puzzle.getId());
-            mRvDrawer.scrollToPosition(provider.getCurrentIndex());
+            mPuzzles.setCurrentId(puzzle.getId());
+            mRvDrawer.scrollToPosition(mPuzzles.getCurrentIndex());
             mTvError.setVisibility(View.GONE);
             mVgCryptogram.setVisibility(View.VISIBLE);
             // Apply the puzzle to the CryptogramView
@@ -645,7 +677,7 @@ public class CryptogramActivity extends BaseActivity implements GoogleApiClient.
     public void onCryptogramUpdated(Puzzle puzzle) {
         // Update the HintView as the puzzle updates
         mHintView.setPuzzle(puzzle);
-        mAdapter.notifyDataSetChanged();
+        mPuzzleAdapter.notifyDataSetChanged();
         if (puzzle.isCompleted()) {
             mHintView.setVisibility(View.GONE);
             mVgStats.setVisibility(View.VISIBLE);
@@ -1088,7 +1120,7 @@ public class CryptogramActivity extends BaseActivity implements GoogleApiClient.
     }
 
     private void nextPuzzle() {
-        Puzzle puzzle = PuzzleProvider.getInstance(this).getNext();
+        Puzzle puzzle = mPuzzles.getNext();
         updateCryptogram(puzzle);
     }
 
