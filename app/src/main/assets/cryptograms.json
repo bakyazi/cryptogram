@@ -3872,12 +3872,40 @@
     "topic": "Individuality"
   },
   {
-    "text": "You will become way less concerned with what other people think of you when you realize how seldom they do.",
-    "author": "David Foster Wallace",
-    "topic": "Anxiety"
+    "text": "Do not ask your children\nto strive for extraordinary lives.\nSuch striving may seem admirable,\nbut it is a way of foolishness.\nHelp them instead to find the wonder\nand the marvel of an ordinary life.",
+    "author": "William Styron",
+    "topic": "Joy"
   },
   {
-    "text": "Worrying is carrying tomorrow’s load with today’s strength- carrying two days at once. Worrying doesn’t empty tomorrow of its sorrow, it empties today of its strength.",
+    "text": "True happiness is to enjoy the present, without anxious dependence upon the future, not to amuse ourselves with either hopes or fears but to rest satisfied with what we have.",
+    "author": "Lucius Annaeus Seneca",
+    "topic": "Happiness",
+    "given": "W"
+  },
+  {
+    "text": "There are more things to alarm us than to harm us, and we suffer more often in apprehension than reality.",
+    "author": "Lucius Annaeus Seneca",
+    "topic": "Fear"
+  },
+  {
+    "text": "The person who tries to keep everyone happy often ends up feeling the loneliest.",
+    "author": "Anonymous",
+    "topic": "Loneliness",
+    "given": "P"
+  },
+  {
+    "text": "The worst kind of loneliness, the one that attacks you while you’re among family and friends.",
+    "author": "Anonymous",
+    "topic": "Loneliness"
+  },
+  {
+    "text": "You will become way less concerned with what other people think of you when you realize how seldom they do.",
+    "author": "David Foster Wallace",
+    "topic": "Anxiety",
+    "given": "U"
+  },
+  {
+    "text": "Worrying is carrying tomorrow’s load with today’s strength — carrying two days at once. Worrying doesn’t empty tomorrow of its sorrow, it empties today of its strength.",
     "author": "Corrie ten Boom",
     "topic": "Anxiety"
   },
@@ -3899,7 +3927,8 @@
   {
     "text": "The most terrible poverty is loneliness, and the feeling of being unloved.",
     "author": "Mother Teresa",
-    "topic": "Loneliness"
+    "topic": "Loneliness",
+    "given": "S"
   },
   {
     "text": "Life is loneliness, despite all the opiates, despite the shrill tinsel gaiety of ‘parties’ with no purpose, despite the false grinning faces we all wear.",
