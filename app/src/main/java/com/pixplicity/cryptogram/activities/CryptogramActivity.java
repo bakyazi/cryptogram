@@ -32,7 +32,6 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.Spinner;
-import android.widget.TableLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -68,6 +67,7 @@ import com.pixplicity.cryptogram.utils.AchievementProvider;
 import com.pixplicity.cryptogram.utils.EventProvider;
 import com.pixplicity.cryptogram.utils.LeaderboardProvider;
 import com.pixplicity.cryptogram.utils.PrefsUtils;
+import com.pixplicity.cryptogram.utils.StatisticsUtils;
 import com.pixplicity.cryptogram.utils.StringUtils;
 import com.pixplicity.cryptogram.utils.StyleUtils;
 import com.pixplicity.cryptogram.views.CryptogramLayout;
@@ -95,6 +95,7 @@ public class CryptogramActivity extends BaseActivity implements GoogleApiClient.
     private static final int ONBOARDING_PAGES = 2;
 
     public static final String EXTRA_LAUNCH_SETTINGS = "launch_settings";
+    public static final int HIGHLIGHT_DELAY = 1200;
 
     @BindView(R.id.iv_google_play_games_banner)
     protected ImageView mIvGooglePlayGamesBanner;
@@ -273,8 +274,7 @@ public class CryptogramActivity extends BaseActivity implements GoogleApiClient.
                     case PrefsUtils.TYPE_HIGHLIGHT_HYPHENATION:
                         showHighlight(type, point,
                                 getString(R.string.highlight_hyphenation_title),
-                                getString(R.string.highlight_hyphenation_description),
-                                1200
+                                getString(R.string.highlight_hyphenation_description)
                         );
                         break;
                     case PrefsUtils.TYPE_HIGHLIGHT_TOUCH_INPUT:
@@ -283,8 +283,7 @@ public class CryptogramActivity extends BaseActivity implements GoogleApiClient.
                         } else {
                             showHighlight(PrefsUtils.TYPE_HIGHLIGHT_TOUCH_INPUT, point,
                                     getString(R.string.highlight_touch_input_title),
-                                    getString(R.string.highlight_touch_input_description),
-                                    1200
+                                    getString(R.string.highlight_touch_input_description)
                             );
                         }
                         break;
@@ -396,7 +395,7 @@ public class CryptogramActivity extends BaseActivity implements GoogleApiClient.
     }
 
     private void showHighlight(final int type, PointF point, final String title,
-                               final String description, int delayMillis) {
+                               final String description) {
         Rect viewRect = new Rect();
         mCryptogramView.getGlobalVisibleRect(viewRect);
         final int targetX = (int) (point.x + viewRect.left);
@@ -442,7 +441,7 @@ public class CryptogramActivity extends BaseActivity implements GoogleApiClient.
                             }
                         });
             }
-        }, delayMillis);
+        }, HIGHLIGHT_DELAY);
     }
 
     private void showOnboarding(final int page) {
@@ -487,13 +486,13 @@ public class CryptogramActivity extends BaseActivity implements GoogleApiClient.
 
         View customView = LayoutInflater.from(this).inflate(R.layout.dialog_intro, null);
 
-        TextView tvIntro = (TextView) customView.findViewById(R.id.tv_intro);
+        TextView tvIntro = customView.findViewById(R.id.tv_intro);
         tvIntro.setText(textStringResId);
 
-        final RatioFrameLayout vgRatio = (RatioFrameLayout) customView.findViewById(R.id.vg_ratio);
+        final RatioFrameLayout vgRatio = customView.findViewById(R.id.vg_ratio);
         vgRatio.setRatio(RatioDatumMode.DATUM_WIDTH, videoW, videoH);
 
-        final EasyVideoPlayer player = (EasyVideoPlayer) customView.findViewById(R.id.player);
+        final EasyVideoPlayer player = customView.findViewById(R.id.player);
         if (player != null) {
             player.disableControls();
             player.setBackgroundColor(Color.WHITE);
@@ -541,7 +540,7 @@ public class CryptogramActivity extends BaseActivity implements GoogleApiClient.
             Uri uri = Uri.parse("android.resource://" + getPackageName() + "/raw/" + videoResName);
             player.setSource(uri);
         } else {
-            ImageView ivVideo = (ImageView) customView.findViewById(R.id.iv_still_frame);
+            ImageView ivVideo = customView.findViewById(R.id.iv_still_frame);
             ivVideo.setImageResource(stillFrameResId);
         }
 
@@ -578,7 +577,7 @@ public class CryptogramActivity extends BaseActivity implements GoogleApiClient.
                     .setView(dialogView)
                     .show();
 
-            Button btLeaderboards = (Button) dialogView.findViewById(R.id.bt_leaderboards);
+            Button btLeaderboards = dialogView.findViewById(R.id.bt_leaderboards);
             btLeaderboards.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
@@ -594,7 +593,7 @@ public class CryptogramActivity extends BaseActivity implements GoogleApiClient.
                 }
             });
 
-            Button btAchievements = (Button) dialogView.findViewById(R.id.bt_achievements);
+            Button btAchievements = dialogView.findViewById(R.id.bt_achievements);
             btAchievements.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
@@ -610,7 +609,7 @@ public class CryptogramActivity extends BaseActivity implements GoogleApiClient.
                 }
             });
 
-            Button btSignOut = (Button) dialogView.findViewById(R.id.bt_sign_out);
+            Button btSignOut = dialogView.findViewById(R.id.bt_sign_out);
             btSignOut.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
@@ -987,108 +986,12 @@ public class CryptogramActivity extends BaseActivity implements GoogleApiClient.
             }
             return true;
             case R.id.action_stats: {
-                // Log the event
-                Answers.getInstance().logContentView(new ContentViewEvent().putContentName(CryptogramApp.CONTENT_STATISTICS));
-                // Compose the dialog
-                TableLayout dialogView = (TableLayout) LayoutInflater.from(this).inflate(R.layout.dialog_statistics, null);
                 if (puzzle != null) {
+                    // Make sure to save the puzzle first
                     puzzle.save();
                 }
-                PuzzleProvider provider = PuzzleProvider.getInstance(this);
-                int count = 0, scoreCount = 0;
-                float score = 0f;
-                long shortestDurationMs = 0, totalDurationMs = 0;
-                for (Puzzle c : provider.getAll()) {
-                    long duration = c.getProgress().getDuration();
-                    if (!c.isInstruction() && c.isCompleted()) {
-                        count++;
-                        Float puzzleScore = c.getScore();
-                        if (puzzleScore == null) {
-                            continue;
-                        }
-                        score += puzzleScore;
-                        scoreCount++;
-                        if (shortestDurationMs == 0 || shortestDurationMs > duration) {
-                            shortestDurationMs = duration;
-                        }
-                    }
-                    totalDurationMs += duration;
-                }
-                String scoreAverageText;
-                if (scoreCount > 0) {
-                    scoreAverageText = getString(R.string.stats_average_score_format, score / (float) scoreCount * 100f);
-                } else {
-                    scoreAverageText = getString(R.string.not_applicable);
-                }
-                String scoreCumulativeText = getString(R.string.stats_cumulative_score_format, score * 100f);
-                String fastestCompletion;
-                if (shortestDurationMs == 0) {
-                    fastestCompletion = getString(R.string.not_applicable);
-                } else {
-                    fastestCompletion = StringUtils.getDurationString(shortestDurationMs);
-                }
-                AchievementProvider.AchievementStats achievementStats = AchievementProvider.getInstance().getAchievementStats();
-                achievementStats.calculate(this);
-                int longestStreak = achievementStats.getLongestStreak();
-                {
-                    View view = LayoutInflater.from(this).inflate(R.layout.in_statistics_row, null);
-                    ((TextView) view.findViewById(R.id.tv_label)).setText(R.string.stats_total_completed_label);
-                    ((TextView) view.findViewById(R.id.tv_value)).setText(
-                            getString(R.string.stats_total_completed_value,
-                                    count,
-                                    provider.getLastNumber()));
-                    dialogView.addView(view);
-                }
-                {
-                    View view = LayoutInflater.from(this).inflate(R.layout.in_statistics_row, null);
-                    ((TextView) view.findViewById(R.id.tv_label)).setText(R.string.stats_average_score_label);
-                    ((TextView) view.findViewById(R.id.tv_value)).setText(
-                            getString(R.string.stats_average_score_value,
-                                    scoreAverageText));
-                    dialogView.addView(view);
-                }
-                {
-                    View view = LayoutInflater.from(this).inflate(R.layout.in_statistics_row, null);
-                    ((TextView) view.findViewById(R.id.tv_label)).setText(R.string.stats_cumulative_score_label);
-                    ((TextView) view.findViewById(R.id.tv_value)).setText(
-                            getString(R.string.stats_cumulative_score_value,
-                                    scoreCumulativeText));
-                    dialogView.addView(view);
-                }
-                {
-                    View view = LayoutInflater.from(this).inflate(R.layout.in_statistics_row, null);
-                    ((TextView) view.findViewById(R.id.tv_label)).setText(R.string.stats_fastest_completion_label);
-                    ((TextView) view.findViewById(R.id.tv_value)).setText(
-                            getString(R.string.stats_fastest_completion_value,
-                                    fastestCompletion));
-                    dialogView.addView(view);
-                }
-                {
-                    View view = LayoutInflater.from(this).inflate(R.layout.in_statistics_row, null);
-                    ((TextView) view.findViewById(R.id.tv_label)).setText(R.string.stats_total_time_spent_label);
-                    ((TextView) view.findViewById(R.id.tv_value)).setText(
-                            getString(R.string.stats_total_time_spent_value,
-                                    StringUtils.getDurationString(totalDurationMs)));
-                    dialogView.addView(view);
-                }
-                {
-                    View view = LayoutInflater.from(this).inflate(R.layout.in_statistics_row, null);
-                    ((TextView) view.findViewById(R.id.tv_label)).setText(R.string.stats_longest_streak_label);
-                    ((TextView) view.findViewById(R.id.tv_value)).setText(
-                            getString(R.string.stats_longest_streak_value,
-                                    longestStreak,
-                                    getResources().getQuantityString(R.plurals.days, longestStreak)));
-                    dialogView.addView(view);
-                }
-                new AlertDialog.Builder(this)
-                        .setTitle(R.string.statistics)
-                        .setView(dialogView)
-                        .setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialogInterface, int i) {
-                            }
-                        })
-                        .show();
+                // Now show the stats
+                StatisticsUtils.showDialog(this);
             }
             return true;
             case R.id.action_settings: {

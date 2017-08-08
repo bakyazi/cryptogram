@@ -41,7 +41,7 @@ public class PuzzleProvider extends AssetProvider {
     private HashMap<Integer, Integer> mPuzzleIds;
     private SparseArray<PuzzleProgress> mPuzzleProgress;
 
-    private int mLastPuzzleId = -1;
+    private int mLastPuzzleId;
 
     private static final Gson mGson = new Gson();
 
@@ -76,7 +76,7 @@ public class PuzzleProvider extends AssetProvider {
             Log.d(TAG, String.format("readStream: parsed Json in %.2fms", (System.nanoTime() - start) / 1000000f));
             start = System.nanoTime();
         }
-        int index = 0, nextId = 0;
+        int index = 0, nextId = 0, lastId = -1;
         mPuzzleIds = new HashMap<>();
         if (BuildConfig.DEBUG) {
             LinkedList<Puzzle> puzzles = new LinkedList<>();
@@ -105,12 +105,13 @@ public class PuzzleProvider extends AssetProvider {
                 id = nextId;
                 puzzle.setId(id);
             }
-            if (id > mLastPuzzleId) {
-                mLastPuzzleId = id;
+            if (id > lastId) {
+                lastId = id;
             }
             mPuzzleIds.put(id, index);
             index++;
         }
+        mLastPuzzleId = lastId + 1;
         if (BuildConfig.DEBUG) {
             Log.d(TAG, String.format("readStream: performed ID mapping in %.2fms", (System.nanoTime() - start) / 1000000f));
         }
@@ -137,7 +138,7 @@ public class PuzzleProvider extends AssetProvider {
      * @return last puzzle ID
      */
     public int getLastNumber() {
-        return mLastPuzzleId + 1;
+        return mLastPuzzleId;
     }
 
     public int getCount() {
