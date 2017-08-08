@@ -39,6 +39,7 @@
     <string name="reset_dialogs">Reset all suppressed  dialogs</string>
 
     <string name="error_no_puzzles">Whoops! Looks like we couldn’t load the puzzle.</string>
+    <string name="error_no_activity">Whoops! Looks like there aren\'t any apps installed to do that.</string>
 
     <string name="reveal_letter_instruction">Please select a letter first.</string>
 
