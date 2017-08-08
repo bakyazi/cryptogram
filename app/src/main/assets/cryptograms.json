@@ -1369,7 +1369,7 @@
   {
     "text": "It is better to lead from behind and to put others in front, espe­cially when you cele­brate victory when nice things occur. You take the front line when there is danger. Then people will appre­ciate your leader­ship.",
     "author": "Nelson Mandela",
-    "topic": "Leadership"
+    "topic": "Governance"
   },
   {
     "text": "For to be free is not merely to cast off one’s chains, but to live in a way that respects and enhances the freedom of others.",
@@ -1574,7 +1574,7 @@
   {
     "text": "All things are subject to interpre­tation. Which­ever interpre­tation prevails at a given time is a function of power and not truth.",
     "author": "Friedrich Nietzsche",
-    "topic": "Truth"
+    "topic": "Reasoning"
   },
   {
     "text": "That which does not kill us makes us stronger.",
@@ -1609,12 +1609,12 @@
   {
     "text": "Think for your­selves and let others enjoy the privi­lege to do so, too.",
     "author": "Voltaire",
-    "topic": "Thoughts"
+    "topic": "Thoughtfulness"
   },
   {
     "text": "No problem can with­stand the assault of sus­tained thinking.",
     "author": "Voltaire",
-    "topic": "Thoughts"
+    "topic": "Scepticism"
   },
   {
     "text": "It is not suffi­cient to see and to know the beauty of a work. We must feel and be affected by it.",
@@ -2071,17 +2071,17 @@
   {
     "text": "One glance at a book and you hear the voice of another person, perhaps someone dead for 1,000 years. To read is to voyage through time.",
     "author": "Carl Sagan",
-    "topic": "Literacy"
+    "topic": "Literature"
   },
   {
     "text": "If you would tell me the heart of a man, tell me not what he reads, but what he rereads.",
     "author": "François Mauriac",
-    "topic": "Literacy"
+    "topic": "Thoughtfulness"
   },
   {
     "text": "All that mankind has done, thought, gained, or been; it is lying as in magic preser­vation in the pages of books.",
     "author": "Thomas Carlyle",
-    "topic": "Literacy"
+    "topic": "Literature"
   },
   {
     "text": "The more that you read, the more things you will know. The more that you learn, the more places you’ll go.",
@@ -2208,7 +2208,7 @@
   {
     "text": "You can not change what you refuse to confront.",
     "author": "John Spence",
-    "topic": "Change"
+    "topic": "Fear"
   },
   {
     "text": "Books don’t offer real escape, but they can stop a mind scratch­ing itself raw.",
@@ -2348,7 +2348,7 @@
   {
     "text": "I will not let anyone walk through my mind with their dirty feet.",
     "author": "Mahatma Gandhi",
-    "topic": "Objectivity"
+    "topic": "Reasoning"
   },
   {
     "text": "Unless you try to do some­thing beyond what you have already mastered you will never grow.",
@@ -2861,7 +2861,7 @@
   {
     "text": "As I obsess about my ancient problems, I feel more like I’m sinking in quicksand than lighting a torch. I’m creating neither heat nor light, just the icky, perversely pleasurable squish of self-pity between my toes. My only defense is that I’m not the only one down here in the muck — our whole culture is doting on tales of personal tragedy.",
     "author": "Martha Beck",
-    "topic": "Tragedy"
+    "topic": "Depression"
   },
   {
     "text": "French culture is known for many great attributes, some of which probably have nothing to do with food, wine, and romance.",
@@ -2917,7 +2917,7 @@
   {
     "text": "Books are the carriers of civilization. Without books, history is silent, literature dumb, science crippled, thought and speculation at a standstill.",
     "author": "Barbara Tuchman",
-    "topic": "History"
+    "topic": "Literature"
   },
   {
     "text": "History, despite its wrenching pain, cannot be unlived, but if faced with courage, need not be lived again.",
@@ -3519,7 +3519,7 @@
   {
     "text": "I am ignorant of absolute truth. But I am humble before my ignorance and therein lies my honor and my reward.",
     "author": "Kahlil Gibran",
-    "topic": "Truth"
+    "topic": "Knowledge"
   },
   {
     "text": "Your pain is the breaking of the shell that encloses your understanding… And could you keep your heart in wonder at the daily miracles of your life, your pain would not seem less wondrous than your joy.",
@@ -3564,7 +3564,7 @@
   {
     "text": "Truth is incontrovertible. Panic may resent it, ignorance may deride it, malice may distort it, but there it is.",
     "author": "Winston Churchill",
-    "topic": "Truth"
+    "topic": "Reasoning"
   },
   {
     "text": "What is the use of living, if it be not to strive for noble causes and to make this muddled world a better place for those who will live in it after we are gone?",
@@ -3595,12 +3595,12 @@
   {
     "text": "If we open a quarrel between the past and the present, we shall find that we have lost the future.",
     "author": "Winston Churchill",
-    "topic": "Future"
+    "topic": "History"
   },
   {
     "text": "We must all turn our backs upon the horrors of the past. We must look to the future. We cannot afford to drag forward cross the years that are to come the hatreds and revenges which have sprung from the injuries of the past.",
     "author": "Winston Churchill",
-    "topic": "Future"
+    "topic": "History"
   },
   {
     "text": "Have patience with every one, but especially with yourself.",
@@ -3616,7 +3616,7 @@
   {
     "text": "If we don’t believe in freedom of expression for people we despise, we don’t believe in it at all.",
     "author": "Noam Chomsky",
-    "topic": "Freedom"
+    "topic": "Tolerance"
   },
   {
     "text": "Optimism is a strategy for making a better future. Because unless you believe that the future can be better, you are unlikely to step up and take responsibility for making it so.",
@@ -3667,7 +3667,8 @@
   {
     "text": "Attitude is a choice. Happiness is a choice. Optimism is a choice. Kindness is a choice. Giving is a choice. Respect is a choice. Whatever choice you make makes you. Choose wisely.",
     "author": "Roy T. Bennett",
-    "topic": "Choice"
+    "topic": "Thoughtfulness",
+    "given": "C"
   },
   {
     "text": "Life is too short to waste your time on people who don’t respect, appreciate, and value you.",
@@ -3682,7 +3683,7 @@
   {
     "text": "It’s only after you’ve stepped outside your comfort zone that you begin to change, grow, and transform.",
     "author": "Roy T. Bennett",
-    "topic": "Change"
+    "topic": "Inspirational"
   },
   {
     "text": "Be brave enough to live the life of your dreams according to your vision and purpose instead of the expectations and opinions of others.",
@@ -3808,7 +3809,7 @@
   {
     "text": "Humanity is like an ocean; if a few drops of the ocean are dirty, the ocean does not become dirty.",
     "author": "Mahatma Gandhi",
-    "topic": "Humanity"
+    "topic": "Optimism"
   },
   {
     "text": "Every one of us is, in the cosmic perspective, precious. If a human disagrees with you, let him live. In a hundred billion galaxies, you will not find another.",

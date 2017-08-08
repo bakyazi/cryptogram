@@ -22,17 +22,22 @@
   {
     "name": "Others",
     "description": "We all want to be treated with kindness, and a bit of humility gets you a long way. These puzzles offer some words of advice on friendship, kindness and compassion for your fellow man.",
-    "topics": "friendship|humility|compassion|sympathy|kindness|goodness|tolerance|morality|respect|discrimination|forgiveness|dishonesty|altruism|individuality"
+    "topics": "humility|compassion|sympathy|kindness|gratitude|goodness|tolerance|equality|morality|respect|discrimination|forgiveness|dishonesty|altruism|individuality"
+  },
+  {
+    "name": "Family & friends",
+    "description": "Many thoughtful writers have found that friendship and family is the most important thing in their lives. These puzzles share those thoughts.",
+    "topics": "family|friendship"
   },
   {
     "name": "Learning",
     "description": "Always be improving yourself and exploring new things. Don't take comfort in not knowing, but undertake action to understand the world around you. Education is the best investment you'll ever make: it's free and it's invaluable.",
-    "topics": "education|learning|knowledge|scepticism|reasoning|science|literacy|storytelling|teaching"
+    "topics": "education|learning|knowledge|scepticism|reasoning|science|technology|universe|literacy|storytelling|teaching"
   },
   {
     "name": "Work ethic",
     "description": "Work hard and reap the rewards. Being ambitious and determined will get you places.",
-    "topics": "ambition|determination|success"
+    "topics": "ambition|determination|success|business"
   },
   {
     "name": "Sorrow",
@@ -50,9 +55,14 @@
     "topics": "christmas|thanksgiving|hanukkah|new year"
   },
   {
+    "name": "Art and culture",
+    "description": "We find the culmination of human creativity in art and culture. These puzzles are on the thoughts of those who have pondered the works of others.",
+    "topics": "art|culture|literature"
+  },
+  {
     "name": "History and governance",
     "description": "Let us learn from our past so as to make our society a better place.",
-    "topics": "history|governance|politics|fear|violence|freedom"
+    "topics": "history|governance|politics|fear|violence|inaction|war"
   },
   {
     "name": "The seasons",
