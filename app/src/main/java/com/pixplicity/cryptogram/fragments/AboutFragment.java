@@ -118,7 +118,7 @@ public class AboutFragment extends BaseFragment {
             @Override
             public void onClick(@NonNull View v) {
                 Intent intent = new Intent(Intent.ACTION_VIEW);
-                intent.setData(Uri.parse(getString(R.string.url)));
+                intent.setData(Uri.parse(getString(R.string.url_pixplicity)));
                 try {
                     startActivity(intent);
                 } catch (ActivityNotFoundException e) {
@@ -152,6 +152,16 @@ public class AboutFragment extends BaseFragment {
                 intent.putExtra(Intent.EXTRA_SUBJECT, getString(R.string.feedback_subject));
                 intent.putExtra(Intent.EXTRA_TEXT, getString(R.string.feedback_body, getVersionString()));
                 intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                try {
+                    startActivity(intent);
+                } catch (ActivityNotFoundException e) {
+                    Toast.makeText(getContext(), R.string.error_no_activity, Toast.LENGTH_LONG).show();
+                }
+            }
+            return true;
+            case R.id.action_beta: {
+                Intent intent = new Intent(Intent.ACTION_VIEW);
+                intent.setData(Uri.parse(getString(R.string.url_beta)));
                 try {
                     startActivity(intent);
                 } catch (ActivityNotFoundException e) {
