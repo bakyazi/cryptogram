@@ -237,18 +237,41 @@ public class CryptogramActivity extends BaseActivity implements GoogleApiClient.
         mSpCategories.setAdapter(topicAdapter);
         mSpCategories.setSelection(topicAdapter.getPosition(topic));
         mSpCategories.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+
+            private boolean mFirstTime = true;
+
             @Override
-            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
-                final Topic topic = topicAdapter.getItem(i);
+            public void onItemSelected(AdapterView<?> adapterView, View view,
+                                       int position, long id) {
+                if (mFirstTime) {
+                    mFirstTime = false;
+                    return;
+                }
+                final Topic topic = topicAdapter.getItem(position);
                 PuzzleProvider provider = PuzzleProvider.getInstance(CryptogramActivity.this);
                 mPuzzles = new PuzzleList(provider.getAllForTopic(topic));
                 mPuzzleAdapter.setPuzzleList(mPuzzles);
                 PrefsUtils.setCurrentTopic(topic);
+                // Display the current puzzle
+                updateCryptogram(provider.getCurrent(mPuzzles));
+                // Show the topic info
+                final String topicName =
+                        topic == null ? getString(R.string.all_topics) : topic.getName();
+                final String topicDescription =
+                        topic == null
+                                ? getString(R.string.all_topics_description)
+                                : topic.getDescription();
+                new MaterialDialog.Builder(CryptogramActivity.this)
+                        .title(topicName)
+                        .content(topicDescription)
+                        .positiveText(R.string.play)
+                        .show();
             }
 
             @Override
             public void onNothingSelected(AdapterView<?> adapterView) {
             }
+
         });
 
         mVgCryptogram.setCrytogramView(mCryptogramView);

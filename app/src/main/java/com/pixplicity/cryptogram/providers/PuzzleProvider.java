@@ -147,7 +147,8 @@ public class PuzzleProvider extends AssetProvider {
 
     @Nullable
     public Puzzle getCurrent(final PuzzleList puzzlesList) {
-        return puzzlesList.get(puzzlesList.getCurrentIndex());
+        final int currentIndex = puzzlesList.getCurrentIndex();
+        return puzzlesList.get(currentIndex < 0 ? 0 : currentIndex);
     }
 
     @Nullable

@@ -61,12 +61,12 @@ class TopicAdapter extends ArrayAdapter<Topic> {
         } else {
             view = convertView;
         }
-        TextView textView = (TextView) view;
+        TextView tvName = view.findViewById(R.id.tv_name);
         final Topic topic = getItem(position);
         if (topic == null) {
-            textView.setText(R.string.all_topics);
+            tvName.setText(R.string.all_topics);
         } else {
-            textView.setText(topic.getName());
+            tvName.setText(topic.getName());
         }
         return view;
     }
