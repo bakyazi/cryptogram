@@ -1,5 +1,6 @@
 package com.pixplicity.cryptogram.fragments;
 
+import android.content.ActivityNotFoundException;
 import android.content.Intent;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
@@ -20,6 +21,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.pixplicity.cryptogram.R;
 import com.pixplicity.cryptogram.utils.HtmlCompat;
@@ -115,9 +117,13 @@ public class AboutFragment extends BaseFragment {
         final View.OnClickListener launchWebsite = new View.OnClickListener() {
             @Override
             public void onClick(@NonNull View v) {
-                Intent i = new Intent(Intent.ACTION_VIEW);
-                i.setData(Uri.parse(getString(R.string.url)));
-                startActivity(i);
+                Intent intent = new Intent(Intent.ACTION_VIEW);
+                intent.setData(Uri.parse(getString(R.string.url)));
+                try {
+                    startActivity(intent);
+                } catch (ActivityNotFoundException e) {
+                    Toast.makeText(getContext(), R.string.error_no_activity, Toast.LENGTH_LONG).show();
+                }
             }
         };
         mBtWebsite.setOnClickListener(launchWebsite);
@@ -140,13 +146,17 @@ public class AboutFragment extends BaseFragment {
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.action_feedback: {
-                Intent emailIntent = new Intent(Intent.ACTION_SENDTO, Uri.fromParts(
+                Intent intent = new Intent(Intent.ACTION_SENDTO, Uri.fromParts(
                         "mailto", FEEDBACK_EMAIL, null));
-                emailIntent.putExtra(Intent.EXTRA_EMAIL, new String[]{FEEDBACK_EMAIL});
-                emailIntent.putExtra(Intent.EXTRA_SUBJECT, getString(R.string.feedback_subject));
-                emailIntent.putExtra(Intent.EXTRA_TEXT, getString(R.string.feedback_body, getVersionString()));
-                emailIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                startActivity(emailIntent);
+                intent.putExtra(Intent.EXTRA_EMAIL, new String[]{FEEDBACK_EMAIL});
+                intent.putExtra(Intent.EXTRA_SUBJECT, getString(R.string.feedback_subject));
+                intent.putExtra(Intent.EXTRA_TEXT, getString(R.string.feedback_body, getVersionString()));
+                intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                try {
+                    startActivity(intent);
+                } catch (ActivityNotFoundException e) {
+                    Toast.makeText(getContext(), R.string.error_no_activity, Toast.LENGTH_LONG).show();
+                }
             }
             return true;
         }
