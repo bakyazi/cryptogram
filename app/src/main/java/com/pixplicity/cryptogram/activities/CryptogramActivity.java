@@ -632,7 +632,12 @@ public class CryptogramActivity extends BaseActivity implements GoogleApiClient.
     private void updateCryptogram(Puzzle puzzle) {
         if (puzzle != null) {
             mPuzzles.setCurrentId(puzzle.getId());
-            mRvDrawer.scrollToPosition(mPuzzles.getCurrentIndex());
+            final int currentIndex = mPuzzles.getCurrentIndex();
+            if (currentIndex >= 0 && currentIndex < mRvDrawer.getAdapter().getItemCount()) {
+                mRvDrawer.scrollToPosition(currentIndex);
+            } else if (mRvDrawer.getAdapter().getItemCount() > 0) {
+                mRvDrawer.scrollToPosition(0);
+            }
             mTvError.setVisibility(View.GONE);
             mVgCryptogram.setVisibility(View.VISIBLE);
             // Apply the puzzle to the CryptogramView

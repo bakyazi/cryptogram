@@ -145,10 +145,6 @@ public class PuzzleProvider extends AssetProvider {
         return getAll().length;
     }
 
-    public int getIdFromIndex(int index) {
-        return mPuzzles[index].getId();
-    }
-
     @Nullable
     public Puzzle getCurrent(final PuzzleList puzzlesList) {
         return puzzlesList.get(puzzlesList.getCurrentIndex());

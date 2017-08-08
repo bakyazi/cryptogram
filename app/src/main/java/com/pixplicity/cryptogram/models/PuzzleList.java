@@ -20,7 +20,7 @@ public class PuzzleList {
 
     private ArrayList<Integer> mRandomIndices;
 
-    private int mCurrentIndex;
+    private int mCurrentIndex = -1;
 
     public PuzzleList(@NonNull Puzzle[] puzzles) {
         mPuzzles = puzzles;
@@ -31,14 +31,7 @@ public class PuzzleList {
             mPuzzleIds.put(puzzle.getId(), index);
             index++;
         }
-    }
-
-    private int getIndexFromId(int id) {
-        Integer index = mPuzzleIds.get(id);
-        if (index == null) {
-            return -1;
-        }
-        return index;
+        setCurrentId(PrefsUtils.getCurrentId());
     }
 
     public int getCount() {
@@ -116,6 +109,14 @@ public class PuzzleList {
     public void setCurrentId(int currentId) {
         mCurrentIndex = getIndexFromId(currentId);
         PrefsUtils.setCurrentId(currentId);
+    }
+
+    private int getIndexFromId(int id) {
+        Integer index = mPuzzleIds.get(id);
+        if (index == null) {
+            return -1;
+        }
+        return index;
     }
 
 }
