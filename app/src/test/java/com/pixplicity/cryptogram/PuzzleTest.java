@@ -92,15 +92,20 @@ public class PuzzleTest {
                     errors.add("Contains single quote; replace with '“' or '”': " + puzzle);
                 }
                 // Ensure there aren't simple hyphens (replace with —)
-                if (text.contains(" - ") || text.contains("--")) {
+                if (text.replaceAll("[-–] ", "")
+                        .replaceAll(" [-–]", "")
+                        .replaceAll("--", "")
+                        .length() < text.length()) {
                     errors.add("Contains simple hyphen; replace with '—': " + puzzle);
                 }
                 // Ensure em dashes are surrounded with spaces
-                if (text.replaceAll("[\\w]—", "").replaceAll("—[\\w]", "").length() < text.length()) {
+                if (text.replaceAll("[\\w]—", "")
+                        .replaceAll("—[\\w]", "")
+                        .length() < text.length()) {
                     errors.add("Contains em dash without surrounding spaces: " + puzzle);
                 }
                 // Ensure there aren't simple hyphens (replace with —)
-                if (text.contains("...")) {
+                if (text.contains("..")) {
                     errors.add("Contains expanded ellipsis; replace with '…': " + puzzle);
                 }
                 // Ensure there aren't simple hyphens (replace with —)
@@ -132,10 +137,12 @@ public class PuzzleTest {
                     errors.add("No author: " + puzzle);
                 }
             }
-            if (author != null && author.contains("[^\\s\\w]")) {
+            if (author != null && author.replaceAll("[^\\s\\w]", "")
+                                        .length() < author.length()) {
                 errors.add("Contains invalid character in author");
             }
-            if (topic != null && topic.contains("[^\\s\\w]")) {
+            if (topic != null && topic.replaceAll("[^\\s\\w]", "")
+                                      .length() < topic.length()) {
                 errors.add("Contains invalid character in topic");
             }
             hashes.put(id, puzzle);
