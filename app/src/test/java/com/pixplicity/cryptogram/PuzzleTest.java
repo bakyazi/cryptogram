@@ -133,26 +133,26 @@ public class PuzzleTest {
             }
             if (!puzzle.isInstruction()) {
                 // Ensure there's an author
-                if (author == null || author.trim().length() == 0) {
-                    errors.add("No author: " + puzzle);
+                if (author == null || author.trim().length() < 3) {
+                    errors.add("No author for " + puzzle);
                 }
-            }
-            if (author != null && author.replaceAll("[^\\s\\w]", "")
-                                        .length() < author.length()) {
-                errors.add("Contains invalid character in author");
             }
             if (topic != null && topic.replaceAll("[^\\s\\w]", "")
                                       .length() < topic.length()) {
-                errors.add("Contains invalid character in topic");
+                errors.add("Contains invalid character in topic for " + puzzle);
             }
             hashes.put(id, puzzle);
+            if (errors.size() > 10) {
+                // Fail early
+                break;
+            }
         }
         if (errors.size() > 0) {
             for (int i = 0; i < Math.min(10, errors.size()); i++) {
                 System.err.println("-\t" + errors.get(i));
             }
             if (errors.size() > 10) {
-                System.err.println("-\t(and " + errors.size() + " more)");
+                System.err.println("-\t(and more)");
             }
             throw new AssertionError(errors.size() + " errors regarding puzzle quality");
         }
