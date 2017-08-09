@@ -154,7 +154,7 @@ public class PuzzleTest {
             if (errors.size() > 10) {
                 System.err.println("-\t(and more)");
             }
-            throw new AssertionError(errors.size() + " errors regarding puzzle quality");
+            throw new AssertionError("Errors regarding puzzle quality");
         }
     }
 
