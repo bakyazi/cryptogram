@@ -89,11 +89,13 @@
 
     <string name="go_to_puzzle_content">Please enter the puzzle number to go to:</string>
 
-    <string name="google_play_games_welcome">Sign in to Google Play Games to track your progress and achievements</string>
+    <string name="google_play_games_welcome">Sign in to Google Play Games to save your progress and compare leaderboards and achievements</string>
     <string name="google_play_games_sign_in">Sign in…</string>
     <string name="google_play_games_leaderboards">Leaderboard</string>
     <string name="google_play_games_achievements">Achievements</string>
+    <string name="google_play_games_saved_games">Saved games</string>
     <string name="google_play_games_sign_out">Sign out</string>
+    <string name="google_play_games_player_unknown">Anonymous</string>
 
     <string name="google_play_games_connection_failure">Uh, oh! Looks like we can’t reach Google Play Games at the moment.\n\nPlease try again later or report this problem (connection failure with code %1$d-%2$d) through the about screen.</string>
     <string name="google_play_games_not_installed">Google Play Games doesn’t appear to be installed</string>
@@ -101,6 +103,9 @@
     <string name="all_topics">All topics</string>
     <string name="all_topics_description">Have fun and be inspired by puzzles from all topics.</string>
     <string name="play">Play</string>
+
+    <string name="saved_game_name">Game state on %1$s</string>
+    <string name="saved_game_loading">Loading saved game…</string>
 
     <!-- Settings -->
     <string name="theme">Theme:</string>
