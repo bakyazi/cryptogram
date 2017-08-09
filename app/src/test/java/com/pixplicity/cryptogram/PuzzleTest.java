@@ -34,6 +34,8 @@ public class PuzzleTest {
 
     private static final boolean VERBOSE = false;
 
+    private static final int TOPIC_PUZZLE_COUNT_WARNING = 5;
+
     @Before
     public void setup() {
         PowerMockito.mockStatic(Log.class);
@@ -209,8 +211,8 @@ public class PuzzleTest {
                 }
             }
             int count = puzzleTopics.get(puzzleTopicName);
-            if (count < 10) {
-                warnings.add("Topic with fewer than 10 puzzles: " + puzzleTopicName);
+            if (count < TOPIC_PUZZLE_COUNT_WARNING) {
+                warnings.add("Topic with fewer than " + TOPIC_PUZZLE_COUNT_WARNING + " puzzles: " + puzzleTopicName);
             }
             if (!found) {
                 errors.add("Topic does not occur in topic list: " + puzzleTopicName);

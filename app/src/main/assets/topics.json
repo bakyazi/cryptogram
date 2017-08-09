@@ -27,7 +27,7 @@
     "id": "compassion",
     "name": "Other people",
     "description": "We all want to be treated with kindness, and a bit of humility gets you a long way. These puzzles offer some words of advice on friendship, kindness and compassion for your fellow man.",
-    "topics": "humility|compassion|sympathy|kindness|gratitude|goodness|tolerance|equality|morality|respect|discrimination|forgiveness|dishonesty|altruism|individuality"
+    "topics": "humility|compassion|sympathy|kindness|gratitude|goodness|tolerance|equality|morality|respect|discrimination|forgiveness|honesty|altruism|individuality"
   },
   {
     "id": "friendship",
@@ -45,7 +45,7 @@
     "id": "success",
     "name": "Work ethic",
     "description": "Work hard and reap the rewards. These quotes are words of encouragement about being ambitious and determined.",
-    "topics": "ambition|determination|success|business"
+    "topics": "ambition|determination|success|confidence|business"
   },
   {
     "id": "sorrow",
