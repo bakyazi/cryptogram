@@ -95,15 +95,20 @@ public class PuzzleTest {
                     errors.add("Contains single quote; replace with '“' or '”': " + puzzle);
                 }
                 // Ensure there aren't simple hyphens (replace with —)
-                if (text.contains(" - ") || text.contains("--")) {
+                if (text.replaceAll("[-–] ", "")
+                        .replaceAll(" [-–]", "")
+                        .replaceAll("--", "")
+                        .length() < text.length()) {
                     errors.add("Contains simple hyphen; replace with '—': " + puzzle);
                 }
                 // Ensure em dashes are surrounded with spaces
-                if (text.replaceAll("[\\w]—", "").replaceAll("—[\\w]", "").length() < text.length()) {
+                if (text.replaceAll("[\\w]—", "")
+                        .replaceAll("—[\\w]", "")
+                        .length() < text.length()) {
                     errors.add("Contains em dash without surrounding spaces: " + puzzle);
                 }
                 // Ensure there aren't simple hyphens (replace with —)
-                if (text.contains("...")) {
+                if (text.contains("..")) {
                     errors.add("Contains expanded ellipsis; replace with '…': " + puzzle);
                 }
                 // Ensure there aren't simple hyphens (replace with —)
@@ -131,17 +136,19 @@ public class PuzzleTest {
             }
             if (!puzzle.isInstruction()) {
                 // Ensure there's an author
-                if (author == null || author.trim().length() == 0) {
-                    errors.add("No author: " + puzzle);
+                if (author == null || author.trim().length() < 3) {
+                    errors.add("No author for " + puzzle);
                 }
             }
-            if (author != null && author.contains("[^\\s\\w]")) {
-                errors.add("Contains invalid character in author");
-            }
-            if (topic != null && topic.contains("[^\\s\\w]")) {
-                errors.add("Contains invalid character in topic");
+            if (topic != null && topic.replaceAll("[^\\s\\w]", "")
+                                      .length() < topic.length()) {
+                errors.add("Contains invalid character in topic for " + puzzle);
             }
             hashes.put(id, puzzle);
+            if (errors.size() > 10) {
+                // Fail early
+                break;
+            }
         }
         handleErrors(errors);
     }
@@ -220,7 +227,7 @@ public class PuzzleTest {
     private void handleErrors(ArrayList<String> messages) {
         printMessages(System.err, messages);
         if (messages.size() > 0) {
-            throw new AssertionError(messages.size() + " errors regarding puzzle quality");
+            throw new AssertionError("Errors regarding puzzle quality");
         }
     }
 
@@ -230,7 +237,7 @@ public class PuzzleTest {
                 out.println("-\t" + messages.get(i));
             }
             if (messages.size() > 10) {
-                out.println("-\t(and " + messages.size() + " more)");
+                out.println("-\t(and more)");
             }
         }
     }
