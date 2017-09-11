@@ -143,7 +143,7 @@ public class CryptogramView extends AppCompatTextView {
         }
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-            setShowSoftInputOnFocus(true);
+            setShowSoftInputOnFocus(PrefsUtils.getUseSystemKeyboard());
         }
         setFocusable(true);
         setFocusableInTouchMode(true);
@@ -161,6 +161,11 @@ public class CryptogramView extends AppCompatTextView {
     }
 
     public void showSoftInput() {
+        if (!PrefsUtils.getUseSystemKeyboard()) {
+            // Never show soft input
+            hideSoftInput();
+            return;
+        }
         if (mPuzzle != null && !mPuzzle.isCompleted()) {
             InputMethodManager inputMethodManager = (InputMethodManager) getContext().getSystemService(Context.INPUT_METHOD_SERVICE);
             if (inputMethodManager != null) {

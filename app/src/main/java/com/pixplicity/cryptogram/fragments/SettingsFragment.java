@@ -43,6 +43,12 @@ public class SettingsFragment extends BaseFragment {
     @BindView(R.id.rb_text_size_large)
     protected RadioButton mRbTextSizeLarge;
 
+    @BindView(R.id.rb_keyboard_builtin)
+    protected RadioButton mRbKeyboardBuiltin;
+
+    @BindView(R.id.rb_keyboard_system)
+    protected RadioButton mRbKeyboardSystem;
+
     @BindView(R.id.cb_randomize)
     protected CheckBox mCbRandomize;
 
@@ -134,6 +140,22 @@ public class SettingsFragment extends BaseFragment {
                 }
             }
         });
+        updateCompoundButton(mRbKeyboardBuiltin, !PrefsUtils.getUseSystemKeyboard(), new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton compoundButton, boolean checked) {
+                if (checked) {
+                    setUseSystemKeyboard(false);
+                }
+            }
+        });
+        updateCompoundButton(mRbKeyboardSystem, !PrefsUtils.getUseSystemKeyboard(), new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton compoundButton, boolean checked) {
+                if (checked) {
+                    setUseSystemKeyboard(true);
+                }
+            }
+        });
         updateCompoundButton(mCbRandomize, PrefsUtils.getRandomize(), new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton compoundButton, boolean checked) {
@@ -171,6 +193,14 @@ public class SettingsFragment extends BaseFragment {
     private void setTheme(boolean theme) {
         PrefsUtils.setDarkTheme(theme);
         relaunch();
+    }
+
+    private void setUseSystemKeyboard(boolean useSystemKeyboard) {
+        if (useSystemKeyboard) {
+            // TODO show warning that it works for shit
+        }
+        PrefsUtils.setUseSystemKeyboard(useSystemKeyboard);
+        // TODO fire event? relaunch?
     }
 
     private void relaunch() {

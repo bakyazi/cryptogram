@@ -75,6 +75,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
+                android:paddingLeft="8dp"
+                android:paddingRight="8dp"
                 android:text="@string/text_size_small"/>
 
             <RadioButton
@@ -84,6 +86,8 @@
                 android:layout_gravity="center"
                 android:layout_marginLeft="16dp"
                 android:layout_marginStart="16dp"
+                android:paddingLeft="8dp"
+                android:paddingRight="8dp"
                 android:text="@string/text_size_normal"/>
 
             <RadioButton
@@ -93,7 +97,44 @@
                 android:layout_gravity="center"
                 android:layout_marginLeft="16dp"
                 android:layout_marginStart="16dp"
+                android:paddingLeft="8dp"
+                android:paddingRight="8dp"
                 android:text="@string/text_size_large"/>
+
+        </RadioGroup>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="8dp"
+            android:layout_marginTop="16dp"
+            android:text="@string/keyboard"/>
+
+        <RadioGroup
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="16dp"
+            android:orientation="horizontal">
+
+            <RadioButton
+                android:id="@+id/rb_keyboard_builtin"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:paddingLeft="8dp"
+                android:paddingRight="8dp"
+                android:text="@string/keyboard_builtin"/>
+
+            <RadioButton
+                android:id="@+id/rb_keyboard_system"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginLeft="16dp"
+                android:layout_marginStart="16dp"
+                android:paddingLeft="8dp"
+                android:paddingRight="8dp"
+                android:text="@string/keyboard_system"/>
 
         </RadioGroup>
 

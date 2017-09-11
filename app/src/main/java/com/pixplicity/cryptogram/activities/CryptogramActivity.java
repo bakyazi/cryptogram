@@ -27,6 +27,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.ViewStub;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TableLayout;
@@ -156,6 +157,9 @@ public class CryptogramActivity extends BaseActivity implements GoogleApiClient.
     @BindView(R.id.vg_stats_practice)
     protected ViewGroup mVgStatsPractice;
 
+    @BindView(R.id.vs_keyboard)
+    protected ViewStub mVsKeyboard;
+
     private PuzzleAdapter mAdapter;
 
     private Rate mRate;
@@ -258,6 +262,13 @@ public class CryptogramActivity extends BaseActivity implements GoogleApiClient.
                 }
             }
         });
+
+        if (PrefsUtils.getUseSystemKeyboard()) {
+            mVsKeyboard.setVisibility(View.GONE);
+        } else {
+            mVsKeyboard.inflate();
+            mVsKeyboard.setVisibility(View.VISIBLE);
+        }
 
         updateCryptogram(puzzleProvider.getCurrent());
 

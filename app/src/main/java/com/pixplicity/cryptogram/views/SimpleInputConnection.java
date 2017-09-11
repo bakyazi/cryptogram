@@ -37,10 +37,15 @@ public class SimpleInputConnection extends BaseInputConnection {
     public static InputMethodInfo getIme(Context context) {
         final InputMethodManager imm = (InputMethodManager) context.getSystemService(Context.INPUT_METHOD_SERVICE);
         final InputMethodSubtype ims = imm.getCurrentInputMethodSubtype();
-        for (InputMethodInfo imi : imm.getEnabledInputMethodList()) {
-            for (int i = 0; i < imi.getSubtypeCount(); i++) {
-                if (ims.equals(imi.getSubtypeAt(i))) {
-                    return imi;
+        if (ims != null) {
+            for (InputMethodInfo imi : imm.getEnabledInputMethodList()) {
+                if (imi == null) {
+                    continue;
+                }
+                for (int i = 0; i < imi.getSubtypeCount(); i++) {
+                    if (ims.equals(imi.getSubtypeAt(i))) {
+                        return imi;
+                    }
                 }
             }
         }

@@ -47,12 +47,14 @@
                     android:elevation="4dp"
                     android:padding="8dp"
                     android:textColor="@color/textLight"
+                    tools:visibility="gone"
                     tools:targetApi="lollipop"/>
 
                 <android.support.v4.widget.NestedScrollView
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_gravity="center"
+                    android:layout_height="0dp"
+                    android:layout_gravity="fill_vertical"
+                    android:layout_weight="1"
                     android:fillViewport="true">
 
                     <com.pixplicity.cryptogram.views.CryptogramLayout
@@ -67,9 +69,9 @@
 
                         <com.pixplicity.cryptogram.views.CryptogramView
                             android:id="@+id/cryptogram"
-                            android:inputType="text|textNoSuggestions"
                             android:layout_width="match_parent"
-                            android:layout_height="wrap_content"/>
+                            android:layout_height="wrap_content"
+                            android:inputType="text|textNoSuggestions"/>
 
                         <android.support.v7.widget.AppCompatTextView
                             android:id="@+id/tv_author"
@@ -204,6 +206,12 @@
                     </com.pixplicity.cryptogram.views.CryptogramLayout>
 
                 </android.support.v4.widget.NestedScrollView>
+
+                <ViewStub
+                    android:id="@+id/vs_keyboard"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout="@layout/in_keyboard"/>
 
             </LinearLayout>
 
