@@ -454,13 +454,13 @@ public class CryptogramActivity extends BaseActivity implements GoogleApiClient.
 
         View customView = LayoutInflater.from(this).inflate(R.layout.dialog_intro, null);
 
-        TextView tvIntro = (TextView) customView.findViewById(R.id.tv_intro);
+        TextView tvIntro = customView.findViewById(R.id.tv_intro);
         tvIntro.setText(textStringResId);
 
-        final RatioFrameLayout vgRatio = (RatioFrameLayout) customView.findViewById(R.id.vg_ratio);
+        final RatioFrameLayout vgRatio = customView.findViewById(R.id.vg_ratio);
         vgRatio.setRatio(RatioDatumMode.DATUM_WIDTH, videoW, videoH);
 
-        final EasyVideoPlayer player = (EasyVideoPlayer) customView.findViewById(R.id.player);
+        final EasyVideoPlayer player = customView.findViewById(R.id.player);
         if (player != null) {
             player.disableControls();
             player.setBackgroundColor(Color.WHITE);
@@ -508,7 +508,7 @@ public class CryptogramActivity extends BaseActivity implements GoogleApiClient.
             Uri uri = Uri.parse("android.resource://" + getPackageName() + "/raw/" + videoResName);
             player.setSource(uri);
         } else {
-            ImageView ivVideo = (ImageView) customView.findViewById(R.id.iv_still_frame);
+            ImageView ivVideo = customView.findViewById(R.id.iv_still_frame);
             ivVideo.setImageResource(stillFrameResId);
         }
 
@@ -545,7 +545,7 @@ public class CryptogramActivity extends BaseActivity implements GoogleApiClient.
                     .setView(dialogView)
                     .show();
 
-            Button btLeaderboards = (Button) dialogView.findViewById(R.id.bt_leaderboards);
+            Button btLeaderboards = dialogView.findViewById(R.id.bt_leaderboards);
             btLeaderboards.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
@@ -561,7 +561,7 @@ public class CryptogramActivity extends BaseActivity implements GoogleApiClient.
                 }
             });
 
-            Button btAchievements = (Button) dialogView.findViewById(R.id.bt_achievements);
+            Button btAchievements = dialogView.findViewById(R.id.bt_achievements);
             btAchievements.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
@@ -577,7 +577,7 @@ public class CryptogramActivity extends BaseActivity implements GoogleApiClient.
                 }
             });
 
-            Button btSignOut = (Button) dialogView.findViewById(R.id.bt_sign_out);
+            Button btSignOut = dialogView.findViewById(R.id.bt_sign_out);
             btSignOut.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
