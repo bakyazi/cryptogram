@@ -2,28 +2,29 @@ package com.pixplicity.cryptogram.views;
 
 import android.content.Context;
 import android.content.res.TypedArray;
-import android.support.v7.widget.AppCompatButton;
+import android.support.v4.content.ContextCompat;
+import android.support.v7.widget.AppCompatImageButton;
 import android.util.AttributeSet;
 
 import com.pixplicity.cryptogram.R;
 import com.pixplicity.cryptogram.utils.KeyboardUtils;
 
 
-public class KeyboardButton extends AppCompatButton implements KeyboardUtils.Contract {
+public class KeyboardImageButton extends AppCompatImageButton implements KeyboardUtils.Contract {
 
-    private int mKeyValue;
+    private int mKeycode;
 
-    public KeyboardButton(Context context) {
+    public KeyboardImageButton(Context context) {
         super(context);
         init(context, null, 0);
     }
 
-    public KeyboardButton(Context context, AttributeSet attrs) {
+    public KeyboardImageButton(Context context, AttributeSet attrs) {
         super(context, attrs);
         init(context, attrs, 0);
     }
 
-    public KeyboardButton(Context context, AttributeSet attrs, int defStyleAttr) {
+    public KeyboardImageButton(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
         init(context, attrs, defStyleAttr);
     }
@@ -31,22 +32,22 @@ public class KeyboardButton extends AppCompatButton implements KeyboardUtils.Con
     private void init(final Context context, AttributeSet attrs, int defStyleAttr) {
         TypedArray a = context.getTheme().obtainStyledAttributes(
                 attrs,
-                R.styleable.KeyboardButton,
+                R.styleable.KeyboardImageButton,
                 defStyleAttr, 0);
 
         try {
-            mKeyValue = a.getInteger(R.styleable.KeyboardButton_key, 0);
+            mKeycode = a.getInteger(R.styleable.KeyboardImageButton_key, 0);
         } finally {
             a.recycle();
         }
 
-        setOnClickListener(view -> KeyboardUtils.dispatch(KeyboardButton.this));
-        setText(KeyboardUtils.getKeyText(this));
+        setOnClickListener(view -> KeyboardUtils.dispatch(KeyboardImageButton.this));
+        setImageDrawable(ContextCompat.getDrawable(getContext(), KeyboardUtils.getKeyIcon(this)));
     }
 
     @Override
     public int getKeyIndex() {
-        return mKeyValue;
+        return mKeycode;
     }
 
 }
