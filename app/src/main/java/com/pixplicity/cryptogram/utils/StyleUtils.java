@@ -15,7 +15,13 @@ public class StyleUtils {
 
     private static float getSizeMultiplier() {
         if (sSizeMultiplier == null) {
-            sSizeMultiplier = (float) Math.pow(1.25f, PrefsUtils.getTextSize());
+            float textSize;
+            try {
+                textSize = PrefsUtils.getTextSize();
+            } catch (Exception e) {
+                textSize = 1f;
+            }
+            sSizeMultiplier = (float) Math.pow(1.25f, textSize);
         }
         return sSizeMultiplier;
     }

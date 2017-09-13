@@ -80,7 +80,7 @@ public class CryptogramView extends AppCompatTextView {
         if (!isInEditMode()) {
             mDarkTheme = PrefsUtils.getDarkTheme();
         } else {
-            mPuzzle = new Puzzle.Mock("This is an example.", "Author", "Topic");
+            mPuzzle = new Puzzle.Mock("This is an example puzzle.", "Author", "Topic");
         }
 
         int colorText, colorHighlight, colorComplete, colorMistake;
@@ -140,11 +140,7 @@ public class CryptogramView extends AppCompatTextView {
         mTextPaintInput.getTextBounds("M", 0, 1, bounds);
         mCharW1 = bounds.width();
 
-        if (isInEditMode()) {
-            setPuzzle(new Puzzle());
-        }
-
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+        if (!isInEditMode() && Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             setShowSoftInputOnFocus(PrefsUtils.getUseSystemKeyboard());
         }
         setFocusable(true);
@@ -441,14 +437,10 @@ public class CryptogramView extends AppCompatTextView {
             return 0;
         }
         HashMap<Character, Character> charMapping;
-        if (isInEditMode()) {
-            charMapping = null;
-        } else {
-            charMapping = mPuzzle.getCharMapping();
-        }
+        charMapping = mPuzzle.getCharMapping();
 
         boolean completed = false;
-        if (!isInEditMode() && mPuzzle.isCompleted()) {
+        if (mPuzzle.isCompleted()) {
             completed = true;
         }
         TextPaint textPaintUser = completed ? mTextPaintInputComplete : mTextPaintInput;
