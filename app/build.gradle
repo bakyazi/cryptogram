@@ -13,6 +13,10 @@ apply plugin: 'com.android.application'
 apply plugin: 'io.fabric'
 
 android {
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
     signingConfigs {
         debug {
             Properties props = new Properties()
@@ -41,7 +45,7 @@ android {
         }
     }
     compileSdkVersion 26
-    buildToolsVersion "26.0.0"
+    buildToolsVersion "26.0.1"
     defaultConfig {
         applicationId "com.pixplicity.cryptogram"
         minSdkVersion 14
