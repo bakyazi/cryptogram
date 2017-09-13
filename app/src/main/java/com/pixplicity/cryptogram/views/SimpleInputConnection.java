@@ -13,6 +13,7 @@ public class SimpleInputConnection extends BaseInputConnection {
 
     public static final int INPUT_TYPE = InputType.TYPE_TEXT_FLAG_NO_SUGGESTIONS;
     public static final int INPUT_TYPE_FOR_FAULTY_IME = InputType.TYPE_TEXT_VARIATION_VISIBLE_PASSWORD;
+    public static final int INPUT_NONE = InputType.TYPE_NULL;
 
     private final CryptogramView mCryptogramView;
     private String mLastComposition;

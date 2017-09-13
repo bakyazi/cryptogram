@@ -15,4 +15,6 @@
 
     <dimen name="highlight_size">96dp</dimen>
 
+    <dimen name="keyboard_height">144dp</dimen>
+
 </resources>

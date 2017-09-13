@@ -1083,7 +1083,7 @@ public class CryptogramActivity extends BaseActivity implements GoogleApiClient.
     }
 
     private void showSnackbar(String text) {
-        final Snackbar snackbar = Snackbar.make(mVgRoot, text, Snackbar.LENGTH_SHORT);
+        final Snackbar snackbar = Snackbar.make(getViewRoot(), text, Snackbar.LENGTH_SHORT);
         View snackBarView = snackbar.getView();
 
         // Set background

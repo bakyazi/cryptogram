@@ -79,6 +79,8 @@ public class CryptogramView extends AppCompatTextView {
 
         if (!isInEditMode()) {
             mDarkTheme = PrefsUtils.getDarkTheme();
+        } else {
+            mPuzzle = new Puzzle.Mock("This is an example.", "Author", "Topic");
         }
 
         int colorText, colorHighlight, colorComplete, colorMistake;
@@ -244,28 +246,35 @@ public class CryptogramView extends AppCompatTextView {
 
     @Override
     public int getInputType() {
-        return SimpleInputConnection.INPUT_TYPE;
+        if (PrefsUtils.getUseSystemKeyboard()) {
+            return SimpleInputConnection.INPUT_TYPE;
+        } else {
+            return SimpleInputConnection.INPUT_NONE;
+        }
     }
 
     @Override
     public InputConnection onCreateInputConnection(EditorInfo outAttrs) {
-        outAttrs.inputType = SimpleInputConnection.INPUT_TYPE;
-        if (SimpleInputConnection.hasFaultyIme(getContext())) {
-            outAttrs.inputType |= SimpleInputConnection.INPUT_TYPE_FOR_FAULTY_IME;
+        if (PrefsUtils.getUseSystemKeyboard()) {
+            outAttrs.inputType = SimpleInputConnection.INPUT_TYPE;
+            if (SimpleInputConnection.hasFaultyIme(getContext())) {
+                outAttrs.inputType |= SimpleInputConnection.INPUT_TYPE_FOR_FAULTY_IME;
+            }
+            outAttrs.imeOptions = EditorInfo.IME_ACTION_NEXT | EditorInfo.IME_FLAG_NO_EXTRACT_UI;
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
+                outAttrs.imeOptions |= EditorInfo.IME_FLAG_FORCE_ASCII;
+            }
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+                outAttrs.imeOptions |= EditorInfo.IME_FLAG_NO_PERSONALIZED_LEARNING;
+            }
+            return new SimpleInputConnection(this);
         }
-        outAttrs.imeOptions = EditorInfo.IME_ACTION_NEXT | EditorInfo.IME_FLAG_NO_EXTRACT_UI;
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
-            outAttrs.imeOptions |= EditorInfo.IME_FLAG_FORCE_ASCII;
-        }
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-            outAttrs.imeOptions |= EditorInfo.IME_FLAG_NO_PERSONALIZED_LEARNING;
-        }
-        return new SimpleInputConnection(this);
+        return super.onCreateInputConnection(outAttrs);
     }
 
     @Override
     public boolean onCheckIsTextEditor() {
-        return true;
+        return PrefsUtils.getUseSystemKeyboard();
     }
 
     @Nullable

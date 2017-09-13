@@ -26,18 +26,19 @@ import butterknife.ButterKnife;
 
 public abstract class BaseActivity extends AppCompatActivity {
 
+    @Nullable
     @BindView(R.id.vg_root)
     protected View mVgRoot;
+
+    @Nullable
+    @BindView(R.id.drawer_layout)
+    protected DrawerLayout mDrawerLayout;
 
     @BindView(R.id.coordinator)
     protected View mVgCoordinator;
 
     @BindView(R.id.toolbar)
     protected Toolbar mToolbar;
-
-    @Nullable
-    @BindView(R.id.drawer_layout)
-    protected DrawerLayout mDrawerLayout;
 
     protected ActionBarDrawerToggle mDrawerToggle;
 
@@ -135,6 +136,10 @@ public abstract class BaseActivity extends AppCompatActivity {
     }
 
     protected void onDrawerMoving() {
+    }
+
+    protected View getViewRoot() {
+        return mVgRoot == null ? mDrawerLayout : mVgRoot;
     }
 
     @NonNull
