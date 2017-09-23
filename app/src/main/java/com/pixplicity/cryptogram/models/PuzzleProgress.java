@@ -269,11 +269,17 @@ public class PuzzleProgress {
         if (mCompleted == null || !mCompleted) {
             mCompleted = true;
             HashMap<Character, Character> userChars = getUserCharsMapping(puzzle);
-            for (Character character : userChars.keySet()) {
-                // In order to be correct, the key and value must be identical
-                if (character != null && character != userChars.get(character) && !puzzle.isGiven(character)) {
-                    mCompleted = false;
-                    break;
+            if (userChars.size() <= 5) {
+                Log.w(TAG, "User character mapping has an unexpectedly small size (that's what she said)");
+                userChars.clear();
+                mCompleted = false;
+            } else {
+                for (Character character : userChars.keySet()) {
+                    // In order to be correct, the key and value must be identical
+                    if (character != null && character != userChars.get(character) && !puzzle.isGiven(character)) {
+                        mCompleted = false;
+                        break;
+                    }
                 }
             }
             if (mCompleted) {
@@ -357,7 +363,7 @@ public class PuzzleProgress {
         Answers.getInstance().logLevelEnd(
                 event);
 
-        EventProvider.postEvent(
+        EventProvider.postEventDelayed(
                 new PuzzleEvent.PuzzleCompletedEvent(puzzle));
     }
 
@@ -443,6 +449,10 @@ public class PuzzleProgress {
                 i.remove();
             }
         }
+        if (mStartTime == null || mStopTime == null) {
+            // This is a hacky fix for dealing with broken completion states
+            mCompleted = false;
+        }
         ArrayList<Character> characterList = getCharacterList(puzzle);
         HashMap<Character, Character> charMapping = getCharMapping(puzzle);
         Log.w(TAG, "check for invalid mappings in " + puzzle);
@@ -451,6 +461,7 @@ public class PuzzleProgress {
                 // Whoops! Puzzle has a broken character mapping
                 mUserChars = null;
                 mCharMapping = null;
+                mCompleted = false;
                 getCharMapping(puzzle);
                 Log.w(TAG, "invalid character mapping for " + puzzle + "; reset mappings");
                 break;

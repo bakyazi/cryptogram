@@ -16,6 +16,12 @@ public abstract class PuzzleEvent {
         }
     }
 
+    public static class PuzzleStyleChanged extends PuzzleEvent {
+        public PuzzleStyleChanged() {
+            super(null);
+        }
+    }
+
     private final Puzzle mPuzzle;
 
     public PuzzleEvent(Puzzle puzzle) {

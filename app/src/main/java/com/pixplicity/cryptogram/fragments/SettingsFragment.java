@@ -17,7 +17,10 @@ import android.widget.RadioButton;
 
 import com.pixplicity.cryptogram.R;
 import com.pixplicity.cryptogram.activities.CryptogramActivity;
+import com.pixplicity.cryptogram.events.PuzzleEvent;
+import com.pixplicity.cryptogram.utils.EventProvider;
 import com.pixplicity.cryptogram.utils.PrefsUtils;
+import com.pixplicity.cryptogram.utils.StyleUtils;
 
 import butterknife.BindView;
 import butterknife.OnClick;
@@ -30,6 +33,15 @@ public class SettingsFragment extends BaseFragment {
 
     @BindView(R.id.rb_theme_dark)
     protected RadioButton mRbThemeDark;
+
+    @BindView(R.id.rb_text_size_small)
+    protected RadioButton mRbTextSizeSmall;
+
+    @BindView(R.id.rb_text_size_normal)
+    protected RadioButton mRbTextSizeNormal;
+
+    @BindView(R.id.rb_text_size_large)
+    protected RadioButton mRbTextSizeLarge;
 
     @BindView(R.id.cb_randomize)
     protected CheckBox mCbRandomize;
@@ -85,18 +97,40 @@ public class SettingsFragment extends BaseFragment {
         updateCompoundButton(mRbThemeLight, !PrefsUtils.getDarkTheme(), new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton compoundButton, boolean checked) {
-                PrefsUtils.setDarkTheme(!checked);
                 if (checked) {
-                    relaunch();
+                    setTheme(false);
                 }
             }
         });
         updateCompoundButton(mRbThemeDark, PrefsUtils.getDarkTheme(), new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton compoundButton, boolean checked) {
-                PrefsUtils.setDarkTheme(checked);
                 if (checked) {
-                    relaunch();
+                    setTheme(true);
+                }
+            }
+        });
+        updateCompoundButton(mRbTextSizeSmall, PrefsUtils.getTextSize() == -1, new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton compoundButton, boolean checked) {
+                if (checked) {
+                    setTextSize(-1);
+                }
+            }
+        });
+        updateCompoundButton(mRbTextSizeNormal, PrefsUtils.getTextSize() == 0, new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton compoundButton, boolean checked) {
+                if (checked) {
+                    setTextSize(0);
+                }
+            }
+        });
+        updateCompoundButton(mRbTextSizeLarge, PrefsUtils.getTextSize() == 1, new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton compoundButton, boolean checked) {
+                if (checked) {
+                    setTextSize(1);
                 }
             }
         });
@@ -126,6 +160,17 @@ public class SettingsFragment extends BaseFragment {
         });
 
         mBtResetDialogs.setEnabled(PrefsUtils.getNeverAskRevealLetter() || PrefsUtils.getNeverAskRevealMistakes());
+    }
+
+    private void setTextSize(int textSize) {
+        PrefsUtils.setTextSize(textSize);
+        StyleUtils.reset();
+        EventProvider.postEvent(new PuzzleEvent.PuzzleStyleChanged());
+    }
+
+    private void setTheme(boolean theme) {
+        PrefsUtils.setDarkTheme(theme);
+        relaunch();
     }
 
     private void relaunch() {

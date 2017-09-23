@@ -10,6 +10,7 @@ import android.graphics.Rect;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
+import android.support.annotation.ColorInt;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.design.widget.Snackbar;
@@ -57,11 +58,12 @@ import com.pixplicity.cryptogram.adapters.PuzzleAdapter;
 import com.pixplicity.cryptogram.events.PuzzleEvent;
 import com.pixplicity.cryptogram.models.Puzzle;
 import com.pixplicity.cryptogram.utils.AchievementProvider;
-import com.pixplicity.cryptogram.utils.PuzzleProvider;
 import com.pixplicity.cryptogram.utils.EventProvider;
 import com.pixplicity.cryptogram.utils.LeaderboardProvider;
 import com.pixplicity.cryptogram.utils.PrefsUtils;
+import com.pixplicity.cryptogram.utils.PuzzleProvider;
 import com.pixplicity.cryptogram.utils.StringUtils;
+import com.pixplicity.cryptogram.utils.StyleUtils;
 import com.pixplicity.cryptogram.views.CryptogramLayout;
 import com.pixplicity.cryptogram.views.CryptogramView;
 import com.pixplicity.cryptogram.views.HintView;
@@ -151,6 +153,9 @@ public class CryptogramActivity extends BaseActivity implements GoogleApiClient.
     @BindView(R.id.tv_stats_score)
     protected TextView mTvStatsScore;
 
+    @BindView(R.id.vg_stats_practice)
+    protected ViewGroup mVgStatsPractice;
+
     private PuzzleAdapter mAdapter;
 
     private Rate mRate;
@@ -197,7 +202,7 @@ public class CryptogramActivity extends BaseActivity implements GoogleApiClient.
                 .setTriggerCount(10)
                 .setMinimumInstallTime((int) TimeUnit.DAYS.toMillis(2))
                 .setMessage(getString(R.string.rating, getString(R.string.app_name)))
-                .setFeedbackAction(Uri.parse("mailto:paul@pixplicity.com"))
+                .setFeedbackAction(Uri.parse("mailto:paul+cryptogram@pixplicity.com"))
                 .build();
 
         mRvDrawer.setLayoutManager(new LinearLayoutManager(this));
@@ -620,9 +625,8 @@ public class CryptogramActivity extends BaseActivity implements GoogleApiClient.
                 mToolbar.setSubtitle(puzzle.getTitle(this));
             } else {
                 mToolbar.setSubtitle(getString(
-                        R.string.puzzle_number_of_total,
-                        puzzle.getNumber(),
-                        provider.getLastNumber()));
+                        R.string.puzzle_number,
+                        puzzle.getNumber()));
             }
             // Invoke various events
             onCryptogramUpdated(puzzle);
@@ -660,14 +664,17 @@ public class CryptogramActivity extends BaseActivity implements GoogleApiClient.
                 mTvStatsExcess.setText(String.valueOf(excessCount));
             }
             mTvStatsReveals.setText(String.valueOf(puzzle.getReveals()));
-            mVgStatsScore.setVisibility(View.GONE);
             Float score = puzzle.getScore();
             if (score != null) {
+                mVgStatsPractice.setVisibility(View.GONE);
                 mVgStatsScore.setVisibility(View.VISIBLE);
                 mTvStatsScore.setText(String.format(
                         Locale.ENGLISH,
                         "%.1f%%",
                         score * 100));
+            } else {
+                mVgStatsScore.setVisibility(View.GONE);
+                mVgStatsPractice.setVisibility(puzzle.isNoScore() ? View.VISIBLE : View.GONE);
             }
         } else {
             if (PrefsUtils.getShowHints() && puzzle.hasUserChars()) {
@@ -679,7 +686,13 @@ public class CryptogramActivity extends BaseActivity implements GoogleApiClient.
     }
 
     @Subscribe
-    public void onCryptogramStarted(PuzzleEvent.PuzzleStartedEvent event) {
+    public void onPuzzleStyleChanged(PuzzleEvent.PuzzleStyleChanged event) {
+        // Just recreate the activity
+        recreate();
+    }
+
+    @Subscribe
+    public void onPuzzleStarted(PuzzleEvent.PuzzleStartedEvent event) {
         if (mGoogleApiClient.isConnected()) {
             // Submit any achievements
             AchievementProvider.getInstance().onCryptogramStart(mGoogleApiClient);
@@ -687,7 +700,7 @@ public class CryptogramActivity extends BaseActivity implements GoogleApiClient.
     }
 
     @Subscribe
-    public void onCryptogramCompleted(PuzzleEvent.PuzzleCompletedEvent event) {
+    public void onPuzzleCompleted(PuzzleEvent.PuzzleCompletedEvent event) {
         updateCryptogram(event.getPuzzle());
 
         // Increment the trigger for displaying the rating dialog
@@ -755,7 +768,7 @@ public class CryptogramActivity extends BaseActivity implements GoogleApiClient.
             return true;
             case R.id.action_reveal_letter: {
                 if (puzzle == null || !mCryptogramView.hasSelectedCharacter()) {
-                    Snackbar.make(mVgRoot, "Please select a letter first.", Snackbar.LENGTH_SHORT).show();
+                    showSnackbar(getString(R.string.reveal_letter_instruction));
                 } else {
                     if (PrefsUtils.getNeverAskRevealLetter()) {
                         mCryptogramView.revealCharacterMapping(
@@ -880,8 +893,7 @@ public class CryptogramActivity extends BaseActivity implements GoogleApiClient.
                                             .getInstance(CryptogramActivity.this);
                                     Puzzle puzzle = provider.getByNumber(puzzleNumber);
                                     if (puzzle == null) {
-                                        Snackbar.make(mVgRoot, getString(R.string.puzzle_nonexistant, puzzleNumber),
-                                                Snackbar.LENGTH_SHORT).show();
+                                        showSnackbar(getString(R.string.puzzle_nonexistant, puzzleNumber));
                                     } else {
                                         updateCryptogram(puzzle);
                                     }
@@ -1057,6 +1069,22 @@ public class CryptogramActivity extends BaseActivity implements GoogleApiClient.
             return true;
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    private void showSnackbar(String text) {
+        final Snackbar snackbar = Snackbar.make(mVgRoot, text, Snackbar.LENGTH_SHORT);
+        View snackBarView = snackbar.getView();
+
+        // Set background
+        @ColorInt int colorPrimary = StyleUtils.getColor(this, R.attr.colorPrimary);
+        snackBarView.setBackgroundColor(colorPrimary);
+
+        // Set foreground
+        @ColorInt int textColor = StyleUtils.getColor(this, R.attr.textColorOnPrimary);
+        TextView textView = snackBarView.findViewById(android.support.design.R.id.snackbar_text);
+        textView.setTextColor(textColor);
+
+        snackbar.show();
     }
 
     private void nextPuzzle() {
