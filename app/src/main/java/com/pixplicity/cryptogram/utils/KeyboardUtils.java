@@ -10,8 +10,8 @@ import android.view.View;
 public class KeyboardUtils {
 
     private enum KeyValue {
-        BACKSPACE(com.pixplicity.cryptogram.R.drawable.ic_keyboard_backspace, KeyEvent.KEYCODE_BACK),
-        TAB(com.pixplicity.cryptogram.R.drawable.ic_keyboard_tab, KeyEvent.KEYCODE_TAB),
+        BACKSPACE(com.pixplicity.cryptogram.R.drawable.ic_keyboard_backspace, KeyEvent.KEYCODE_DEL),
+        TAB(com.pixplicity.cryptogram.R.drawable.ic_keyboard_tab, KeyEvent.KEYCODE_ENTER),
         A("A", KeyEvent.KEYCODE_A),
         B("B", KeyEvent.KEYCODE_B),
         C("C", KeyEvent.KEYCODE_C),
