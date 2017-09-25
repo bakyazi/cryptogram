@@ -39,6 +39,12 @@
         <enum name="space" value="28"/>
     </attr>
 
+    <declare-styleable name="KeyboardButtonTheme">
+        <attr name="keyboardButtonStyle" format="reference"/>
+    </declare-styleable>
+    <declare-styleable name="KeyboardImageButtonTheme">
+        <attr name="keyboardImageButtonStyle" format="reference"/>
+    </declare-styleable>
     <declare-styleable name="KeyboardButton">
         <attr name="test"/>
         <attr name="key"/>

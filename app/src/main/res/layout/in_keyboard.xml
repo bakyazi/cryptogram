@@ -5,6 +5,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="@dimen/keyboard_height"
+    android:background="?attr/keyboardBackground"
+    android:clipChildren="false"
     android:elevation="48dp"
     android:orientation="vertical"
     android:weightSum="3"
@@ -12,7 +14,8 @@
 
     <TableRow
         android:layout_height="0dp"
-        android:layout_weight="1">
+        android:layout_weight="1"
+        android:clipChildren="false">
 
         <com.pixplicity.cryptogram.views.KeyboardButton
             android:layout_width="0dp"
@@ -88,7 +91,8 @@
 
     <TableRow
         android:layout_height="0dp"
-        android:layout_weight="1">
+        android:layout_weight="1"
+        android:clipChildren="false">
 
         <Space
             android:layout_height="match_parent"
@@ -165,13 +169,15 @@
 
     <TableRow
         android:layout_height="0dp"
-        android:layout_weight="1">
+        android:layout_weight="1"
+        android:clipChildren="false">
 
         <com.pixplicity.cryptogram.views.KeyboardImageButton
             android:layout_width="0dp"
             android:layout_height="match_parent"
-            android:layout_weight="1"
+            android:layout_weight="1.2"
             android:elevation="4dp"
+            android:tint="?attr/textColor"
             app:key="next"
             tools:ignore="HardcodedText"/>
 
@@ -227,7 +233,7 @@
         <com.pixplicity.cryptogram.views.KeyboardImageButton
             android:layout_width="0dp"
             android:layout_height="match_parent"
-            android:layout_weight="2"
+            android:layout_weight="1.8"
             android:elevation="4dp"
             app:key="backspace"
             tools:ignore="HardcodedText"/>

@@ -15,25 +15,21 @@ public class KeyboardImageButton extends AppCompatImageButton implements Keyboar
     private int mKeycode;
 
     public KeyboardImageButton(Context context) {
-        super(context);
-        init(context, null, 0);
+        this(context, null);
     }
 
     public KeyboardImageButton(Context context, AttributeSet attrs) {
-        super(context, attrs);
-        init(context, attrs, 0);
+        this(context, attrs, R.attr.keyboardImageButtonStyle);
     }
 
     public KeyboardImageButton(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
-        init(context, attrs, defStyleAttr);
-    }
 
-    private void init(final Context context, AttributeSet attrs, int defStyleAttr) {
         TypedArray a = context.getTheme().obtainStyledAttributes(
                 attrs,
                 R.styleable.KeyboardImageButton,
-                defStyleAttr, 0);
+                defStyleAttr,
+                R.style.KeyboardButton_Image);
 
         try {
             mKeycode = a.getInteger(R.styleable.KeyboardImageButton_key, 0);
@@ -41,7 +37,7 @@ public class KeyboardImageButton extends AppCompatImageButton implements Keyboar
             a.recycle();
         }
 
-        setOnClickListener(view -> KeyboardUtils.dispatch(KeyboardImageButton.this));
+        setOnClickListener(view -> KeyboardUtils.dispatch(this));
         setImageDrawable(ContextCompat.getDrawable(getContext(), KeyboardUtils.getKeyIcon(this)));
     }
 
