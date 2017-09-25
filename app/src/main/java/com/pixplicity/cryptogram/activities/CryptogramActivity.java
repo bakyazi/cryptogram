@@ -255,6 +255,13 @@ public class CryptogramActivity extends BaseActivity implements GoogleApiClient.
                             );
                         }
                         break;
+                    case PrefsUtils.TYPE_HIGHLIGHT_CORRECTION_SCORE:
+                        showHighlight(PrefsUtils.TYPE_HIGHLIGHT_CORRECTION_SCORE, point,
+                                      getString(R.string.highlight_touch_input_title),
+                                      getString(R.string.highlight_touch_input_description),
+                                      1200
+                        );
+                        break;
                 }
             }
         });
@@ -1081,7 +1088,7 @@ public class CryptogramActivity extends BaseActivity implements GoogleApiClient.
 
         // Set foreground
         @ColorInt int textColor = StyleUtils.getColor(this, R.attr.textColorOnPrimary);
-        TextView textView = snackBarView.findViewById(android.support.design.R.id.snackbar_text);
+        TextView textView = (TextView) snackBarView.findViewById(android.support.design.R.id.snackbar_text);
         textView.setTextColor(textColor);
 
         snackbar.show();

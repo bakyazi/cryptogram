@@ -15,6 +15,9 @@
     <string name="highlight_hyphenation_title">Hyphenation</string>
     <string name="highlight_hyphenation_description">Watch out for the hyphen! The word continues on the next line.</string>
 
+    <string name="highlight_correction_title">No sweat</string>
+    <string name="highlight_correction_description">Making a correction before continuing doesn\'t immediately affect your score.</string>
+
     <string name="drawer_open">Open drawer</string>
     <string name="drawer_close">Close drawer</string>
 

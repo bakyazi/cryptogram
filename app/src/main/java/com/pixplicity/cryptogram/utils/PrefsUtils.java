@@ -20,9 +20,11 @@ public class PrefsUtils {
     private static final String KEY_NEVER_ASK_REVEAL_MISTAKES = "never_ask_reveal_mistakes";
     private static final String KEY_HIGHLIGHTED_HYPHENATION = "highlighted_hyphenation";
     private static final String KEY_HIGHLIGHTED_TOUCH_INPUT = "highlighted_touch_input";
+    private static final String KEY_HIGHLIGHTED_CORRECTION_SCORE = "highlighted_correction_score";
 
     public static final int TYPE_HIGHLIGHT_HYPHENATION = 0;
     public static final int TYPE_HIGHLIGHT_TOUCH_INPUT = 1;
+    public static final int TYPE_HIGHLIGHT_CORRECTION_SCORE = 2;
 
 
     public static int getCurrentId() {
@@ -126,6 +128,8 @@ public class PrefsUtils {
                 return KEY_HIGHLIGHTED_HYPHENATION;
             case TYPE_HIGHLIGHT_TOUCH_INPUT:
                 return KEY_HIGHLIGHTED_TOUCH_INPUT;
+            case TYPE_HIGHLIGHT_CORRECTION_SCORE:
+                return KEY_HIGHLIGHTED_CORRECTION_SCORE;
             default:
                 return null;
         }

@@ -59,6 +59,8 @@ public class CryptogramView extends AppCompatTextView {
     private OnHighlightListener mOnHighlightListener;
     private char[][] mCharMap;
 
+    private boolean mCorrectionMade;
+
 
     public CryptogramView(Context context) {
         super(context);
@@ -316,7 +318,7 @@ public class CryptogramView extends AppCompatTextView {
             if (mPuzzle.isRevealed(selectedChar)) {
                 // This character was already revealed; don't allow the user to alter it
                 if (mPuzzle.setUserChar(selectedChar, selectedChar)) {
-                    // TODO show highlight
+                    mCorrectionMade = true;
                 }
                 return true;
             }
@@ -529,7 +531,12 @@ public class CryptogramView extends AppCompatTextView {
                 // The user is inputting this character; highlight it
                 canvas.drawRect(x + mBoxInset, y - mBoxH + mBoxInset, x + mBoxW - mBoxInset, y + mBoxPadding - mBoxInset, mBoxPaint1);
                 canvas.drawRect(x + mBoxInset, y - mBoxH + mBoxInset, x + mBoxW - mBoxInset, y + mBoxPadding - mBoxInset, mBoxPaint2);
-                //canvas.drawRect(x, y - mBoxH, x + mBoxW, y + mBoxPadding, mBoxPaint2);
+                if (mCorrectionMade) {
+                    mCorrectionMade = false;
+                    PointF point = new PointF(x + mBoxW - mBoxW / 2, y);
+                    mOnHighlightListener.onHighlight(PrefsUtils.TYPE_HIGHLIGHT_CORRECTION_SCORE,
+                                                     point);
+                }
             }
             if (mappedChar != null) {
                 chr = String.valueOf(mappedChar);
