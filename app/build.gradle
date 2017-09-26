@@ -43,6 +43,20 @@ android {
                 println e
             }
         }
+        upload {
+            Properties props = new Properties()
+            try {
+                props.load(new FileInputStream(".signing/upload-keystore.properties"))
+                storeFile file('../.signing/upload-keystore.jks')
+                storePassword(props['RELEASE_STORE_PASSWORD'])
+                keyAlias(props['RELEASE_KEY_ALIAS'])
+                keyPassword(props['RELEASE_KEY_PASSWORD'])
+            } catch (IOException e) {
+                println "WARNING: Missing release keystore and properties"
+                println e
+            }
+        }
+
     }
     compileSdkVersion 26
     buildToolsVersion "26.0.1"
@@ -50,7 +64,7 @@ android {
         applicationId "com.pixplicity.cryptogram"
         minSdkVersion 14
         targetSdkVersion 26
-        versionCode 182
+        versionCode 183
         versionName "1.7.8"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
     }
@@ -62,7 +76,9 @@ android {
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
-            signingConfig signingConfigs.release
+            // We're no longer using the release key, but an upload key for Google Play App Signing
+            //signingConfig signingConfigs.release
+            signingConfig signingConfigs.upload
         }
     }
 }
