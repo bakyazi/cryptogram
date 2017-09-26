@@ -15,6 +15,7 @@ import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.RadioButton;
 
+import com.afollestad.materialdialogs.MaterialDialog;
 import com.pixplicity.cryptogram.R;
 import com.pixplicity.cryptogram.activities.CryptogramActivity;
 import com.pixplicity.cryptogram.events.PuzzleEvent;
@@ -132,7 +133,12 @@ public class SettingsFragment extends BaseFragment {
         });
         updateCompoundButton(mRbKeyboardSystem, PrefsUtils.getUseSystemKeyboard(), (compoundButton, checked) -> {
             if (checked) {
-                setUseSystemKeyboard(true);
+                // Show warning that it works for shit
+                new MaterialDialog.Builder(getActivity())
+                        .content(R.string.keyboard_system_dialog)
+                        .positiveText(R.string.keyboard_system_dialog_ok)
+                        .dismissListener(dialogInterface -> setUseSystemKeyboard(true))
+                        .show();
             }
         });
         updateCompoundButton(mCbRandomize, PrefsUtils.getRandomize(),
@@ -159,14 +165,12 @@ public class SettingsFragment extends BaseFragment {
     }
 
     private void setUseSystemKeyboard(boolean useSystemKeyboard) {
-        if (useSystemKeyboard) {
-            // TODO show warning that it works for shit
-        }
         PrefsUtils.setUseSystemKeyboard(useSystemKeyboard);
-        // TODO fire event? relaunch?
+        relaunch();
     }
 
     private void relaunch() {
+        // TODO Show progress as it takes a moment to relaunch
         // Relaunch as though launched from home screen
         Context context = getActivity().getBaseContext();
         Intent i = context.getPackageManager()

@@ -111,6 +111,9 @@
     <string name="keyboard_builtin">Built-in</string>
     <string name="keyboard_system">System default</string>
 
+    <string name="keyboard_system_dialog">Some keyboards don’t play nicely with Cryptogram. If you experience problems, I please switch back to the built-in keyboard.</string>
+    <string name="keyboard_system_dialog_ok">Gotcha</string>
+
     <string name="join_beta">Join beta</string>
     <string name="send_feedback">Send feedback</string>
     <string name="made_with_love_by">MADE WITH LOVE BY</string>
