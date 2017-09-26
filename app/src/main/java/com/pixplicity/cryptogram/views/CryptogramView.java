@@ -16,6 +16,7 @@ import android.util.AttributeSet;
 import android.util.Log;
 import android.view.KeyEvent;
 import android.view.MotionEvent;
+import android.view.View;
 import android.view.inputmethod.EditorInfo;
 import android.view.inputmethod.InputConnection;
 import android.view.inputmethod.InputMethodManager;
@@ -57,6 +58,7 @@ public class CryptogramView extends AppCompatTextView {
     private OnPuzzleProgressListener mOnPuzzleProgressListener;
     private OnHighlightListener mOnHighlightListener;
     private char[][] mCharMap;
+    private View mKeyboardView;
 
 
     public CryptogramView(Context context) {
@@ -148,6 +150,10 @@ public class CryptogramView extends AppCompatTextView {
         setClickable(true);
     }
 
+    public void setKeyboardView(View keyboardView) {
+        mKeyboardView = keyboardView;
+    }
+
     @Override
     protected void onFocusChanged(boolean focused, int direction, Rect previouslyFocusedRect) {
         super.onFocusChanged(focused, direction, previouslyFocusedRect);
@@ -159,20 +165,27 @@ public class CryptogramView extends AppCompatTextView {
     }
 
     public void showSoftInput() {
-        if (!PrefsUtils.getUseSystemKeyboard()) {
-            // Never show soft input
-            hideSoftInput();
-            return;
-        }
         if (mPuzzle != null && !mPuzzle.isCompleted()) {
-            InputMethodManager inputMethodManager = (InputMethodManager) getContext().getSystemService(Context.INPUT_METHOD_SERVICE);
-            if (inputMethodManager != null) {
-                inputMethodManager.showSoftInput(this, InputMethodManager.SHOW_IMPLICIT);
+            // Show keyboard
+            if (mKeyboardView == null) {
+                InputMethodManager inputMethodManager = (InputMethodManager) getContext().getSystemService(Context.INPUT_METHOD_SERVICE);
+                if (inputMethodManager != null) {
+                    inputMethodManager.showSoftInput(this, InputMethodManager.SHOW_IMPLICIT);
+                }
+            } else {
+                // Show built-in keyboard
+                mKeyboardView.setVisibility(View.VISIBLE);
             }
+        } else {
+            hideSoftInput();
         }
     }
 
     public void hideSoftInput() {
+        if (mKeyboardView != null) {
+            // Hide built-in keyboard
+            mKeyboardView.setVisibility(View.GONE);
+        }
         InputMethodManager inputMethodManager = (InputMethodManager) getContext().getSystemService(Context.INPUT_METHOD_SERVICE);
         if (inputMethodManager != null) {
             inputMethodManager.hideSoftInputFromWindow(getWindowToken(), InputMethodManager.HIDE_IMPLICIT_ONLY);

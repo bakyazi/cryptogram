@@ -1,7 +1,6 @@
 package com.pixplicity.cryptogram.activities;
 
 import android.content.ActivityNotFoundException;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.IntentSender;
 import android.graphics.Color;
@@ -261,6 +260,7 @@ public class CryptogramActivity extends BaseActivity implements GoogleApiClient.
         } else {
             mVsKeyboard.inflate();
             mVsKeyboard.setVisibility(View.VISIBLE);
+            mCryptogramView.setKeyboardView(mVsKeyboard);
         }
 
         updateCryptogram(puzzleProvider.getCurrent());
@@ -1024,10 +1024,7 @@ public class CryptogramActivity extends BaseActivity implements GoogleApiClient.
                 new AlertDialog.Builder(this)
                         .setTitle(R.string.statistics)
                         .setView(dialogView)
-                        .setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialogInterface, int i) {
-                            }
+                        .setPositiveButton(android.R.string.ok, (dialogInterface, i) -> {
                         })
                         .show();
             }
