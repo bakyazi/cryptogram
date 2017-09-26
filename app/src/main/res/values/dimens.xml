@@ -16,6 +16,8 @@
     <dimen name="highlight_size">96dp</dimen>
 
     <dimen name="keyboard_height">144dp</dimen>
+    <dimen name="keyboard_padding_horizontal">0dp</dimen>
+    <dimen name="keyboard_padding_vertical">0dp</dimen>
     <dimen name="keyboard_popup_padding">4dp</dimen>
     <dimen name="keyboard_popup_width">48dp</dimen>
     <dimen name="keyboard_popup_height">64dp</dimen>

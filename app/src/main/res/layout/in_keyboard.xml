@@ -7,8 +7,12 @@
     android:layout_height="@dimen/keyboard_height"
     android:background="?attr/keyboardBackground"
     android:clipChildren="false"
+    android:clipToPadding="false"
     android:elevation="48dp"
     android:orientation="vertical"
+    android:paddingBottom="@dimen/keyboard_padding_vertical"
+    android:paddingLeft="@dimen/keyboard_padding_horizontal"
+    android:paddingRight="@dimen/keyboard_padding_horizontal"
     android:weightSum="3"
     tools:targetApi="lollipop">
 
