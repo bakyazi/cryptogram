@@ -100,86 +100,49 @@ public class SettingsFragment extends BaseFragment {
     }
 
     private void update() {
-        updateCompoundButton(mRbThemeLight, !PrefsUtils.getDarkTheme(), new CompoundButton.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(CompoundButton compoundButton, boolean checked) {
-                if (checked) {
-                    setTheme(false);
-                }
+        updateCompoundButton(mRbThemeLight, !PrefsUtils.getDarkTheme(), (compoundButton, checked) -> {
+            if (checked) {
+                setTheme(false);
             }
         });
-        updateCompoundButton(mRbThemeDark, PrefsUtils.getDarkTheme(), new CompoundButton.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(CompoundButton compoundButton, boolean checked) {
-                if (checked) {
-                    setTheme(true);
-                }
+        updateCompoundButton(mRbThemeDark, PrefsUtils.getDarkTheme(), (compoundButton, checked) -> {
+            if (checked) {
+                setTheme(true);
             }
         });
-        updateCompoundButton(mRbTextSizeSmall, PrefsUtils.getTextSize() == -1, new CompoundButton.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(CompoundButton compoundButton, boolean checked) {
-                if (checked) {
-                    setTextSize(-1);
-                }
+        updateCompoundButton(mRbTextSizeSmall, PrefsUtils.getTextSize() == -1, (compoundButton, checked) -> {
+            if (checked) {
+                setTextSize(-1);
             }
         });
-        updateCompoundButton(mRbTextSizeNormal, PrefsUtils.getTextSize() == 0, new CompoundButton.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(CompoundButton compoundButton, boolean checked) {
-                if (checked) {
-                    setTextSize(0);
-                }
+        updateCompoundButton(mRbTextSizeNormal, PrefsUtils.getTextSize() == 0, (compoundButton, checked) -> {
+            if (checked) {
+                setTextSize(0);
             }
         });
-        updateCompoundButton(mRbTextSizeLarge, PrefsUtils.getTextSize() == 1, new CompoundButton.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(CompoundButton compoundButton, boolean checked) {
-                if (checked) {
-                    setTextSize(1);
-                }
+        updateCompoundButton(mRbTextSizeLarge, PrefsUtils.getTextSize() == 1, (compoundButton, checked) -> {
+            if (checked) {
+                setTextSize(1);
             }
         });
-        updateCompoundButton(mRbKeyboardBuiltin, !PrefsUtils.getUseSystemKeyboard(), new CompoundButton.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(CompoundButton compoundButton, boolean checked) {
-                if (checked) {
-                    setUseSystemKeyboard(false);
-                }
+        updateCompoundButton(mRbKeyboardBuiltin, !PrefsUtils.getUseSystemKeyboard(), (compoundButton, checked) -> {
+            if (checked) {
+                setUseSystemKeyboard(false);
             }
         });
-        updateCompoundButton(mRbKeyboardSystem, !PrefsUtils.getUseSystemKeyboard(), new CompoundButton.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(CompoundButton compoundButton, boolean checked) {
-                if (checked) {
-                    setUseSystemKeyboard(true);
-                }
+        updateCompoundButton(mRbKeyboardSystem, PrefsUtils.getUseSystemKeyboard(), (compoundButton, checked) -> {
+            if (checked) {
+                setUseSystemKeyboard(true);
             }
         });
-        updateCompoundButton(mCbRandomize, PrefsUtils.getRandomize(), new CompoundButton.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(CompoundButton compoundButton, boolean checked) {
-                PrefsUtils.setRandomize(checked);
-            }
-        });
-        updateCompoundButton(mCbShowHints, PrefsUtils.getShowHints(), new CompoundButton.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(CompoundButton compoundButton, boolean checked) {
-                PrefsUtils.setShowHints(checked);
-            }
-        });
-        updateCompoundButton(mCbShowTopic, PrefsUtils.getShowTopic(), new CompoundButton.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(CompoundButton compoundButton, boolean checked) {
-                PrefsUtils.setShowTopic(checked);
-            }
-        });
-        updateCompoundButton(mCbAutoAdvance, PrefsUtils.getAutoAdvance(), new CompoundButton.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(CompoundButton compoundButton, boolean checked) {
-                PrefsUtils.setAutoAdvance(checked);
-            }
-        });
+        updateCompoundButton(mCbRandomize, PrefsUtils.getRandomize(),
+                (compoundButton, checked) -> PrefsUtils.setRandomize(checked));
+        updateCompoundButton(mCbShowHints, PrefsUtils.getShowHints(),
+                (compoundButton, checked) -> PrefsUtils.setShowHints(checked));
+        updateCompoundButton(mCbShowTopic, PrefsUtils.getShowTopic(),
+                (compoundButton, checked) -> PrefsUtils.setShowTopic(checked));
+        updateCompoundButton(mCbAutoAdvance, PrefsUtils.getAutoAdvance(),
+                (compoundButton, checked) -> PrefsUtils.setAutoAdvance(checked));
 
         mBtResetDialogs.setEnabled(PrefsUtils.getNeverAskRevealLetter() || PrefsUtils.getNeverAskRevealMistakes());
     }
