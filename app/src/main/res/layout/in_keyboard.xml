@@ -4,7 +4,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="@dimen/keyboard_height"
+    android:layout_height="wrap_content"
     android:background="?attr/keyboardBackground"
     android:clipChildren="false"
     android:clipToPadding="false"
@@ -17,76 +17,74 @@
     tools:targetApi="lollipop">
 
     <TableRow
-        android:layout_height="0dp"
-        android:layout_weight="1"
         android:clipChildren="false">
 
         <com.pixplicity.cryptogram.views.KeyboardButton
             android:layout_width="0dp"
-            android:layout_height="match_parent"
+            android:layout_height="@dimen/keyboard_button_height"
             android:layout_weight="1"
             app:key="q"
             tools:ignore="HardcodedText"/>
 
         <com.pixplicity.cryptogram.views.KeyboardButton
             android:layout_width="0dp"
-            android:layout_height="match_parent"
+            android:layout_height="@dimen/keyboard_button_height"
             android:layout_weight="1"
             app:key="w"
             tools:ignore="HardcodedText"/>
 
         <com.pixplicity.cryptogram.views.KeyboardButton
             android:layout_width="0dp"
-            android:layout_height="match_parent"
+            android:layout_height="@dimen/keyboard_button_height"
             android:layout_weight="1"
             app:key="e"
             tools:ignore="HardcodedText"/>
 
         <com.pixplicity.cryptogram.views.KeyboardButton
             android:layout_width="0dp"
-            android:layout_height="match_parent"
+            android:layout_height="@dimen/keyboard_button_height"
             android:layout_weight="1"
             app:key="r"
             tools:ignore="HardcodedText"/>
 
         <com.pixplicity.cryptogram.views.KeyboardButton
             android:layout_width="0dp"
-            android:layout_height="match_parent"
+            android:layout_height="@dimen/keyboard_button_height"
             android:layout_weight="1"
             app:key="t"
             tools:ignore="HardcodedText"/>
 
         <com.pixplicity.cryptogram.views.KeyboardButton
             android:layout_width="0dp"
-            android:layout_height="match_parent"
+            android:layout_height="@dimen/keyboard_button_height"
             android:layout_weight="1"
             app:key="y"
             tools:ignore="HardcodedText"/>
 
         <com.pixplicity.cryptogram.views.KeyboardButton
             android:layout_width="0dp"
-            android:layout_height="match_parent"
+            android:layout_height="@dimen/keyboard_button_height"
             android:layout_weight="1"
             app:key="u"
             tools:ignore="HardcodedText"/>
 
         <com.pixplicity.cryptogram.views.KeyboardButton
             android:layout_width="0dp"
-            android:layout_height="match_parent"
+            android:layout_height="@dimen/keyboard_button_height"
             android:layout_weight="1"
             app:key="i"
             tools:ignore="HardcodedText"/>
 
         <com.pixplicity.cryptogram.views.KeyboardButton
             android:layout_width="0dp"
-            android:layout_height="match_parent"
+            android:layout_height="@dimen/keyboard_button_height"
             android:layout_weight="1"
             app:key="o"
             tools:ignore="HardcodedText"/>
 
         <com.pixplicity.cryptogram.views.KeyboardButton
             android:layout_width="0dp"
-            android:layout_height="match_parent"
+            android:layout_height="@dimen/keyboard_button_height"
             android:layout_weight="1"
             app:key="p"
             tools:ignore="HardcodedText"/>
@@ -94,151 +92,149 @@
     </TableRow>
 
     <TableRow
-        android:layout_height="0dp"
-        android:layout_weight="1"
         android:clipChildren="false">
 
         <Space
-            android:layout_height="match_parent"
+            android:layout_height="@dimen/keyboard_button_height"
             android:layout_weight="0.5"/>
 
         <com.pixplicity.cryptogram.views.KeyboardButton
             android:layout_width="0dp"
-            android:layout_height="match_parent"
+            android:layout_height="@dimen/keyboard_button_height"
             android:layout_weight="1"
             app:key="a"
             tools:ignore="HardcodedText"/>
 
         <com.pixplicity.cryptogram.views.KeyboardButton
             android:layout_width="0dp"
-            android:layout_height="match_parent"
+            android:layout_height="@dimen/keyboard_button_height"
             android:layout_weight="1"
             app:key="s"
             tools:ignore="HardcodedText"/>
 
         <com.pixplicity.cryptogram.views.KeyboardButton
             android:layout_width="0dp"
-            android:layout_height="match_parent"
+            android:layout_height="@dimen/keyboard_button_height"
             android:layout_weight="1"
             app:key="d"
             tools:ignore="HardcodedText"/>
 
         <com.pixplicity.cryptogram.views.KeyboardButton
             android:layout_width="0dp"
-            android:layout_height="match_parent"
+            android:layout_height="@dimen/keyboard_button_height"
             android:layout_weight="1"
             app:key="f"
             tools:ignore="HardcodedText"/>
 
         <com.pixplicity.cryptogram.views.KeyboardButton
             android:layout_width="0dp"
-            android:layout_height="match_parent"
+            android:layout_height="@dimen/keyboard_button_height"
             android:layout_weight="1"
             app:key="g"
             tools:ignore="HardcodedText"/>
 
         <com.pixplicity.cryptogram.views.KeyboardButton
             android:layout_width="0dp"
-            android:layout_height="match_parent"
+            android:layout_height="@dimen/keyboard_button_height"
             android:layout_weight="1"
             app:key="h"
             tools:ignore="HardcodedText"/>
 
         <com.pixplicity.cryptogram.views.KeyboardButton
             android:layout_width="0dp"
-            android:layout_height="match_parent"
+            android:layout_height="@dimen/keyboard_button_height"
             android:layout_weight="1"
             app:key="j"
             tools:ignore="HardcodedText"/>
 
         <com.pixplicity.cryptogram.views.KeyboardButton
             android:layout_width="0dp"
-            android:layout_height="match_parent"
+            android:layout_height="@dimen/keyboard_button_height"
             android:layout_weight="1"
             app:key="k"
             tools:ignore="HardcodedText"/>
 
         <com.pixplicity.cryptogram.views.KeyboardButton
             android:layout_width="0dp"
-            android:layout_height="match_parent"
+            android:layout_height="@dimen/keyboard_button_height"
             android:layout_weight="1"
             app:key="l"
             tools:ignore="HardcodedText"/>
 
         <Space
-            android:layout_height="match_parent"
+            android:layout_height="@dimen/keyboard_button_height"
             android:layout_weight="0.5"/>
 
     </TableRow>
 
     <TableRow
-        android:layout_height="0dp"
-        android:layout_weight="1"
         android:clipChildren="false">
 
         <com.pixplicity.cryptogram.views.KeyboardImageButton
             android:layout_width="0dp"
-            android:layout_height="match_parent"
+            android:layout_height="@dimen/keyboard_button_height"
             android:layout_weight="1.2"
             android:elevation="4dp"
+            android:scaleType="centerInside"
             android:tint="?attr/textColor"
             app:key="next"
             tools:ignore="HardcodedText"/>
 
         <com.pixplicity.cryptogram.views.KeyboardButton
             android:layout_width="0dp"
-            android:layout_height="match_parent"
+            android:layout_height="@dimen/keyboard_button_height"
             android:layout_weight="1"
             app:key="z"
             tools:ignore="HardcodedText"/>
 
         <com.pixplicity.cryptogram.views.KeyboardButton
             android:layout_width="0dp"
-            android:layout_height="match_parent"
+            android:layout_height="@dimen/keyboard_button_height"
             android:layout_weight="1"
             app:key="x"
             tools:ignore="HardcodedText"/>
 
         <com.pixplicity.cryptogram.views.KeyboardButton
             android:layout_width="0dp"
-            android:layout_height="match_parent"
+            android:layout_height="@dimen/keyboard_button_height"
             android:layout_weight="1"
             app:key="c"
             tools:ignore="HardcodedText"/>
 
         <com.pixplicity.cryptogram.views.KeyboardButton
             android:layout_width="0dp"
-            android:layout_height="match_parent"
+            android:layout_height="@dimen/keyboard_button_height"
             android:layout_weight="1"
             app:key="v"
             tools:ignore="HardcodedText"/>
 
         <com.pixplicity.cryptogram.views.KeyboardButton
             android:layout_width="0dp"
-            android:layout_height="match_parent"
+            android:layout_height="@dimen/keyboard_button_height"
             android:layout_weight="1"
             app:key="b"
             tools:ignore="HardcodedText"/>
 
         <com.pixplicity.cryptogram.views.KeyboardButton
             android:layout_width="0dp"
-            android:layout_height="match_parent"
+            android:layout_height="@dimen/keyboard_button_height"
             android:layout_weight="1"
             app:key="n"
             tools:ignore="HardcodedText"/>
 
         <com.pixplicity.cryptogram.views.KeyboardButton
             android:layout_width="0dp"
-            android:layout_height="match_parent"
+            android:layout_height="@dimen/keyboard_button_height"
             android:layout_weight="1"
             app:key="m"
             tools:ignore="HardcodedText"/>
 
         <com.pixplicity.cryptogram.views.KeyboardImageButton
             android:layout_width="0dp"
-            android:layout_height="match_parent"
+            android:layout_height="@dimen/keyboard_button_height"
             android:layout_weight="1.8"
             android:elevation="4dp"
+            android:scaleType="centerInside"
             app:key="backspace"
             tools:ignore="HardcodedText"/>
 

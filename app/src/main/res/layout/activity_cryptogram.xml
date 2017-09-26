@@ -197,7 +197,7 @@
         <ViewStub
             android:id="@+id/vs_keyboard"
             android:layout_width="match_parent"
-            android:layout_height="@dimen/keyboard_height"
+            android:layout_height="wrap_content"
             android:layout_gravity="bottom"
             android:layout="@layout/in_keyboard"/>
 

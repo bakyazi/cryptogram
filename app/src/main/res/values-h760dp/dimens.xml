@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <dimen name="keyboard_height">160dp</dimen>
+    <dimen name="keyboard_button_height">56dp</dimen>
+    <dimen name="keyboard_text_size">17sp</dimen>
     <dimen name="keyboard_padding_vertical">24dp</dimen>
 </resources>
