@@ -12,7 +12,6 @@ import android.support.annotation.ColorInt;
 import android.support.v7.widget.AppCompatButton;
 import android.text.TextPaint;
 import android.util.AttributeSet;
-import android.util.Log;
 import android.util.TypedValue;
 import android.view.MotionEvent;
 import android.view.View;
@@ -33,7 +32,6 @@ public class KeyboardButton extends AppCompatButton implements KeyboardUtils.Con
     private final Paint mPathPaint;
     private final TextPaint mTextPaint;
     private Rect mViewBounds = new Rect();
-    private int mBoxPadding;
     private Rect mBox = new Rect();
 
     public KeyboardButton(Context context) {
@@ -70,7 +68,7 @@ public class KeyboardButton extends AppCompatButton implements KeyboardUtils.Con
         mTextPaint.setColor(colorFg);
         mTextPaint.setTextAlign(Paint.Align.CENTER);
         mTextPaint.setTextSize(getResources().getDimensionPixelSize(R.dimen.keyboard_popup_text_size));
-        mPathPaint.setShadowLayer(16.0f, 0.0f, 2.0f, Color.argb(50, 0, 0, 0));
+        mPathPaint.setShadowLayer(4.0f, 0.0f, 4.0f, Color.argb(200, 0, 0, 0));
 
         TypedArray a = context.getTheme().obtainStyledAttributes(
                 attrs,
@@ -126,7 +124,6 @@ public class KeyboardButton extends AppCompatButton implements KeyboardUtils.Con
     @Override
     protected void onLayout(boolean changed, int left, int top, int right, int bottom) {
         super.onLayout(changed, left, top, right, bottom);
-        Log.d(TAG, "onLayout: " + KeyboardUtils.getKeyText(this) + " " + left + "-" + right);
 
         // Store view dimensions
         getDrawingRect(mViewBounds);
@@ -134,7 +131,7 @@ public class KeyboardButton extends AppCompatButton implements KeyboardUtils.Con
         // Store path for touch
         int parentWidth = ((View) getParent()).getWidth();
         int width = right - left;
-        mBoxPadding = getResources().getDimensionPixelSize(R.dimen.keyboard_popup_padding);
+        int boxPadding = getResources().getDimensionPixelSize(R.dimen.keyboard_popup_padding);
         {
             int boxWidth = getResources().getDimensionPixelSize(R.dimen.keyboard_popup_width);
             int boxHeight = getResources().getDimensionPixelSize(R.dimen.keyboard_popup_height);
@@ -144,18 +141,18 @@ public class KeyboardButton extends AppCompatButton implements KeyboardUtils.Con
             mBox.right = boxLeft + boxWidth;
             mBox.bottom = 0;
         }
-        mPath.moveTo(mBoxPadding, mBoxPadding);
-        mPath.lineTo(mBoxPadding, 0);
+        mPath.moveTo(boxPadding, boxPadding);
+        mPath.lineTo(boxPadding, 0);
         {
             // Box itself
-            // TODO this would be nicer: mPath.quadTo()
+            // TODO mPath.quadTo() would be nicer
             mPath.lineTo(mBox.left, mBox.bottom);
             mPath.lineTo(mBox.left, mBox.top);
             mPath.lineTo(mBox.right, mBox.top);
             mPath.lineTo(mBox.right, mBox.bottom);
         }
-        mPath.lineTo(width - mBoxPadding, 0);
-        mPath.lineTo(width - mBoxPadding, mBoxPadding);
+        mPath.lineTo(width - boxPadding, 0);
+        mPath.lineTo(width - boxPadding, boxPadding);
         mPath.close();
     }
 
