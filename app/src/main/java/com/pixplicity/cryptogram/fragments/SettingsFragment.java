@@ -29,6 +29,12 @@ import butterknife.OnClick;
 
 public class SettingsFragment extends BaseFragment {
 
+    @BindView(R.id.vg_content)
+    protected ViewGroup mVgContent;
+
+    @BindView(R.id.vg_busy)
+    protected ViewGroup mVgBusy;
+
     @BindView(R.id.rb_theme_light)
     protected RadioButton mRbThemeLight;
 
@@ -170,7 +176,9 @@ public class SettingsFragment extends BaseFragment {
     }
 
     private void relaunch() {
-        // TODO Show progress as it takes a moment to relaunch
+        // Show progress as it takes a moment to relaunch
+        mVgBusy.setVisibility(View.VISIBLE);
+        mVgContent.setVisibility(View.GONE);
         // Relaunch as though launched from home screen
         Context context = getActivity().getBaseContext();
         Intent i = context.getPackageManager()
