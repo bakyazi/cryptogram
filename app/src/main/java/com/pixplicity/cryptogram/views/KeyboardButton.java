@@ -12,6 +12,7 @@ import android.support.annotation.ColorInt;
 import android.support.v7.widget.AppCompatButton;
 import android.text.TextPaint;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.util.TypedValue;
 import android.view.MotionEvent;
 import android.view.View;
@@ -135,14 +136,20 @@ public class KeyboardButton extends AppCompatButton implements KeyboardUtils.Con
         {
             int boxWidth = getResources().getDimensionPixelSize(R.dimen.keyboard_popup_width);
             int boxHeight = getResources().getDimensionPixelSize(R.dimen.keyboard_popup_height);
-            int boxLeft = Math.max(-left, Math.min(parentWidth - right, width / 2 - boxWidth / 2));
+            int boxLeft = Math.max(-left, Math.min(parentWidth - left - boxWidth, width / 2 - boxWidth / 2));
+            if (mKeyValue == 16 || mKeyValue == 17) {
+                Log.d(TAG, "onLayout: " + mKeyValue + "; " + parentWidth + " - " + right);
+            }
             mBox.left = boxLeft;
             mBox.top = -boxHeight;
             mBox.right = boxLeft + boxWidth;
             mBox.bottom = 0;
         }
-        mPath.moveTo(boxPadding, boxPadding);
-        mPath.lineTo(boxPadding, 0);
+        int x1 = Math.max(mBox.left + boxPadding, boxPadding);
+        int x2 = Math.min(mBox.right - boxPadding, width - boxPadding);
+        // Inset below box
+        mPath.moveTo(x1, boxPadding);
+        mPath.lineTo(x1, 0);
         {
             // Box itself
             // TODO mPath.quadTo() would be nicer
@@ -151,8 +158,9 @@ public class KeyboardButton extends AppCompatButton implements KeyboardUtils.Con
             mPath.lineTo(mBox.right, mBox.top);
             mPath.lineTo(mBox.right, mBox.bottom);
         }
-        mPath.lineTo(width - boxPadding, 0);
-        mPath.lineTo(width - boxPadding, boxPadding);
+        // Return to inset below box
+        mPath.lineTo(x2, 0);
+        mPath.lineTo(x2, boxPadding);
         mPath.close();
     }
 
