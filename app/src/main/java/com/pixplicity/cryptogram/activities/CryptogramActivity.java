@@ -160,6 +160,9 @@ public class CryptogramActivity extends BaseActivity implements GoogleApiClient.
     @BindView(R.id.vs_keyboard)
     protected ViewStub mVsKeyboard;
 
+    @Nullable
+    private View mVwKeyboard;
+
     private PuzzleAdapter mAdapter;
 
     private Rate mRate;
@@ -258,9 +261,9 @@ public class CryptogramActivity extends BaseActivity implements GoogleApiClient.
         if (PrefsUtils.getUseSystemKeyboard()) {
             mVsKeyboard.setVisibility(View.GONE);
         } else {
-            mVsKeyboard.inflate();
+            mVwKeyboard = mVsKeyboard.inflate();
             mVsKeyboard.setVisibility(View.VISIBLE);
-            mCryptogramView.setKeyboardView(mVsKeyboard);
+            mCryptogramView.setKeyboardView(mVwKeyboard);
         }
 
         updateCryptogram(puzzleProvider.getCurrent());
@@ -322,6 +325,10 @@ public class CryptogramActivity extends BaseActivity implements GoogleApiClient.
     public void onBackPressed() {
         if (mDrawerLayout != null && mDrawerLayout.isDrawerOpen(GravityCompat.START)) {
             mDrawerLayout.closeDrawer(GravityCompat.START);
+            return;
+        }
+        if (mVwKeyboard != null && mVwKeyboard.isShown()) {
+            mCryptogramView.hideSoftInput();
             return;
         }
         super.onBackPressed();

@@ -1,5 +1,7 @@
 package com.pixplicity.cryptogram.views;
 
+import android.animation.Animator;
+import android.animation.AnimatorListenerAdapter;
 import android.content.Context;
 import android.content.res.Resources;
 import android.graphics.Canvas;
@@ -36,6 +38,8 @@ public class CryptogramView extends AppCompatTextView {
 
     private static final String SOFT_HYPHEN = "\u00AD";
     public static final boolean ENABLE_HYPHENATION = false;
+
+    private static final int KEYBOARD_ANIMATION_DURATION_MS = 200;
 
     @Nullable
     private Puzzle mPuzzle;
@@ -175,6 +179,11 @@ public class CryptogramView extends AppCompatTextView {
             } else {
                 // Show built-in keyboard
                 mKeyboardView.setVisibility(View.VISIBLE);
+                mKeyboardView.animate()
+                             .translationY(0)
+                             .alpha(1.0f)
+                             .setDuration(KEYBOARD_ANIMATION_DURATION_MS)
+                             .setListener(null);
             }
         } else {
             hideSoftInput();
@@ -184,7 +193,16 @@ public class CryptogramView extends AppCompatTextView {
     public void hideSoftInput() {
         if (mKeyboardView != null) {
             // Hide built-in keyboard
-            mKeyboardView.setVisibility(View.GONE);
+            mKeyboardView.animate()
+                         .translationY(mKeyboardView.getHeight())
+                         .alpha(0.0f)
+                         .setDuration(KEYBOARD_ANIMATION_DURATION_MS)
+                         .setListener(new AnimatorListenerAdapter() {
+                             @Override
+                             public void onAnimationEnd(Animator animation) {
+                                 mKeyboardView.setVisibility(View.GONE);
+                             }
+                         });
         }
         InputMethodManager inputMethodManager = (InputMethodManager) getContext().getSystemService(Context.INPUT_METHOD_SERVICE);
         if (inputMethodManager != null) {
