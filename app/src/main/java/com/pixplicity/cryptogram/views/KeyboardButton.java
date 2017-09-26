@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.res.Resources;
 import android.content.res.TypedArray;
 import android.graphics.Canvas;
+import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Path;
 import android.graphics.Rect;
@@ -69,6 +70,7 @@ public class KeyboardButton extends AppCompatButton implements KeyboardUtils.Con
         mTextPaint.setColor(colorFg);
         mTextPaint.setTextAlign(Paint.Align.CENTER);
         mTextPaint.setTextSize(getResources().getDimensionPixelSize(R.dimen.keyboard_popup_text_size));
+        mPathPaint.setShadowLayer(16.0f, 0.0f, 2.0f, Color.argb(50, 0, 0, 0));
 
         TypedArray a = context.getTheme().obtainStyledAttributes(
                 attrs,
