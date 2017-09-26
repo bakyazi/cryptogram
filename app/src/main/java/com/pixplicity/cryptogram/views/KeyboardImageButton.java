@@ -4,10 +4,8 @@ import android.content.Context;
 import android.content.res.TypedArray;
 import android.graphics.drawable.Drawable;
 import android.support.v4.content.ContextCompat;
-import android.support.v4.content.res.ResourcesCompat;
 import android.support.v7.widget.AppCompatImageButton;
 import android.util.AttributeSet;
-import android.util.DisplayMetrics;
 
 import com.pixplicity.cryptogram.R;
 import com.pixplicity.cryptogram.utils.KeyboardUtils;
@@ -42,13 +40,7 @@ public class KeyboardImageButton extends AppCompatImageButton implements Keyboar
 
         setOnClickListener(view -> KeyboardUtils.dispatch(this));
         final Drawable drawable;
-        if (false) {
-            drawable = ResourcesCompat.getDrawable(getResources(), KeyboardUtils.getKeyIcon(this), null);
-        } else if (false) {
-            drawable = ResourcesCompat.getDrawableForDensity(getResources(), KeyboardUtils.getKeyIcon(this), DisplayMetrics.DENSITY_XXXHIGH, null);
-        } else {
-            drawable = ContextCompat.getDrawable(getContext(), KeyboardUtils.getKeyIcon(this));
-        }
+        drawable = ContextCompat.getDrawable(getContext(), KeyboardUtils.getKeyIcon(this));
         setImageDrawable(drawable);
     }
 
