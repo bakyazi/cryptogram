@@ -291,7 +291,7 @@ public class CryptogramView extends AppCompatTextView {
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
                 outAttrs.imeOptions |= EditorInfo.IME_FLAG_FORCE_ASCII;
             }
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            if (SimpleInputConnection.DISABLE_PERSONALIZED_LEARNING && Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
                 outAttrs.imeOptions |= EditorInfo.IME_FLAG_NO_PERSONALIZED_LEARNING;
             }
             return new SimpleInputConnection(this);
