@@ -62,8 +62,8 @@
         <item name="android:shadowColor">?attr/keyboardForeground1</item>
         <item name="android:paddingLeft">8dp</item>
         <item name="android:paddingRight">8dp</item>
-        <item name="android:paddingTop">12dp</item>
-        <item name="android:paddingBottom">12dp</item>
+        <item name="android:paddingTop">@dimen/keyboard_button_padding</item>
+        <item name="android:paddingBottom">@dimen/keyboard_button_padding</item>
         <item name="android:textSize">@dimen/keyboard_text_size</item>
     </style>
 
@@ -72,8 +72,6 @@
         <item name="tint">?attr/keyboardForeground2</item>
         <item name="android:backgroundTint" tools:targetApi="lollipop">?attr/keyboardBackground2</item>
         <item name="backgroundTint">?attr/keyboardBackground2</item>
-        <item name="android:paddingTop">16dp</item>
-        <item name="android:paddingBottom">16dp</item>
     </style>
 
     <style name="DrawerArrowStyle" parent="@style/Widget.AppCompat.DrawerArrowToggle">

@@ -16,6 +16,7 @@
     <dimen name="highlight_size">96dp</dimen>
 
     <dimen name="keyboard_button_height">48dp</dimen>
+    <dimen name="keyboard_button_padding">12dp</dimen>
     <dimen name="keyboard_text_size">14sp</dimen>
     <dimen name="keyboard_padding_horizontal">0dp</dimen>
     <dimen name="keyboard_padding_vertical">0dp</dimen>
