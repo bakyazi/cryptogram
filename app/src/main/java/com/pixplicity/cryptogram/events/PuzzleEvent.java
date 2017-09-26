@@ -22,6 +22,19 @@ public abstract class PuzzleEvent {
         }
     }
 
+    public static class KeyboardInputEvent extends PuzzleEvent {
+        private final int mKeyCode;
+
+        public KeyboardInputEvent(int keyCode) {
+            super(null);
+            mKeyCode = keyCode;
+        }
+
+        public int getKeyCode() {
+            return mKeyCode;
+        }
+    }
+
     private final Puzzle mPuzzle;
 
     public PuzzleEvent(Puzzle puzzle) {

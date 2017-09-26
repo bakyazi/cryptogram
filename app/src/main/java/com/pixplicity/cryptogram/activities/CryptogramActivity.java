@@ -22,6 +22,7 @@ import android.text.Editable;
 import android.text.InputType;
 import android.util.Log;
 import android.util.SparseBooleanArray;
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -727,6 +728,15 @@ public class CryptogramActivity extends BaseActivity implements GoogleApiClient.
             // Submit any achievements
             AchievementProvider.getInstance().onCryptogramCompleted(mGoogleApiClient);
         }
+    }
+
+    @Subscribe
+    public void onPuzzleKeyboardInput(PuzzleEvent.KeyboardInputEvent event) {
+        final int keyCode = event.getKeyCode();
+        mCryptogramView.dispatchKeyEvent(new KeyEvent(0, 0, KeyEvent.ACTION_DOWN,
+                keyCode, 0));
+        mCryptogramView.dispatchKeyEvent(new KeyEvent(0, 0, KeyEvent.ACTION_UP,
+                keyCode, 0));
     }
 
     @Override

@@ -1,11 +1,11 @@
 package com.pixplicity.cryptogram.utils;
 
-import android.app.Activity;
 import android.content.Context;
 import android.support.annotation.DrawableRes;
 import android.support.annotation.NonNull;
 import android.view.KeyEvent;
-import android.view.View;
+
+import com.pixplicity.cryptogram.events.PuzzleEvent;
 
 public class KeyboardUtils {
 
@@ -63,14 +63,8 @@ public class KeyboardUtils {
     }
 
     public static void dispatch(final Contract contract) {
-        final View focusedView = ((Activity) contract.getContext()).getCurrentFocus();
-        if (focusedView != null) {
-            int keycode = getKeycode(contract);
-            focusedView.dispatchKeyEvent(new KeyEvent(0, 0, KeyEvent.ACTION_DOWN,
-                    keycode, 0));
-            focusedView.dispatchKeyEvent(new KeyEvent(0, 0, KeyEvent.ACTION_UP,
-                    keycode, 0));
-        }
+        EventProvider.postEvent(
+                new PuzzleEvent.KeyboardInputEvent(getKeycode(contract)));
     }
 
     private static int getKeycode(Contract contract) {
@@ -89,8 +83,6 @@ public class KeyboardUtils {
     public interface Contract {
 
         Context getContext();
-
-        void setOnClickListener(View.OnClickListener onClickListener);
 
         int getKeyIndex();
 
