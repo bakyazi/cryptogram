@@ -815,7 +815,7 @@ public class CryptogramActivity extends BaseActivity implements GoogleApiClient.
                     if (puzzle != null) {
                         puzzle.revealPuzzle();
                     }
-                    mCryptogramView.invalidate();
+                    mCryptogramView.redraw();
                 } else {
                     throw new IllegalStateException("Only applicable to debug builds");
                 }

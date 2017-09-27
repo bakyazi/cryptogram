@@ -4,6 +4,7 @@ import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
 import android.content.Context;
 import android.content.res.Resources;
+import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.Paint;
 import android.graphics.PointF;
@@ -345,7 +346,7 @@ public class CryptogramView extends AppCompatTextView {
                 }
             }
         }
-        invalidate();
+        redraw();
     }
 
     public boolean setUserChar(char selectedChar, char userChar) {
@@ -355,7 +356,9 @@ public class CryptogramView extends AppCompatTextView {
         if (selectedChar != 0 && mPuzzle != null) {
             if (mPuzzle.isRevealed(selectedChar)) {
                 // This character was already revealed; don't allow the user to alter it
-                mPuzzle.setUserChar(selectedChar, selectedChar);
+                if (mPuzzle.setUserChar(selectedChar, selectedChar)) {
+                    // TODO show highlight
+                }
                 return true;
             }
             // Check for completion state
@@ -373,7 +376,7 @@ public class CryptogramView extends AppCompatTextView {
             if (mOnPuzzleProgressListener != null) {
                 mOnPuzzleProgressListener.onPuzzleProgress(mPuzzle);
             }
-            invalidate();
+            redraw();
             return true;
         }
         return false;
@@ -397,12 +400,12 @@ public class CryptogramView extends AppCompatTextView {
             mPuzzle.revealedMistakes();
             mHighlightMistakes = true;
         }
-        invalidate();
+        redraw();
     }
 
     public void reset() {
         mSelectedCharacter = 0;
-        invalidate();
+        redraw();
     }
 
     @Override
@@ -478,7 +481,7 @@ public class CryptogramView extends AppCompatTextView {
         mTextPaintMapping.setAlpha(completed ? 96 : 255);
         Paint linePaint = completed ? mLinePaint2 : mLinePaint1;
 
-        PointF hyphenHighlight = null;
+        PointF highlightPosition = null;
 
         mCharMap = new char[(int) (width / mBoxW)][100];
 
@@ -499,10 +502,10 @@ public class CryptogramView extends AppCompatTextView {
                     Log.d(TAG, "soft hyphen at index " + index);
                     if (x + (index + 1) * mBoxW <= width) {
                         // It fits with a soft hyphen; draw this segment
-                        if (hyphenHighlight == null && canvas != null) {
-                            hyphenHighlight = new PointF(x + index * mBoxW - mBoxW / 2, y - mBoxH / 2);
+                        if (highlightPosition == null && canvas != null) {
+                            highlightPosition = new PointF(x + index * mBoxW - mBoxW / 2, y - mBoxH / 2);
                             if (mOnHighlightListener != null) {
-                                mOnHighlightListener.onHighlight(PrefsUtils.TYPE_HIGHLIGHT_HYPHENATION, hyphenHighlight);
+                                mOnHighlightListener.onHighlight(PrefsUtils.TYPE_HIGHLIGHT_HYPHENATION, highlightPosition);
                             }
                         }
                         String wordSegment = word.substring(0, index).replace(SOFT_HYPHEN, "") + "-";
@@ -600,6 +603,11 @@ public class CryptogramView extends AppCompatTextView {
             x += mBoxW;
         }
         return x;
+    }
+
+    public void redraw() {
+        // TODO allow for buffering the image and issue a redraw here
+        invalidate();
     }
 
     @Override
