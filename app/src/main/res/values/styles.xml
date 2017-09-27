@@ -42,5 +42,8 @@
         <item name="android:lineSpacingExtra">3sp</item>
         <item name="android:padding">8dp</item>
     </style>
+    <style name="InfoTextView.Title" parent="@style/InfoTextView">
+        <item name="android:textSize">17sp</item>
+    </style>
 
 </resources>

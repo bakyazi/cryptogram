@@ -127,15 +127,30 @@
                 simple enough that the cryptogram can be solved by hand.
             ]]>
     </string>
+    <string name="how_to_play_2_title">How the cipher works</string>
     <string name="how_to_play_2">
         <![CDATA[
-                This cipher works like this:
-                <ol>
-                    <li>Each letter is uniquely replaced with a <i>different</i> letter in the alphabet.</li>
-                    <li>All occurrences of a letter are substituted with the same letter from the cipher.</li>
-                    <li>The substitution letter itself may not occur in the puzzle.</li>
-                    <li>Each puzzle uses a unique cipher.</li>
-                </ol>
+                • Each letter is uniquely substituted with a <i>different</i> letter in the alphabet.<br />
+                • All occurrences of a letter are substituted with the same letter from the cipher.<br />
+                • The substitution letter itself might not occur in the puzzle.<br />
+                • Each puzzle uses a unique cipher.<br />
+            ]]>
+    </string>
+    <string name="how_to_play_example">Example</string>
+    <string name="how_to_play_3_title">Tips</string>
+    <string name="how_to_play_3">
+        <![CDATA[
+                • Look at the letter frequencies—the most frequent letters in English are from most to least frequent:<br />
+                  <tt>ETAONRISHDLFCMUGYPWBVKJXQZ</tt><br />
+                • Also think about the most common letter pairs—in English, from most to least frequent:<br />
+                  <tt>TH HE AN RE ER IN ON AT ND ST ES EN OF TE ED OR TI HI AS TO</tt><br />
+                • When you encounter doubled letters, bear in mind the most frequent combinations—in English, from most to least frequent:<br />
+                  <tt>LL EE SS OO TT FF RR NN PP CC</tt><br />
+                • Think about common words and which words might bridge between two parts of a sentence.<br />
+                • Many puzzles have some letters revealed to start with; consider why that might be.<br />
+                • Be sure to check the puzzle theme!
+                <br /><br />
+                <b>Good luck!</b>
             ]]>
     </string>
 
