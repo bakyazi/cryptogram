@@ -13,8 +13,8 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:datumRatio="datumWidth"
-        app:heightRatio="608"
-        app:widthRatio="1080">
+        app:heightRatio="360"
+        app:widthRatio="720">
 
         <include layout="@layout/in_video"/>
 
