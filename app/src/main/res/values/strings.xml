@@ -5,7 +5,7 @@
     <string name="intro1_title">How to play</string>
     <string name="intro1_text">Decipher the encrypted text to reveal the motivational quote!</string>
     <string name="intro2_title">How it works</string>
-    <string name="intro2_text">Use the keyboard or tap the screen to select hints and insert answers.</string>
+    <string name="intro2_text">Check the help pages for instructions and tips.</string>
     <string name="intro_next">Go on…</string>
     <string name="intro_done">Got it!</string>
 
@@ -122,20 +122,20 @@
                     Decipher the encrypted text to reveal the motivational quote!
                 </strong>
             </p>
-            <p>
                 A <i>cryptogram</i> is a type of puzzle that consists of a short piece of encrypted text.
                 The cipher used to encrypt the text is a simple substitution of letters and is
                 simple enough that the cryptogram can be solved by hand.
-            </p>
-            <p>
-                This cipher works as follows:
-                <ul>
+            ]]>
+    </string>
+    <string name="how_to_play_2">
+        <![CDATA[
+                This cipher works like this:
+                <ol>
                     <li>Each letter is uniquely replaced with a <i>different</i> letter in the alphabet.</li>
                     <li>All occurrences of a letter are substituted with the same letter from the cipher.</li>
                     <li>The substitution letter itself may not occur in the puzzle.</li>
                     <li>Each puzzle uses a unique cipher.</li>
-                </ul>
-            </p>
+                </ol>
             ]]>
     </string>
 

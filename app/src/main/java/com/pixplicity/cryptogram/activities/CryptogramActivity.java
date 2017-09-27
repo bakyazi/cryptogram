@@ -4,7 +4,6 @@ import android.content.ActivityNotFoundException;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.IntentSender;
-import android.graphics.Color;
 import android.graphics.PointF;
 import android.graphics.Rect;
 import android.net.Uri;
@@ -33,7 +32,6 @@ import android.widget.TableLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.afollestad.easyvideoplayer.EasyVideoCallback;
 import com.afollestad.easyvideoplayer.EasyVideoPlayer;
 import com.afollestad.materialdialogs.DialogAction;
 import com.afollestad.materialdialogs.MaterialDialog;
@@ -64,13 +62,13 @@ import com.pixplicity.cryptogram.utils.PrefsUtils;
 import com.pixplicity.cryptogram.utils.PuzzleProvider;
 import com.pixplicity.cryptogram.utils.StringUtils;
 import com.pixplicity.cryptogram.utils.StyleUtils;
+import com.pixplicity.cryptogram.utils.VideoUtils;
 import com.pixplicity.cryptogram.views.CryptogramLayout;
 import com.pixplicity.cryptogram.views.CryptogramView;
 import com.pixplicity.cryptogram.views.HintView;
 import com.pixplicity.generate.Rate;
 import com.squareup.otto.Subscribe;
 
-import net.soulwolf.widget.ratiolayout.RatioDatumMode;
 import net.soulwolf.widget.ratiolayout.widget.RatioFrameLayout;
 
 import java.util.Locale;
@@ -416,26 +414,18 @@ public class CryptogramActivity extends BaseActivity implements GoogleApiClient.
         int titleStringResId;
         int textStringResId;
         int actionStringResId = R.string.intro_next;
-        int stillFrameResId;
-        String videoResName;
-        int videoW, videoH;
+        VideoUtils.Video video;
         switch (page) {
             case 0:
                 titleStringResId = R.string.intro1_title;
                 textStringResId = R.string.intro1_text;
-                videoResName = "vid_intro1";
-                stillFrameResId = R.drawable.im_intro1;
-                videoW = 1088;
-                videoH = 386;
+                video = VideoUtils.VIDEO_INSTRUCTION;
                 break;
             case 1:
                 titleStringResId = R.string.intro2_title;
                 textStringResId = R.string.intro2_text;
                 actionStringResId = R.string.intro_done;
-                videoResName = "vid_intro2";
-                stillFrameResId = R.drawable.im_intro2;
-                videoW = 1088;
-                videoH = 962;
+                video = VideoUtils.VIDEO_HELP;
                 break;
             case ONBOARDING_PAGES:
             default:
@@ -454,84 +444,25 @@ public class CryptogramActivity extends BaseActivity implements GoogleApiClient.
 
         View customView = LayoutInflater.from(this).inflate(R.layout.dialog_intro, null);
 
-        TextView tvIntro = (TextView) customView.findViewById(R.id.tv_intro);
+        TextView tvIntro = customView.findViewById(R.id.tv_intro);
         tvIntro.setText(textStringResId);
 
-        final RatioFrameLayout vgRatio = (RatioFrameLayout) customView.findViewById(R.id.vg_ratio);
-        vgRatio.setRatio(RatioDatumMode.DATUM_WIDTH, videoW, videoH);
-
-        final EasyVideoPlayer player = (EasyVideoPlayer) customView.findViewById(R.id.player);
-        if (player != null) {
-            player.disableControls();
-            player.setBackgroundColor(Color.WHITE);
-            player.setCallback(new EasyVideoCallback() {
-                @Override
-                public void onStarted(EasyVideoPlayer player) {
-                }
-
-                @Override
-                public void onPaused(EasyVideoPlayer player) {
-                }
-
-                @Override
-                public void onPreparing(EasyVideoPlayer player) {
-                }
-
-                @Override
-                public void onPrepared(EasyVideoPlayer player) {
-                }
-
-                @Override
-                public void onBuffering(int percent) {
-                }
-
-                @Override
-                public void onError(EasyVideoPlayer player, Exception e) {
-                }
-
-                @Override
-                public void onCompletion(EasyVideoPlayer player) {
-                    player.seekTo(0);
-                    player.start();
-                }
-
-                @Override
-                public void onRetry(EasyVideoPlayer player, Uri source) {
-                }
-
-                @Override
-                public void onSubmit(EasyVideoPlayer player, Uri source) {
-                }
-            });
-            player.setAutoPlay(true);
-
-            Uri uri = Uri.parse("android.resource://" + getPackageName() + "/raw/" + videoResName);
-            player.setSource(uri);
-        } else {
-            ImageView ivVideo = (ImageView) customView.findViewById(R.id.iv_still_frame);
-            ivVideo.setImageResource(stillFrameResId);
-        }
+        final RatioFrameLayout vgRatio = customView.findViewById(R.id.vg_ratio);
+        EasyVideoPlayer player = VideoUtils.setup(this, vgRatio, video);
 
         new MaterialDialog.Builder(this)
                 .title(titleStringResId)
                 .customView(customView, false)
                 .cancelable(false)
                 .positiveText(actionStringResId)
-                .showListener(new DialogInterface.OnShowListener() {
-                    @Override
-                    public void onShow(DialogInterface dialogInterface) {
-                        if (player != null) {
-                            player.start();
-                        }
+                .showListener(dialogInterface -> {
+                    if (player != null) {
+                        player.start();
                     }
                 })
-                .onAny(new MaterialDialog.SingleButtonCallback() {
-                    @Override
-                    public void onClick(@NonNull MaterialDialog dialog,
-                                        @NonNull DialogAction which) {
-                        PrefsUtils.setOnboarding(page);
-                        showOnboarding(page + 1);
-                    }
+                .onAny((dialog, which) -> {
+                    PrefsUtils.setOnboarding(page);
+                    showOnboarding(page + 1);
                 })
                 .show();
     }
