@@ -736,18 +736,6 @@ public class CryptogramActivity extends BaseActivity implements GoogleApiClient.
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.menu_cryptogram, menu);
         {
-            MenuItem item = menu.findItem(R.id.action_randomize);
-            item.setChecked(PrefsUtils.getRandomize());
-        }
-        {
-            MenuItem item = menu.findItem(R.id.action_show_hints);
-            item.setChecked(PrefsUtils.getShowHints());
-        }
-        {
-            MenuItem item = menu.findItem(R.id.action_dark_theme);
-            item.setChecked(PrefsUtils.getDarkTheme());
-        }
-        {
             MenuItem item = menu.findItem(R.id.action_reveal_puzzle);
             item.setVisible(BuildConfig.DEBUG);
         }
@@ -903,30 +891,6 @@ public class CryptogramActivity extends BaseActivity implements GoogleApiClient.
                         }).show();
             }
             return true;
-            case R.id.action_randomize: {
-                boolean randomize = !item.isChecked();
-                PrefsUtils.setRandomize(randomize);
-                item.setChecked(randomize);
-            }
-            return true;
-            case R.id.action_show_hints: {
-                boolean showHints = !item.isChecked();
-                PrefsUtils.setShowHints(showHints);
-                item.setChecked(showHints);
-                onCryptogramUpdated(puzzle);
-            }
-            return true;
-            case R.id.action_dark_theme: {
-                mDarkTheme = !mDarkTheme;
-                PrefsUtils.setDarkTheme(mDarkTheme);
-                item.setChecked(mDarkTheme);
-                // Relaunch as though launched from home screen
-                Intent i = getBaseContext().getPackageManager()
-                                           .getLaunchIntentForPackage(getBaseContext().getPackageName());
-                i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                startActivity(i);
-            }
-            return true;
             case R.id.action_share: {
                 Intent intent = new Intent(Intent.ACTION_SEND);
                 intent.setType("text/plain");
@@ -940,7 +904,7 @@ public class CryptogramActivity extends BaseActivity implements GoogleApiClient.
                 } else {
                     text = getString(
                             R.string.share_partial,
-                            puzzle.getAuthor(),
+                            puzzle == null ? getString(R.string.author_unknown) : puzzle.getAuthor(),
                             getString(R.string.share_url));
                 }
                 intent.putExtra(Intent.EXTRA_TEXT, text);
@@ -948,7 +912,7 @@ public class CryptogramActivity extends BaseActivity implements GoogleApiClient.
                 // Log the event
                 Answers.getInstance().logShare(
                         new ShareEvent()
-                                .putContentId(String.valueOf(puzzle.getId()))
+                                .putContentId(puzzle == null ? null : String.valueOf(puzzle.getId()))
                                 .putContentType("puzzle")
                                 .putContentName(text)
                 );
@@ -1061,6 +1025,10 @@ public class CryptogramActivity extends BaseActivity implements GoogleApiClient.
             return true;
             case R.id.action_settings: {
                 startActivity(SettingsActivity.create(this));
+            }
+            return true;
+            case R.id.action_how_to_play: {
+                startActivity(HowToPlayActivity.create(this));
             }
             return true;
             case R.id.action_about: {

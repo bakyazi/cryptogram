@@ -6,7 +6,6 @@ import android.content.ContextWrapper;
 import com.crashlytics.android.Crashlytics;
 import com.pixplicity.easyprefs.library.Prefs;
 
-import butterknife.ButterKnife;
 import io.fabric.sdk.android.Fabric;
 
 
@@ -16,6 +15,7 @@ public class CryptogramApp extends Application {
     public static final String CONTENT_LEADERBOARDS = "leaderboards";
     public static final String CONTENT_STATISTICS = "statistics";
     public static final String CONTENT_SETTINGS = "settings";
+    public static final String CONTENT_HOW_TO_PLAY = "how-to-play";
     public static final String CONTENT_ABOUT = "about";
 
     private static CryptogramApp sInstance;

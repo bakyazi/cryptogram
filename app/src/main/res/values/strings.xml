@@ -29,6 +29,8 @@
     <string name="share">Share puzzle…</string>
     <string name="statistics">Statistics</string>
     <string name="settings">Settings</string>
+    <string name="help">Help…</string>
+    <string name="how_to_play">How do I play?</string>
     <string name="about">About</string>
     <string name="cancel">Cancel</string>
     <string name="skip_puzzle">Are you sure you’d like to skip this puzzle?</string>
@@ -58,6 +60,7 @@
     <string name="quote">— %1$s&#x200A;</string>
     <string name="topic">Topic: “%1$s”</string>
     <string name="not_applicable">N/A</string>
+    <string name="author_unknown">anonymous</string>
 
     <string name="stats_excess">Number of excess inputs:</string>
     <string name="stats_time">Time elapsed:</string>
@@ -111,6 +114,30 @@
 
     <string name="version" translatable="false">%s (%d)</string>
     <string name="version_long" translatable="false">%s\n%d</string>
+
+    <string name="how_to_play_1">
+        <![CDATA[
+            <p>
+                <strong>
+                    Decipher the encrypted text to reveal the motivational quote!
+                </strong>
+            </p>
+            <p>
+                A <i>cryptogram</i> is a type of puzzle that consists of a short piece of encrypted text.
+                The cipher used to encrypt the text is a simple substitution of letters and is
+                simple enough that the cryptogram can be solved by hand.
+            </p>
+            <p>
+                This cipher works as follows:
+                <ul>
+                    <li>Each letter is uniquely replaced with a <i>different</i> letter in the alphabet.</li>
+                    <li>All occurrences of a letter are substituted with the same letter from the cipher.</li>
+                    <li>The substitution letter itself may not occur in the puzzle.</li>
+                    <li>Each puzzle uses a unique cipher.</li>
+                </ul>
+            </p>
+            ]]>
+    </string>
 
     <string name="about_this_app_1">
         <![CDATA[
