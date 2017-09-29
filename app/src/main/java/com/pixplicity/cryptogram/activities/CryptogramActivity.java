@@ -1,5 +1,6 @@
 package com.pixplicity.cryptogram.activities;
 
+import android.app.ProgressDialog;
 import android.content.ActivityNotFoundException;
 import android.content.Intent;
 import android.content.IntentSender;
@@ -47,9 +48,12 @@ import com.getkeepsafe.taptargetview.TapTargetView;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.common.images.ImageManager;
+import com.google.android.gms.drive.Drive;
 import com.google.android.gms.games.Games;
 import com.google.android.gms.games.GamesActivityResultCodes;
 import com.google.android.gms.games.Player;
+import com.google.android.gms.games.snapshot.SnapshotMetadata;
+import com.google.android.gms.games.snapshot.Snapshots;
 import com.pixplicity.cryptogram.BuildConfig;
 import com.pixplicity.cryptogram.CryptogramApp;
 import com.pixplicity.cryptogram.R;
@@ -61,6 +65,7 @@ import com.pixplicity.cryptogram.utils.EventProvider;
 import com.pixplicity.cryptogram.utils.LeaderboardProvider;
 import com.pixplicity.cryptogram.utils.PrefsUtils;
 import com.pixplicity.cryptogram.utils.PuzzleProvider;
+import com.pixplicity.cryptogram.utils.SavegameManager;
 import com.pixplicity.cryptogram.utils.StringUtils;
 import com.pixplicity.cryptogram.utils.StyleUtils;
 import com.pixplicity.cryptogram.utils.VideoUtils;
@@ -84,6 +89,7 @@ public class CryptogramActivity extends BaseActivity implements GoogleApiClient.
 
     private static final int RC_UNUSED = 1000;
     private static final int RC_PLAY_GAMES = 1001;
+    private static final int RC_SAVED_GAMES = 1002;
 
     private static final int ONBOARDING_PAGES = 2;
 
@@ -201,6 +207,7 @@ public class CryptogramActivity extends BaseActivity implements GoogleApiClient.
                 .addConnectionCallbacks(this)
                 .addOnConnectionFailedListener(this)
                 .addApi(Games.API).addScope(Games.SCOPE_GAMES)
+                .addApi(Drive.API).addScope(Drive.SCOPE_APPFOLDER)
                 .build();
 
         mRate = new Rate.Builder(this)
@@ -334,9 +341,11 @@ public class CryptogramActivity extends BaseActivity implements GoogleApiClient.
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent intent) {
+        Log.d(TAG, "onActivityResult: " + requestCode);
         super.onActivityResult(requestCode, resultCode, intent);
         switch (requestCode) {
             case RC_PLAY_GAMES: {
+                Log.d(TAG, "onActivityResult: resolution result");
                 mSignInClicked = false;
                 mResolvingConnectionFailure = false;
                 switch (resultCode) {
@@ -363,7 +372,49 @@ public class CryptogramActivity extends BaseActivity implements GoogleApiClient.
                     }
                 }
             }
-            break;
+            case RC_SAVED_GAMES:
+                if (mDrawerLayout != null) {
+                    mDrawerLayout.closeDrawers();
+                }
+                if (intent != null) {
+                    if (intent.hasExtra(Snapshots.EXTRA_SNAPSHOT_METADATA)) {
+                        // Load a snapshot.
+                        final ProgressDialog pd = new ProgressDialog(this);
+                        pd.setMessage("Loading saved game...");
+                        pd.show();
+                        final SnapshotMetadata snapshotMetadata = intent.getParcelableExtra(Snapshots.EXTRA_SNAPSHOT_METADATA);
+                        PuzzleProvider.getInstance(this).load(mGoogleApiClient, snapshotMetadata,
+                                new SavegameManager.OnLoadResult() {
+                                    @Override
+                                    public void onLoadSuccess() {
+                                        updateCryptogram(PuzzleProvider.getInstance(CryptogramActivity.this)
+                                                                       .getCurrent());
+                                        showSnackbar("Game loaded.");
+                                        pd.dismiss();
+                                    }
+
+                                    @Override
+                                    public void onLoadFailure() {
+                                        showSnackbar("Sorry, the game state couldn't be restored.");
+                                        pd.dismiss();
+                                    }
+                                });
+                    } else if (intent.hasExtra(Snapshots.EXTRA_SNAPSHOT_NEW)) {
+                        PuzzleProvider.getInstance(this).save(mGoogleApiClient,
+                                new SavegameManager.OnSaveResult() {
+                                    @Override
+                                    public void onSaveSuccess() {
+                                        showSnackbar("Game saved.");
+                                    }
+
+                                    @Override
+                                    public void onSaveFailure() {
+                                        showSnackbar("Game couldn't be saved at this time.");
+                                    }
+                                });
+                    }
+                }
+                break;
         }
     }
 
@@ -513,15 +564,30 @@ public class CryptogramActivity extends BaseActivity implements GoogleApiClient.
                 }
             });
 
-            Button btSignOut = dialogView.findViewById(R.id.bt_sign_out);
-            btSignOut.setOnClickListener(view -> {
-                dialog.dismiss();
-                mSignInClicked = false;
-                Games.signOut(mGoogleApiClient);
-                if (mGoogleApiClient.isConnected()) {
-                    mGoogleApiClient.disconnect();
+            Button btRestoreSavedGames = dialogView.findViewById(R.id.bt_restore_saved_games);
+            btRestoreSavedGames.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    dialog.dismiss();
+                    int maxNumberOfSavedGamesToShow = 5;
+                    Intent savedGamesIntent = Games.Snapshots.getSelectSnapshotIntent(mGoogleApiClient,
+                            "See My Saves", true, true, maxNumberOfSavedGamesToShow);
+                    startActivityForResult(savedGamesIntent, RC_SAVED_GAMES);
                 }
-                updateGooglePlayGames();
+            });
+
+            Button btSignOut = dialogView.findViewById(R.id.bt_sign_out);
+            btSignOut.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    dialog.dismiss();
+                    mSignInClicked = false;
+                    Games.signOut(mGoogleApiClient);
+                    if (mGoogleApiClient.isConnected()) {
+                        mGoogleApiClient.disconnect();
+                    }
+                    updateGooglePlayGames();
+                }
             });
         } else {
             // start the sign-in flow
@@ -649,6 +715,9 @@ public class CryptogramActivity extends BaseActivity implements GoogleApiClient.
             // Submit any achievements
             AchievementProvider.getInstance().onCryptogramCompleted(mGoogleApiClient);
         }
+
+        // Attempt to save the game to Google Play Saved Games
+        PuzzleProvider.getInstance(this).save(mGoogleApiClient, null);
     }
 
     @Subscribe
@@ -1001,9 +1070,9 @@ public class CryptogramActivity extends BaseActivity implements GoogleApiClient.
 
     @Override
     public void onConnectionFailed(@NonNull ConnectionResult connectionResult) {
-        Log.d(TAG, "onConnectionFailed(): attempting to resolve");
+        Log.d(TAG, "onConnectionFailed: attempting to resolve");
         if (mResolvingConnectionFailure) {
-            Log.d(TAG, "onConnectionFailed(): already resolving");
+            Log.d(TAG, "onConnectionFailed: already resolving");
             return;
         }
 
@@ -1012,10 +1081,20 @@ public class CryptogramActivity extends BaseActivity implements GoogleApiClient.
             mAutoStartSignInFlow = false;
             mSignInClicked = false;
             mResolvingConnectionFailure = true;
-            try {
-                connectionResult.startResolutionForResult(this, RC_PLAY_GAMES);
-            } catch (IntentSender.SendIntentException e) {
-                Crashlytics.logException(e);
+            boolean noResolution = true;
+            if (connectionResult.hasResolution()) {
+                try {
+                    Log.d(TAG, "onConnectionFailed: offering resolution");
+                    connectionResult.startResolutionForResult(this, RC_PLAY_GAMES);
+                    noResolution = false;
+                } catch (IntentSender.SendIntentException e) {
+                    Crashlytics.logException(e);
+                    Log.e(TAG, "onConnectionFailed: couldn't resolve", e);
+                }
+            }
+            if (noResolution) {
+                Log.e(TAG, "onConnectionFailed: no resolution for: " + connectionResult.toString());
+                mResolvingConnectionFailure = false;
                 showGmsError(0);
             }
         }
@@ -1027,15 +1106,14 @@ public class CryptogramActivity extends BaseActivity implements GoogleApiClient.
             // Set the greeting appropriately on main menu
             Player p = Games.Players.getCurrentPlayer(mGoogleApiClient);
             String displayName;
-            Uri imageUri, bannerUri;
+            Uri imageUri;
             if (p == null) {
-                displayName = "???";
+                displayName = getString(R.string.google_play_games_player_unknown);
                 imageUri = null;
-                bannerUri = null;
             } else {
                 displayName = p.getDisplayName();
                 imageUri = p.hasHiResImage() ? p.getHiResImageUri() : p.getIconImageUri();
-                bannerUri = p.getBannerImageLandscapeUri();
+                //bannerUri = p.getBannerImageLandscapeUri();
             }
             Log.w(TAG, "onConnected(): current player is " + displayName);
 

@@ -20,6 +20,7 @@ public class PrefsUtils {
     private static final String KEY_NEVER_ASK_REVEAL_MISTAKES = "never_ask_reveal_mistakes";
     private static final String KEY_HIGHLIGHTED_HYPHENATION = "highlighted_hyphenation";
     private static final String KEY_HIGHLIGHTED_TOUCH_INPUT = "highlighted_touch_input";
+    private static final String KEY_SAVEGAME_NAME = "savegame_name";
     private static final String KEY_USE_SYSTEM_KEYBOARD = "use_system_keyboard";
 
     public static final int TYPE_HIGHLIGHT_HYPHENATION = 0;
@@ -152,6 +153,14 @@ public class PrefsUtils {
         if (key != null) {
             Prefs.putBoolean(key, highlighted);
         }
+    }
+
+    public static String getLastSavegameName() {
+        return Prefs.getString(KEY_SAVEGAME_NAME, null);
+    }
+
+    public static void setLastSavegameName(String savegameName) {
+        Prefs.putString(KEY_SAVEGAME_NAME, savegameName);
     }
 
 }
