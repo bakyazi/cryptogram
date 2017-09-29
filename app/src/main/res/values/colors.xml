@@ -2,6 +2,7 @@
 <resources>
 
     <color name="colorTextPrimary">#000000</color>
+    <color name="colorBackground">#f0f0f0</color>
     <color name="colorPrimary">#3F51B5</color>
     <color name="colorPrimaryDark">#303F9F</color>
     <color name="colorPrimaryDark_translucent">#80303F9F</color>
@@ -13,6 +14,7 @@
     <color name="colorPuzzleHighlight">#80808ee0</color>
 
     <!--Dark Theme -->
+    <color name="colorDarkBackground">#000</color>
     <color name="colorDarkTextPrimary">#d0d0d0</color>
     <color name="colorDarkPrimary">#505050</color>
     <color name="colorDarkPrimaryDark">#202020</color>

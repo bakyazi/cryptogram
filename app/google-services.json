@@ -1,0 +1,55 @@
+{
+  "project_info": {
+    "project_number": "1070342491314",
+    "firebase_url": "https://cryptogram-56669507.firebaseio.com",
+    "project_id": "cryptogram-56669507",
+    "storage_bucket": "cryptogram-56669507.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1070342491314:android:66758193479a5817",
+        "android_client_info": {
+          "package_name": "com.pixplicity.cryptogram.debug"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1070342491314-e5bt883dcvrcj3u3nhsq1j0k227raltd.apps.googleusercontent.com",
+          "client_type": 3
+        },
+        {
+          "client_id": "1070342491314-osgkr34ujjd8spt8be5s8a1lcoeoe8gn.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.pixplicity.cryptogram.debug",
+            "certificate_hash": "5e66968507ad68eb5e71e41371c82760ac1f972f"
+          }
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBibeZXs4asAPG_ZmwgIdI5kdb05MznEz4"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1070342491314-e5bt883dcvrcj3u3nhsq1j0k227raltd.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

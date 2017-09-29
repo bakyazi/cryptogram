@@ -188,9 +188,10 @@ public class Puzzle {
         return getProgress().getUserChar(this, c);
     }
 
-    public void setUserChar(char selectedCharacter, char c) {
-        getProgress().setUserChar(this, selectedCharacter, c);
+    public boolean setUserChar(char selectedCharacter, char c) {
+        boolean changed = getProgress().setUserChar(this, selectedCharacter, c);
         save();
+        return changed;
     }
 
     public boolean hasUserChars() {

@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.v4.widget.NestedScrollView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:paddingBottom="20dp">
+
+        <TextView
+            android:id="@+id/tv_how_to_play_1"
+            style="@style/InfoTextView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:text="@string/how_to_play_1"/>
+
+        <ImageView
+            android:id="@+id/iv_instructions1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:adjustViewBounds="true"
+            android:maxWidth="360dp"
+            android:scaleType="centerInside"
+            android:src="@drawable/im_instructions1"
+            tools:ignore="ContentDescription"/>
+
+        <TextView
+            style="@style/InfoTextView.Title"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:text="@string/how_to_play_2_title"
+            android:textStyle="bold"/>
+
+        <TextView
+            android:id="@+id/tv_how_to_play_2"
+            style="@style/InfoTextView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/how_to_play_2"/>
+
+        <ImageView
+            android:id="@+id/iv_instructions2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:adjustViewBounds="true"
+            android:maxWidth="360dp"
+            android:scaleType="centerInside"
+            android:src="@drawable/im_instructions2"
+            tools:ignore="ContentDescription"/>
+
+        <TextView
+            style="@style/InfoTextView.Title"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:text="@string/how_to_play_example"
+            android:textStyle="bold"/>
+
+        <net.soulwolf.widget.ratiolayout.widget.RatioFrameLayout
+            android:id="@+id/rf_video1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="16dp"
+            android:layout_marginRight="16dp"
+            android:clipToPadding="false"
+            android:elevation="16dp"
+            app:datumRatio="datumWidth"
+            app:heightRatio="360"
+            app:widthRatio="720"
+            tools:targetApi="lollipop">
+
+            <include layout="@layout/in_video"/>
+
+        </net.soulwolf.widget.ratiolayout.widget.RatioFrameLayout>
+
+        <TextView
+            style="@style/InfoTextView.Title"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:text="@string/how_to_play_3_title"
+            android:textStyle="bold"/>
+
+        <TextView
+            android:id="@+id/tv_how_to_play_3"
+            style="@style/InfoTextView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/how_to_play_3"/>
+
+    </LinearLayout>
+
+</android.support.v4.widget.NestedScrollView>

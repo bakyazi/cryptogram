@@ -5,7 +5,7 @@
     <string name="intro1_title">How to play</string>
     <string name="intro1_text">Decipher the encrypted text to reveal the motivational quote!</string>
     <string name="intro2_title">How it works</string>
-    <string name="intro2_text">Use the keyboard or tap the screen to select hints and insert answers.</string>
+    <string name="intro2_text">Check the help pages for instructions and tips.</string>
     <string name="intro_next">Go on…</string>
     <string name="intro_done">Got it!</string>
 
@@ -29,6 +29,8 @@
     <string name="share">Share puzzle…</string>
     <string name="statistics">Statistics</string>
     <string name="settings">Settings</string>
+    <string name="help">Help…</string>
+    <string name="how_to_play">How do I play?</string>
     <string name="about">About</string>
     <string name="cancel">Cancel</string>
     <string name="skip_puzzle">Are you sure you’d like to skip this puzzle?</string>
@@ -59,6 +61,7 @@
     <string name="quote">— %1$s&#x200A;</string>
     <string name="topic">Topic: “%1$s”</string>
     <string name="not_applicable">N/A</string>
+    <string name="author_unknown">anonymous</string>
 
     <string name="stats_excess">Number of excess inputs:</string>
     <string name="stats_time">Time elapsed:</string>
@@ -113,6 +116,18 @@
     <string name="show_hints">Show used letters</string>
     <string name="show_topic">Show puzzle topics</string>
     <string name="auto_advance">Advance to next cell when filled</string>
+    <string name="text_size">Text size:</string>
+    <string name="text_size_small">Small</string>
+    <string name="text_size_normal">Normal</string>
+    <string name="text_size_large">Large</string>
+    <string name="keyboard">Keyboard:</string>
+    <string name="keyboard_builtin">Built-in</string>
+    <string name="keyboard_system">System default</string>
+
+    <string name="keyboard_system_dialog">Some keyboards don’t play nicely with Cryptogram. If you experience problems, I please switch back to the built-in keyboard.</string>
+    <string name="keyboard_system_dialog_ok">Gotcha</string>
+
+    <string name="applying_settings">Applying settings…</string>
 
     <string name="join_beta">Join beta</string>
     <string name="send_feedback">Send feedback</string>
@@ -121,6 +136,45 @@
 
     <string name="version" translatable="false">%s (%d)</string>
     <string name="version_long" translatable="false">%s\n%d</string>
+
+    <string name="how_to_play_1">
+        <![CDATA[
+            <p>
+                <strong>
+                    Decipher the encrypted text to reveal the motivational quote!
+                </strong>
+            </p>
+                A <i>cryptogram</i> is a type of puzzle that consists of a short piece of encrypted text.
+                The cipher used to encrypt the text is a simple substitution of letters and is
+                simple enough that the cryptogram can be solved by hand.
+            ]]>
+    </string>
+    <string name="how_to_play_2_title">How the cipher works</string>
+    <string name="how_to_play_2">
+        <![CDATA[
+                • Each letter is uniquely substituted with a <i>different</i> letter in the alphabet.<br />
+                • All occurrences of a letter are substituted with the same letter from the cipher.<br />
+                • The substitution letter itself might not occur in the puzzle.<br />
+                • Each puzzle uses a unique cipher.<br />
+            ]]>
+    </string>
+    <string name="how_to_play_example">Example</string>
+    <string name="how_to_play_3_title">Tips</string>
+    <string name="how_to_play_3">
+        <![CDATA[
+                • Look at the letter frequencies—the most frequent letters in English are from most to least frequent:<br />
+                  <tt>ETAONRISHDLFCMUGYPWBVKJXQZ</tt><br />
+                • Also think about the most common letter pairs—in English, from most to least frequent:<br />
+                  <tt>TH HE AN RE ER IN ON AT ND ST ES EN OF TE ED OR TI HI AS TO</tt><br />
+                • When you encounter doubled letters, bear in mind the most frequent combinations—in English, from most to least frequent:<br />
+                  <tt>LL EE SS OO TT FF RR NN PP CC</tt><br />
+                • Think about common words and which words might bridge between two parts of a sentence.<br />
+                • Many puzzles have some letters revealed to start with; consider why that might be.<br />
+                • Be sure to check the puzzle theme!
+                <br /><br />
+                <b>Good luck!</b>
+            ]]>
+    </string>
 
     <string name="about_this_app_1">
         <![CDATA[
@@ -168,8 +222,12 @@
             <br /><br />
             • <strong>EasyPrefs</strong> by Pixplicity<br />
             • <strong>Butter Knife</strong> by Square Inc.<br />
+            • <strong>Otto</strong> by Square Inc.<br />
             • <strong>Material Dialogs</strong> by Aidan Follestad<br />
-            • <strong>Easy Video Player</strong> by Aidan Follestad
+            • <strong>Glide</strong> by Bump Technologies<br />
+            • <strong>RatioLayout</strong> by Amphiaraus<br />
+            • <strong>TapTargetView</strong> by Keepsafe<br />
+            • <strong>Gson</strong> by Google
             ]]>
     </string>
     <string name="title_artwork">Artwork</string>
@@ -189,9 +247,5 @@
 
     <string name="feedback_subject">Feedback on Cryptogram</string>
     <string name="feedback_body">Hi Paul, \n\nI’m using Cryptogram version %1$s and my keyboard is "%2$s". \n\nHere’s my feedback on Cryptogram: \n\n</string>
-    <string name="text_size">Text size:</string>
-    <string name="text_size_small">Small</string>
-    <string name="text_size_normal">Normal</string>
-    <string name="text_size_large">Large</string>
 
 </resources>

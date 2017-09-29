@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <item name="keycode_m" type="id" />
+    <integer-array name="keycodes">
+        <item>1</item>
+    </integer-array>
+
+    <attr name="test" format="boolean"/>
+    <attr name="key" format="enum">
+        <enum name="backspace" value="0"/>
+        <enum name="next" value="1"/>
+        <enum name="a" value="2"/>
+        <enum name="b" value="3"/>
+        <enum name="c" value="4"/>
+        <enum name="d" value="5"/>
+        <enum name="e" value="6"/>
+        <enum name="f" value="7"/>
+        <enum name="g" value="8"/>
+        <enum name="h" value="9"/>
+        <enum name="i" value="10"/>
+        <enum name="j" value="11"/>
+        <enum name="k" value="12"/>
+        <enum name="l" value="13"/>
+        <enum name="m" value="14"/>
+        <enum name="n" value="15"/>
+        <enum name="o" value="16"/>
+        <enum name="p" value="17"/>
+        <enum name="q" value="18"/>
+        <enum name="r" value="19"/>
+        <enum name="s" value="20"/>
+        <enum name="t" value="21"/>
+        <enum name="u" value="22"/>
+        <enum name="v" value="23"/>
+        <enum name="w" value="24"/>
+        <enum name="x" value="25"/>
+        <enum name="y" value="26"/>
+        <enum name="z" value="27"/>
+        <enum name="space" value="28"/>
+    </attr>
+
+    <declare-styleable name="KeyboardButtonTheme">
+        <attr name="keyboardButtonStyle" format="reference"/>
+    </declare-styleable>
+    <declare-styleable name="KeyboardImageButtonTheme">
+        <attr name="keyboardImageButtonStyle" format="reference"/>
+    </declare-styleable>
+    <declare-styleable name="KeyboardButton">
+        <attr name="test"/>
+        <attr name="key"/>
+    </declare-styleable>
+    <declare-styleable name="KeyboardImageButton">
+        <attr name="test"/>
+        <attr name="key"/>
+    </declare-styleable>
+
+</resources>

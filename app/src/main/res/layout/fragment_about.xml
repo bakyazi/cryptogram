@@ -42,8 +42,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="16dp"
-            android:text="@string/about_this_app_1"
-            android:textSize="15sp"/>
+            android:text="@string/about_this_app_1"/>
 
         <TextView
             style="@style/InfoTextView"
@@ -69,8 +68,7 @@
             style="@style/InfoTextView"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="@string/about_this_app_2"
-            android:textSize="15sp"/>
+            android:text="@string/about_this_app_2"/>
 
         <android.support.v7.widget.AppCompatButton
             android:id="@+id/bt_website"
@@ -86,7 +84,7 @@
             tools:ignore="UnusedAttribute"/>
 
         <TextView
-            style="@style/InfoTextView"
+            style="@style/InfoTextView.Title"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="@string/title_disclaimer"
@@ -101,7 +99,7 @@
             tools:targetApi="ice_cream_sandwich"/>
 
         <TextView
-            style="@style/InfoTextView"
+            style="@style/InfoTextView.Title"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="@string/title_licenses"
@@ -115,7 +113,7 @@
             tools:text="@string/licenses"/>
 
         <TextView
-            style="@style/InfoTextView"
+            style="@style/InfoTextView.Title"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="24dp"

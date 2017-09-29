@@ -23,6 +23,7 @@ public class PrefsUtils {
     private static final String KEY_HIGHLIGHTED_HYPHENATION = "highlighted_hyphenation";
     private static final String KEY_HIGHLIGHTED_TOUCH_INPUT = "highlighted_touch_input";
     private static final String KEY_SAVEGAME_NAME = "savegame_name";
+    private static final String KEY_USE_SYSTEM_KEYBOARD = "use_system_keyboard";
 
     public static final int TYPE_HIGHLIGHT_HYPHENATION = 0;
     public static final int TYPE_HIGHLIGHT_TOUCH_INPUT = 1;
@@ -128,6 +129,14 @@ public class PrefsUtils {
 
     public static boolean getNeverAskRevealLetter() {
         return Prefs.getBoolean(KEY_NEVER_ASK_REVEAL_LETTER, false);
+    }
+
+    public static void setUseSystemKeyboard(boolean useSystemKeyboard) {
+        Prefs.putBoolean(KEY_USE_SYSTEM_KEYBOARD, useSystemKeyboard);
+    }
+
+    public static boolean getUseSystemKeyboard() {
+        return Prefs.getBoolean(KEY_USE_SYSTEM_KEYBOARD, false);
     }
 
     private static String getHighlightKey(int type) {
