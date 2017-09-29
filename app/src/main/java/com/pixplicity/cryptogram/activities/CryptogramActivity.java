@@ -184,19 +184,17 @@ public class CryptogramActivity extends BaseActivity implements GoogleApiClient.
 
     private int mLastConnectionError;
 
-    private boolean mDarkTheme;
     private boolean mFreshInstall;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        mDarkTheme = PrefsUtils.getDarkTheme();
-        if (mDarkTheme) {
+        if (isDarkTheme()) {
             setTheme(R.style.AppTheme_Dark);
             getWindow().setBackgroundDrawableResource(R.drawable.bg_activity_dark);
         }
         setContentView(R.layout.activity_cryptogram);
-        if (mDarkTheme) {
+        if (isDarkTheme()) {
             mVgStats.setBackgroundResource(R.drawable.bg_statistics_dark);
         }
 
@@ -227,7 +225,7 @@ public class CryptogramActivity extends BaseActivity implements GoogleApiClient.
         mRvDrawer.setAdapter(mAdapter);
 
         mVgCryptogram.setCrytogramView(mCryptogramView);
-        mCryptogramView.setOnPuzzleProgressListener(puzzle -> onCryptogramUpdated(puzzle));
+        mCryptogramView.setOnPuzzleProgressListener(this::onCryptogramUpdated);
         mCryptogramView.setOnHighlightListener(new CryptogramView.OnHighlightListener() {
             private SparseBooleanArray mHighlightShown = new SparseBooleanArray();
 
@@ -430,45 +428,42 @@ public class CryptogramActivity extends BaseActivity implements GoogleApiClient.
         final int targetY = (int) (point.y + viewRect.top);
         final int targetRadius = 48;
         Handler handler = new Handler();
-        handler.postDelayed(new Runnable() {
-            @Override
-            public void run() {
-                final long showTime = System.currentTimeMillis();
-                TapTargetView.showFor(
-                        CryptogramActivity.this,
-                        TapTarget.forBounds(new Rect(targetX - targetRadius, targetY - targetRadius, targetX + targetRadius, targetY + targetRadius),
-                                title, description)
-                                 .titleTextColor(R.color.white)
-                                 .descriptionTextColor(R.color.white)
-                                 .outerCircleColor(R.color.highlight_color)
-                                 .cancelable(true)
-                                 .tintTarget(false)
-                                 .transparentTarget(true),
-                        new TapTargetView.Listener() {
-                            @Override
-                            public void onTargetClick(TapTargetView view) {
-                                dismiss(view);
-                            }
+        handler.postDelayed(() -> {
+            final long showTime = System.currentTimeMillis();
+            TapTargetView.showFor(
+                    CryptogramActivity.this,
+                    TapTarget.forBounds(new Rect(targetX - targetRadius, targetY - targetRadius, targetX + targetRadius, targetY + targetRadius),
+                            title, description)
+                             .titleTextColor(R.color.white)
+                             .descriptionTextColor(R.color.white)
+                             .outerCircleColor(R.color.highlight_color)
+                             .cancelable(true)
+                             .tintTarget(false)
+                             .transparentTarget(true),
+                    new TapTargetView.Listener() {
+                        @Override
+                        public void onTargetClick(TapTargetView view) {
+                            dismiss(view);
+                        }
 
-                            @Override
-                            public void onOuterCircleClick(TapTargetView view) {
-                                dismiss(view);
-                            }
+                        @Override
+                        public void onOuterCircleClick(TapTargetView view) {
+                            dismiss(view);
+                        }
 
-                            @Override
-                            public void onTargetCancel(TapTargetView view) {
-                                dismiss(view);
-                            }
+                        @Override
+                        public void onTargetCancel(TapTargetView view) {
+                            dismiss(view);
+                        }
 
-                            private void dismiss(TapTargetView view) {
-                                if (System.currentTimeMillis() - showTime >= 1500) {
-                                    // Ensure that the user saw the message
-                                    PrefsUtils.setHighlighted(type, true);
-                                }
-                                view.dismiss(false);
+                        private void dismiss(TapTargetView view) {
+                            if (System.currentTimeMillis() - showTime >= 1500) {
+                                // Ensure that the user saw the message
+                                PrefsUtils.setHighlighted(type, true);
                             }
-                        });
-            }
+                            view.dismiss(false);
+                        }
+                    });
         }, delayMillis);
     }
 
@@ -565,29 +560,23 @@ public class CryptogramActivity extends BaseActivity implements GoogleApiClient.
             });
 
             Button btRestoreSavedGames = dialogView.findViewById(R.id.bt_restore_saved_games);
-            btRestoreSavedGames.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    dialog.dismiss();
-                    int maxNumberOfSavedGamesToShow = 5;
-                    Intent savedGamesIntent = Games.Snapshots.getSelectSnapshotIntent(mGoogleApiClient,
-                            "See My Saves", true, true, maxNumberOfSavedGamesToShow);
-                    startActivityForResult(savedGamesIntent, RC_SAVED_GAMES);
-                }
+            btRestoreSavedGames.setOnClickListener(view -> {
+                dialog.dismiss();
+                int maxNumberOfSavedGamesToShow = 5;
+                Intent savedGamesIntent = Games.Snapshots.getSelectSnapshotIntent(mGoogleApiClient,
+                        "See My Saves", true, true, maxNumberOfSavedGamesToShow);
+                startActivityForResult(savedGamesIntent, RC_SAVED_GAMES);
             });
 
             Button btSignOut = dialogView.findViewById(R.id.bt_sign_out);
-            btSignOut.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    dialog.dismiss();
-                    mSignInClicked = false;
-                    Games.signOut(mGoogleApiClient);
-                    if (mGoogleApiClient.isConnected()) {
-                        mGoogleApiClient.disconnect();
-                    }
-                    updateGooglePlayGames();
+            btSignOut.setOnClickListener(view -> {
+                dialog.dismiss();
+                mSignInClicked = false;
+                Games.signOut(mGoogleApiClient);
+                if (mGoogleApiClient.isConnected()) {
+                    mGoogleApiClient.disconnect();
                 }
+                updateGooglePlayGames();
             });
         } else {
             // start the sign-in flow
