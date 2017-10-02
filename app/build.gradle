@@ -64,8 +64,8 @@ android {
         applicationId "com.pixplicity.cryptogram"
         minSdkVersion 14
         targetSdkVersion 26
-        versionCode 184
-        versionName "1.7.9"
+        versionCode 185
+        versionName "1.7.10"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
     }
     buildTypes {
@@ -119,12 +119,14 @@ dependencies {
     implementation 'com.android.support:support-v4:26.0.1'
     implementation 'com.android.support:support-annotations:26.0.1'
     implementation 'com.android.support:design:26.0.1'
+    implementation 'com.android.support:cardview-v7:26.0.1'
     implementation 'com.android.support:recyclerview-v7:26.0.1'
+    implementation 'com.android.support:gridlayout-v7:26.0.1'
 
-    implementation 'com.google.android.gms:play-services-games:11.2.2'
+    implementation 'com.google.android.gms:play-services-games:11.4.0'
 
-    implementation 'com.jakewharton:butterknife:8.7.0'
-    annotationProcessor 'com.jakewharton:butterknife-compiler:8.7.0'
+    implementation 'com.jakewharton:butterknife:8.8.1'
+    annotationProcessor 'com.jakewharton:butterknife-compiler:8.8.1'
 
     implementation 'com.afollestad:easyvideoplayer:0.2.13'
 
@@ -151,10 +153,9 @@ dependencies {
     })
 
     testImplementation 'junit:junit:4.12'
-    // FIXME only upgrade this to Mockito 2.* once Powermock 1.7.0 or later is out
-    testImplementation 'org.mockito:mockito-core:1.10.19'
-    testImplementation 'org.powermock:powermock-api-mockito:1.6.6'
-    testImplementation 'org.powermock:powermock-module-junit4-rule-agent:1.6.6'
-    testImplementation 'org.powermock:powermock-module-junit4-rule:1.6.6'
-    testImplementation 'org.powermock:powermock-module-junit4:1.6.6'
+    testImplementation 'org.mockito:mockito-core:2.8.9'
+    testImplementation 'org.powermock:powermock-api-mockito2:1.7.0'
+    testImplementation 'org.powermock:powermock-module-junit4-rule-agent:1.7.0'
+    testImplementation 'org.powermock:powermock-module-junit4-rule:1.7.0'
+    testImplementation 'org.powermock:powermock-module-junit4:1.7.0'
 }
