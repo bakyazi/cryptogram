@@ -123,10 +123,10 @@ dependencies {
     implementation 'com.android.support:recyclerview-v7:26.0.1'
     implementation 'com.android.support:gridlayout-v7:26.0.1'
 
-    implementation 'com.google.android.gms:play-services-games:11.2.2'
+    implementation 'com.google.android.gms:play-services-games:11.4.0'
 
-    implementation 'com.jakewharton:butterknife:8.7.0'
-    annotationProcessor 'com.jakewharton:butterknife-compiler:8.7.0'
+    implementation 'com.jakewharton:butterknife:8.8.1'
+    annotationProcessor 'com.jakewharton:butterknife-compiler:8.8.1'
 
     implementation 'com.afollestad:easyvideoplayer:0.2.13'
 
