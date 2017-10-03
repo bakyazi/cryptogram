@@ -183,7 +183,7 @@ public abstract class BaseActivity extends AppCompatActivity {
         }
         switch (item.getItemId()) {
             case android.R.id.home: {
-                Intent up = new Intent(BaseActivity.this, CryptogramActivity.class);
+                Intent up = new Intent(BaseActivity.this, PuzzleActivity.class);
                 if (NavUtils.shouldUpRecreateTask(BaseActivity.this, up)) {
                     TaskStackBuilder.create(BaseActivity.this)
                                     .addNextIntent(up)

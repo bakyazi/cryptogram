@@ -54,4 +54,13 @@
         <attr name="key"/>
     </declare-styleable>
 
+    <attr name="invert" format="boolean"/>
+
+    <declare-styleable name="CryptogramViewTheme">
+        <attr name="cryptogramViewStyle" format="reference"/>
+    </declare-styleable>
+    <declare-styleable name="CryptogramView">
+        <attr name="inverted"/>
+    </declare-styleable>
+
 </resources>

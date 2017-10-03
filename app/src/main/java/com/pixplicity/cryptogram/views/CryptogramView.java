@@ -4,7 +4,7 @@ import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
 import android.content.Context;
 import android.content.res.Resources;
-import android.graphics.Bitmap;
+import android.content.res.TypedArray;
 import android.graphics.Canvas;
 import android.graphics.Paint;
 import android.graphics.PointF;
@@ -45,6 +45,8 @@ public class CryptogramView extends AppCompatTextView {
     @Nullable
     private Puzzle mPuzzle;
 
+    private boolean mInverted;
+
     private char mSelectedCharacter, mSelectedCharacterLast, mSelectedCharacterBeforeTouch;
     private boolean mHighlightMistakes;
 
@@ -57,8 +59,6 @@ public class CryptogramView extends AppCompatTextView {
     private Paint mBoxPaint2;
     private TextPaint mTextPaintInput, mTextPaintInputComplete, mTextPaintMapping, mTextPaintMistake;
     private int mBoxInset;
-
-    private boolean mDarkTheme;
 
     private OnPuzzleProgressListener mOnPuzzleProgressListener;
     private OnHighlightListener mOnHighlightListener;
@@ -84,14 +84,30 @@ public class CryptogramView extends AppCompatTextView {
     private void init(Context context, AttributeSet attrs, int defStyleAttr) {
         Resources res = getResources();
 
+        boolean darkTheme = false;
         if (!isInEditMode()) {
-            mDarkTheme = PrefsUtils.getDarkTheme();
+            darkTheme = PrefsUtils.getDarkTheme();
         } else {
             mPuzzle = new Puzzle.Mock("This is an example puzzle.", "Author", "Topic");
         }
 
+        TypedArray a = context.getTheme().obtainStyledAttributes(
+                attrs,
+                R.styleable.CryptogramView,
+                defStyleAttr,
+                0);
+
+        try {
+            mInverted = a.getBoolean(R.styleable.CryptogramView_inverted, false);
+            if (mInverted) {
+                darkTheme = !darkTheme;
+            }
+        } finally {
+            a.recycle();
+        }
+
         int colorText, colorHighlight, colorComplete, colorMistake;
-        if (mDarkTheme) {
+        if (darkTheme) {
             colorText = R.color.colorDarkPuzzleText;
             colorHighlight = R.color.colorDarkPuzzleHighlight;
             colorComplete = R.color.colorDarkPuzzleComplete;
@@ -150,9 +166,11 @@ public class CryptogramView extends AppCompatTextView {
         if (!isInEditMode() && Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             setShowSoftInputOnFocus(PrefsUtils.getUseSystemKeyboard());
         }
-        setFocusable(true);
-        setFocusableInTouchMode(true);
-        setClickable(true);
+        if (isEnabled()) {
+            setFocusable(true);
+            setFocusableInTouchMode(true);
+            setClickable(true);
+        }
     }
 
     public void setKeyboardView(View keyboardView) {
@@ -485,8 +503,11 @@ public class CryptogramView extends AppCompatTextView {
 
         mCharMap = new char[(int) (width / mBoxW)][100];
 
+        int paddingLeft = getPaddingLeft();
+        width -= paddingLeft + getPaddingRight();
+
         float offsetX1 = (mBoxW - mCharW1) / 4;
-        float x = 0, y = mBoxH;
+        float x = paddingLeft, y = getPaddingTop() + mBoxH;
         for (String word : mPuzzle.getWords()) {
             String displayWord = word.replace(SOFT_HYPHEN, "");
             if (!ENABLE_HYPHENATION) {
@@ -612,6 +633,9 @@ public class CryptogramView extends AppCompatTextView {
 
     @Override
     public boolean onTouchEvent(MotionEvent event) {
+        if (!isEnabled()) {
+            return false;
+        }
         switch (event.getAction()) {
             case MotionEvent.ACTION_DOWN:
                 if (mPuzzle != null) {

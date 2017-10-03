@@ -1,6 +1,7 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
 
     <attr name="colorPrimary" format="color"/>
+    <attr name="colorPrimaryLight" format="color"/>
     <attr name="colorPrimaryDark" format="color"/>
     <attr name="textColor" format="color"/>
     <attr name="textColorOnPrimary" format="color"/>
@@ -17,6 +18,7 @@
 
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
+        <item name="colorPrimaryLight">@color/colorPrimaryLight</item>
         <item name="colorAccent">@color/colorAccent</item>
         <item name="actionMenuTextColor">@color/textLight</item>
         <item name="actionOverflowButtonStyle">@style/OverflowButtonStyle</item>
@@ -41,6 +43,7 @@
 
         <item name="colorPrimary">@color/colorDarkPrimary</item>
         <item name="colorPrimaryDark">@color/colorDarkPrimaryDark</item>
+        <item name="colorPrimaryLight">@color/colorDarkPrimaryLight</item>
         <item name="colorAccent">@color/colorDarkAccent</item>
         <item name="actionMenuTextColor">@color/textLight</item>
         <item name="actionOverflowButtonStyle">@style/OverflowButtonStyle</item>

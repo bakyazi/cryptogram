@@ -89,9 +89,9 @@ import java.util.concurrent.TimeUnit;
 import butterknife.BindView;
 import butterknife.OnClick;
 
-public class CryptogramActivity extends BaseActivity implements GoogleApiClient.ConnectionCallbacks, GoogleApiClient.OnConnectionFailedListener {
+public class PuzzleActivity extends BaseActivity implements GoogleApiClient.ConnectionCallbacks, GoogleApiClient.OnConnectionFailedListener {
 
-    private static final String TAG = CryptogramActivity.class.getSimpleName();
+    private static final String TAG = PuzzleActivity.class.getSimpleName();
 
     private static final int RC_UNUSED = 1000;
     private static final int RC_PLAY_GAMES = 1001;
@@ -230,7 +230,7 @@ public class CryptogramActivity extends BaseActivity implements GoogleApiClient.
 
         final String topicId = PrefsUtils.getCurrentTopic();
         Topic topic = TopicProvider.getInstance(this).getTopicById(topicId);
-        PuzzleProvider provider = PuzzleProvider.getInstance(CryptogramActivity.this);
+        PuzzleProvider provider = PuzzleProvider.getInstance(PuzzleActivity.this);
         mPuzzles = new PuzzleList(provider.getAllForTopic(topic));
         mPuzzleAdapter = new PuzzleAdapter(this, new PuzzleAdapter.OnItemClickListener() {
             @Override
@@ -258,7 +258,7 @@ public class CryptogramActivity extends BaseActivity implements GoogleApiClient.
                     return;
                 }
                 final Topic topic = topicAdapter.getItem(position);
-                PuzzleProvider provider = PuzzleProvider.getInstance(CryptogramActivity.this);
+                PuzzleProvider provider = PuzzleProvider.getInstance(PuzzleActivity.this);
                 mPuzzles = new PuzzleList(provider.getAllForTopic(topic));
                 mPuzzleAdapter.setPuzzleList(mPuzzles);
                 PrefsUtils.setCurrentTopic(topic);
@@ -271,7 +271,7 @@ public class CryptogramActivity extends BaseActivity implements GoogleApiClient.
                         topic == null
                                 ? getString(R.string.all_topics_description)
                                 : topic.getDescription();
-                new MaterialDialog.Builder(CryptogramActivity.this)
+                new MaterialDialog.Builder(PuzzleActivity.this)
                         .title(topicName)
                         .content(topicDescription)
                         .positiveText(R.string.play)
@@ -443,7 +443,7 @@ public class CryptogramActivity extends BaseActivity implements GoogleApiClient.
                                 new SavegameManager.OnLoadResult() {
                                     @Override
                                     public void onLoadSuccess() {
-                                        updateCryptogram(PuzzleProvider.getInstance(CryptogramActivity.this)
+                                        updateCryptogram(PuzzleProvider.getInstance(PuzzleActivity.this)
                                                                        .getCurrent(mPuzzles));
                                         showSnackbar("Game loaded.");
                                         pd.dismiss();
@@ -489,7 +489,7 @@ public class CryptogramActivity extends BaseActivity implements GoogleApiClient.
         handler.postDelayed(() -> {
             final long showTime = System.currentTimeMillis();
             TapTargetView.showFor(
-                    CryptogramActivity.this,
+                    PuzzleActivity.this,
                     TapTarget.forBounds(new Rect(targetX - targetRadius, targetY - targetRadius, targetX + targetRadius, targetY + targetRadius),
                             title, description)
                              .titleTextColor(R.color.white)
@@ -600,7 +600,7 @@ public class CryptogramActivity extends BaseActivity implements GoogleApiClient.
                             Games.Leaderboards.getLeaderboardIntent(mGoogleApiClient, getString(R.string.leaderboard_scoreboard)),
                             RC_UNUSED);
                 } catch (ActivityNotFoundException e) {
-                    Toast.makeText(CryptogramActivity.this, R.string.google_play_games_not_installed, Toast.LENGTH_LONG).show();
+                    Toast.makeText(PuzzleActivity.this, R.string.google_play_games_not_installed, Toast.LENGTH_LONG).show();
                 }
             });
 
@@ -613,7 +613,7 @@ public class CryptogramActivity extends BaseActivity implements GoogleApiClient.
                             Games.Achievements.getAchievementsIntent(mGoogleApiClient),
                             RC_UNUSED);
                 } catch (ActivityNotFoundException e) {
-                    Toast.makeText(CryptogramActivity.this, R.string.google_play_games_not_installed, Toast.LENGTH_LONG).show();
+                    Toast.makeText(PuzzleActivity.this, R.string.google_play_games_not_installed, Toast.LENGTH_LONG).show();
                 }
             });
 
@@ -917,7 +917,7 @@ public class CryptogramActivity extends BaseActivity implements GoogleApiClient.
                             try {
                                 int puzzleNumber = Integer.parseInt(input.toString());
                                 PuzzleProvider provider = PuzzleProvider
-                                        .getInstance(CryptogramActivity.this);
+                                        .getInstance(PuzzleActivity.this);
                                 Puzzle puzzle1 = provider.getByNumber(puzzleNumber);
                                 if (puzzle1 == null) {
                                     showSnackbar(getString(R.string.puzzle_nonexistant, puzzleNumber));

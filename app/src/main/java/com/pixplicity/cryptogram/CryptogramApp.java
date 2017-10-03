@@ -11,6 +11,7 @@ import io.fabric.sdk.android.Fabric;
 
 public class CryptogramApp extends Application {
 
+    public static final String CONTENT_LANDING = "landing";
     public static final String CONTENT_ACHIEVEMENTS = "achievements";
     public static final String CONTENT_LEADERBOARDS = "leaderboards";
     public static final String CONTENT_STATISTICS = "statistics";

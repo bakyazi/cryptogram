@@ -13,7 +13,7 @@
         android:theme="@style/AppTheme">
 
         <activity
-            android:name=".activities.CryptogramActivity"
+            android:name=".activities.LandingActivity"
             android:windowSoftInputMode="adjustResize">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
@@ -21,6 +21,14 @@
                 <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
         </activity>
+
+        <activity-alias
+            android:name=".activities.CryptogramActivity"
+            android:targetActivity=".activities.LandingActivity"/>
+
+        <activity
+            android:name=".activities.PuzzleActivity"
+            android:windowSoftInputMode="adjustResize"/>
 
         <activity
             android:name=".activities.HowToPlayActivity"/>
