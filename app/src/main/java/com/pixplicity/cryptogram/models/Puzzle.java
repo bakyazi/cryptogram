@@ -12,6 +12,7 @@ import com.pixplicity.cryptogram.utils.StringUtils;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.Locale;
@@ -41,12 +42,19 @@ public class Puzzle {
     @SerializedName("noscore")
     protected boolean mNoScore;
 
+    // TODO serialize
+    protected Date mDate;
+
     private transient String[] mWords;
 
     private PuzzleProgress mProgress;
     private boolean mLoadedProgress;
 
     public Puzzle() {
+    }
+
+    public Date getDate() {
+        return mDate;
     }
 
     public static class Mock extends Puzzle {
@@ -65,6 +73,7 @@ public class Puzzle {
             mAuthor = author;
             mTopic = topic;
             mIsMock = true;
+            mDate = new Date();
         }
 
     }

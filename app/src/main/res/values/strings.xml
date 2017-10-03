@@ -110,6 +110,10 @@
     <string name="saved_game_name">Game state on %1$s</string>
     <string name="saved_game_loading">Loading saved game…</string>
 
+    <!-- Subscription -->
+    <string name="daily_puzzle">Daily puzzle</string>
+    <string name="subscribe">Subscribe</string>
+
     <!-- Settings -->
     <string name="theme">Theme:</string>
     <string name="randomize_puzzles">Randomize puzzles</string>

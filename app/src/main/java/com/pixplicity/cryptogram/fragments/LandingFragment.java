@@ -10,16 +10,9 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.pixplicity.cryptogram.R;
-import com.pixplicity.cryptogram.models.Puzzle;
-import com.pixplicity.cryptogram.views.CryptogramView;
-
-import butterknife.BindView;
 
 
 public class LandingFragment extends BaseFragment {
-
-    @BindView(R.id.cryptogram)
-    protected CryptogramView mCryptogramView;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -36,7 +29,6 @@ public class LandingFragment extends BaseFragment {
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        mCryptogramView.setPuzzle(new Puzzle.Mock());
     }
 
     @Override

@@ -20,116 +20,12 @@
             android:orientation="vertical"
             android:padding="16dp">
 
-            <android.support.v7.widget.CardView
-                android:layout_width="match_parent"
-                android:layout_height="96dp"
-                android:clickable="true"
-                android:foreground="@drawable/ripple_white">
-
-                <RelativeLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:background="?attr/colorPrimaryLight">
-
-                    <TextView
-                        android:id="@+id/tv_label"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="top"
-                        android:background="?attr/colorPrimary"
-                        android:gravity="center"
-                        android:padding="4dp"
-                        android:text="Daily puzzle"
-                        android:textAllCaps="true"
-                        android:textColor="@color/textLight"
-                        android:textSize="12sp"/>
-
-                    <com.pixplicity.cryptogram.views.CryptogramView
-                        android:id="@+id/cryptogram"
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:layout_below="@id/tv_label"
-                        android:enabled="false"
-                        android:paddingLeft="8dp"
-                        app:inverted="true"/>
-
-                    <View
-                        android:layout_width="240dp"
-                        android:layout_height="match_parent"
-                        android:layout_alignParentEnd="true"
-                        android:layout_alignParentRight="true"
-                        android:layout_below="@id/tv_label"
-                        android:background="@drawable/bg_overlay"/>
-
-                    <FrameLayout
-                        android:layout_width="68dp"
-                        android:layout_height="68dp"
-                        android:layout_alignParentEnd="true"
-                        android:layout_alignParentRight="true"
-                        android:layout_marginLeft="8dp"
-                        android:layout_marginRight="8dp"
-                        android:layout_marginTop="-3dp"
-                        android:background="@drawable/ic_date">
-
-                        <TextView
-                            android:layout_width="68dp"
-                            android:layout_height="wrap_content"
-                            android:layout_marginTop="7dp"
-                            android:gravity="center"
-                            android:text="OCT"
-                            android:textColor="?attr/colorPrimaryDark"
-                            android:textSize="12dp"
-                            android:textStyle="bold"/>
-
-                        <TextView
-                            android:layout_width="68dp"
-                            android:layout_height="40dp"
-                            android:layout_gravity="bottom"
-                            android:layout_marginBottom="4dp"
-                            android:gravity="center"
-                            android:text="30"
-                            android:textColor="?attr/textColorOnPrimary"
-                            android:textSize="20dp"
-                            android:textStyle="bold"/>
-
-                    </FrameLayout>
-
-                    <TextView
-                        android:layout_width="192dp"
-                        android:layout_height="wrap_content"
-                        android:layout_alignParentBottom="true"
-                        android:layout_alignParentEnd="true"
-                        android:layout_alignParentRight="true"
-                        android:ellipsize="end"
-                        android:gravity="end"
-                        android:maxLines="1"
-                        android:padding="8dp"
-                        android:text="- Nelson Mandela"
-                        android:textColor="?attr/textColorOnPrimary"/>
-
-                </RelativeLayout>
-
-            </android.support.v7.widget.CardView>
-
-            <LinearLayout
+            <fragment
+                android:name="com.pixplicity.cryptogram.fragments.DailyPuzzleFragment"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal">
-
-                <TextView
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:text="Your subscription ends in 7 days."/>
-
-                <Button
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginRight="-4dp"
-                    android:minHeight="32dp"
-                    android:text="Subscribe"/>
-
-            </LinearLayout>
+                android:tag="daily"
+                tools:layout="@layout/fragment_daily"/>
 
             <LinearLayout
                 android:layout_width="match_parent"
