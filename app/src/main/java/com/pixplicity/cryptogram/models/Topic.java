@@ -10,6 +10,9 @@ public class Topic {
     @SerializedName("name")
     protected String mName;
 
+    @SerializedName("cover")
+    protected String mCover;
+
     @SerializedName("description")
     protected String mDescription;
 
@@ -24,6 +27,10 @@ public class Topic {
 
     public String getName() {
         return mName;
+    }
+
+    public String getCover() {
+        return mCover;
     }
 
     public String getDescription() {

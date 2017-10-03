@@ -2,30 +2,35 @@
   {
     "id": "inspirational",
     "name": "Inspirational & motivational",
+    "cover": "inspirational-1.jpg",
     "description": "Impel and motivate yourself with inspirational and motivational words from those who have experienced life.",
     "topics": "inspirational|motivational|life|humor|appreciation|happiness"
   },
   {
     "id": "love",
     "name": "Love",
+    "cover": "love-1.jpg",
     "description": "Whether it brings happiness and meaning or anguish and pain, love is an essential part of living. Love gives our lives contrast, for without it, life is a dull shade of grey. These quotes are spoken from both those in its warm embrace, and those in the sorrow of its departure.",
     "topics": "love|romance"
   },
   {
     "id": "optimism",
     "name": "Optimism",
+    "cover": "optimism-1.jpg",
     "description": "A positive outlook on life is key to overcoming hurdles and finding long-lasting happiness. Whether finding yourself in the service of others, seeking joy in small things or enjoying the beauty of the world and the kindness of others, these quotes inspire optimism.",
     "topics": "optimism|joy|beauty|hope|disappointment"
   },
   {
     "id": "thoughtfulness",
     "name": "Thoughts and dreams",
+    "cover": "thoughtfulness-1.jpg",
     "description": "Dare to dream. Find your inner peace. The wise words in these puzzles may help you to learn to know yourself better.",
     "topics": "thoughtfulness|imagination|tranquility"
   },
   {
     "id": "compassion",
     "name": "Other people",
+    "cover": "compassion-1.jpg",
     "description": "We all want to be treated with kindness, and a bit of humility gets you a long way. These puzzles offer some words of advice on friendship, kindness and compassion for your fellow man.",
     "topics": "humility|compassion|sympathy|kindness|gratitude|goodness|tolerance|equality|morality|respect|discrimination|forgiveness|honesty|altruism|individuality"
   },

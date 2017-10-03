@@ -112,6 +112,10 @@
 
     <string name="help_card">What\'s a cryptogram? How do I play?</string>
 
+    <!-- IAPs -->
+    <string name="puzzle_packs">Puzzle packs</string>
+    <string name="more">More</string>
+
     <!-- Subscription -->
     <string name="daily_puzzle">Daily puzzle</string>
     <string name="subscribe">Subscribe</string>
