@@ -2,6 +2,7 @@ package com.pixplicity.cryptogram.fragments;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.text.TextUtils;
 import android.text.format.DateFormat;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -26,6 +27,9 @@ public class DailyPuzzleFragment extends BaseFragment {
     @BindView(R.id.vg_subscribe)
     protected ViewGroup mVgSubscribe;
 
+    @BindView(R.id.tv_subscribe)
+    protected TextView mTvSubscribe;
+
     @BindView(R.id.vg_calendar)
     protected ViewGroup mVgCalendar;
 
@@ -41,6 +45,9 @@ public class DailyPuzzleFragment extends BaseFragment {
     @BindView(R.id.tv_daily_author)
     protected TextView mTvDailyAuthor;
 
+    @BindView(R.id.tv_total_puzzles)
+    protected TextView mTvTotalPuzzles;
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -54,7 +61,12 @@ public class DailyPuzzleFragment extends BaseFragment {
             // TODO attach to today's puzzle
             Puzzle.Mock puzzle = new Puzzle.Mock();
             mCryptogramView.setPuzzle(puzzle);
-            mTvDailyAuthor.setText(puzzle.getAuthor());
+            String author = puzzle.getAuthor();
+            if (TextUtils.isEmpty(author)) {
+                mTvDailyAuthor.setText(null);
+            } else {
+                mTvDailyAuthor.setText(getString(R.string.quote_by, author));
+            }
             Date date = puzzle.getDate();
             if (date == null) {
                 mVgDate.setVisibility(View.INVISIBLE);
@@ -67,9 +79,15 @@ public class DailyPuzzleFragment extends BaseFragment {
         if (hasSubscription()) {
             mVgSubscribe.setVisibility(View.GONE);
             mVgCalendar.setVisibility(View.VISIBLE);
+            // TODO show total puzzles
+            int totalPuzzles = 36;
+            mTvTotalPuzzles.setText(getString(R.string.subscription_total_puzzles, totalPuzzles));
         } else {
             mVgSubscribe.setVisibility(View.VISIBLE);
             mVgCalendar.setVisibility(View.GONE);
+            // TODO show trial expiry
+            int trialExpiry = 7;
+            mTvSubscribe.setText(getString(R.string.subscription_expires, trialExpiry));
         }
     }
 

@@ -101,6 +101,7 @@
                 android:maxLines="1"
                 android:padding="8dp"
                 android:textColor="?attr/textColorOnPrimary"
+                android:textStyle="italic"
                 tools:text="- Nelson Mandela"/>
 
         </RelativeLayout>
@@ -118,7 +119,7 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            tools:text="Your subscription ends in 7 days."/>
+            tools:text="@string/subscription_expires"/>
 
         <Button
             android:id="@+id/bt_subscribe"
@@ -143,7 +144,7 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            tools:text="There are 36 puzzles in your subscription."/>
+            tools:text="@string/subscription_total_puzzles"/>
 
         <Button
             android:id="@+id/bt_archive"

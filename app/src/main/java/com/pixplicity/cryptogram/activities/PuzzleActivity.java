@@ -662,7 +662,7 @@ public class PuzzleActivity extends BaseActivity implements GoogleApiClient.Conn
                 mTvAuthor.setVisibility(View.GONE);
             } else {
                 mTvAuthor.setVisibility(View.VISIBLE);
-                mTvAuthor.setText(getString(R.string.quote, author));
+                mTvAuthor.setText(getString(R.string.quote_by, author));
             }
             String topic = puzzle.getTopic();
             if ((!PrefsUtils.getShowTopic() && !puzzle.isCompleted()) || topic == null) {

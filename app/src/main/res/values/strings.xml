@@ -1,4 +1,4 @@
-<resources>
+<resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
 
     <string name="app_name">Cryptogram</string>
 
@@ -58,7 +58,7 @@
     <string name="share_url">https://play.google.com/store/apps/details?id=com.pixplicity.cryptogram</string>
 
     <!-- followed by a hair space as otherwise text is clipped when italic -->
-    <string name="quote">— %1$s&#x200A;</string>
+    <string name="quote_by">— %1$s&#x200A;</string>
     <string name="topic">Topic: “%1$s”</string>
     <string name="not_applicable">N/A</string>
     <string name="author_unknown">anonymous</string>
@@ -113,6 +113,8 @@
     <!-- Subscription -->
     <string name="daily_puzzle">Daily puzzle</string>
     <string name="subscribe">Subscribe</string>
+    <string name="subscription_expires">Your subscription ends in <xliff:g id="days" example="36">%1$d</xliff:g> days.</string>
+    <string name="subscription_total_puzzles">There are <xliff:g id="total" example="36">%1$d</xliff:g> puzzles in your subscription.</string>
 
     <!-- Settings -->
     <string name="theme">Theme:</string>
