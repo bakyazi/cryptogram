@@ -110,6 +110,8 @@
     <string name="saved_game_name">Game state on %1$s</string>
     <string name="saved_game_loading">Loading saved game…</string>
 
+    <string name="help_card">What\'s a cryptogram? How do I play?</string>
+
     <!-- Subscription -->
     <string name="daily_puzzle">Daily puzzle</string>
     <string name="subscribe">Subscribe</string>

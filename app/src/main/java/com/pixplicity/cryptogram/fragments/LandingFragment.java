@@ -1,5 +1,6 @@
 package com.pixplicity.cryptogram.fragments;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
@@ -10,9 +11,16 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.pixplicity.cryptogram.R;
+import com.pixplicity.cryptogram.activities.HowToPlayActivity;
+
+import butterknife.BindView;
+import butterknife.OnClick;
 
 
 public class LandingFragment extends BaseFragment {
+
+    @BindView(R.id.vg_help)
+    protected ViewGroup mVgHelp;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -44,6 +52,18 @@ public class LandingFragment extends BaseFragment {
             // TODO
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    @OnClick(R.id.vg_help)
+    protected void onClickHelp() {
+        startActivity(new Intent(getContext(), HowToPlayActivity.class));
+    }
+
+    @OnClick(R.id.bt_help_dismiss)
+    protected void onClickHelpDismiss() {
+        // TODO save preference
+        // Animation is determined by `animateLayoutChanges` of view parent
+        mVgHelp.setVisibility(View.GONE);
     }
 
 }
