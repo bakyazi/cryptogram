@@ -1,6 +1,7 @@
 package com.pixplicity.cryptogram.adapters;
 
 import android.content.Context;
+import android.graphics.drawable.Drawable;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -9,28 +10,28 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.pixplicity.cryptogram.R;
-import com.pixplicity.cryptogram.models.Puzzle;
-import com.pixplicity.cryptogram.models.PuzzleList;
-import com.pixplicity.cryptogram.utils.PrefsUtils;
+import com.pixplicity.cryptogram.models.Topic;
+import com.pixplicity.cryptogram.providers.TopicProvider;
+
+import java.io.IOException;
+import java.io.InputStream;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-public class PuzzleAdapter extends RecyclerView.Adapter<PuzzleAdapter.ViewHolder> {
+public class PackAdapter extends RecyclerView.Adapter<PackAdapter.ViewHolder> {
 
     private static final int TYPE_NORMAL = 0;
-    private static final int TYPE_SELECTED = 1;
+    private static final int TYPE_PURCHASABLE = 1;
 
     private final Context mContext;
     private final OnItemClickListener mOnItemClickListener;
-    private PuzzleList mPuzzles;
+    private Topic[] mPacks;
 
-    private boolean mDarkTheme = PrefsUtils.getDarkTheme();
-
-    public PuzzleAdapter(Context context, OnItemClickListener onItemClickListener, PuzzleList puzzleList) {
+    public PackAdapter(Context context, OnItemClickListener onItemClickListener) {
         mContext = context;
         mOnItemClickListener = onItemClickListener;
-        mPuzzles = puzzleList;
+        mPacks = TopicProvider.getInstance(context).getTopics();
     }
 
     @Override
@@ -39,18 +40,10 @@ public class PuzzleAdapter extends RecyclerView.Adapter<PuzzleAdapter.ViewHolder
         switch (viewType) {
             default:
             case TYPE_NORMAL:
-                if (mDarkTheme) {
-                    layoutResId = R.layout.item_puzzle_dark;
-                } else {
-                    layoutResId = R.layout.item_puzzle;
-                }
+                layoutResId = R.layout.in_pack;
                 break;
-            case TYPE_SELECTED:
-                if (mDarkTheme) {
-                    layoutResId = R.layout.item_puzzle_selected_dark;
-                } else {
-                    layoutResId = R.layout.item_puzzle_selected;
-                }
+            case TYPE_PURCHASABLE:
+                layoutResId = R.layout.in_pack;
                 break;
         }
         return new ViewHolder(LayoutInflater.from(parent.getContext())
@@ -59,35 +52,38 @@ public class PuzzleAdapter extends RecyclerView.Adapter<PuzzleAdapter.ViewHolder
 
     @Override
     public int getItemViewType(int position) {
-        if (mPuzzles.getCurrentIndex() == position) {
-            return TYPE_SELECTED;
+        if (false) {
+            // TODO
+            return TYPE_PURCHASABLE;
         }
         return TYPE_NORMAL;
     }
 
     @Override
     public void onBindViewHolder(ViewHolder vh, int position) {
-        Puzzle puzzle = mPuzzles.get(position);
+        Topic topic = mPacks[position];
         vh.setPosition(position);
-        vh.tvPuzzleId.setText(puzzle.getTitle(mContext));
-        String author = puzzle.getAuthor();
-        if (author == null) {
-            vh.tvAuthor.setVisibility(View.GONE);
-        } else {
-            vh.tvAuthor.setVisibility(View.VISIBLE);
-            vh.tvAuthor.setText(author);
+        vh.tvTitle.setText(topic.getName());
+
+        String cover = topic.getCover();
+        if (cover != null) {
+            try {
+                InputStream ims = mContext.getAssets().open("covers/" + cover);
+                Drawable d = Drawable.createFromStream(ims, null);
+                vh.ivCover.setImageDrawable(d);
+                ims.close();
+            } catch (IOException ignored) {
+                cover = null;
+            }
         }
-        vh.ivCompleted.setVisibility(puzzle.isCompleted() ? View.VISIBLE : View.GONE);
+        if (cover == null) {
+            vh.ivCover.setImageResource(R.drawable.im_puzzle1);
+        }
     }
 
     @Override
     public int getItemCount() {
-        return mPuzzles.getCount();
-    }
-
-    public void setPuzzleList(PuzzleList puzzleList) {
-        mPuzzles = puzzleList;
-        notifyDataSetChanged();
+        return mPacks.length;
     }
 
     public interface OnItemClickListener {
@@ -98,14 +94,14 @@ public class PuzzleAdapter extends RecyclerView.Adapter<PuzzleAdapter.ViewHolder
 
     public class ViewHolder extends RecyclerView.ViewHolder {
 
-        @BindView(R.id.tv_puzzle_id)
-        protected TextView tvPuzzleId;
+        @BindView(R.id.tv_title)
+        protected TextView tvTitle;
 
-        @BindView(R.id.tv_author)
-        protected TextView tvAuthor;
+        @BindView(R.id.tv_progress)
+        protected TextView tvProgress;
 
-        @BindView(R.id.iv_completed)
-        protected ImageView ivCompleted;
+        @BindView(R.id.iv_cover)
+        protected ImageView ivCover;
 
         protected ViewGroup vgContainer;
 

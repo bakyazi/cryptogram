@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_marginBottom="8dp"
@@ -37,104 +37,12 @@
 
     </LinearLayout>
 
-    <android.support.v7.widget.GridLayout
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/rv_packs"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:columnCount="3">
-
-        <include
-            layout="@layout/in_pack"
-            android:layout_width="0dp"
-            android:layout_height="120dp"
-            android:layout_marginBottom="8dp"
-            android:layout_marginRight="4dp"
-            android:layout_weight="1"
-            app:layout_columnWeight="1"/>
-
-        <include
-            layout="@layout/in_pack"
-            android:layout_width="0dp"
-            android:layout_height="120dp"
-            android:layout_marginBottom="8dp"
-            android:layout_marginLeft="4dp"
-            android:layout_marginRight="4dp"
-            android:layout_weight="1"
-            app:layout_columnWeight="1"/>
-
-        <include
-            layout="@layout/in_pack"
-            android:layout_width="0dp"
-            android:layout_height="120dp"
-            android:layout_marginBottom="8dp"
-            android:layout_marginLeft="4dp"
-            android:layout_weight="1"
-            app:layout_columnWeight="1"/>
-
-        <include
-            layout="@layout/in_pack"
-            android:layout_width="0dp"
-            android:layout_height="120dp"
-            android:layout_marginBottom="8dp"
-            android:layout_marginRight="4dp"
-            android:layout_weight="1"
-            app:layout_columnWeight="1"/>
-
-        <include
-            layout="@layout/in_pack"
-            android:layout_width="0dp"
-            android:layout_height="120dp"
-            android:layout_marginBottom="8dp"
-            android:layout_marginLeft="4dp"
-            android:layout_marginRight="4dp"
-            android:layout_weight="1"
-            app:layout_columnWeight="1"/>
-
-        <include
-            layout="@layout/in_pack"
-            android:layout_width="0dp"
-            android:layout_height="120dp"
-            android:layout_marginBottom="8dp"
-            android:layout_marginLeft="4dp"
-            android:layout_weight="1"
-            app:layout_columnWeight="1"/>
-
-        <include
-            layout="@layout/in_pack"
-            android:layout_width="0dp"
-            android:layout_height="120dp"
-            android:layout_marginBottom="8dp"
-            android:layout_marginRight="4dp"
-            android:layout_weight="1"
-            app:layout_columnWeight="1"/>
-
-        <include
-            layout="@layout/in_pack"
-            android:layout_width="0dp"
-            android:layout_height="120dp"
-            android:layout_marginBottom="8dp"
-            android:layout_marginLeft="4dp"
-            android:layout_marginRight="4dp"
-            android:layout_weight="1"
-            app:layout_columnWeight="1"/>
-
-        <include
-            layout="@layout/in_pack"
-            android:layout_width="0dp"
-            android:layout_height="120dp"
-            android:layout_marginBottom="8dp"
-            android:layout_marginLeft="4dp"
-            android:layout_weight="1"
-            app:layout_columnWeight="1"/>
-
-        <include
-            layout="@layout/in_pack"
-            android:layout_width="0dp"
-            android:layout_height="120dp"
-            android:layout_marginBottom="8dp"
-            android:layout_marginRight="4dp"
-            android:layout_weight="1"
-            app:layout_columnWeight="1"/>
-
-    </android.support.v7.widget.GridLayout>
+        android:layout_height="match_parent"
+        tools:layoutManager="android.support.v7.widget.GridLayoutManager"
+        tools:listitem="@layout/in_pack"
+        tools:spanCount="3"/>
 
 </LinearLayout>

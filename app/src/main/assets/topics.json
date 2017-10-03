@@ -30,79 +30,91 @@
   {
     "id": "compassion",
     "name": "Other people",
-    "cover": "compassion-1.jpg",
+    "cover": "others-1.jpg",
     "description": "We all want to be treated with kindness, and a bit of humility gets you a long way. These puzzles offer some words of advice on friendship, kindness and compassion for your fellow man.",
     "topics": "humility|compassion|sympathy|kindness|gratitude|goodness|tolerance|equality|morality|respect|discrimination|forgiveness|honesty|altruism|individuality"
   },
   {
     "id": "friendship",
     "name": "Family & friends",
+    "cover": "family-1.jpg",
     "description": "Many thoughtful writers have found that friendship and family is the most important thing in their lives. These puzzles share those thoughts.",
     "topics": "family|friendship"
   },
   {
     "id": "learning",
     "name": "Learning",
+    "cover": "learning-1.jpg",
     "description": "Always be improving yourself and exploring new things. Don’t take comfort in not knowing, but undertake action to understand the world around you. Education is the best investment you’ll ever make: it’s free and it’s invaluable.",
     "topics": "education|learning|knowledge|scepticism|reasoning|science|technology|universe|literacy|storytelling|teaching"
   },
   {
     "id": "success",
     "name": "Work ethic",
+    "cover": "success-1.jpg",
     "description": "Work hard and reap the rewards. These quotes are words of encouragement about being ambitious and determined.",
     "topics": "ambition|determination|success|confidence|business"
   },
   {
     "id": "sorrow",
     "name": "Sorrow",
+    "cover": "sorrow-1.jpg",
     "description": "In the contrasts of life there must also be darkness. These puzzles are words spoken as words of comfort by those who have suffered.",
     "topics": "sorrow"
   },
   {
     "id": "despair",
     "name": "Depression & despair",
+    "cover": "despair-1.jpg",
     "description": "Depression is a mental illness often gone undiagnosed and untreated. Once it grasps you, you’re sucked in to a whirlpool of despair. The thoughts shared in these puzzles are spoken by those who have escaped it and can help us understand what it’s like.",
     "topics": "depression|despair|loneliness|acceptance|anxiety"
   },
   {
     "id": "holidays",
     "name": "Holidays",
+    "cover": "holidays-1.jpg",
     "description": "It’s a time to relax and be with family. Play the puzzles in the theme of different holidays.",
     "topics": "christmas|thanksgiving|hanukkah|new year"
   },
   {
     "id": "art",
     "name": "Art and culture",
+    "cover": "art-1.jpg",
     "description": "We find the culmination of human creativity in art and culture. These puzzles are on the thoughts of those who have pondered the works of others.",
     "topics": "art|culture|literature"
   },
   {
     "id": "history",
     "name": "History and governance",
+    "cover": "history-1.jpg",
     "description": "Let us learn from our past so as to make our society a better place. The messages concealed in these puzzles cover topics like leadership, violence, peace and war.",
     "topics": "history|governance|politics|fear|violence|inaction|war"
   },
   {
     "id": "seasons",
     "name": "The seasons",
+    "cover": "seasons-1.jpg",
     "description": "Each season can bring something new. Explore these words by poets and philosophers on what might shore with the tides of time.",
     "topics": "spring|summer|autumn|winter"
   },
   {
     "id": "literature",
     "name": "From literature",
+    "cover": "literature-1.jpg",
     "description": "This theme contains an assortment of quotes from literature.",
     "topics": "from literature"
   },
   {
     "id": "films",
     "name": "From films",
+    "cover": "film-1.jpg",
     "description": "This theme contains an assortment of quotes from famous films.",
     "topics": "film"
   },
   {
     "id": "funny",
     "name": "Funny",
+    "cover": "funny-1.jpg",
     "description": "Enjoy some of these funny quotes. Don’t look for too much meaning behind them!",
     "topics": "funny"
   }
