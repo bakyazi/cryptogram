@@ -4,7 +4,6 @@ import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
 import android.content.Context;
 import android.content.res.Resources;
-import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.Paint;
 import android.graphics.PointF;
@@ -235,17 +234,44 @@ public class CryptogramView extends AppCompatTextView {
             if (mSelectedCharacter == 0) {
                 mSelectedCharacter = mSelectedCharacterLast;
             }
+            boolean skipFilledCells = PrefsUtils.getSkipFilledCells();
+            char fallbackHintChar = 0;
             if (mSelectedCharacter != 0) {
                 index = charMapping.indexOf(mSelectedCharacter) + 1;
             }
-            if (index >= charMapping.size()) {
-                index = 0;
+            int initialIndex = index;
+            while (true) {
+                if (index >= charMapping.size()) {
+                    index = 0;
+                }
+                if (charMapping.size() > index) {
+                    char c = charMapping.get(index);
+                    Character hintChar = mPuzzle.getCharMapping().get(c);
+                    if (skipFilledCells) {
+                        if (fallbackHintChar == 0) {
+                            fallbackHintChar = hintChar;
+                        }
+                        char userChar = getUserInput(c);
+                        if (userChar != 0) {
+                            // Cell not empty; continue searching
+                            index++;
+                            if (initialIndex == index) {
+                                // We came full circle, no empty cell found
+                                break;
+                            }
+                            continue;
+                        }
+                        // Found an empty cell
+                    }
+                    fallbackHintChar = 0;
+                    setSelectedCharacter(hintChar == null ? 0 : hintChar);
+                } else {
+                    setSelectedCharacter((char) 0);
+                }
+                break;
             }
-            if (charMapping.size() > index) {
-                char c = charMapping.get(index);
-                setSelectedCharacter(mPuzzle.getCharMapping().get(c));
-            } else {
-                setSelectedCharacter((char) 0);
+            if (fallbackHintChar != 0) {
+                setSelectedCharacter(fallbackHintChar);
             }
         } else {
             setSelectedCharacter((char) 0);

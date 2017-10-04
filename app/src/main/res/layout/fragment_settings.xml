@@ -179,6 +179,15 @@
                 android:paddingRight="8dp"
                 android:text="@string/auto_advance"/>
 
+            <android.support.v7.widget.AppCompatCheckBox
+                android:id="@+id/cb_skip_filled_cells"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:paddingLeft="8dp"
+                android:paddingRight="8dp"
+                android:text="@string/skip_filled_cells"/>
+
             <Space
                 android:layout_width="0dp"
                 android:layout_height="0dp"

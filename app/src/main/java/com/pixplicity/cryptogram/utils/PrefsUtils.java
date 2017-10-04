@@ -16,6 +16,7 @@ public class PrefsUtils {
     private static final String KEY_DARK_THEME = "dark_theme";
     private static final String KEY_TEXT_SIZE = "text_size";
     private static final String KEY_AUTO_ADVANCE = "auto_advance";
+    private static final String KEY_SKIP_FILLED_CELLS = "skip_filled_cells";
     private static final String KEY_NEVER_ASK_REVEAL_LETTER = "never_ask_reveal_letter";
     private static final String KEY_NEVER_ASK_REVEAL_MISTAKES = "never_ask_reveal_mistakes";
     private static final String KEY_HIGHLIGHTED_HYPHENATION = "highlighted_hyphenation";
@@ -103,6 +104,14 @@ public class PrefsUtils {
 
     public static void setAutoAdvance(boolean show) {
         Prefs.putBoolean(KEY_AUTO_ADVANCE, show);
+    }
+
+    public static boolean getSkipFilledCells() {
+        return Prefs.getBoolean(KEY_SKIP_FILLED_CELLS, true);
+    }
+
+    public static void setSkipFilledCells(boolean skillFilledCells) {
+        Prefs.putBoolean(KEY_SKIP_FILLED_CELLS, skillFilledCells);
     }
 
     public static void setNeverAskRevealMistakes(boolean neverAsk) {
