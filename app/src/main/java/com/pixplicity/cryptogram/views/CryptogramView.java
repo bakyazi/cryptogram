@@ -234,6 +234,7 @@ public class CryptogramView extends AppCompatTextView {
             if (mSelectedCharacter == 0) {
                 mSelectedCharacter = mSelectedCharacterLast;
             }
+            // Respect user preference to skipp filled cells
             boolean skipFilledCells = PrefsUtils.getSkipFilledCells();
             char fallbackHintChar = 0;
             if (mSelectedCharacter != 0) {
