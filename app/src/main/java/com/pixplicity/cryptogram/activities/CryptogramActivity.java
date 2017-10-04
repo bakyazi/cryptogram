@@ -637,7 +637,7 @@ public class CryptogramActivity extends BaseActivity implements GoogleApiClient.
         if (puzzle.isCompleted()) {
             mHintView.setVisibility(View.GONE);
             mVgStats.setVisibility(View.VISIBLE);
-            long durationMs = puzzle.getDuration();
+            long durationMs = puzzle.getDurationMs();
             if (durationMs <= 0) {
                 mVgStatsTime.setVisibility(View.GONE);
             } else {
@@ -907,7 +907,7 @@ public class CryptogramActivity extends BaseActivity implements GoogleApiClient.
                 float score = 0f;
                 long shortestDurationMs = 0, totalDurationMs = 0;
                 for (Puzzle c : provider.getAll()) {
-                    long duration = c.getProgress().getDuration();
+                    long durationMs = c.getProgress().getDurationMs();
                     if (!c.isInstruction() && c.isCompleted()) {
                         count++;
                         Float puzzleScore = c.getScore();
@@ -916,11 +916,11 @@ public class CryptogramActivity extends BaseActivity implements GoogleApiClient.
                         }
                         score += puzzleScore;
                         scoreCount++;
-                        if (shortestDurationMs == 0 || shortestDurationMs > duration) {
-                            shortestDurationMs = duration;
+                        if (shortestDurationMs == 0 || shortestDurationMs > durationMs) {
+                            shortestDurationMs = durationMs;
                         }
                     }
-                    totalDurationMs += duration;
+                    totalDurationMs += durationMs;
                 }
                 String scoreAverageText;
                 if (scoreCount > 0) {

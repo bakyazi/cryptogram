@@ -394,7 +394,7 @@ public class PuzzleProgress {
     }
 
     public synchronized boolean hasScore(@NonNull Puzzle puzzle) {
-        long duration = puzzle.getDuration();
+        long duration = puzzle.getDurationMs();
         int excessCount = getExcessCount(puzzle);
         if (duration == 0 || excessCount < 0) {
             return false;
