@@ -95,6 +95,21 @@
             android:layout_height="wrap_content"
             android:text="@string/how_to_play_3"/>
 
+        <TextView
+            style="@style/InfoTextView.Title"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:text="@string/how_to_play_4_title"
+            android:textStyle="bold"/>
+
+        <TextView
+            android:id="@+id/tv_how_to_play_4"
+            style="@style/InfoTextView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/how_to_play_4"/>
+
     </LinearLayout>
 
 </android.support.v4.widget.NestedScrollView>
