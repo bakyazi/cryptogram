@@ -116,6 +116,7 @@
     <string name="show_hints">Show used letters</string>
     <string name="show_topic">Show puzzle topics</string>
     <string name="auto_advance">Advance to next cell when filled</string>
+    <string name="skip_filled_cells">Skip over filled cells when advancing</string>
     <string name="text_size">Text size:</string>
     <string name="text_size_small">Small</string>
     <string name="text_size_normal">Normal</string>
@@ -159,17 +160,29 @@
             ]]>
     </string>
     <string name="how_to_play_example">Example</string>
-    <string name="how_to_play_3_title">Tips</string>
+    <string name="how_to_play_3_title">Scoring</string>
     <string name="how_to_play_3">
         <![CDATA[
+                Your score is a percentage, where 100% is a perfect solution. It is determined by these factors:<br /><br />
+                • The amount of time you take to complete the puzzle. Try to solve under 2 minutes.<br />
+                • Each time you reveal mistakes, your score is reduced by 25%.<br />
+                • Each time you reveal a letter, your score is reduced by 17%.<br />
+                • For each excess input (filling in an incorrect character), your score is reduced by 4%.<br />
+                • Each score reduction rule above is computed separately, and the final score is the multiple of all factors.
+            ]]>
+    </string>
+    <string name="how_to_play_4_title">Tips</string>
+    <string name="how_to_play_4">
+        <![CDATA[
+                • Many puzzles have some letters revealed to start with; consider why that might be.<br />
                 • Look at the letter frequencies—the most frequent letters in English are from most to least frequent:<br />
                   <tt>ETAONRISHDLFCMUGYPWBVKJXQZ</tt><br />
                 • Also think about the most common letter pairs—in English, from most to least frequent:<br />
                   <tt>TH HE AN RE ER IN ON AT ND ST ES EN OF TE ED OR TI HI AS TO</tt><br />
                 • When you encounter doubled letters, bear in mind the most frequent combinations—in English, from most to least frequent:<br />
                   <tt>LL EE SS OO TT FF RR NN PP CC</tt><br />
+                • Pay attention to punctuation, apostrophes in particular.<br />
                 • Think about common words and which words might bridge between two parts of a sentence.<br />
-                • Many puzzles have some letters revealed to start with; consider why that might be.<br />
                 • Be sure to check the puzzle theme!
                 <br /><br />
                 <b>Good luck!</b>
@@ -221,6 +234,8 @@
             This app uses the following libraries, licensed under the Apache License 2.0:
             <br /><br />
             • <strong>EasyPrefs</strong> by Pixplicity<br />
+            • <strong>HtmlCompat</strong> by Pixplicity<br />
+            • <strong>Gene-rate</strong> by Pixplicity<br />
             • <strong>Butter Knife</strong> by Square Inc.<br />
             • <strong>Otto</strong> by Square Inc.<br />
             • <strong>Material Dialogs</strong> by Aidan Follestad<br />

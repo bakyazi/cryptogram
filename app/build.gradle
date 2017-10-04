@@ -64,8 +64,8 @@ android {
         applicationId "com.pixplicity.cryptogram"
         minSdkVersion 14
         targetSdkVersion 26
-        versionCode 185
-        versionName "1.7.10"
+        versionCode 187
+        versionName "1.8.0"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
     }
     buildTypes {
@@ -113,8 +113,6 @@ repositories {
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
 
-    implementation 'com.pixplicity.htmlcompat:library:1.0.0'
-
     implementation 'com.android.support:appcompat-v7:26.0.1'
     implementation 'com.android.support:support-v4:26.0.1'
     implementation 'com.android.support:support-annotations:26.0.1'
@@ -137,8 +135,9 @@ dependencies {
     implementation 'net.soulwolf.widget:ratiolayout:1.0.0'
     implementation 'com.afollestad.material-dialogs:core:0.9.4.7'
 
+    implementation 'com.pixplicity.htmlcompat:library:1.0.0'
     implementation 'com.pixplicity.easyprefs:library:1.9.0'
-    implementation 'com.pixplicity.generate:library:1.0'
+    implementation 'com.pixplicity.generate:library:1.1.8'
 
     implementation 'com.google.code.gson:gson:2.8.1'
 

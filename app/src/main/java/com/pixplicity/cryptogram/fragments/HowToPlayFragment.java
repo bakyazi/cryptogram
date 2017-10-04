@@ -42,6 +42,9 @@ public class HowToPlayFragment extends BaseFragment {
     @BindView(R.id.tv_how_to_play_3)
     protected TextView mTvHowToPlay3;
 
+    @BindView(R.id.tv_how_to_play_4)
+    protected TextView mTvHowToPlay4;
+
     @BindView(R.id.iv_instructions1)
     protected ImageView mIvInstructions1;
 
@@ -72,6 +75,8 @@ public class HowToPlayFragment extends BaseFragment {
                 HtmlCompat.fromHtml(getString(R.string.how_to_play_2)));
         mTvHowToPlay3.setText(
                 HtmlCompat.fromHtml(getString(R.string.how_to_play_3)));
+        mTvHowToPlay4.setText(
+                HtmlCompat.fromHtml(getString(R.string.how_to_play_4)));
 
         VideoUtils.setup(getActivity(), mRfVideo1, VideoUtils.VIDEO_INSTRUCTION);
     }

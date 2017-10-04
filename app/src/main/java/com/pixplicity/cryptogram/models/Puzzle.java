@@ -276,12 +276,12 @@ public class Puzzle {
     /**
      * Returns the duration of the user's play time on this puzzle in milliseconds.
      */
-    public long getDuration() {
+    public long getDurationMs() {
         if (isNoScore()) {
             // Don't measure the duration for puzzles with given characters
             return 0;
         }
-        return getProgress().getDuration();
+        return getProgress().getDurationMs();
     }
 
     @Nullable

@@ -281,7 +281,7 @@ public class AchievementProvider {
                 }
                 long startTime = puzzle.getProgress().getStartTime();
                 if (startTime > 0) {
-                    long duration = puzzle.getProgress().getDuration();
+                    long duration = puzzle.getProgress().getDurationMs();
                     if (!puzzle.isCompleted()) {
                         duration = 0;
                     }
