@@ -27,7 +27,7 @@ public class StatisticsUtils {
         float score = 0f;
         long shortestDurationMs = 0, totalDurationMs = 0;
         for (Puzzle c : provider.getAll()) {
-            long duration = c.getProgress().getDuration();
+            long durationMs = c.getProgress().getDurationMs();
             if (!c.isInstruction() && c.isCompleted()) {
                 count++;
                 Float puzzleScore = c.getScore();
@@ -36,11 +36,11 @@ public class StatisticsUtils {
                 }
                 score += puzzleScore;
                 scoreCount++;
-                if (shortestDurationMs == 0 || shortestDurationMs > duration) {
-                    shortestDurationMs = duration;
+                if (shortestDurationMs == 0 || shortestDurationMs > durationMs) {
+                    shortestDurationMs = durationMs;
                 }
             }
-            totalDurationMs += duration;
+            totalDurationMs += durationMs;
         }
         String scoreAverageText;
         if (scoreCount > 0) {

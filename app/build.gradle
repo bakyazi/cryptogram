@@ -67,7 +67,7 @@ android {
         minSdkVersion 14
         targetSdkVersion 26
         versionCode 186
-        versionName "1.7.10"
+        versionName "1.8.0"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
     }
     buildTypes {
