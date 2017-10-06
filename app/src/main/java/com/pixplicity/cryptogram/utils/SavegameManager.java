@@ -103,11 +103,17 @@ public class SavegameManager {
                 .setDescription(context.getString(R.string.saved_game_name, SystemUtils.getDeviceName()))
                 .build();
 
-        // Commit the operation
-        Snapshots.CommitSnapshotResult saveResult = Games.Snapshots.commitAndClose(googleApiClient, snapshot, metadataChange).await();
-        if (saveResult.getStatus().isSuccess()) {
-            PrefsUtils.setLastSavegameName(snapshotName);
-            return saveResult.getSnapshotMetadata();
+        try {
+            // Commit the operation
+            Snapshots.CommitSnapshotResult saveResult = Games.Snapshots.commitAndClose(googleApiClient, snapshot, metadataChange).await();
+            if (saveResult.getStatus().isSuccess()) {
+                PrefsUtils.setLastSavegameName(snapshotName);
+                return saveResult.getSnapshotMetadata();
+            }
+        } catch (IllegalStateException e) {
+            // Not sure why we're still seeing errors about the connection state, but here we are
+            Crashlytics.logException(e);
+            return null;
         }
         return null;
     }
