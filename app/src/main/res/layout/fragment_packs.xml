@@ -41,6 +41,7 @@
         android:id="@+id/rv_packs"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:focusableInTouchMode="false"
         tools:layoutManager="android.support.v7.widget.GridLayoutManager"
         tools:listitem="@layout/in_pack"
         tools:spanCount="3"/>

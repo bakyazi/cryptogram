@@ -14,7 +14,7 @@
 
     <!-- Base application theme. -->
     <style name="AppTheme" parent="@style/Theme.AppCompat.Light.NoActionBar">
-        <item name="android:windowBackground">@color/colorBackground</item>
+        <item name="android:windowBackground">@drawable/bg_activity</item>
 
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
@@ -39,7 +39,7 @@
     </style>
 
     <style name="AppTheme.Dark" parent="@style/Theme.AppCompat.NoActionBar">
-        <item name="android:windowBackground">@color/colorDarkBackground</item>
+        <item name="android:windowBackground">@drawable/bg_activity_dark</item>
 
         <item name="colorPrimary">@color/colorDarkPrimary</item>
         <item name="colorPrimaryDark">@color/colorDarkPrimaryDark</item>
@@ -61,6 +61,10 @@
 
         <item name="keyboardButtonStyle">@style/KeyboardButton</item>
         <item name="keyboardImageButtonStyle">@style/KeyboardButton.Image</item>
+    </style>
+
+    <style name="Inverted">
+        <item name="android:textColor">?attr/textColorInverse</item>
     </style>
 
     <style name="KeyboardButton" parent="@style/Widget.AppCompat.Button">

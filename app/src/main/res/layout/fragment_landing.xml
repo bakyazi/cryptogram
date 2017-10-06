@@ -1,48 +1,38 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.v4.widget.DrawerLayout
-    android:id="@+id/drawer_layout"
+<android.support.v4.widget.NestedScrollView
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:focusableInTouchMode="true"
     tools:context=".activities.PuzzleActivity">
 
-    <android.support.v4.widget.NestedScrollView
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="wrap_content"
+        android:animateLayoutChanges="true"
+        android:clipChildren="false"
+        android:clipToPadding="false"
+        android:orientation="vertical"
+        android:padding="16dp">
 
-        <LinearLayout
+        <include layout="@layout/in_help"/>
+
+        <fragment
+            android:name="com.pixplicity.cryptogram.fragments.DailyPuzzleFragment"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:animateLayoutChanges="true"
-            android:clipChildren="false"
-            android:clipToPadding="false"
-            android:orientation="vertical"
-            android:padding="16dp">
+            android:layout_marginBottom="8dp"
+            android:tag="daily"
+            tools:layout="@layout/fragment_daily"/>
 
-            <include layout="@layout/in_help"/>
+        <fragment
+            android:name="com.pixplicity.cryptogram.fragments.PuzzlePacksFragment"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:tag="packs"
+            tools:layout="@layout/fragment_packs"/>
 
-            <fragment
-                android:name="com.pixplicity.cryptogram.fragments.DailyPuzzleFragment"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="8dp"
-                android:tag="daily"
-                tools:layout="@layout/fragment_daily"/>
+    </LinearLayout>
 
-            <fragment
-                android:name="com.pixplicity.cryptogram.fragments.PuzzlePacksFragment"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:tag="packs"
-                tools:layout="@layout/fragment_packs"/>
-
-        </LinearLayout>
-
-    </android.support.v4.widget.NestedScrollView>
-
-    <include
-        layout="@layout/in_drawer"
-        tools:visibility="gone"/>
-
-</android.support.v4.widget.DrawerLayout>
+</android.support.v4.widget.NestedScrollView>

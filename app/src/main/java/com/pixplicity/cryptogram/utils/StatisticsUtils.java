@@ -1,7 +1,6 @@
 package com.pixplicity.cryptogram.utils;
 
 import android.content.Context;
-import android.content.DialogInterface;
 import android.support.v7.app.AlertDialog;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -113,10 +112,7 @@ public class StatisticsUtils {
         new AlertDialog.Builder(context)
                 .setTitle(R.string.statistics)
                 .setView(dialogView)
-                .setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialogInterface, int i) {
-                    }
+                .setPositiveButton(android.R.string.ok, (dialogInterface, i) -> {
                 })
                 .show();
     }

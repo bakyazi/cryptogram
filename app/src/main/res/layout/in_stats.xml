@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="utf-8"?>
+<TableLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:padding="16dp"
+    android:stretchColumns="*">
+
+    <TableRow
+        android:layout_height="match_parent">
+
+        <TextView
+            android:layout_span="3"
+            android:text="@string/stats_total_completed_label"/>
+
+        <TextView android:id="@+id/tv_stats_completed"/>
+
+    </TableRow>
+
+    <TableRow
+        android:layout_height="match_parent">
+
+        <TextView
+            android:layout_span="3"
+            android:text="@string/stats_average_score_label"/>
+
+        <TextView android:id="@+id/tv_stats_average_score"/>
+
+    </TableRow>
+
+    <TableRow
+        android:layout_height="match_parent">
+
+        <TextView
+            android:layout_span="3"
+            android:text="@string/stats_cumulative_score_label"/>
+
+        <TextView android:id="@+id/tv_stats_total_score"/>
+
+    </TableRow>
+
+    <TableRow
+        android:layout_height="match_parent">
+
+        <TextView
+            android:layout_span="3"
+            android:text="@string/stats_fastest_completion_label"/>
+
+        <TextView android:id="@+id/tv_stats_fastest"/>
+
+    </TableRow>
+
+    <TableRow
+        android:layout_height="match_parent">
+
+        <TextView
+            android:layout_span="3"
+            android:text="@string/stats_total_time_spent_label"/>
+
+        <TextView android:id="@+id/tv_stats_total_time"/>
+
+    </TableRow>
+
+    <TableRow
+        android:layout_height="match_parent">
+
+        <TextView
+            android:layout_span="3"
+            android:text="@string/stats_longest_streak_label"/>
+
+        <TextView android:id="@+id/tv_stats_streak"/>
+
+    </TableRow>
+
+</TableLayout>
