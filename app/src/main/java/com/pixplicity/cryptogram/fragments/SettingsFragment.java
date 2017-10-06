@@ -68,6 +68,9 @@ public class SettingsFragment extends BaseFragment {
     @BindView(R.id.cb_auto_advance)
     protected CheckBox mCbAutoAdvance;
 
+    @BindView(R.id.cb_skip_filled_cells)
+    protected CheckBox mCbSkipFilledCells;
+
     @BindView(R.id.bt_reset_dialogs)
     protected Button mBtResetDialogs;
 
@@ -155,6 +158,8 @@ public class SettingsFragment extends BaseFragment {
                 (compoundButton, checked) -> PrefsUtils.setShowTopic(checked));
         updateCompoundButton(mCbAutoAdvance, PrefsUtils.getAutoAdvance(),
                 (compoundButton, checked) -> PrefsUtils.setAutoAdvance(checked));
+        updateCompoundButton(mCbSkipFilledCells, PrefsUtils.getSkipFilledCells(),
+                (compoundButton, checked) -> PrefsUtils.setSkipFilledCells(checked));
 
         mBtResetDialogs.setEnabled(PrefsUtils.getNeverAskRevealLetter() || PrefsUtils.getNeverAskRevealMistakes());
     }

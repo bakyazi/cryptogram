@@ -2,6 +2,7 @@ package com.pixplicity.cryptogram.utils;
 
 import android.content.Context;
 import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 
 import com.crashlytics.android.Crashlytics;
 import com.google.android.gms.common.api.GoogleApiClient;
@@ -32,13 +33,23 @@ public class SavegameManager {
         void onLoadFailure();
     }
 
-    private static Snapshot getSnapshot(GoogleApiClient googleApiClient,
+    @Nullable
+    private static Snapshot getSnapshot(@Nullable GoogleApiClient googleApiClient,
                                         String snapshotName,
                                         boolean createIfNotFound) {
-        Snapshots.OpenSnapshotResult result = Games.Snapshots.open(googleApiClient, snapshotName, createIfNotFound).await(30, TimeUnit.SECONDS);
-        if (result.getStatus().isSuccess()) {
-            return result.getSnapshot();
-        } else {
+        if (googleApiClient == null || !googleApiClient.isConnected()) {
+            return null;
+        }
+        try {
+            Snapshots.OpenSnapshotResult result = Games.Snapshots.open(googleApiClient, snapshotName, createIfNotFound).await(30, TimeUnit.SECONDS);
+            if (result.getStatus().isSuccess()) {
+                return result.getSnapshot();
+            } else {
+                return null;
+            }
+        } catch (IllegalStateException e) {
+            // Not sure why we're still seeing errors about the connection state, but here we are
+            Crashlytics.logException(e);
             return null;
         }
     }
@@ -70,11 +81,11 @@ public class SavegameManager {
         return snapshot;
     }
 
-    public static SnapshotMetadata save(GoogleApiClient googleApiClient) {
+    public static SnapshotMetadata save(@Nullable GoogleApiClient googleApiClient) {
         return save(googleApiClient, getLastSavegameName());
     }
 
-    private static SnapshotMetadata save(GoogleApiClient googleApiClient,
+    private static SnapshotMetadata save(@Nullable GoogleApiClient googleApiClient,
                                          String snapshotName) {
         final Snapshot snapshot = getSnapshot(googleApiClient, snapshotName, true);
         if (snapshot == null) {
@@ -93,11 +104,17 @@ public class SavegameManager {
                 .setDescription(context.getString(R.string.saved_game_name, SystemUtils.getDeviceName()))
                 .build();
 
-        // Commit the operation
-        Snapshots.CommitSnapshotResult saveResult = Games.Snapshots.commitAndClose(googleApiClient, snapshot, metadataChange).await();
-        if (saveResult.getStatus().isSuccess()) {
-            PrefsUtils.setLastSavegameName(snapshotName);
-            return saveResult.getSnapshotMetadata();
+        try {
+            // Commit the operation
+            Snapshots.CommitSnapshotResult saveResult = Games.Snapshots.commitAndClose(googleApiClient, snapshot, metadataChange).await();
+            if (saveResult.getStatus().isSuccess()) {
+                PrefsUtils.setLastSavegameName(snapshotName);
+                return saveResult.getSnapshotMetadata();
+            }
+        } catch (IllegalStateException e) {
+            // Not sure why we're still seeing errors about the connection state, but here we are
+            Crashlytics.logException(e);
+            return null;
         }
         return null;
     }

@@ -128,6 +128,7 @@
     <string name="show_hints">Show used letters</string>
     <string name="show_topic">Show puzzle topics</string>
     <string name="auto_advance">Advance to next cell when filled</string>
+    <string name="skip_filled_cells">Skip over filled cells when advancing</string>
     <string name="text_size">Text size:</string>
     <string name="text_size_small">Small</string>
     <string name="text_size_normal">Normal</string>
@@ -171,17 +172,29 @@
             ]]>
     </string>
     <string name="how_to_play_example">Example</string>
-    <string name="how_to_play_3_title">Tips</string>
+    <string name="how_to_play_3_title">Scoring</string>
     <string name="how_to_play_3">
         <![CDATA[
+                Your score is a percentage, where 100% is a perfect solution. It is determined by these factors:<br /><br />
+                • The amount of time you take to complete the puzzle. Try to solve under 2 minutes.<br />
+                • Each time you reveal mistakes, your score is reduced by 25%.<br />
+                • Each time you reveal a letter, your score is reduced by 17%.<br />
+                • For each excess input (filling in an incorrect character), your score is reduced by 4%.<br />
+                • Each score reduction rule above is computed separately, and the final score is the multiple of all factors.
+            ]]>
+    </string>
+    <string name="how_to_play_4_title">Tips</string>
+    <string name="how_to_play_4">
+        <![CDATA[
+                • Many puzzles have some letters revealed to start with; consider why that might be.<br />
                 • Look at the letter frequencies—the most frequent letters in English are from most to least frequent:<br />
                   <tt>ETAONRISHDLFCMUGYPWBVKJXQZ</tt><br />
                 • Also think about the most common letter pairs—in English, from most to least frequent:<br />
                   <tt>TH HE AN RE ER IN ON AT ND ST ES EN OF TE ED OR TI HI AS TO</tt><br />
                 • When you encounter doubled letters, bear in mind the most frequent combinations—in English, from most to least frequent:<br />
                   <tt>LL EE SS OO TT FF RR NN PP CC</tt><br />
+                • Pay attention to punctuation, apostrophes in particular.<br />
                 • Think about common words and which words might bridge between two parts of a sentence.<br />
-                • Many puzzles have some letters revealed to start with; consider why that might be.<br />
                 • Be sure to check the puzzle theme!
                 <br /><br />
                 <b>Good luck!</b>
@@ -213,8 +226,7 @@
         ]]>
     </string>
     <string name="title_disclaimer">Legal</string>
-    <string name="disclaimer">
-        <![CDATA[
+    <string name="disclaimer"><![CDATA[
             <p>
                 Anonymous crash and usage data may be sent to Crashlytics by Twitter. This is solely
                 used to gather anonymous statistics about usage for automatic reporting of any
@@ -222,8 +234,16 @@
                 transferred.
             </p>
             <p>
-                THIS APP COMES WITHOUT WARRANTY OF ANY KIND AND IS COPYRIGHT OF PIXPLICITY B.V., THE
-                NETHERLANDS.
+                <b>Copyright © 2017 Pixplicity</b>
+            </p>
+            <p>
+                Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the "Software"), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:
+            </p>
+            <p>
+                The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
+            </p>
+            <p>
+                THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
             </p>
         ]]>
     </string>
@@ -233,6 +253,8 @@
             This app uses the following libraries, licensed under the Apache License 2.0:
             <br /><br />
             • <strong>EasyPrefs</strong> by Pixplicity<br />
+            • <strong>HtmlCompat</strong> by Pixplicity<br />
+            • <strong>Gene-rate</strong> by Pixplicity<br />
             • <strong>Butter Knife</strong> by Square Inc.<br />
             • <strong>Otto</strong> by Square Inc.<br />
             • <strong>Material Dialogs</strong> by Aidan Follestad<br />
@@ -258,6 +280,6 @@
     <string name="rating">Nice, you’re solving some cryptograms!\n\nWould you mind visiting the Play store to give %1$s a rating? It would help in sharing the fun!\n\nInstead, if you’re experiencing problems, please give me some feedback so I can improve. Thanks!</string>
 
     <string name="feedback_subject">Feedback on Cryptogram</string>
-    <string name="feedback_body">Hi Paul, \n\nI’m using Cryptogram version %1$s and my keyboard is "%2$s". \n\nHere’s my feedback on Cryptogram: \n\n</string>
+    <string name="feedback_body">Hi Pixplicity, \n\nI’m using Cryptogram version %1$s and my keyboard is "%2$s". \n\nHere’s my feedback on Cryptogram: \n\n</string>
 
 </resources>

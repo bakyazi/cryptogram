@@ -369,7 +369,7 @@ public class PuzzleProgress {
 
     private synchronized void setTimes() {
         long stopTime = System.currentTimeMillis();
-        mStartTime = stopTime - getDuration();
+        mStartTime = stopTime - getDurationMs();
         mStopTime = stopTime;
     }
 
@@ -380,7 +380,7 @@ public class PuzzleProgress {
         return mStartTime;
     }
 
-    public synchronized long getDuration() {
+    public synchronized long getDurationMs() {
         if (mStartTime == null || mStartTime == 0) {
             return 0;
         }
@@ -394,7 +394,7 @@ public class PuzzleProgress {
     }
 
     public synchronized boolean hasScore(@NonNull Puzzle puzzle) {
-        long duration = puzzle.getDuration();
+        long duration = puzzle.getDurationMs();
         int excessCount = getExcessCount(puzzle);
         if (duration == 0 || excessCount < 0) {
             return false;
@@ -406,10 +406,10 @@ public class PuzzleProgress {
         if (!hasScore(puzzle)) {
             return null;
         }
-        long duration = getDuration();
+        float duration = getDurationMs() / 1000f;
         int excessCount = getExcessCount(puzzle);
         float score = 1;
-        score = addScore(score, (float) duration / 120f);
+        score = addScore(score, 120f / duration);
         score = addScore(score, (float) Math.pow(0.75f, getRevealedMistakes()));
         score = addScore(score, (6f - getReveals()) / 6f);
         score = addScore(score, (26f - excessCount) / 26f);

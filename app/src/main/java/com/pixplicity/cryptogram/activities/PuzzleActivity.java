@@ -699,7 +699,7 @@ public class PuzzleActivity extends BaseActivity implements GoogleApiClient.Conn
         if (puzzle.isCompleted()) {
             mHintView.setVisibility(View.GONE);
             mVgStats.setVisibility(View.VISIBLE);
-            long durationMs = puzzle.getDuration();
+            long durationMs = puzzle.getDurationMs();
             if (durationMs <= 0) {
                 mVgStatsTime.setVisibility(View.GONE);
             } else {
