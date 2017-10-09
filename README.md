@@ -22,6 +22,6 @@ Best of all, it's completely free, and free of ads! Enjoy!
 
 ## License
 
-Licensed under the Apache license 2.0.
+[Licensed under the MIT License.](LICENSE.md)
 
 Google Play and the Google Play logo are trademarks of Google Inc.

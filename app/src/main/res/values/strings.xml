@@ -214,8 +214,7 @@
         ]]>
     </string>
     <string name="title_disclaimer">Legal</string>
-    <string name="disclaimer">
-        <![CDATA[
+    <string name="disclaimer"><![CDATA[
             <p>
                 Anonymous crash and usage data may be sent to Crashlytics by Twitter. This is solely
                 used to gather anonymous statistics about usage for automatic reporting of any
@@ -223,8 +222,16 @@
                 transferred.
             </p>
             <p>
-                THIS APP COMES WITHOUT WARRANTY OF ANY KIND AND IS COPYRIGHT OF PIXPLICITY B.V., THE
-                NETHERLANDS.
+                <b>Copyright © 2017 Pixplicity</b>
+            </p>
+            <p>
+                Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the "Software"), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:
+            </p>
+            <p>
+                The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
+            </p>
+            <p>
+                THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
             </p>
         ]]>
     </string>
@@ -261,6 +268,6 @@
     <string name="rating">Nice, you’re solving some cryptograms!\n\nWould you mind visiting the Play store to give %1$s a rating? It would help in sharing the fun!\n\nInstead, if you’re experiencing problems, please give me some feedback so I can improve. Thanks!</string>
 
     <string name="feedback_subject">Feedback on Cryptogram</string>
-    <string name="feedback_body">Hi Paul, \n\nI’m using Cryptogram version %1$s and my keyboard is "%2$s". \n\nHere’s my feedback on Cryptogram: \n\n</string>
+    <string name="feedback_body">Hi Pixplicity, \n\nI’m using Cryptogram version %1$s and my keyboard is "%2$s". \n\nHere’s my feedback on Cryptogram: \n\n</string>
 
 </resources>

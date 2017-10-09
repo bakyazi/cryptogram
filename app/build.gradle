@@ -59,7 +59,7 @@ android {
 
     }
     compileSdkVersion 26
-    buildToolsVersion "26.0.1"
+    buildToolsVersion '26.0.2'
     defaultConfig {
         applicationId "com.pixplicity.cryptogram"
         minSdkVersion 14
