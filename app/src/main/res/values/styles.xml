@@ -8,6 +8,9 @@
     <attr name="keyboardBackground2" format="color"/>
     <attr name="keyboardForeground2" format="color"/>
 
+    <attr name="im_launcher" format="reference"/>
+    <attr name="bg_activity" format="reference"/>
+
     <!-- Base application theme. -->
     <style name="AppTheme" parent="@style/Theme.AppCompat.Light.NoActionBar">
         <item name="android:windowBackground">@color/colorBackground</item>
@@ -30,6 +33,9 @@
 
         <item name="keyboardButtonStyle">@style/KeyboardButton</item>
         <item name="keyboardImageButtonStyle">@style/KeyboardButton.Image</item>
+
+        <item name="bg_activity">@drawable/bg_activity_light</item>
+        <item name="im_launcher">@drawable/im_launcher_light</item>
     </style>
 
     <style name="AppTheme.Dark" parent="@style/Theme.AppCompat.NoActionBar">
@@ -53,6 +59,9 @@
 
         <item name="keyboardButtonStyle">@style/KeyboardButton</item>
         <item name="keyboardImageButtonStyle">@style/KeyboardButton.Image</item>
+
+        <item name="bg_activity">@drawable/bg_activity_dark</item>
+        <item name="im_launcher">@drawable/im_launcher_dark</item>
     </style>
 
     <style name="KeyboardButton" parent="@style/Widget.AppCompat.Button">

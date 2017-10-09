@@ -194,9 +194,6 @@ public class CryptogramActivity extends BaseActivity implements GoogleApiClient.
             getWindow().setBackgroundDrawableResource(R.drawable.bg_activity_dark);
         }
         setContentView(R.layout.activity_cryptogram);
-        if (isDarkTheme()) {
-            mVgStats.setBackgroundResource(R.drawable.bg_statistics_dark);
-        }
 
         final PuzzleProvider puzzleProvider = PuzzleProvider.getInstance(this);
 

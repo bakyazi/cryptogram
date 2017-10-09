@@ -47,14 +47,14 @@ public abstract class BaseActivity extends AppCompatActivity {
     @Override
     public void setContentView(@LayoutRes int layoutResID) {
         // Replace any splash screen image
-        getWindow().setBackgroundDrawableResource(R.drawable.bg_activity);
+        getWindow().setBackgroundDrawableResource(R.drawable.bg_activity_light);
         mDarkTheme = PrefsUtils.getDarkTheme();
         if (mDarkTheme) {
             setTheme(R.style.AppTheme_Dark);
             // Replace any splash screen image
             getWindow().setBackgroundDrawableResource(R.drawable.bg_activity_dark);
         } else {
-            getWindow().setBackgroundDrawableResource(R.drawable.bg_activity);
+            getWindow().setBackgroundDrawableResource(R.drawable.bg_activity_light);
         }
         super.setContentView(layoutResID);
         ButterKnife.bind(this);
