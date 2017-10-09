@@ -64,6 +64,10 @@ public class PackAdapter extends RecyclerView.Adapter<PackAdapter.ViewHolder> {
         Topic topic = mPacks[position];
         vh.setPosition(position);
         vh.tvTitle.setText(topic.getName());
+        // TODO set correct progress values
+        int packProgress = 0;
+        int packCount = topic.getPuzzles(mContext).length;
+        vh.tvProgress.setText(mContext.getString(R.string.pack_progress, packProgress, packCount));
 
         String cover = topic.getCover();
         if (cover != null) {
