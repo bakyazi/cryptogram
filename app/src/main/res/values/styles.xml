@@ -22,7 +22,7 @@
         <item name="textColor">@color/colorTextPrimary</item>
         <item name="textColorOnPrimary">@color/textLight</item>
 
-        <item name="keyboardBackground">@color/colorBackground</item>
+        <item name="keyboardBackground">@color/colorBackgroundKeyboard</item>
         <item name="keyboardBackground1">@color/colorDarkTextPrimary</item>
         <item name="keyboardForeground1">@color/colorTextPrimary</item>
         <item name="keyboardBackground2">@color/colorDarkPrimary</item>
@@ -45,7 +45,7 @@
         <item name="textColor">@color/colorDarkTextPrimary</item>
         <item name="textColorOnPrimary">@color/textLight</item>
 
-        <item name="keyboardBackground">@color/colorDarkBackground</item>
+        <item name="keyboardBackground">@color/colorDarkBackgroundKeyboard</item>
         <item name="keyboardBackground1">@color/colorDarkPrimary</item>
         <item name="keyboardForeground1">@color/colorDarkTextPrimary</item>
         <item name="keyboardBackground2">@color/colorDarkTextPrimary</item>
