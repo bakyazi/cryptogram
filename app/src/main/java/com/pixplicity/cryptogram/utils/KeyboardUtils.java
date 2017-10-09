@@ -75,6 +75,14 @@ public class KeyboardUtils {
         return KeyValue.fromKeycode(contract.getKeyIndex()).text;
     }
 
+    public static char getKeyChar(Contract contract) {
+        String text = KeyValue.fromKeycode(contract.getKeyIndex()).text;
+        if (text == null || text.length() < 1) {
+            return 0;
+        }
+        return text.charAt(0);
+    }
+
     @DrawableRes
     public static int getKeyIcon(Contract contract) {
         return KeyValue.fromKeycode(contract.getKeyIndex()).drawableRes;

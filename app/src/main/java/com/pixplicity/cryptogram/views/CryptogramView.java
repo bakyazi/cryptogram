@@ -24,6 +24,7 @@ import android.view.inputmethod.InputConnection;
 import android.view.inputmethod.InputMethodManager;
 
 import com.pixplicity.cryptogram.R;
+import com.pixplicity.cryptogram.layout.KeyboardLayout;
 import com.pixplicity.cryptogram.models.Puzzle;
 import com.pixplicity.cryptogram.utils.PrefsUtils;
 import com.pixplicity.cryptogram.utils.StyleUtils;
