@@ -21,6 +21,7 @@ import com.google.android.gms.games.Games;
 import com.google.android.gms.games.Player;
 import com.pixplicity.cryptogram.CryptogramApp;
 import com.pixplicity.cryptogram.R;
+import com.pixplicity.cryptogram.utils.StatisticsUtils;
 
 import butterknife.BindView;
 import butterknife.OnClick;
@@ -45,6 +46,9 @@ public class LandingActivity extends BaseActivity {
     @BindView(R.id.vg_google_play_games_actions)
     protected ViewGroup mVgGooglePlayGamesActions;
 
+    @BindView(R.id.vg_stats)
+    protected ViewGroup mVgStats;
+
     public static Intent create(Context context) {
         return new Intent(context, LandingActivity.class);
     }
@@ -57,6 +61,8 @@ public class LandingActivity extends BaseActivity {
         mToolbar.setTitle(R.string.app_name);
 
         Answers.getInstance().logContentView(new ContentViewEvent().putContentName(CryptogramApp.CONTENT_LANDING));
+
+        StatisticsUtils.populateTable(this, mVgStats);
     }
 
     @OnClick(R.id.vg_google_play_games)

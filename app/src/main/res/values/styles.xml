@@ -14,7 +14,7 @@
 
     <!-- Base application theme. -->
     <style name="AppTheme" parent="@style/Theme.AppCompat.Light.NoActionBar">
-        <item name="android:windowBackground">@drawable/bg_activity</item>
+        <item name="android:windowBackground">@drawable/bg_splash</item>
 
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
@@ -39,7 +39,7 @@
     </style>
 
     <style name="AppTheme.Dark" parent="@style/Theme.AppCompat.NoActionBar">
-        <item name="android:windowBackground">@drawable/bg_activity_dark</item>
+        <item name="android:windowBackground">@drawable/bg_splash_dark</item>
 
         <item name="colorPrimary">@color/colorDarkPrimary</item>
         <item name="colorPrimaryDark">@color/colorDarkPrimaryDark</item>
@@ -63,8 +63,14 @@
         <item name="keyboardImageButtonStyle">@style/KeyboardButton.Image</item>
     </style>
 
-    <style name="Inverted">
-        <item name="android:textColor">?attr/textColorInverse</item>
+    <style name="Dialog.Light" parent="@style/Base.Theme.AppCompat.Light.Dialog.Alert">
+        <!-- Poorly named as the color isn't inverted, but this is for compatibility with inverting the activity -->
+        <item name="textColorInverse">@color/colorTextPrimary</item>
+    </style>
+
+    <style name="Dialog.Dark" parent="@style/Base.Theme.AppCompat.Dialog.Alert">
+        <!-- Poorly named as the color isn't inverted, but this is for compatibility with inverting the activity -->
+        <item name="textColorInverse">@color/colorDarkTextPrimary</item>
     </style>
 
     <style name="KeyboardButton" parent="@style/Widget.AppCompat.Button">

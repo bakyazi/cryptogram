@@ -665,7 +665,7 @@ public class PuzzleActivity extends BaseActivity {
                     puzzle.save();
                 }
                 // Now show the stats
-                StatisticsUtils.showDialog(this);
+                StatisticsUtils.showDialog(this, isDarkTheme());
             }
             return true;
             case R.id.action_settings: {

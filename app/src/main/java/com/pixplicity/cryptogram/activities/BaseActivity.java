@@ -235,11 +235,13 @@ public abstract class BaseActivity extends AppCompatActivity implements
 
     @Override
     public void setContentView(@LayoutRes int layoutResID) {
-        // Replace any splash screen image
-        getWindow().setBackgroundDrawableResource(R.drawable.bg_activity);
         mDarkTheme = PrefsUtils.getDarkTheme();
         if (mDarkTheme) {
             setTheme(R.style.AppTheme_Dark);
+            // Replace any splash screen image
+            getWindow().setBackgroundDrawableResource(R.drawable.bg_activity_dark);
+        } else {
+            getWindow().setBackgroundDrawableResource(R.drawable.bg_activity);
         }
         super.setContentView(layoutResID);
         ButterKnife.bind(this);

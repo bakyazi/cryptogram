@@ -1,75 +1,124 @@
 <?xml version="1.0" encoding="utf-8"?>
-<TableLayout
+<RelativeLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:padding="16dp"
-    android:stretchColumns="*">
+    tools:background="?attr/colorPrimary">
 
-    <TableRow
-        android:layout_height="match_parent">
+    <FrameLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBottom="@+id/tl_stats"
+        android:layout_alignLeft="@+id/v_center"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentTop="true"
+        tools:ignore="RtlHardcoded">
 
-        <TextView
-            android:layout_span="3"
-            android:text="@string/stats_total_completed_label"/>
+        <ProgressBar
+            android:id="@+id/pb_stats"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:layout_gravity="center"/>
 
-        <TextView android:id="@+id/tv_stats_completed"/>
+    </FrameLayout>
 
-    </TableRow>
+    <View
+        android:id="@+id/v_center"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_centerHorizontal="true"/>
 
-    <TableRow
-        android:layout_height="match_parent">
+    <TableLayout
+        android:id="@+id/tl_stats"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:stretchColumns="*">
 
-        <TextView
-            android:layout_span="3"
-            android:text="@string/stats_average_score_label"/>
+        <TableRow
+            android:layout_height="match_parent">
 
-        <TextView android:id="@+id/tv_stats_average_score"/>
+            <TextView
+                android:layout_span="3"
+                android:text="@string/stats_total_completed_label"
+                android:textColor="?attr/textColorInverse"/>
 
-    </TableRow>
+            <TextView
+                android:id="@+id/tv_stats_completed"
+                android:textColor="?attr/textColorInverse"/>
 
-    <TableRow
-        android:layout_height="match_parent">
+        </TableRow>
 
-        <TextView
-            android:layout_span="3"
-            android:text="@string/stats_cumulative_score_label"/>
+        <TableRow
+            android:layout_height="match_parent">
 
-        <TextView android:id="@+id/tv_stats_total_score"/>
+            <TextView
+                android:layout_span="3"
+                android:text="@string/stats_average_score_label"
+                android:textColor="?attr/textColorInverse"/>
 
-    </TableRow>
+            <TextView
+                android:id="@+id/tv_stats_average_score"
+                android:textColor="?attr/textColorInverse"/>
 
-    <TableRow
-        android:layout_height="match_parent">
+        </TableRow>
 
-        <TextView
-            android:layout_span="3"
-            android:text="@string/stats_fastest_completion_label"/>
+        <TableRow
+            android:layout_height="match_parent">
 
-        <TextView android:id="@+id/tv_stats_fastest"/>
+            <TextView
+                android:layout_span="3"
+                android:text="@string/stats_cumulative_score_label"
+                android:textColor="?attr/textColorInverse"/>
 
-    </TableRow>
+            <TextView
+                android:id="@+id/tv_stats_total_score"
+                android:textColor="?attr/textColorInverse"/>
 
-    <TableRow
-        android:layout_height="match_parent">
+        </TableRow>
 
-        <TextView
-            android:layout_span="3"
-            android:text="@string/stats_total_time_spent_label"/>
+        <TableRow
+            android:layout_height="match_parent">
 
-        <TextView android:id="@+id/tv_stats_total_time"/>
+            <TextView
+                android:layout_span="3"
+                android:text="@string/stats_fastest_completion_label"
+                android:textColor="?attr/textColorInverse"/>
 
-    </TableRow>
+            <TextView
+                android:id="@+id/tv_stats_fastest"
+                android:textColor="?attr/textColorInverse"/>
 
-    <TableRow
-        android:layout_height="match_parent">
+        </TableRow>
 
-        <TextView
-            android:layout_span="3"
-            android:text="@string/stats_longest_streak_label"/>
+        <TableRow
+            android:layout_height="match_parent">
 
-        <TextView android:id="@+id/tv_stats_streak"/>
+            <TextView
+                android:layout_span="3"
+                android:text="@string/stats_total_time_spent_label"
+                android:textColor="?attr/textColorInverse"/>
 
-    </TableRow>
+            <TextView
+                android:id="@+id/tv_stats_total_time"
+                android:textColor="?attr/textColorInverse"/>
 
-</TableLayout>
+        </TableRow>
+
+        <TableRow
+            android:layout_height="match_parent">
+
+            <TextView
+                android:layout_span="3"
+                android:text="@string/stats_longest_streak_label"
+                android:textColor="?attr/textColorInverse"/>
+
+            <TextView
+                android:id="@+id/tv_stats_streak"
+                android:textColor="?attr/textColorInverse"/>
+
+        </TableRow>
+
+    </TableLayout>
+
+</RelativeLayout>

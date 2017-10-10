@@ -121,9 +121,44 @@
 
         </RelativeLayout>
 
+        <TextView
+            style="@style/InfoTextView.Title"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="16dp"
+            android:layout_marginRight="16dp"
+            android:layout_marginTop="16dp"
+            android:padding="0dp"
+            android:text="@string/statistics"
+            android:textColor="?attr/textColorInverse"
+            android:textStyle="bold"/>
+
         <include
-            style="@style/Inverted"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_marginBottom="8dp"
+            android:layout_marginLeft="16dp"
+            android:layout_marginRight="16dp"
+            android:layout_marginTop="8dp"
+            android:layout_weight="1"
+            android:id="@+id/vg_stats"
             layout="@layout/in_stats"/>
+
+        <android.support.v7.widget.AppCompatButton
+            style="?attr/borderlessButtonStyle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:minHeight="64dp"
+            android:text="@string/settings"
+            android:textColor="?attr/textColorInverse"/>
+
+        <android.support.v7.widget.AppCompatButton
+            style="?attr/borderlessButtonStyle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:minHeight="64dp"
+            android:text="@string/how_to_play"
+            android:textColor="?attr/textColorInverse"/>
 
     </LinearLayout>
 
