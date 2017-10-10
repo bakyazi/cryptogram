@@ -12,6 +12,7 @@ import android.view.ViewGroup;
 
 import com.pixplicity.cryptogram.R;
 import com.pixplicity.cryptogram.activities.HowToPlayActivity;
+import com.pixplicity.cryptogram.utils.PrefsUtils;
 
 import butterknife.BindView;
 import butterknife.OnClick;
@@ -37,6 +38,10 @@ public class LandingFragment extends BaseFragment {
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+
+        if (PrefsUtils.getNeverShowHelp()) {
+            mVgHelp.setVisibility(View.GONE);
+        }
     }
 
     @Override
@@ -61,7 +66,8 @@ public class LandingFragment extends BaseFragment {
 
     @OnClick(R.id.bt_help_dismiss)
     protected void onClickHelpDismiss() {
-        // TODO save preference
+        // Save preference
+        PrefsUtils.setNeverShowHelp(true);
         // Animation is determined by `animateLayoutChanges` of view parent
         mVgHelp.setVisibility(View.GONE);
     }

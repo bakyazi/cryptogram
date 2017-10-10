@@ -161,7 +161,9 @@ public class SettingsFragment extends BaseFragment {
         updateCompoundButton(mCbSkipFilledCells, PrefsUtils.getSkipFilledCells(),
                 (compoundButton, checked) -> PrefsUtils.setSkipFilledCells(checked));
 
-        mBtResetDialogs.setEnabled(PrefsUtils.getNeverAskRevealLetter() || PrefsUtils.getNeverAskRevealMistakes());
+        mBtResetDialogs.setEnabled(PrefsUtils.getNeverShowHelp()
+                || PrefsUtils.getNeverAskRevealLetter()
+                || PrefsUtils.getNeverAskRevealMistakes());
     }
 
     private void setTextSize(int textSize) {
@@ -209,6 +211,7 @@ public class SettingsFragment extends BaseFragment {
 
     @OnClick(R.id.bt_reset_dialogs)
     protected void onClickResetDialogs() {
+        PrefsUtils.setNeverShowHelp(false);
         PrefsUtils.setNeverAskRevealLetter(false);
         PrefsUtils.setNeverAskRevealMistakes(false);
         update();

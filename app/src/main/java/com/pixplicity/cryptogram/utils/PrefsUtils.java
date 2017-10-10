@@ -19,6 +19,7 @@ public class PrefsUtils {
     private static final String KEY_AUTO_ADVANCE = "auto_advance";
     private static final String KEY_SKIP_FILLED_CELLS = "skip_filled_cells";
     private static final String KEY_CURRENT_TOPIC = "current_topic";
+    private static final String KEY_NEVER_SHOW_HELP = "never_show_help";
     private static final String KEY_NEVER_ASK_REVEAL_LETTER = "never_ask_reveal_letter";
     private static final String KEY_NEVER_ASK_REVEAL_MISTAKES = "never_ask_reveal_mistakes";
     private static final String KEY_HIGHLIGHTED_HYPHENATION = "highlighted_hyphenation";
@@ -130,6 +131,14 @@ public class PrefsUtils {
 
     public static boolean getNeverAskRevealMistakes() {
         return Prefs.getBoolean(KEY_NEVER_ASK_REVEAL_MISTAKES, false);
+    }
+
+    public static void setNeverShowHelp(boolean neverShowHelp) {
+        Prefs.putBoolean(KEY_NEVER_SHOW_HELP, neverShowHelp);
+    }
+
+    public static boolean getNeverShowHelp() {
+        return Prefs.getBoolean(KEY_NEVER_SHOW_HELP, false);
     }
 
     public static void setNeverAskRevealLetter(boolean neverAsk) {
