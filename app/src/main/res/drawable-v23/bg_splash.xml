@@ -5,12 +5,11 @@
         android:drawable="@drawable/bg_splash_gradient"/>
 
     <item
-        android:bottom="96dp"
-        android:left="336dp"
-        android:right="336dp"
-        android:top="96dp">
+        android:width="144dp"
+        android:height="144dp"
+        android:gravity="center">
         <bitmap
-            android:gravity="center"
+            android:gravity="fill"
             android:src="?attr/im_launcher"/>
     </item>
 
