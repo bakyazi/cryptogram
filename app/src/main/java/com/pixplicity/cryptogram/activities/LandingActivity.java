@@ -28,6 +28,8 @@ import butterknife.OnClick;
 
 public class LandingActivity extends BaseActivity {
 
+    public static final String EXTRA_LAUNCH_SETTINGS = "launch_settings";
+
     @BindView(R.id.iv_google_play_games_banner)
     protected ImageView mIvGooglePlayGamesBanner;
 
@@ -63,6 +65,24 @@ public class LandingActivity extends BaseActivity {
         Answers.getInstance().logContentView(new ContentViewEvent().putContentName(CryptogramApp.CONTENT_LANDING));
 
         StatisticsUtils.populateTable(mVgStats);
+
+        Intent intent = getIntent();
+        if (intent != null) {
+            // Relaunch settings to resume where user left off
+            if (intent.getBooleanExtra(EXTRA_LAUNCH_SETTINGS, false)) {
+                startActivity(SettingsActivity.create(this));
+            }
+        }
+    }
+
+    @OnClick(R.id.bt_settings)
+    protected void onClickSettings() {
+        startActivity(SettingsActivity.create(this));
+    }
+
+    @OnClick(R.id.bt_how_to_play)
+    protected void onClickHowToPlay() {
+        startActivity(HowToPlayActivity.create(this));
     }
 
     @OnClick(R.id.vg_google_play_games)

@@ -17,7 +17,7 @@ import android.widget.RadioButton;
 
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.pixplicity.cryptogram.R;
-import com.pixplicity.cryptogram.activities.PuzzleActivity;
+import com.pixplicity.cryptogram.activities.LandingActivity;
 import com.pixplicity.cryptogram.events.PuzzleEvent;
 import com.pixplicity.cryptogram.utils.EventProvider;
 import com.pixplicity.cryptogram.utils.PrefsUtils;
@@ -177,7 +177,6 @@ public class SettingsFragment extends BaseFragment {
 
     private void setUseSystemKeyboard(boolean useSystemKeyboard) {
         PrefsUtils.setUseSystemKeyboard(useSystemKeyboard);
-        relaunch();
     }
 
     private void relaunch() {
@@ -189,7 +188,7 @@ public class SettingsFragment extends BaseFragment {
         Intent i = context.getPackageManager()
                           .getLaunchIntentForPackage(context.getPackageName());
         i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-        i.putExtra(PuzzleActivity.EXTRA_LAUNCH_SETTINGS, true);
+        i.putExtra(LandingActivity.EXTRA_LAUNCH_SETTINGS, true);
         startActivity(i);
         getActivity().finish();
     }

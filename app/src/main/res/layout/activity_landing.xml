@@ -1,44 +1,33 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
-    android:id="@+id/coordinator"
+<android.support.v4.widget.DrawerLayout
+    android:id="@+id/drawer_layout"
     xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:fitsSystemWindows="true"
-    android:orientation="vertical">
+    tools:context=".activities.PuzzleActivity">
 
-    <include layout="@layout/in_toolbar"/>
-
-    <android.support.v4.widget.DrawerLayout
-        android:id="@+id/drawer_layout"
-        xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:tools="http://schemas.android.com/tools"
+    <LinearLayout
+        android:id="@+id/vg_content"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:context=".activities.PuzzleActivity">
+        android:fitsSystemWindows="true"
+        android:orientation="vertical">
 
-        <FrameLayout
-            android:id="@+id/vg_root"
+        <include layout="@layout/in_toolbar"/>
+
+        <fragment
+            android:id="@+id/fragment"
+            android:name="com.pixplicity.cryptogram.fragments.LandingFragment"
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_weight="1"
-            app:layout_behavior="@string/appbar_scrolling_view_behavior">
+            tools:layout="@layout/fragment_landing"/>
 
-            <fragment
-                android:id="@+id/fragment"
-                android:name="com.pixplicity.cryptogram.fragments.LandingFragment"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                tools:layout="@layout/fragment_landing"/>
+    </LinearLayout>
 
-        </FrameLayout>
+    <include
+        layout="@layout/in_drawer"
+        tools:visibility="gone"/>
 
-        <include
-            layout="@layout/in_drawer"
-            tools:visibility="gone"/>
-
-    </android.support.v4.widget.DrawerLayout>
-
-</LinearLayout>
+</android.support.v4.widget.DrawerLayout>

@@ -63,7 +63,6 @@ public class PuzzleActivity extends BaseActivity {
 
     private static final int ONBOARDING_PAGES = 2;
 
-    public static final String EXTRA_LAUNCH_SETTINGS = "launch_settings";
     public static final int HIGHLIGHT_DELAY = 1200;
 
     @BindView(R.id.vg_cryptogram)
@@ -194,13 +193,6 @@ public class PuzzleActivity extends BaseActivity {
         }
 
         updateCryptogram(puzzleProvider.getCurrent(mPuzzles));
-
-        Intent intent = getIntent();
-        if (intent != null) {
-            if (intent.getBooleanExtra(EXTRA_LAUNCH_SETTINGS, false)) {
-                startActivity(SettingsActivity.create(this));
-            }
-        }
     }
 
     @Override
@@ -663,10 +655,6 @@ public class PuzzleActivity extends BaseActivity {
                 }
                 // Now show the stats
                 StatisticsUtils.showDialog(this, isDarkTheme());
-            }
-            return true;
-            case R.id.action_settings: {
-                startActivity(SettingsActivity.create(this));
             }
             return true;
             case R.id.action_how_to_play: {

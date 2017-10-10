@@ -68,13 +68,6 @@
         app:showAsAction="never"/>
 
     <item
-        android:id="@+id/action_settings"
-        android:icon="@drawable/ic_settings"
-        android:orderInCategory="310"
-        android:title="@string/settings"
-        app:showAsAction="never"/>
-
-    <item
         android:id="@+id/action_help"
         android:icon="@drawable/ic_help"
         android:orderInCategory="400"

@@ -23,6 +23,8 @@ import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.Window;
+import android.view.WindowManager;
 import android.widget.TextView;
 
 import com.crashlytics.android.Crashlytics;
@@ -59,15 +61,12 @@ public abstract class BaseActivity extends AppCompatActivity implements
     protected static final int RC_SAVED_GAMES = 1002;
 
     @Nullable
-    @BindView(R.id.vg_root)
-    protected View mVgRoot;
-
-    @Nullable
     @BindView(R.id.drawer_layout)
     protected DrawerLayout mDrawerLayout;
 
-    @BindView(R.id.coordinator)
-    protected View mVgCoordinator;
+    @Nullable
+    @BindView(R.id.vg_content)
+    protected View mVgContent;
 
     @BindView(R.id.toolbar)
     protected Toolbar mToolbar;
@@ -235,14 +234,32 @@ public abstract class BaseActivity extends AppCompatActivity implements
 
     @Override
     public void setContentView(@LayoutRes int layoutResID) {
+        Window window = getWindow();
+
         mDarkTheme = PrefsUtils.getDarkTheme();
         if (mDarkTheme) {
             setTheme(R.style.AppTheme_Dark);
             // Replace any splash screen image
-            getWindow().setBackgroundDrawableResource(R.drawable.bg_activity_dark);
+            window.setBackgroundDrawableResource(R.drawable.bg_activity_dark);
         } else {
-            getWindow().setBackgroundDrawableResource(R.drawable.bg_activity_light);
+            window.setBackgroundDrawableResource(R.drawable.bg_activity_light);
         }
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
+            // Enable status bar translucency (requires API 19)
+            window.setFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS,
+                    WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
+        }
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            // Set a color (requires API 21)
+            if (mDarkTheme) {
+                window.setStatusBarColor(ContextCompat.getColor(this, R.color.colorDarkPrimaryDark));
+            } else {
+                window.setStatusBarColor(ContextCompat.getColor(this, R.color.colorPrimaryDark));
+            }
+        }
+
         super.setContentView(layoutResID);
         ButterKnife.bind(this);
 
@@ -256,13 +273,6 @@ public abstract class BaseActivity extends AppCompatActivity implements
         ab.setDisplayShowTitleEnabled(true);
         ab.setDisplayHomeAsUpEnabled(true);
         ab.setHomeButtonEnabled(true);
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-            if (mDarkTheme) {
-                getWindow().setStatusBarColor(ContextCompat.getColor(this, R.color.colorDarkPrimaryDark));
-            } else {
-                getWindow().setStatusBarColor(ContextCompat.getColor(this, R.color.colorPrimaryDark));
-            }
-        }
 
         if (mDrawerLayout != null) {
             // Apply side navigation
@@ -324,8 +334,8 @@ public abstract class BaseActivity extends AppCompatActivity implements
     protected void onDrawerMoving() {
     }
 
-    protected View getViewRoot() {
-        return mVgRoot == null ? mDrawerLayout : mVgRoot;
+    protected View getViewContents() {
+        return mVgContent == null ? mDrawerLayout : mVgContent;
     }
 
     @NonNull
@@ -423,7 +433,7 @@ public abstract class BaseActivity extends AppCompatActivity implements
     }
 
     protected void showSnackbar(String text) {
-        final Snackbar snackbar = Snackbar.make(getViewRoot(), text, Snackbar.LENGTH_SHORT);
+        final Snackbar snackbar = Snackbar.make(getViewContents(), text, Snackbar.LENGTH_SHORT);
         View snackBarView = snackbar.getView();
 
         // Set background
