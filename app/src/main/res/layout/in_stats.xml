@@ -41,11 +41,11 @@
             <TextView
                 android:layout_span="3"
                 android:text="@string/stats_total_completed_label"
-                android:textColor="?attr/textColorInverse"/>
+                android:textColor="?attr/textColorOnPrimary"/>
 
             <TextView
                 android:id="@+id/tv_stats_completed"
-                android:textColor="?attr/textColorInverse"/>
+                android:textColor="?attr/textColorOnPrimary"/>
 
         </TableRow>
 
@@ -55,11 +55,11 @@
             <TextView
                 android:layout_span="3"
                 android:text="@string/stats_average_score_label"
-                android:textColor="?attr/textColorInverse"/>
+                android:textColor="?attr/textColorOnPrimary"/>
 
             <TextView
                 android:id="@+id/tv_stats_average_score"
-                android:textColor="?attr/textColorInverse"/>
+                android:textColor="?attr/textColorOnPrimary"/>
 
         </TableRow>
 
@@ -69,11 +69,11 @@
             <TextView
                 android:layout_span="3"
                 android:text="@string/stats_cumulative_score_label"
-                android:textColor="?attr/textColorInverse"/>
+                android:textColor="?attr/textColorOnPrimary"/>
 
             <TextView
                 android:id="@+id/tv_stats_total_score"
-                android:textColor="?attr/textColorInverse"/>
+                android:textColor="?attr/textColorOnPrimary"/>
 
         </TableRow>
 
@@ -83,11 +83,11 @@
             <TextView
                 android:layout_span="3"
                 android:text="@string/stats_fastest_completion_label"
-                android:textColor="?attr/textColorInverse"/>
+                android:textColor="?attr/textColorOnPrimary"/>
 
             <TextView
                 android:id="@+id/tv_stats_fastest"
-                android:textColor="?attr/textColorInverse"/>
+                android:textColor="?attr/textColorOnPrimary"/>
 
         </TableRow>
 
@@ -97,11 +97,11 @@
             <TextView
                 android:layout_span="3"
                 android:text="@string/stats_total_time_spent_label"
-                android:textColor="?attr/textColorInverse"/>
+                android:textColor="?attr/textColorOnPrimary"/>
 
             <TextView
                 android:id="@+id/tv_stats_total_time"
-                android:textColor="?attr/textColorInverse"/>
+                android:textColor="?attr/textColorOnPrimary"/>
 
         </TableRow>
 
@@ -111,11 +111,11 @@
             <TextView
                 android:layout_span="3"
                 android:text="@string/stats_longest_streak_label"
-                android:textColor="?attr/textColorInverse"/>
+                android:textColor="?attr/textColorOnPrimary"/>
 
             <TextView
                 android:id="@+id/tv_stats_streak"
-                android:textColor="?attr/textColorInverse"/>
+                android:textColor="?attr/textColorOnPrimary"/>
 
         </TableRow>
 

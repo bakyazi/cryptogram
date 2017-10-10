@@ -83,13 +83,11 @@
     </style>
 
     <style name="Dialog.Light" parent="@style/Base.Theme.AppCompat.Light.Dialog.Alert">
-        <!-- Poorly named as the color isn't inverted, but this is for compatibility with inverting the activity -->
-        <item name="textColorInverse">@color/colorTextPrimary</item>
+        <item name="textColorOnPrimary">@color/colorTextPrimary</item>
     </style>
 
     <style name="Dialog.Dark" parent="@style/Base.Theme.AppCompat.Dialog.Alert">
-        <!-- Poorly named as the color isn't inverted, but this is for compatibility with inverting the activity -->
-        <item name="textColorInverse">@color/colorDarkTextPrimary</item>
+        <item name="textColorOnPrimary">@color/colorDarkTextPrimary</item>
     </style>
 
     <style name="KeyboardButton" parent="@style/Widget.AppCompat.Button">

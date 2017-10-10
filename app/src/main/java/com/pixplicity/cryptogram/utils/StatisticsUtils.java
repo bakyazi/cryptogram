@@ -1,7 +1,9 @@
 package com.pixplicity.cryptogram.utils;
 
 import android.content.Context;
+import android.content.ContextWrapper;
 import android.os.AsyncTask;
+import android.support.annotation.StyleRes;
 import android.support.v7.app.AlertDialog;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -115,18 +117,22 @@ public class StatisticsUtils {
     public static void showDialog(Context context, boolean darkTheme) {
         // Log the event
         Answers.getInstance().logContentView(new ContentViewEvent().putContentName(CryptogramApp.CONTENT_STATISTICS));
+        // Prepare the theme (both for view and the dialog itself)
+        ContextWrapper contextWrapper = new ContextWrapper(context);
+        @StyleRes int themeResId = darkTheme ? R.style.Dialog_Dark : R.style.Dialog_Light;
+        contextWrapper.setTheme(themeResId);
+        // Populate the contents
+        ViewGroup dialogView = (ViewGroup) LayoutInflater.from(contextWrapper).inflate(R.layout.dialog_statistics, null);
+        populateTable(dialogView);
         // Compose the dialog
-        ViewGroup dialogView = (ViewGroup) LayoutInflater.from(context).inflate(R.layout.dialog_statistics, null);
-        populateTable(context, dialogView);
-        new AlertDialog.Builder(context, darkTheme ? R.style.Dialog_Dark : R.style.Dialog_Light)
+        new AlertDialog.Builder(context, themeResId)
                 .setTitle(R.string.statistics)
                 .setView(dialogView)
-                .setPositiveButton(android.R.string.ok, (dialogInterface, i) -> {
-                })
+                .setPositiveButton(android.R.string.ok, null)
                 .show();
     }
 
-    public static void populateTable(Context context, ViewGroup statsView) {
+    public static void populateTable(ViewGroup statsView) {
         new StatsTask(statsView).execute();
     }
 

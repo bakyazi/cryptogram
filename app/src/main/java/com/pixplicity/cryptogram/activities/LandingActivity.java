@@ -62,7 +62,7 @@ public class LandingActivity extends BaseActivity {
 
         Answers.getInstance().logContentView(new ContentViewEvent().putContentName(CryptogramApp.CONTENT_LANDING));
 
-        StatisticsUtils.populateTable(this, mVgStats);
+        StatisticsUtils.populateTable(mVgStats);
     }
 
     @OnClick(R.id.vg_google_play_games)

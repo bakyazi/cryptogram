@@ -130,35 +130,39 @@
             android:layout_marginTop="16dp"
             android:padding="0dp"
             android:text="@string/statistics"
-            android:textColor="?attr/textColorInverse"
+            android:textColor="?attr/textColorOnPrimary"
             android:textStyle="bold"/>
 
         <include
+            android:id="@+id/vg_stats"
+            layout="@layout/in_stats"
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_marginBottom="8dp"
             android:layout_marginLeft="16dp"
             android:layout_marginRight="16dp"
             android:layout_marginTop="8dp"
-            android:layout_weight="1"
-            android:id="@+id/vg_stats"
-            layout="@layout/in_stats"/>
+            android:layout_weight="1"/>
 
         <android.support.v7.widget.AppCompatButton
             style="?attr/borderlessButtonStyle"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:minHeight="64dp"
+            android:layout_marginBottom="8dp"
+            android:layout_marginLeft="8dp"
+            android:layout_marginRight="8dp"
             android:text="@string/settings"
-            android:textColor="?attr/textColorInverse"/>
+            android:textColor="?attr/textColorOnPrimary"/>
 
         <android.support.v7.widget.AppCompatButton
             style="?attr/borderlessButtonStyle"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:minHeight="64dp"
+            android:layout_marginBottom="8dp"
+            android:layout_marginLeft="8dp"
+            android:layout_marginRight="8dp"
             android:text="@string/how_to_play"
-            android:textColor="?attr/textColorInverse"/>
+            android:textColor="?attr/textColorOnPrimary"/>
 
     </LinearLayout>
 
