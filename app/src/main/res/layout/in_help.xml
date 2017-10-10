@@ -8,7 +8,7 @@
     android:background="?attr/cardBackground"
     android:clickable="true"
     android:focusable="true"
-    android:foreground="@drawable/ripple_primary_dark">
+    android:foreground="@drawable/ripple_card">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -34,7 +34,7 @@
             android:id="@+id/bt_help_dismiss"
             android:layout_width="48dp"
             android:layout_height="48dp"
-            android:background="@drawable/ripple_primary_dark_borderless"
+            android:background="@drawable/ripple_card_borderless"
             android:src="@drawable/ic_cross"
             android:tint="?attr/textColorPrimary"/>
 
