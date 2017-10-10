@@ -5,6 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_marginBottom="16dp"
+    android:background="?attr/cardBackground"
     android:clickable="true"
     android:focusable="true"
     android:foreground="@drawable/ripple_primary_dark">
@@ -25,7 +26,7 @@
             android:paddingStart="24dp"
             android:paddingTop="8dp"
             android:text="@string/help_card"
-            android:textColor="@color/colorPrimaryDark"
+            android:textColor="?attr/textColorPrimary"
             android:textSize="18sp"
             android:textStyle="italic"/>
 
@@ -35,7 +36,7 @@
             android:layout_height="48dp"
             android:background="@drawable/ripple_primary_dark_borderless"
             android:src="@drawable/ic_cross"
-            android:tint="@color/colorPrimaryDark"/>
+            android:tint="?attr/textColorPrimary"/>
 
     </LinearLayout>
 

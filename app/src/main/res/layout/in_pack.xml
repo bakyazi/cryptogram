@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="144dp"
+    android:background="?attr/cardBackground"
     android:clickable="true"
     android:focusable="true"
     android:foreground="@drawable/ripple_primary_dark">
@@ -27,7 +28,6 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="bottom"
-            android:background="@color/white"
             android:ellipsize="end"
             android:gravity="center"
             android:maxLines="1"
@@ -43,7 +43,6 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="bottom"
-            android:background="@color/white"
             android:ellipsize="end"
             android:gravity="center"
             android:maxLines="1"
