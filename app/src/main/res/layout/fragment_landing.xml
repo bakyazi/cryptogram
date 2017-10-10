@@ -19,12 +19,20 @@
         <include layout="@layout/in_help"/>
 
         <fragment
+            android:name="com.pixplicity.cryptogram.fragments.ContinuePuzzleFragment"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="16dp"
+            android:tag="continue"
+            tools:layout="@layout/fragment_continue_puzzle"/>
+
+        <fragment
             android:name="com.pixplicity.cryptogram.fragments.DailyPuzzleFragment"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="8dp"
             android:tag="daily"
-            tools:layout="@layout/fragment_daily"/>
+            tools:layout="@layout/fragment_daily_puzzle"/>
 
         <fragment
             android:name="com.pixplicity.cryptogram.fragments.PuzzlePacksFragment"

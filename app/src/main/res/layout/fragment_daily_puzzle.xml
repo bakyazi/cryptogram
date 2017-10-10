@@ -5,6 +5,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    android:layout_marginBottom="16dp"
     android:clipChildren="false"
     android:orientation="vertical">
 
@@ -50,7 +51,7 @@
                 android:layout_alignParentEnd="true"
                 android:layout_alignParentRight="true"
                 android:layout_below="@id/tv_label"
-                android:background="@drawable/bg_overlay"/>
+                android:background="@drawable/bg_overlay_primary"/>
 
             <FrameLayout
                 android:id="@+id/vg_daily_date"

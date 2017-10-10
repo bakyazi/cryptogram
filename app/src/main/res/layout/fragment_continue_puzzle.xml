@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.v7.widget.CardView
+    android:id="@+id/cv_puzzle"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:clickable="true"
+    android:focusable="true"
+    android:foreground="@drawable/ripple_primary_dark">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="96dp">
+
+        <TextView
+            android:id="@+id/tv_label"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="top"
+            android:background="?attr/colorPrimary"
+            android:gravity="center"
+            android:padding="4dp"
+            android:text="@string/resume_puzzle"
+            android:textAllCaps="true"
+            android:textColor="@color/textLight"
+            android:textSize="12sp"/>
+
+        <com.pixplicity.cryptogram.views.CryptogramView
+            android:id="@+id/cryptogram"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_below="@id/tv_label"
+            android:enabled="false"
+            android:paddingLeft="8dp"
+            android:paddingRight="8dp"/>
+
+        <View
+            android:layout_width="240dp"
+            android:layout_height="match_parent"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentRight="true"
+            android:layout_below="@id/tv_label"
+            android:background="@drawable/bg_overlay_white"/>
+
+        <TextView
+            android:id="@+id/tv_author"
+            android:layout_width="192dp"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentRight="true"
+            android:ellipsize="end"
+            android:gravity="end"
+            android:maxLines="1"
+            android:padding="8dp"
+            android:textColor="?attr/textColor"
+            android:textStyle="italic"
+            tools:text="- Nelson Mandela"/>
+
+    </RelativeLayout>
+
+</android.support.v7.widget.CardView>
