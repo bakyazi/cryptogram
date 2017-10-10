@@ -15,11 +15,10 @@
             android:layout_width="wrap_content"
             android:layout_height="128dp"
             android:layout_gravity="center_horizontal"
-            android:layout_marginBottom="16dp"
             android:adjustViewBounds="true"
             android:contentDescription="@string/app_name"
             android:scaleType="centerInside"
-            android:src="@drawable/ic_icon"/>
+            android:src="?attr/im_launcher"/>
 
         <TextView
             style="@style/Base.TextAppearance.Widget.AppCompat.Toolbar.Title"

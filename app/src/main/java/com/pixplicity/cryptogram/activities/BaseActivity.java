@@ -241,7 +241,7 @@ public abstract class BaseActivity extends AppCompatActivity implements
             // Replace any splash screen image
             getWindow().setBackgroundDrawableResource(R.drawable.bg_activity_dark);
         } else {
-            getWindow().setBackgroundDrawableResource(R.drawable.bg_activity);
+            getWindow().setBackgroundDrawableResource(R.drawable.bg_activity_light);
         }
         super.setContentView(layoutResID);
         ButterKnife.bind(this);
