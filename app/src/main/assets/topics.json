@@ -1,10 +1,17 @@
 [
   {
     "id": "inspirational",
-    "name": "Inspirational & motivational",
+    "name": "Inspirational",
     "cover": "inspirational-1.jpg",
-    "description": "Impel and motivate yourself with inspirational and motivational words from those who have experienced life.",
-    "topics": "inspirational|motivational|life|appreciation|happiness"
+    "description": "Impel yourself with inspirational insights by visionaries of all walks of life.",
+    "topics": "inspirational|appreciation|happiness"
+  },
+  {
+    "id": "motivational",
+    "name": "Motivational",
+    "cover": "motivational-1.jpg",
+    "description": "These motivational words from those who have experienced life will surely encourage you.",
+    "topics": "motivational|life"
   },
   {
     "id": "love",
@@ -22,7 +29,7 @@
   },
   {
     "id": "thoughtfulness",
-    "name": "Thoughts & dreams",
+    "name": "Thoughtfulness",
     "cover": "thoughtfulness-1.jpg",
     "description": "Dare to dream. Find your inner peace. The wise words in these puzzles may help you to learn to know yourself better.",
     "topics": "thoughtfulness|imagination|tranquility"
@@ -56,18 +63,11 @@
     "topics": "ambition|determination|success|confidence|business"
   },
   {
-    "id": "sorrow",
-    "name": "Sorrow",
-    "cover": "sorrow-1.jpg",
-    "description": "In the contrasts of life there must also be darkness. These puzzles are words spoken as words of comfort by those who have suffered.",
-    "topics": "sorrow"
-  },
-  {
     "id": "despair",
-    "name": "Depression & despair",
-    "cover": "despair-1.jpg",
-    "description": "Depression is a mental illness often gone undiagnosed and untreated. Once it grasps you, you’re sucked in to a whirlpool of despair. The thoughts shared in these puzzles are spoken by those who have escaped it and can help us understand what it’s like.",
-    "topics": "depression|despair|loneliness|acceptance|anxiety"
+    "name": "Suffering",
+    "cover": "suffering-1.jpg",
+    "description": "In the contrasts of life there must also be darkness. These puzzles are words spoken as words of comfort by those who have suffered.",
+    "topics": "sorrow|depression|despair|loneliness|acceptance|anxiety"
   },
   {
     "id": "holidays",
@@ -94,7 +94,7 @@
     "id": "seasons",
     "name": "The seasons",
     "cover": "seasons-1.jpg",
-    "description": "Each season can bring something new. Explore these words by poets and philosophers on what might shore with the tides of time.",
+    "description": "Each season brings something new. Explore these words by poets and philosophers on what might shore with the tides of time.",
     "topics": "spring|summer|autumn|winter"
   },
   {
