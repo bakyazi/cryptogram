@@ -121,7 +121,7 @@
     <!-- Subscription -->
     <string name="daily_puzzle">Daily puzzle</string>
     <string name="subscribe">Subscribe</string>
-    <string name="subscription_expires">Your subscription ends in <xliff:g id="days" example="36">%1$d</xliff:g> days.</string>
+    <string name="subscription_expires">Your subscription ends in <xliff:g id="days" example="6">%1$d</xliff:g> days.</string>
     <string name="subscription_total_puzzles">There are <xliff:g id="total" example="36">%1$d</xliff:g> puzzles in your subscription.</string>
 
     <!-- Settings -->

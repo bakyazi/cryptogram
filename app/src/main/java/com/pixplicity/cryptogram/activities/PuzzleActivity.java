@@ -1,23 +1,16 @@
 package com.pixplicity.cryptogram.activities;
 
-import android.app.ProgressDialog;
-import android.content.ActivityNotFoundException;
+import android.content.Context;
 import android.content.Intent;
-import android.content.IntentSender;
 import android.graphics.PointF;
 import android.graphics.Rect;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
-import android.support.annotation.ColorInt;
-import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
-import android.support.design.widget.Snackbar;
-import android.support.v4.view.GravityCompat;
 import android.support.v7.app.AlertDialog;
 import android.text.Editable;
 import android.text.InputType;
-import android.util.Log;
 import android.util.SparseBooleanArray;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
@@ -26,33 +19,17 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.ViewStub;
-import android.widget.Button;
-import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.afollestad.easyvideoplayer.EasyVideoPlayer;
 import com.afollestad.materialdialogs.DialogAction;
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.afollestad.materialdialogs.internal.MDButton;
-import com.crashlytics.android.Crashlytics;
 import com.crashlytics.android.answers.Answers;
-import com.crashlytics.android.answers.ContentViewEvent;
-import com.crashlytics.android.answers.LoginEvent;
 import com.crashlytics.android.answers.ShareEvent;
 import com.getkeepsafe.taptargetview.TapTarget;
 import com.getkeepsafe.taptargetview.TapTargetView;
-import com.google.android.gms.common.ConnectionResult;
-import com.google.android.gms.common.api.GoogleApiClient;
-import com.google.android.gms.common.images.ImageManager;
-import com.google.android.gms.drive.Drive;
-import com.google.android.gms.games.Games;
-import com.google.android.gms.games.GamesActivityResultCodes;
-import com.google.android.gms.games.Player;
-import com.google.android.gms.games.snapshot.SnapshotMetadata;
-import com.google.android.gms.games.snapshot.Snapshots;
 import com.pixplicity.cryptogram.BuildConfig;
-import com.pixplicity.cryptogram.CryptogramApp;
 import com.pixplicity.cryptogram.R;
 import com.pixplicity.cryptogram.events.PuzzleEvent;
 import com.pixplicity.cryptogram.models.Puzzle;
@@ -64,10 +41,8 @@ import com.pixplicity.cryptogram.utils.AchievementProvider;
 import com.pixplicity.cryptogram.utils.EventProvider;
 import com.pixplicity.cryptogram.utils.LeaderboardProvider;
 import com.pixplicity.cryptogram.utils.PrefsUtils;
-import com.pixplicity.cryptogram.utils.SavegameManager;
 import com.pixplicity.cryptogram.utils.StatisticsUtils;
 import com.pixplicity.cryptogram.utils.StringUtils;
-import com.pixplicity.cryptogram.utils.StyleUtils;
 import com.pixplicity.cryptogram.utils.VideoUtils;
 import com.pixplicity.cryptogram.views.CryptogramLayout;
 import com.pixplicity.cryptogram.views.CryptogramView;
@@ -81,38 +56,15 @@ import java.util.Locale;
 import java.util.concurrent.TimeUnit;
 
 import butterknife.BindView;
-import butterknife.OnClick;
 
-public class PuzzleActivity extends BaseActivity implements GoogleApiClient.ConnectionCallbacks, GoogleApiClient.OnConnectionFailedListener {
+public class PuzzleActivity extends BaseActivity {
 
     private static final String TAG = PuzzleActivity.class.getSimpleName();
-
-    private static final int RC_UNUSED = 1000;
-    private static final int RC_PLAY_GAMES = 1001;
-    private static final int RC_SAVED_GAMES = 1002;
 
     private static final int ONBOARDING_PAGES = 2;
 
     public static final String EXTRA_LAUNCH_SETTINGS = "launch_settings";
     public static final int HIGHLIGHT_DELAY = 1200;
-
-    @BindView(R.id.iv_google_play_games_banner)
-    protected ImageView mIvGooglePlayGamesBanner;
-
-    @BindView(R.id.iv_google_play_games_icon)
-    protected ImageView mIvGooglePlayGamesIcon;
-
-    @BindView(R.id.tv_google_play_games)
-    protected TextView mTvGooglePlayGames;
-
-    @BindView(R.id.iv_google_play_games_avatar)
-    protected ImageView mIvGooglePlayGamesAvatar;
-
-    @BindView(R.id.tv_google_play_games_name)
-    protected TextView mTvGooglePlayGamesName;
-
-    @BindView(R.id.vg_google_play_games_actions)
-    protected ViewGroup mVgGooglePlayGamesActions;
 
     @BindView(R.id.vg_cryptogram)
     protected CryptogramLayout mVgCryptogram;
@@ -169,20 +121,11 @@ public class PuzzleActivity extends BaseActivity implements GoogleApiClient.Conn
 
     private Rate mRate;
 
-    private GoogleApiClient mGoogleApiClient;
-
-    // Are we currently resolving a connection failure?
-    private boolean mResolvingConnectionFailure = false;
-
-    // Has the user clicked the sign-in button?
-    private boolean mSignInClicked = false;
-
-    // Automatically start the sign-in flow when the Activity starts
-    private boolean mAutoStartSignInFlow = false;
-
-    private int mLastConnectionError;
-
     private boolean mFreshInstall;
+
+    public static Intent create(Context context) {
+        return new Intent(context, PuzzleActivity.class);
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -191,20 +134,12 @@ public class PuzzleActivity extends BaseActivity implements GoogleApiClient.Conn
             setTheme(R.style.AppTheme_Dark);
             getWindow().setBackgroundDrawableResource(R.drawable.bg_activity_dark);
         }
-        setContentView(R.layout.activity_cryptogram);
+        setContentView(R.layout.activity_puzzle);
         if (isDarkTheme()) {
             mVgStats.setBackgroundResource(R.drawable.bg_statistics_dark);
         }
 
         final PuzzleProvider puzzleProvider = PuzzleProvider.getInstance(this);
-
-        // Create the Google Api Client with access to Games
-        mGoogleApiClient = new GoogleApiClient.Builder(this)
-                .addConnectionCallbacks(this)
-                .addOnConnectionFailedListener(this)
-                .addApi(Games.API).addScope(Games.SCOPE_GAMES)
-                .addApi(Drive.API).addScope(Drive.SCOPE_APPFOLDER)
-                .build();
 
         mRate = new Rate.Builder(this)
                 .setTriggerCount(10)
@@ -280,8 +215,6 @@ public class PuzzleActivity extends BaseActivity implements GoogleApiClient.Conn
     protected void onStart() {
         super.onStart();
 
-        mGoogleApiClient.connect();
-
         final PuzzleProvider puzzleProvider = PuzzleProvider.getInstance(this);
         Puzzle puzzle = puzzleProvider.getCurrent(mPuzzles);
         if (puzzle != null) {
@@ -303,10 +236,6 @@ public class PuzzleActivity extends BaseActivity implements GoogleApiClient.Conn
     protected void onStop() {
         super.onStop();
 
-        if (mGoogleApiClient.isConnected()) {
-            mGoogleApiClient.disconnect();
-        }
-
         final PuzzleProvider puzzleProvider = PuzzleProvider.getInstance(this);
         Puzzle puzzle = puzzleProvider.getCurrent(mPuzzles);
         if (puzzle != null) {
@@ -318,94 +247,11 @@ public class PuzzleActivity extends BaseActivity implements GoogleApiClient.Conn
 
     @Override
     public void onBackPressed() {
-        if (mDrawerLayout != null && mDrawerLayout.isDrawerOpen(GravityCompat.START)) {
-            mDrawerLayout.closeDrawer(GravityCompat.START);
-            return;
-        }
         if (mVwKeyboard != null && mVwKeyboard.isShown()) {
             mCryptogramView.hideSoftInput();
             return;
         }
         super.onBackPressed();
-    }
-
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent intent) {
-        Log.d(TAG, "onActivityResult: " + requestCode);
-        super.onActivityResult(requestCode, resultCode, intent);
-        switch (requestCode) {
-            case RC_PLAY_GAMES: {
-                Log.d(TAG, "onActivityResult: resolution result");
-                mSignInClicked = false;
-                mResolvingConnectionFailure = false;
-                switch (resultCode) {
-                    case RESULT_OK: {
-                        // Logged in
-                        Answers.getInstance().logLogin(new LoginEvent().putSuccess(true));
-                        mGoogleApiClient.connect();
-                    }
-                    break;
-                    case GamesActivityResultCodes.RESULT_RECONNECT_REQUIRED: {
-                        // Logged out
-                        if (mGoogleApiClient.isConnected()) {
-                            mGoogleApiClient.disconnect();
-                        }
-                    }
-                    break;
-                    case RESULT_CANCELED: {
-                        // Canceled; do nothing
-                    }
-                    break;
-                    default: {
-                        // Assume some error
-                        showGmsError(resultCode);
-                    }
-                }
-            }
-            case RC_SAVED_GAMES:
-                if (mDrawerLayout != null) {
-                    mDrawerLayout.closeDrawers();
-                }
-                if (intent != null) {
-                    if (intent.hasExtra(Snapshots.EXTRA_SNAPSHOT_METADATA)) {
-                        // Load a snapshot.
-                        final ProgressDialog pd = new ProgressDialog(this);
-                        pd.setMessage("Loading saved game...");
-                        pd.show();
-                        final SnapshotMetadata snapshotMetadata = intent.getParcelableExtra(Snapshots.EXTRA_SNAPSHOT_METADATA);
-                        PuzzleProvider.getInstance(this).load(mGoogleApiClient, snapshotMetadata,
-                                new SavegameManager.OnLoadResult() {
-                                    @Override
-                                    public void onLoadSuccess() {
-                                        updateCryptogram(PuzzleProvider.getInstance(PuzzleActivity.this)
-                                                                       .getCurrent(mPuzzles));
-                                        showSnackbar("Game loaded.");
-                                        pd.dismiss();
-                                    }
-
-                                    @Override
-                                    public void onLoadFailure() {
-                                        showSnackbar("Sorry, the game state couldn't be restored.");
-                                        pd.dismiss();
-                                    }
-                                });
-                    } else if (intent.hasExtra(Snapshots.EXTRA_SNAPSHOT_NEW)) {
-                        PuzzleProvider.getInstance(this).save(mGoogleApiClient,
-                                new SavegameManager.OnSaveResult() {
-                                    @Override
-                                    public void onSaveSuccess() {
-                                        showSnackbar("Game saved.");
-                                    }
-
-                                    @Override
-                                    public void onSaveFailure() {
-                                        showSnackbar("Game couldn't be saved at this time.");
-                                    }
-                                });
-                    }
-                }
-                break;
-        }
     }
 
     private boolean hasOnBoardingPages() {
@@ -516,67 +362,6 @@ public class PuzzleActivity extends BaseActivity implements GoogleApiClient.Conn
                 .show();
     }
 
-    @OnClick(R.id.vg_google_play_games)
-    protected void onClickGooglePlayGames() {
-        if (mGoogleApiClient.isConnected()) {
-            // Connected; show gameplay options
-            View dialogView = LayoutInflater.from(this).inflate(R.layout.dialog_google_play_games, null);
-            final AlertDialog dialog = new AlertDialog.Builder(this)
-                    .setView(dialogView)
-                    .show();
-
-            Button btLeaderboards = dialogView.findViewById(R.id.bt_leaderboards);
-            btLeaderboards.setOnClickListener(view -> {
-                dialog.dismiss();
-                Answers.getInstance().logContentView(new ContentViewEvent().putContentName(CryptogramApp.CONTENT_LEADERBOARDS));
-                try {
-                    startActivityForResult(
-                            Games.Leaderboards.getLeaderboardIntent(mGoogleApiClient, getString(R.string.leaderboard_scoreboard)),
-                            RC_UNUSED);
-                } catch (ActivityNotFoundException e) {
-                    Toast.makeText(PuzzleActivity.this, R.string.google_play_games_not_installed, Toast.LENGTH_LONG).show();
-                }
-            });
-
-            Button btAchievements = dialogView.findViewById(R.id.bt_achievements);
-            btAchievements.setOnClickListener(view -> {
-                dialog.dismiss();
-                Answers.getInstance().logContentView(new ContentViewEvent().putContentName(CryptogramApp.CONTENT_ACHIEVEMENTS));
-                try {
-                    startActivityForResult(
-                            Games.Achievements.getAchievementsIntent(mGoogleApiClient),
-                            RC_UNUSED);
-                } catch (ActivityNotFoundException e) {
-                    Toast.makeText(PuzzleActivity.this, R.string.google_play_games_not_installed, Toast.LENGTH_LONG).show();
-                }
-            });
-
-            Button btRestoreSavedGames = dialogView.findViewById(R.id.bt_restore_saved_games);
-            btRestoreSavedGames.setOnClickListener(view -> {
-                dialog.dismiss();
-                int maxNumberOfSavedGamesToShow = 5;
-                Intent savedGamesIntent = Games.Snapshots.getSelectSnapshotIntent(mGoogleApiClient,
-                        "See My Saves", true, true, maxNumberOfSavedGamesToShow);
-                startActivityForResult(savedGamesIntent, RC_SAVED_GAMES);
-            });
-
-            Button btSignOut = dialogView.findViewById(R.id.bt_sign_out);
-            btSignOut.setOnClickListener(view -> {
-                dialog.dismiss();
-                mSignInClicked = false;
-                Games.signOut(mGoogleApiClient);
-                if (mGoogleApiClient.isConnected()) {
-                    mGoogleApiClient.disconnect();
-                }
-                updateGooglePlayGames();
-            });
-        } else {
-            // start the sign-in flow
-            mSignInClicked = true;
-            mGoogleApiClient.connect();
-        }
-    }
-
     private void updateCryptogram(Puzzle puzzle) {
         if (puzzle != null) {
             mPuzzles.setCurrentId(puzzle.getId());
@@ -663,6 +448,13 @@ public class PuzzleActivity extends BaseActivity implements GoogleApiClient.Conn
     }
 
     @Subscribe
+    public void onPuzzleLoaded(PuzzleEvent.PuzzlesLoaded event) {
+        // Reload the current puzzle we're working on
+        updateCryptogram(PuzzleProvider.getInstance(PuzzleActivity.this)
+                                       .getCurrent(mPuzzles));
+    }
+
+    @Subscribe
     public void onPuzzleStyleChanged(PuzzleEvent.PuzzleStyleChanged event) {
         // Just recreate the activity
         recreate();
@@ -670,9 +462,9 @@ public class PuzzleActivity extends BaseActivity implements GoogleApiClient.Conn
 
     @Subscribe
     public void onPuzzleStarted(PuzzleEvent.PuzzleStartedEvent event) {
-        if (mGoogleApiClient.isConnected()) {
+        if (getGoogleApiClient().isConnected()) {
             // Submit any achievements
-            AchievementProvider.getInstance().onCryptogramStart(mGoogleApiClient);
+            AchievementProvider.getInstance().onCryptogramStart(getGoogleApiClient());
         }
     }
 
@@ -686,16 +478,16 @@ public class PuzzleActivity extends BaseActivity implements GoogleApiClient.Conn
         // Allow the rating dialog to appear if needed
         mRate.check();
 
-        if (mGoogleApiClient.isConnected()) {
+        if (getGoogleApiClient().isConnected()) {
             // Submit score
-            LeaderboardProvider.getInstance().submit(mGoogleApiClient);
+            LeaderboardProvider.getInstance().submit(getGoogleApiClient());
 
             // Submit any achievements
-            AchievementProvider.getInstance().onCryptogramCompleted(mGoogleApiClient);
+            AchievementProvider.getInstance().onCryptogramCompleted(getGoogleApiClient());
         }
 
         // Attempt to save the game to Google Play Saved Games
-        PuzzleProvider.getInstance(this).save(mGoogleApiClient, null);
+        PuzzleProvider.getInstance(this).save(getGoogleApiClient(), null);
     }
 
     @Subscribe
@@ -705,19 +497,6 @@ public class PuzzleActivity extends BaseActivity implements GoogleApiClient.Conn
                 keyCode, 0));
         mCryptogramView.dispatchKeyEvent(new KeyEvent(0, 0, KeyEvent.ACTION_UP,
                 keyCode, 0));
-    }
-
-    @Override
-    protected void onDrawerOpened(View drawerView) {
-    }
-
-    @Override
-    protected void onDrawerClosed(View drawerView) {
-    }
-
-    @Override
-    protected void onDrawerMoving() {
-        mCryptogramView.hideSoftInput();
     }
 
     @Override
@@ -811,9 +590,6 @@ public class PuzzleActivity extends BaseActivity implements GoogleApiClient.Conn
             return true;
             case R.id.action_go_to: {
                 if (puzzle == null) {
-                    if (mDrawerLayout != null) {
-                        mDrawerLayout.openDrawer(GravityCompat.START);
-                    }
                     break;
                 }
                 String prefilledText = null;
@@ -908,121 +684,9 @@ public class PuzzleActivity extends BaseActivity implements GoogleApiClient.Conn
         return super.onOptionsItemSelected(item);
     }
 
-    private void showSnackbar(String text) {
-        final Snackbar snackbar = Snackbar.make(getViewRoot(), text, Snackbar.LENGTH_SHORT);
-        View snackBarView = snackbar.getView();
-
-        // Set background
-        @ColorInt int colorPrimary = StyleUtils.getColor(this, R.attr.colorPrimary);
-        snackBarView.setBackgroundColor(colorPrimary);
-
-        // Set foreground
-        @ColorInt int textColor = StyleUtils.getColor(this, R.attr.textColorOnPrimary);
-        TextView textView = snackBarView.findViewById(android.support.design.R.id.snackbar_text);
-        textView.setTextColor(textColor);
-
-        snackbar.show();
-    }
-
     private void nextPuzzle() {
         Puzzle puzzle = mPuzzles.getNext();
         updateCryptogram(puzzle);
-    }
-
-    // Google Play Services
-    @Override
-    public void onConnected(@Nullable Bundle bundle) {
-        mLastConnectionError = 0;
-        Log.d(TAG, "onConnected(): connected to Google APIs");
-
-        updateGooglePlayGames();
-
-        if (mGoogleApiClient.isConnected()) {
-            // Submit score
-            LeaderboardProvider.getInstance().submit(mGoogleApiClient);
-
-            // Submit any achievements
-            AchievementProvider.getInstance().check(mGoogleApiClient);
-        }
-    }
-
-    // Google Play Services
-    @Override
-    public void onConnectionSuspended(int i) {
-        Log.d(TAG, "onConnectionSuspended(): attempting to connect");
-        mGoogleApiClient.connect();
-    }
-
-    @Override
-    public void onConnectionFailed(@NonNull ConnectionResult connectionResult) {
-        Log.d(TAG, "onConnectionFailed: attempting to resolve");
-        if (mResolvingConnectionFailure) {
-            Log.d(TAG, "onConnectionFailed: already resolving");
-            return;
-        }
-
-        mLastConnectionError = connectionResult.getErrorCode();
-        if (mSignInClicked || mAutoStartSignInFlow) {
-            mAutoStartSignInFlow = false;
-            mSignInClicked = false;
-            mResolvingConnectionFailure = true;
-            boolean noResolution = true;
-            if (connectionResult.hasResolution()) {
-                try {
-                    Log.d(TAG, "onConnectionFailed: offering resolution");
-                    connectionResult.startResolutionForResult(this, RC_PLAY_GAMES);
-                    noResolution = false;
-                } catch (IntentSender.SendIntentException e) {
-                    Crashlytics.logException(e);
-                    Log.e(TAG, "onConnectionFailed: couldn't resolve", e);
-                }
-            }
-            if (noResolution) {
-                Log.e(TAG, "onConnectionFailed: no resolution for: " + connectionResult.toString());
-                mResolvingConnectionFailure = false;
-                showGmsError(0);
-            }
-        }
-        updateGooglePlayGames();
-    }
-
-    private void updateGooglePlayGames() {
-        if (mGoogleApiClient.isConnected()) {
-            // Set the greeting appropriately on main menu
-            Player p = Games.Players.getCurrentPlayer(mGoogleApiClient);
-            String displayName;
-            Uri imageUri;
-            if (p == null) {
-                displayName = getString(R.string.google_play_games_player_unknown);
-                imageUri = null;
-            } else {
-                displayName = p.getDisplayName();
-                imageUri = p.hasHiResImage() ? p.getHiResImageUri() : p.getIconImageUri();
-                //bannerUri = p.getBannerImageLandscapeUri();
-            }
-            Log.w(TAG, "onConnected(): current player is " + displayName);
-
-            mIvGooglePlayGamesIcon.setVisibility(View.GONE);
-            mIvGooglePlayGamesAvatar.setVisibility(View.VISIBLE);
-            ImageManager.create(this).loadImage(mIvGooglePlayGamesAvatar, imageUri, R.drawable.im_avatar);
-            mTvGooglePlayGames.setVisibility(View.GONE);
-            mTvGooglePlayGamesName.setVisibility(View.VISIBLE);
-            mTvGooglePlayGamesName.setText(displayName);
-            mVgGooglePlayGamesActions.setVisibility(View.VISIBLE);
-        } else {
-            mIvGooglePlayGamesIcon.setVisibility(View.VISIBLE);
-            mIvGooglePlayGamesAvatar.setVisibility(View.GONE);
-            mTvGooglePlayGames.setVisibility(View.VISIBLE);
-            mTvGooglePlayGamesName.setVisibility(View.GONE);
-            mVgGooglePlayGamesActions.setVisibility(View.GONE);
-        }
-    }
-
-    private void showGmsError(int errorCode) {
-        new AlertDialog.Builder(this)
-                .setMessage(getString(R.string.google_play_games_connection_failure, mLastConnectionError, errorCode))
-                .setPositiveButton(android.R.string.ok, (dialog, i) -> dialog.dismiss())
-                .show();
     }
 
 }

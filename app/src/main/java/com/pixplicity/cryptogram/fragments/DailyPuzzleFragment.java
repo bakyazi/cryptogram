@@ -11,6 +11,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.pixplicity.cryptogram.R;
+import com.pixplicity.cryptogram.activities.PuzzleActivity;
 import com.pixplicity.cryptogram.models.Puzzle;
 import com.pixplicity.cryptogram.views.CryptogramView;
 
@@ -93,6 +94,11 @@ public class DailyPuzzleFragment extends BaseFragment {
 
     private boolean hasSubscription() {
         return false;
+    }
+
+    @OnClick(R.id.cv_puzzle)
+    protected void onClickPuzzle() {
+        startActivity(PuzzleActivity.create(getContext()));
     }
 
     @OnClick(R.id.bt_subscribe)

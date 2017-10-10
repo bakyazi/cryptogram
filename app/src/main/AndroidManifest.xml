@@ -28,23 +28,29 @@
 
         <activity
             android:name=".activities.PuzzleActivity"
+            android:parentActivityName=".activities.LandingActivity"
             android:windowSoftInputMode="adjustResize"/>
 
         <activity
-            android:name=".activities.HowToPlayActivity"/>
+            android:name=".activities.HowToPlayActivity"
+            android:parentActivityName=".activities.LandingActivity"/>
 
         <activity
-            android:name=".activities.AboutActivity"/>
+            android:name=".activities.AboutActivity"
+            android:parentActivityName=".activities.LandingActivity"/>
 
         <activity
-            android:name=".activities.SettingsActivity"/>
+            android:name=".activities.SettingsActivity"
+            android:parentActivityName=".activities.LandingActivity"/>
 
-        <receiver android:name=".utils.NotificationPublisher" />
+        <receiver android:name=".utils.NotificationPublisher"/>
 
-        <meta-data android:name="com.google.android.gms.games.APP_ID"
-                   android:value="@string/app_id"/>
-        <meta-data android:name="com.google.android.gms.version"
-                   android:value="@integer/google_play_services_version"/>
+        <meta-data
+            android:name="com.google.android.gms.games.APP_ID"
+            android:value="@string/app_id"/>
+        <meta-data
+            android:name="com.google.android.gms.version"
+            android:value="@integer/google_play_services_version"/>
 
         <meta-data
             android:name="io.fabric.ApiKey"
