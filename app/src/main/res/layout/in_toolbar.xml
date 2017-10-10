@@ -5,17 +5,18 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content">
+    android:layout_height="wrap_content"
+    android:background="?attr/colorPrimary">
 
     <android.support.v7.widget.Toolbar
         android:id="@+id/toolbar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="?attr/colorPrimary"
         android:elevation="4dp"
+        android:fitsSystemWindows="true"
         android:gravity="center_vertical"
         android:theme="@style/ThemeOverlay.AppCompat.ActionBar"
-        app:layout_scrollFlags="scroll|snap|enterAlways"
+        app:layout_scrollFlags="scroll|enterAlways"
         app:subtitleTextColor="@color/textLight"
         app:titleTextColor="@color/textLight"
         tools:ignore="UnusedAttribute"/>
