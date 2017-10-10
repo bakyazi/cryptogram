@@ -22,8 +22,6 @@ public class AboutActivity extends BaseActivity {
 
         mToolbar.setTitle(R.string.about);
 
-        setHomeButtonEnabled(true);
-
         Answers.getInstance().logContentView(new ContentViewEvent().putContentName(CryptogramApp.CONTENT_ABOUT));
     }
 

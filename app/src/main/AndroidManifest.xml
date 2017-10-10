@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest package="com.pixplicity.cryptogram"
-          xmlns:android="http://schemas.android.com/apk/res/android">
+          xmlns:android="http://schemas.android.com/apk/res/android"
+          xmlns:tools="http://schemas.android.com/tools">
 
     <uses-permission android:name="android.permission.INTERNET"/>
 
@@ -29,19 +30,23 @@
         <activity
             android:name=".activities.PuzzleActivity"
             android:parentActivityName=".activities.LandingActivity"
-            android:windowSoftInputMode="adjustResize"/>
+            android:windowSoftInputMode="adjustResize"
+            tools:targetApi="jelly_bean"/>
 
         <activity
             android:name=".activities.HowToPlayActivity"
-            android:parentActivityName=".activities.LandingActivity"/>
+            android:parentActivityName=".activities.LandingActivity"
+            tools:targetApi="jelly_bean"/>
 
         <activity
             android:name=".activities.AboutActivity"
-            android:parentActivityName=".activities.LandingActivity"/>
+            android:parentActivityName=".activities.LandingActivity"
+            tools:targetApi="jelly_bean"/>
 
         <activity
             android:name=".activities.SettingsActivity"
-            android:parentActivityName=".activities.LandingActivity"/>
+            android:parentActivityName=".activities.LandingActivity"
+            tools:targetApi="jelly_bean"/>
 
         <receiver android:name=".utils.NotificationPublisher"/>
 

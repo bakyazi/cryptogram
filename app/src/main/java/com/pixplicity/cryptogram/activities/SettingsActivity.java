@@ -22,8 +22,6 @@ public class SettingsActivity extends BaseActivity {
 
         mToolbar.setTitle(R.string.settings);
 
-        setHomeButtonEnabled(true);
-
         Answers.getInstance().logContentView(new ContentViewEvent().putContentName(CryptogramApp.CONTENT_SETTINGS));
     }
 

@@ -252,6 +252,8 @@ public abstract class BaseActivity extends AppCompatActivity implements
         ab.setElevation(6);
         ab.setTitle(R.string.app_name);
         ab.setDisplayShowTitleEnabled(true);
+        ab.setDisplayHomeAsUpEnabled(true);
+        ab.setHomeButtonEnabled(true);
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             if (mDarkTheme) {
                 getWindow().setStatusBarColor(ContextCompat.getColor(this, R.color.colorDarkPrimaryDark));
@@ -308,9 +310,6 @@ public abstract class BaseActivity extends AppCompatActivity implements
                     }
                 }
             });
-
-            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-            getSupportActionBar().setHomeButtonEnabled(true);
         }
     }
 
@@ -333,13 +332,6 @@ public abstract class BaseActivity extends AppCompatActivity implements
         ActionBar actionBar = super.getSupportActionBar();
         assert actionBar != null;
         return actionBar;
-    }
-
-    protected void setHomeButtonEnabled(boolean enabled) {
-        ActionBar ab = getSupportActionBar();
-        ab.setHomeButtonEnabled(enabled);
-        ab.setDisplayShowHomeEnabled(enabled);
-        ab.setDisplayHomeAsUpEnabled(enabled);
     }
 
     public GoogleApiClient getGoogleApiClient() {
