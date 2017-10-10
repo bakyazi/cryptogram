@@ -1,6 +1,12 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
 
+    <attr name="colorPrimary" format="color"/>
+    <attr name="colorPrimaryLight" format="color"/>
+    <attr name="colorPrimaryDark" format="color"/>
+    <attr name="cardBackground" format="color"/>
     <attr name="textColor" format="color"/>
+    <attr name="textColorPrimary" format="color"/>
+    <attr name="textColorInverse" format="color"/>
     <attr name="textColorOnPrimary" format="color"/>
     <attr name="keyboardBackground" format="color"/>
     <attr name="keyboardBackground1" format="color"/>
@@ -13,16 +19,22 @@
 
     <!-- Base application theme. -->
     <style name="AppTheme" parent="@style/Theme.AppCompat.Light.NoActionBar">
-        <item name="android:windowBackground">@color/colorBackground</item>
+        <item name="android:windowBackground">@drawable/bg_splash</item>
 
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
+        <item name="colorPrimaryLight">@color/colorPrimaryLight</item>
         <item name="colorAccent">@color/colorAccent</item>
         <item name="actionMenuTextColor">@color/textLight</item>
         <item name="actionOverflowButtonStyle">@style/OverflowButtonStyle</item>
         <item name="drawerArrowStyle">@style/DrawerArrowStyle</item>
+
+        <item name="cardBackground">@color/white</item>
+
         <item name="android:textColor">@color/colorTextPrimary</item>
         <item name="textColor">@color/colorTextPrimary</item>
+        <item name="textColorPrimary">@color/colorPrimaryDark</item>
+        <item name="textColorInverse">@color/colorDarkTextPrimary</item>
         <item name="textColorOnPrimary">@color/textLight</item>
 
         <item name="keyboardBackground">@color/colorBackground</item>
@@ -39,16 +51,22 @@
     </style>
 
     <style name="AppTheme.Dark" parent="@style/Theme.AppCompat.NoActionBar">
-        <item name="android:windowBackground">@color/colorDarkBackground</item>
+        <item name="android:windowBackground">@drawable/bg_splash</item>
 
         <item name="colorPrimary">@color/colorDarkPrimary</item>
         <item name="colorPrimaryDark">@color/colorDarkPrimaryDark</item>
+        <item name="colorPrimaryLight">@color/colorDarkPrimaryLight</item>
         <item name="colorAccent">@color/colorDarkAccent</item>
         <item name="actionMenuTextColor">@color/textLight</item>
         <item name="actionOverflowButtonStyle">@style/OverflowButtonStyle</item>
         <item name="drawerArrowStyle">@style/DrawerArrowStyle</item>
+
+        <item name="cardBackground">@color/colorDarkPrimary</item>
+
         <item name="android:textColor">@color/colorDarkTextPrimary</item>
         <item name="textColor">@color/colorDarkTextPrimary</item>
+        <item name="textColorPrimary">@color/colorDarkAccent</item>
+        <item name="textColorInverse">@color/colorTextPrimary</item>
         <item name="textColorOnPrimary">@color/textLight</item>
 
         <item name="keyboardBackground">@color/colorDarkBackground</item>
