@@ -20,13 +20,17 @@
             android:scaleType="centerInside"
             android:src="?attr/im_launcher"/>
 
-        <TextView
-            style="@style/Base.TextAppearance.Widget.AppCompat.Toolbar.Title"
-            android:layout_width="match_parent"
+        <ImageView
+            android:id="@+id/iv_logo"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_margin="1dp"
-            android:gravity="center_horizontal"
-            android:text="@string/app_name"/>
+            android:layout_gravity="center_horizontal"
+            android:layout_marginBottom="-4dp"
+            android:adjustViewBounds="true"
+            android:contentDescription="@string/app_name"
+            android:maxWidth="240dp"
+            android:scaleType="centerInside"
+            android:src="@drawable/im_logo"/>
 
         <TextView
             android:id="@+id/tv_version"

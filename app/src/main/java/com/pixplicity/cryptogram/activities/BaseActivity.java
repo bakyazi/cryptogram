@@ -17,6 +17,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.TextView;
 
 import com.pixplicity.cryptogram.R;
 import com.pixplicity.cryptogram.utils.PrefsUtils;
@@ -39,6 +40,10 @@ public abstract class BaseActivity extends AppCompatActivity {
 
     @BindView(R.id.toolbar)
     protected Toolbar mToolbar;
+
+    @Nullable
+    @BindView(R.id.tv_toolbar_subtitle)
+    protected TextView mTvToolbarSubtitle;
 
     protected ActionBarDrawerToggle mDrawerToggle;
 
@@ -126,6 +131,14 @@ public abstract class BaseActivity extends AppCompatActivity {
 
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
             getSupportActionBar().setHomeButtonEnabled(true);
+        }
+    }
+
+    protected void setToolbarSubtitle(String subtitle) {
+        if (mTvToolbarSubtitle != null) {
+            mTvToolbarSubtitle.setText(subtitle);
+        } else {
+            mToolbar.setSubtitle(subtitle);
         }
     }
 

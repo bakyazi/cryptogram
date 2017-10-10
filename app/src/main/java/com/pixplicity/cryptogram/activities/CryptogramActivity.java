@@ -607,9 +607,9 @@ public class CryptogramActivity extends BaseActivity implements GoogleApiClient.
                 mTvTopic.setText(getString(R.string.topic, topic));
             }
             if (puzzle.isInstruction() || puzzle.isNoScore()) {
-                mToolbar.setSubtitle(puzzle.getTitle(this));
+                setToolbarSubtitle(puzzle.getTitle(this));
             } else {
-                mToolbar.setSubtitle(getString(
+                setToolbarSubtitle(getString(
                         R.string.puzzle_number,
                         puzzle.getNumber()));
             }
@@ -619,7 +619,7 @@ public class CryptogramActivity extends BaseActivity implements GoogleApiClient.
         } else {
             mTvError.setVisibility(View.VISIBLE);
             mVgCryptogram.setVisibility(View.GONE);
-            mToolbar.setSubtitle(null);
+            setToolbarSubtitle(null);
         }
     }
 
@@ -877,7 +877,9 @@ public class CryptogramActivity extends BaseActivity implements GoogleApiClient.
                 } else {
                     text = getString(
                             R.string.share_partial,
-                            puzzle == null ? getString(R.string.author_unknown) : puzzle.getAuthor(),
+                            puzzle == null
+                                    ? getString(R.string.author_unknown)
+                                    : puzzle.getAuthor(),
                             getString(R.string.share_url));
                 }
                 intent.putExtra(Intent.EXTRA_TEXT, text);
@@ -885,7 +887,9 @@ public class CryptogramActivity extends BaseActivity implements GoogleApiClient.
                 // Log the event
                 Answers.getInstance().logShare(
                         new ShareEvent()
-                                .putContentId(puzzle == null ? null : String.valueOf(puzzle.getId()))
+                                .putContentId(puzzle == null
+                                        ? null
+                                        : String.valueOf(puzzle.getId()))
                                 .putContentType("puzzle")
                                 .putContentName(text)
                 );
