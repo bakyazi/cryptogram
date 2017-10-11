@@ -24,6 +24,10 @@ public class PuzzleProgress {
 
     private static final List<Character> ALPHABET = new ArrayList<>(26);
 
+    private static final float TARGET_DURATION = 3 * 60f;
+    private static final float MAX_REVEALS = 6f;
+    private static final float MAX_EXCESS_INPUT = 26f;
+
     static {
         for (int i = 'A'; i <= 'Z'; i++) {
             ALPHABET.add((char) i);
@@ -409,10 +413,10 @@ public class PuzzleProgress {
         float duration = getDurationMs() / 1000f;
         int excessCount = getExcessCount(puzzle);
         float score = 1;
-        score = addScore(score, 120f / duration);
+        score = addScore(score, TARGET_DURATION / duration);
         score = addScore(score, (float) Math.pow(0.75f, getRevealedMistakes()));
-        score = addScore(score, (6f - getReveals()) / 6f);
-        score = addScore(score, (26f - excessCount) / 26f);
+        score = addScore(score, (MAX_REVEALS - getReveals()) / 6f);
+        score = addScore(score, (MAX_EXCESS_INPUT - excessCount) / 26f);
         // Never return a score below 0.0% or above 100.0%
         return Math.max(0f, Math.min(1f, score));
     }
