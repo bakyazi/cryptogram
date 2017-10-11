@@ -194,6 +194,10 @@ public class Puzzle {
         return mId < 0;
     }
 
+    public boolean isInProgress() {
+        return getProgress().isInProgress(this);
+    }
+
     public boolean isCompleted() {
         return getProgress().isCompleted(this);
     }

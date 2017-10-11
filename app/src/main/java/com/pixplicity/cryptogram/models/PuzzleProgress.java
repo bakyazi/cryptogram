@@ -256,19 +256,37 @@ public class PuzzleProgress {
         return changed;
     }
 
+    private int getUserCharsCount(@NonNull Puzzle puzzle) {
+        int count = 0;
+        HashMap<Character, Character> userCharsMapping = getUserCharsMapping(puzzle);
+        for (Character c : userCharsMapping.keySet()) {
+            if (puzzle.isGiven(c)) {
+                // This character is given by the puzzle
+                continue;
+            }
+            Character userChar = userCharsMapping.get(c);
+            if (userChar != null && userChar != 0) {
+                // This is a user filled character
+                count++;
+            }
+        }
+        return count;
+    }
+
     public synchronized int getExcessCount(@NonNull Puzzle puzzle) {
         if (mInputs == null) {
             return -1;
         }
         // Start with total number of inputs
-        int count = mInputs;
-        for (Character c : getUserCharsMapping(puzzle).values()) {
-            if (c != null && c != 0) {
-                // Subtract any filled in characters
-                count--;
-            }
+        return mInputs - getUserCharsCount(puzzle);
+    }
+
+    public synchronized boolean isInProgress(@NonNull Puzzle puzzle) {
+        if (isCompleted(puzzle)) {
+            return false;
         }
-        return count;
+        // Dumb approach of simply checking on inputs
+        return getUserCharsCount(puzzle) > 0;
     }
 
     public synchronized boolean isCompleted(@NonNull Puzzle puzzle) {

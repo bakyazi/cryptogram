@@ -80,6 +80,7 @@ public class PuzzleAdapter extends RecyclerView.Adapter<PuzzleAdapter.ViewHolder
             vh.tvAuthor.setText(author);
         }
         vh.ivCompleted.setVisibility(puzzle.isCompleted() ? View.VISIBLE : View.GONE);
+        vh.ivInProgress.setVisibility(puzzle.isInProgress() ? View.VISIBLE : View.GONE);
     }
 
     @Override
@@ -103,6 +104,9 @@ public class PuzzleAdapter extends RecyclerView.Adapter<PuzzleAdapter.ViewHolder
 
         @BindView(R.id.iv_completed)
         protected ImageView ivCompleted;
+
+        @BindView(R.id.iv_in_progress)
+        protected ImageView ivInProgress;
 
         protected ViewGroup vgContainer;
 
