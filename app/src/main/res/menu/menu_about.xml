@@ -10,8 +10,15 @@
         app:showAsAction="ifRoom"/>
 
     <item
-        android:id="@+id/action_beta"
+        android:id="@+id/action_rate"
         android:orderInCategory="101"
+        android:title="@string/rate"
+        app:showAsAction="ifRoom"/>
+
+    <item
+        android:id="@+id/action_beta"
+        android:visible="false"
+        android:orderInCategory="102"
         android:title="@string/join_beta"
         app:showAsAction="ifRoom"/>
 
