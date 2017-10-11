@@ -4159,6 +4159,7 @@
   {
     "text": "The only thing that shatters dreams is compromise.",
     "author": "Richard Bach",
+    "given": "IM",
     "topic": "Ambition"
   },
   {
@@ -4175,6 +4176,7 @@
   {
     "text": "A tiny change today brings a dramatically different tomorrow.",
     "author": "Richard Bach",
+    "given": "TY",
     "topic": "Inspirational"
   },
   {
@@ -4201,6 +4203,7 @@
   {
     "text": "Remember me and smile, for it’s better to forget than to remember me and cry.",
     "author": "Dr. Seuss",
+    "given": "CIN",
     "topic": "Goodbye"
   }
 ]
