@@ -11,7 +11,7 @@
         android:top="96dp">
         <bitmap
             android:gravity="center"
-            android:src="@drawable/im_launcher_light"/>
+            android:src="@drawable/im_launcher_light_small"/>
     </item>
 
 </layer-list>
