@@ -230,9 +230,11 @@ public class PuzzleProgress {
 
     /**
      * Sets a selected hint to a character.
+     *
      * @return If the character was changed from a previous assignment; i.e. 'corrected' by the user.
      */
-    public synchronized boolean setUserChar(@NonNull Puzzle puzzle, char selectedCharacter, char c) {
+    public synchronized boolean setUserChar(@NonNull Puzzle puzzle, char selectedCharacter,
+                                            char c) {
         boolean changed = false;
         Character previousChar = getUserCharsMapping(puzzle).get(selectedCharacter);
         if (previousChar == null) {
@@ -479,7 +481,7 @@ public class PuzzleProgress {
         }
     }
 
-    public synchronized void reset(@NonNull Puzzle puzzle) {
+    public synchronized void reset(@Nullable Puzzle puzzle) {
         mUserChars = null;
         mCharMapping = null;
         mStartTime = null;
@@ -487,9 +489,13 @@ public class PuzzleProgress {
         mCompleted = null;
         if (isPlaying()) {
             mPlaying = null;
-            onResume(puzzle);
+            if (puzzle != null) {
+                onResume(puzzle);
+            }
         }
-        sanitize(puzzle);
+        if (puzzle != null) {
+            sanitize(puzzle);
+        }
     }
 
 }

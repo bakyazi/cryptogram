@@ -9,10 +9,8 @@ import android.graphics.Rect;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
-import android.support.annotation.ColorInt;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
-import android.support.design.widget.Snackbar;
 import android.support.v4.view.GravityCompat;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.LinearLayoutManager;
@@ -67,7 +65,6 @@ import com.pixplicity.cryptogram.utils.PrefsUtils;
 import com.pixplicity.cryptogram.utils.PuzzleProvider;
 import com.pixplicity.cryptogram.utils.SavegameManager;
 import com.pixplicity.cryptogram.utils.StringUtils;
-import com.pixplicity.cryptogram.utils.StyleUtils;
 import com.pixplicity.cryptogram.utils.VideoUtils;
 import com.pixplicity.cryptogram.views.CryptogramLayout;
 import com.pixplicity.cryptogram.views.CryptogramView;
@@ -269,8 +266,6 @@ public class CryptogramActivity extends BaseActivity implements GoogleApiClient.
             mCryptogramView.setKeyboardView(mVwKeyboard);
         }
 
-        updateCryptogram(puzzleProvider.getCurrent());
-
         Intent intent = getIntent();
         if (intent != null) {
             if (intent.getBooleanExtra(EXTRA_LAUNCH_SETTINGS, false)) {
@@ -295,6 +290,7 @@ public class CryptogramActivity extends BaseActivity implements GoogleApiClient.
         if (puzzle != null) {
             puzzle.onResume();
         }
+        updateCryptogram(puzzle);
 
         EventProvider.getBus().register(this);
 
@@ -688,14 +684,19 @@ public class CryptogramActivity extends BaseActivity implements GoogleApiClient.
     }
 
     @Subscribe
+    public void onPuzzleReset(PuzzleEvent.PuzzleResetEvent event) {
+        updateCryptogram(event.getPuzzle());
+    }
+
+    @Subscribe
     public void onPuzzleCompleted(PuzzleEvent.PuzzleCompletedEvent event) {
         updateCryptogram(event.getPuzzle());
 
         // Increment the trigger for displaying the rating dialog
-        mRate.launched();
+        mRate.count();
 
         // Allow the rating dialog to appear if needed
-        mRate.check();
+        mRate.showRequest();
 
         if (mGoogleApiClient.isConnected()) {
             // Submit score
@@ -810,7 +811,7 @@ public class CryptogramActivity extends BaseActivity implements GoogleApiClient.
                     new AlertDialog.Builder(this)
                             .setMessage(R.string.reset_puzzle)
                             .setPositiveButton(R.string.reset, (dialogInterface, i) -> {
-                                puzzle.reset();
+                                puzzle.reset(true);
                                 mCryptogramView.reset();
                                 onCryptogramUpdated(puzzle);
                             })
@@ -1014,22 +1015,6 @@ public class CryptogramActivity extends BaseActivity implements GoogleApiClient.
             return true;
         }
         return super.onOptionsItemSelected(item);
-    }
-
-    private void showSnackbar(String text) {
-        final Snackbar snackbar = Snackbar.make(getViewRoot(), text, Snackbar.LENGTH_SHORT);
-        View snackBarView = snackbar.getView();
-
-        // Set background
-        @ColorInt int colorPrimary = StyleUtils.getColor(this, R.attr.colorPrimary);
-        snackBarView.setBackgroundColor(colorPrimary);
-
-        // Set foreground
-        @ColorInt int textColor = StyleUtils.getColor(this, R.attr.textColorOnPrimary);
-        TextView textView = snackBarView.findViewById(android.support.design.R.id.snackbar_text);
-        textView.setTextColor(textColor);
-
-        snackbar.show();
     }
 
     private void nextPuzzle() {

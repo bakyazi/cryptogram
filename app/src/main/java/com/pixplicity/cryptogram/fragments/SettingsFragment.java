@@ -17,11 +17,15 @@ import android.widget.RadioButton;
 
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.pixplicity.cryptogram.R;
+import com.pixplicity.cryptogram.activities.BaseActivity;
 import com.pixplicity.cryptogram.activities.CryptogramActivity;
 import com.pixplicity.cryptogram.events.PuzzleEvent;
 import com.pixplicity.cryptogram.utils.EventProvider;
 import com.pixplicity.cryptogram.utils.PrefsUtils;
+import com.pixplicity.cryptogram.utils.PuzzleProvider;
 import com.pixplicity.cryptogram.utils.StyleUtils;
+
+import java.util.Locale;
 
 import butterknife.BindView;
 import butterknife.OnClick;
@@ -213,6 +217,24 @@ public class SettingsFragment extends BaseFragment {
         PrefsUtils.setNeverAskRevealLetter(false);
         PrefsUtils.setNeverAskRevealMistakes(false);
         update();
+    }
+
+    @OnClick(R.id.bt_reset_all_puzzles)
+    protected void onClickResetAllPuzzles() {
+        String keyword = getString(R.string.reset_all_puzzles_keyword);
+        new MaterialDialog.Builder(getActivity())
+                .content(getString(R.string.reset_all_puzzles_confirmation, keyword))
+                .positiveText(R.string.reset)
+                .input(null, null, (dialog, input) -> {
+                    BaseActivity activity = (BaseActivity) getActivity();
+                    if (input.toString().trim().toLowerCase(Locale.ENGLISH).equals(keyword)) {
+                        PuzzleProvider.getInstance(getContext()).resetAll();
+                        activity.showSnackbar(getString(R.string.reset_all_puzzles_executed));
+                    } else {
+                        activity.showSnackbar(getString(R.string.reset_all_puzzles_cancelled));
+                    }
+                })
+                .show();
     }
 
 }

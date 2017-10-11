@@ -4,9 +4,11 @@ import android.content.Intent;
 import android.content.res.Configuration;
 import android.os.Build;
 import android.os.Bundle;
+import android.support.annotation.ColorInt;
 import android.support.annotation.LayoutRes;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.design.widget.Snackbar;
 import android.support.v4.app.NavUtils;
 import android.support.v4.app.TaskStackBuilder;
 import android.support.v4.content.ContextCompat;
@@ -21,6 +23,7 @@ import android.widget.TextView;
 
 import com.pixplicity.cryptogram.R;
 import com.pixplicity.cryptogram.utils.PrefsUtils;
+import com.pixplicity.cryptogram.utils.StyleUtils;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -213,6 +216,22 @@ public abstract class BaseActivity extends AppCompatActivity {
 
     public boolean isDarkTheme() {
         return mDarkTheme;
+    }
+
+    public void showSnackbar(String text) {
+        final Snackbar snackbar = Snackbar.make(getViewRoot(), text, Snackbar.LENGTH_SHORT);
+        View snackBarView = snackbar.getView();
+
+        // Set background
+        @ColorInt int colorPrimary = StyleUtils.getColor(this, R.attr.colorPrimary);
+        snackBarView.setBackgroundColor(colorPrimary);
+
+        // Set foreground
+        @ColorInt int textColor = StyleUtils.getColor(this, R.attr.textColorOnPrimary);
+        TextView textView = snackBarView.findViewById(android.support.design.R.id.snackbar_text);
+        textView.setTextColor(textColor);
+
+        snackbar.show();
     }
 
 }

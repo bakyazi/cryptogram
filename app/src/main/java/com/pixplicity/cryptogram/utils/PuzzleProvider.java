@@ -15,6 +15,7 @@ import com.google.android.gms.games.snapshot.SnapshotMetadata;
 import com.google.gson.Gson;
 import com.google.gson.JsonSyntaxException;
 import com.pixplicity.cryptogram.BuildConfig;
+import com.pixplicity.cryptogram.events.PuzzleEvent;
 import com.pixplicity.cryptogram.models.Puzzle;
 import com.pixplicity.cryptogram.models.PuzzleProgress;
 import com.pixplicity.cryptogram.models.PuzzleProgressState;
@@ -286,6 +287,22 @@ public class PuzzleProvider {
         // Ensure that we've loaded all puzzle progress
         getProgress();
         mPuzzleProgress.put(puzzleId, progress);
+    }
+
+    /**
+     * Resets all puzzles.
+     */
+    public void resetAll() {
+        for (Puzzle puzzle : mPuzzles) {
+            puzzle.reset(false);
+        }
+        mPuzzleProgress.clear();
+        saveLocal();
+
+        // Jump back to the first puzzle
+        setCurrentIndex(0);
+        EventProvider.postEventDelayed(
+                new PuzzleEvent.PuzzleResetEvent(getCurrent()));
     }
 
     public void load(@Nullable final GoogleApiClient googleApiClient,

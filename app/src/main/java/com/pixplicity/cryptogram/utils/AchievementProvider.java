@@ -357,7 +357,7 @@ public class AchievementProvider {
             return mLongestStreak;
         }
 
-        private Calendar toCalendar(long timestamp) {
+        private static Calendar toCalendar(long timestamp) {
             Calendar calendar = Calendar.getInstance();
             calendar.setTimeInMillis(timestamp);
             calendar.set(Calendar.HOUR_OF_DAY, 0);

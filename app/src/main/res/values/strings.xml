@@ -38,7 +38,12 @@
     <string name="reveal_mistakes_confirmation">Are you sure you’d like to highlight all mistakes in the puzzle? This affects your score.</string>
     <string name="reset_puzzle">Are you sure you’d like to reset this puzzle?</string>
     <string name="never_ask_again">Never ask again</string>
-    <string name="reset_dialogs">Reset all suppressed  dialogs</string>
+    <string name="reset_dialogs">Reset all suppressed dialogs</string>
+    <string name="reset_all_puzzles">Reset all puzzles</string>
+    <string name="reset_all_puzzles_confirmation">Are you sure you’d like to reset all puzzles? There’s no going back! Type “%1$s” to permanently reset all puzzles.</string>
+    <string name="reset_all_puzzles_keyword">do it</string>
+    <string name="reset_all_puzzles_executed">All puzzles have been reset</string>
+    <string name="reset_all_puzzles_cancelled">You didn’t say the magic word!</string>
 
     <string name="error_no_puzzles">Whoops! Looks like we couldn’t load the puzzle.</string>
     <string name="error_no_activity">Whoops! Looks like there aren’t any apps installed to do that.</string>
@@ -220,13 +225,13 @@
                 <b>Copyright © 2017 Pixplicity</b>
             </p>
             <p>
-                Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the "Software"), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:
+                Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the “Software”), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:
             </p>
             <p>
                 The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
             </p>
             <p>
-                THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+                THE SOFTWARE IS PROVIDED “AS IS”, WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
             </p>
         ]]>
     </string>
@@ -263,6 +268,6 @@
     <string name="rating">Nice, you’re solving some cryptograms!\n\nWould you mind visiting the Play store to give %1$s a rating? It would help in sharing the fun!\n\nInstead, if you’re experiencing problems, please give me some feedback so I can improve. Thanks!</string>
 
     <string name="feedback_subject">Feedback on Cryptogram</string>
-    <string name="feedback_body">Hi Pixplicity, \n\nI’m using Cryptogram version %1$s and my keyboard is "%2$s". \n\nHere’s my feedback on Cryptogram: \n\n</string>
+    <string name="feedback_body">Hi Pixplicity, \n\nI’m using Cryptogram version %1$s and my keyboard is “%2$s”. \n\nHere’s my feedback on Cryptogram: \n\n</string>
 
 </resources>

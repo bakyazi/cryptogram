@@ -306,9 +306,11 @@ public class Puzzle {
         mLoadedProgress = true;
     }
 
-    public void reset() {
-        getProgress().reset(this);
-        save();
+    public void reset(boolean save) {
+        getProgress().reset(save ? this : null);
+        if (save) {
+            save();
+        }
     }
 
     public void save() {
