@@ -220,6 +220,10 @@ public class Puzzle {
         return mId < 0;
     }
 
+    public boolean isInProgress() {
+        return getProgress().isInProgress(this);
+    }
+
     public boolean isCompleted() {
         return getProgress().isCompleted(this);
     }
@@ -332,9 +336,11 @@ public class Puzzle {
         mLoadedProgress = true;
     }
 
-    public void reset() {
-        getProgress().reset(this);
-        save();
+    public void reset(boolean save) {
+        getProgress().reset(save ? this : null);
+        if (save) {
+            save();
+        }
     }
 
     public void save() {

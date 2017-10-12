@@ -7,7 +7,9 @@ import android.graphics.Rect;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.v4.view.GravityCompat;
 import android.support.v7.app.AlertDialog;
 import android.text.Editable;
 import android.text.InputType;
@@ -134,6 +136,9 @@ public class PuzzleActivity extends BaseActivity {
             getWindow().setBackgroundDrawableResource(R.drawable.bg_activity_dark);
         }
         setContentView(R.layout.activity_puzzle);
+        if (isDarkTheme()) {
+            mVgStats.setBackgroundResource(R.drawable.bg_statistics_dark);
+        }
 
         final PuzzleProvider puzzleProvider = PuzzleProvider.getInstance(this);
 
@@ -191,8 +196,6 @@ public class PuzzleActivity extends BaseActivity {
             mVsKeyboard.setVisibility(View.VISIBLE);
             mCryptogramView.setKeyboardView(mVwKeyboard);
         }
-
-        updateCryptogram(puzzleProvider.getCurrent(mPuzzles));
     }
 
     @Override
@@ -209,6 +212,7 @@ public class PuzzleActivity extends BaseActivity {
         if (puzzle != null) {
             puzzle.onResume();
         }
+        updateCryptogram(puzzle);
 
         EventProvider.getBus().register(this);
 
@@ -374,9 +378,9 @@ public class PuzzleActivity extends BaseActivity {
                 mTvTopic.setText(getString(R.string.topic, topic));
             }
             if (puzzle.isInstruction() || puzzle.isNoScore()) {
-                mToolbar.setSubtitle(puzzle.getTitle(this));
+                setToolbarSubtitle(puzzle.getTitle(this));
             } else {
-                mToolbar.setSubtitle(getString(
+                setToolbarSubtitle(getString(
                         R.string.puzzle_number,
                         puzzle.getNumber()));
             }
@@ -386,7 +390,7 @@ public class PuzzleActivity extends BaseActivity {
         } else {
             mTvError.setVisibility(View.VISIBLE);
             mVgCryptogram.setVisibility(View.GONE);
-            mToolbar.setSubtitle(null);
+            setToolbarSubtitle(null);
         }
     }
 
@@ -458,14 +462,19 @@ public class PuzzleActivity extends BaseActivity {
     }
 
     @Subscribe
+    public void onPuzzleReset(PuzzleEvent.PuzzleResetEvent event) {
+        updateCryptogram(event.getPuzzle());
+    }
+
+    @Subscribe
     public void onPuzzleCompleted(PuzzleEvent.PuzzleCompletedEvent event) {
         updateCryptogram(event.getPuzzle());
 
         // Increment the trigger for displaying the rating dialog
-        mRate.launched();
+        mRate.count();
 
         // Allow the rating dialog to appear if needed
-        mRate.check();
+        mRate.showRequest();
 
         if (getGoogleApiClient().isConnected()) {
             // Submit score
@@ -567,7 +576,7 @@ public class PuzzleActivity extends BaseActivity {
                     new AlertDialog.Builder(this)
                             .setMessage(R.string.reset_puzzle)
                             .setPositiveButton(R.string.reset, (dialogInterface, i) -> {
-                                puzzle.reset();
+                                puzzle.reset(true);
                                 mCryptogramView.reset();
                                 onCryptogramUpdated(puzzle);
                             })
@@ -634,7 +643,9 @@ public class PuzzleActivity extends BaseActivity {
                 } else {
                     text = getString(
                             R.string.share_partial,
-                            puzzle == null ? getString(R.string.author_unknown) : puzzle.getAuthor(),
+                            puzzle == null
+                                    ? getString(R.string.author_unknown)
+                                    : puzzle.getAuthor(),
                             getString(R.string.share_url));
                 }
                 intent.putExtra(Intent.EXTRA_TEXT, text);
@@ -642,7 +653,9 @@ public class PuzzleActivity extends BaseActivity {
                 // Log the event
                 Answers.getInstance().logShare(
                         new ShareEvent()
-                                .putContentId(puzzle == null ? null : String.valueOf(puzzle.getId()))
+                                .putContentId(puzzle == null
+                                        ? null
+                                        : String.valueOf(puzzle.getId()))
                                 .putContentType("puzzle")
                                 .putContentName(text)
                 );

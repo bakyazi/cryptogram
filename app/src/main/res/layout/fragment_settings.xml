@@ -204,6 +204,19 @@
                 android:textAllCaps="true"
                 tools:ignore="UnusedAttribute"/>
 
+            <android.support.v7.widget.AppCompatButton
+                android:id="@+id/bt_reset_all_puzzles"
+                style="@style/Widget.AppCompat.Button.Borderless"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/activity_horizontal_margin"
+                android:layout_marginRight="@dimen/activity_horizontal_margin"
+                android:layout_marginTop="8dp"
+                android:gravity="center"
+                android:text="@string/reset_all_puzzles"
+                android:textAllCaps="true"
+                tools:ignore="UnusedAttribute"/>
+
         </LinearLayout>
 
     </ScrollView>

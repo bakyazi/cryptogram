@@ -23,6 +23,7 @@ import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.TextView;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.TextView;
@@ -44,6 +45,7 @@ import com.pixplicity.cryptogram.utils.AchievementProvider;
 import com.pixplicity.cryptogram.utils.EventProvider;
 import com.pixplicity.cryptogram.utils.LeaderboardProvider;
 import com.pixplicity.cryptogram.utils.PrefsUtils;
+import com.pixplicity.cryptogram.utils.StyleUtils;
 import com.pixplicity.cryptogram.utils.SavegameManager;
 import com.pixplicity.cryptogram.utils.StyleUtils;
 
@@ -70,6 +72,10 @@ public abstract class BaseActivity extends AppCompatActivity implements
 
     @BindView(R.id.toolbar)
     protected Toolbar mToolbar;
+
+    @Nullable
+    @BindView(R.id.tv_toolbar_subtitle)
+    protected TextView mTvToolbarSubtitle;
 
     protected ActionBarDrawerToggle mDrawerToggle;
 
@@ -325,6 +331,14 @@ public abstract class BaseActivity extends AppCompatActivity implements
         }
     }
 
+    protected void setToolbarSubtitle(String subtitle) {
+        if (mTvToolbarSubtitle != null) {
+            mTvToolbarSubtitle.setText(subtitle);
+        } else {
+            mToolbar.setSubtitle(subtitle);
+        }
+    }
+
     protected void onDrawerOpened(View drawerView) {
     }
 
@@ -450,6 +464,22 @@ public abstract class BaseActivity extends AppCompatActivity implements
 
     public boolean isDarkTheme() {
         return mDarkTheme;
+    }
+
+    public void showSnackbar(String text) {
+        final Snackbar snackbar = Snackbar.make(getViewRoot(), text, Snackbar.LENGTH_SHORT);
+        View snackBarView = snackbar.getView();
+
+        // Set background
+        @ColorInt int colorPrimary = StyleUtils.getColor(this, R.attr.colorPrimary);
+        snackBarView.setBackgroundColor(colorPrimary);
+
+        // Set foreground
+        @ColorInt int textColor = StyleUtils.getColor(this, R.attr.textColorOnPrimary);
+        TextView textView = snackBarView.findViewById(android.support.design.R.id.snackbar_text);
+        textView.setTextColor(textColor);
+
+        snackbar.show();
     }
 
 }
