@@ -22,6 +22,7 @@ import com.pixplicity.cryptogram.models.PuzzleList;
 import com.pixplicity.cryptogram.models.PuzzleProgress;
 import com.pixplicity.cryptogram.models.PuzzleProgressState;
 import com.pixplicity.cryptogram.models.Topic;
+import com.pixplicity.cryptogram.utils.EventProvider;
 import com.pixplicity.cryptogram.utils.PrefsUtils;
 import com.pixplicity.cryptogram.utils.SavegameManager;
 import com.pixplicity.cryptogram.views.CryptogramView;
@@ -234,10 +235,10 @@ public class PuzzleProvider extends AssetProvider {
         mPuzzleProgress.clear();
         saveLocal();
 
-        // Jump back to the first puzzle
-        setCurrentIndex(0);
+        // Forget the current puzzle
+        PrefsUtils.clearCurrentId();
         EventProvider.postEventDelayed(
-                new PuzzleEvent.PuzzleResetEvent(getCurrent()));
+                new PuzzleEvent.PuzzleResetEvent());
     }
 
     public void load(@Nullable final GoogleApiClient googleApiClient,

@@ -17,8 +17,8 @@ public abstract class PuzzleEvent {
     }
 
     public static class PuzzleResetEvent extends PuzzleEvent {
-        public PuzzleResetEvent(Puzzle puzzle) {
-            super(puzzle);
+        public PuzzleResetEvent() {
+            super(null);
         }
     }
 

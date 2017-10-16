@@ -39,6 +39,10 @@ public class PrefsUtils {
         Prefs.putInt(PrefsUtils.KEY_CURRENT_ID, currentId);
     }
 
+    public static void clearCurrentId() {
+        Prefs.remove(PrefsUtils.KEY_CURRENT_ID);
+    }
+
     public static Set<String> getProgress() {
         if (CryptogramApp.getInstance() == null) {
             return null;
