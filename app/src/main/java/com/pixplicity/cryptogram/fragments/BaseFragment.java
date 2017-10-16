@@ -19,10 +19,10 @@ public abstract class BaseFragment extends Fragment {
      * and keeps the alpha intact.
      */
     private static final float[] NEGATIVE = {
-            -1.0f,     0,     0,    0, 255, // red
-            0, -1.0f,     0,    0, 255, // green
-            0,     0, -1.0f,    0, 255, // blue
-            0,     0,     0, 1.0f,   0  // alpha
+            -1.0f, 0, 0, 0, 255, // red
+            0, -1.0f, 0, 0, 255, // green
+            0, 0, -1.0f, 0, 255, // blue
+            0, 0, 0, 1.0f, 0  // alpha
     };
 
     @Override
@@ -34,13 +34,20 @@ public abstract class BaseFragment extends Fragment {
     public boolean isDarkTheme() {
         FragmentActivity activity = getActivity();
         if (activity instanceof BaseActivity) {
-            return ((BaseActivity)activity).isDarkTheme();
+            return ((BaseActivity) activity).isDarkTheme();
         }
         return false;
     }
 
     protected void invert(ImageView imageView) {
         imageView.getDrawable().setColorFilter(new ColorMatrixColorFilter(NEGATIVE));
+    }
+
+    protected void showSnackbar(String text) {
+        FragmentActivity activity = getActivity();
+        if (activity instanceof BaseActivity) {
+            ((BaseActivity) activity).showSnackbar(text);
+        }
     }
 
 }
