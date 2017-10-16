@@ -3,7 +3,6 @@ package com.pixplicity.cryptogram.fragments;
 import android.app.ProgressDialog;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
@@ -14,14 +13,10 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
 import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.Spinner;
-import android.widget.Toast;
 
-import com.google.android.gms.tasks.OnFailureListener;
-import com.google.android.gms.tasks.OnSuccessListener;
 import com.pixplicity.cryptogram.R;
 import com.pixplicity.cryptogram.adapters.SimpleAdapter;
 import com.pixplicity.cryptogram.events.SubmissionEvent;
@@ -40,8 +35,6 @@ import butterknife.BindView;
 
 
 public class ContributeSuggestFragment extends BaseFragment {
-
-    private static final String TAG = ContributeSuggestFragment.class.getSimpleName();
 
     @BindView(R.id.vg_root)
     protected ViewGroup mVgRoot;
@@ -93,12 +86,7 @@ public class ContributeSuggestFragment extends BaseFragment {
         mSpLanguage.setSelection(0);
         new AsyncTask<Void, Void, List<Locale>>() {
             public int mPosition;
-            Comparator<Locale> mComparator = new Comparator<Locale>() {
-                @Override
-                public int compare(Locale l1, Locale l2) {
-                    return l1.getDisplayName().compareTo(l2.getDisplayName());
-                }
-            };
+            Comparator<Locale> mComparator = (l1, l2) -> l1.getDisplayName().compareTo(l2.getDisplayName());
 
             @Override
             protected List<Locale> doInBackground(Void... voids) {
@@ -114,22 +102,6 @@ public class ContributeSuggestFragment extends BaseFragment {
                 mSpLanguage.setSelection(mPosition);
             }
         }.execute();
-        mSpLanguage.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-            @Override
-            public void onItemSelected(AdapterView<?> adapterView, View view, int position, long l) {
-                Locale item = adapter.getItem(position);
-                String localeString = item.getLanguage();
-                String country = item.getCountry();
-                if (!TextUtils.isEmpty(country)) {
-                    localeString += "-r" + country;
-                }
-                Toast.makeText(getContext(), localeString, Toast.LENGTH_SHORT).show();
-            }
-
-            @Override
-            public void onNothingSelected(AdapterView<?> adapterView) {
-            }
-        });
     }
 
     @Override
@@ -162,8 +134,16 @@ public class ContributeSuggestFragment extends BaseFragment {
         if (!confirmLength(topic, "puzzle topic", 3, 40)) {
             return;
         }
-        // TODO
-        String language = null;
+        // Extract selected locale
+        Locale item = (Locale) mSpLanguage.getSelectedItem();
+        String localeString = null;
+        if (item != null) {
+            localeString = item.getLanguage();
+            String country = item.getCountry();
+            if (!TextUtils.isEmpty(country)) {
+                localeString += "-r" + country;
+            }
+        }
         // Show progress
         final ProgressDialog pd = new ProgressDialog(getContext());
         pd.setIndeterminate(true);
@@ -175,42 +155,36 @@ public class ContributeSuggestFragment extends BaseFragment {
                 text,
                 author,
                 topic,
-                language,
+                localeString,
                 mCbExplicit.isChecked());
         // Submit it
         Database.getInstance()
                 .getSuggestions()
                 .push()
                 .setValue(puzzle)
-                .addOnSuccessListener(new OnSuccessListener<Void>() {
-                    @Override
-                    public void onSuccess(Void aVoid) {
-                        pd.dismiss();
-                        EventProvider.postEvent(new SubmissionEvent());
-                    }
+                .addOnSuccessListener(aVoid -> {
+                    pd.dismiss();
+                    EventProvider.postEvent(new SubmissionEvent());
                 })
-                .addOnFailureListener(new OnFailureListener() {
-                    @Override
-                    public void onFailure(@NonNull Exception e) {
-                        pd.dismiss();
-                        showError(e.getMessage());
-                    }
+                .addOnFailureListener(e -> {
+                    pd.dismiss();
+                    showSnackbar(e.getMessage());
                 });
     }
 
     private boolean confirmLength(String text, String fieldName, int min, int max) {
         if (text.length() < min) {
-            showError(getString(R.string.error_min_characters, fieldName, min));
+            showSnackbar(getString(R.string.error_min_characters, fieldName, min));
             return false;
         }
         if (text.length() > max) {
-            showError(getString(R.string.error_max_characters, fieldName, min));
+            showSnackbar(getString(R.string.error_max_characters, fieldName, min));
             return false;
         }
         return true;
     }
 
-    private void showError(String message) {
+    private void showSnackbar(String message) {
         Snackbar.make(mVgRoot, message, Snackbar.LENGTH_SHORT).show();
     }
 
