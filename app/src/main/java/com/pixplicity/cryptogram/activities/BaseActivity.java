@@ -23,7 +23,6 @@ import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.TextView;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.TextView;
@@ -45,7 +44,6 @@ import com.pixplicity.cryptogram.utils.AchievementProvider;
 import com.pixplicity.cryptogram.utils.EventProvider;
 import com.pixplicity.cryptogram.utils.LeaderboardProvider;
 import com.pixplicity.cryptogram.utils.PrefsUtils;
-import com.pixplicity.cryptogram.utils.StyleUtils;
 import com.pixplicity.cryptogram.utils.SavegameManager;
 import com.pixplicity.cryptogram.utils.StyleUtils;
 
@@ -275,7 +273,7 @@ public abstract class BaseActivity extends AppCompatActivity implements
         ActionBar ab = getSupportActionBar();
         ab.setHomeAsUpIndicator(R.drawable.ic_arrow_back);
         ab.setElevation(6);
-        ab.setTitle(R.string.app_name);
+        ab.setTitle(null);
         ab.setDisplayShowTitleEnabled(true);
         ab.setDisplayHomeAsUpEnabled(true);
         ab.setHomeButtonEnabled(true);
@@ -439,6 +437,10 @@ public abstract class BaseActivity extends AppCompatActivity implements
         // By default do nothing
     }
 
+    public boolean isDarkTheme() {
+        return mDarkTheme;
+    }
+
     private void showGmsError(int errorCode) {
         new AlertDialog.Builder(this)
                 .setMessage(getString(R.string.google_play_games_connection_failure, mLastConnectionError, errorCode))
@@ -446,28 +448,8 @@ public abstract class BaseActivity extends AppCompatActivity implements
                 .show();
     }
 
-    protected void showSnackbar(String text) {
-        final Snackbar snackbar = Snackbar.make(getViewContents(), text, Snackbar.LENGTH_SHORT);
-        View snackBarView = snackbar.getView();
-
-        // Set background
-        @ColorInt int colorPrimary = StyleUtils.getColor(this, R.attr.colorPrimary);
-        snackBarView.setBackgroundColor(colorPrimary);
-
-        // Set foreground
-        @ColorInt int textColor = StyleUtils.getColor(this, R.attr.textColorOnPrimary);
-        TextView textView = snackBarView.findViewById(android.support.design.R.id.snackbar_text);
-        textView.setTextColor(textColor);
-
-        snackbar.show();
-    }
-
-    public boolean isDarkTheme() {
-        return mDarkTheme;
-    }
-
     public void showSnackbar(String text) {
-        final Snackbar snackbar = Snackbar.make(getViewRoot(), text, Snackbar.LENGTH_SHORT);
+        final Snackbar snackbar = Snackbar.make(getViewContents(), text, Snackbar.LENGTH_SHORT);
         View snackBarView = snackbar.getView();
 
         // Set background

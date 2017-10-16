@@ -60,8 +60,6 @@ public class LandingActivity extends BaseActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_landing);
 
-        mToolbar.setTitle(R.string.app_name);
-
         Answers.getInstance().logContentView(new ContentViewEvent().putContentName(CryptogramApp.CONTENT_LANDING));
 
         StatisticsUtils.populateTable(mVgStats);

@@ -13,7 +13,7 @@
         android:layout_height="match_parent"
         android:orientation="vertical">
 
-        <include layout="@layout/in_toolbar"/>
+        <include layout="@layout/in_toolbar_cryptogram"/>
 
         <fragment
             android:id="@+id/fragment"
