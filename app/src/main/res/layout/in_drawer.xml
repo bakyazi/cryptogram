@@ -1,23 +1,23 @@
 <?xml version="1.0" encoding="utf-8"?>
-<merge xmlns:android="http://schemas.android.com/apk/res/android"
-       xmlns:app="http://schemas.android.com/apk/res-auto"
-       xmlns:tools="http://schemas.android.com/tools">
+<merge
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
 
     <LinearLayout
         android:layout_width="@dimen/side_navigation_width"
         android:layout_height="match_parent"
         android:layout_gravity="start"
         android:background="?attr/colorPrimary"
-        android:orientation="vertical"
-        tools:layout_gravity=""
-        tools:visibility="gone">
+        android:orientation="vertical">
 
         <RelativeLayout
             android:id="@+id/vg_google_play_games"
             android:layout_width="match_parent"
             android:layout_height="144dp"
             android:clickable="true"
-            android:foreground="@drawable/ripple_white">
+            android:foreground="@drawable/ripple_white"
+            android:focusable="true">
 
             <ImageView
                 android:id="@+id/iv_google_play_games_banner"
@@ -59,6 +59,7 @@
                 android:layout_marginLeft="32dp"
                 android:layout_marginRight="32dp"
                 android:layout_marginTop="16dp"
+                android:scaleType="fitStart"
                 android:src="@drawable/im_avatar"
                 android:visibility="gone"
                 tools:ignore="ContentDescription"
@@ -98,7 +99,15 @@
                 <ImageView
                     android:layout_width="32dp"
                     android:layout_height="32dp"
-                    android:layout_marginBottom="8dp"
+                    android:layout_marginBottom="4dp"
+                    android:src="@drawable/games_savedgames"
+                    android:tint="@color/white"
+                    tools:ignore="ContentDescription"/>
+
+                <ImageView
+                    android:layout_width="32dp"
+                    android:layout_height="32dp"
+                    android:layout_marginBottom="4dp"
                     android:src="@drawable/games_achievements"
                     android:tint="@color/white"
                     tools:ignore="ContentDescription"/>

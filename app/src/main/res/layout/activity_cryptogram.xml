@@ -1,200 +1,210 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.design.widget.CoordinatorLayout
-    android:id="@+id/coordinator"
+<android.support.v4.widget.DrawerLayout
+    android:id="@+id/drawer_layout"
     xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
     tools:context=".activities.CryptogramActivity">
 
-    <include layout="@layout/in_toolbar"/>
-
-    <FrameLayout
-        android:id="@+id/vg_root"
+    <LinearLayout
+        android:id="@+id/coordinator"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        app:layout_behavior="@string/appbar_scrolling_view_behavior">
+        android:clipChildren="false"
+        android:orientation="vertical">
 
-        <android.support.v4.widget.DrawerLayout
-            android:id="@+id/drawer_layout"
+        <include layout="@layout/in_toolbar_cryptogram_subtitle"/>
+
+        <android.support.v7.widget.AppCompatTextView
+            android:id="@+id/tv_error"
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:paddingBottom="@dimen/activity_vertical_margin"
+            android:paddingLeft="@dimen/activity_horizontal_margin"
+            android:paddingRight="@dimen/activity_horizontal_margin"
+            android:paddingTop="@dimen/activity_vertical_margin"
+            android:text="@string/error_bad_puzzle"
+            android:visibility="gone"/>
 
-            <LinearLayout
+        <com.pixplicity.cryptogram.views.HintView
+            android:id="@+id/hint"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="?attr/colorPrimary"
+            android:elevation="4dp"
+            android:padding="8dp"
+            android:textColor="@color/textLight"
+            tools:targetApi="lollipop"
+            tools:visibility="gone"/>
+
+        <android.support.v4.widget.NestedScrollView
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_gravity="fill_vertical"
+            android:layout_weight="1">
+
+            <com.pixplicity.cryptogram.views.CryptogramLayout
+                android:id="@+id/vg_cryptogram"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:orientation="vertical">
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:paddingBottom="@dimen/activity_vertical_margin"
+                android:paddingLeft="@dimen/activity_horizontal_margin"
+                android:paddingRight="@dimen/activity_horizontal_margin"
+                android:paddingTop="@dimen/activity_vertical_margin">
+
+                <com.pixplicity.cryptogram.views.CryptogramView
+                    android:id="@+id/cryptogram"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"/>
 
                 <android.support.v7.widget.AppCompatTextView
-                    android:id="@+id/tv_error"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:gravity="center"
-                    android:paddingBottom="@dimen/activity_vertical_margin"
-                    android:paddingLeft="@dimen/activity_horizontal_margin"
-                    android:paddingRight="@dimen/activity_horizontal_margin"
-                    android:paddingTop="@dimen/activity_vertical_margin"
-                    android:text="@string/error_bad_puzzle"
-                    android:visibility="gone"/>
-
-                <com.pixplicity.cryptogram.views.HintView
-                    android:id="@+id/hint"
+                    android:id="@+id/tv_author"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:background="?attr/colorPrimary"
-                    android:elevation="4dp"
-                    android:padding="8dp"
-                    android:textColor="@color/textLight"
-                    tools:targetApi="lollipop"/>
+                    android:layout_marginTop="16dp"
+                    android:gravity="end"
+                    android:textStyle="italic"
+                    tools:text="John Doe"/>
 
-                <android.support.v4.widget.NestedScrollView
+                <android.support.v7.widget.AppCompatTextView
+                    android:id="@+id/tv_topic"
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_gravity="center"
-                    android:fillViewport="true">
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    android:gravity="end"
+                    tools:text="Inspirational"/>
 
-                    <com.pixplicity.cryptogram.views.CryptogramLayout
-                        android:id="@+id/vg_cryptogram"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:orientation="vertical"
-                        android:paddingBottom="@dimen/activity_vertical_margin"
-                        android:paddingLeft="@dimen/activity_horizontal_margin"
-                        android:paddingRight="@dimen/activity_horizontal_margin"
-                        android:paddingTop="@dimen/activity_vertical_margin">
+                <TableLayout
+                    android:id="@+id/vg_stats"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="16dp"
+                    android:background="@drawable/bg_statistics"
+                    android:gravity="center_horizontal"
+                    android:padding="16dp">
 
-                        <com.pixplicity.cryptogram.views.CryptogramView
-                            android:id="@+id/cryptogram"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"/>
-
-                        <android.support.v7.widget.AppCompatTextView
-                            android:id="@+id/tv_author"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_marginTop="16dp"
-                            android:gravity="end"
-                            android:textStyle="italic"
-                            tools:text="John Doe"/>
+                    <TableRow
+                        android:id="@+id/vg_stats_time"
+                        android:layout_marginBottom="8dp">
 
                         <android.support.v7.widget.AppCompatTextView
-                            android:id="@+id/tv_topic"
-                            android:layout_width="match_parent"
+                            android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_marginTop="8dp"
-                            android:gravity="end"
-                            tools:text="Inspirational"/>
+                            android:text="@string/stats_time"
+                            android:textColor="@color/textLight"/>
 
-                        <TableLayout
-                            android:id="@+id/vg_stats"
-                            android:layout_width="match_parent"
+                        <android.support.v7.widget.AppCompatTextView
+                            android:id="@+id/tv_stats_time"
+                            android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_marginTop="16dp"
-                            android:background="@drawable/bg_statistics"
-                            android:gravity="center_horizontal"
-                            android:padding="16dp">
+                            android:layout_marginLeft="8dp"
+                            android:layout_marginStart="8dp"
+                            android:minWidth="64dp"
+                            android:textColor="@color/textLight"
+                            android:textStyle="bold"/>
 
-                            <TableRow
-                                android:id="@+id/vg_stats_time"
-                                android:layout_marginBottom="8dp">
+                    </TableRow>
 
-                                <android.support.v7.widget.AppCompatTextView
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
-                                    android:text="@string/stats_time"
-                                    android:textColor="@color/textLight"/>
+                    <TableRow
+                        android:id="@+id/vg_stats_excess"
+                        android:layout_marginBottom="8dp">
 
-                                <android.support.v7.widget.AppCompatTextView
-                                    android:id="@+id/tv_stats_time"
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
-                                    android:layout_marginLeft="8dp"
-                                    android:layout_marginStart="8dp"
-                                    android:minWidth="64dp"
-                                    android:textColor="@color/textLight"
-                                    android:textStyle="bold"/>
+                        <android.support.v7.widget.AppCompatTextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/stats_excess"
+                            android:textColor="@color/textLight"/>
 
-                            </TableRow>
+                        <android.support.v7.widget.AppCompatTextView
+                            android:id="@+id/tv_stats_excess"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="8dp"
+                            android:layout_marginStart="8dp"
+                            android:minWidth="64dp"
+                            android:textColor="@color/textLight"
+                            android:textStyle="bold"/>
 
-                            <TableRow
-                                android:id="@+id/vg_stats_excess"
-                                android:layout_marginBottom="8dp">
+                    </TableRow>
 
-                                <android.support.v7.widget.AppCompatTextView
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
-                                    android:text="@string/stats_excess"
-                                    android:textColor="@color/textLight"/>
+                    <TableRow
+                        android:id="@+id/vg_stats_reveals">
 
-                                <android.support.v7.widget.AppCompatTextView
-                                    android:id="@+id/tv_stats_excess"
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
-                                    android:layout_marginLeft="8dp"
-                                    android:layout_marginStart="8dp"
-                                    android:minWidth="64dp"
-                                    android:textColor="@color/textLight"
-                                    android:textStyle="bold"/>
+                        <android.support.v7.widget.AppCompatTextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/stats_reveals"
+                            android:textColor="@color/textLight"/>
 
-                            </TableRow>
+                        <android.support.v7.widget.AppCompatTextView
+                            android:id="@+id/tv_stats_reveals"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="8dp"
+                            android:layout_marginStart="8dp"
+                            android:minWidth="64dp"
+                            android:textColor="@color/textLight"
+                            android:textStyle="bold"/>
 
-                            <TableRow
-                                android:id="@+id/vg_stats_reveals">
+                    </TableRow>
 
-                                <android.support.v7.widget.AppCompatTextView
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
-                                    android:text="@string/stats_reveals"
-                                    android:textColor="@color/textLight"/>
+                    <TableRow
+                        android:id="@+id/vg_stats_score"
+                        android:layout_marginTop="8dp">
 
-                                <android.support.v7.widget.AppCompatTextView
-                                    android:id="@+id/tv_stats_reveals"
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
-                                    android:layout_marginLeft="8dp"
-                                    android:layout_marginStart="8dp"
-                                    android:minWidth="64dp"
-                                    android:textColor="@color/textLight"
-                                    android:textStyle="bold"/>
+                        <android.support.v7.widget.AppCompatTextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/stats_score"
+                            android:textColor="@color/textLight"/>
 
-                            </TableRow>
+                        <android.support.v7.widget.AppCompatTextView
+                            android:id="@+id/tv_stats_score"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="8dp"
+                            android:layout_marginStart="8dp"
+                            android:minWidth="64dp"
+                            android:textColor="@color/textLight"
+                            android:textStyle="bold"/>
 
-                            <TableRow
-                                android:id="@+id/vg_stats_score"
-                                android:layout_marginTop="8dp">
+                    </TableRow>
 
-                                <android.support.v7.widget.AppCompatTextView
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
-                                    android:text="@string/stats_score"
-                                    android:textColor="@color/textLight"/>
+                    <TableRow
+                        android:id="@+id/vg_stats_practice"
+                        android:layout_marginTop="8dp"
+                        android:visibility="gone">
 
-                                <android.support.v7.widget.AppCompatTextView
-                                    android:id="@+id/tv_stats_score"
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
-                                    android:layout_marginLeft="8dp"
-                                    android:layout_marginStart="8dp"
-                                    android:minWidth="64dp"
-                                    android:textColor="@color/textLight"
-                                    android:textStyle="bold"/>
+                        <android.support.v7.widget.AppCompatTextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_span="2"
+                            android:text="@string/stats_practice"
+                            android:textColor="@color/textLight"
+                            android:textStyle="italic"/>
 
-                            </TableRow>
+                    </TableRow>
 
-                        </TableLayout>
+                </TableLayout>
 
-                    </com.pixplicity.cryptogram.views.CryptogramLayout>
+            </com.pixplicity.cryptogram.views.CryptogramLayout>
 
-                </android.support.v4.widget.NestedScrollView>
+        </android.support.v4.widget.NestedScrollView>
 
-            </LinearLayout>
+        <ViewStub
+            android:id="@+id/vs_keyboard"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom"
+            android:layout="@layout/in_keyboard"/>
 
-            <include layout="@layout/in_drawer"/>
+    </LinearLayout>
 
-        </android.support.v4.widget.DrawerLayout>
+    <include
+        layout="@layout/in_drawer"
+        tools:visibility="gone"/>
 
-    </FrameLayout>
-
-</android.support.design.widget.CoordinatorLayout>
+</android.support.v4.widget.DrawerLayout>

@@ -85,22 +85,27 @@ public class PuzzleTest {
             } else {
                 // Ensure there aren't single quotes (replace with ’)
                 if (text.indexOf('\'') >= 0) {
-                    errors.add("Contains single quote; replace with '’': " + puzzle);
+                    errors.add("Contains single quote; replace with '‘' or '’': " + puzzle);
                 }
                 // Ensure there aren't single quotes (replace with “/”)
                 if (text.indexOf('"') >= 0) {
                     errors.add("Contains single quote; replace with '“' or '”': " + puzzle);
                 }
                 // Ensure there aren't simple hyphens (replace with —)
-                if (text.contains(" - ")) {
+                if (text.replaceAll("[-–] ", "")
+                        .replaceAll(" [-–]", "")
+                        .replaceAll("--", "")
+                        .length() < text.length()) {
                     errors.add("Contains simple hyphen; replace with '—': " + puzzle);
                 }
                 // Ensure em dashes are surrounded with spaces
-                if (text.replaceAll("[\\w]—", "").replaceAll("—[\\w]", "").length() < text.length()) {
+                if (text.replaceAll("[\\w]—", "")
+                        .replaceAll("—[\\w]", "")
+                        .length() < text.length()) {
                     errors.add("Contains em dash without surrounding spaces: " + puzzle);
                 }
                 // Ensure there aren't simple hyphens (replace with —)
-                if (text.contains("...")) {
+                if (text.contains("..")) {
                     errors.add("Contains expanded ellipsis; replace with '…': " + puzzle);
                 }
                 // Ensure there aren't simple hyphens (replace with —)
@@ -128,26 +133,28 @@ public class PuzzleTest {
             }
             if (!puzzle.isInstruction()) {
                 // Ensure there's an author
-                if (author == null || author.trim().length() == 0) {
-                    errors.add("No author: " + puzzle);
+                if (author == null || author.trim().length() < 3) {
+                    errors.add("No author for " + puzzle);
                 }
             }
-            if (author != null && author.contains("[^\\s\\w]")) {
-                errors.add("Contains invalid character in author");
-            }
-            if (topic != null && topic.contains("[^\\s\\w]")) {
-                errors.add("Contains invalid character in topic");
+            if (topic != null && topic.replaceAll("[^\\s\\w]", "")
+                                      .length() < topic.length()) {
+                errors.add("Contains invalid character in topic for " + puzzle);
             }
             hashes.put(id, puzzle);
+            if (errors.size() > 10) {
+                // Fail early
+                break;
+            }
         }
         if (errors.size() > 0) {
             for (int i = 0; i < Math.min(10, errors.size()); i++) {
                 System.err.println("-\t" + errors.get(i));
             }
             if (errors.size() > 10) {
-                System.err.println("-\t(and " + errors.size() + " more)");
+                System.err.println("-\t(and more)");
             }
-            throw new AssertionError(errors.size() + " errors regarding puzzle quality");
+            throw new AssertionError("Errors regarding puzzle quality");
         }
     }
 

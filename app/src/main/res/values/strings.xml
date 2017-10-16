@@ -5,12 +5,12 @@
     <string name="intro1_title">How to play</string>
     <string name="intro1_text">Decipher the encrypted text to reveal the motivational quote!</string>
     <string name="intro2_title">How it works</string>
-    <string name="intro2_text">Use the keyboard or tap the screen to select hints and insert answers.</string>
+    <string name="intro2_text">Check the help pages for instructions and tips.</string>
     <string name="intro_next">Go on…</string>
     <string name="intro_done">Got it!</string>
 
     <string name="highlight_touch_input_title">Tap to input</string>
-    <string name="highlight_touch_input_description">You can now simply tap the puzzle to select a hint.</string>
+    <string name="highlight_touch_input_description">You can simply tap the puzzle to select a hint.</string>
 
     <string name="highlight_hyphenation_title">Hyphenation</string>
     <string name="highlight_hyphenation_description">Watch out for the hyphen! The word continues on the next line.</string>
@@ -29,6 +29,8 @@
     <string name="share">Share puzzle…</string>
     <string name="statistics">Statistics</string>
     <string name="settings">Settings</string>
+    <string name="help">Help…</string>
+    <string name="how_to_play">How do I play?</string>
     <string name="about">About</string>
     <string name="cancel">Cancel</string>
     <string name="skip_puzzle">Are you sure you’d like to skip this puzzle?</string>
@@ -36,14 +38,21 @@
     <string name="reveal_mistakes_confirmation">Are you sure you’d like to highlight all mistakes in the puzzle? This affects your score.</string>
     <string name="reset_puzzle">Are you sure you’d like to reset this puzzle?</string>
     <string name="never_ask_again">Never ask again</string>
-    <string name="reset_dialogs">Reset all suppressed  dialogs</string>
+    <string name="reset_dialogs">Reset all suppressed dialogs</string>
+    <string name="reset_all_puzzles">Reset all puzzles</string>
+    <string name="reset_all_puzzles_confirmation">Are you sure you’d like to reset all puzzles? There’s no going back! Type “%1$s” to permanently reset all puzzles.</string>
+    <string name="reset_all_puzzles_keyword">do it</string>
+    <string name="reset_all_puzzles_executed">All puzzles have been reset</string>
+    <string name="reset_all_puzzles_cancelled">You didn’t say the magic word!</string>
 
     <string name="error_bad_puzzle">Whoops! Looks like we couldn’t load the puzzle.</string>
     <string name="error_no_puzzles">Whoops! Looks like we couldn’t load the puzzles.</string>
+    <string name="error_no_activity">Whoops! Looks like there aren’t any apps installed to do that.</string>
+
+    <string name="reveal_letter_instruction">Please select a letter first.</string>
 
     <string name="puzzle_number_instruction">Instructional puzzle</string>
     <string name="puzzle_number_practice">Puzzle #%1$d (practice)</string>
-    <string name="puzzle_number_of_total">Puzzle #%1$d of %2$d</string>
     <string name="puzzle_number">Puzzle #%1$d</string>
 
     <string name="puzzle_nonexistant">Puzzle #%1$d doesn’t exist</string>
@@ -57,11 +66,13 @@
     <string name="quote">— %1$s&#x200A;</string>
     <string name="topic">Topic: “%1$s”</string>
     <string name="not_applicable">N/A</string>
+    <string name="author_unknown">anonymous</string>
 
     <string name="stats_excess">Number of excess inputs:</string>
     <string name="stats_time">Time elapsed:</string>
     <string name="stats_reveals">Characters revealed:</string>
     <string name="stats_score">Score:</string>
+    <string name="stats_practice">Practice puzzles don’t count towards your score or achievements.</string>
 
     <string name="stats_average_score_format" translatable="false">%1$.1f%%</string>
     <string name="stats_cumulative_score_format" translatable="false">%1$.0f</string>
@@ -87,14 +98,19 @@
     <string name="go_to_puzzle_content">Please enter the puzzle number to go to:</string>
 
     <!-- Google Play Games -->
-    <string name="google_play_games_welcome">Sign in to Google Play Games to track your progress and achievements</string>
+    <string name="google_play_games_welcome">Sign in to Google Play Games to save your progress and compare leaderboards and achievements</string>
     <string name="google_play_games_sign_in">Sign in…</string>
     <string name="google_play_games_leaderboards">Leaderboard</string>
     <string name="google_play_games_achievements">Achievements</string>
+    <string name="google_play_games_saved_games">Saved games</string>
     <string name="google_play_games_sign_out">Sign out</string>
+    <string name="google_play_games_player_unknown">Anonymous</string>
 
-    <string name="google_play_games_connection_failure">Uh, oh! Looks like we can\'t reach Google Play Games at the moment.\n\nPlease try again later or report this problem (connection failure with code %1$d-%2$d) through the about screen.</string>
-    <string name="google_play_games_not_installed">Google Play Games doesn\'t appear to be installed</string>
+    <string name="google_play_games_connection_failure">Uh, oh! Looks like we can’t reach Google Play Games at the moment.\n\nPlease try again later or report this problem (connection failure with code %1$d-%2$d) through the about screen.</string>
+    <string name="google_play_games_not_installed">Google Play Games doesn’t appear to be installed</string>
+
+    <string name="saved_game_name">Game state on %1$s</string>
+    <string name="saved_game_loading">Loading saved game…</string>
 
     <!-- Contribute -->
     <string name="contribute"><![CDATA[Suggest & review]]></string>
@@ -122,14 +138,80 @@
     <string name="show_hints">Show used letters</string>
     <string name="show_topic">Show puzzle topics</string>
     <string name="auto_advance">Advance to next cell when filled</string>
+    <string name="skip_filled_cells">Skip over filled cells when advancing</string>
+    <string name="text_size">Text size:</string>
+    <string name="text_size_small">Small</string>
+    <string name="text_size_normal">Normal</string>
+    <string name="text_size_large">Large</string>
+    <string name="keyboard">Keyboard:</string>
+    <string name="keyboard_builtin">Built-in</string>
+    <string name="keyboard_system">System default</string>
 
     <!-- About -->
-    <string name="feedback">Send feedback</string>
+    <string name="keyboard_system_dialog">Some keyboards don’t play nicely with Cryptogram. If you experience problems, I please switch back to the built-in keyboard.</string>
+    <string name="keyboard_system_dialog_ok">Gotcha</string>
+
+    <string name="applying_settings">Applying settings…</string>
+
+    <string name="send_feedback">Send feedback</string>
+    <string name="rate">Rate!</string>
+    <string name="join_beta">Join beta</string>
     <string name="made_with_love_by">MADE WITH LOVE BY</string>
     <string name="pixplicity">Pixplicity</string>
 
     <string name="version" translatable="false">%s (%d)</string>
     <string name="version_long" translatable="false">%s\n%d</string>
+
+    <string name="how_to_play_1">
+        <![CDATA[
+            <p>
+                <strong>
+                    Decipher the encrypted text to reveal the motivational quote!
+                </strong>
+            </p>
+                A <i>cryptogram</i> is a type of puzzle that consists of a short piece of encrypted text.
+                The cipher used to encrypt the text is a simple substitution of letters and is
+                simple enough that the cryptogram can be solved by hand.
+            ]]>
+    </string>
+    <string name="how_to_play_2_title">How the cipher works</string>
+    <string name="how_to_play_2">
+        <![CDATA[
+                • Each letter is uniquely substituted with a <i>different</i> letter in the alphabet.<br />
+                • All occurrences of a letter are substituted with the same letter from the cipher.<br />
+                • The substitution letter itself might not occur in the puzzle.<br />
+                • Each puzzle uses a unique cipher.<br />
+            ]]>
+    </string>
+    <string name="how_to_play_example">Example</string>
+    <string name="how_to_play_3_title">Scoring</string>
+    <string name="how_to_play_3">
+        <![CDATA[
+                Your score is a percentage, where 100% is a perfect solution. It is determined by these factors:<br /><br />
+                • The amount of time you take to complete the puzzle. Try to solve under 2 minutes.<br />
+                • Each time you reveal mistakes, your score is reduced by 25%.<br />
+                • Each time you reveal a letter, your score is reduced by 17%.<br />
+                • For each excess input (filling in an incorrect character), your score is reduced by 4%.<br />
+                • Each score reduction rule above is computed separately, and the final score is the multiple of all factors.
+            ]]>
+    </string>
+    <string name="how_to_play_4_title">Tips</string>
+    <string name="how_to_play_4">
+        <![CDATA[
+                • Many puzzles have some letters revealed to start with; consider why that might be.<br />
+                • Look at the letter frequencies—the most frequent letters in English are from most to least frequent:<br />
+                  <tt>ETAONRISHDLFCMUGYPWBVKJXQZ</tt><br />
+                • Also think about the most common letter pairs—in English, from most to least frequent:<br />
+                  <tt>TH HE AN RE ER IN ON AT ND ST ES EN OF TE ED OR TI HI AS TO</tt><br />
+                • When you encounter doubled letters, bear in mind the most frequent combinations—in English, from most to least frequent:<br />
+                  <tt>LL EE SS OO TT FF RR NN PP CC</tt><br />
+                • Pay attention to punctuation, apostrophes in particular.<br />
+                • Think about common words and which words might bridge between two parts of a sentence.<br />
+                • Be sure to check the puzzle theme!
+                <br /><br />
+                <b>Good luck!</b>
+            ]]>
+    </string>
 
     <string name="about_this_app_1">
         <![CDATA[
@@ -156,8 +238,7 @@
         ]]>
     </string>
     <string name="title_disclaimer">Legal</string>
-    <string name="disclaimer">
-        <![CDATA[
+    <string name="disclaimer"><![CDATA[
             <p>
                 Anonymous crash and usage data may be sent to Crashlytics by Twitter. This is solely
                 used to gather anonymous statistics about usage for automatic reporting of any
@@ -165,8 +246,16 @@
                 transferred.
             </p>
             <p>
-                THIS APP COMES WITHOUT WARRANTY OF ANY KIND AND IS COPYRIGHT OF PIXPLICITY B.V., THE
-                NETHERLANDS.
+                <b>Copyright © 2017 Pixplicity</b>
+            </p>
+            <p>
+                Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the “Software”), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:
+            </p>
+            <p>
+                The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
+            </p>
+            <p>
+                THE SOFTWARE IS PROVIDED “AS IS”, WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
             </p>
         ]]>
     </string>
@@ -176,9 +265,15 @@
             This app uses the following libraries, licensed under the Apache License 2.0:
             <br /><br />
             • <strong>EasyPrefs</strong> by Pixplicity<br />
+            • <strong>HtmlCompat</strong> by Pixplicity<br />
+            • <strong>Gene-rate</strong> by Pixplicity<br />
             • <strong>Butter Knife</strong> by Square Inc.<br />
+            • <strong>Otto</strong> by Square Inc.<br />
             • <strong>Material Dialogs</strong> by Aidan Follestad<br />
-            • <strong>Easy Video Player</strong> by Aidan Follestad
+            • <strong>Glide</strong> by Bump Technologies<br />
+            • <strong>RatioLayout</strong> by Amphiaraus<br />
+            • <strong>TapTargetView</strong> by Keepsafe<br />
+            • <strong>Gson</strong> by Google
             ]]>
     </string>
     <string name="title_artwork">Artwork</string>
@@ -191,11 +286,13 @@
             ]]>
     </string>
     <string name="website">Visit Pixplicity.com</string>
-    <string name="url">https://pixplicity.com/?utm_source=component_app&amp;utm_medium=android-app&amp;utm_content=en&amp;utm_campaign=component_app</string>
+    <string name="url_pixplicity">https://pixplicity.com/?utm_source=component_app&amp;utm_medium=android-app&amp;utm_content=en&amp;utm_campaign=component_app</string>
+    <string name="url_google_play">http://play.google.com/store/apps/details?id=%1$s</string>
+    <string name="url_beta">https://play.google.com/apps/testing/%1$s</string>
 
-    <string name="rating">Nice, you\'re solving some cryptograms!\n\nWould you mind visiting the Play store to give %1$s a rating? It would help in sharing the fun!\n\nInstead, if you\'re experiencing problems, please give me some feedback so I can improve. Thanks!</string>
+    <string name="rating">Nice, you’re solving some cryptograms!\n\nWould you mind visiting the Play store to give %1$s a rating? It would help in sharing the fun!\n\nInstead, if you’re experiencing problems, please give me some feedback so I can improve. Thanks!</string>
 
     <string name="feedback_subject">Feedback on Cryptogram</string>
-    <string name="feedback_body">Hi Paul,  Here\'s my feedback on Cryptogram…  I\'m using Cryptogram version %1$s.</string>
+    <string name="feedback_body">Hi Pixplicity, \n\nI’m using Cryptogram version %1$s and my keyboard is “%2$s”. \n\nHere’s my feedback on Cryptogram: \n\n</string>
 
 </resources>

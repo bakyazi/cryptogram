@@ -80,8 +80,9 @@
   },
   {
     "text": "In the end, it’s not the years in your life that count. It’s the life in your years.",
-    "author": "Abraham Lincoln",
+    "author": "Edward J. Stieglitz",
     "topic": "Life",
+    "given": "L",
     "number": 9,
     "id": 6
   },
@@ -89,6 +90,7 @@
     "text": "Nothing is impos­sible, the word itself says “I’m pos­sible”!",
     "author": "Audrey Hepburn",
     "topic": "Inspirational",
+    "given": "S",
     "number": 10,
     "id": 8
   },
@@ -96,6 +98,7 @@
     "text": "The best pre­paration for tomor­row is doing your best today.",
     "author": "H. Jackson Brown, Jr.",
     "topic": "Inspirational",
+    "given": "A",
     "number": 11,
     "id": 9
   },
@@ -103,59 +106,69 @@
     "text": "Put your heart, mind, and soul into even your smallest acts. This is the secret of success.",
     "author": "Swami Sivananda",
     "topic": "Inspirational",
+    "given": "I",
     "number": 12,
     "id": 10
   },
   {
     "text": "The best and most beau­tiful things in the world cannot be seen or even touched — they must be felt with the heart.",
     "author": "Helen Keller",
-    "topic": "Inspirational"
+    "topic": "Inspirational",
+    "given": "B"
   },
   {
     "text": "Change your thoughts and you change your world.",
     "author": "Norman Vincent Peale",
-    "topic": "Inspirational"
+    "topic": "Inspirational",
+    "given": "AY"
   },
   {
     "text": "I can’t change the direc­tion of the wind, but I can adjust my sails to always reach my destin­ation.",
     "author": "Jimmy Dean",
-    "topic": "Inspirational"
+    "topic": "Inspirational",
+    "given": "Y"
   },
   {
     "text": "What we think, we become.",
     "author": "Buddha",
-    "given": "W",
-    "topic": "Inspirational"
+    "topic": "Inspirational",
+    "given": "W"
   },
   {
     "text": "It is during our darkest moments that we must focus to see the light.",
     "author": "Aristotle Onassis",
-    "topic": "Inspirational"
+    "topic": "Inspirational",
+    "given": "E"
   },
   {
     "text": "Believe you can and you’re halfway there.",
     "author": "Theodore Roosevelt",
-    "topic": "Inspirational"
+    "topic": "Inspirational",
+    "given": "V"
   },
   {
     "text": "Health is the greatest gift, content­ment the greatest wealth, faithful­ness the best relation­ship.",
     "author": "Buddha",
-    "topic": "Inspirational"
+    "topic": "Inspirational",
+    "given": "H"
   },
   {
     "text": "A flower cannot blossom without sunshine, and man cannot live without love.",
     "author": "Max Muller",
-    "topic": "Love"
+    "topic": "Love",
+    "given": "A"
   },
   {
     "text": "We waste time looking for the perfect lover, instead of creating the perfect love.",
     "author": "Tom Robbins",
-    "topic": "Love"
+    "topic": "Love",
+    "given": "H"
   },
   {
     "text": "’Tis better to have loved and lost than never to have loved at all.",
     "author": "Alfred Lord Tennyson",
-    "topic": "Love"
+    "topic": "Love",
+    "given": "IT"
   },
   {
     "text": "There can be no deep disap­point­ment where there is not deep love.",
@@ -303,7 +316,7 @@
   {
     "text": "When you forgive, you in no way change the past — but you sure do change the future.",
     "author": "Bernard Meltzer",
-    "topic": "Life"
+    "topic": "Forgiveness"
   },
   {
     "text": "Forgive, forget. Bear with the faults of others as you would have them bear with yours.",
@@ -637,7 +650,7 @@
   },
   {
     "text": "Good, better, best. Never let it rest. ’Til your good is better and your better is best.",
-    "author": "St. Jerome",
+    "author": "Anonymous",
     "topic": "Inspirational"
   },
   {
@@ -930,17 +943,17 @@
   {
     "text": "It’s not what you look at that matters, it’s what you see.",
     "author": "Henry David Thoreau",
-    "topic": "Wisdom"
+    "topic": "Optimism"
   },
   {
     "text": "Whatever you do in life, surround yourself with smart people who’ll argue with you.",
     "author": "John Wooden",
-    "topic": "Wisdom"
+    "topic": "Scepticism"
   },
   {
     "text": "We are made wise not by the recollec­tion of our past, but by the responsi­bility for our future.",
     "author": "George Bernard Shaw",
-    "topic": "Wisdom"
+    "topic": "Inspirational"
   },
   {
     "text": "Do not go where the path may lead, go instead where there is no path and leave a trail.",
@@ -1346,7 +1359,7 @@
   {
     "text": "I learned that courage was not the absence of fear, but the triumph over it. The brave man is not he who does not feel afraid, but he who conquers that fear.",
     "author": "Nelson Mandela",
-    "topic": "Courage"
+    "topic": "Fear"
   },
   {
     "text": "As long as poverty, injust­ice and gross inequal­ity persist in our world, none of us can truly rest.",
@@ -1356,7 +1369,7 @@
   {
     "text": "It is better to lead from behind and to put others in front, espe­cially when you cele­brate victory when nice things occur. You take the front line when there is danger. Then people will appre­ciate your leader­ship.",
     "author": "Nelson Mandela",
-    "topic": "Leadership"
+    "topic": "Governance"
   },
   {
     "text": "For to be free is not merely to cast off one’s chains, but to live in a way that respects and enhances the freedom of others.",
@@ -1561,7 +1574,7 @@
   {
     "text": "All things are subject to interpre­tation. Which­ever interpre­tation prevails at a given time is a function of power and not truth.",
     "author": "Friedrich Nietzsche",
-    "topic": "Power"
+    "topic": "Reasoning"
   },
   {
     "text": "That which does not kill us makes us stronger.",
@@ -1571,12 +1584,12 @@
   {
     "text": "Those who cannot under­stand how to put their thoughts on ice should not enter into the heat of debate.",
     "author": "Friedrich Nietzsche",
-    "topic": "Thoughts"
+    "topic": "Thoughtfulness"
   },
   {
     "text": "On the moun­tains of truth you can never climb in vain: either you will reach a point higher up today, or you will be training your powers so that you will be able to climb higher tomor­row.",
     "author": "Friedrich Nietzsche",
-    "topic": "Thoughts"
+    "topic": "Thoughtfulness"
   },
   {
     "text": "God gave us the gift of life; it is up to us to give our­selves the gift of living well.",
@@ -1591,17 +1604,17 @@
   {
     "text": "Those who can make you believe absurd­ities can make you commit atro­cities.",
     "author": "Voltaire",
-    "topic": "Power"
+    "topic": "Violence"
   },
   {
     "text": "Think for your­selves and let others enjoy the privi­lege to do so, too.",
     "author": "Voltaire",
-    "topic": "Thoughts"
+    "topic": "Thoughtfulness"
   },
   {
     "text": "No problem can with­stand the assault of sus­tained thinking.",
     "author": "Voltaire",
-    "topic": "Thoughts"
+    "topic": "Scepticism"
   },
   {
     "text": "It is not suffi­cient to see and to know the beauty of a work. We must feel and be affected by it.",
@@ -2058,17 +2071,17 @@
   {
     "text": "One glance at a book and you hear the voice of another person, perhaps someone dead for 1,000 years. To read is to voyage through time.",
     "author": "Carl Sagan",
-    "topic": "Literacy"
+    "topic": "Literature"
   },
   {
     "text": "If you would tell me the heart of a man, tell me not what he reads, but what he rereads.",
     "author": "François Mauriac",
-    "topic": "Literacy"
+    "topic": "Thoughtfulness"
   },
   {
     "text": "All that mankind has done, thought, gained, or been; it is lying as in magic preser­vation in the pages of books.",
     "author": "Thomas Carlyle",
-    "topic": "Literacy"
+    "topic": "Literature"
   },
   {
     "text": "The more that you read, the more things you will know. The more that you learn, the more places you’ll go.",
@@ -2088,43 +2101,43 @@
   {
     "text": "I’m killing time while I wait for life to shower me with meaning and happi­ness.",
     "author": "Bill Watterson",
-    "topic": "Humor"
+    "topic": "Funny"
   },
   {
     "text": "The secret of life is honesty and fair dealing. If you can fake that, you’ve got it made.",
     "author": "Groucho Marx",
-    "topic": "Humor"
+    "topic": "Funny"
   },
   {
     "text": "In my opinion, we don’t devote nearly enough scien­tific research to finding a cure for jerks.",
     "author": "Bill Watterson",
-    "topic": "Humor"
+    "topic": "Funny"
   },
   {
     "text": "If you try and take a cat apart to see how it works, the first thing you have on your hands is a non-working cat.",
     "author": "Douglas Adams",
-    "topic": "Humor"
+    "topic": "Funny"
   },
   {
     "text": "Outside of a dog, a book is man’s best friend. Inside of a dog it’s too dark to read.",
     "author": "Groucho Marx",
-    "topic": "Humor"
+    "topic": "Funny"
   },
   {
     "text": "There’s one way to find out if a man is honest — ask him. If he says “yes” you know he is a crook.",
     "author": "Groucho Marx",
-    "topic": "Humor"
+    "topic": "Funny"
   },
   {
     "text": "If at first you don’t succeed then sky­diving defi­nitely isn’t for you.",
     "author": "Steven Wright",
-    "topic": "Humor"
+    "topic": "Funny"
   },
   {
     "text": "Coffee. The sweet balm by which we shall accom­plish today’s tasks.",
     "author": "Holly Black",
     "given": "BW",
-    "topic": "Humor"
+    "topic": "Funny"
   },
   {
     "text": "Study hard what inter­ests you the most in the most undisci­plined, irrever­ent and original manner possible",
@@ -2155,7 +2168,7 @@
     "text": "Don’t let perfec­tion become pro­crasti­nation. Do it now.",
     "author": "Danielle LaPorte",
     "given": "P",
-    "topic": "Work ethic"
+    "topic": "Motivational"
   },
   {
     "text": "We cannot teach people anything. We can only help them discover it within them­selves.",
@@ -2189,13 +2202,13 @@
   },
   {
     "text": "We can com­plain because rose bushes have thorns, or rejoice because thorn bushes have roses.",
-    "author": "Abraham Lincoln",
+    "author": "Alphonse Karr",
     "topic": "Beauty"
   },
   {
     "text": "You can not change what you refuse to confront.",
     "author": "John Spence",
-    "topic": "Change"
+    "topic": "Fear"
   },
   {
     "text": "Books don’t offer real escape, but they can stop a mind scratch­ing itself raw.",
@@ -2216,7 +2229,7 @@
     "text": "Once a year, go some­place you’ve never been before.",
     "author": "Dalai Lama",
     "given": "ON",
-    "topic": "Exploration"
+    "topic": "Motivational"
   },
   {
     "text": "Opportu­nity is missed by most people because it is dressed in overalls and looks like work.",
@@ -2267,7 +2280,7 @@
   {
     "text": "Never be in a hurry; do every­thing quietly and in a calm spirit. Do not lose your inner peace for anything whatso­ever, even if your whole world seems upset.",
     "author": "Saint Francis de Sales",
-    "topic": "Peace"
+    "topic": "Tranquility"
   },
   {
     "text": "A friend is what the heart needs all the time.",
@@ -2283,7 +2296,7 @@
   {
     "text": "I learned to give not because I have much, but because I know exactly how it feels to have nothing.",
     "author": "Anonymous",
-    "topic": "Giving"
+    "topic": "Altruism"
   },
   {
     "text": "Over time, the hurt doesn’t hurt. Only regret does.",
@@ -2335,7 +2348,7 @@
   {
     "text": "I will not let anyone walk through my mind with their dirty feet.",
     "author": "Mahatma Gandhi",
-    "topic": "Objectivity"
+    "topic": "Reasoning"
   },
   {
     "text": "Unless you try to do some­thing beyond what you have already mastered you will never grow.",
@@ -2465,108 +2478,108 @@
   {
     "text": "If you want to leave foot­prints in the sands of time, don’t drag your feet.",
     "author": "Arnot L. Sheppard",
-    "topic": "Wisdom"
+    "topic": "Motivational"
   },
   {
     "text": "We should not judge people by their peak of excel­lence; but by the distance they have traveled from the point where they started.",
     "author": "Henry Ward Beecher",
-    "topic": "Wisdom"
+    "topic": "Respect"
   },
   {
     "text": "Obsta­cles are those fright­ful things you see when you take your eyes off your goal.",
     "author": "Henry Ford",
-    "topic": "Wisdom"
+    "topic": "Ambition"
   },
   {
     "text": "Whenever you find yourself on the side of the majority, it is time to pause and reflect.",
     "author": "Mark Twain",
-    "topic": "Wisdom"
+    "topic": "Inspirational"
   },
   {
     "text": "The pessi­mist com­plains about the wind; the optimist expects it to change; the realist adjusts the sails.",
     "author": "William Arthur Ward",
-    "topic": "Wisdom"
+    "topic": "Optimism"
   },
   {
     "text": "The less you talk, the more you’re listened to.",
     "author": "Abigail Van Buren",
-    "topic": "Wisdom"
+    "topic": "Thoughtfulness"
   },
   {
     "text": "Ignorant men raise ques­tions that wise men answered a thousand years ago.",
     "author": "Johann Wolfgang von Goethe",
-    "topic": "Wisdom"
+    "topic": "Thoughtfulness"
   },
   {
     "text": "Knowing yourself is the begin­ning of all wisdom.",
     "author": "Aristotle",
-    "topic": "Wisdom"
+    "topic": "Individuality"
   },
   {
     "text": "The saddest aspect of life right now is that science gathers know­ledge faster than society gathers wisdom.",
     "author": "Isaac Asimov",
-    "topic": "Wisdom"
+    "topic": "Science"
   },
   {
     "text": "Nothing is more danger­ous than an idea, when it’s the only one we have.",
     "author": "Alain",
-    "topic": "Wisdom"
+    "topic": "Scepticism"
   },
   {
     "text": "It’s better to be a lion for a day than a sheep all your life.",
     "author": "Elizabeth Kenny",
-    "topic": "Wisdom"
+    "topic": "Inspirational"
   },
   {
     "text": "Think before you speak. Read before you think.",
     "author": "Fran Lebowitz",
     "given": "TBK",
-    "topic": "Wisdom"
+    "topic": "Thoughtfulness"
   },
   {
     "text": "The best index to a person’s charac­ter is how he treats people who can’t do him any good, and how he treats people who can’t fight back.",
     "author": "Abigail Van Buren",
-    "topic": "Wisdom"
+    "topic": "Respect"
   },
   {
     "text": "Do not seek to follow in the foot­steps of the wise. Seek what they sought.",
     "author": "Matsuo Basho",
-    "topic": "Wisdom"
+    "topic": "Motivational"
   },
   {
     "text": "It is the province of know­ledge to speak, and it is the privi­lege of wisdom to listen.",
     "author": "Oliver Wendell Holmes",
-    "topic": "Wisdom"
+    "topic": "Thoughtfulness"
   },
   {
     "text": "A man begins cutting his wisdom teeth the first time he bites off more than he can chew.",
     "author": "Herb Caen",
-    "topic": "Wisdom"
+    "topic": "Learning"
   },
   {
     "text": "The young man knows the rules, but the old man knows the excep­tions.",
     "author": "Oliver Wendell Holmes",
-    "topic": "Wisdom"
+    "topic": "Knowledge"
   },
   {
     "text": "When you choose to see the good in others, you end up finding the good in yourself.",
     "author": "John Spence",
-    "topic": "Wisdom"
+    "topic": "Goodness"
   },
   {
     "text": "Nature gave men two ends — one to sit on and one to think with. Ever since then man’s success or failure has been depen­dent on the one he used most.",
     "author": "George Ross Kirkpatrick",
-    "topic": "Wisdom"
+    "topic": "Success"
   },
   {
     "text": "Humility is not thinking less of yourself, it’s thinking of yourself less.",
     "author": "C. S. Lewis",
-    "topic": "Wisdom"
+    "topic": "Humility"
   },
   {
     "text": "Even when we are quite alone, how often do we think with pleas­ure or pain of what others think of us — of their imagined appro­bation or disappro­bation.",
     "author": "Charles Darwin",
-    "topic": "Wisdom"
+    "topic": "Anxiety"
   },
   {
     "text": "The greatest tragedy in mankind’s entire history may be the hijacking of morality by religion.",
@@ -2640,9 +2653,9 @@
     "topic": "Teaching"
   },
   {
-    "text": "Knowledge can be communicated, but not wisdom. One can find it, live it, do wonders through it, but one cannot communicate and teach it.” ",
+    "text": "Knowledge can be communicated, but not wisdom. One can find it, live it, do wonders through it, but one cannot communicate and teach it.",
     "author": "Hermann Hesse",
-    "topic": "Wisdom"
+    "topic": "Knowledge"
   },
   {
     "text": "Share your knowledge. It is a way to achieve immortality.",
@@ -2652,13 +2665,13 @@
   {
     "text": "It is the mark of an educated mind to be able to entertain a thought without accepting it.",
     "author": "Aristotle",
-    "topic": "Wisdom"
+    "topic": "Knowledge"
   },
   {
     "text": "Any fool can know. The point is to understand.",
     "author": "Albert Einstein",
     "given": "C",
-    "topic": "Wisdom"
+    "topic": "Knowledge"
   },
   {
     "text": "It is amazing how complete is the delusion that beauty is goodness.",
@@ -2823,32 +2836,32 @@
   {
     "text": "The very concept of objective truth is fading out of the world. Lies will pass into history.",
     "author": "George Orwell",
-    "topic": "Dishonesty"
+    "topic": "Honesty"
   },
   {
     "text": "The more people rationalize cheating, the more it becomes a culture of dishonesty. And that can become a vicious, downward cycle. Because suddenly, if everyone else is cheating, you feel a need to cheat, too.",
     "author": "Stephen Covey",
-    "topic": "Dishonesty"
+    "topic": "Honesty"
   },
   {
     "text": "There are some things that we know are just not as pleasant as the lies that we tell ourselves, and in that sense in order to endure existence everyone endures a certain amount of dishonesty in their everyday lives.",
     "author": "Todd Rundgren",
-    "topic": "Dishonesty"
+    "topic": "Honesty"
   },
   {
     "text": "To be without guile is to be free of deceit, cunning, hypocrisy, and dishonesty in thought or action.",
     "author": "Joseph B. Wirthlin",
-    "topic": "Dishonesty"
+    "topic": "Honesty"
   },
   {
     "text": "Time will inevitably uncover dishonesty and lies; history has no place for them.",
     "author": "Norodom Sihanouk",
-    "topic": "Dishonesty"
+    "topic": "Honesty"
   },
   {
     "text": "As I obsess about my ancient problems, I feel more like I’m sinking in quicksand than lighting a torch. I’m creating neither heat nor light, just the icky, perversely pleasurable squish of self-pity between my toes. My only defense is that I’m not the only one down here in the muck — our whole culture is doting on tales of personal tragedy.",
     "author": "Martha Beck",
-    "topic": "Tragedy"
+    "topic": "Depression"
   },
   {
     "text": "French culture is known for many great attributes, some of which probably have nothing to do with food, wine, and romance.",
@@ -2904,7 +2917,7 @@
   {
     "text": "Books are the carriers of civilization. Without books, history is silent, literature dumb, science crippled, thought and speculation at a standstill.",
     "author": "Barbara Tuchman",
-    "topic": "History"
+    "topic": "Literature"
   },
   {
     "text": "History, despite its wrenching pain, cannot be unlived, but if faced with courage, need not be lived again.",
@@ -2979,7 +2992,7 @@
     "topic": "Motivational"
   },
   {
-    "text": "The most sophisticated people I know--inside they are all children.",
+    "text": "The most sophisticated people I know — inside they are all children.",
     "author": "Jim Henson",
     "topic": "Happiness"
   },
@@ -3428,7 +3441,7 @@
     "topic": "Happiness"
   },
   {
-    "text": "I think and think and think, I‘ve thought myself out of happiness one million times, but never once into it.",
+    "text": "I think and think and think, I’ve thought myself out of happiness one million times, but never once into it.",
     "author": "Jonathan Safran Foer",
     "topic": "Happiness"
   },
@@ -3446,7 +3459,7 @@
   {
     "text": "I don’t think of all the misery, but of the beauty that still remains.",
     "author": "Anne Frank",
-    "topic": "Joy"
+    "topic": "Optimism"
   },
   {
     "text": "Sometimes your joy is the source of your smile, but sometimes your smile can be the source of your joy.",
@@ -3506,7 +3519,7 @@
   {
     "text": "I am ignorant of absolute truth. But I am humble before my ignorance and therein lies my honor and my reward.",
     "author": "Kahlil Gibran",
-    "topic": "Truth"
+    "topic": "Knowledge"
   },
   {
     "text": "Your pain is the breaking of the shell that encloses your understanding… And could you keep your heart in wonder at the daily miracles of your life, your pain would not seem less wondrous than your joy.",
@@ -3551,7 +3564,7 @@
   {
     "text": "Truth is incontrovertible. Panic may resent it, ignorance may deride it, malice may distort it, but there it is.",
     "author": "Winston Churchill",
-    "topic": "Truth"
+    "topic": "Reasoning"
   },
   {
     "text": "What is the use of living, if it be not to strive for noble causes and to make this muddled world a better place for those who will live in it after we are gone?",
@@ -3566,7 +3579,8 @@
   {
     "text": "Only the dead have seen the end of war.",
     "author": "George Santayana",
-    "topic": "War"
+    "topic": "War",
+    "given": "H"
   },
   {
     "text": "History teaches us that men and nations behave wisely once they have exhausted all other alternatives.",
@@ -3581,11 +3595,615 @@
   {
     "text": "If we open a quarrel between the past and the present, we shall find that we have lost the future.",
     "author": "Winston Churchill",
-    "topic": "Future"
+    "topic": "History"
   },
   {
     "text": "We must all turn our backs upon the horrors of the past. We must look to the future. We cannot afford to drag forward cross the years that are to come the hatreds and revenges which have sprung from the injuries of the past.",
     "author": "Winston Churchill",
-    "topic": "Future"
+    "topic": "History"
+  },
+  {
+    "text": "Have patience with every one, but especially with yourself.",
+    "author": "St. Francis de Sales",
+    "topic": "Inspirational",
+    "given": "H"
+  },
+  {
+    "text": "Never confuse your mistakes with your value as a human being. You are perfectly valuable, creative, worthwhile person simply because you exist. And no amount of triumphs or tribulations can ever change that.",
+    "author": "Michael LeBoeuf",
+    "topic": "Inspirational"
+  },
+  {
+    "text": "If we don’t believe in freedom of expression for people we despise, we don’t believe in it at all.",
+    "author": "Noam Chomsky",
+    "topic": "Tolerance"
+  },
+  {
+    "text": "Optimism is a strategy for making a better future. Because unless you believe that the future can be better, you are unlikely to step up and take responsibility for making it so.",
+    "author": "Noam Chomsky",
+    "topic": "Optimism"
+  },
+  {
+    "text": "How wonderful it is that nobody need wait a single moment before starting to improve the world.",
+    "author": "Anne Frank",
+    "topic": "Optimism"
+  },
+  {
+    "text": "“What day is it?”\n“It’s today,” squeaked Piglet.\n“My favorite day,” said Pooh.",
+    "author": "A.A. Milne",
+    "topic": "Optimism",
+    "given": "P"
+  },
+  {
+    "text": "Part of being optimistic is keeping one’s head pointed toward the sun, one’s feet moving forward. There were many dark moments when my faith in humanity was sorely tested, but I would not and could not give myself up to despair.",
+    "author": "Nelson Mandela",
+    "topic": "Optimism"
+  },
+  {
+    "text": "You’ll never find a rainbow if you’re looking down.",
+    "author": "Charlie Chaplin",
+    "topic": "Optimism"
+  },
+  {
+    "text": "Human history is a history not only of cruelty, but also of compassion, sacrifice, courage, kindness. What we choose to emphasize in this complex history will determine our lives.",
+    "author": "Howard Zinn",
+    "topic": "Optimism"
+  },
+  {
+    "text": "I am so far from being a pessimist; on the contrary, in spite of my scars, I am tickled to death at life.",
+    "author": "Eugene O’Neill",
+    "topic": "Optimism"
+  },
+  {
+    "text": "Finish every day and be done with it.\nYou have done what you could.\nSome blunders and absurdities, no doubt crept in.\nForget them as soon as you can, tomorrow is a new day.",
+    "author": "Ralph Waldo Emerson",
+    "topic": "Optimism"
+  },
+  {
+    "text": "Great things happen to those who don’t stop believing, trying, learning, and being grateful.",
+    "author": "Roy T. Bennett",
+    "topic": "Optimism"
+  },
+  {
+    "text": "Attitude is a choice. Happiness is a choice. Optimism is a choice. Kindness is a choice. Giving is a choice. Respect is a choice. Whatever choice you make makes you. Choose wisely.",
+    "author": "Roy T. Bennett",
+    "topic": "Thoughtfulness",
+    "given": "C"
+  },
+  {
+    "text": "Life is too short to waste your time on people who don’t respect, appreciate, and value you.",
+    "author": "Roy T. Bennett",
+    "topic": "Respect"
+  },
+  {
+    "text": "A random act of kindness, no matter how small, can make a tremendous impact on someone else’s life.",
+    "author": "Roy T. Bennett",
+    "topic": "Kindness"
+  },
+  {
+    "text": "It’s only after you’ve stepped outside your comfort zone that you begin to change, grow, and transform.",
+    "author": "Roy T. Bennett",
+    "topic": "Inspirational"
+  },
+  {
+    "text": "Be brave enough to live the life of your dreams according to your vision and purpose instead of the expectations and opinions of others.",
+    "author": "Roy T. Bennett",
+    "topic": "Life"
+  },
+  {
+    "text": "Take responsibility of your own happiness, never put it in other people’s hands.",
+    "author": "Roy T. Bennett",
+    "topic": "Happiness"
+  },
+  {
+    "text": "Be the reason someone smiles. Be the reason someone feels loved and believes in the goodness in people.",
+    "author": "Roy T. Bennett",
+    "topic": "Love"
+  },
+  {
+    "text": "Always remember people who have helped you along the way, and don’t forget to lift someone up.",
+    "author": "Roy T. Bennett",
+    "topic": "Gratitude"
+  },
+  {
+    "text": "I was never aware of any other option but to question everything.",
+    "author": "Noam Chomsky",
+    "topic": "Scepticism"
+  },
+  {
+    "text": "I think it only makes sense to seek out and identify structures of authority, hierarchy, and domination in every aspect of life, and to challenge them; unless a justification for them can be given, they are illegitimate, and should be dismantled, to increase the scope of human freedom.",
+    "author": "Noam Chomsky",
+    "topic": "Scepticism"
+  },
+  {
+    "text": "Cynicism is a self-imposed blindness, a rejection of the world because we are afraid it will hurt us or disappoint us.",
+    "author": "Stephen Colbert",
+    "topic": "Fear"
+  },
+  {
+    "text": "There’s an old saying about those who forget history. I don’t remember it, but it’s good.",
+    "author": "Stephen Colbert",
+    "topic": "Funny"
+  },
+  {
+    "text": "Wikipedia is the first place I go when I’m looking for knowledge… or when I want to create some.",
+    "author": "Stephen Colbert",
+    "topic": "Funny",
+    "given": "W"
+  },
+  {
+    "text": "Twenty-two astronauts were born in Ohio. What is it about that state that makes people want to flee the Earth?",
+    "author": "Stephen Colbert",
+    "topic": "Funny"
+  },
+  {
+    "text": "Look, I’ve got nothing against brains. Some of my best friends have them.",
+    "author": "Stephen Colbert",
+    "topic": "Funny"
+  },
+  {
+    "text": "You cannot correct an old person every time they say something offensive. You would never make it through Thanksgiving dinner!",
+    "author": "Stephen Colbert",
+    "topic": "Funny"
+  },
+  {
+    "text": "Why were you happier when you were a kid? Because you didn’t know anything. The more you know, the sadder you get.",
+    "author": "Stephen Colbert",
+    "topic": "Funny"
+  },
+  {
+    "text": "The pen is mightier than the sword, if you shoot that pen out of a gun.",
+    "author": "Stephen Colbert",
+    "topic": "Funny"
+  },
+  {
+    "text": "Take it from me, there’s nothing like a job well done. Except the quiet enveloping darkness at the bottom of a bottle of Jim Beam after a job done any way at all.",
+    "author": "Stephen Colbert",
+    "topic": "Funny"
+  },
+  {
+    "text": "My character is self-important, poorly informed, well-intentioned but an idiot… So we said, “Let’s give him a promotion.”",
+    "author": "Stephen Colbert",
+    "topic": "Funny"
+  },
+  {
+    "text": "I hold a little fundraiser every day. Its called going to work.",
+    "author": "Stephen Colbert",
+    "topic": "Funny"
+  },
+  {
+    "text": "After obsessively Googling symptoms for four hours, I discovered “obsessively Googling symptoms” is a symptom of hypochondria.",
+    "author": "Stephen Colbert",
+    "topic": "Funny"
+  },
+  {
+    "text": "Now, for my younger viewers out there, a book is something we used to have before the internet. It’s sort of a blog for people with attention spans.",
+    "author": "Stephen Colbert",
+    "topic": "Funny"
+  },
+  {
+    "text": "New study reveals men like to cuddle. Another study reveals men will say anything to get into bed with a woman.",
+    "author": "Stephen Colbert",
+    "topic": "Funny"
+  },
+  {
+    "text": "Dr. Martin Luther King, Jr. once proposed we judge people by the content of their character. He was shot.",
+    "author": "Jon Stewart",
+    "topic": "Tolerance"
+  },
+  {
+    "text": "Indifference and neglect often do much more damage than outright dislike.",
+    "author": "J.K. Rowling",
+    "topic": "Inaction"
+  },
+  {
+    "text": "The ultimate tragedy is not the oppression and cruelty by the bad people but the silence over that by the good people.",
+    "author": "Martin Luther King, Jr.",
+    "topic": "Tolerance"
+  },
+  {
+    "text": "We can know only that we know nothing. And that is the highest degree of human wisdom.",
+    "author": "Leo Tolstoy",
+    "topic": "Knowledge"
+  },
+  {
+    "text": "Humanity is like an ocean; if a few drops of the ocean are dirty, the ocean does not become dirty.",
+    "author": "Mahatma Gandhi",
+    "topic": "Optimism"
+  },
+  {
+    "text": "Every one of us is, in the cosmic perspective, precious. If a human disagrees with you, let him live. In a hundred billion galaxies, you will not find another.",
+    "author": "Carl Sagan",
+    "topic": "Individuality"
+  },
+  {
+    "text": "If you’re reading this…\nCongratulations, you’re alive.\nIf that’s not something to smile about,\nthen I don’t know what is.",
+    "author": "Chad Sugg",
+    "topic": "Life"
+  },
+  {
+    "text": "You wonder sometimes how our government puts on its pants in the morning.",
+    "author": "Jon Stewart",
+    "topic": "Funny"
+  },
+  {
+    "text": "If “con” is the opposite of pro, then isn’t congress the opposite of progress?",
+    "author": "Jon Stewart",
+    "topic": "Funny"
+  },
+  {
+    "text": "Parenthood is an amazing opportunity to be able to ruin someone from scratch.",
+    "author": "Jon Stewart",
+    "topic": "Funny",
+    "given": "A"
+  },
+  {
+    "text": "If you don’t stick to your values when they’re being tested, they’re not values: they’re hobbies.",
+    "author": "Jon Stewart",
+    "topic": "Funny"
+  },
+  {
+    "text": "If a tree falls in the forest and no one hears it, I hope it lands on a philosophy professor.",
+    "author": "Jon Stewart",
+    "topic": "Funny"
+  },
+  {
+    "text": "Who would have thought that a means of communication limited to 140 characters would ever create misunderstanding.",
+    "author": "Jon Stewart",
+    "topic": "Funny"
+  },
+  {
+    "text": "Well, like a lot of other dictators, there’s one man’s opinion I value above all others. Mine.",
+    "author": "Jon Stewart",
+    "topic": "Funny"
+  },
+  {
+    "text": "That’s me off the cuff. Blunt and in your face. No editing. I think it. I say it. You read it. Sometimes I don’t even think it, I just say it.",
+    "author": "Jon Stewart",
+    "topic": "Funny"
+  },
+  {
+    "text": "In whose delusional mind is democracy made better by letting wealthier people control more of it?",
+    "author": "Jon Stewart",
+    "topic": "Governance"
+  },
+  {
+    "text": "It is in your power to withdraw yourself whenever you desire. Perfect tranquility within consists in the good ordering of the mind, the realm of your own.",
+    "author": "Marcus Aurelius",
+    "topic": "Tranquility"
+  },
+  {
+    "text": "Everybody is identical in their secret unspoken belief that way deep down they are different from everyone else.",
+    "author": "David Foster Wallace",
+    "topic": "Individuality"
+  },
+  {
+    "text": "Do not ask your children\nto strive for extraordinary lives.\nSuch striving may seem admirable,\nbut it is a way of foolishness.\nHelp them instead to find the wonder\nand the marvel of an ordinary life.",
+    "author": "William Styron",
+    "topic": "Joy"
+  },
+  {
+    "text": "True happiness is to enjoy the present, without anxious dependence upon the future, not to amuse ourselves with either hopes or fears but to rest satisfied with what we have.",
+    "author": "Lucius Annaeus Seneca",
+    "topic": "Happiness",
+    "given": "W"
+  },
+  {
+    "text": "There are more things to alarm us than to harm us, and we suffer more often in apprehension than reality.",
+    "author": "Lucius Annaeus Seneca",
+    "topic": "Fear"
+  },
+  {
+    "text": "The person who tries to keep everyone happy often ends up feeling the loneliest.",
+    "author": "Anonymous",
+    "topic": "Loneliness",
+    "given": "P"
+  },
+  {
+    "text": "The worst kind of loneliness, the one that attacks you while you’re among family and friends.",
+    "author": "Anonymous",
+    "topic": "Loneliness"
+  },
+  {
+    "text": "You will become way less concerned with what other people think of you when you realize how seldom they do.",
+    "author": "David Foster Wallace",
+    "topic": "Anxiety",
+    "given": "U"
+  },
+  {
+    "text": "Worrying is carrying tomorrow’s load with today’s strength — carrying two days at once. Worrying doesn’t empty tomorrow of its sorrow, it empties today of its strength.",
+    "author": "Corrie ten Boom",
+    "topic": "Anxiety"
+  },
+  {
+    "text": "If you meet a loner, no matter what they tell you, it’s not because they enjoy solitude. It’s because they have tried to blend into the world before, and people continue to disappoint them.",
+    "author": "Jodi Picoult",
+    "topic": "Loneliness"
+  },
+  {
+    "text": "The loneliest moment in someone’s life is when they are watching their whole world fall apart, and all they can do is stare blankly.",
+    "author": "F. Scott Fitzgerald",
+    "topic": "Loneliness"
+  },
+  {
+    "text": "It has not been in the pursuit of pleasure that I have periled life and reputation and reason. It has been the desperate attempt to escape from torturing memories, from a sense of insupportable loneliness and a dread of some strange impending doom.",
+    "author": "Edgar Allan Poe",
+    "topic": "Loneliness"
+  },
+  {
+    "text": "The most terrible poverty is loneliness, and the feeling of being unloved.",
+    "author": "Mother Teresa",
+    "topic": "Loneliness",
+    "given": "S"
+  },
+  {
+    "text": "Life is loneliness, despite all the opiates, despite the shrill tinsel gaiety of ‘parties’ with no purpose, despite the false grinning faces we all wear.",
+    "author": "Sylvia Plath",
+    "topic": "Loneliness"
+  },
+  {
+    "text": "The loneliness of the soul in its appalling self-consciousness is horrible and overpowering.",
+    "author": "Sylvia Plath",
+    "topic": "Loneliness"
+  },
+  {
+    "text": "When you’re surrounded by all these people, it can be lonelier than when you’re by yourself. You can be in a huge crowd, but if you don’t feel like you can trust anyone or talk to anybody, you feel like you’re really alone.",
+    "author": "Fiona Apple",
+    "topic": "Loneliness"
+  },
+  {
+    "text": "Blessed is he who expects nothing, for he shall never be disappointed.",
+    "author": "Alexander Pope",
+    "topic": "Disappointment",
+    "given": "H"
+  },
+  {
+    "text": "Twenty years from now you will be more disappointed by the things that you didn’t do than by the ones you did do. So throw off the bowlines. Sail away from the safe harbor. Catch the trade winds in your sails. Explore. Dream. Discover.",
+    "author": "H. Jackson Brown Jr.",
+    "topic": "Ambition"
+  },
+  {
+    "text": "There comes a time when you look into the mirror and you realize that what you see is all that you will ever be. And then you accept it. Or you kill yourself. Or you stop looking in mirrors.",
+    "author": "Tennessee Williams",
+    "topic": "Acceptance"
+  },
+  {
+    "text": "The sun was shining, the sky a merciless blue. It was only eleven in the morning but I had been awake since three twenty. I was in bed because, as usual, I could think of nowhere else to go. I said that I was feeling low. Low is the depressive’s euphemism for despair.",
+    "author": "Sally Brampton",
+    "topic": "Despair"
+  },
+  {
+    "text": "Where is home? I feel a sense, always, of trying to find my way back to a place that doesn’t exist.",
+    "author": "Sally Brampton",
+    "topic": "Depression"
+  },
+  {
+    "text": "Why would anyone want us? We don’t even want ourselves. Sometimes, we try to drive the people who love us away. Not because we don’t want them with us, but because we cannot bear for them to see what we have become.",
+    "author": "Sally Brampton",
+    "topic": "Depression"
+  },
+  {
+    "text": "What do you do with a self that is no longer your self? If you don’t know who you are, how do you go on living? If you cannot live as yourself, who and what is it that you are living for?",
+    "author": "Sally Brampton",
+    "topic": "Depression"
+  },
+  {
+    "text": "The greatest danger, that of losing one’s own self, may pass off as quietly as if it were nothing; every other loss, that of an arm, a leg, five dollars, a wife, is sure to be noticed.",
+    "author": "Søren Kierkegaard",
+    "topic": "Despair"
+  },
+  {
+    "text": "A human being can survive almost anything, as long as she sees the end in sight. But depression is so insidious, and it compounds daily, that it’s impossible to ever see the end.",
+    "author": "Elizabeth Wurtzel",
+    "topic": "Despair"
+  },
+  {
+    "text": "Let them think what they liked, but I didn’t mean to drown myself. I meant to swim till I sank — but that’s not the same thing.",
+    "author": "Joseph Conrad",
+    "topic": "Despair"
+  },
+  {
+    "text": "There is nothing in this world to which every man has a more unassailable title than to his own life and person.",
+    "author": "Arthur Schopenhauer",
+    "topic": "Despair"
+  },
+  {
+    "text": "Depression is a paralysis of hope. Try never to abandon hope for if you do, hope will surely try to abandon you.",
+    "author": "Sally Brampton",
+    "topic": "Depression",
+    "given": "T"
+  },
+  {
+    "text": "When you have spent long years in the dark, there is joy in seeing the light and pleasure, above all, in the ordinary.",
+    "author": "Sally Brampton",
+    "topic": "Joy"
+  },
+  {
+    "text": "I often find myself grateful for the comfort of strangers; a man who gave up his seat for me on the bus, a woman who helped me out with a heavy shopping bag. Remembering small acts of kindness puts the world in a finer, sweeter order.",
+    "author": "Sally Brampton",
+    "topic": "Kindness"
+  },
+  {
+    "text": "If what I feel were equally distributed to the whole human family, there would not be a cheerful face on earth. Whether I shall ever be better I cannot tell; I awfully forbode I shall not. To remain as I am is impossible. I must die or be better.",
+    "author": "Sally Brampton",
+    "topic": "Depression"
+  },
+  {
+    "text": "The decision-making of daily life involves not, as in normal affairs, shifting from one annoying situation to another less annoying — or from discomfort to relative comfort, or from boredom to activity — but moving from pain to pain. One does not abandon, even briefly, one’s bed of nails, but is attached to it wherever one goes.",
+    "author": "William Styron",
+    "topic": "Depression"
+  },
+  {
+    "text": "The pain is unrelenting, and what makes the condition intolerable is the foreknowledge that no remedy will come — not in a day, an hour, a month, or a minute. If there is mild relief, one knows that it is only temporary; more pain will follow.",
+    "author": "William Styron",
+    "topic": "Depression"
+  },
+  {
+    "text": "There he must, despite the anguish devouring his brain, present a face approximating the one that is associated with ordinary events and companionship. He must try to utter small talk, and be responsive to questions, and knowingly nod and frown and, God help him, even smile.",
+    "author": "William Styron",
+    "topic": "Depression"
+  },
+  {
+    "text": "My brain had begun to endure its familiar siege: panic and dislocation, and a sense that my thought processes were being engulfed by a toxic and unnameable tide that obliterated any enjoyable response to the living world.",
+    "author": "William Styron",
+    "topic": "Depression"
+  },
+  {
+    "text": "If ever there is tomorrow when we’re not together, there is something you must always remember. You are braver than you believe, stronger than you seem, and smarter than you think. But the most important thing is, even if we’re apart, I’ll always be with you.",
+    "author": "A.A. Milne",
+    "topic": "Tranquility"
+  },
+  {
+    "text": "Do not fear to be eccentric in opinion, for every opinion now accepted was once eccentric.",
+    "author": "Bertrand Russell",
+    "topic": "Confidence"
+  },
+  {
+    "text": "Be who you are and say what you feel, because those who mind don’t matter, and those who matter don’t mind.",
+    "author": "Bernard M. Baruch",
+    "topic": "Confidence"
+  },
+  {
+    "text": "Do what you feel in your heart to be right — for you’ll be criticized anyway.",
+    "author": "Eleanor Roosevelt",
+    "topic": "Confidence"
+  },
+  {
+    "text": "You gain strength, courage and confidence by every experience in which you really stop to look fear in the face. You are able to say to yourself, ‘I have lived through this horror. I can take the next thing that comes along.’ You must do the thing you think you cannot do.",
+    "author": "Eleanor Roosevelt",
+    "topic": "Confidence"
+  },
+  {
+    "text": "The future belongs to those who believe in the beauty of their dreams.",
+    "author": "Eleanor Roosevelt",
+    "topic": "Ambition"
+  },
+  {
+    "text": "You wouldn’t worry so much about what others think of you if you realized how seldom they do.",
+    "author": "Eleanor Roosevelt",
+    "topic": "Confidence"
+  },
+  {
+    "text": "The purpose of life is to live it, to taste experience to the utmost, to reach out eagerly and without fear for newer and richer experience.",
+    "author": "Eleanor Roosevelt",
+    "topic": "Life"
+  },
+  {
+    "text": "It takes courage to love, but pain through love is the purifying fire which those who love generously know.",
+    "author": "Eleanor Roosevelt",
+    "topic": "Love"
+  },
+  {
+    "text": "We all know people who are so much afraid of pain that they shut themselves up like clams in a shell and, giving out nothing, receive nothing and therefore shrink until life is a mere living death.",
+    "author": "Eleanor Roosevelt",
+    "topic": "Fear"
+  },
+  {
+    "text": "Many people will walk in and out of your life, but only true friends will leave footprints in your heart.",
+    "author": "Eleanor Roosevelt",
+    "topic": "Friendship"
+  },
+  {
+    "text": "No matter how plain a woman may be, if truth and honesty are written across her face, she will be beautiful.",
+    "author": "Eleanor Roosevelt",
+    "topic": "Honesty"
+  },
+  {
+    "text": "We are afraid to care too much, for fear that the other person does not care at all.",
+    "author": "Eleanor Roosevelt",
+    "topic": "Fear"
+  },
+  {
+    "text": "You can often change your circumstances by changing your attitude.",
+    "author": "Eleanor Roosevelt",
+    "topic": "Optimism",
+    "given": "C"
+  },
+  {
+    "text": "Beautiful young people are accidents of nature, but beautiful old people are works of art.",
+    "author": "Eleanor Roosevelt",
+    "topic": "Beauty",
+    "given": "AB"
+  },
+  {
+    "text": "With the new day comes new strength and new thoughts.",
+    "author": "Eleanor Roosevelt",
+    "topic": "Optimism",
+    "given": "N"
+  },
+  {
+    "text": "Do not stop thinking of life as an adventure. You have no security unless you can live bravely, excitingly, imaginatively; unless you can choose a challenge instead of competence.",
+    "author": "Eleanor Roosevelt",
+    "topic": "Life"
+  },
+  {
+    "text": "Life was meant to be lived, and curiosity must be kept alive. One must never, for whatever reason, turn his back on life.",
+    "author": "Eleanor Roosevelt",
+    "topic": "Life"
+  },
+  {
+    "text": "The biggest mistake people make in life is not trying to make a living at doing what they most enjoy.",
+    "author": "Malcolm Forbes",
+    "topic": "Life"
+  },
+  {
+    "text": "There are no mistakes. The events we bring upon ourselves, no matter how unpleasant, are necessary in order to learn what we need to learn; whatever steps we take, they’re necessary to reach the places we’ve chosen to go.",
+    "author": "Richard Bach",
+    "topic": "Life"
+  },
+  {
+    "text": "We can lift ourselves out of ignorance, we can find ourselves as creatures of excellence and intelligence and skill.",
+    "author": "Richard Bach",
+    "topic": "Knowledge"
+  },
+  {
+    "text": "The only thing that shatters dreams is compromise.",
+    "author": "Richard Bach",
+    "given": "IM",
+    "topic": "Ambition"
+  },
+  {
+    "text": "Believe you know all the answers, and you know all the answers. Believe you’re a master, and you are.",
+    "author": "Richard Bach",
+    "given": "A",
+    "topic": "Confidence"
+  },
+  {
+    "text": "The simplest questions are the most profound. Where were you born? Where is your home? Where are you going? What are you doing? Think about these once in a while and watch your answers change.",
+    "author": "Richard Bach",
+    "topic": "Thoughtfulness"
+  },
+  {
+    "text": "A tiny change today brings a dramatically different tomorrow.",
+    "author": "Richard Bach",
+    "given": "TY",
+    "topic": "Inspirational"
+  },
+  {
+    "text": "An easy life doesn’t teach us anything. In the end it’s the learning that matters: what we’ve learned and how we’ve grown.",
+    "author": "Richard Bach",
+    "topic": "Life"
+  },
+  {
+    "text": "We either make ourselves miserable, or we make ourselves strong. The amount of work is the same.",
+    "author": "Carlos Castañeda",
+    "given": "MW",
+    "topic": "Motivational"
+  },
+  {
+    "text": "If one advances confidently in the direction of his dreams, and endeavors to live the life which he has imagined, he will meet with a success unexpected in common hours.",
+    "author": "Henry David Thoreau",
+    "topic": "Confidence"
+  },
+  {
+    "text": "I have often wondered how it is that every man loves himself more than all the rest of men, but yet sets less value on his own opinion of himself than on the opinion of others.",
+    "author": "Marcus Aurelius",
+    "topic": "Confidence"
+  },
+  {
+    "text": "Remember me and smile, for it’s better to forget than to remember me and cry.",
+    "author": "Dr. Seuss",
+    "given": "CIN",
+    "topic": "Goodbye"
   }
 ]

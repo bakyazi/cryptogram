@@ -15,9 +15,17 @@ import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.RadioButton;
 
+import com.afollestad.materialdialogs.MaterialDialog;
 import com.pixplicity.cryptogram.R;
+import com.pixplicity.cryptogram.activities.BaseActivity;
 import com.pixplicity.cryptogram.activities.CryptogramActivity;
+import com.pixplicity.cryptogram.events.PuzzleEvent;
+import com.pixplicity.cryptogram.utils.EventProvider;
 import com.pixplicity.cryptogram.utils.PrefsUtils;
+import com.pixplicity.cryptogram.utils.PuzzleProvider;
+import com.pixplicity.cryptogram.utils.StyleUtils;
+
+import java.util.Locale;
 
 import butterknife.BindView;
 import butterknife.OnClick;
@@ -25,11 +33,32 @@ import butterknife.OnClick;
 
 public class SettingsFragment extends BaseFragment {
 
+    @BindView(R.id.vg_content)
+    protected ViewGroup mVgContent;
+
+    @BindView(R.id.vg_busy)
+    protected ViewGroup mVgBusy;
+
     @BindView(R.id.rb_theme_light)
     protected RadioButton mRbThemeLight;
 
     @BindView(R.id.rb_theme_dark)
     protected RadioButton mRbThemeDark;
+
+    @BindView(R.id.rb_text_size_small)
+    protected RadioButton mRbTextSizeSmall;
+
+    @BindView(R.id.rb_text_size_normal)
+    protected RadioButton mRbTextSizeNormal;
+
+    @BindView(R.id.rb_text_size_large)
+    protected RadioButton mRbTextSizeLarge;
+
+    @BindView(R.id.rb_keyboard_builtin)
+    protected RadioButton mRbKeyboardBuiltin;
+
+    @BindView(R.id.rb_keyboard_system)
+    protected RadioButton mRbKeyboardSystem;
 
     @BindView(R.id.cb_randomize)
     protected CheckBox mCbRandomize;
@@ -42,6 +71,9 @@ public class SettingsFragment extends BaseFragment {
 
     @BindView(R.id.cb_auto_advance)
     protected CheckBox mCbAutoAdvance;
+
+    @BindView(R.id.cb_skip_filled_cells)
+    protected CheckBox mCbSkipFilledCells;
 
     @BindView(R.id.bt_reset_dialogs)
     protected Button mBtResetDialogs;
@@ -82,53 +114,80 @@ public class SettingsFragment extends BaseFragment {
     }
 
     private void update() {
-        updateCompoundButton(mRbThemeLight, !PrefsUtils.getDarkTheme(), new CompoundButton.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(CompoundButton compoundButton, boolean checked) {
-                PrefsUtils.setDarkTheme(!checked);
-                if (checked) {
-                    relaunch();
-                }
+        updateCompoundButton(mRbThemeLight, !PrefsUtils.getDarkTheme(), (compoundButton, checked) -> {
+            if (checked) {
+                setTheme(false);
             }
         });
-        updateCompoundButton(mRbThemeDark, PrefsUtils.getDarkTheme(), new CompoundButton.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(CompoundButton compoundButton, boolean checked) {
-                PrefsUtils.setDarkTheme(checked);
-                if (checked) {
-                    relaunch();
-                }
+        updateCompoundButton(mRbThemeDark, PrefsUtils.getDarkTheme(), (compoundButton, checked) -> {
+            if (checked) {
+                setTheme(true);
             }
         });
-        updateCompoundButton(mCbRandomize, PrefsUtils.getRandomize(), new CompoundButton.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(CompoundButton compoundButton, boolean checked) {
-                PrefsUtils.setRandomize(checked);
+        updateCompoundButton(mRbTextSizeSmall, PrefsUtils.getTextSize() == -1, (compoundButton, checked) -> {
+            if (checked) {
+                setTextSize(-1);
             }
         });
-        updateCompoundButton(mCbShowHints, PrefsUtils.getShowHints(), new CompoundButton.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(CompoundButton compoundButton, boolean checked) {
-                PrefsUtils.setShowHints(checked);
+        updateCompoundButton(mRbTextSizeNormal, PrefsUtils.getTextSize() == 0, (compoundButton, checked) -> {
+            if (checked) {
+                setTextSize(0);
             }
         });
-        updateCompoundButton(mCbShowTopic, PrefsUtils.getShowTopic(), new CompoundButton.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(CompoundButton compoundButton, boolean checked) {
-                PrefsUtils.setShowTopic(checked);
+        updateCompoundButton(mRbTextSizeLarge, PrefsUtils.getTextSize() == 1, (compoundButton, checked) -> {
+            if (checked) {
+                setTextSize(1);
             }
         });
-        updateCompoundButton(mCbAutoAdvance, PrefsUtils.getAutoAdvance(), new CompoundButton.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(CompoundButton compoundButton, boolean checked) {
-                PrefsUtils.setAutoAdvance(checked);
+        updateCompoundButton(mRbKeyboardBuiltin, !PrefsUtils.getUseSystemKeyboard(), (compoundButton, checked) -> {
+            if (checked) {
+                setUseSystemKeyboard(false);
             }
         });
+        updateCompoundButton(mRbKeyboardSystem, PrefsUtils.getUseSystemKeyboard(), (compoundButton, checked) -> {
+            if (checked) {
+                // Show warning that it works for shit
+                new MaterialDialog.Builder(getActivity())
+                        .content(R.string.keyboard_system_dialog)
+                        .positiveText(R.string.keyboard_system_dialog_ok)
+                        .dismissListener(dialogInterface -> setUseSystemKeyboard(true))
+                        .show();
+            }
+        });
+        updateCompoundButton(mCbRandomize, PrefsUtils.getRandomize(),
+                (compoundButton, checked) -> PrefsUtils.setRandomize(checked));
+        updateCompoundButton(mCbShowHints, PrefsUtils.getShowHints(),
+                (compoundButton, checked) -> PrefsUtils.setShowHints(checked));
+        updateCompoundButton(mCbShowTopic, PrefsUtils.getShowTopic(),
+                (compoundButton, checked) -> PrefsUtils.setShowTopic(checked));
+        updateCompoundButton(mCbAutoAdvance, PrefsUtils.getAutoAdvance(),
+                (compoundButton, checked) -> PrefsUtils.setAutoAdvance(checked));
+        updateCompoundButton(mCbSkipFilledCells, PrefsUtils.getSkipFilledCells(),
+                (compoundButton, checked) -> PrefsUtils.setSkipFilledCells(checked));
 
         mBtResetDialogs.setEnabled(PrefsUtils.getNeverAskRevealLetter() || PrefsUtils.getNeverAskRevealMistakes());
     }
 
+    private void setTextSize(int textSize) {
+        PrefsUtils.setTextSize(textSize);
+        StyleUtils.reset();
+        EventProvider.postEvent(new PuzzleEvent.PuzzleStyleChanged());
+    }
+
+    private void setTheme(boolean theme) {
+        PrefsUtils.setDarkTheme(theme);
+        relaunch();
+    }
+
+    private void setUseSystemKeyboard(boolean useSystemKeyboard) {
+        PrefsUtils.setUseSystemKeyboard(useSystemKeyboard);
+        relaunch();
+    }
+
     private void relaunch() {
+        // Show progress as it takes a moment to relaunch
+        mVgBusy.setVisibility(View.VISIBLE);
+        mVgContent.setVisibility(View.GONE);
         // Relaunch as though launched from home screen
         Context context = getActivity().getBaseContext();
         Intent i = context.getPackageManager()
@@ -158,6 +217,24 @@ public class SettingsFragment extends BaseFragment {
         PrefsUtils.setNeverAskRevealLetter(false);
         PrefsUtils.setNeverAskRevealMistakes(false);
         update();
+    }
+
+    @OnClick(R.id.bt_reset_all_puzzles)
+    protected void onClickResetAllPuzzles() {
+        String keyword = getString(R.string.reset_all_puzzles_keyword);
+        new MaterialDialog.Builder(getActivity())
+                .content(getString(R.string.reset_all_puzzles_confirmation, keyword))
+                .positiveText(R.string.reset)
+                .input(null, null, (dialog, input) -> {
+                    BaseActivity activity = (BaseActivity) getActivity();
+                    if (input.toString().trim().toLowerCase(Locale.ENGLISH).equals(keyword)) {
+                        PuzzleProvider.getInstance(getContext()).resetAll();
+                        activity.showSnackbar(getString(R.string.reset_all_puzzles_executed));
+                    } else {
+                        activity.showSnackbar(getString(R.string.reset_all_puzzles_cancelled));
+                    }
+                })
+                .show();
     }
 
 }

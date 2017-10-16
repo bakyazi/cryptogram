@@ -14,11 +14,15 @@ public class PrefsUtils {
     private static final String KEY_SHOW_HINTS = "show_hints";
     private static final String KEY_SHOW_TOPIC = "show_topic";
     private static final String KEY_DARK_THEME = "dark_theme";
+    private static final String KEY_TEXT_SIZE = "text_size";
     private static final String KEY_AUTO_ADVANCE = "auto_advance";
+    private static final String KEY_SKIP_FILLED_CELLS = "skip_filled_cells";
     private static final String KEY_NEVER_ASK_REVEAL_LETTER = "never_ask_reveal_letter";
     private static final String KEY_NEVER_ASK_REVEAL_MISTAKES = "never_ask_reveal_mistakes";
     private static final String KEY_HIGHLIGHTED_HYPHENATION = "highlighted_hyphenation";
     private static final String KEY_HIGHLIGHTED_TOUCH_INPUT = "highlighted_touch_input";
+    private static final String KEY_SAVEGAME_NAME = "savegame_name";
+    private static final String KEY_USE_SYSTEM_KEYBOARD = "use_system_keyboard";
 
     public static final int TYPE_HIGHLIGHT_HYPHENATION = 0;
     public static final int TYPE_HIGHLIGHT_TOUCH_INPUT = 1;
@@ -78,12 +82,20 @@ public class PrefsUtils {
         Prefs.putBoolean(KEY_SHOW_TOPIC, show);
     }
 
+    public static boolean getDarkTheme() {
+        return Prefs.getBoolean(KEY_DARK_THEME, false);
+    }
+
     public static void setDarkTheme(boolean theme) {
         Prefs.putBoolean(KEY_DARK_THEME, theme);
     }
 
-    public static boolean getDarkTheme() {
-        return Prefs.getBoolean(KEY_DARK_THEME, false);
+    public static int getTextSize() {
+        return Prefs.getInt(KEY_TEXT_SIZE, 0);
+    }
+
+    public static void setTextSize(int textSize) {
+        Prefs.putInt(KEY_TEXT_SIZE, textSize);
     }
 
     public static boolean getAutoAdvance() {
@@ -94,6 +106,13 @@ public class PrefsUtils {
         Prefs.putBoolean(KEY_AUTO_ADVANCE, show);
     }
 
+    public static boolean getSkipFilledCells() {
+        return Prefs.getBoolean(KEY_SKIP_FILLED_CELLS, true);
+    }
+
+    public static void setSkipFilledCells(boolean skillFilledCells) {
+        Prefs.putBoolean(KEY_SKIP_FILLED_CELLS, skillFilledCells);
+    }
 
     public static void setNeverAskRevealMistakes(boolean neverAsk) {
         Prefs.putBoolean(KEY_NEVER_ASK_REVEAL_MISTAKES, neverAsk);
@@ -109,6 +128,14 @@ public class PrefsUtils {
 
     public static boolean getNeverAskRevealLetter() {
         return Prefs.getBoolean(KEY_NEVER_ASK_REVEAL_LETTER, false);
+    }
+
+    public static void setUseSystemKeyboard(boolean useSystemKeyboard) {
+        Prefs.putBoolean(KEY_USE_SYSTEM_KEYBOARD, useSystemKeyboard);
+    }
+
+    public static boolean getUseSystemKeyboard() {
+        return Prefs.getBoolean(KEY_USE_SYSTEM_KEYBOARD, false);
     }
 
     private static String getHighlightKey(int type) {
@@ -135,6 +162,14 @@ public class PrefsUtils {
         if (key != null) {
             Prefs.putBoolean(key, highlighted);
         }
+    }
+
+    public static String getLastSavegameName() {
+        return Prefs.getString(KEY_SAVEGAME_NAME, null);
+    }
+
+    public static void setLastSavegameName(String savegameName) {
+        Prefs.putString(KEY_SAVEGAME_NAME, savegameName);
     }
 
 }

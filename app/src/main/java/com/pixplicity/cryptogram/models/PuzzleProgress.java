@@ -24,6 +24,10 @@ public class PuzzleProgress {
 
     private static final List<Character> ALPHABET = new ArrayList<>(26);
 
+    private static final float TARGET_DURATION = 3 * 60f;
+    private static final float MAX_REVEALS = 6f;
+    private static final float MAX_EXCESS_INPUT = 26f;
+
     static {
         for (int i = 'A'; i <= 'Z'; i++) {
             ALPHABET.add((char) i);
@@ -224,13 +228,24 @@ public class PuzzleProgress {
         return getUserCharsMapping(puzzle).get(c);
     }
 
-    public synchronized void setUserChar(@NonNull Puzzle puzzle, char selectedCharacter, char c) {
+    /**
+     * Sets a selected hint to a character.
+     *
+     * @return If the character was changed from a previous assignment; i.e. 'corrected' by the user.
+     */
+    public synchronized boolean setUserChar(@NonNull Puzzle puzzle, char selectedCharacter,
+                                            char c) {
+        boolean changed = false;
         Character previousChar = getUserCharsMapping(puzzle).get(selectedCharacter);
         if (previousChar == null) {
             previousChar = 0;
         }
         char userChar = Character.toUpperCase(c);
         if (previousChar != userChar && userChar != 0) {
+            if (previousChar != 0) {
+                // User made a correction
+                changed = true;
+            }
             if (mInputs == null) {
                 mInputs = 1;
             } else {
@@ -238,6 +253,24 @@ public class PuzzleProgress {
             }
         }
         getUserCharsMapping(puzzle).put(selectedCharacter, userChar);
+        return changed;
+    }
+
+    private int getUserCharsCount(@NonNull Puzzle puzzle) {
+        int count = 0;
+        HashMap<Character, Character> userCharsMapping = getUserCharsMapping(puzzle);
+        for (Character c : userCharsMapping.keySet()) {
+            if (puzzle.isGiven(c)) {
+                // This character is given by the puzzle
+                continue;
+            }
+            Character userChar = userCharsMapping.get(c);
+            if (userChar != null && userChar != 0) {
+                // This is a user filled character
+                count++;
+            }
+        }
+        return count;
     }
 
     public synchronized int getExcessCount(@NonNull Puzzle puzzle) {
@@ -245,25 +278,32 @@ public class PuzzleProgress {
             return -1;
         }
         // Start with total number of inputs
-        int count = mInputs;
-        for (Character c : getUserCharsMapping(puzzle).values()) {
-            if (c != null && c != 0) {
-                // Subtract any filled in characters
-                count--;
-            }
+        return mInputs - getUserCharsCount(puzzle);
+    }
+
+    public synchronized boolean isInProgress(@NonNull Puzzle puzzle) {
+        if (isCompleted(puzzle)) {
+            return false;
         }
-        return count;
+        // Dumb approach of simply checking on inputs
+        return getUserCharsCount(puzzle) > 0;
     }
 
     public synchronized boolean isCompleted(@NonNull Puzzle puzzle) {
         if (mCompleted == null || !mCompleted) {
             mCompleted = true;
             HashMap<Character, Character> userChars = getUserCharsMapping(puzzle);
-            for (Character character : userChars.keySet()) {
-                // In order to be correct, the key and value must be identical
-                if (character != null && character != userChars.get(character) && !puzzle.isGiven(character)) {
-                    mCompleted = false;
-                    break;
+            if (userChars.size() <= 5) {
+                Log.w(TAG, "User character mapping has an unexpectedly small size (that's what she said)");
+                userChars.clear();
+                mCompleted = false;
+            } else {
+                for (Character character : userChars.keySet()) {
+                    // In order to be correct, the key and value must be identical
+                    if (character != null && character != userChars.get(character) && !puzzle.isGiven(character)) {
+                        mCompleted = false;
+                        break;
+                    }
                 }
             }
             if (mCompleted) {
@@ -347,13 +387,13 @@ public class PuzzleProgress {
         Answers.getInstance().logLevelEnd(
                 event);
 
-        EventProvider.postEvent(
+        EventProvider.postEventDelayed(
                 new PuzzleEvent.PuzzleCompletedEvent(puzzle));
     }
 
     private synchronized void setTimes() {
         long stopTime = System.currentTimeMillis();
-        mStartTime = stopTime - getDuration();
+        mStartTime = stopTime - getDurationMs();
         mStopTime = stopTime;
     }
 
@@ -364,7 +404,7 @@ public class PuzzleProgress {
         return mStartTime;
     }
 
-    public synchronized long getDuration() {
+    public synchronized long getDurationMs() {
         if (mStartTime == null || mStartTime == 0) {
             return 0;
         }
@@ -378,7 +418,7 @@ public class PuzzleProgress {
     }
 
     public synchronized boolean hasScore(@NonNull Puzzle puzzle) {
-        long duration = puzzle.getDuration();
+        long duration = puzzle.getDurationMs();
         int excessCount = getExcessCount(puzzle);
         if (duration == 0 || excessCount < 0) {
             return false;
@@ -390,13 +430,13 @@ public class PuzzleProgress {
         if (!hasScore(puzzle)) {
             return null;
         }
-        long duration = getDuration();
+        float duration = getDurationMs() / 1000f;
         int excessCount = getExcessCount(puzzle);
         float score = 1;
-        score = addScore(score, (float) duration / 120f);
+        score = addScore(score, TARGET_DURATION / duration);
         score = addScore(score, (float) Math.pow(0.75f, getRevealedMistakes()));
-        score = addScore(score, (6f - getReveals()) / 6f);
-        score = addScore(score, (26f - excessCount) / 26f);
+        score = addScore(score, (MAX_REVEALS - getReveals()) / 6f);
+        score = addScore(score, (MAX_EXCESS_INPUT - excessCount) / 26f);
         // Never return a score below 0.0% or above 100.0%
         return Math.max(0f, Math.min(1f, score));
     }
@@ -433,6 +473,10 @@ public class PuzzleProgress {
                 i.remove();
             }
         }
+        if (mStartTime == null || mStopTime == null) {
+            // This is a hacky fix for dealing with broken completion states
+            mCompleted = false;
+        }
         ArrayList<Character> characterList = getCharacterList(puzzle);
         HashMap<Character, Character> charMapping = getCharMapping(puzzle);
         Log.w(TAG, "check for invalid mappings in " + puzzle);
@@ -441,6 +485,7 @@ public class PuzzleProgress {
                 // Whoops! Puzzle has a broken character mapping
                 mUserChars = null;
                 mCharMapping = null;
+                mCompleted = false;
                 getCharMapping(puzzle);
                 Log.w(TAG, "invalid character mapping for " + puzzle + "; reset mappings");
                 break;
@@ -454,7 +499,7 @@ public class PuzzleProgress {
         }
     }
 
-    public synchronized void reset(@NonNull Puzzle puzzle) {
+    public synchronized void reset(@Nullable Puzzle puzzle) {
         mUserChars = null;
         mCharMapping = null;
         mStartTime = null;
@@ -462,9 +507,13 @@ public class PuzzleProgress {
         mCompleted = null;
         if (isPlaying()) {
             mPlaying = null;
-            onResume(puzzle);
+            if (puzzle != null) {
+                onResume(puzzle);
+            }
         }
-        sanitize(puzzle);
+        if (puzzle != null) {
+            sanitize(puzzle);
+        }
     }
 
 }

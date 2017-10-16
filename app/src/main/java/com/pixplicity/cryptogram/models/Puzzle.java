@@ -259,9 +259,10 @@ public class Puzzle {
     }
 
     @Exclude
-    public void setUserChar(char selectedCharacter, char c) {
-        getProgress().setUserChar(this, selectedCharacter, c);
+    public boolean setUserChar(char selectedCharacter, char c) {
+        boolean changed = getProgress().setUserChar(this, selectedCharacter, c);
         save();
+        return changed;
     }
 
     @Exclude
@@ -282,6 +283,11 @@ public class Puzzle {
     @Exclude
     public boolean isInstruction() {
         return mId < 0;
+    }
+
+    @Exclude
+    public boolean isInProgress() {
+        return getProgress().isInProgress(this);
     }
 
     @Exclude
@@ -335,6 +341,7 @@ public class Puzzle {
         save();
     }
 
+    @Exclude
     public boolean isRevealed(char c) {
         if (mGiven != null && mGiven.indexOf(c) > -1) {
             return true;
@@ -356,12 +363,12 @@ public class Puzzle {
      * Returns the duration of the user's play time on this puzzle in milliseconds.
      */
     @Exclude
-    public long getDuration() {
+    public long getDurationMs() {
         if (isNoScore()) {
             // Don't measure the duration for puzzles with given characters
             return 0;
         }
-        return getProgress().getDuration();
+        return getProgress().getDurationMs();
     }
 
     @Exclude
@@ -392,6 +399,10 @@ public class Puzzle {
         save();
     }
 
+    public void unload() {
+        mLoadedProgress = false;
+    }
+
     private void load() {
         if (!mLoadedProgress && !mIsMock) {
             mProgress = PuzzleProvider.getInstance(CryptogramApp.getInstance()).getProgress().get(mId);
@@ -402,14 +413,21 @@ public class Puzzle {
         mLoadedProgress = true;
     }
 
-    public void reset() {
-        getProgress().reset(this);
-        save();
+    public void reset(boolean save) {
+        getProgress().reset(save ? this : null);
+        if (save) {
+            save();
+        }
     }
 
     public void save() {
         if (!mIsMock) {
-            PuzzleProvider.getInstance(CryptogramApp.getInstance()).setProgress(getProgress());
+            final PuzzleProvider puzzleProvider = PuzzleProvider.getInstance(CryptogramApp.getInstance());
+            final PuzzleProgress progress = getProgress();
+            if (progress != null) {
+                puzzleProvider.setProgress(progress.getId(), progress);
+                puzzleProvider.saveLocal();
+            }
         }
     }
 

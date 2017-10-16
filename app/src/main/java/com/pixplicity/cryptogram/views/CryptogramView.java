@@ -1,5 +1,7 @@
 package com.pixplicity.cryptogram.views;
 
+import android.animation.Animator;
+import android.animation.AnimatorListenerAdapter;
 import android.content.Context;
 import android.content.res.Resources;
 import android.graphics.Canvas;
@@ -10,11 +12,13 @@ import android.graphics.Typeface;
 import android.os.Build;
 import android.support.annotation.Nullable;
 import android.support.v4.content.ContextCompat;
+import android.support.v7.widget.AppCompatTextView;
 import android.text.TextPaint;
 import android.util.AttributeSet;
 import android.util.Log;
 import android.view.KeyEvent;
 import android.view.MotionEvent;
+import android.view.View;
 import android.view.inputmethod.EditorInfo;
 import android.view.inputmethod.InputConnection;
 import android.view.inputmethod.InputMethodManager;
@@ -22,17 +26,20 @@ import android.view.inputmethod.InputMethodManager;
 import com.pixplicity.cryptogram.R;
 import com.pixplicity.cryptogram.models.Puzzle;
 import com.pixplicity.cryptogram.utils.PrefsUtils;
+import com.pixplicity.cryptogram.utils.StyleUtils;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 
 
-public class CryptogramView extends android.support.v7.widget.AppCompatTextView {
+public class CryptogramView extends AppCompatTextView {
 
     private static final String TAG = CryptogramView.class.getSimpleName();
 
     private static final String SOFT_HYPHEN = "\u00AD";
     public static final boolean ENABLE_HYPHENATION = false;
+
+    private static final int KEYBOARD_ANIMATION_DURATION_MS = 200;
 
     @Nullable
     private Puzzle mPuzzle;
@@ -43,7 +50,10 @@ public class CryptogramView extends android.support.v7.widget.AppCompatTextView 
     private float mBoxW, mBoxH, mCharW1;
     private float mBoxPadding;
     private float mLineHeight;
-    private Paint mPaint, mLinePaint1, mLinePaint2, mBoxPaint1, mBoxPaint2;
+    private Paint mLinePaint1;
+    private Paint mLinePaint2;
+    private Paint mBoxPaint1;
+    private Paint mBoxPaint2;
     private TextPaint mTextPaintInput, mTextPaintInputComplete, mTextPaintMapping, mTextPaintMistake;
     private int mBoxInset;
 
@@ -52,6 +62,7 @@ public class CryptogramView extends android.support.v7.widget.AppCompatTextView 
     private OnPuzzleProgressListener mOnPuzzleProgressListener;
     private OnHighlightListener mOnHighlightListener;
     private char[][] mCharMap;
+    private View mKeyboardView;
 
 
     public CryptogramView(Context context) {
@@ -70,13 +81,14 @@ public class CryptogramView extends android.support.v7.widget.AppCompatTextView 
     }
 
     private void init(Context context, AttributeSet attrs, int defStyleAttr) {
-        Resources r = context.getResources();
+        Resources res = getResources();
 
         if (!isInEditMode()) {
             mDarkTheme = PrefsUtils.getDarkTheme();
+        } else {
+            mPuzzle = new Puzzle.Mock("This is an example puzzle.", "Author", "Topic");
         }
 
-        mPaint = new Paint();
         int colorText, colorHighlight, colorComplete, colorMistake;
         if (mDarkTheme) {
             colorText = R.color.colorDarkPuzzleText;
@@ -90,38 +102,38 @@ public class CryptogramView extends android.support.v7.widget.AppCompatTextView 
             colorMistake = R.color.colorPuzzleMistake;
         }
 
-        mPaint = new Paint();
-        mPaint.setColor(ContextCompat.getColor(context, colorText));
-        mPaint.setAntiAlias(true);
+        Paint paint = new Paint();
+        paint.setColor(ContextCompat.getColor(context, colorText));
+        paint.setAntiAlias(true);
 
-        mLinePaint1 = new Paint(mPaint);
-        mLinePaint1.setStrokeWidth(r.getDimensionPixelSize(R.dimen.puzzle_line_height));
+        mLinePaint1 = new Paint(paint);
+        mLinePaint1.setStrokeWidth(res.getDimensionPixelSize(R.dimen.puzzle_line_height));
         mLinePaint1.setStrokeCap(Paint.Cap.ROUND);
         mLinePaint2 = new Paint(mLinePaint1);
         mLinePaint2.setAlpha(96);
 
-        mBoxPaint1 = new Paint(mPaint);
+        mBoxPaint1 = new Paint(paint);
 
         mBoxPaint1.setColor(ContextCompat.getColor(context, colorHighlight));
-        mBoxPaint1.setStrokeWidth(r.getDimensionPixelSize(R.dimen.box_highlight_stroke));
+        mBoxPaint1.setStrokeWidth(res.getDimensionPixelSize(R.dimen.box_highlight_stroke));
         mBoxPaint1.setStyle(Paint.Style.FILL);
         mBoxPaint2 = new Paint(mBoxPaint1);
         mBoxPaint2.setStyle(Paint.Style.STROKE);
 
-        mBoxInset = r.getDimensionPixelSize(R.dimen.box_highlight_stroke) / 2;
+        mBoxInset = res.getDimensionPixelSize(R.dimen.box_highlight_stroke) / 2;
 
-        mTextPaintInput = new TextPaint(mPaint);
+        mTextPaintInput = new TextPaint(paint);
         mTextPaintInput.setTypeface(Typeface.MONOSPACE);
 
         mTextPaintMapping = new TextPaint(mTextPaintInput);
 
         // Compute size of each box
-        mBoxW = r.getDimensionPixelSize(R.dimen.puzzle_box_width);
-        mBoxH = r.getDimensionPixelSize(R.dimen.puzzle_box_height);
+        mBoxW = StyleUtils.getSize(res, R.dimen.puzzle_box_width);
+        mBoxH = StyleUtils.getSize(res, R.dimen.puzzle_box_height);
         mBoxPadding = mBoxH / 4;
         mLineHeight = mBoxH * 2 + mBoxPadding * 2;
-        mTextPaintInput.setTextSize(r.getDimensionPixelSize(R.dimen.puzzle_text_size));
-        mTextPaintMapping.setTextSize(r.getDimensionPixelSize(R.dimen.puzzle_hint_size));
+        mTextPaintInput.setTextSize(StyleUtils.getSize(res, R.dimen.puzzle_text_size));
+        mTextPaintMapping.setTextSize(StyleUtils.getSize(res, R.dimen.puzzle_hint_size));
 
         mTextPaintInputComplete = new TextPaint(mTextPaintInput);
         mTextPaintInputComplete.setColor(ContextCompat.getColor(context, colorComplete));
@@ -134,16 +146,16 @@ public class CryptogramView extends android.support.v7.widget.AppCompatTextView 
         mTextPaintInput.getTextBounds("M", 0, 1, bounds);
         mCharW1 = bounds.width();
 
-        if (isInEditMode()) {
-            setPuzzle(new Puzzle());
-        }
-
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-            setShowSoftInputOnFocus(true);
+        if (!isInEditMode() && Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            setShowSoftInputOnFocus(PrefsUtils.getUseSystemKeyboard());
         }
         setFocusable(true);
         setFocusableInTouchMode(true);
         setClickable(true);
+    }
+
+    public void setKeyboardView(View keyboardView) {
+        mKeyboardView = keyboardView;
     }
 
     @Override
@@ -158,14 +170,40 @@ public class CryptogramView extends android.support.v7.widget.AppCompatTextView 
 
     public void showSoftInput() {
         if (mPuzzle != null && !mPuzzle.isCompleted()) {
-            InputMethodManager inputMethodManager = (InputMethodManager) getContext().getSystemService(Context.INPUT_METHOD_SERVICE);
-            if (inputMethodManager != null) {
-                inputMethodManager.showSoftInput(this, InputMethodManager.SHOW_IMPLICIT);
+            // Show keyboard
+            if (mKeyboardView == null) {
+                InputMethodManager inputMethodManager = (InputMethodManager) getContext().getSystemService(Context.INPUT_METHOD_SERVICE);
+                if (inputMethodManager != null) {
+                    inputMethodManager.showSoftInput(this, InputMethodManager.SHOW_IMPLICIT);
+                }
+            } else {
+                // Show built-in keyboard
+                mKeyboardView.setVisibility(View.VISIBLE);
+                mKeyboardView.animate()
+                             .translationY(0)
+                             .alpha(1.0f)
+                             .setDuration(KEYBOARD_ANIMATION_DURATION_MS)
+                             .setListener(null);
             }
+        } else {
+            hideSoftInput();
         }
     }
 
     public void hideSoftInput() {
+        if (mKeyboardView != null) {
+            // Hide built-in keyboard
+            mKeyboardView.animate()
+                         .translationY(mKeyboardView.getHeight())
+                         .alpha(0.0f)
+                         .setDuration(KEYBOARD_ANIMATION_DURATION_MS)
+                         .setListener(new AnimatorListenerAdapter() {
+                             @Override
+                             public void onAnimationEnd(Animator animation) {
+                                 mKeyboardView.setVisibility(View.GONE);
+                             }
+                         });
+        }
         InputMethodManager inputMethodManager = (InputMethodManager) getContext().getSystemService(Context.INPUT_METHOD_SERVICE);
         if (inputMethodManager != null) {
             inputMethodManager.hideSoftInputFromWindow(getWindowToken(), InputMethodManager.HIDE_IMPLICIT_ONLY);
@@ -196,17 +234,45 @@ public class CryptogramView extends android.support.v7.widget.AppCompatTextView 
             if (mSelectedCharacter == 0) {
                 mSelectedCharacter = mSelectedCharacterLast;
             }
+            // Respect user preference to skipp filled cells
+            boolean skipFilledCells = PrefsUtils.getSkipFilledCells();
+            char fallbackHintChar = 0;
             if (mSelectedCharacter != 0) {
                 index = charMapping.indexOf(mSelectedCharacter) + 1;
             }
-            if (index >= charMapping.size()) {
-                index = 0;
+            int initialIndex = index;
+            while (true) {
+                if (index >= charMapping.size()) {
+                    index = 0;
+                }
+                if (charMapping.size() > index) {
+                    char c = charMapping.get(index);
+                    Character hintChar = mPuzzle.getCharMapping().get(c);
+                    if (skipFilledCells) {
+                        if (fallbackHintChar == 0) {
+                            fallbackHintChar = hintChar;
+                        }
+                        char userChar = getUserInput(c);
+                        if (userChar != 0) {
+                            // Cell not empty; continue searching
+                            index++;
+                            if (initialIndex == index) {
+                                // We came full circle, no empty cell found
+                                break;
+                            }
+                            continue;
+                        }
+                        // Found an empty cell
+                    }
+                    fallbackHintChar = 0;
+                    setSelectedCharacter(hintChar == null ? 0 : hintChar);
+                } else {
+                    setSelectedCharacter((char) 0);
+                }
+                break;
             }
-            if (charMapping.size() > index) {
-                char c = charMapping.get(index);
-                setSelectedCharacter(mPuzzle.getCharMapping().get(c));
-            } else {
-                setSelectedCharacter((char) 0);
+            if (fallbackHintChar != 0) {
+                setSelectedCharacter(fallbackHintChar);
             }
         } else {
             setSelectedCharacter((char) 0);
@@ -235,19 +301,35 @@ public class CryptogramView extends android.support.v7.widget.AppCompatTextView 
 
     @Override
     public int getInputType() {
-        return SimpleInputConnection.INPUT_TYPE;
+        if (PrefsUtils.getUseSystemKeyboard()) {
+            return SimpleInputConnection.INPUT_TYPE;
+        } else {
+            return SimpleInputConnection.INPUT_NONE;
+        }
     }
 
     @Override
     public InputConnection onCreateInputConnection(EditorInfo outAttrs) {
-        outAttrs.inputType = SimpleInputConnection.INPUT_TYPE;
-        outAttrs.imeOptions = EditorInfo.IME_ACTION_NEXT | EditorInfo.IME_FLAG_NO_EXTRACT_UI;
-        return new SimpleInputConnection(this);
+        if (PrefsUtils.getUseSystemKeyboard()) {
+            outAttrs.inputType = SimpleInputConnection.INPUT_TYPE;
+            if (SimpleInputConnection.hasFaultyIme(getContext())) {
+                outAttrs.inputType |= SimpleInputConnection.INPUT_TYPE_FOR_FAULTY_IME;
+            }
+            outAttrs.imeOptions = EditorInfo.IME_ACTION_NEXT | EditorInfo.IME_FLAG_NO_EXTRACT_UI;
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
+                outAttrs.imeOptions |= EditorInfo.IME_FLAG_FORCE_ASCII;
+            }
+            if (SimpleInputConnection.DISABLE_PERSONALIZED_LEARNING && Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+                outAttrs.imeOptions |= EditorInfo.IME_FLAG_NO_PERSONALIZED_LEARNING;
+            }
+            return new SimpleInputConnection(this);
+        }
+        return super.onCreateInputConnection(outAttrs);
     }
 
     @Override
     public boolean onCheckIsTextEditor() {
-        return true;
+        return PrefsUtils.getUseSystemKeyboard();
     }
 
     @Nullable
@@ -291,7 +373,7 @@ public class CryptogramView extends android.support.v7.widget.AppCompatTextView 
                 }
             }
         }
-        invalidate();
+        redraw();
     }
 
     public boolean setUserChar(char selectedChar, char userChar) {
@@ -301,7 +383,9 @@ public class CryptogramView extends android.support.v7.widget.AppCompatTextView 
         if (selectedChar != 0 && mPuzzle != null) {
             if (mPuzzle.isRevealed(selectedChar)) {
                 // This character was already revealed; don't allow the user to alter it
-                mPuzzle.setUserChar(selectedChar, selectedChar);
+                if (mPuzzle.setUserChar(selectedChar, selectedChar)) {
+                    // TODO show highlight
+                }
                 return true;
             }
             // Check for completion state
@@ -319,7 +403,7 @@ public class CryptogramView extends android.support.v7.widget.AppCompatTextView 
             if (mOnPuzzleProgressListener != null) {
                 mOnPuzzleProgressListener.onPuzzleProgress(mPuzzle);
             }
-            invalidate();
+            redraw();
             return true;
         }
         return false;
@@ -343,12 +427,12 @@ public class CryptogramView extends android.support.v7.widget.AppCompatTextView 
             mPuzzle.revealedMistakes();
             mHighlightMistakes = true;
         }
-        invalidate();
+        redraw();
     }
 
     public void reset() {
         mSelectedCharacter = 0;
-        invalidate();
+        redraw();
     }
 
     @Override
@@ -414,21 +498,17 @@ public class CryptogramView extends android.support.v7.widget.AppCompatTextView 
             return 0;
         }
         HashMap<Character, Character> charMapping;
-        if (isInEditMode()) {
-            charMapping = null;
-        } else {
-            charMapping = mPuzzle.getCharMapping();
-        }
+        charMapping = mPuzzle.getCharMapping();
 
         boolean completed = false;
-        if (!isInEditMode() && mPuzzle.isCompleted()) {
+        if (mPuzzle.isCompleted()) {
             completed = true;
         }
         TextPaint textPaintUser = completed ? mTextPaintInputComplete : mTextPaintInput;
         mTextPaintMapping.setAlpha(completed ? 96 : 255);
         Paint linePaint = completed ? mLinePaint2 : mLinePaint1;
 
-        PointF hyphenHighlight = null;
+        PointF highlightPosition = null;
 
         mCharMap = new char[(int) (width / mBoxW)][100];
 
@@ -449,10 +529,10 @@ public class CryptogramView extends android.support.v7.widget.AppCompatTextView 
                     Log.d(TAG, "soft hyphen at index " + index);
                     if (x + (index + 1) * mBoxW <= width) {
                         // It fits with a soft hyphen; draw this segment
-                        if (hyphenHighlight == null && canvas != null) {
-                            hyphenHighlight = new PointF(x + index * mBoxW - mBoxW / 2, y - mBoxH / 2);
+                        if (highlightPosition == null && canvas != null) {
+                            highlightPosition = new PointF(x + index * mBoxW - mBoxW / 2, y - mBoxH / 2);
                             if (mOnHighlightListener != null) {
-                                mOnHighlightListener.onHighlight(PrefsUtils.TYPE_HIGHLIGHT_HYPHENATION, hyphenHighlight);
+                                mOnHighlightListener.onHighlight(PrefsUtils.TYPE_HIGHLIGHT_HYPHENATION, highlightPosition);
                             }
                         }
                         String wordSegment = word.substring(0, index).replace(SOFT_HYPHEN, "") + "-";
@@ -550,6 +630,11 @@ public class CryptogramView extends android.support.v7.widget.AppCompatTextView 
             x += mBoxW;
         }
         return x;
+    }
+
+    public void redraw() {
+        // TODO allow for buffering the image and issue a redraw here
+        invalidate();
     }
 
     @Override

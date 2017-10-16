@@ -2,12 +2,16 @@
 <layer-list xmlns:android="http://schemas.android.com/apk/res/android">
 
     <item
-        android:drawable="@drawable/bg_activity"/>
+        android:drawable="@drawable/bg_splash_gradient"/>
 
-    <item>
+    <item
+        android:bottom="96dp"
+        android:left="336dp"
+        android:right="336dp"
+        android:top="96dp">
         <bitmap
             android:gravity="center"
-            android:src="@drawable/ic_icon"/>
+            android:src="@drawable/im_launcher_light_small"/>
     </item>
 
 </layer-list>

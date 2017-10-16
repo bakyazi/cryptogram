@@ -1,5 +1,6 @@
 <resources>
 
     <dimen name="side_navigation_width">360dp</dimen>
+    <dimen name="keyboard_padding_horizontal">24dp</dimen>
 
 </resources>

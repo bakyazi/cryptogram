@@ -1,5 +1,6 @@
 package com.pixplicity.cryptogram.fragments;
 
+import android.content.ActivityNotFoundException;
 import android.content.Intent;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
@@ -17,12 +18,15 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.inputmethod.InputMethodInfo;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.pixplicity.cryptogram.R;
 import com.pixplicity.cryptogram.utils.HtmlCompat;
+import com.pixplicity.cryptogram.views.SimpleInputConnection;
 
 import butterknife.BindView;
 
@@ -31,6 +35,9 @@ public class AboutFragment extends BaseFragment {
 
     private static final String TAG = AboutFragment.class.getSimpleName();
     public static final String FEEDBACK_EMAIL = "paul@pixplicity.com";
+
+    @BindView(R.id.iv_logo)
+    protected ImageView mIvLogo;
 
     @BindView(R.id.tv_version)
     protected TextView mTvVersion;
@@ -54,7 +61,7 @@ public class AboutFragment extends BaseFragment {
     protected Button mBtWebsite;
 
     @BindView(R.id.iv_pixplicity)
-    protected ImageView mIvLabs;
+    protected ImageView mIvPixplicity;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -78,6 +85,9 @@ public class AboutFragment extends BaseFragment {
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
+        if (isDarkTheme()) {
+            invert(mIvLogo);
+        }
         // App version
         String versionString = getVersionString();
         mTvVersion.setText(versionString);
@@ -109,19 +119,23 @@ public class AboutFragment extends BaseFragment {
         Drawable drawable = ContextCompat.getDrawable(getContext(), drawableId);
         // drawable = VectorDrawableCompat.create(getResources(), drawableId, getActivity().getTheme());
 
-        mIvLabs.setImageDrawable(drawable);
+        mIvPixplicity.setImageDrawable(drawable);
 
         // Website
         final View.OnClickListener launchWebsite = new View.OnClickListener() {
             @Override
             public void onClick(@NonNull View v) {
-                Intent i = new Intent(Intent.ACTION_VIEW);
-                i.setData(Uri.parse(getString(R.string.url)));
-                startActivity(i);
+                Intent intent = new Intent(Intent.ACTION_VIEW);
+                intent.setData(Uri.parse(getString(R.string.url_pixplicity)));
+                try {
+                    startActivity(intent);
+                } catch (ActivityNotFoundException e) {
+                    Toast.makeText(getContext(), R.string.error_no_activity, Toast.LENGTH_LONG).show();
+                }
             }
         };
         mBtWebsite.setOnClickListener(launchWebsite);
-        mIvLabs.setOnClickListener(launchWebsite);
+        mIvPixplicity.setOnClickListener(launchWebsite);
     }
 
     @Nullable
@@ -140,13 +154,39 @@ public class AboutFragment extends BaseFragment {
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.action_feedback: {
-                Intent emailIntent = new Intent(Intent.ACTION_SENDTO, Uri.fromParts(
+                Intent intent = new Intent(Intent.ACTION_SENDTO, Uri.fromParts(
                         "mailto", FEEDBACK_EMAIL, null));
-                emailIntent.putExtra(Intent.EXTRA_EMAIL, new String[]{FEEDBACK_EMAIL});
-                emailIntent.putExtra(Intent.EXTRA_SUBJECT, getString(R.string.feedback_subject));
-                emailIntent.putExtra(Intent.EXTRA_TEXT, getString(R.string.feedback_body, getVersionString()));
-                emailIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                startActivity(emailIntent);
+                intent.putExtra(Intent.EXTRA_EMAIL, new String[]{FEEDBACK_EMAIL});
+                intent.putExtra(Intent.EXTRA_SUBJECT, getString(R.string.feedback_subject));
+                final InputMethodInfo ime = SimpleInputConnection.getIme(getContext());
+                String keyboardPackageName = ime == null ? "unknown" : ime.getPackageName();
+                intent.putExtra(Intent.EXTRA_TEXT, getString(R.string.feedback_body, getVersionString(), keyboardPackageName));
+                intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                try {
+                    startActivity(intent);
+                } catch (ActivityNotFoundException e) {
+                    Toast.makeText(getContext(), R.string.error_no_activity, Toast.LENGTH_LONG).show();
+                }
+            }
+            return true;
+            case R.id.action_rate: {
+                Intent intent = new Intent(Intent.ACTION_VIEW);
+                intent.setData(Uri.parse(getString(R.string.url_google_play, getContext().getPackageName())));
+                try {
+                    startActivity(intent);
+                } catch (ActivityNotFoundException e) {
+                    Toast.makeText(getContext(), R.string.error_no_activity, Toast.LENGTH_LONG).show();
+                }
+            }
+            return true;
+            case R.id.action_beta: {
+                Intent intent = new Intent(Intent.ACTION_VIEW);
+                intent.setData(Uri.parse(getString(R.string.url_beta, getContext().getPackageName())));
+                try {
+                    startActivity(intent);
+                } catch (ActivityNotFoundException e) {
+                    Toast.makeText(getContext(), R.string.error_no_activity, Toast.LENGTH_LONG).show();
+                }
             }
             return true;
         }
