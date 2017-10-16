@@ -8,7 +8,9 @@
         android:layout_height="match_parent"
         android:layout_gravity="start"
         android:background="?attr/colorPrimary"
-        android:orientation="vertical">
+        android:clickable="true"
+        android:orientation="vertical"
+        tools:ignore="KeyboardInaccessibleWidget">
 
         <RelativeLayout
             android:id="@+id/vg_google_play_games"
