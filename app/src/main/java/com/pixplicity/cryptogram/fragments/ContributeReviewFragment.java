@@ -2,7 +2,6 @@ package com.pixplicity.cryptogram.fragments;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -14,7 +13,6 @@ import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.pixplicity.cryptogram.R;
-import com.pixplicity.cryptogram.adapters.PuzzleAdapter;
 import com.pixplicity.cryptogram.adapters.SuggestionsAdapter;
 import com.pixplicity.cryptogram.models.Puzzle;
 import com.pixplicity.cryptogram.utils.Database;
@@ -92,7 +90,7 @@ public class ContributeReviewFragment extends BaseFragment {
             public void onCancelled(DatabaseError databaseError) {
                 // Failed to read value
                 mPuzzlesLoaded = true;
-                Snackbar.make(mRvPuzzles, R.string.error_no_puzzles, Snackbar.LENGTH_SHORT).show();
+                showSnackbar(getString(R.string.error_no_puzzles));
                 updateAdapter();
             }
         });
@@ -108,15 +106,12 @@ public class ContributeReviewFragment extends BaseFragment {
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        mAdapter = new SuggestionsAdapter(getContext(), new PuzzleAdapter.OnItemClickListener() {
-            @Override
-            public void onItemClick(int position) {
-                Puzzle[] puzzles = mAdapter.getPuzzles();
-                if (puzzles != null) {
-                    Puzzle puzzle = puzzles[position];
-                    Snackbar.make(mRvPuzzles, "Reviewing puzzles will be available in an upcoming version", Snackbar.LENGTH_SHORT).show();
-                    // TODO something with the puzzle
-                }
+        mAdapter = new SuggestionsAdapter(getContext(), position -> {
+            Puzzle[] puzzles = mAdapter.getPuzzles();
+            if (puzzles != null) {
+                Puzzle puzzle = puzzles[position];
+                showSnackbar("Reviewing puzzles will be available in an upcoming version");
+                // TODO something with the puzzle
             }
         });
         updateAdapter();
