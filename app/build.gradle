@@ -107,6 +107,8 @@ repositories {
     maven { url "https://dl.bintray.com/pixplicity/maven" }
     maven { url "https://dl.bintray.com/drummer-aidan/maven" }
     maven { url 'https://maven.fabric.io/public' }
+    // FIXME currently only used for TapTargetView-SNAPSHOT (4d36558 below)
+    maven { url 'https://jitpack.io' }
 }
 
 dependencies {
@@ -138,7 +140,9 @@ dependencies {
 
     implementation 'com.google.code.gson:gson:2.8.1'
 
-    implementation 'com.getkeepsafe.taptargetview:taptargetview:1.9.1'
+    // FIXME a fix is due in 1.9.2
+    // implementation 'com.getkeepsafe.taptargetview:taptargetview:1.9.1'
+    implementation 'com.github.KeepSafe:TapTargetView:4d36558'
 
     implementation('com.crashlytics.sdk.android:crashlytics:2.6.7@aar') {
         transitive = true
