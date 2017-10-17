@@ -159,8 +159,7 @@ public class ContributeSuggestFragment extends BaseFragment {
         // Submit it
         Database.getInstance()
                 .getSuggestions()
-                .push()
-                .setValue(puzzle)
+                .add(puzzle)
                 .addOnSuccessListener(aVoid -> {
                     pd.dismiss();
                     EventProvider.postEvent(new SubmissionEvent());

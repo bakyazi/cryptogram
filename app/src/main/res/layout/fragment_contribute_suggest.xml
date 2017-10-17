@@ -42,34 +42,52 @@
 
             </LinearLayout>
 
-            <android.support.v7.widget.AppCompatEditText
-                android:id="@+id/et_text"
+            <android.support.design.widget.TextInputLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:gravity="bottom"
-                android:hint="@string/hint_puzzle_text"
-                android:inputType="text|textCapSentences|textMultiLine"
-                android:lines="4"/>
+                android:layout_height="wrap_content">
 
-            <android.support.v7.widget.AppCompatEditText
-                android:id="@+id/et_author"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:gravity="bottom"
-                android:hint="@string/hint_puzzle_author"
-                android:inputType="text|textPersonName"
-                android:lines="1"
-                android:maxLines="1"/>
+                <android.support.v7.widget.AppCompatEditText
+                    android:id="@+id/et_text"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="bottom"
+                    android:hint="@string/hint_puzzle_text"
+                    android:inputType="text|textCapSentences|textMultiLine"
+                    android:lines="4"/>
 
-            <android.support.v7.widget.AppCompatEditText
-                android:id="@+id/et_topic"
+            </android.support.design.widget.TextInputLayout>
+
+            <android.support.design.widget.TextInputLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:gravity="bottom"
-                android:hint="@string/hint_puzzle_topic"
-                android:inputType="text|textCapWords"
-                android:lines="1"
-                android:maxLines="1"/>
+                android:layout_height="wrap_content">
+
+                <android.support.v7.widget.AppCompatEditText
+                    android:id="@+id/et_author"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="bottom"
+                    android:hint="@string/hint_puzzle_author"
+                    android:inputType="text|textPersonName"
+                    android:lines="1"
+                    android:maxLines="1"/>
+
+            </android.support.design.widget.TextInputLayout>
+
+            <android.support.design.widget.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <android.support.v7.widget.AppCompatEditText
+                    android:id="@+id/et_topic"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="bottom"
+                    android:hint="@string/hint_puzzle_topic"
+                    android:inputType="text|textCapWords"
+                    android:lines="1"
+                    android:maxLines="1"/>
+
+            </android.support.design.widget.TextInputLayout>
 
             <android.support.v7.widget.AppCompatCheckBox
                 android:id="@+id/cb_explicit"

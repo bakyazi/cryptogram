@@ -1,29 +1,30 @@
 package com.pixplicity.cryptogram.utils;
 
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.firestore.CollectionReference;
+import com.google.firebase.firestore.FirebaseFirestore;
 
 public class Database {
 
     private static final Database sInstance = new Database();
 
-    private final DatabaseReference mDbPuzzles;
+    private final CollectionReference mDbTopics, mDbSuggestions;
 
     public static Database getInstance() {
         return sInstance;
     }
 
     private Database() {
-        FirebaseDatabase database = FirebaseDatabase.getInstance();
-        mDbPuzzles = database.getReference("puzzles");
+        FirebaseFirestore database = FirebaseFirestore.getInstance();
+        mDbTopics = database.collection("topics");
+        mDbSuggestions = database.collection("suggestions");
     }
 
-    private DatabaseReference getPuzzles() {
-        return mDbPuzzles;
+    public CollectionReference getPuzzles() {
+        return mDbTopics;
     }
 
-    public DatabaseReference getSuggestions() {
-        return getPuzzles().child("suggestions");
+    public CollectionReference getSuggestions() {
+        return mDbSuggestions;
     }
 
 }
