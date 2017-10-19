@@ -27,9 +27,11 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.ViewStub;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ImageView;
-import android.widget.TableLayout;
+import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -59,12 +61,16 @@ import com.pixplicity.cryptogram.R;
 import com.pixplicity.cryptogram.adapters.PuzzleAdapter;
 import com.pixplicity.cryptogram.events.PuzzleEvent;
 import com.pixplicity.cryptogram.models.Puzzle;
+import com.pixplicity.cryptogram.models.PuzzleList;
+import com.pixplicity.cryptogram.models.Topic;
+import com.pixplicity.cryptogram.providers.GsonProvider;
+import com.pixplicity.cryptogram.providers.PuzzleProvider;
 import com.pixplicity.cryptogram.utils.AchievementProvider;
 import com.pixplicity.cryptogram.utils.EventProvider;
 import com.pixplicity.cryptogram.utils.LeaderboardProvider;
 import com.pixplicity.cryptogram.utils.PrefsUtils;
-import com.pixplicity.cryptogram.utils.PuzzleProvider;
 import com.pixplicity.cryptogram.utils.SavegameManager;
+import com.pixplicity.cryptogram.utils.StatisticsUtils;
 import com.pixplicity.cryptogram.utils.StringUtils;
 import com.pixplicity.cryptogram.utils.VideoUtils;
 import com.pixplicity.cryptogram.views.CryptogramLayout;
@@ -76,6 +82,7 @@ import com.squareup.otto.Subscribe;
 import net.soulwolf.widget.ratiolayout.widget.RatioFrameLayout;
 
 import java.util.Locale;
+import java.util.Map;
 import java.util.concurrent.TimeUnit;
 
 import butterknife.BindView;
@@ -93,6 +100,7 @@ public class CryptogramActivity extends BaseActivity implements
     private static final int ONBOARDING_PAGES = 2;
 
     public static final String EXTRA_LAUNCH_SETTINGS = "launch_settings";
+    public static final int HIGHLIGHT_DELAY = 1200;
 
     @BindView(R.id.iv_google_play_games_banner)
     protected ImageView mIvGooglePlayGamesBanner;
@@ -111,6 +119,9 @@ public class CryptogramActivity extends BaseActivity implements
 
     @BindView(R.id.vg_google_play_games_actions)
     protected ViewGroup mVgGooglePlayGamesActions;
+
+    @BindView(R.id.sp_categories)
+    protected Spinner mSpCategories;
 
     @BindView(R.id.rv_drawer)
     protected RecyclerView mRvDrawer;
@@ -166,7 +177,8 @@ public class CryptogramActivity extends BaseActivity implements
     @Nullable
     private View mVwKeyboard;
 
-    private PuzzleAdapter mAdapter;
+    private PuzzleList mPuzzles;
+    private PuzzleAdapter mPuzzleAdapter;
 
     private Rate mRate;
 
@@ -188,6 +200,7 @@ public class CryptogramActivity extends BaseActivity implements
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
         if (isDarkTheme()) {
             setTheme(R.style.AppTheme_Dark);
             getWindow().setBackgroundDrawableResource(R.drawable.bg_activity_dark);
@@ -214,13 +227,54 @@ public class CryptogramActivity extends BaseActivity implements
                 .setFeedbackAction(Uri.parse("mailto:paul+cryptogram@pixplicity.com"))
                 .build();
 
-        mAdapter = new PuzzleAdapter(this, position -> {
+        mPuzzleAdapter = new PuzzleAdapter(this, position -> {
             if (mDrawerLayout != null) {
                 mDrawerLayout.closeDrawers();
             }
-            updateCryptogram(puzzleProvider.get(position));
+            updateCryptogram(mPuzzles.get(position));
+        }, mPuzzles);
+        mRvDrawer.setAdapter(mPuzzleAdapter);
+
+        final ArrayAdapter<Topic> topicAdapter = new TopicAdapter(this);
+        mSpCategories.setAdapter(topicAdapter);
+        mSpCategories.setSelection(topicAdapter.getPosition(topic));
+        mSpCategories.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+
+            private boolean mFirstTime = true;
+
+            @Override
+            public void onItemSelected(AdapterView<?> adapterView, View view,
+                                       int position, long id) {
+                if (mFirstTime) {
+                    mFirstTime = false;
+                    return;
+                }
+                final Topic topic = topicAdapter.getItem(position);
+                PuzzleProvider provider = PuzzleProvider.getInstance(CryptogramActivity.this);
+                mPuzzles = new PuzzleList(provider.getAllForTopic(topic));
+                mPuzzleAdapter.setPuzzleList(mPuzzles);
+                PrefsUtils.setCurrentTopic(topic);
+                // Display the current puzzle
+                updateCryptogram(provider.getCurrent(mPuzzles));
+                // Show the topic info
+                final String topicName =
+                        topic == null ? getString(R.string.all_topics) : topic.getName();
+                final String topicDescription =
+                        topic == null
+                                ? getString(R.string.all_topics_description)
+                                : topic.getDescription();
+                new MaterialDialog.Builder(CryptogramActivity.this)
+                        .title(topicName)
+                        .content(topicDescription)
+                        .positiveText(R.string.play)
+                        .show();
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> adapterView) {
+            }
+
         });
-        mRvDrawer.setAdapter(mAdapter);
 
         mVgCryptogram.setCrytogramView(mCryptogramView);
         mCryptogramView.setOnPuzzleProgressListener(this::onCryptogramUpdated);
@@ -240,8 +294,7 @@ public class CryptogramActivity extends BaseActivity implements
                     case PrefsUtils.TYPE_HIGHLIGHT_HYPHENATION:
                         showHighlight(type, point,
                                 getString(R.string.highlight_hyphenation_title),
-                                getString(R.string.highlight_hyphenation_description),
-                                1200
+                                getString(R.string.highlight_hyphenation_description)
                         );
                         break;
                     case PrefsUtils.TYPE_HIGHLIGHT_TOUCH_INPUT:
@@ -250,8 +303,7 @@ public class CryptogramActivity extends BaseActivity implements
                         } else {
                             showHighlight(PrefsUtils.TYPE_HIGHLIGHT_TOUCH_INPUT, point,
                                     getString(R.string.highlight_touch_input_title),
-                                    getString(R.string.highlight_touch_input_description),
-                                    1200
+                                    getString(R.string.highlight_touch_input_description)
                             );
                         }
                         break;
@@ -293,7 +345,7 @@ public class CryptogramActivity extends BaseActivity implements
         mGoogleApiClient.connect();
 
         final PuzzleProvider puzzleProvider = PuzzleProvider.getInstance(this);
-        Puzzle puzzle = puzzleProvider.getCurrent();
+        Puzzle puzzle = puzzleProvider.getCurrent(mPuzzles);
         if (puzzle != null) {
             puzzle.onResume();
         }
@@ -319,7 +371,7 @@ public class CryptogramActivity extends BaseActivity implements
         }
 
         final PuzzleProvider puzzleProvider = PuzzleProvider.getInstance(this);
-        Puzzle puzzle = puzzleProvider.getCurrent();
+        Puzzle puzzle = puzzleProvider.getCurrent(mPuzzles);
         if (puzzle != null) {
             puzzle.onPause();
         }
@@ -389,7 +441,7 @@ public class CryptogramActivity extends BaseActivity implements
                                     @Override
                                     public void onLoadSuccess() {
                                         updateCryptogram(PuzzleProvider.getInstance(CryptogramActivity.this)
-                                                                       .getCurrent());
+                                                                       .getCurrent(mPuzzles));
                                         showSnackbar("Game loaded.");
                                         pd.dismiss();
                                     }
@@ -424,7 +476,7 @@ public class CryptogramActivity extends BaseActivity implements
     }
 
     private void showHighlight(final int type, PointF point, final String title,
-                               final String description, int delayMillis) {
+                               final String description) {
         Rect viewRect = new Rect();
         mCryptogramView.getGlobalVisibleRect(viewRect);
         final int targetX = (int) (point.x + viewRect.left);
@@ -467,7 +519,7 @@ public class CryptogramActivity extends BaseActivity implements
                             view.dismiss(false);
                         }
                     });
-        }, delayMillis);
+        }, HIGHLIGHT_DELAY);
     }
 
     private void showOnboarding(final int page) {
@@ -590,9 +642,13 @@ public class CryptogramActivity extends BaseActivity implements
 
     private void updateCryptogram(Puzzle puzzle) {
         if (puzzle != null) {
-            PuzzleProvider provider = PuzzleProvider.getInstance(this);
-            provider.setCurrentId(puzzle.getId());
-            mRvDrawer.scrollToPosition(provider.getCurrentIndex());
+            mPuzzles.setCurrentId(puzzle.getId());
+            final int currentIndex = mPuzzles.getCurrentIndex();
+            if (currentIndex >= 0 && currentIndex < mRvDrawer.getAdapter().getItemCount()) {
+                mRvDrawer.scrollToPosition(currentIndex);
+            } else if (mRvDrawer.getAdapter().getItemCount() > 0) {
+                mRvDrawer.scrollToPosition(0);
+            }
             mTvError.setVisibility(View.GONE);
             mVgCryptogram.setVisibility(View.VISIBLE);
             // Apply the puzzle to the CryptogramView
@@ -636,7 +692,7 @@ public class CryptogramActivity extends BaseActivity implements
     public void onCryptogramUpdated(Puzzle puzzle) {
         // Update the HintView as the puzzle updates
         mHintView.setPuzzle(puzzle);
-        mAdapter.notifyDataSetChanged();
+        mPuzzleAdapter.notifyDataSetChanged();
         if (puzzle.isCompleted()) {
             mHintView.setVisibility(View.GONE);
             mVgStats.setVisibility(View.VISIBLE);
@@ -759,7 +815,14 @@ public class CryptogramActivity extends BaseActivity implements
         final Puzzle puzzle = mCryptogramView.getPuzzle();
         switch (item.getItemId()) {
             case R.id.action_next: {
-                nextPuzzle();
+                if (BuildConfig.DEBUG) {
+                    Map<String, Topic> topics = PuzzleProvider.getInstance(this).getTopics();
+                    String json = GsonProvider.getGson().toJson(topics);
+
+                    Toast.makeText(this, "Exported puzzles; " + json.length() + " chars", Toast.LENGTH_SHORT).show();
+                } else {
+                    nextPuzzle();
+                }
             }
             return true;
             case R.id.action_reveal_letter: {
@@ -907,105 +970,12 @@ public class CryptogramActivity extends BaseActivity implements
             }
             return true;
             case R.id.action_stats: {
-                // Log the event
-                Answers.getInstance().logContentView(new ContentViewEvent().putContentName(CryptogramApp.CONTENT_STATISTICS));
-                // Compose the dialog
-                TableLayout dialogView = (TableLayout) LayoutInflater.from(this).inflate(R.layout.dialog_statistics, null);
                 if (puzzle != null) {
+                    // Make sure to save the puzzle first
                     puzzle.save();
                 }
-                PuzzleProvider provider = PuzzleProvider.getInstance(this);
-                int count = 0, scoreCount = 0;
-                float score = 0f;
-                long shortestDurationMs = 0, totalDurationMs = 0;
-                for (Puzzle c : provider.getAll()) {
-                    long durationMs = c.getProgress().getDurationMs();
-                    if (!c.isInstruction() && c.isCompleted()) {
-                        count++;
-                        Float puzzleScore = c.getScore();
-                        if (puzzleScore == null) {
-                            continue;
-                        }
-                        score += puzzleScore;
-                        scoreCount++;
-                        if (shortestDurationMs == 0 || shortestDurationMs > durationMs) {
-                            shortestDurationMs = durationMs;
-                        }
-                    }
-                    totalDurationMs += durationMs;
-                }
-                String scoreAverageText;
-                if (scoreCount > 0) {
-                    scoreAverageText = getString(R.string.stats_average_score_format, score / (float) scoreCount * 100f);
-                } else {
-                    scoreAverageText = getString(R.string.not_applicable);
-                }
-                String scoreCumulativeText = getString(R.string.stats_cumulative_score_format, score * 100f);
-                String fastestCompletion;
-                if (shortestDurationMs == 0) {
-                    fastestCompletion = getString(R.string.not_applicable);
-                } else {
-                    fastestCompletion = StringUtils.getDurationString(shortestDurationMs);
-                }
-                AchievementProvider.AchievementStats achievementStats = AchievementProvider.getInstance().getAchievementStats();
-                achievementStats.calculate(this);
-                int longestStreak = achievementStats.getLongestStreak();
-                {
-                    View view = LayoutInflater.from(this).inflate(R.layout.in_statistics_row, null);
-                    ((TextView) view.findViewById(R.id.tv_label)).setText(R.string.stats_total_completed_label);
-                    ((TextView) view.findViewById(R.id.tv_value)).setText(
-                            getString(R.string.stats_total_completed_value,
-                                    count,
-                                    provider.getLastNumber()));
-                    dialogView.addView(view);
-                }
-                {
-                    View view = LayoutInflater.from(this).inflate(R.layout.in_statistics_row, null);
-                    ((TextView) view.findViewById(R.id.tv_label)).setText(R.string.stats_average_score_label);
-                    ((TextView) view.findViewById(R.id.tv_value)).setText(
-                            getString(R.string.stats_average_score_value,
-                                    scoreAverageText));
-                    dialogView.addView(view);
-                }
-                {
-                    View view = LayoutInflater.from(this).inflate(R.layout.in_statistics_row, null);
-                    ((TextView) view.findViewById(R.id.tv_label)).setText(R.string.stats_cumulative_score_label);
-                    ((TextView) view.findViewById(R.id.tv_value)).setText(
-                            getString(R.string.stats_cumulative_score_value,
-                                    scoreCumulativeText));
-                    dialogView.addView(view);
-                }
-                {
-                    View view = LayoutInflater.from(this).inflate(R.layout.in_statistics_row, null);
-                    ((TextView) view.findViewById(R.id.tv_label)).setText(R.string.stats_fastest_completion_label);
-                    ((TextView) view.findViewById(R.id.tv_value)).setText(
-                            getString(R.string.stats_fastest_completion_value,
-                                    fastestCompletion));
-                    dialogView.addView(view);
-                }
-                {
-                    View view = LayoutInflater.from(this).inflate(R.layout.in_statistics_row, null);
-                    ((TextView) view.findViewById(R.id.tv_label)).setText(R.string.stats_total_time_spent_label);
-                    ((TextView) view.findViewById(R.id.tv_value)).setText(
-                            getString(R.string.stats_total_time_spent_value,
-                                    StringUtils.getDurationString(totalDurationMs)));
-                    dialogView.addView(view);
-                }
-                {
-                    View view = LayoutInflater.from(this).inflate(R.layout.in_statistics_row, null);
-                    ((TextView) view.findViewById(R.id.tv_label)).setText(R.string.stats_longest_streak_label);
-                    ((TextView) view.findViewById(R.id.tv_value)).setText(
-                            getString(R.string.stats_longest_streak_value,
-                                    longestStreak,
-                                    getResources().getQuantityString(R.plurals.days, longestStreak)));
-                    dialogView.addView(view);
-                }
-                new AlertDialog.Builder(this)
-                        .setTitle(R.string.statistics)
-                        .setView(dialogView)
-                        .setPositiveButton(android.R.string.ok, (dialogInterface, i) -> {
-                        })
-                        .show();
+                // Now show the stats
+                StatisticsUtils.showDialog(this);
             }
             return true;
             case R.id.action_contribute: {
@@ -1029,7 +999,7 @@ public class CryptogramActivity extends BaseActivity implements
     }
 
     private void nextPuzzle() {
-        Puzzle puzzle = PuzzleProvider.getInstance(this).getNext();
+        Puzzle puzzle = mPuzzles.getNext();
         updateCryptogram(puzzle);
     }
 

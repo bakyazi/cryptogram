@@ -20,9 +20,9 @@ import com.pixplicity.cryptogram.R;
 import com.pixplicity.cryptogram.activities.BaseActivity;
 import com.pixplicity.cryptogram.activities.CryptogramActivity;
 import com.pixplicity.cryptogram.events.PuzzleEvent;
+import com.pixplicity.cryptogram.providers.PuzzleProvider;
 import com.pixplicity.cryptogram.utils.EventProvider;
 import com.pixplicity.cryptogram.utils.PrefsUtils;
-import com.pixplicity.cryptogram.utils.PuzzleProvider;
 import com.pixplicity.cryptogram.utils.StyleUtils;
 
 import java.util.Locale;

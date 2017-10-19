@@ -12,6 +12,7 @@ import com.google.android.gms.games.snapshot.SnapshotMetadata;
 import com.google.android.gms.games.snapshot.SnapshotMetadataChange;
 import com.google.android.gms.games.snapshot.Snapshots;
 import com.pixplicity.cryptogram.R;
+import com.pixplicity.cryptogram.providers.PuzzleProvider;
 
 import java.io.IOException;
 import java.math.BigInteger;

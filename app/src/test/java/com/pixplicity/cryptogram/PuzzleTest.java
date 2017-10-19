@@ -5,8 +5,9 @@ import android.util.Log;
 
 import com.pixplicity.cryptogram.models.Puzzle;
 import com.pixplicity.cryptogram.models.PuzzleProgress;
+import com.pixplicity.cryptogram.models.Topic;
+import com.pixplicity.cryptogram.providers.PuzzleProvider;
 import com.pixplicity.cryptogram.stringsimilarity.Levenshtein;
-import com.pixplicity.cryptogram.utils.PuzzleProvider;
 import com.pixplicity.cryptogram.views.CryptogramView;
 
 import org.junit.Before;
@@ -16,9 +17,11 @@ import org.powermock.api.mockito.PowerMockito;
 import org.powermock.core.classloader.annotations.PrepareForTest;
 import org.powermock.modules.junit4.PowerMockRunner;
 
+import java.io.PrintStream;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Locale;
+import java.util.Map;
 
 /**
  * Example local unit test, which will execute on the development machine (host).
@@ -147,15 +150,7 @@ public class PuzzleTest {
                 break;
             }
         }
-        if (errors.size() > 0) {
-            for (int i = 0; i < Math.min(10, errors.size()); i++) {
-                System.err.println("-\t" + errors.get(i));
-            }
-            if (errors.size() > 10) {
-                System.err.println("-\t(and more)");
-            }
-            throw new AssertionError("Errors regarding puzzle quality");
-        }
+        handleErrors(errors);
     }
 
     @Test
@@ -169,6 +164,82 @@ public class PuzzleTest {
             System.out.println();
             for (String wordPart : puzzle.getWordsForLineWidth(lineWidthInChars)) {
                 System.out.println(wordPart);
+            }
+        }
+    }
+
+    @Test
+    public void topicsCategorized() {
+        ArrayList<String> warnings = new ArrayList<>();
+        ArrayList<String> errors = new ArrayList<>();
+        HashMap<String, Integer> puzzleTopics = new HashMap<>();
+        HashMap<String, Integer> topicNames = new HashMap<>();
+        for (Puzzle puzzle : PuzzleProvider.getInstance(null).getAll()) {
+            String topicName = puzzle.getTopic();
+            if (topicName == null || puzzle.isNoScore()) {
+                // Ignore this puzzle
+                continue;
+            }
+            topicName = topicName.toLowerCase(Locale.ENGLISH);
+            Integer count = puzzleTopics.get(topicName);
+            if (count == null) {
+                count = 0;
+            }
+            puzzleTopics.put(topicName, count + 1);
+        }
+        Map<String, Topic> topics = PuzzleProvider.getInstance(null).getTopics();
+        for (String topicId : topics.keySet()) {
+            Topic topic = topics.get(topicId);
+            for (String topicName : topic.getTopics()) {
+                topicName = topicName.toLowerCase(Locale.ENGLISH);
+                if (!puzzleTopics.containsKey(topicName)) {
+                    warnings.add("Topic does not occur in puzzles: " + topicName);
+                }
+                Integer count = topicNames.get(topicName);
+                if (count == null) {
+                    count = 0;
+                }
+                topicNames.put(topicName, count + 1);
+            }
+        }
+        for (String puzzleTopicName : puzzleTopics.keySet()) {
+            boolean found = false;
+            for (String topicName : topicNames.keySet()) {
+                if (puzzleTopicName.equals(topicName)) {
+                    found = true;
+                    break;
+                }
+            }
+            int count = puzzleTopics.get(puzzleTopicName);
+            if (count < 10) {
+                warnings.add("Topic with fewer than 10 puzzles: " + puzzleTopicName);
+            }
+            if (!found) {
+                errors.add("Topic does not occur in topic list: " + puzzleTopicName);
+            }
+        }
+        handleWarning(warnings);
+        handleErrors(errors);
+    }
+
+    private void handleWarning(ArrayList<String> messages) {
+        printMessages(System.out, messages);
+    }
+
+    private void handleErrors(ArrayList<String> messages) {
+        printMessages(System.err, messages);
+        if (messages.size() > 0) {
+            throw new AssertionError("Errors regarding puzzle quality");
+        }
+    }
+
+    private void printMessages(final PrintStream out, ArrayList<String> messages) {
+        if (messages.size() > 0) {
+            for (int i = 0; i < Math.min(10, messages.size()); i++) {
+                out.println("-\t" + messages.get(i));
+            }
+            if (messages.size() > 10) {
+                out.println("-\t(and more)");
             }
         }
     }

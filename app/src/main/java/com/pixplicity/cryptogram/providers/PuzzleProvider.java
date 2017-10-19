@@ -1,4 +1,4 @@
-package com.pixplicity.cryptogram.utils;
+package com.pixplicity.cryptogram.providers;
 
 import android.content.Context;
 import android.os.AsyncTask;
@@ -14,27 +14,31 @@ import com.google.android.gms.games.snapshot.Snapshot;
 import com.google.android.gms.games.snapshot.SnapshotMetadata;
 import com.google.gson.Gson;
 import com.google.gson.JsonSyntaxException;
+import com.google.gson.reflect.TypeToken;
 import com.pixplicity.cryptogram.BuildConfig;
-import com.pixplicity.cryptogram.events.PuzzleEvent;
+import com.pixplicity.cryptogram.R;
 import com.pixplicity.cryptogram.models.Puzzle;
+import com.pixplicity.cryptogram.models.PuzzleList;
 import com.pixplicity.cryptogram.models.PuzzleProgress;
 import com.pixplicity.cryptogram.models.PuzzleProgressState;
+import com.pixplicity.cryptogram.models.Topic;
+import com.pixplicity.cryptogram.utils.PrefsUtils;
+import com.pixplicity.cryptogram.utils.SavegameManager;
 import com.pixplicity.cryptogram.views.CryptogramView;
 
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Collections;
 import java.util.HashMap;
-import java.util.Iterator;
 import java.util.LinkedHashSet;
 import java.util.LinkedList;
-import java.util.Random;
+import java.util.Map;
 import java.util.Set;
 
-public class PuzzleProvider {
+public class PuzzleProvider extends AssetProvider {
 
     private static final String TAG = PuzzleProvider.class.getSimpleName();
 
@@ -42,54 +46,55 @@ public class PuzzleProvider {
 
     private static PuzzleProvider sInstance;
 
-    private int mCurrentIndex = -1;
+    private Map<String, Topic> mTopics;
     private Puzzle[] mPuzzles;
     private HashMap<Integer, Integer> mPuzzleIds;
     private SparseArray<PuzzleProgress> mPuzzleProgress;
 
-    private int mLastPuzzleId = -1;
+    private int mLastPuzzleId;
 
-    private final Gson mGson = new Gson();
-    private final Random mRandom = new Random();
-    private ArrayList<Integer> mRandomIndices;
+    private static final Gson mGson = new Gson();
 
     @NonNull
     public static PuzzleProvider getInstance(Context context) {
         if (sInstance == null) {
-            try {
-                sInstance = new PuzzleProvider(context);
-            } catch (IOException e) {
-                Log.e(TAG, "could not read puzzle file", e);
-                Toast.makeText(context, "Could not find any puzzles", Toast.LENGTH_LONG).show();
-            }
+            sInstance = new PuzzleProvider(context);
         }
         return sInstance;
     }
 
-    private PuzzleProvider(@Nullable Context context) throws IOException {
-        if (context != null) {
-            InputStream is = context.getAssets().open(ASSET_FILENAME);
-            readStream(is);
-        } else {
-            InputStream is = this.getClass().getClassLoader().getResourceAsStream("assets/" + ASSET_FILENAME);
-            if (is != null) {
-                readStream(is);
-                is.close();
-            }
-        }
+    private PuzzleProvider(@Nullable Context context) {
+        super(context);
     }
 
-    private void readStream(InputStream is) {
+    @NonNull
+    @Override
+    public String getAssetFilename() {
+        return ASSET_FILENAME;
+    }
+
+    @Override
+    protected void onLoadFailure(Context context, IOException e) {
+        Toast.makeText(context, R.string.error_puzzles_load_failure, Toast.LENGTH_LONG).show();
+    }
+
+    @Override
+    protected void onLoad(Context context, InputStream is) {
         long start = System.nanoTime();
-        mPuzzles = mGson.fromJson(new InputStreamReader(is), Puzzle[].class);
+        Type type = new TypeToken<Map<String, Topic>>() {
+        }.getType();
+        mTopics = GsonProvider.getGson().fromJson(new InputStreamReader(is), type);
         if (BuildConfig.DEBUG) {
             Log.d(TAG, String.format("readStream: parsed Json in %.2fms", (System.nanoTime() - start) / 1000000f));
             start = System.nanoTime();
         }
-        int index = 0, nextId = 0;
-        mPuzzleIds = new HashMap<>();
+
+        LinkedList<Puzzle> puzzles = new LinkedList<>();
+        for (String topicId : mTopics.keySet()) {
+            Topic topic = mTopics.get(topicId);
+            puzzles.addAll(Arrays.asList(topic.getPuzzles()));
+        }
         if (BuildConfig.DEBUG) {
-            LinkedList<Puzzle> puzzles = new LinkedList<>();
             if (CryptogramView.ENABLE_HYPHENATION) {
                 puzzles.add(new Puzzle.Mock(
                         "AAAAAAAA\u00ADBBB\u00ADCCCCCCC\u00ADDDDDDDDDD\u00ADEEEE\u00ADFFFFFFFFFFFFF\u00ADGGGG\u00ADHHHHHHHHHH\u00ADIIIIII.",
@@ -98,13 +103,15 @@ public class PuzzleProvider {
                         "JJJJJJJJ KKK LLLLLLL MMMMMMMMM NNNN OOOOOOOOOOOOO PPPP\u00ADQQQQQQQQQQ\u00ADRRRRRR.",
                         null, null));
             }
-            puzzles.addAll(Arrays.asList(mPuzzles));
-            mPuzzles = puzzles.toArray(new Puzzle[puzzles.size()]);
-            if (BuildConfig.DEBUG) {
-                Log.d(TAG, String.format("readStream: added test puzzles in %.2fms", (System.nanoTime() - start) / 1000000f));
-                start = System.nanoTime();
-            }
         }
+        mPuzzles = puzzles.toArray(new Puzzle[puzzles.size()]);
+        if (BuildConfig.DEBUG) {
+            Log.d(TAG, String.format("readStream: added puzzles in %.2fms", (System.nanoTime() - start) / 1000000f));
+            start = System.nanoTime();
+        }
+
+        int index = 0, nextId = 0, lastId = -1;
+        mPuzzleIds = new HashMap<>();
         for (Puzzle puzzle : mPuzzles) {
             int id = puzzle.getId();
             if (id == 0) {
@@ -115,112 +122,62 @@ public class PuzzleProvider {
                 id = nextId;
                 puzzle.setId(id);
             }
-            if (id > mLastPuzzleId) {
-                mLastPuzzleId = id;
+            if (id > lastId) {
+                lastId = id;
             }
             mPuzzleIds.put(id, index);
             index++;
         }
+        mLastPuzzleId = lastId + 1;
         if (BuildConfig.DEBUG) {
             Log.d(TAG, String.format("readStream: performed ID mapping in %.2fms", (System.nanoTime() - start) / 1000000f));
         }
+    }
+
+    public Map<String, Topic> getTopics() {
+        return mTopics;
+    }
+
+    @Nullable
+    public Topic getTopicById(@Nullable String topicId) {
+        if (topicId != null) {
+            mTopics.get(topicId);
+        }
+        return null;
     }
 
     public Puzzle[] getAll() {
         return mPuzzles;
     }
 
+    public Puzzle[] getAllForTopic(@Nullable Topic topic) {
+        if (topic == null) {
+            return getAll();
+        }
+        ArrayList<Puzzle> puzzles = new ArrayList<>();
+        for (Puzzle puzzle : mPuzzles) {
+            if (puzzle.hasTopic(topic)) {
+                puzzles.add(puzzle);
+            }
+        }
+        return puzzles.toArray(new Puzzle[puzzles.size()]);
+    }
+
     /**
      * @return last puzzle ID
      */
     public int getLastNumber() {
-        return mLastPuzzleId + 1;
+        return mLastPuzzleId;
     }
 
     public int getCount() {
         return getAll().length;
     }
 
-    public int getCurrentIndex() {
-        return mCurrentIndex;
-    }
-
-    private int getIndexFromId(int id) {
-        Integer index = mPuzzleIds.get(id);
-        if (index == null) {
-            return -1;
-        }
-        return index;
-    }
-
-    private int getIdFromIndex(int index) {
-        return mPuzzles[index].getId();
-    }
-
     @Nullable
-    public Puzzle getCurrent() {
-        if (mCurrentIndex < 0) {
-            mCurrentIndex = getIndexFromId(PrefsUtils.getCurrentId());
-        }
-        if (mCurrentIndex < 0) {
-            return getNext();
-        }
-        return get(mCurrentIndex);
-    }
-
-    public void setCurrentIndex(int index) {
-        mCurrentIndex = index;
-        PrefsUtils.setCurrentId(getIdFromIndex(index));
-    }
-
-    public void setCurrentId(int id) {
-        mCurrentIndex = getIndexFromId(id);
-        PrefsUtils.setCurrentId(id);
-    }
-
-    @Nullable
-    public Puzzle getNext() {
-        int oldIndex = mCurrentIndex;
-        int newIndex = -1;
-        int count = getCount();
-        if (count == 0) {
-            return null;
-        }
-        if (PrefsUtils.getRandomize()) {
-            if (mRandomIndices == null) {
-                mRandomIndices = new ArrayList<>();
-                for (int i = 0; i < getAll().length; i++) {
-                    mRandomIndices.add(i);
-                }
-                Collections.shuffle(mRandomIndices, mRandom);
-            }
-            boolean chooseNext = false;
-            Iterator<Integer> iter = mRandomIndices.iterator();
-            while (iter.hasNext()) {
-                Integer index = iter.next();
-                Puzzle puzzle = get(index);
-                if (puzzle == null || puzzle.isCompleted()) {
-                    // No good; eliminate this candidate and find the next
-                    iter.remove();
-                    puzzle = null;
-                }
-                if (oldIndex == index) {
-                    chooseNext = true;
-                } else if (chooseNext && puzzle != null) {
-                    newIndex = index;
-                    break;
-                }
-            }
-            if (newIndex < 0 && !mRandomIndices.isEmpty()) {
-                newIndex = mRandomIndices.get(0);
-            }
-        } else if (mCurrentIndex + 1 < getCount()) {
-            newIndex = mCurrentIndex + 1;
-        }
-        if (newIndex > -1) {
-            setCurrentIndex(newIndex);
-        }
-        return get(mCurrentIndex);
+    public Puzzle getCurrent(final PuzzleList puzzlesList) {
+        final int currentIndex = puzzlesList.getCurrentIndex();
+        return puzzlesList.get(currentIndex < 0 ? 0 : currentIndex);
     }
 
     @Nullable
@@ -300,9 +257,13 @@ public class PuzzleProvider {
         saveLocal();
 
         // Jump back to the first puzzle
+        // FIXME get the first puzzle from the current puzzle list
+        // FIXME maybe just reset the puzzle topics?
+        /*
         setCurrentIndex(0);
         EventProvider.postEventDelayed(
                 new PuzzleEvent.PuzzleResetEvent(getCurrent()));
+        */
     }
 
     public void load(@Nullable final GoogleApiClient googleApiClient,
@@ -391,7 +352,8 @@ public class PuzzleProvider {
         for (int i = 0; i < progressList.size(); i++) {
             resultList.addProgress(progressList.valueAt(i));
         }
-        resultList.setCurrentId(getIdFromIndex(getCurrentIndex()));
+        // FIXME store the current puzzle
+        // resultList.setCurrentId(getIdFromIndex(getCurrentIndex()));
         return mGson.toJson(resultList);
     }
 
@@ -402,12 +364,14 @@ public class PuzzleProvider {
                 if (puzzleProgress != null) {
                     final int puzzleId = puzzleProgress.getId();
                     setProgress(puzzleId, puzzleProgress);
-                    int index = getIndexFromId(puzzleId);
-                    if (index >= 0) {
+                    Integer index = mPuzzleIds.get(puzzleId);
+                    if (index != null && index >= 0) {
                         mPuzzles[index].unload();
                     }
                 }
             }
+            // FIXME resume the current puzzle from state.getCurrentId()
+            /*
             final Integer currentId = state.getCurrentId();
             if (currentId != null) {
                 // Select the current puzzle by its ID
@@ -416,6 +380,7 @@ public class PuzzleProvider {
                 // Select the first puzzle
                 setCurrentIndex(0);
             }
+            */
         }
         saveLocal();
     }

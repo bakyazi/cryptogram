@@ -8,13 +8,15 @@ import com.google.firebase.database.Exclude;
 import com.google.gson.annotations.SerializedName;
 import com.pixplicity.cryptogram.CryptogramApp;
 import com.pixplicity.cryptogram.R;
-import com.pixplicity.cryptogram.utils.PuzzleProvider;
+import com.pixplicity.cryptogram.providers.PuzzleProvider;
 import com.pixplicity.cryptogram.utils.StringUtils;
 
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.LinkedList;
+import java.util.Locale;
+import java.util.UUID;
 
 public class Puzzle {
 
@@ -24,6 +26,10 @@ public class Puzzle {
 
     @Exclude
     protected transient String mFirebaseId;
+
+    @Exclude
+    @SerializedName("uuid")
+    protected String mUuid;
 
     @Exclude
     @SerializedName("number")
@@ -58,6 +64,8 @@ public class Puzzle {
     protected String mLanguage;
 
     @Exclude
+    transient boolean mIsMock;
+
     private transient String[] mWords;
 
     @Exclude
@@ -70,6 +78,9 @@ public class Puzzle {
     private transient boolean mLoadedProgress;
 
     public Puzzle() {
+        if (mUuid == null) {
+            mUuid = UUID.randomUUID().toString();
+        }
     }
 
 
@@ -184,6 +195,23 @@ public class Puzzle {
     @SuppressWarnings("unused")
     public String getLanguage() {
         return mLanguage;
+    }
+
+    @Exclude
+    public boolean hasTopic(@Nullable Topic topic) {
+        if (topic == null) {
+            return true;
+        }
+        if (mTopic == null) {
+            return false;
+        }
+        String puzzleTopic = mTopic.toLowerCase(Locale.ENGLISH);
+        for (String topicName : topic.getTopics()) {
+            if (topicName.equals(puzzleTopic)) {
+                return true;
+            }
+        }
+        return false;
     }
 
     @Exclude
