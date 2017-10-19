@@ -7,7 +7,6 @@ import com.pixplicity.cryptogram.models.Puzzle;
 import com.pixplicity.cryptogram.models.PuzzleProgress;
 import com.pixplicity.cryptogram.models.Topic;
 import com.pixplicity.cryptogram.providers.PuzzleProvider;
-import com.pixplicity.cryptogram.providers.TopicProvider;
 import com.pixplicity.cryptogram.stringsimilarity.Levenshtein;
 import com.pixplicity.cryptogram.views.CryptogramView;
 

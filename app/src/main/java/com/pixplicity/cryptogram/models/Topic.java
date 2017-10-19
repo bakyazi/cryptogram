@@ -40,6 +40,14 @@ public class Topic {
         return mTopicNames;
     }
 
+    public Puzzle[] getPuzzles() {
+        return mPuzzles;
+    }
+
+    public void setPuzzles(Puzzle[] puzzles) {
+        mPuzzles = puzzles;
+    }
+
     @Override
     public String toString() {
         return mName;
@@ -62,10 +70,6 @@ public class Topic {
     @Override
     public int hashCode() {
         return mId != null ? mId.hashCode() : 0;
-    }
-
-    public void setPuzzles(Puzzle[] puzzles) {
-        mPuzzles = puzzles;
     }
 
 }

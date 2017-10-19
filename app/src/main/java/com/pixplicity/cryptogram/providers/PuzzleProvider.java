@@ -14,6 +14,7 @@ import com.google.android.gms.games.snapshot.Snapshot;
 import com.google.android.gms.games.snapshot.SnapshotMetadata;
 import com.google.gson.Gson;
 import com.google.gson.JsonSyntaxException;
+import com.google.gson.reflect.TypeToken;
 import com.pixplicity.cryptogram.BuildConfig;
 import com.pixplicity.cryptogram.R;
 import com.pixplicity.cryptogram.models.Puzzle;
@@ -28,11 +29,13 @@ import com.pixplicity.cryptogram.views.CryptogramView;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.LinkedHashSet;
 import java.util.LinkedList;
+import java.util.Map;
 import java.util.Set;
 
 public class PuzzleProvider extends AssetProvider {
@@ -43,6 +46,7 @@ public class PuzzleProvider extends AssetProvider {
 
     private static PuzzleProvider sInstance;
 
+    private Map<String, Topic> mTopics;
     private Puzzle[] mPuzzles;
     private HashMap<Integer, Integer> mPuzzleIds;
     private SparseArray<PuzzleProgress> mPuzzleProgress;
@@ -77,15 +81,20 @@ public class PuzzleProvider extends AssetProvider {
     @Override
     protected void onLoad(Context context, InputStream is) {
         long start = System.nanoTime();
-        mPuzzles = GsonProvider.getGson().fromJson(new InputStreamReader(is), Puzzle[].class);
+        Type type = new TypeToken<Map<String, Topic>>() {
+        }.getType();
+        mTopics = GsonProvider.getGson().fromJson(new InputStreamReader(is), type);
         if (BuildConfig.DEBUG) {
             Log.d(TAG, String.format("readStream: parsed Json in %.2fms", (System.nanoTime() - start) / 1000000f));
             start = System.nanoTime();
         }
-        int index = 0, nextId = 0, lastId = -1;
-        mPuzzleIds = new HashMap<>();
+
+        LinkedList<Puzzle> puzzles = new LinkedList<>();
+        for (String topicId : mTopics.keySet()) {
+            Topic topic = mTopics.get(topicId);
+            puzzles.addAll(Arrays.asList(topic.getPuzzles()));
+        }
         if (BuildConfig.DEBUG) {
-            LinkedList<Puzzle> puzzles = new LinkedList<>();
             if (CryptogramView.ENABLE_HYPHENATION) {
                 puzzles.add(new Puzzle.Mock(
                         "AAAAAAAA\u00ADBBB\u00ADCCCCCCC\u00ADDDDDDDDDD\u00ADEEEE\u00ADFFFFFFFFFFFFF\u00ADGGGG\u00ADHHHHHHHHHH\u00ADIIIIII.",
@@ -94,13 +103,15 @@ public class PuzzleProvider extends AssetProvider {
                         "JJJJJJJJ KKK LLLLLLL MMMMMMMMM NNNN OOOOOOOOOOOOO PPPP\u00ADQQQQQQQQQQ\u00ADRRRRRR.",
                         null, null));
             }
-            puzzles.addAll(Arrays.asList(mPuzzles));
-            mPuzzles = puzzles.toArray(new Puzzle[puzzles.size()]);
-            if (BuildConfig.DEBUG) {
-                Log.d(TAG, String.format("readStream: added test puzzles in %.2fms", (System.nanoTime() - start) / 1000000f));
-                start = System.nanoTime();
-            }
         }
+        mPuzzles = puzzles.toArray(new Puzzle[puzzles.size()]);
+        if (BuildConfig.DEBUG) {
+            Log.d(TAG, String.format("readStream: added puzzles in %.2fms", (System.nanoTime() - start) / 1000000f));
+            start = System.nanoTime();
+        }
+
+        int index = 0, nextId = 0, lastId = -1;
+        mPuzzleIds = new HashMap<>();
         for (Puzzle puzzle : mPuzzles) {
             int id = puzzle.getId();
             if (id == 0) {
@@ -121,6 +132,18 @@ public class PuzzleProvider extends AssetProvider {
         if (BuildConfig.DEBUG) {
             Log.d(TAG, String.format("readStream: performed ID mapping in %.2fms", (System.nanoTime() - start) / 1000000f));
         }
+    }
+
+    public Map<String, Topic> getTopics() {
+        return mTopics;
+    }
+
+    @Nullable
+    public Topic getTopicById(@Nullable String topicId) {
+        if (topicId != null) {
+            mTopics.get(topicId);
+        }
+        return null;
     }
 
     public Puzzle[] getAll() {

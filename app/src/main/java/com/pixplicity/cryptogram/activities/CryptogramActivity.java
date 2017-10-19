@@ -64,7 +64,6 @@ import com.pixplicity.cryptogram.models.PuzzleList;
 import com.pixplicity.cryptogram.models.Topic;
 import com.pixplicity.cryptogram.providers.GsonProvider;
 import com.pixplicity.cryptogram.providers.PuzzleProvider;
-import com.pixplicity.cryptogram.providers.TopicProvider;
 import com.pixplicity.cryptogram.utils.AchievementProvider;
 import com.pixplicity.cryptogram.utils.EventProvider;
 import com.pixplicity.cryptogram.utils.LeaderboardProvider;
@@ -229,17 +228,14 @@ public class CryptogramActivity extends BaseActivity implements GoogleApiClient.
         mRvDrawer.setLayoutManager(new LinearLayoutManager(this));
 
         final String topicId = PrefsUtils.getCurrentTopic();
-        Topic topic = TopicProvider.getInstance(this).getTopicById(topicId);
+        Topic topic = PuzzleProvider.getInstance(this).getTopicById(topicId);
         PuzzleProvider provider = PuzzleProvider.getInstance(CryptogramActivity.this);
         mPuzzles = new PuzzleList(provider.getAllForTopic(topic));
-        mPuzzleAdapter = new PuzzleAdapter(this, new PuzzleAdapter.OnItemClickListener() {
-            @Override
-            public void onItemClick(int position) {
-                if (mDrawerLayout != null) {
-                    mDrawerLayout.closeDrawers();
-                }
-                updateCryptogram(mPuzzles.get(position));
+        mPuzzleAdapter = new PuzzleAdapter(this, position -> {
+            if (mDrawerLayout != null) {
+                mDrawerLayout.closeDrawers();
             }
+            updateCryptogram(mPuzzles.get(position));
         }, mPuzzles);
         mRvDrawer.setAdapter(mPuzzleAdapter);
 
@@ -818,7 +814,7 @@ public class CryptogramActivity extends BaseActivity implements GoogleApiClient.
         switch (item.getItemId()) {
             case R.id.action_next: {
                 if (BuildConfig.DEBUG) {
-                    Map<String, Topic> topics = TopicProvider.getInstance(this).getTopics();
+                    Map<String, Topic> topics = PuzzleProvider.getInstance(this).getTopics();
                     String json = GsonProvider.getGson().toJson(topics);
 
                     Toast.makeText(this, "Exported puzzles; " + json.length() + " chars", Toast.LENGTH_SHORT).show();
