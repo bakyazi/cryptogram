@@ -7,9 +7,12 @@ import com.crashlytics.android.Crashlytics;
 import com.pixplicity.easyprefs.library.Prefs;
 
 import io.fabric.sdk.android.Fabric;
+import io.realm.Realm;
 
 
 public class CryptogramApp extends Application {
+
+    private static final String TAG = CryptogramApp.class.getSimpleName();
 
     public static final String CONTENT_ACHIEVEMENTS = "achievements";
     public static final String CONTENT_LEADERBOARDS = "leaderboards";
@@ -44,6 +47,9 @@ public class CryptogramApp extends Application {
                 .setPrefsName(getPackageName())
                 .setUseDefaultSharedPreference(true)
                 .build();
+
+        // Prepare Realm
+        Realm.init(this);
     }
 
 }
