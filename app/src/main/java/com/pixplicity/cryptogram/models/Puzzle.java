@@ -63,9 +63,6 @@ public class Puzzle {
     @SerializedName("language")
     protected String mLanguage;
 
-    @Exclude
-    transient boolean mIsMock;
-
     private transient String[] mWords;
 
     @Exclude

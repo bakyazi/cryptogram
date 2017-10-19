@@ -11,9 +11,8 @@ import android.widget.TextView;
 
 import com.pixplicity.cryptogram.R;
 import com.pixplicity.cryptogram.models.Puzzle;
-import com.pixplicity.cryptogram.models.PuzzleList;
+import com.pixplicity.cryptogram.providers.PuzzleProvider;
 import com.pixplicity.cryptogram.utils.PrefsUtils;
-import com.pixplicity.cryptogram.utils.PuzzleProvider;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -26,14 +25,13 @@ public class PuzzleAdapter extends RecyclerView.Adapter<PuzzleAdapter.ViewHolder
     private final Context mContext;
     private final OnItemClickListener mOnItemClickListener;
 
-    protected PuzzleList mPuzzles;
+    protected Puzzle[] mPuzzles;
 
     private boolean mDarkTheme = PrefsUtils.getDarkTheme();
 
-    public PuzzleAdapter(Context context, OnItemClickListener onItemClickListener, PuzzleList puzzleList) {
+    public PuzzleAdapter(Context context, OnItemClickListener onItemClickListener) {
         mContext = context;
         mOnItemClickListener = onItemClickListener;
-        mPuzzles = puzzleList;
     }
 
     @Override
@@ -66,7 +64,7 @@ public class PuzzleAdapter extends RecyclerView.Adapter<PuzzleAdapter.ViewHolder
 
     @Override
     public int getItemViewType(int position) {
-        if (mPuzzles.getCurrentIndex() == position) {
+        if (getSelection() == position) {
             return TYPE_SELECTED;
         }
         return TYPE_NORMAL;
@@ -78,8 +76,9 @@ public class PuzzleAdapter extends RecyclerView.Adapter<PuzzleAdapter.ViewHolder
 
     @Override
     public void onBindViewHolder(ViewHolder vh, int position) {
-        Puzzle puzzle = mPuzzles.get(position);
-        if (puzzle != null) {
+        Puzzle[] puzzles = getPuzzles();
+        if (puzzles != null) {
+            Puzzle puzzle = puzzles[position];
             vh.setPosition(position);
             vh.tvPuzzleId.setText(puzzle.getTitle(mContext));
             String author = puzzle.getAuthor();
@@ -100,12 +99,7 @@ public class PuzzleAdapter extends RecyclerView.Adapter<PuzzleAdapter.ViewHolder
         if (puzzles == null) {
             return 0;
         }
-        return puzzles.getCount();
-    }
-
-    public void setPuzzleList(PuzzleList puzzleList) {
-        mPuzzles = puzzleList;
-        notifyDataSetChanged();
+        return puzzles.length;
     }
 
     public void setPuzzles(@Nullable Puzzle[] puzzles) {

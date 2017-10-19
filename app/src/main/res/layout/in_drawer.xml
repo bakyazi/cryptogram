@@ -123,30 +123,6 @@
 
         </RelativeLayout>
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal">
-
-            <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="16dp"
-                android:layout_gravity="start|center_vertical"
-                android:layout_marginLeft="4dp"
-                android:layout_marginStart="4dp"
-                android:src="@drawable/ic_topics"
-                android:tint="@color/textLight"
-                tools:ignore="ContentDescription"/>
-
-            <android.support.v7.widget.AppCompatSpinner
-                android:id="@+id/sp_categories"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:backgroundTint="@color/textLight"
-                tools:targetApi="lollipop"/>
-
-        </LinearLayout>
-
         <android.support.v7.widget.RecyclerView
             android:id="@+id/rv_drawer"
             android:layout_width="match_parent"

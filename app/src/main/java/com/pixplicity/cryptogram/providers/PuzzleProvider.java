@@ -12,13 +12,11 @@ import com.crashlytics.android.Crashlytics;
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.games.snapshot.Snapshot;
 import com.google.android.gms.games.snapshot.SnapshotMetadata;
-import com.google.gson.Gson;
 import com.google.gson.JsonSyntaxException;
 import com.google.gson.reflect.TypeToken;
 import com.pixplicity.cryptogram.BuildConfig;
 import com.pixplicity.cryptogram.R;
 import com.pixplicity.cryptogram.models.Puzzle;
-import com.pixplicity.cryptogram.models.PuzzleList;
 import com.pixplicity.cryptogram.models.PuzzleProgress;
 import com.pixplicity.cryptogram.models.PuzzleProgressState;
 import com.pixplicity.cryptogram.models.Topic;
@@ -32,10 +30,13 @@ import java.io.InputStreamReader;
 import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.LinkedHashSet;
 import java.util.LinkedList;
 import java.util.Map;
+import java.util.Random;
 import java.util.Set;
 
 public class PuzzleProvider extends AssetProvider {
@@ -46,19 +47,22 @@ public class PuzzleProvider extends AssetProvider {
 
     private static PuzzleProvider sInstance;
 
+    private int mCurrentIndex = -1;
+
     private Map<String, Topic> mTopics;
     private Puzzle[] mPuzzles;
     private HashMap<Integer, Integer> mPuzzleIds;
     private SparseArray<PuzzleProgress> mPuzzleProgress;
 
-    private int mLastPuzzleId;
+    private int mLastPuzzleId = -1;
 
-    private static final Gson mGson = new Gson();
+    private final Random mRandom = new Random();
+    private ArrayList<Integer> mRandomIndices;
 
     @NonNull
     public static PuzzleProvider getInstance(Context context) {
         if (sInstance == null) {
-            sInstance = new PuzzleProvider(context);
+                sInstance = new PuzzleProvider(context);
         }
         return sInstance;
     }
@@ -104,11 +108,11 @@ public class PuzzleProvider extends AssetProvider {
                         null, null));
             }
         }
-        mPuzzles = puzzles.toArray(new Puzzle[puzzles.size()]);
-        if (BuildConfig.DEBUG) {
+            mPuzzles = puzzles.toArray(new Puzzle[puzzles.size()]);
+            if (BuildConfig.DEBUG) {
             Log.d(TAG, String.format("readStream: added puzzles in %.2fms", (System.nanoTime() - start) / 1000000f));
-            start = System.nanoTime();
-        }
+                start = System.nanoTime();
+            }
 
         int index = 0, nextId = 0, lastId = -1;
         mPuzzleIds = new HashMap<>();
@@ -174,10 +178,86 @@ public class PuzzleProvider extends AssetProvider {
         return getAll().length;
     }
 
+    public int getCurrentIndex() {
+        return mCurrentIndex;
+    }
+
+    private int getIndexFromId(int id) {
+        Integer index = mPuzzleIds.get(id);
+        if (index == null) {
+            return -1;
+        }
+        return index;
+    }
+
+    private int getIdFromIndex(int index) {
+        return mPuzzles[index].getId();
+    }
+
     @Nullable
-    public Puzzle getCurrent(final PuzzleList puzzlesList) {
-        final int currentIndex = puzzlesList.getCurrentIndex();
-        return puzzlesList.get(currentIndex < 0 ? 0 : currentIndex);
+    public Puzzle getCurrent() {
+        if (mCurrentIndex < 0) {
+            mCurrentIndex = getIndexFromId(PrefsUtils.getCurrentId());
+        }
+        if (mCurrentIndex < 0) {
+            return getNext();
+        }
+        return get(mCurrentIndex);
+    }
+
+    public void setCurrentIndex(int index) {
+        mCurrentIndex = index;
+        PrefsUtils.setCurrentId(getIdFromIndex(index));
+    }
+
+    public void setCurrentId(int id) {
+        mCurrentIndex = getIndexFromId(id);
+        PrefsUtils.setCurrentId(id);
+    }
+
+    @Nullable
+    public Puzzle getNext() {
+        int oldIndex = mCurrentIndex;
+        int newIndex = -1;
+        int count = getCount();
+        if (count == 0) {
+            return null;
+        }
+        if (PrefsUtils.getRandomize()) {
+            if (mRandomIndices == null) {
+                mRandomIndices = new ArrayList<>();
+                for (int i = 0; i < getAll().length; i++) {
+                    mRandomIndices.add(i);
+                }
+                Collections.shuffle(mRandomIndices, mRandom);
+            }
+            boolean chooseNext = false;
+            Iterator<Integer> iter = mRandomIndices.iterator();
+            while (iter.hasNext()) {
+                Integer index = iter.next();
+                Puzzle puzzle = get(index);
+                if (puzzle == null || puzzle.isCompleted()) {
+                    // No good; eliminate this candidate and find the next
+                    iter.remove();
+                    puzzle = null;
+                }
+                if (oldIndex == index) {
+                    chooseNext = true;
+                } else if (chooseNext && puzzle != null) {
+                    newIndex = index;
+                    break;
+                }
+            }
+            if (newIndex < 0 && !mRandomIndices.isEmpty()) {
+                newIndex = mRandomIndices.get(0);
+            }
+        } else if (mCurrentIndex + 1 < getCount()) {
+            newIndex = mCurrentIndex + 1;
+        }
+        if (newIndex > -1) {
+            setCurrentIndex(newIndex);
+        }
+        return get(mCurrentIndex);
     }
 
     @Nullable
@@ -222,7 +302,7 @@ public class PuzzleProvider extends AssetProvider {
             if (progressStrSet != null) {
                 for (String progressStr : progressStrSet) {
                     try {
-                        PuzzleProgress progress = mGson.fromJson(progressStr, PuzzleProgress.class);
+                        PuzzleProgress progress = GsonProvider.getGson().fromJson(progressStr, PuzzleProgress.class);
                         mPuzzleProgress.put(progress.getId(), progress);
                     } catch (JsonSyntaxException e) {
                         Crashlytics.setString("progressStr", progressStr);
@@ -341,7 +421,7 @@ public class PuzzleProvider extends AssetProvider {
         // Now store everything
         Set<String> progressStrSet = new LinkedHashSet<>();
         for (int i = 0; i < progressList.size(); i++) {
-            progressStrSet.add(mGson.toJson(progressList.valueAt(i)));
+            progressStrSet.add(GsonProvider.getGson().toJson(progressList.valueAt(i)));
         }
         PrefsUtils.setProgress(progressStrSet);
     }
@@ -352,13 +432,13 @@ public class PuzzleProvider extends AssetProvider {
         for (int i = 0; i < progressList.size(); i++) {
             resultList.addProgress(progressList.valueAt(i));
         }
-        // FIXME store the current puzzle
-        // resultList.setCurrentId(getIdFromIndex(getCurrentIndex()));
-        return mGson.toJson(resultList);
+        // Store the index of the current puzzle
+        resultList.setCurrentId(getIdFromIndex(getCurrentIndex()));
+        return GsonProvider.getGson().toJson(resultList);
     }
 
     public void setProgressFromJson(String json) {
-        PuzzleProgressState state = mGson.fromJson(json, PuzzleProgressState.class);
+        PuzzleProgressState state = GsonProvider.getGson().fromJson(json, PuzzleProgressState.class);
         if (state != null) {
             for (PuzzleProgress puzzleProgress : state.getProgress()) {
                 if (puzzleProgress != null) {
@@ -370,8 +450,6 @@ public class PuzzleProvider extends AssetProvider {
                     }
                 }
             }
-            // FIXME resume the current puzzle from state.getCurrentId()
-            /*
             final Integer currentId = state.getCurrentId();
             if (currentId != null) {
                 // Select the current puzzle by its ID
@@ -380,7 +458,6 @@ public class PuzzleProvider extends AssetProvider {
                 // Select the first puzzle
                 setCurrentIndex(0);
             }
-            */
         }
         saveLocal();
     }

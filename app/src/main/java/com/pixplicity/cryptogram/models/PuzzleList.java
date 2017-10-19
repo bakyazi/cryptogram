@@ -11,6 +11,7 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Random;
 
+@Deprecated
 public class PuzzleList {
 
     private static final Random sRandom = new Random();

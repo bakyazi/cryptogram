@@ -90,7 +90,7 @@ public class ContributeReviewFragment extends BaseFragment {
             public void onCancelled(DatabaseError databaseError) {
                 // Failed to read value
                 mPuzzlesLoaded = true;
-                showSnackbar(getString(R.string.error_no_puzzles));
+                showSnackbar(getString(R.string.error_puzzles_load_failure));
                 updateAdapter();
             }
         });
