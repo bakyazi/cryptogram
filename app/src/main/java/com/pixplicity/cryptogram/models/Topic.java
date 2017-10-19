@@ -22,6 +22,9 @@ public class Topic {
     @SerializedName("topics")
     protected String mTopics;
 
+    @SerializedName("puzzles")
+    protected Puzzle[] mPuzzles;
+
     private transient String[] mTopicNames;
 
     private transient Puzzle[] mPuzzles;
@@ -49,9 +52,12 @@ public class Topic {
         return mTopicNames;
     }
 
-    public Puzzle[] getPuzzles(Context context) {
-        mPuzzles = PuzzleProvider.getInstance(context).getAllForTopic(this);
+    public Puzzle[] getPuzzles() {
         return mPuzzles;
+    }
+
+    public void setPuzzles(Puzzle[] puzzles) {
+        mPuzzles = puzzles;
     }
 
     @Override

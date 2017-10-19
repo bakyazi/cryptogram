@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <merge
     xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
 
     <LinearLayout
@@ -17,8 +18,8 @@
             android:layout_width="match_parent"
             android:layout_height="176dp"
             android:clickable="true"
-            android:focusable="true"
-            android:foreground="@drawable/ripple_white">
+            android:foreground="@drawable/ripple_white"
+            android:focusable="true">
 
             <ImageView
                 android:id="@+id/iv_google_play_games_banner"
@@ -166,7 +167,8 @@
             android:layout_marginLeft="8dp"
             android:layout_marginRight="8dp"
             android:text="@string/how_to_play"
-            android:textColor="?attr/textColorOnPrimary"/>
+            android:textColor="?attr/textColorOnPrimary"
+            app:layoutManager="android.support.v7.widget.LinearLayoutManager"/>
 
     </LinearLayout>
 

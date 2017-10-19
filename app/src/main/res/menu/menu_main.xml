@@ -68,6 +68,13 @@
         app:showAsAction="never"/>
 
     <item
+        android:id="@+id/action_contribute"
+        android:icon="@drawable/ic_contribute_review"
+        android:orderInCategory="310"
+        android:title="@string/contribute"
+        app:showAsAction="never"/>
+
+    <item
         android:id="@+id/action_help"
         android:icon="@drawable/ic_help"
         android:orderInCategory="400"

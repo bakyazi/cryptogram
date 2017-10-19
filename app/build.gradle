@@ -11,6 +11,7 @@ buildscript {
 
 apply plugin: 'com.android.application'
 apply plugin: 'io.fabric'
+apply plugin: 'realm-android'
 
 android {
     compileOptions {
@@ -110,6 +111,8 @@ repositories {
     maven { url "https://dl.bintray.com/pixplicity/maven" }
     maven { url "https://dl.bintray.com/drummer-aidan/maven" }
     maven { url 'https://maven.fabric.io/public' }
+    // FIXME currently only used for TapTargetView-SNAPSHOT (4d36558 below)
+    maven { url 'https://jitpack.io' }
 }
 
 dependencies {
@@ -124,18 +127,21 @@ dependencies {
     implementation 'com.android.support:gridlayout-v7:26.1.0'
 
     implementation 'com.google.android.gms:play-services-games:11.4.2'
+    implementation 'com.google.android.gms:play-services-auth:11.4.2'
+
+    implementation 'com.google.firebase:firebase-database:11.4.2'
+    implementation 'com.google.firebase:firebase-auth:11.4.2'
 
     implementation 'com.jakewharton:butterknife:8.8.1'
     annotationProcessor 'com.jakewharton:butterknife-compiler:8.8.1'
 
+    implementation 'net.soulwolf.widget:ratiolayout:1.0.0'
+    implementation 'com.afollestad.material-dialogs:core:0.9.4.7'
     implementation 'com.afollestad:easyvideoplayer:0.2.13'
 
     implementation 'com.github.bumptech.glide:glide:4.2.0'
 
     implementation 'com.squareup:otto:1.3.8'
-
-    implementation 'net.soulwolf.widget:ratiolayout:1.0.0'
-    implementation 'com.afollestad.material-dialogs:core:0.9.4.7'
 
     implementation 'com.pixplicity.htmlcompat:library:1.0.0'
     implementation 'com.pixplicity.easyprefs:library:1.9.0'
@@ -143,7 +149,9 @@ dependencies {
 
     implementation 'com.google.code.gson:gson:2.8.1'
 
-    implementation 'com.getkeepsafe.taptargetview:taptargetview:1.9.1'
+    // FIXME a fix is due in 1.9.2
+    // implementation 'com.getkeepsafe.taptargetview:taptargetview:1.9.1'
+    implementation 'com.github.KeepSafe:TapTargetView:4d36558'
 
     implementation('com.crashlytics.sdk.android:crashlytics:2.6.7@aar') {
         transitive = true
@@ -160,3 +168,5 @@ dependencies {
     testImplementation 'org.powermock:powermock-module-junit4-rule:1.7.0'
     testImplementation 'org.powermock:powermock-module-junit4:1.7.0'
 }
+
+apply plugin: 'com.google.gms.google-services'

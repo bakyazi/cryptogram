@@ -221,7 +221,7 @@ public abstract class BaseActivity extends AppCompatActivity implements
         }
         switch (item.getItemId()) {
             case android.R.id.home: {
-                Intent up = new Intent(BaseActivity.this, PuzzleActivity.class);
+                Intent up = new Intent(BaseActivity.this, getHierarchicalParent());
                 if (NavUtils.shouldUpRecreateTask(BaseActivity.this, up)) {
                     TaskStackBuilder.create(BaseActivity.this)
                                     .addNextIntent(up)
@@ -436,6 +436,9 @@ public abstract class BaseActivity extends AppCompatActivity implements
     protected void onGoogleApiClientConnectionChange() {
         // By default do nothing
     }
+
+    @NonNull
+    protected abstract Class<? extends Activity> getHierarchicalParent();
 
     public boolean isDarkTheme() {
         return mDarkTheme;

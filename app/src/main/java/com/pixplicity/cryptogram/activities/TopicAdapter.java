@@ -11,7 +11,9 @@ import android.widget.TextView;
 
 import com.pixplicity.cryptogram.R;
 import com.pixplicity.cryptogram.models.Topic;
-import com.pixplicity.cryptogram.providers.TopicProvider;
+import com.pixplicity.cryptogram.providers.PuzzleProvider;
+
+import java.util.Map;
 
 class TopicAdapter extends ArrayAdapter<Topic> {
 
@@ -25,7 +27,10 @@ class TopicAdapter extends ArrayAdapter<Topic> {
         mListItemRes = R.layout.item_topic;
         mDropDownRes = R.layout.item_topic_dropdown;
         add(null);
-        addAll(TopicProvider.getInstance(context).getTopics());
+        Map<String, Topic> topics = PuzzleProvider.getInstance(context).getTopics();
+        for (String topicId : topics.keySet()) {
+            add(topics.get(topicId));
+        }
     }
 
     @Override

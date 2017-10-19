@@ -38,3 +38,16 @@
 -keepclasseswithmembernames class * { @butterknife.* <methods>; }
 -keepclasseswithmembernames class * { @butterknife.* <fields>; }
 -keep class **$$ViewBinder { *; }
+
+
+## FIREBASE
+
+# Add this global rule
+-keepattributes Signature
+
+# This rule will properly ProGuard all the model classes in
+# the package com.yourcompany.models. Modify to fit the structure
+# of your app.
+-keepclassmembers class com.pixplicity.puzzle.models.** {
+  *;
+}

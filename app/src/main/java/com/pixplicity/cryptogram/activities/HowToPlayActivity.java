@@ -1,8 +1,10 @@
 package com.pixplicity.cryptogram.activities;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 
 import com.crashlytics.android.answers.Answers;
 import com.crashlytics.android.answers.ContentViewEvent;
@@ -23,6 +25,12 @@ public class HowToPlayActivity extends BaseActivity {
         mToolbar.setTitle(R.string.how_to_play);
 
         Answers.getInstance().logContentView(new ContentViewEvent().putContentName(CryptogramApp.CONTENT_HOW_TO_PLAY));
+    }
+
+    @NonNull
+    @Override
+    protected Class<? extends Activity> getHierarchicalParent() {
+        return CryptogramActivity.class;
     }
 
 }

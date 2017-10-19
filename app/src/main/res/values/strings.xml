@@ -97,6 +97,7 @@
 
     <string name="go_to_puzzle_content">Please enter the puzzle number to go to:</string>
 
+    <!-- Google Play Games -->
     <string name="google_play_games_welcome">Sign in to Google Play Games to save your progress and compare leaderboards and achievements</string>
     <string name="google_play_games_sign_in">Sign in…</string>
     <string name="google_play_games_leaderboards">Leaderboard</string>
@@ -130,6 +131,26 @@
     <string name="subscription_expires">Your subscription ends in <xliff:g id="days" example="6">%1$d</xliff:g> days.</string>
     <string name="subscription_total_puzzles">There are <xliff:g id="total" example="36">%1$d</xliff:g> puzzles in your subscription.</string>
 
+    <!-- Contribute -->
+    <string name="contribute"><![CDATA[Suggest & review]]></string>
+
+    <string name="sign_in">Sign in</string>
+
+    <string name="contribute_suggest">Suggest a puzzle</string>
+    <string name="contribute_suggest_description">Got an inspirational quote, funny play on words or some other bit of text that players would enjoy uncovering?</string>
+    <string name="contribute_review">Review puzzles</string>
+    <string name="contribute_review_description">Help decide which contributed puzzles are fun to play! With your feedback, you\'ll also determine the difficulty level.</string>
+
+    <string name="hint_puzzle_text">Puzzle text</string>
+    <string name="hint_puzzle_author">Puzzle author</string>
+    <string name="hint_puzzle_topic">Puzzle topic</string>
+    <string name="language">Language:</string>
+    <string name="explicit_content">Explicit or otherwise inappropriate for children</string>
+    <string name="error_min_characters">The %1$s must be at least %2$d characters.</string>
+    <string name="error_max_characters">The %1$s must be at most %2$d characters.</string>
+    <string name="submit_puzzle">Submit</string>
+    <string name="submitting_puzzle">Submitting…</string>
+
     <!-- Settings -->
     <string name="theme">Theme:</string>
     <string name="randomize_puzzles">Randomize puzzles</string>
@@ -145,6 +166,7 @@
     <string name="keyboard_builtin">Built-in</string>
     <string name="keyboard_system">System default</string>
 
+    <!-- About -->
     <string name="keyboard_system_dialog">Some keyboards don’t play nicely with Cryptogram. If you experience problems, I please switch back to the built-in keyboard.</string>
     <string name="keyboard_system_dialog_ok">Gotcha</string>
 

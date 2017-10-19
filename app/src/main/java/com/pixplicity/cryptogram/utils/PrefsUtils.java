@@ -119,7 +119,7 @@ public class PrefsUtils {
 
     public static void setSkipFilledCells(boolean skillFilledCells) {
         Prefs.putBoolean(KEY_SKIP_FILLED_CELLS, skillFilledCells);
-    }
+}
 
     public static String getCurrentTopic() {
         return Prefs.getString(KEY_CURRENT_TOPIC, null);
