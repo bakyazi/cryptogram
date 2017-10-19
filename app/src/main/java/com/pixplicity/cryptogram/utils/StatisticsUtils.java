@@ -27,7 +27,7 @@ public class StatisticsUtils {
         float score = 0f;
         long shortestDurationMs = 0, totalDurationMs = 0;
         for (Puzzle c : provider.getAll()) {
-            long duration = c.getProgress().getDuration();
+            long duration = c.getProgress().getDurationMs();
             if (!c.isInstruction() && c.isCompleted()) {
                 count++;
                 Float puzzleScore = c.getScore();

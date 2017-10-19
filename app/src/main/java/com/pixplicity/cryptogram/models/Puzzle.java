@@ -188,9 +188,10 @@ public class Puzzle {
         return getProgress().getUserChar(this, c);
     }
 
-    public void setUserChar(char selectedCharacter, char c) {
-        getProgress().setUserChar(this, selectedCharacter, c);
+    public boolean setUserChar(char selectedCharacter, char c) {
+        boolean changed = getProgress().setUserChar(this, selectedCharacter, c);
         save();
+        return changed;
     }
 
     public boolean hasUserChars() {
@@ -208,6 +209,10 @@ public class Puzzle {
 
     public boolean isInstruction() {
         return mId < 0;
+    }
+
+    public boolean isInProgress() {
+        return getProgress().isInProgress(this);
     }
 
     public boolean isCompleted() {
@@ -275,12 +280,12 @@ public class Puzzle {
     /**
      * Returns the duration of the user's play time on this puzzle in milliseconds.
      */
-    public long getDuration() {
+    public long getDurationMs() {
         if (isNoScore()) {
             // Don't measure the duration for puzzles with given characters
             return 0;
         }
-        return getProgress().getDuration();
+        return getProgress().getDurationMs();
     }
 
     @Nullable
@@ -308,6 +313,10 @@ public class Puzzle {
         save();
     }
 
+    public void unload() {
+        mLoadedProgress = false;
+    }
+
     private void load() {
         if (!mLoadedProgress && !mIsMock) {
             mProgress = PuzzleProvider.getInstance(CryptogramApp.getInstance()).getProgress().get(mId);
@@ -318,14 +327,21 @@ public class Puzzle {
         mLoadedProgress = true;
     }
 
-    public void reset() {
-        getProgress().reset(this);
-        save();
+    public void reset(boolean save) {
+        getProgress().reset(save ? this : null);
+        if (save) {
+            save();
+        }
     }
 
     public void save() {
         if (!mIsMock) {
-            PuzzleProvider.getInstance(CryptogramApp.getInstance()).setProgress(getProgress());
+            final PuzzleProvider puzzleProvider = PuzzleProvider.getInstance(CryptogramApp.getInstance());
+            final PuzzleProgress progress = getProgress();
+            if (progress != null) {
+                puzzleProvider.setProgress(progress.getId(), progress);
+                puzzleProvider.saveLocal();
+            }
         }
     }
 

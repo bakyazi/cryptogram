@@ -15,9 +15,11 @@
         android:elevation="4dp"
         android:gravity="center_vertical"
         android:theme="@style/ThemeOverlay.AppCompat.ActionBar"
-        app:layout_scrollFlags="scroll|enterAlways"
+        app:layout_scrollFlags="scroll|snap|enterAlways"
         app:subtitleTextColor="@color/textLight"
         app:titleTextColor="@color/textLight"
-        tools:ignore="UnusedAttribute"/>
+        tools:ignore="UnusedAttribute"
+        tools:subtitle="Puzzle #1"
+        tools:title="@string/app_name"/>
 
 </android.support.design.widget.AppBarLayout>

@@ -15,19 +15,22 @@
             android:layout_width="wrap_content"
             android:layout_height="128dp"
             android:layout_gravity="center_horizontal"
-            android:layout_marginBottom="16dp"
             android:adjustViewBounds="true"
             android:contentDescription="@string/app_name"
             android:scaleType="centerInside"
-            android:src="@drawable/ic_icon"/>
+            android:src="?attr/im_launcher"/>
 
-        <TextView
-            style="@style/Base.TextAppearance.Widget.AppCompat.Toolbar.Title"
-            android:layout_width="match_parent"
+        <ImageView
+            android:id="@+id/iv_logo"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_margin="1dp"
-            android:gravity="center_horizontal"
-            android:text="@string/app_name"/>
+            android:layout_gravity="center_horizontal"
+            android:layout_marginBottom="-4dp"
+            android:adjustViewBounds="true"
+            android:contentDescription="@string/app_name"
+            android:maxWidth="240dp"
+            android:scaleType="centerInside"
+            android:src="@drawable/im_logo"/>
 
         <TextView
             android:id="@+id/tv_version"
@@ -42,8 +45,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="16dp"
-            android:text="@string/about_this_app_1"
-            android:textSize="15sp"/>
+            android:text="@string/about_this_app_1"/>
 
         <TextView
             style="@style/InfoTextView"
@@ -69,8 +71,7 @@
             style="@style/InfoTextView"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="@string/about_this_app_2"
-            android:textSize="15sp"/>
+            android:text="@string/about_this_app_2"/>
 
         <android.support.v7.widget.AppCompatButton
             android:id="@+id/bt_website"
@@ -86,7 +87,7 @@
             tools:ignore="UnusedAttribute"/>
 
         <TextView
-            style="@style/InfoTextView"
+            style="@style/InfoTextView.Title"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="@string/title_disclaimer"
@@ -101,7 +102,7 @@
             tools:targetApi="ice_cream_sandwich"/>
 
         <TextView
-            style="@style/InfoTextView"
+            style="@style/InfoTextView.Title"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="@string/title_licenses"
@@ -115,7 +116,7 @@
             tools:text="@string/licenses"/>
 
         <TextView
-            style="@style/InfoTextView"
+            style="@style/InfoTextView.Title"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="24dp"

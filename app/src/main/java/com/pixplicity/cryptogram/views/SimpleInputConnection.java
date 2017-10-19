@@ -13,6 +13,8 @@ public class SimpleInputConnection extends BaseInputConnection {
 
     public static final int INPUT_TYPE = InputType.TYPE_TEXT_FLAG_NO_SUGGESTIONS;
     public static final int INPUT_TYPE_FOR_FAULTY_IME = InputType.TYPE_TEXT_VARIATION_VISIBLE_PASSWORD;
+    public static final int INPUT_NONE = InputType.TYPE_NULL;
+    public static final boolean DISABLE_PERSONALIZED_LEARNING = false;
 
     private final CryptogramView mCryptogramView;
     private String mLastComposition;
@@ -37,10 +39,15 @@ public class SimpleInputConnection extends BaseInputConnection {
     public static InputMethodInfo getIme(Context context) {
         final InputMethodManager imm = (InputMethodManager) context.getSystemService(Context.INPUT_METHOD_SERVICE);
         final InputMethodSubtype ims = imm.getCurrentInputMethodSubtype();
-        for (InputMethodInfo imi : imm.getEnabledInputMethodList()) {
-            for (int i = 0; i < imi.getSubtypeCount(); i++) {
-                if (ims.equals(imi.getSubtypeAt(i))) {
-                    return imi;
+        if (ims != null) {
+            for (InputMethodInfo imi : imm.getEnabledInputMethodList()) {
+                if (imi == null) {
+                    continue;
+                }
+                for (int i = 0; i < imi.getSubtypeCount(); i++) {
+                    if (ims.equals(imi.getSubtypeAt(i))) {
+                        return imi;
+                    }
                 }
             }
         }

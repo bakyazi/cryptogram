@@ -1,42 +1,112 @@
-<resources>
+<resources xmlns:tools="http://schemas.android.com/tools">
 
     <attr name="colorPrimary" format="color"/>
+    <attr name="colorPrimaryLight" format="color"/>
     <attr name="colorPrimaryDark" format="color"/>
-    <attr name="textColorOnPrimary" format="color"/>
+    <attr name="cardBackground" format="color"/>
+    <attr name="textColor" format="color"/>
+    <attr name="textColorPrimary" format="color"/>
     <attr name="textColorInverse" format="color"/>
+    <attr name="textColorOnPrimary" format="color"/>
+    <attr name="keyboardBackground" format="color"/>
+    <attr name="keyboardBackground1" format="color"/>
+    <attr name="keyboardForeground1" format="color"/>
+    <attr name="keyboardBackground2" format="color"/>
+    <attr name="keyboardForeground2" format="color"/>
+
+    <attr name="im_launcher" format="reference"/>
+    <attr name="bg_activity" format="reference"/>
 
     <!-- Base application theme. -->
-    <style name="AppTheme" parent="Theme.AppCompat.Light.NoActionBar">
-        <!-- Customize your theme here. -->
+    <style name="AppTheme" parent="@style/Theme.AppCompat.Light.NoActionBar">
+        <item name="android:windowBackground">@drawable/bg_splash</item>
+
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
+        <item name="colorPrimaryLight">@color/colorPrimaryLight</item>
         <item name="colorAccent">@color/colorAccent</item>
         <item name="actionMenuTextColor">@color/textLight</item>
         <item name="actionOverflowButtonStyle">@style/OverflowButtonStyle</item>
         <item name="drawerArrowStyle">@style/DrawerArrowStyle</item>
+
+        <item name="cardBackground">@color/white</item>
+
         <item name="android:textColor">@color/colorTextPrimary</item>
+        <item name="textColor">@color/colorTextPrimary</item>
+        <item name="textColorPrimary">@color/colorPrimaryDark</item>
         <item name="textColorInverse">@color/colorDarkTextPrimary</item>
         <item name="textColorOnPrimary">@color/textLight</item>
+
+        <item name="keyboardBackground">@color/colorBackground</item>
+        <item name="keyboardBackground1">@color/colorDarkTextPrimary</item>
+        <item name="keyboardForeground1">@color/colorTextPrimary</item>
+        <item name="keyboardBackground2">@color/colorDarkPrimary</item>
+        <item name="keyboardForeground2">@color/colorDarkTextPrimary</item>
+
+        <item name="keyboardButtonStyle">@style/KeyboardButton</item>
+        <item name="keyboardImageButtonStyle">@style/KeyboardButton.Image</item>
+
+        <item name="bg_activity">@drawable/bg_activity_light</item>
+        <item name="im_launcher">@drawable/im_launcher_light</item>
     </style>
 
-    <style name="AppTheme.Dark" parent="Theme.AppCompat.NoActionBar">
+    <style name="AppTheme.Dark" parent="@style/Theme.AppCompat.NoActionBar">
+        <item name="android:windowBackground">@drawable/bg_splash</item>
+
         <item name="colorPrimary">@color/colorDarkPrimary</item>
         <item name="colorPrimaryDark">@color/colorDarkPrimaryDark</item>
+        <item name="colorPrimaryLight">@color/colorDarkPrimaryLight</item>
         <item name="colorAccent">@color/colorDarkAccent</item>
         <item name="actionMenuTextColor">@color/textLight</item>
         <item name="actionOverflowButtonStyle">@style/OverflowButtonStyle</item>
         <item name="drawerArrowStyle">@style/DrawerArrowStyle</item>
+
+        <item name="cardBackground">@color/colorDarkPrimary</item>
+
         <item name="android:textColor">@color/colorDarkTextPrimary</item>
+        <item name="textColor">@color/colorDarkTextPrimary</item>
+        <item name="textColorPrimary">@color/colorDarkAccent</item>
         <item name="textColorInverse">@color/colorTextPrimary</item>
         <item name="textColorOnPrimary">@color/textLight</item>
+
+        <item name="keyboardBackground">@color/colorDarkBackground</item>
+        <item name="keyboardBackground1">@color/colorDarkPrimary</item>
+        <item name="keyboardForeground1">@color/colorDarkTextPrimary</item>
+        <item name="keyboardBackground2">@color/colorDarkTextPrimary</item>
+        <item name="keyboardForeground2">@color/colorTextPrimary</item>
+
+        <item name="keyboardButtonStyle">@style/KeyboardButton</item>
+        <item name="keyboardImageButtonStyle">@style/KeyboardButton.Image</item>
+
+        <item name="bg_activity">@drawable/bg_activity_dark</item>
+        <item name="im_launcher">@drawable/im_launcher_dark</item>
     </style>
 
-    <style name="DrawerArrowStyle" parent="Widget.AppCompat.DrawerArrowToggle">
+    <style name="KeyboardButton" parent="@style/Widget.AppCompat.Button">
+        <item name="android:textColor">?attr/keyboardForeground1</item>
+        <item name="android:backgroundTint" tools:targetApi="lollipop">?attr/keyboardBackground1</item>
+        <item name="backgroundTint">?attr/keyboardBackground1</item>
+        <item name="android:shadowColor">?attr/keyboardForeground1</item>
+        <item name="android:paddingLeft">8dp</item>
+        <item name="android:paddingRight">8dp</item>
+        <item name="android:paddingTop">@dimen/keyboard_button_padding</item>
+        <item name="android:paddingBottom">@dimen/keyboard_button_padding</item>
+        <item name="android:textSize">@dimen/keyboard_text_size</item>
+    </style>
+
+    <style name="KeyboardButton.Image" parent="@style/KeyboardButton">
+        <item name="android:tint">?attr/keyboardForeground2</item>
+        <item name="tint">?attr/keyboardForeground2</item>
+        <item name="android:backgroundTint" tools:targetApi="lollipop">?attr/keyboardBackground2</item>
+        <item name="backgroundTint">?attr/keyboardBackground2</item>
+    </style>
+
+    <style name="DrawerArrowStyle" parent="@style/Widget.AppCompat.DrawerArrowToggle">
         <item name="spinBars">true</item>
         <item name="color">@color/white</item>
     </style>
 
-    <style name="OverflowButtonStyle" parent="Widget.AppCompat.ActionButton.Overflow">
+    <style name="OverflowButtonStyle" parent="@style/Widget.AppCompat.ActionButton.Overflow">
         <item name="android:src">@drawable/ic_overflow</item>
     </style>
 
@@ -46,6 +116,9 @@
         <item name="android:textSize">15sp</item>
         <item name="android:lineSpacingExtra">3sp</item>
         <item name="android:padding">8dp</item>
+    </style>
+    <style name="InfoTextView.Title" parent="@style/InfoTextView">
+        <item name="android:textSize">17sp</item>
     </style>
 
 </resources>
