@@ -62,14 +62,15 @@ import com.pixplicity.cryptogram.events.PuzzleEvent;
 import com.pixplicity.cryptogram.models.Puzzle;
 import com.pixplicity.cryptogram.models.PuzzleList;
 import com.pixplicity.cryptogram.models.Topic;
+import com.pixplicity.cryptogram.providers.GsonProvider;
 import com.pixplicity.cryptogram.providers.PuzzleProvider;
 import com.pixplicity.cryptogram.providers.TopicProvider;
 import com.pixplicity.cryptogram.utils.AchievementProvider;
 import com.pixplicity.cryptogram.utils.EventProvider;
 import com.pixplicity.cryptogram.utils.LeaderboardProvider;
 import com.pixplicity.cryptogram.utils.PrefsUtils;
-import com.pixplicity.cryptogram.utils.StatisticsUtils;
 import com.pixplicity.cryptogram.utils.SavegameManager;
+import com.pixplicity.cryptogram.utils.StatisticsUtils;
 import com.pixplicity.cryptogram.utils.StringUtils;
 import com.pixplicity.cryptogram.utils.VideoUtils;
 import com.pixplicity.cryptogram.views.CryptogramLayout;
@@ -81,6 +82,7 @@ import com.squareup.otto.Subscribe;
 import net.soulwolf.widget.ratiolayout.widget.RatioFrameLayout;
 
 import java.util.Locale;
+import java.util.Map;
 import java.util.concurrent.TimeUnit;
 
 import butterknife.BindView;
@@ -197,6 +199,7 @@ public class CryptogramActivity extends BaseActivity implements GoogleApiClient.
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
         if (isDarkTheme()) {
             setTheme(R.style.AppTheme_Dark);
             getWindow().setBackgroundDrawableResource(R.drawable.bg_activity_dark);
@@ -814,7 +817,14 @@ public class CryptogramActivity extends BaseActivity implements GoogleApiClient.
         final Puzzle puzzle = mCryptogramView.getPuzzle();
         switch (item.getItemId()) {
             case R.id.action_next: {
-                nextPuzzle();
+                if (BuildConfig.DEBUG) {
+                    Map<String, Topic> topics = TopicProvider.getInstance(this).getTopics();
+                    String json = GsonProvider.getGson().toJson(topics);
+
+                    Toast.makeText(this, "Exported puzzles; " + json.length() + " chars", Toast.LENGTH_SHORT).show();
+                } else {
+                    nextPuzzle();
+                }
             }
             return true;
             case R.id.action_reveal_letter: {

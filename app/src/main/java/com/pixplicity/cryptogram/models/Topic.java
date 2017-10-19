@@ -16,6 +16,9 @@ public class Topic {
     @SerializedName("topics")
     protected String mTopics;
 
+    @SerializedName("puzzles")
+    protected Puzzle[] mPuzzles;
+
     private transient String[] mTopicNames;
 
     public String getId() {
@@ -59,6 +62,10 @@ public class Topic {
     @Override
     public int hashCode() {
         return mId != null ? mId.hashCode() : 0;
+    }
+
+    public void setPuzzles(Puzzle[] puzzles) {
+        mPuzzles = puzzles;
     }
 
 }

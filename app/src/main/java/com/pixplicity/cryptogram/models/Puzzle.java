@@ -15,13 +15,15 @@ import java.util.Collection;
 import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.Locale;
+import java.util.UUID;
 
 public class Puzzle {
 
-    protected boolean mIsMock;
-
     @SerializedName("id")
     protected int mId;
+
+    @SerializedName("uuid")
+    protected String mUuid;
 
     @SerializedName("number")
     protected Integer mNumber;
@@ -41,12 +43,17 @@ public class Puzzle {
     @SerializedName("noscore")
     protected boolean mNoScore;
 
+    transient boolean mIsMock;
+
     private transient String[] mWords;
 
-    private PuzzleProgress mProgress;
-    private boolean mLoadedProgress;
+    private transient PuzzleProgress mProgress;
+    private transient boolean mLoadedProgress;
 
     public Puzzle() {
+        if (mUuid == null) {
+            mUuid = UUID.randomUUID().toString();
+        }
     }
 
     public static class Mock extends Puzzle {

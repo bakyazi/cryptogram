@@ -4,11 +4,15 @@ import android.content.Context;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 
+import com.google.gson.reflect.TypeToken;
+import com.pixplicity.cryptogram.models.Puzzle;
 import com.pixplicity.cryptogram.models.Topic;
 
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.lang.reflect.Type;
+import java.util.Map;
 
 public class TopicProvider extends AssetProvider {
 
@@ -16,7 +20,7 @@ public class TopicProvider extends AssetProvider {
 
     private static TopicProvider sInstance;
 
-    private Topic[] mTopics;
+    private Map<String, Topic> mTopics;
 
     @NonNull
     public static TopicProvider getInstance(Context context) {
@@ -43,21 +47,24 @@ public class TopicProvider extends AssetProvider {
 
     @Override
     protected void onLoad(Context context, InputStream is) {
-        mTopics = GsonProvider.getGson().fromJson(new InputStreamReader(is), Topic[].class);
+        Type type = new TypeToken<Map<String, Topic>>() {
+        }.getType();
+        mTopics = GsonProvider.getGson().fromJson(new InputStreamReader(is), type);
+        for (String topicId : mTopics.keySet()) {
+            Topic topic = mTopics.get(topicId);
+            Puzzle[] puzzles = PuzzleProvider.getInstance(context).getAllForTopic(topic);
+            topic.setPuzzles(puzzles);
+        }
     }
 
-    public Topic[] getTopics() {
+    public Map<String, Topic> getTopics() {
         return mTopics;
     }
 
     @Nullable
     public Topic getTopicById(@Nullable String topicId) {
         if (topicId != null) {
-            for (Topic topic : getTopics()) {
-                if (topicId.equals(topic.getId())) {
-                    return topic;
-                }
-            }
+            mTopics.get(topicId);
         }
         return null;
     }

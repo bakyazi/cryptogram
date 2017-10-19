@@ -13,6 +13,8 @@ import com.pixplicity.cryptogram.R;
 import com.pixplicity.cryptogram.models.Topic;
 import com.pixplicity.cryptogram.providers.TopicProvider;
 
+import java.util.Map;
+
 class TopicAdapter extends ArrayAdapter<Topic> {
 
     private final LayoutInflater mInflater;
@@ -25,7 +27,10 @@ class TopicAdapter extends ArrayAdapter<Topic> {
         mListItemRes = R.layout.item_topic;
         mDropDownRes = R.layout.item_topic_dropdown;
         add(null);
-        addAll(TopicProvider.getInstance(context).getTopics());
+        Map<String, Topic> topics = TopicProvider.getInstance(context).getTopics();
+        for (String topicId : topics.keySet()) {
+            add(topics.get(topicId));
+        }
     }
 
     @Override
