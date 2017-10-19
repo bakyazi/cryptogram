@@ -1,10 +1,12 @@
 package com.pixplicity.cryptogram.activities;
 
+import android.app.Activity;
 import android.content.ActivityNotFoundException;
 import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.support.v7.app.AlertDialog;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -71,6 +73,12 @@ public class LandingActivity extends BaseActivity {
                 startActivity(SettingsActivity.create(this));
             }
         }
+    }
+
+    @Nullable
+    @Override
+    protected Class<? extends Activity> getHierarchicalParent() {
+        return null;
     }
 
     @OnClick(R.id.bt_settings)

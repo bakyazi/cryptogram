@@ -4,7 +4,7 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.view.ViewGroup;
 
@@ -51,18 +51,16 @@ public class ContributeActivity extends BaseActivity {
 
         mToolbar.setTitle(R.string.contribute);
 
-        setHomeButtonEnabled(true);
-
         mAuth = FirebaseAuth.getInstance();
 
         Answers.getInstance().logContentView(new ContentViewEvent().putContentName(CryptogramApp.CONTENT_CONTRIBUTE));
     }
 
-    @NonNull
+    @Nullable
     @Override
     protected Class<? extends Activity> getHierarchicalParent() {
         if (getIntent().getIntExtra(EXTRA_MODE, MODE_SELECT) == MODE_SELECT) {
-            return CryptogramActivity.class;
+            return LandingActivity.class;
         } else {
             return ContributeActivity.class;
         }

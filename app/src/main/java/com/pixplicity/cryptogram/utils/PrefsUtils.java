@@ -1,7 +1,6 @@
 package com.pixplicity.cryptogram.utils;
 
 import com.pixplicity.cryptogram.CryptogramApp;
-import com.pixplicity.cryptogram.models.Topic;
 import com.pixplicity.easyprefs.library.Prefs;
 
 import java.util.Set;
@@ -119,14 +118,6 @@ public class PrefsUtils {
 
     public static void setSkipFilledCells(boolean skillFilledCells) {
         Prefs.putBoolean(KEY_SKIP_FILLED_CELLS, skillFilledCells);
-}
-
-    public static String getCurrentTopic() {
-        return Prefs.getString(KEY_CURRENT_TOPIC, null);
-    }
-
-    public static void setCurrentTopic(Topic topic) {
-        Prefs.putString(KEY_CURRENT_TOPIC, topic == null ? null : topic.getId());
     }
 
     public static void setNeverAskRevealMistakes(boolean neverAsk) {

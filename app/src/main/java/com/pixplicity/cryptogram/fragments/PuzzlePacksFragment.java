@@ -13,8 +13,6 @@ import android.widget.Toast;
 import com.pixplicity.cryptogram.R;
 import com.pixplicity.cryptogram.adapters.GridSpacingItemDecoration;
 import com.pixplicity.cryptogram.adapters.PackAdapter;
-import com.pixplicity.cryptogram.models.Topic;
-import com.pixplicity.cryptogram.providers.TopicProvider;
 
 import butterknife.BindView;
 import butterknife.OnClick;
@@ -38,11 +36,9 @@ public class PuzzlePacksFragment extends BaseFragment {
         mRvPacks.setLayoutManager(new GridLayoutManager(getContext(), spanCount));
         mRvPacks.addItemDecoration(new GridSpacingItemDecoration(spanCount,
                 getResources().getDimensionPixelSize(R.dimen.grid_padding), false));
-        mRvPacks.setAdapter(new PackAdapter(getContext(), position -> {
+        mRvPacks.setAdapter(new PackAdapter(getContext(), topic -> {
             // TODO open pack
-            Topic[] topics = TopicProvider.getInstance(getContext()).getTopics();
-            Toast.makeText(getContext(), "TODO " + topics[position], Toast.LENGTH_SHORT).show();
-
+            Toast.makeText(getContext(), "TODO " + topic, Toast.LENGTH_SHORT).show();
         }));
 
         ViewCompat.setNestedScrollingEnabled(mRvPacks, false);

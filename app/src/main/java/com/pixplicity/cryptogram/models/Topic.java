@@ -1,9 +1,6 @@
 package com.pixplicity.cryptogram.models;
 
-import android.content.Context;
-
 import com.google.gson.annotations.SerializedName;
-import com.pixplicity.cryptogram.providers.PuzzleProvider;
 
 public class Topic {
 
@@ -26,8 +23,6 @@ public class Topic {
     protected Puzzle[] mPuzzles;
 
     private transient String[] mTopicNames;
-
-    private transient Puzzle[] mPuzzles;
 
     public String getId() {
         return mId;

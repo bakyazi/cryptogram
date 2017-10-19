@@ -1,5 +1,6 @@
 package com.pixplicity.cryptogram.activities;
 
+import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.content.IntentSender;
@@ -221,14 +222,19 @@ public abstract class BaseActivity extends AppCompatActivity implements
         }
         switch (item.getItemId()) {
             case android.R.id.home: {
-                Intent up = new Intent(BaseActivity.this, getHierarchicalParent());
-                if (NavUtils.shouldUpRecreateTask(BaseActivity.this, up)) {
-                    TaskStackBuilder.create(BaseActivity.this)
-                                    .addNextIntent(up)
-                                    .startActivities();
+                Class<? extends Activity> hierarchicalParent = getHierarchicalParent();
+                if (hierarchicalParent == null) {
                     finish();
                 } else {
-                    NavUtils.navigateUpTo(BaseActivity.this, up);
+                    Intent up = new Intent(BaseActivity.this, hierarchicalParent);
+                    if (NavUtils.shouldUpRecreateTask(BaseActivity.this, up)) {
+                        TaskStackBuilder.create(BaseActivity.this)
+                                        .addNextIntent(up)
+                                        .startActivities();
+                        finish();
+                    } else {
+                        NavUtils.navigateUpTo(BaseActivity.this, up);
+                    }
                 }
             }
             return true;
@@ -437,7 +443,7 @@ public abstract class BaseActivity extends AppCompatActivity implements
         // By default do nothing
     }
 
-    @NonNull
+    @Nullable
     protected abstract Class<? extends Activity> getHierarchicalParent();
 
     public boolean isDarkTheme() {

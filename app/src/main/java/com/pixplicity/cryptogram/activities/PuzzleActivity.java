@@ -1,5 +1,6 @@
 package com.pixplicity.cryptogram.activities;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.PointF;
@@ -7,9 +8,7 @@ import android.graphics.Rect;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
-import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
-import android.support.v4.view.GravityCompat;
 import android.support.v7.app.AlertDialog;
 import android.text.Editable;
 import android.text.InputType;
@@ -35,10 +34,7 @@ import com.pixplicity.cryptogram.BuildConfig;
 import com.pixplicity.cryptogram.R;
 import com.pixplicity.cryptogram.events.PuzzleEvent;
 import com.pixplicity.cryptogram.models.Puzzle;
-import com.pixplicity.cryptogram.models.PuzzleList;
-import com.pixplicity.cryptogram.models.Topic;
 import com.pixplicity.cryptogram.providers.PuzzleProvider;
-import com.pixplicity.cryptogram.providers.TopicProvider;
 import com.pixplicity.cryptogram.utils.AchievementProvider;
 import com.pixplicity.cryptogram.utils.EventProvider;
 import com.pixplicity.cryptogram.utils.LeaderboardProvider;
@@ -118,8 +114,6 @@ public class PuzzleActivity extends BaseActivity {
     @Nullable
     private View mVwKeyboard;
 
-    private PuzzleList mPuzzles;
-
     private Rate mRate;
 
     private boolean mFreshInstall;
@@ -148,11 +142,6 @@ public class PuzzleActivity extends BaseActivity {
                 .setMessage(getString(R.string.rating, getString(R.string.app_name)))
                 .setFeedbackAction(Uri.parse("mailto:paul+cryptogram@pixplicity.com"))
                 .build();
-
-        final String topicId = PrefsUtils.getCurrentTopic();
-        Topic topic = TopicProvider.getInstance(this).getTopicById(topicId);
-        PuzzleProvider provider = PuzzleProvider.getInstance(PuzzleActivity.this);
-        mPuzzles = new PuzzleList(provider.getAllForTopic(topic));
 
         mVgCryptogram.setCrytogramView(mCryptogramView);
         mCryptogramView.setOnPuzzleProgressListener(this::onCryptogramUpdated);
@@ -198,6 +187,12 @@ public class PuzzleActivity extends BaseActivity {
         }
     }
 
+    @Nullable
+    @Override
+    protected Class<? extends Activity> getHierarchicalParent() {
+        return BaseActivity.class;
+    }
+
     @Override
     protected void onNewIntent(Intent intent) {
         super.onNewIntent(intent);
@@ -208,7 +203,7 @@ public class PuzzleActivity extends BaseActivity {
         super.onStart();
 
         final PuzzleProvider puzzleProvider = PuzzleProvider.getInstance(this);
-        Puzzle puzzle = puzzleProvider.getCurrent(mPuzzles);
+        Puzzle puzzle = puzzleProvider.getCurrent();
         if (puzzle != null) {
             puzzle.onResume();
         }
@@ -230,7 +225,7 @@ public class PuzzleActivity extends BaseActivity {
         super.onStop();
 
         final PuzzleProvider puzzleProvider = PuzzleProvider.getInstance(this);
-        Puzzle puzzle = puzzleProvider.getCurrent(mPuzzles);
+        Puzzle puzzle = puzzleProvider.getCurrent();
         if (puzzle != null) {
             puzzle.onPause();
         }
@@ -357,7 +352,8 @@ public class PuzzleActivity extends BaseActivity {
 
     private void updateCryptogram(Puzzle puzzle) {
         if (puzzle != null) {
-            mPuzzles.setCurrentId(puzzle.getId());
+            PuzzleProvider provider = PuzzleProvider.getInstance(this);
+            provider.setCurrentId(puzzle.getId());
             mTvError.setVisibility(View.GONE);
             mVgCryptogram.setVisibility(View.VISIBLE);
             // Apply the puzzle to the CryptogramView
@@ -444,7 +440,7 @@ public class PuzzleActivity extends BaseActivity {
     public void onPuzzleLoaded(PuzzleEvent.PuzzlesLoaded event) {
         // Reload the current puzzle we're working on
         updateCryptogram(PuzzleProvider.getInstance(PuzzleActivity.this)
-                                       .getCurrent(mPuzzles));
+                                       .getCurrent());
     }
 
     @Subscribe
@@ -500,7 +496,7 @@ public class PuzzleActivity extends BaseActivity {
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_cryptogram, menu);
+        getMenuInflater().inflate(R.menu.menu_puzzle, menu);
         {
             MenuItem item = menu.findItem(R.id.action_reveal_puzzle);
             item.setVisible(BuildConfig.DEBUG);
@@ -683,7 +679,7 @@ public class PuzzleActivity extends BaseActivity {
     }
 
     private void nextPuzzle() {
-        Puzzle puzzle = mPuzzles.getNext();
+        Puzzle puzzle = PuzzleProvider.getInstance(this).getNext();
         updateCryptogram(puzzle);
     }
 

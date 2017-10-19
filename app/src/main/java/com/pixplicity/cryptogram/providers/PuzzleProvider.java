@@ -426,14 +426,6 @@ public class PuzzleProvider extends AssetProvider {
         PrefsUtils.setProgress(progressStrSet);
     }
 
-    private int getIndexFromId(int id) {
-        Integer index = mPuzzleIds.get(id);
-        if (index == null) {
-            return -1;
-        }
-        return index;
-    }
-
     public String getProgressJson() {
         SparseArray<PuzzleProgress> progressList = getProgress();
         PuzzleProgressState resultList = new PuzzleProgressState();

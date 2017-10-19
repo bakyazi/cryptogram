@@ -11,10 +11,11 @@ import android.widget.TextView;
 
 import com.pixplicity.cryptogram.R;
 import com.pixplicity.cryptogram.models.Topic;
-import com.pixplicity.cryptogram.providers.TopicProvider;
+import com.pixplicity.cryptogram.providers.PuzzleProvider;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.Map;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -31,7 +32,8 @@ public class PackAdapter extends RecyclerView.Adapter<PackAdapter.ViewHolder> {
     public PackAdapter(Context context, OnItemClickListener onItemClickListener) {
         mContext = context;
         mOnItemClickListener = onItemClickListener;
-        mPacks = TopicProvider.getInstance(context).getTopics();
+        Map<String, Topic> topics = PuzzleProvider.getInstance(context).getTopics();
+        mPacks = topics.values().toArray(new Topic[topics.size()]);
     }
 
     @Override
@@ -62,11 +64,11 @@ public class PackAdapter extends RecyclerView.Adapter<PackAdapter.ViewHolder> {
     @Override
     public void onBindViewHolder(ViewHolder vh, int position) {
         Topic topic = mPacks[position];
-        vh.setPosition(position);
+        vh.setTopic(topic);
         vh.tvTitle.setText(topic.getName());
         // TODO set correct progress values
         int packProgress = 0;
-        int packCount = topic.getPuzzles(mContext).length;
+        int packCount = topic.getPuzzles().length;
         vh.tvProgress.setText(mContext.getString(R.string.pack_progress, packProgress, packCount));
 
         String cover = topic.getCover();
@@ -92,7 +94,7 @@ public class PackAdapter extends RecyclerView.Adapter<PackAdapter.ViewHolder> {
 
     public interface OnItemClickListener {
 
-        void onItemClick(int position);
+        void onItemClick(Topic topic);
 
     }
 
@@ -108,19 +110,22 @@ public class PackAdapter extends RecyclerView.Adapter<PackAdapter.ViewHolder> {
         protected ImageView ivCover;
 
         protected ViewGroup vgContainer;
-
-        private int mPosition;
+        private Topic mTopic;
 
         public ViewHolder(View itemView) {
             super(itemView);
             ButterKnife.bind(this, itemView);
             vgContainer = (ViewGroup) itemView;
 
-            itemView.setOnClickListener(view -> mOnItemClickListener.onItemClick(mPosition));
+            itemView.setOnClickListener(view -> mOnItemClickListener.onItemClick(mTopic));
         }
 
-        public void setPosition(int position) {
-            mPosition = position;
+        public Topic getTopic() {
+            return mTopic;
+        }
+
+        public void setTopic(Topic topic) {
+            mTopic = topic;
         }
 
     }

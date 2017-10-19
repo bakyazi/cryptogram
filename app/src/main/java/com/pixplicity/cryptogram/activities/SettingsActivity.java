@@ -4,7 +4,7 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 
 import com.crashlytics.android.answers.Answers;
 import com.crashlytics.android.answers.ContentViewEvent;
@@ -27,10 +27,10 @@ public class SettingsActivity extends BaseActivity {
         Answers.getInstance().logContentView(new ContentViewEvent().putContentName(CryptogramApp.CONTENT_SETTINGS));
     }
 
-    @NonNull
+    @Nullable
     @Override
     protected Class<? extends Activity> getHierarchicalParent() {
-        return CryptogramActivity.class;
+        return LandingActivity.class;
     }
 
 }
