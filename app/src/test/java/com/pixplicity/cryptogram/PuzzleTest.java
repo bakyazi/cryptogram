@@ -7,7 +7,6 @@ import com.pixplicity.cryptogram.models.Puzzle;
 import com.pixplicity.cryptogram.models.PuzzleProgress;
 import com.pixplicity.cryptogram.models.Topic;
 import com.pixplicity.cryptogram.providers.PuzzleProvider;
-import com.pixplicity.cryptogram.providers.TopicProvider;
 import com.pixplicity.cryptogram.stringsimilarity.Levenshtein;
 import com.pixplicity.cryptogram.views.CryptogramView;
 
@@ -22,6 +21,7 @@ import java.io.PrintStream;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Locale;
+import java.util.Map;
 
 /**
  * Example local unit test, which will execute on the development machine (host).
@@ -173,7 +173,7 @@ public class PuzzleTest {
         ArrayList<String> warnings = new ArrayList<>();
         ArrayList<String> errors = new ArrayList<>();
         HashMap<String, Integer> puzzleTopics = new HashMap<>();
-        HashMap<String, Integer> topics = new HashMap<>();
+        HashMap<String, Integer> topicNames = new HashMap<>();
         for (Puzzle puzzle : PuzzleProvider.getInstance(null).getAll()) {
             String topicName = puzzle.getTopic();
             if (topicName == null || puzzle.isNoScore()) {
@@ -187,22 +187,24 @@ public class PuzzleTest {
             }
             puzzleTopics.put(topicName, count + 1);
         }
-        for (Topic topic : TopicProvider.getInstance(null).getTopics()) {
+        Map<String, Topic> topics = PuzzleProvider.getInstance(null).getTopics();
+        for (String topicId : topics.keySet()) {
+            Topic topic = topics.get(topicId);
             for (String topicName : topic.getTopics()) {
                 topicName = topicName.toLowerCase(Locale.ENGLISH);
                 if (!puzzleTopics.containsKey(topicName)) {
                     warnings.add("Topic does not occur in puzzles: " + topicName);
                 }
-                Integer count = topics.get(topicName);
+                Integer count = topicNames.get(topicName);
                 if (count == null) {
                     count = 0;
                 }
-                topics.put(topicName, count + 1);
+                topicNames.put(topicName, count + 1);
             }
         }
         for (String puzzleTopicName : puzzleTopics.keySet()) {
             boolean found = false;
-            for (String topicName : topics.keySet()) {
+            for (String topicName : topicNames.keySet()) {
                 if (puzzleTopicName.equals(topicName)) {
                     found = true;
                     break;
