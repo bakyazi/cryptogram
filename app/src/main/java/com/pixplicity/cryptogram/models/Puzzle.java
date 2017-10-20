@@ -4,7 +4,6 @@ import android.content.Context;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 
-import com.google.firebase.database.Exclude;
 import com.google.gson.annotations.SerializedName;
 import com.pixplicity.cryptogram.CryptogramApp;
 import com.pixplicity.cryptogram.R;
@@ -21,62 +20,47 @@ import java.util.UUID;
 
 public class Puzzle {
 
-    @Exclude
     @SerializedName("id")
     protected int mId;
 
-    @Exclude
     protected transient String mFirebaseId;
 
-    @Exclude
     @SerializedName("uuid")
     protected String mUuid;
 
-    @Exclude
     @SerializedName("number")
     protected Integer mNumber;
 
-    @Exclude
     @SerializedName("text")
     protected String mText;
 
-    @Exclude
     @SerializedName("author")
     protected String mAuthor;
 
-    @Exclude
     @SerializedName("topic")
     protected String mTopic;
 
-    @Exclude
     @SerializedName("given")
     protected String mGiven;
 
-    @Exclude
     @SerializedName("noscore")
     protected boolean mNoScore;
 
-    @Exclude
     @SerializedName("explicit")
     protected boolean mIsExplicit;
 
-    @Exclude
     @SerializedName("language")
     protected String mLanguage;
 
     // TODO serialize
-    @Exclude
     protected Date mDate;
 
     private transient String[] mWords;
 
-    @Exclude
     protected transient boolean mIsMock;
 
-    @Exclude
     private transient PuzzleProgress mProgress;
 
-    @Exclude
     private transient boolean mLoadedProgress;
 
     public Puzzle() {
@@ -204,7 +188,6 @@ public class Puzzle {
         return mLanguage;
     }
 
-    @Exclude
     public boolean hasTopic(@Nullable Topic topic) {
         if (topic == null) {
             return true;
@@ -221,7 +204,6 @@ public class Puzzle {
         return false;
     }
 
-    @Exclude
     @NonNull
     public String[] getWords() {
         if (mWords == null) {
@@ -234,7 +216,6 @@ public class Puzzle {
         return mWords;
     }
 
-    @Exclude
     @NonNull
     public String[] getWordsForLineWidth(int lineWidthInChars) {
         LinkedList<String> wordParts = new LinkedList<>();
@@ -246,7 +227,6 @@ public class Puzzle {
         return wordParts.toArray(new String[wordParts.size()]);
     }
 
-    @Exclude
     public PuzzleProgress getProgress() {
         // Ensure we've attempted to load the data
         load();
@@ -256,23 +236,19 @@ public class Puzzle {
         return mProgress;
     }
 
-    @Exclude
     @NonNull
     public HashMap<Character, Character> getCharMapping() {
         return getProgress().getCharMapping(this);
     }
 
-    @Exclude
     public ArrayList<Character> getCharacterList() {
         return getProgress().getCharacterList(this);
     }
 
-    @Exclude
     public Character getCharacterForMapping(char mappedChar) {
         return getCharMapping().get(mappedChar);
     }
 
-    @Exclude
     public Character getMappedCharacter(char inputChar) {
         HashMap<Character, Character> charMapping = getCharMapping();
         for (Character character : charMapping.keySet()) {
@@ -283,24 +259,20 @@ public class Puzzle {
         return null;
     }
 
-    @Exclude
     public Collection<Character> getUserChars() {
         return getProgress().getUserChars(this);
     }
 
-    @Exclude
     public Character getUserChar(char c) {
         return getProgress().getUserChar(this, c);
     }
 
-    @Exclude
     public boolean setUserChar(char selectedCharacter, char c) {
         boolean changed = getProgress().setUserChar(this, selectedCharacter, c);
         save();
         return changed;
     }
 
-    @Exclude
     public boolean hasUserChars() {
         for (Character c : getUserChars()) {
             if (c != null && c != 0) {
@@ -310,38 +282,31 @@ public class Puzzle {
         return false;
     }
 
-    @Exclude
     public boolean isInputChar(char c) {
         return (c >= 'a' && c <= 'z') || (c >= 'A' && c <= 'Z');
     }
 
-    @Exclude
     public boolean isInstruction() {
         return mId < 0;
     }
 
-    @Exclude
     public boolean isInProgress() {
         return getProgress().isInProgress(this);
     }
 
-    @Exclude
     public boolean isCompleted() {
         return getProgress().isCompleted(this);
     }
 
-    @Exclude
     public boolean isNoScore() {
         return mNoScore;
     }
 
-    @Exclude
     @Nullable
     public String getGiven() {
         return mGiven;
     }
 
-    @Exclude
     public boolean isGiven(char matchChar) {
         if (mGiven != null) {
             for (int j = 0; j < mGiven.length(); j++) {
@@ -376,7 +341,6 @@ public class Puzzle {
         save();
     }
 
-    @Exclude
     public boolean isRevealed(char c) {
         if (mGiven != null && mGiven.indexOf(c) > -1) {
             return true;
@@ -384,12 +348,10 @@ public class Puzzle {
         return getProgress().isRevealed(c);
     }
 
-    @Exclude
     public int getReveals() {
         return getProgress().getReveals();
     }
 
-    @Exclude
     public int getExcessCount() {
         return getProgress().getExcessCount(this);
     }
@@ -397,7 +359,6 @@ public class Puzzle {
     /**
      * Returns the duration of the user's play time on this puzzle in milliseconds.
      */
-    @Exclude
     public long getDurationMs() {
         if (isNoScore()) {
             // Don't measure the duration for puzzles with given characters
@@ -406,7 +367,6 @@ public class Puzzle {
         return getProgress().getDurationMs();
     }
 
-    @Exclude
     @Nullable
     public Float getScore() {
         if (isInstruction()) {
@@ -415,12 +375,10 @@ public class Puzzle {
         return getProgress().getScore(this);
     }
 
-    @Exclude
     public void setHadHints(boolean hadHints) {
         getProgress().setHadHints(hadHints);
     }
 
-    @Exclude
     public boolean hadHints() {
         return getProgress().hadHints();
     }

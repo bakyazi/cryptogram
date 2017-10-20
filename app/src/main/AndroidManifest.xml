@@ -34,11 +34,6 @@
             tools:targetApi="jelly_bean"/>
 
         <activity
-            android:name=".activities.ContributeActivity"
-            android:parentActivityName=".activities.LandingActivity"
-            tools:targetApi="jelly_bean"/>
-
-        <activity
             android:name=".activities.HowToPlayActivity"
             android:parentActivityName=".activities.LandingActivity"
             tools:targetApi="jelly_bean"/>
