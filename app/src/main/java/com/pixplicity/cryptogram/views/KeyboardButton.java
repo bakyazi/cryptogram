@@ -18,7 +18,6 @@ import android.view.View;
 
 import com.pixplicity.cryptogram.R;
 import com.pixplicity.cryptogram.utils.KeyboardUtils;
-import com.pixplicity.cryptogram.utils.Logger;
 
 public class KeyboardButton extends AppCompatButton implements KeyboardUtils.Contract {
 
@@ -134,9 +133,6 @@ public class KeyboardButton extends AppCompatButton implements KeyboardUtils.Con
             int boxWidth = getResources().getDimensionPixelSize(R.dimen.keyboard_popup_width);
             int boxHeight = getResources().getDimensionPixelSize(R.dimen.keyboard_popup_height);
             int boxLeft = Math.max(-left, Math.min(parentWidth - left - boxWidth, width / 2 - boxWidth / 2));
-            if (mKeyValue == 16 || mKeyValue == 17) {
-                Logger.d("layout", mKeyValue + "; " + parentWidth + " - " + right);
-            }
             mBox.left = boxLeft;
             mBox.top = -boxHeight;
             mBox.right = boxLeft + boxWidth;

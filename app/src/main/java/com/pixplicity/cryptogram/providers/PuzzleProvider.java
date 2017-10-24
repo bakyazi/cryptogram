@@ -37,6 +37,7 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.LinkedHashSet;
 import java.util.LinkedList;
+import java.util.Locale;
 import java.util.Map;
 import java.util.Random;
 import java.util.Set;
@@ -89,7 +90,7 @@ public class PuzzleProvider extends AssetProvider {
         }.getType();
         mTopics = GsonProvider.getGson().fromJson(new InputStreamReader(is), type);
         if (BuildConfig.DEBUG) {
-            Logger.d("parsing", String.format("readStream: parsed Json in %.2fms", (System.nanoTime() - start) / 1000000f));
+            Logger.d("parsing", String.format(Locale.ENGLISH, "readStream: parsed json in %.2fms", (System.nanoTime() - start) / 1000000f));
             start = System.nanoTime();
         }
 
@@ -110,7 +111,7 @@ public class PuzzleProvider extends AssetProvider {
         }
         mPuzzles = puzzles.toArray(new Puzzle[puzzles.size()]);
         if (BuildConfig.DEBUG) {
-            Logger.d("parsing", String.format("readStream: added puzzles in %.2fms", (System.nanoTime() - start) / 1000000f));
+            Logger.d("parsing", String.format(Locale.ENGLISH, "readStream: remapped puzzles in %.2fms", (System.nanoTime() - start) / 1000000f));
             start = System.nanoTime();
         }
 
@@ -134,7 +135,7 @@ public class PuzzleProvider extends AssetProvider {
         }
         mLastPuzzleId = lastId + 1;
         if (BuildConfig.DEBUG) {
-            Logger.d("parsing", String.format("readStream: performed ID mapping in %.2fms", (System.nanoTime() - start) / 1000000f));
+            Logger.d("parsing", String.format(Locale.ENGLISH, "readStream: performed ID mapping in %.2fms", (System.nanoTime() - start) / 1000000f));
         }
     }
 

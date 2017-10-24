@@ -74,7 +74,7 @@ public class Logger {
         }
         String clazz = extractClassName(stackTrace[CALL_STACK_INDEX]);
         int lineNumber = stackTrace[CALL_STACK_INDEX].getLineNumber();
-        message = ".(" + clazz + ".java:" + lineNumber + ") - " + message;
+        message = "(" + clazz + ".java:" + lineNumber + ")\t " + message;
         switch (priority) {
             case VERBOSE:
                 Log.v(tag, message, throwable);
