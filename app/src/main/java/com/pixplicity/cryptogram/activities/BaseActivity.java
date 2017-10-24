@@ -62,6 +62,9 @@ public abstract class BaseActivity extends AppCompatActivity {
             // Replace any splash screen image
             getWindow().setBackgroundDrawableResource(R.drawable.bg_activity_dark);
         } else {
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+                getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_LIGHT_NAVIGATION_BAR);
+            }
             getWindow().setBackgroundDrawableResource(R.drawable.bg_activity_light);
         }
         super.setContentView(layoutResID);
