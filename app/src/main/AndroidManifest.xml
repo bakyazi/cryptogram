@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest package="com.pixplicity.cryptogram"
-          xmlns:android="http://schemas.android.com/apk/res/android">
+          xmlns:android="http://schemas.android.com/apk/res/android"
+          xmlns:tools="http://schemas.android.com/tools">
 
     <uses-permission android:name="android.permission.INTERNET"/>
 
@@ -23,20 +24,32 @@
         </activity>
 
         <activity
-            android:name=".activities.HowToPlayActivity"/>
+            android:name=".activities.HowToPlayActivity"
+            android:parentActivityName=".activities.CryptogramActivity"
+            tools:targetApi="jelly_bean"/>
 
         <activity
-            android:name=".activities.AboutActivity"/>
+            android:name=".activities.AboutActivity"
+            android:parentActivityName=".activities.CryptogramActivity"
+            tools:targetApi="jelly_bean"/>
 
         <activity
-            android:name=".activities.SettingsActivity"/>
+            android:name=".activities.SettingsActivity"
+            android:parentActivityName=".activities.CryptogramActivity"
+            tools:targetApi="jelly_bean"/>
 
-        <receiver android:name=".utils.NotificationPublisher" />
+        <receiver android:name=".utils.NotificationPublisher"/>
 
-        <meta-data android:name="com.google.android.gms.games.APP_ID"
-                   android:value="@string/app_id"/>
-        <meta-data android:name="com.google.android.gms.version"
-                   android:value="@integer/google_play_services_version"/>
+        <meta-data
+            android:name="android.max_aspect"
+            android:value="2.1"/>
+
+        <meta-data
+            android:name="com.google.android.gms.games.APP_ID"
+            android:value="@string/app_id"/>
+        <meta-data
+            android:name="com.google.android.gms.version"
+            android:value="@integer/google_play_services_version"/>
 
         <meta-data
             android:name="io.fabric.ApiKey"
