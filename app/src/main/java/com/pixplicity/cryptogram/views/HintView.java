@@ -11,15 +11,16 @@ import android.text.TextPaint;
 import android.util.AttributeSet;
 
 import com.pixplicity.cryptogram.R;
+import com.pixplicity.cryptogram.events.PuzzleEvent;
 import com.pixplicity.cryptogram.models.Puzzle;
+import com.pixplicity.cryptogram.utils.EventProvider;
 import com.pixplicity.cryptogram.utils.StyleUtils;
+import com.squareup.otto.Subscribe;
 
 import java.util.Collection;
 
 
 public class HintView extends AppCompatTextView {
-
-    private static final String TAG = HintView.class.getSimpleName();
 
     @Nullable
     private Puzzle mPuzzle;
@@ -64,18 +65,20 @@ public class HintView extends AppCompatTextView {
         mCharH = bounds.height();
 
         if (isInEditMode()) {
-            setPuzzle(new Puzzle());
+            mPuzzle = new Puzzle();
         }
     }
 
-    @Nullable
-    public Puzzle getPuzzle() {
-        return mPuzzle;
+    @Override
+    protected void onAttachedToWindow() {
+        super.onAttachedToWindow();
+        EventProvider.getBus().register(this);
     }
 
-    public void setPuzzle(Puzzle puzzle) {
-        mPuzzle = puzzle;
-        requestLayout();
+    @Override
+    protected void onDetachedFromWindow() {
+        EventProvider.getBus().unregister(this);
+        super.onDetachedFromWindow();
     }
 
     @Override
@@ -177,6 +180,12 @@ public class HintView extends AppCompatTextView {
 
         desiredHeight += getPaddingBottom();
         return desiredHeight;
+    }
+
+    @Subscribe
+    public void onPuzzleProgress(PuzzleEvent.PuzzleProgressEvent event) {
+        mPuzzle = event.getPuzzle();
+        requestLayout();
     }
 
 }

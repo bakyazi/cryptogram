@@ -217,12 +217,11 @@ public class CryptogramActivity extends BaseActivity implements GoogleApiClient.
             if (mDrawerLayout != null) {
                 mDrawerLayout.closeDrawers();
             }
-            updateCryptogram(puzzleProvider.get(position));
+            onPuzzleChanged(puzzleProvider.get(position), false);
         });
         mRvDrawer.setAdapter(mAdapter);
 
-        mVgCryptogram.setCrytogramView(mCryptogramView);
-        mCryptogramView.setOnPuzzleProgressListener(this::onCryptogramUpdated);
+        mVgCryptogram.setCryptogramView(mCryptogramView);
         mCryptogramView.setOnHighlightListener(new CryptogramView.OnHighlightListener() {
             private SparseBooleanArray mHighlightShown = new SparseBooleanArray();
 
@@ -283,6 +282,8 @@ public class CryptogramActivity extends BaseActivity implements GoogleApiClient.
     protected void onStart() {
         super.onStart();
 
+        EventProvider.getBus().register(this);
+
         mGoogleApiClient.connect();
 
         final PuzzleProvider puzzleProvider = PuzzleProvider.getInstance(this);
@@ -290,9 +291,6 @@ public class CryptogramActivity extends BaseActivity implements GoogleApiClient.
         if (puzzle != null) {
             puzzle.onResume();
         }
-        updateCryptogram(puzzle);
-
-        EventProvider.getBus().register(this);
 
         if (hasOnBoardingPages()) {
             showOnboarding(0);
@@ -301,6 +299,15 @@ public class CryptogramActivity extends BaseActivity implements GoogleApiClient.
         }
 
         mHintView.setVisibility(PrefsUtils.getShowHints() ? View.VISIBLE : View.GONE);
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+
+        final PuzzleProvider puzzleProvider = PuzzleProvider.getInstance(this);
+        Puzzle puzzle = puzzleProvider.getCurrent();
+        onPuzzleChanged(puzzle, true);
     }
 
     @Override
@@ -381,8 +388,8 @@ public class CryptogramActivity extends BaseActivity implements GoogleApiClient.
                                 new SavegameManager.OnLoadResult() {
                                     @Override
                                     public void onLoadSuccess() {
-                                        updateCryptogram(PuzzleProvider.getInstance(CryptogramActivity.this)
-                                                                       .getCurrent());
+                                        onPuzzleChanged(PuzzleProvider.getInstance(CryptogramActivity.this)
+                                                                      .getCurrent(), false);
                                         showSnackbar("Game loaded.");
                                         pd.dismiss();
                                     }
@@ -613,7 +620,7 @@ public class CryptogramActivity extends BaseActivity implements GoogleApiClient.
                         puzzle.getNumber()));
             }
             // Invoke various events
-            onCryptogramUpdated(puzzle);
+            showPuzzleState(puzzle);
             puzzle.onResume();
         } else {
             mTvError.setVisibility(View.VISIBLE);
@@ -626,9 +633,8 @@ public class CryptogramActivity extends BaseActivity implements GoogleApiClient.
         mCryptogramView.requestFocus();
     }
 
-    public void onCryptogramUpdated(Puzzle puzzle) {
+    public void showPuzzleState(Puzzle puzzle) {
         // Update the HintView as the puzzle updates
-        mHintView.setPuzzle(puzzle);
         mAdapter.notifyDataSetChanged();
         if (puzzle.isCompleted()) {
             mHintView.setVisibility(View.GONE);
@@ -669,8 +675,22 @@ public class CryptogramActivity extends BaseActivity implements GoogleApiClient.
         }
     }
 
+    public void onPuzzleChanged(Puzzle puzzle, boolean delayEvent) {
+        updateCryptogram(puzzle);
+        if (delayEvent) {
+            EventProvider.postEventDelayed(new PuzzleEvent.PuzzleProgressEvent(puzzle), 200);
+        } else {
+            EventProvider.postEvent(new PuzzleEvent.PuzzleProgressEvent(puzzle));
+        }
+    }
+
     @Subscribe
-    public void onPuzzleStyleChanged(PuzzleEvent.PuzzleStyleChanged event) {
+    public void onPuzzleProgress(PuzzleEvent.PuzzleProgressEvent event) {
+        showPuzzleState(event.getPuzzle());
+    }
+
+    @Subscribe
+    public void onPuzzleStyleChanged(PuzzleEvent.PuzzleStyleChangedEvent event) {
         // Just recreate the activity
         recreate();
     }
@@ -813,7 +833,7 @@ public class CryptogramActivity extends BaseActivity implements GoogleApiClient.
                             .setPositiveButton(R.string.reset, (dialogInterface, i) -> {
                                 puzzle.reset(true);
                                 mCryptogramView.reset();
-                                onCryptogramUpdated(puzzle);
+                                showPuzzleState(puzzle);
                             })
                             .setNegativeButton(R.string.cancel, (dialogInterface, i) -> {
                             })
@@ -857,11 +877,11 @@ public class CryptogramActivity extends BaseActivity implements GoogleApiClient.
                                 int puzzleNumber = Integer.parseInt(input.toString());
                                 PuzzleProvider provider = PuzzleProvider
                                         .getInstance(CryptogramActivity.this);
-                                Puzzle puzzle1 = provider.getByNumber(puzzleNumber);
-                                if (puzzle1 == null) {
+                                Puzzle newPuzzle = provider.getByNumber(puzzleNumber);
+                                if (newPuzzle == null) {
                                     showSnackbar(getString(R.string.puzzle_nonexistant, puzzleNumber));
                                 } else {
-                                    updateCryptogram(puzzle1);
+                                    onPuzzleChanged(newPuzzle, false);
                                 }
                             } catch (NumberFormatException ignored) {
                             }
@@ -1019,7 +1039,7 @@ public class CryptogramActivity extends BaseActivity implements GoogleApiClient.
 
     private void nextPuzzle() {
         Puzzle puzzle = PuzzleProvider.getInstance(this).getNext();
-        updateCryptogram(puzzle);
+        onPuzzleChanged(puzzle, false);
     }
 
     // Google Play Services

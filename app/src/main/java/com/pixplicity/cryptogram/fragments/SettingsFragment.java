@@ -171,7 +171,7 @@ public class SettingsFragment extends BaseFragment {
     private void setTextSize(int textSize) {
         PrefsUtils.setTextSize(textSize);
         StyleUtils.reset();
-        EventProvider.postEvent(new PuzzleEvent.PuzzleStyleChanged());
+        EventProvider.postEvent(new PuzzleEvent.PuzzleStyleChangedEvent());
     }
 
     private void setTheme(boolean theme) {

@@ -8,12 +8,17 @@ import android.support.v7.widget.AppCompatImageButton;
 import android.util.AttributeSet;
 
 import com.pixplicity.cryptogram.R;
+import com.pixplicity.cryptogram.events.PuzzleEvent;
+import com.pixplicity.cryptogram.models.Puzzle;
+import com.pixplicity.cryptogram.utils.EventProvider;
 import com.pixplicity.cryptogram.utils.KeyboardUtils;
+import com.squareup.otto.Subscribe;
 
 
 public class KeyboardImageButton extends AppCompatImageButton implements KeyboardUtils.Contract {
 
     private int mKeycode;
+    private int mAlpha = 255;
 
     public KeyboardImageButton(Context context) {
         this(context, null);
@@ -41,12 +46,38 @@ public class KeyboardImageButton extends AppCompatImageButton implements Keyboar
         setOnClickListener(view -> KeyboardUtils.dispatch(this));
         final Drawable drawable;
         drawable = ContextCompat.getDrawable(getContext(), KeyboardUtils.getKeyIcon(this));
+        drawable.setAlpha(mAlpha);
         setImageDrawable(drawable);
+    }
+
+    @Override
+    protected void onAttachedToWindow() {
+        super.onAttachedToWindow();
+        EventProvider.getBus().register(this);
+    }
+
+    @Override
+    protected void onDetachedFromWindow() {
+        EventProvider.getBus().unregister(this);
+        super.onDetachedFromWindow();
     }
 
     @Override
     public int getKeyIndex() {
         return mKeycode;
+    }
+
+    @Subscribe
+    public void onPuzzleProgress(PuzzleEvent.PuzzleProgressEvent event) {
+        boolean input = false;
+        String keyText = KeyboardUtils.getKeyText(this);
+        if (keyText != null && keyText.length() > 0) {
+            Puzzle puzzle = event.getPuzzle();
+            Character c = puzzle.getUserChar(keyText.charAt(0));
+            input = c != null && c != 0;
+        }
+        mAlpha = input ? ALPHA_GREYED : 255;
+        invalidate();
     }
 
 }

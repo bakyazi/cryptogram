@@ -16,14 +16,20 @@ public abstract class PuzzleEvent {
         }
     }
 
+    public static class PuzzleProgressEvent extends PuzzleEvent {
+        public PuzzleProgressEvent(Puzzle puzzle) {
+            super(puzzle);
+        }
+    }
+
     public static class PuzzleResetEvent extends PuzzleEvent {
         public PuzzleResetEvent(Puzzle puzzle) {
             super(puzzle);
         }
     }
 
-    public static class PuzzleStyleChanged extends PuzzleEvent {
-        public PuzzleStyleChanged() {
+    public static class PuzzleStyleChangedEvent extends PuzzleEvent {
+        public PuzzleStyleChangedEvent() {
             super(null);
         }
     }

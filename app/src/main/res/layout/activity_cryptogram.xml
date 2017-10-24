@@ -43,7 +43,8 @@
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_gravity="fill_vertical"
-            android:layout_weight="1">
+            android:layout_weight="1"
+            android:fillViewport="true">
 
             <com.pixplicity.cryptogram.views.CryptogramLayout
                 android:id="@+id/vg_cryptogram"
