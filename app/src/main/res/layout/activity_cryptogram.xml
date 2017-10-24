@@ -77,11 +77,13 @@
                     android:paddingBottom="16dp"
                     android:paddingLeft="16dp"
                     android:paddingRight="16dp"
-                    android:paddingTop="8dp">
+                    android:paddingTop="8dp"
+                    android:stretchColumns="1">
 
                     <TableRow
                         android:id="@+id/vg_stats_time"
-                        android:layout_marginTop="8dp">
+                        android:layout_marginTop="8dp"
+                        tools:visibility="visible">
 
                         <android.support.v7.widget.AppCompatTextView
                             android:layout_width="wrap_content"
@@ -97,13 +99,15 @@
                             android:layout_marginStart="8dp"
                             android:minWidth="64dp"
                             android:textColor="@color/textLight"
-                            android:textStyle="bold"/>
+                            android:textStyle="bold"
+                            tools:text="01:23"/>
 
                     </TableRow>
 
                     <TableRow
                         android:id="@+id/vg_stats_excess"
-                        android:layout_marginTop="8dp">
+                        android:layout_marginTop="8dp"
+                        tools:visibility="visible">
 
                         <android.support.v7.widget.AppCompatTextView
                             android:layout_width="wrap_content"
@@ -119,13 +123,15 @@
                             android:layout_marginStart="8dp"
                             android:minWidth="64dp"
                             android:textColor="@color/textLight"
-                            android:textStyle="bold"/>
+                            android:textStyle="bold"
+                            tools:text="4"/>
 
                     </TableRow>
 
                     <TableRow
                         android:id="@+id/vg_stats_reveals"
-                        android:layout_marginTop="8dp">
+                        android:layout_marginTop="8dp"
+                        tools:visibility="gone">
 
                         <android.support.v7.widget.AppCompatTextView
                             android:layout_width="wrap_content"
@@ -141,13 +147,15 @@
                             android:layout_marginStart="8dp"
                             android:minWidth="64dp"
                             android:textColor="@color/textLight"
-                            android:textStyle="bold"/>
+                            android:textStyle="bold"
+                            tools:text="0"/>
 
                     </TableRow>
 
                     <TableRow
                         android:id="@+id/vg_stats_score"
-                        android:layout_marginTop="8dp">
+                        android:layout_marginTop="8dp"
+                        tools:visibility="gone">
 
                         <android.support.v7.widget.AppCompatTextView
                             android:layout_width="wrap_content"
@@ -163,14 +171,16 @@
                             android:layout_marginStart="8dp"
                             android:minWidth="64dp"
                             android:textColor="@color/textLight"
-                            android:textStyle="bold"/>
+                            android:textStyle="bold"
+                            tools:text="68%"/>
 
                     </TableRow>
 
                     <TableRow
                         android:id="@+id/vg_stats_practice"
                         android:layout_marginTop="8dp"
-                        android:visibility="gone">
+                        android:visibility="gone"
+                        tools:visibility="visible">
 
                         <android.support.v7.widget.AppCompatTextView
                             android:layout_width="wrap_content"
