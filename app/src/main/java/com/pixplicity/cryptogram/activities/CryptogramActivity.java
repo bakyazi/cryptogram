@@ -65,6 +65,7 @@ import com.pixplicity.cryptogram.utils.PrefsUtils;
 import com.pixplicity.cryptogram.utils.PuzzleProvider;
 import com.pixplicity.cryptogram.utils.SavegameManager;
 import com.pixplicity.cryptogram.utils.StringUtils;
+import com.pixplicity.cryptogram.utils.UpdateManager;
 import com.pixplicity.cryptogram.utils.VideoUtils;
 import com.pixplicity.cryptogram.views.CryptogramLayout;
 import com.pixplicity.cryptogram.views.CryptogramView;
@@ -239,20 +240,22 @@ public class CryptogramActivity extends BaseActivity implements GoogleApiClient.
                 mHighlightShown.put(type, true);
                 switch (type) {
                     case PrefsUtils.TYPE_HIGHLIGHT_HYPHENATION:
-                        showHighlight(type, point,
+                        showHighlight(type, createTapTargetFromPoint(
+                                point,
                                 getString(R.string.highlight_hyphenation_title),
-                                getString(R.string.highlight_hyphenation_description),
-                                1200
+                                getString(R.string.highlight_hyphenation_description)),
+                                      1200
                         );
                         break;
                     case PrefsUtils.TYPE_HIGHLIGHT_TOUCH_INPUT:
                         if (mFreshInstall) {
                             PrefsUtils.setHighlighted(type, true);
                         } else {
-                            showHighlight(PrefsUtils.TYPE_HIGHLIGHT_TOUCH_INPUT, point,
+                            showHighlight(PrefsUtils.TYPE_HIGHLIGHT_TOUCH_INPUT, createTapTargetFromPoint(
+                                    point,
                                     getString(R.string.highlight_touch_input_title),
-                                    getString(R.string.highlight_touch_input_description),
-                                    1200
+                                    getString(R.string.highlight_touch_input_description)),
+                                          1200
                             );
                         }
                         break;
@@ -273,6 +276,15 @@ public class CryptogramActivity extends BaseActivity implements GoogleApiClient.
             if (intent.getBooleanExtra(EXTRA_LAUNCH_SETTINGS, false)) {
                 startActivity(SettingsActivity.create(this));
             }
+        }
+
+        if (UpdateManager.consumeEnabledShowUsedLetters()) {
+            showHighlight(-1, TapTarget.forToolbarOverflow(
+                    mToolbar,
+                    getString(R.string.highlight_used_letters_title),
+                    getString(R.string.highlight_used_letters_description)),
+                          1200
+            );
         }
     }
 
@@ -387,34 +399,34 @@ public class CryptogramActivity extends BaseActivity implements GoogleApiClient.
                         pd.show();
                         final SnapshotMetadata snapshotMetadata = intent.getParcelableExtra(Snapshots.EXTRA_SNAPSHOT_METADATA);
                         PuzzleProvider.getInstance(this).load(mGoogleApiClient, snapshotMetadata,
-                                new SavegameManager.OnLoadResult() {
-                                    @Override
-                                    public void onLoadSuccess() {
-                                        onPuzzleChanged(PuzzleProvider.getInstance(CryptogramActivity.this)
-                                                                      .getCurrent(), false);
-                                        showSnackbar("Game loaded.");
-                                        pd.dismiss();
-                                    }
+                                                              new SavegameManager.OnLoadResult() {
+                                                                  @Override
+                                                                  public void onLoadSuccess() {
+                                                                      onPuzzleChanged(PuzzleProvider.getInstance(CryptogramActivity.this)
+                                                                                                    .getCurrent(), false);
+                                                                      showSnackbar("Game loaded.");
+                                                                      pd.dismiss();
+                                                                  }
 
-                                    @Override
-                                    public void onLoadFailure() {
-                                        showSnackbar("Sorry, the game state couldn't be restored.");
-                                        pd.dismiss();
-                                    }
-                                });
+                                                                  @Override
+                                                                  public void onLoadFailure() {
+                                                                      showSnackbar("Sorry, the game state couldn't be restored.");
+                                                                      pd.dismiss();
+                                                                  }
+                                                              });
                     } else if (intent.hasExtra(Snapshots.EXTRA_SNAPSHOT_NEW)) {
                         PuzzleProvider.getInstance(this).save(mGoogleApiClient,
-                                new SavegameManager.OnSaveResult() {
-                                    @Override
-                                    public void onSaveSuccess() {
-                                        showSnackbar("Game saved.");
-                                    }
+                                                              new SavegameManager.OnSaveResult() {
+                                                                  @Override
+                                                                  public void onSaveSuccess() {
+                                                                      showSnackbar("Game saved.");
+                                                                  }
 
-                                    @Override
-                                    public void onSaveFailure() {
-                                        showSnackbar("Game couldn't be saved at this time.");
-                                    }
-                                });
+                                                                  @Override
+                                                                  public void onSaveFailure() {
+                                                                      showSnackbar("Game couldn't be saved at this time.");
+                                                                  }
+                                                              });
                     }
                 }
                 break;
@@ -425,26 +437,29 @@ public class CryptogramActivity extends BaseActivity implements GoogleApiClient.
         return PrefsUtils.getOnboarding() < ONBOARDING_PAGES - 1;
     }
 
-    private void showHighlight(final int type, PointF point, final String title,
-                               final String description, int delayMillis) {
+    private TapTarget createTapTargetFromPoint(PointF point, final String title,
+                                               final String description) {
         Rect viewRect = new Rect();
         mCryptogramView.getGlobalVisibleRect(viewRect);
         final int targetX = (int) (point.x + viewRect.left);
         final int targetY = (int) (point.y + viewRect.top);
         final int targetRadius = 48;
-        Handler handler = new Handler();
-        handler.postDelayed(() -> {
+        return TapTarget.forBounds(new Rect(targetX - targetRadius, targetY - targetRadius, targetX + targetRadius, targetY + targetRadius),
+                                   title, description);
+    }
+
+    private void showHighlight(final int type, final TapTarget tapTarget, int delayMillis) {
+        new Handler().postDelayed(() -> {
             final long showTime = System.currentTimeMillis();
             TapTargetView.showFor(
                     CryptogramActivity.this,
-                    TapTarget.forBounds(new Rect(targetX - targetRadius, targetY - targetRadius, targetX + targetRadius, targetY + targetRadius),
-                            title, description)
-                             .titleTextColor(R.color.white)
-                             .descriptionTextColor(R.color.white)
-                             .outerCircleColor(R.color.highlight_color)
-                             .cancelable(true)
-                             .tintTarget(false)
-                             .transparentTarget(true),
+                    tapTarget
+                            .titleTextColor(R.color.white)
+                            .descriptionTextColor(R.color.white)
+                            .outerCircleColor(R.color.highlight_color)
+                            .cancelable(true)
+                            .tintTarget(false)
+                            .transparentTarget(true),
                     new TapTargetView.Listener() {
                         @Override
                         public void onTargetClick(TapTargetView view) {
@@ -462,7 +477,7 @@ public class CryptogramActivity extends BaseActivity implements GoogleApiClient.
                         }
 
                         private void dismiss(TapTargetView view) {
-                            if (System.currentTimeMillis() - showTime >= 1500) {
+                            if (type >= 0 && System.currentTimeMillis() - showTime >= 1500) {
                                 // Ensure that the user saw the message
                                 PrefsUtils.setHighlighted(type, true);
                             }
@@ -569,7 +584,7 @@ public class CryptogramActivity extends BaseActivity implements GoogleApiClient.
                 dialog.dismiss();
                 int maxNumberOfSavedGamesToShow = 5;
                 Intent savedGamesIntent = Games.Snapshots.getSelectSnapshotIntent(mGoogleApiClient,
-                        "See My Saves", true, true, maxNumberOfSavedGamesToShow);
+                                                                                  "See My Saves", true, true, maxNumberOfSavedGamesToShow);
                 startActivityForResult(savedGamesIntent, RC_SAVED_GAMES);
             });
 
@@ -686,8 +701,8 @@ public class CryptogramActivity extends BaseActivity implements GoogleApiClient.
 
     protected void showHintView(@Nullable Puzzle puzzle) {
         mHintView.setVisibility(puzzle != null && !puzzle.isCompleted()
-                && PrefsUtils.getShowHints() && PrefsUtils.getUseSystemKeyboard()
-                ? View.VISIBLE : View.GONE);
+                                        && PrefsUtils.getShowUsedChars() && PrefsUtils.getUseSystemKeyboard()
+                                        ? View.VISIBLE : View.GONE);
     }
 
     public void onPuzzleChanged(Puzzle puzzle, boolean delayEvent) {
@@ -749,9 +764,9 @@ public class CryptogramActivity extends BaseActivity implements GoogleApiClient.
     public void onPuzzleKeyboardInput(PuzzleEvent.KeyboardInputEvent event) {
         final int keyCode = event.getKeyCode();
         mCryptogramView.dispatchKeyEvent(new KeyEvent(0, 0, KeyEvent.ACTION_DOWN,
-                keyCode, 0));
+                                                      keyCode, 0));
         mCryptogramView.dispatchKeyEvent(new KeyEvent(0, 0, KeyEvent.ACTION_UP,
-                keyCode, 0));
+                                                      keyCode, 0));
     }
 
     @Override
@@ -928,8 +943,8 @@ public class CryptogramActivity extends BaseActivity implements GoogleApiClient.
                 Answers.getInstance().logShare(
                         new ShareEvent()
                                 .putContentId(puzzle == null
-                                        ? null
-                                        : String.valueOf(puzzle.getId()))
+                                                      ? null
+                                                      : String.valueOf(puzzle.getId()))
                                 .putContentType("puzzle")
                                 .putContentName(text)
                 );
@@ -984,8 +999,8 @@ public class CryptogramActivity extends BaseActivity implements GoogleApiClient.
                     ((TextView) view.findViewById(R.id.tv_label)).setText(R.string.stats_total_completed_label);
                     ((TextView) view.findViewById(R.id.tv_value)).setText(
                             getString(R.string.stats_total_completed_value,
-                                    count,
-                                    provider.getLastNumber()));
+                                      count,
+                                      provider.getLastNumber()));
                     dialogView.addView(view);
                 }
                 {
@@ -993,7 +1008,7 @@ public class CryptogramActivity extends BaseActivity implements GoogleApiClient.
                     ((TextView) view.findViewById(R.id.tv_label)).setText(R.string.stats_average_score_label);
                     ((TextView) view.findViewById(R.id.tv_value)).setText(
                             getString(R.string.stats_average_score_value,
-                                    scoreAverageText));
+                                      scoreAverageText));
                     dialogView.addView(view);
                 }
                 {
@@ -1001,7 +1016,7 @@ public class CryptogramActivity extends BaseActivity implements GoogleApiClient.
                     ((TextView) view.findViewById(R.id.tv_label)).setText(R.string.stats_cumulative_score_label);
                     ((TextView) view.findViewById(R.id.tv_value)).setText(
                             getString(R.string.stats_cumulative_score_value,
-                                    scoreCumulativeText));
+                                      scoreCumulativeText));
                     dialogView.addView(view);
                 }
                 {
@@ -1009,7 +1024,7 @@ public class CryptogramActivity extends BaseActivity implements GoogleApiClient.
                     ((TextView) view.findViewById(R.id.tv_label)).setText(R.string.stats_fastest_completion_label);
                     ((TextView) view.findViewById(R.id.tv_value)).setText(
                             getString(R.string.stats_fastest_completion_value,
-                                    fastestCompletion));
+                                      fastestCompletion));
                     dialogView.addView(view);
                 }
                 {
@@ -1017,7 +1032,7 @@ public class CryptogramActivity extends BaseActivity implements GoogleApiClient.
                     ((TextView) view.findViewById(R.id.tv_label)).setText(R.string.stats_total_time_spent_label);
                     ((TextView) view.findViewById(R.id.tv_value)).setText(
                             getString(R.string.stats_total_time_spent_value,
-                                    StringUtils.getDurationString(totalDurationMs)));
+                                      StringUtils.getDurationString(totalDurationMs)));
                     dialogView.addView(view);
                 }
                 {
@@ -1025,8 +1040,8 @@ public class CryptogramActivity extends BaseActivity implements GoogleApiClient.
                     ((TextView) view.findViewById(R.id.tv_label)).setText(R.string.stats_longest_streak_label);
                     ((TextView) view.findViewById(R.id.tv_value)).setText(
                             getString(R.string.stats_longest_streak_value,
-                                    longestStreak,
-                                    getResources().getQuantityString(R.plurals.days, longestStreak)));
+                                      longestStreak,
+                                      getResources().getQuantityString(R.plurals.days, longestStreak)));
                     dialogView.addView(view);
                 }
                 new AlertDialog.Builder(this)

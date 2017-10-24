@@ -15,6 +15,9 @@
     <string name="highlight_hyphenation_title">Hyphenation</string>
     <string name="highlight_hyphenation_description">Watch out for the hyphen! The word continues on the next line.</string>
 
+    <string name="highlight_used_letters_title">Used characters</string>
+    <string name="highlight_used_letters_description">Used characters are now shown by default. You can change this setting and many others here.</string>
+
     <string name="drawer_open">Open drawer</string>
     <string name="drawer_close">Close drawer</string>
 

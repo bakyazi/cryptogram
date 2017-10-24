@@ -2,8 +2,12 @@ package com.pixplicity.cryptogram;
 
 import android.app.Application;
 import android.content.ContextWrapper;
+import android.content.pm.PackageInfo;
+import android.content.pm.PackageManager;
 
 import com.crashlytics.android.Crashlytics;
+import com.pixplicity.cryptogram.utils.PrefsUtils;
+import com.pixplicity.cryptogram.utils.UpdateManager;
 import com.pixplicity.easyprefs.library.Prefs;
 
 import io.fabric.sdk.android.Fabric;
@@ -43,6 +47,8 @@ public class CryptogramApp extends Application {
                 .setPrefsName(getPackageName())
                 .setUseDefaultSharedPreference(true)
                 .build();
+
+        UpdateManager.init(this);
     }
 
 }

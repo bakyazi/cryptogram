@@ -167,8 +167,8 @@ public class SettingsFragment extends BaseFragment {
                         .show();
             }
         });
-        updateCompoundButton(mCbShowHints, PrefsUtils.getShowHints(),
-                (compoundButton, checked) -> PrefsUtils.setShowHints(checked));
+        updateCompoundButton(mCbShowHints, PrefsUtils.getShowUsedChars(),
+                (compoundButton, checked) -> PrefsUtils.setShowUsedChars(checked));
         updateCompoundButton(mCbAutoAdvance, PrefsUtils.getAutoAdvance(),
                 (compoundButton, checked) -> PrefsUtils.setAutoAdvance(checked));
         updateCompoundButton(mCbSkipFilledCells, PrefsUtils.getSkipFilledCells(),

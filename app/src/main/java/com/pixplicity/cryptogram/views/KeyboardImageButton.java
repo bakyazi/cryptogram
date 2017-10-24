@@ -71,7 +71,7 @@ public class KeyboardImageButton extends AppCompatImageButton implements Keyboar
     @Subscribe
     public void onPuzzleProgress(PuzzleEvent.PuzzleProgressEvent event) {
         boolean input = false;
-        if (PrefsUtils.getShowHints()) {
+        if (PrefsUtils.getShowUsedChars()) {
             String keyText = KeyboardUtils.getKeyText(this);
             if (keyText != null && keyText.length() > 0) {
                 Puzzle puzzle = event.getPuzzle();
