@@ -173,6 +173,7 @@
   {
     "text": "There can be no deep disap­point­ment where there is not deep love.",
     "author": "Martin Luther King, Jr.",
+    "given": "V",
     "topic": "Love"
   },
   {
@@ -183,26 +184,31 @@
   {
     "text": "Love is when the other person’s happi­ness is more impor­tant than your own.",
     "author": "H. Jackson Brown, Jr.",
+    "given": "V",
     "topic": "Love"
   },
   {
     "text": "Let us always meet each other with smile, for the smile is the begin­ning of love.",
     "author": "Mother Teresa",
+    "given": "V",
     "topic": "Love"
   },
   {
     "text": "Kindness in words creates confi­dence. Kindness in thinking creates profound­ness. Kindness in giving creates love.",
     "author": "Lao Tzu",
+    "given": "V",
     "topic": "Love"
   },
   {
     "text": "Some­times the heart sees what is invis­ible to the eye.",
     "author": "H. Jackson Brown, Jr.",
+    "given": "Y",
     "topic": "Love"
   },
   {
     "text": "I have found the paradox, that if you love until it hurts, there can be no more hurt, only more love.",
     "author": "Mother Teresa",
+    "given": "V",
     "topic": "Love"
   },
   {
@@ -219,6 +225,7 @@
   {
     "text": "Love is composed of a single soul inhabit­ing two bodies.",
     "author": "Aristotle",
+    "given": "V",
     "topic": "Love"
   },
   {
@@ -244,31 +251,37 @@
   {
     "text": "No man has a good enough memory to be a success­ful liar.",
     "author": "Abraham Lincoln",
+    "given": "E",
     "topic": "Funny"
   },
   {
     "text": "I can resist every­thing except temp­tation.",
     "author": "Oscar Wilde",
+    "given": "XY",
     "topic": "Funny"
   },
   {
     "text": "Go to Heaven for the climate, Hell for the company.",
     "author": "Mark Twain",
+    "given": "GH",
     "topic": "Funny"
   },
   {
     "text": "I’m sorry, if you were right, I’d agree with you.",
     "author": "Robin Williams",
+    "given": "U",
     "topic": "Funny"
   },
   {
     "text": "Behind every great man is a woman rolling her eyes.",
     "author": "Jim Carrey",
+    "given": "S",
     "topic": "Funny"
   },
   {
     "text": "I love dead­lines. I like the whoo­shing sound they make as they fly by.",
     "author": "Douglas Adams",
+    "given": "KY",
     "topic": "Funny"
   },
   {
@@ -279,12 +292,13 @@
   {
     "text": "Weather forecast for tonight: dark.",
     "author": "George Carlin",
-    "given": "TH",
+    "given": "HKT",
     "topic": "Funny"
   },
   {
     "text": "All gene­raliza­tions are false, inclu­ding this one.",
     "author": "Mark Twain",
+    "given": "I",
     "topic": "Funny"
   },
   {
@@ -295,6 +309,7 @@
   {
     "text": "I refuse to join any club that would have me as a member.",
     "author": "Groucho Marx",
+    "given": "M",
     "topic": "Funny"
   },
   {
@@ -305,6 +320,7 @@
   {
     "text": "Why do they call it rush hour when nothing moves?",
     "author": "Robin Williams",
+    "given": "RY",
     "topic": "Funny"
   },
   {
@@ -646,6 +662,7 @@
   {
     "text": "If you can dream it, you can do it.",
     "author": "Walt Disney",
+    "given": "U",
     "topic": "Inspirational"
   },
   {
@@ -666,6 +683,7 @@
   {
     "text": "It always seems impos­sible until it’s done.",
     "author": "Nelson Mandela",
+    "given": "U",
     "topic": "Inspirational"
   },
   {
@@ -701,7 +719,7 @@
   {
     "text": "Not all those who wander are lost.",
     "author": "J.R.R. Tolkien",
-    "given": "A",
+    "given": "AN",
     "topic": "From literature"
   },
   {
@@ -712,7 +730,7 @@
   {
     "text": "Well-behaved women seldom make history.",
     "author": "Laurel Thatcher Ulrich",
-    "given": "W",
+    "given": "DIW",
     "topic": "From literature"
   },
   {
@@ -736,8 +754,9 @@
     "topic": "From literature"
   },
   {
-    "text": "Get busy living, or get busy dying.",
+    "text": "I guess it comes down to a simple choice, really. Get busy living, or get busy dying.",
     "author": "Stephen King",
+    "given": "GY",
     "topic": "From literature"
   },
   {
@@ -753,6 +772,7 @@
   {
     "text": "Travel far enough, you meet yourself.",
     "author": "David Mitchell",
+    "given": "F",
     "topic": "From literature"
   },
   {
