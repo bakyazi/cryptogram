@@ -146,6 +146,9 @@ public class CryptogramActivity extends BaseActivity implements GoogleApiClient.
     @BindView(R.id.tv_stats_time)
     protected TextView mTvStatsTime;
 
+    @BindView(R.id.vg_stats_reveals)
+    protected ViewGroup mVgStatsReveals;
+
     @BindView(R.id.tv_stats_reveals)
     protected TextView mTvStatsReveals;
 
@@ -291,14 +294,13 @@ public class CryptogramActivity extends BaseActivity implements GoogleApiClient.
         if (puzzle != null) {
             puzzle.onResume();
         }
+        showHintView(puzzle);
 
         if (hasOnBoardingPages()) {
             showOnboarding(0);
         } else {
             onGameplayReady();
         }
-
-        mHintView.setVisibility(PrefsUtils.getShowHints() ? View.VISIBLE : View.GONE);
     }
 
     @Override
@@ -637,7 +639,6 @@ public class CryptogramActivity extends BaseActivity implements GoogleApiClient.
         // Update the HintView as the puzzle updates
         mAdapter.notifyDataSetChanged();
         if (puzzle.isCompleted()) {
-            mHintView.setVisibility(View.GONE);
             mVgStats.setVisibility(View.VISIBLE);
             long durationMs = puzzle.getDurationMs();
             if (durationMs <= 0) {
@@ -646,15 +647,26 @@ public class CryptogramActivity extends BaseActivity implements GoogleApiClient.
                 mVgStatsTime.setVisibility(View.VISIBLE);
                 mTvStatsTime.setText(StringUtils.getDurationString(durationMs));
             }
-            int excessCount = puzzle.getExcessCount();
+            int excessCount = -1;
+            int reveals = -1;
+            Float score = null;
+            if (PrefsUtils.getShowScore()) {
+                excessCount = puzzle.getExcessCount();
+                reveals = puzzle.getReveals();
+                score = puzzle.getScore();
+            }
             if (excessCount < 0) {
                 mVgStatsExcess.setVisibility(View.GONE);
             } else {
                 mVgStatsExcess.setVisibility(View.VISIBLE);
                 mTvStatsExcess.setText(String.valueOf(excessCount));
             }
-            mTvStatsReveals.setText(String.valueOf(puzzle.getReveals()));
-            Float score = puzzle.getScore();
+            if (reveals < 0) {
+                mVgStatsReveals.setVisibility(View.GONE);
+            } else {
+                mVgStatsReveals.setVisibility(View.VISIBLE);
+                mTvStatsReveals.setText(String.valueOf(reveals));
+            }
             if (score != null) {
                 mVgStatsPractice.setVisibility(View.GONE);
                 mVgStatsScore.setVisibility(View.VISIBLE);
@@ -667,12 +679,15 @@ public class CryptogramActivity extends BaseActivity implements GoogleApiClient.
                 mVgStatsPractice.setVisibility(puzzle.isNoScore() ? View.VISIBLE : View.GONE);
             }
         } else {
-            if (PrefsUtils.getShowHints() && puzzle.hasUserChars()) {
-                puzzle.setHadHints(true);
-            }
-            mHintView.setVisibility(PrefsUtils.getShowHints() ? View.VISIBLE : View.GONE);
             mVgStats.setVisibility(View.GONE);
         }
+        showHintView(puzzle);
+    }
+
+    protected void showHintView(@Nullable Puzzle puzzle) {
+        mHintView.setVisibility(puzzle != null && !puzzle.isCompleted()
+                && PrefsUtils.getShowHints() && PrefsUtils.getUseSystemKeyboard()
+                ? View.VISIBLE : View.GONE);
     }
 
     public void onPuzzleChanged(Puzzle puzzle, boolean delayEvent) {
@@ -834,6 +849,7 @@ public class CryptogramActivity extends BaseActivity implements GoogleApiClient.
                                 puzzle.reset(true);
                                 mCryptogramView.reset();
                                 showPuzzleState(puzzle);
+                                onPuzzleChanged(puzzle, false);
                             })
                             .setNegativeButton(R.string.cancel, (dialogInterface, i) -> {
                             })

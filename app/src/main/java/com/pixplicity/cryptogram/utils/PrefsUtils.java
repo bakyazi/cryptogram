@@ -13,6 +13,7 @@ public class PrefsUtils {
     private static final String KEY_ONBOARDING = "onboarding";
     private static final String KEY_SHOW_HINTS = "show_hints";
     private static final String KEY_SHOW_TOPIC = "show_topic";
+    private static final String KEY_SHOW_SCORE = "show_score";
     private static final String KEY_DARK_THEME = "dark_theme";
     private static final String KEY_TEXT_SIZE = "text_size";
     private static final String KEY_AUTO_ADVANCE = "auto_advance";
@@ -67,7 +68,7 @@ public class PrefsUtils {
     }
 
     public static boolean getShowHints() {
-        return Prefs.getBoolean(KEY_SHOW_HINTS, false);
+        return Prefs.getBoolean(KEY_SHOW_HINTS, true);
     }
 
     public static void setShowHints(boolean show) {
@@ -80,6 +81,14 @@ public class PrefsUtils {
 
     public static void setShowTopic(boolean show) {
         Prefs.putBoolean(KEY_SHOW_TOPIC, show);
+    }
+
+    public static boolean getShowScore() {
+        return Prefs.getBoolean(KEY_SHOW_SCORE, true);
+    }
+
+    public static void setShowScore(boolean show) {
+        Prefs.putBoolean(KEY_SHOW_SCORE, show);
     }
 
     public static boolean getDarkTheme() {

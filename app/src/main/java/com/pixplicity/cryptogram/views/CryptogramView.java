@@ -449,6 +449,8 @@ public class CryptogramView extends AppCompatTextView {
     public void reset() {
         mSelectedCharacter = 0;
         redraw();
+        EventProvider.postEvent(
+                new PuzzleEvent.PuzzleResetEvent(mPuzzle));
     }
 
     @Override

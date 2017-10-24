@@ -22,6 +22,7 @@ import com.pixplicity.cryptogram.events.PuzzleEvent;
 import com.pixplicity.cryptogram.models.Puzzle;
 import com.pixplicity.cryptogram.utils.EventProvider;
 import com.pixplicity.cryptogram.utils.KeyboardUtils;
+import com.pixplicity.cryptogram.utils.PrefsUtils;
 import com.squareup.otto.Subscribe;
 
 
@@ -201,11 +202,12 @@ public class KeyboardButton extends AppCompatButton implements KeyboardUtils.Con
     @Subscribe
     public void onPuzzleProgress(PuzzleEvent.PuzzleProgressEvent event) {
         boolean input = false;
-        String keyText = KeyboardUtils.getKeyText(this);
-        if (keyText != null && keyText.length() > 0) {
-            Puzzle puzzle = event.getPuzzle();
-            Character c = puzzle.getUserChar(keyText.charAt(0));
-            input = c != null && c != 0;
+        if (PrefsUtils.getShowHints()) {
+            String keyText = KeyboardUtils.getKeyText(this);
+            if (keyText != null && keyText.length() > 0) {
+                Puzzle puzzle = event.getPuzzle();
+                input = puzzle.isUserCharInput(keyText.charAt(0));
+            }
         }
         setTextColor(input ? mTextColorGreyed : mTextColor);
         getBackground().setAlpha(input ? ALPHA_GREYED : 255);

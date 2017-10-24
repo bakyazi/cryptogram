@@ -292,7 +292,7 @@ public class AchievementProvider {
                 if (score != null && score >= 1f) {
                     mPerfectScore++;
                 }
-                if (puzzle.getExcessCount() == 0 && puzzle.getReveals() == 0 && !puzzle.hadHints()) {
+                if (puzzle.getExcessCount() == 0 && puzzle.getReveals() == 0) {
                     mUnlockedJackOfAllTrades = true;
                 }
                 long startTime = puzzle.getProgress().getStartTime();

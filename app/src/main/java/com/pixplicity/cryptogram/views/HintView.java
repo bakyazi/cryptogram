@@ -17,8 +17,6 @@ import com.pixplicity.cryptogram.utils.EventProvider;
 import com.pixplicity.cryptogram.utils.StyleUtils;
 import com.squareup.otto.Subscribe;
 
-import java.util.Collection;
-
 
 public class HintView extends AppCompatTextView {
 
@@ -143,7 +141,6 @@ public class HintView extends AppCompatTextView {
         int desiredHeight = getPaddingTop();
 
         if (mPuzzle != null) {
-            Collection<Character> userChars = mPuzzle.getUserChars();
             // Compute the height that works for this width
             float offsetY = mCharH / 2;
             float offsetX = (mBoxW / 2) - (mCharW / 2);
@@ -165,7 +162,7 @@ public class HintView extends AppCompatTextView {
                 if (canvas != null) {
                     String chr = String.valueOf(c);
                     // Check if it's been mapped already
-                    if (userChars.contains(c)) {
+                    if (mPuzzle.isUserCharInput(c)) {
                         mTextPaint.setAlpha(96);
                     } else {
                         mTextPaint.setAlpha(255);
