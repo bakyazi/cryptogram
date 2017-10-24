@@ -28,17 +28,6 @@
             android:text="@string/error_no_puzzles"
             android:visibility="gone"/>
 
-        <com.pixplicity.cryptogram.views.HintView
-            android:id="@+id/hint"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="?attr/colorPrimary"
-            android:elevation="4dp"
-            android:padding="8dp"
-            android:textColor="@color/textLight"
-            tools:targetApi="lollipop"
-            tools:visibility="gone"/>
-
         <android.support.v4.widget.NestedScrollView
             android:layout_width="match_parent"
             android:layout_height="0dp"
@@ -194,6 +183,17 @@
             </com.pixplicity.cryptogram.views.CryptogramLayout>
 
         </android.support.v4.widget.NestedScrollView>
+
+        <com.pixplicity.cryptogram.views.HintView
+            android:id="@+id/hint"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="?attr/colorPrimary"
+            android:elevation="4dp"
+            android:padding="8dp"
+            android:textColor="@color/textLight"
+            tools:targetApi="lollipop"
+            tools:visibility="gone"/>
 
         <ViewStub
             android:id="@+id/vs_keyboard"
