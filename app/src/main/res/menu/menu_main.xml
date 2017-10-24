@@ -4,10 +4,10 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <item
-        android:id="@+id/action_contribute"
-        android:icon="@drawable/ic_contribute_review"
-        android:orderInCategory="310"
-        android:title="@string/contribute"
+        android:id="@+id/action_open_side_nav"
+        android:icon="@drawable/ic_settings"
+        android:orderInCategory="300"
+        android:title="@string/settings_statistics"
         app:showAsAction="never"/>
 
     <item

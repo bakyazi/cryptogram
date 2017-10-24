@@ -10,8 +10,6 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AlertDialog;
-import android.text.Editable;
-import android.text.InputType;
 import android.util.SparseBooleanArray;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
@@ -23,9 +21,7 @@ import android.view.ViewStub;
 import android.widget.TextView;
 
 import com.afollestad.easyvideoplayer.EasyVideoPlayer;
-import com.afollestad.materialdialogs.DialogAction;
 import com.afollestad.materialdialogs.MaterialDialog;
-import com.afollestad.materialdialogs.internal.MDButton;
 import com.crashlytics.android.answers.Answers;
 import com.crashlytics.android.answers.ShareEvent;
 import com.getkeepsafe.taptargetview.TapTarget;
@@ -118,6 +114,7 @@ public class PuzzleActivity extends BaseActivity {
 
     private boolean mFreshInstall;
 
+    // FIXME enforce that puzzle UUID and topic ID are provided
     public static Intent create(Context context) {
         return new Intent(context, PuzzleActivity.class);
     }
@@ -580,50 +577,6 @@ public class PuzzleActivity extends BaseActivity {
                             })
                             .show();
                 }
-            }
-            return true;
-            case R.id.action_go_to: {
-                if (puzzle == null) {
-                    break;
-                }
-                String prefilledText = null;
-                int currentId = puzzle.getNumber();
-                if (currentId > 0) {
-                    prefilledText = String.valueOf(currentId);
-                }
-                new MaterialDialog.Builder(this)
-                        .content(R.string.go_to_puzzle_content)
-                        .inputType(InputType.TYPE_CLASS_NUMBER)
-                        .input(null, prefilledText, (dialog, input) -> {
-                            MDButton button = dialog.getActionButton(DialogAction.POSITIVE);
-                            try {
-                                button.setEnabled(Integer.parseInt(input.toString()) > 0);
-                            } catch (NumberFormatException ignored) {
-                                button.setEnabled(false);
-                            }
-                        })
-                        .alwaysCallInputCallback()
-                        .showListener(dialogInterface -> {
-                            MaterialDialog dialog = (MaterialDialog) dialogInterface;
-                            //noinspection ConstantConditions
-                            dialog.getInputEditText().selectAll();
-                        })
-                        .onPositive((dialog, which) -> {
-                            //noinspection ConstantConditions
-                            Editable input = dialog.getInputEditText().getText();
-                            try {
-                                int puzzleNumber = Integer.parseInt(input.toString());
-                                PuzzleProvider provider = PuzzleProvider
-                                        .getInstance(PuzzleActivity.this);
-                                Puzzle puzzle1 = provider.getByNumber(puzzleNumber);
-                                if (puzzle1 == null) {
-                                    showSnackbar(getString(R.string.puzzle_nonexistant, puzzleNumber));
-                                } else {
-                                    updateCryptogram(puzzle1);
-                                }
-                            } catch (NumberFormatException ignored) {
-                            }
-                        }).show();
             }
             return true;
             case R.id.action_share: {

@@ -47,13 +47,6 @@
         app:showAsAction="never"/>
 
     <item
-        android:id="@+id/action_go_to"
-        android:icon="@drawable/ic_go_to"
-        android:orderInCategory="210"
-        android:title="@string/go_to_puzzle"
-        app:showAsAction="never"/>
-
-    <item
         android:id="@+id/action_share"
         android:icon="@drawable/ic_share"
         android:orderInCategory="300"

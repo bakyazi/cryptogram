@@ -3,6 +3,8 @@ package com.pixplicity.cryptogram.fragments;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.text.Editable;
+import android.text.InputType;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -10,8 +12,14 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.afollestad.materialdialogs.DialogAction;
+import com.afollestad.materialdialogs.MaterialDialog;
+import com.afollestad.materialdialogs.internal.MDButton;
 import com.pixplicity.cryptogram.R;
 import com.pixplicity.cryptogram.activities.HowToPlayActivity;
+import com.pixplicity.cryptogram.activities.PuzzleActivity;
+import com.pixplicity.cryptogram.models.Puzzle;
+import com.pixplicity.cryptogram.providers.PuzzleProvider;
 import com.pixplicity.cryptogram.utils.PrefsUtils;
 
 import butterknife.BindView;
@@ -46,15 +54,49 @@ public class LandingFragment extends BaseFragment {
 
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
-        // TODO
-        //inflater.inflate(R.menu.menu_, menu);
+        inflater.inflate(R.menu.menu_landing, menu);
         super.onCreateOptionsMenu(menu, inflater);
     }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
-            // TODO
+            case R.id.action_go_to: {
+                new MaterialDialog.Builder(getContext())
+                        .content(R.string.go_to_puzzle_content)
+                        .inputType(InputType.TYPE_CLASS_NUMBER)
+                        .input(null, null, (dialog, input) -> {
+                            MDButton button = dialog.getActionButton(DialogAction.POSITIVE);
+                            try {
+                                button.setEnabled(Integer.parseInt(input.toString()) > 0);
+                            } catch (NumberFormatException ignored) {
+                                button.setEnabled(false);
+                            }
+                        })
+                        .alwaysCallInputCallback()
+                        .showListener(dialogInterface -> {
+                            MaterialDialog dialog = (MaterialDialog) dialogInterface;
+                            //noinspection ConstantConditions
+                            dialog.getInputEditText().selectAll();
+                        })
+                        .onPositive((dialog, which) -> {
+                            //noinspection ConstantConditions
+                            Editable input = dialog.getInputEditText().getText();
+                            try {
+                                int puzzleNumber = Integer.parseInt(input.toString());
+                                PuzzleProvider provider = PuzzleProvider
+                                        .getInstance(getContext());
+                                Puzzle puzzle1 = provider.getByNumber(puzzleNumber);
+                                if (puzzle1 == null) {
+                                    showSnackbar(getString(R.string.puzzle_nonexistant, puzzleNumber));
+                                } else {
+                                    startActivity(PuzzleActivity.create(getContext()));
+                                }
+                            } catch (NumberFormatException ignored) {
+                            }
+                        }).show();
+            }
+            return true;
         }
         return super.onOptionsItemSelected(item);
     }

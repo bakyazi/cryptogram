@@ -7,8 +7,11 @@ import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v4.view.GravityCompat;
 import android.support.v7.app.AlertDialog;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
@@ -79,6 +82,33 @@ public class LandingActivity extends BaseActivity {
     @Override
     protected Class<? extends Activity> getHierarchicalParent() {
         return null;
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.menu_main, menu);
+        return super.onCreateOptionsMenu(menu);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.action_open_side_nav: {
+                if (mDrawerLayout != null) {
+                    mDrawerLayout.openDrawer(GravityCompat.START);
+                }
+            }
+            return true;
+            case R.id.action_how_to_play: {
+                startActivity(HowToPlayActivity.create(this));
+            }
+            return true;
+            case R.id.action_about: {
+                startActivity(AboutActivity.create(this));
+            }
+            return true;
+        }
+        return super.onOptionsItemSelected(item);
     }
 
     @OnClick(R.id.bt_settings)
