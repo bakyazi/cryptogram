@@ -2,14 +2,13 @@ package com.pixplicity.cryptogram.providers;
 
 import android.content.Context;
 import android.support.annotation.NonNull;
-import android.util.Log;
+
+import com.pixplicity.cryptogram.utils.Logger;
 
 import java.io.IOException;
 import java.io.InputStream;
 
 public abstract class AssetProvider {
-
-    private static final String TAG = AssetProvider.class.getSimpleName();
 
     public AssetProvider(Context context) {
         final String assetFilename = getAssetFilename();
@@ -25,7 +24,7 @@ public abstract class AssetProvider {
                 }
             }
         } catch (IOException e) {
-            Log.e(TAG, "could not read asset " + assetFilename, e);
+            Logger.e("parsing", "could not read asset " + assetFilename, e);
             onLoadFailure(context, e);
         }
     }

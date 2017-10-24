@@ -53,8 +53,6 @@ import butterknife.BindView;
 
 public class PuzzleActivity extends BaseActivity {
 
-    private static final String TAG = PuzzleActivity.class.getSimpleName();
-
     private static final int ONBOARDING_PAGES = 2;
 
     public static final int HIGHLIGHT_DELAY = 1200;

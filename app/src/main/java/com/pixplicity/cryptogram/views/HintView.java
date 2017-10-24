@@ -19,8 +19,6 @@ import java.util.Collection;
 
 public class HintView extends AppCompatTextView {
 
-    private static final String TAG = HintView.class.getSimpleName();
-
     @Nullable
     private Puzzle mPuzzle;
 

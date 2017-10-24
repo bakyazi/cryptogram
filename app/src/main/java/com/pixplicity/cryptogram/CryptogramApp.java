@@ -12,8 +12,6 @@ import io.realm.Realm;
 
 public class CryptogramApp extends Application {
 
-    private static final String TAG = CryptogramApp.class.getSimpleName();
-
     public static final String CONTENT_LANDING = "landing";
     public static final String CONTENT_ACHIEVEMENTS = "achievements";
     public static final String CONTENT_LEADERBOARDS = "leaderboards";

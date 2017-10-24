@@ -21,7 +21,6 @@ import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.Window;
@@ -44,6 +43,7 @@ import com.pixplicity.cryptogram.providers.PuzzleProvider;
 import com.pixplicity.cryptogram.utils.AchievementProvider;
 import com.pixplicity.cryptogram.utils.EventProvider;
 import com.pixplicity.cryptogram.utils.LeaderboardProvider;
+import com.pixplicity.cryptogram.utils.Logger;
 import com.pixplicity.cryptogram.utils.PrefsUtils;
 import com.pixplicity.cryptogram.utils.SavegameManager;
 import com.pixplicity.cryptogram.utils.StyleUtils;
@@ -111,7 +111,7 @@ public abstract class BaseActivity extends AppCompatActivity implements
         super.onActivityResult(requestCode, resultCode, intent);
         switch (requestCode) {
             case RC_PLAY_GAMES: {
-                Log.d(TAG, "onActivityResult: resolution result");
+                Logger.d(TAG, "onActivityResult: resolution result");
                 mSignInClicked = false;
                 mResolvingConnectionFailure = false;
                 switch (resultCode) {
@@ -407,9 +407,9 @@ public abstract class BaseActivity extends AppCompatActivity implements
 
     @Override
     public void onConnectionFailed(@NonNull ConnectionResult connectionResult) {
-        Log.d(TAG, "onConnectionFailed: attempting to resolve");
+        Logger.d(TAG, "onConnectionFailed: attempting to resolve");
         if (mResolvingConnectionFailure) {
-            Log.d(TAG, "onConnectionFailed: already resolving");
+            Logger.d(TAG, "onConnectionFailed: already resolving");
             return;
         }
 
@@ -421,16 +421,16 @@ public abstract class BaseActivity extends AppCompatActivity implements
             boolean noResolution = true;
             if (connectionResult.hasResolution()) {
                 try {
-                    Log.d(TAG, "onConnectionFailed: offering resolution");
+                    Logger.d(TAG, "onConnectionFailed: offering resolution");
                     connectionResult.startResolutionForResult(this, RC_PLAY_GAMES);
                     noResolution = false;
                 } catch (IntentSender.SendIntentException e) {
                     Crashlytics.logException(e);
-                    Log.e(TAG, "onConnectionFailed: couldn't resolve", e);
+                    Logger.e(TAG, "onConnectionFailed: couldn't resolve", e);
                 }
             }
             if (noResolution) {
-                Log.e(TAG, "onConnectionFailed: no resolution for: " + connectionResult.toString());
+                Logger.e(TAG, "onConnectionFailed: no resolution for: " + connectionResult.toString());
                 mResolvingConnectionFailure = false;
                 showGmsError(0);
             }

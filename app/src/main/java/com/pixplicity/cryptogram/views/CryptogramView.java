@@ -16,7 +16,6 @@ import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.AppCompatTextView;
 import android.text.TextPaint;
 import android.util.AttributeSet;
-import android.util.Log;
 import android.view.KeyEvent;
 import android.view.MotionEvent;
 import android.view.View;
@@ -26,6 +25,7 @@ import android.view.inputmethod.InputMethodManager;
 
 import com.pixplicity.cryptogram.R;
 import com.pixplicity.cryptogram.models.Puzzle;
+import com.pixplicity.cryptogram.utils.Logger;
 import com.pixplicity.cryptogram.utils.PrefsUtils;
 import com.pixplicity.cryptogram.utils.StyleUtils;
 
@@ -34,8 +34,6 @@ import java.util.HashMap;
 
 
 public class CryptogramView extends AppCompatTextView {
-
-    private static final String TAG = CryptogramView.class.getSimpleName();
 
     private static final String SOFT_HYPHEN = "\u00AD";
     public static final boolean ENABLE_HYPHENATION = false;
@@ -548,7 +546,7 @@ public class CryptogramView extends AppCompatTextView {
                 int index = word.lastIndexOf(SOFT_HYPHEN);
                 boolean needsLineBreak = true;
                 while (index > -1) {
-                    Log.d(TAG, "soft hyphen at index " + index);
+                    Logger.d("drawing", "soft hyphen at index " + index);
                     if (x + (index + 1) * mBoxW <= width) {
                         // It fits with a soft hyphen; draw this segment
                         if (highlightPosition == null && canvas != null) {
@@ -561,7 +559,7 @@ public class CryptogramView extends AppCompatTextView {
                         x = drawWord(canvas, charMapping, textPaintUser, linePaint, offsetX1, x, y, wordSegment);
                         // Remainder of the word
                         word = word.substring(index + 1);
-                        Log.d(TAG, "soft hyphen: " + wordSegment + " // " + word);
+                        Logger.d("drawing", "soft hyphen: " + wordSegment + " // " + word);
                         // Reset the search
                         index = word.lastIndexOf(SOFT_HYPHEN);
                         // Manually add a line break since nothing else will fit

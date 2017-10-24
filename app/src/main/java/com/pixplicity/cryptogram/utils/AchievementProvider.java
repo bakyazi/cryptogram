@@ -3,7 +3,6 @@ package com.pixplicity.cryptogram.utils;
 import android.content.Context;
 import android.os.AsyncTask;
 import android.support.annotation.NonNull;
-import android.util.Log;
 
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.games.Games;
@@ -20,7 +19,6 @@ import java.util.TreeMap;
 
 public class AchievementProvider {
 
-    private static final String TAG = AchievementProvider.class.getSimpleName();
     private static final boolean DEBUG = BuildConfig.DEBUG && false;
 
     private static final int[] ACHIEVEMENTS = new int[]{
@@ -189,7 +187,9 @@ public class AchievementProvider {
                 }
             }
         }
-    };
+    }
+
+    ;
 
     @NonNull
     public static AchievementProvider getInstance() {
@@ -251,7 +251,7 @@ public class AchievementProvider {
         String achievementId = context.getString(achievementResId);
         Games.Achievements.unlock(googleApiClient, achievementId);
         if (DEBUG) {
-            Log.d(TAG, "unlocked: " + achievementId);
+            Logger.d("achievements", "unlocked: " + achievementId);
         }
     }
 

@@ -12,18 +12,15 @@ import android.support.annotation.ColorInt;
 import android.support.v7.widget.AppCompatButton;
 import android.text.TextPaint;
 import android.util.AttributeSet;
-import android.util.Log;
 import android.util.TypedValue;
 import android.view.MotionEvent;
 import android.view.View;
 
 import com.pixplicity.cryptogram.R;
 import com.pixplicity.cryptogram.utils.KeyboardUtils;
-
+import com.pixplicity.cryptogram.utils.Logger;
 
 public class KeyboardButton extends AppCompatButton implements KeyboardUtils.Contract {
-
-    private static final String TAG = KeyboardButton.class.getSimpleName();
 
     private boolean mShowLetter;
 
@@ -138,7 +135,7 @@ public class KeyboardButton extends AppCompatButton implements KeyboardUtils.Con
             int boxHeight = getResources().getDimensionPixelSize(R.dimen.keyboard_popup_height);
             int boxLeft = Math.max(-left, Math.min(parentWidth - left - boxWidth, width / 2 - boxWidth / 2));
             if (mKeyValue == 16 || mKeyValue == 17) {
-                Log.d(TAG, "onLayout: " + mKeyValue + "; " + parentWidth + " - " + right);
+                Logger.d("layout", mKeyValue + "; " + parentWidth + " - " + right);
             }
             mBox.left = boxLeft;
             mBox.top = -boxHeight;

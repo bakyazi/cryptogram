@@ -1,13 +1,13 @@
 package com.pixplicity.cryptogram;
 
 import android.annotation.SuppressLint;
-import android.util.Log;
 
 import com.pixplicity.cryptogram.models.Puzzle;
 import com.pixplicity.cryptogram.models.PuzzleProgress;
 import com.pixplicity.cryptogram.models.Topic;
 import com.pixplicity.cryptogram.providers.PuzzleProvider;
 import com.pixplicity.cryptogram.stringsimilarity.Levenshtein;
+import com.pixplicity.cryptogram.utils.Logger;
 import com.pixplicity.cryptogram.views.CryptogramView;
 
 import org.junit.Before;
@@ -29,7 +29,7 @@ import java.util.Map;
  * @see <a href="http://d.android.com/tools/testing">Testing documentation</a>
  */
 @RunWith(PowerMockRunner.class)
-@PrepareForTest({Log.class})
+@PrepareForTest({Logger.class})
 public class PuzzleTest {
 
     private static final boolean VERBOSE = false;
@@ -38,7 +38,7 @@ public class PuzzleTest {
 
     @Before
     public void setup() {
-        PowerMockito.mockStatic(Log.class);
+        PowerMockito.mockStatic(Logger.class);
     }
 
     @Test

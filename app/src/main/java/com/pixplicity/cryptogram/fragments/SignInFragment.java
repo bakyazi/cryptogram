@@ -24,8 +24,6 @@ import butterknife.OnClick;
 
 public class SignInFragment extends BaseFragment implements GoogleApiClient.OnConnectionFailedListener {
 
-    private static final String TAG = SignInFragment.class.getSimpleName();
-
     private static final int RC_SIGN_IN = 9001;
 
     private GoogleApiClient mGoogleApiClient;

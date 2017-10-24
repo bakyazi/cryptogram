@@ -4,7 +4,6 @@ import android.content.Context;
 import android.os.AsyncTask;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
-import android.util.Log;
 import android.util.SparseArray;
 import android.widget.Toast;
 
@@ -22,6 +21,7 @@ import com.pixplicity.cryptogram.models.PuzzleProgress;
 import com.pixplicity.cryptogram.models.PuzzleProgressState;
 import com.pixplicity.cryptogram.models.Topic;
 import com.pixplicity.cryptogram.utils.EventProvider;
+import com.pixplicity.cryptogram.utils.Logger;
 import com.pixplicity.cryptogram.utils.PrefsUtils;
 import com.pixplicity.cryptogram.utils.SavegameManager;
 import com.pixplicity.cryptogram.views.CryptogramView;
@@ -43,8 +43,6 @@ import java.util.Set;
 
 public class PuzzleProvider extends AssetProvider {
 
-    private static final String TAG = PuzzleProvider.class.getSimpleName();
-
     private static final String ASSET_FILENAME = "cryptograms.json";
 
     private static PuzzleProvider sInstance;
@@ -64,7 +62,7 @@ public class PuzzleProvider extends AssetProvider {
     @NonNull
     public static PuzzleProvider getInstance(Context context) {
         if (sInstance == null) {
-                sInstance = new PuzzleProvider(context);
+            sInstance = new PuzzleProvider(context);
         }
         return sInstance;
     }
@@ -91,7 +89,7 @@ public class PuzzleProvider extends AssetProvider {
         }.getType();
         mTopics = GsonProvider.getGson().fromJson(new InputStreamReader(is), type);
         if (BuildConfig.DEBUG) {
-            Log.d(TAG, String.format("readStream: parsed Json in %.2fms", (System.nanoTime() - start) / 1000000f));
+            Logger.d("parsing", String.format("readStream: parsed Json in %.2fms", (System.nanoTime() - start) / 1000000f));
             start = System.nanoTime();
         }
 
@@ -110,11 +108,11 @@ public class PuzzleProvider extends AssetProvider {
                         null, null));
             }
         }
-            mPuzzles = puzzles.toArray(new Puzzle[puzzles.size()]);
-            if (BuildConfig.DEBUG) {
-            Log.d(TAG, String.format("readStream: added puzzles in %.2fms", (System.nanoTime() - start) / 1000000f));
-                start = System.nanoTime();
-            }
+        mPuzzles = puzzles.toArray(new Puzzle[puzzles.size()]);
+        if (BuildConfig.DEBUG) {
+            Logger.d("parsing", String.format("readStream: added puzzles in %.2fms", (System.nanoTime() - start) / 1000000f));
+            start = System.nanoTime();
+        }
 
         int index = 0, nextId = 0, lastId = -1;
         mPuzzleIds = new HashMap<>();
@@ -136,7 +134,7 @@ public class PuzzleProvider extends AssetProvider {
         }
         mLastPuzzleId = lastId + 1;
         if (BuildConfig.DEBUG) {
-            Log.d(TAG, String.format("readStream: performed ID mapping in %.2fms", (System.nanoTime() - start) / 1000000f));
+            Logger.d("parsing", String.format("readStream: performed ID mapping in %.2fms", (System.nanoTime() - start) / 1000000f));
         }
     }
 
@@ -366,12 +364,12 @@ public class PuzzleProvider extends AssetProvider {
             @Override
             protected void onPostExecute(Snapshot snapshot) {
                 if (snapshot == null) {
-                    Log.e(TAG, "game state failed loading from Google Play Games");
+                    Logger.e("loading", "game state failed loading from Google Play Games");
                     if (onLoadResult != null) {
                         onLoadResult.onLoadFailure();
                     }
                 } else {
-                    Log.d(TAG, "game state loaded from Google Play Games");
+                    Logger.d("loading", "game state loaded from Google Play Games");
                     if (onLoadResult != null) {
                         onLoadResult.onLoadSuccess();
                     }
@@ -401,12 +399,12 @@ public class PuzzleProvider extends AssetProvider {
             @Override
             protected void onPostExecute(SnapshotMetadata snapshot) {
                 if (snapshot == null) {
-                    Log.e(TAG, "game state failed saving to Google Play Games");
+                    Logger.e("saving", "game state failed saving to Google Play Games");
                     if (onSaveResult != null) {
                         onSaveResult.onSaveFailure();
                     }
                 } else {
-                    Log.d(TAG, "game state saved to Google Play Games");
+                    Logger.d("saving", "game state saved to Google Play Games");
                     if (onSaveResult != null) {
                         onSaveResult.onSaveSuccess();
                     }

@@ -2,7 +2,6 @@ package com.pixplicity.cryptogram.models;
 
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
-import android.util.Log;
 
 import com.crashlytics.android.answers.Answers;
 import com.crashlytics.android.answers.LevelEndEvent;
@@ -10,6 +9,7 @@ import com.crashlytics.android.answers.LevelStartEvent;
 import com.google.gson.annotations.SerializedName;
 import com.pixplicity.cryptogram.events.PuzzleEvent;
 import com.pixplicity.cryptogram.utils.EventProvider;
+import com.pixplicity.cryptogram.utils.Logger;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -19,8 +19,6 @@ import java.util.List;
 import java.util.Random;
 
 public class PuzzleProgress {
-
-    private static final String TAG = PuzzleProgress.class.getSimpleName();
 
     private static final List<Character> ALPHABET = new ArrayList<>(26);
 
@@ -294,7 +292,7 @@ public class PuzzleProgress {
             mCompleted = true;
             HashMap<Character, Character> userChars = getUserCharsMapping(puzzle);
             if (userChars.size() <= 5) {
-                Log.w(TAG, "User character mapping has an unexpectedly small size (that's what she said)");
+                Logger.w("completion", "User character mapping has an unexpectedly small size (that's what she said)");
                 userChars.clear();
                 mCompleted = false;
             } else {
@@ -479,7 +477,7 @@ public class PuzzleProgress {
         }
         ArrayList<Character> characterList = getCharacterList(puzzle);
         HashMap<Character, Character> charMapping = getCharMapping(puzzle);
-        Log.w(TAG, "check for invalid mappings in " + puzzle);
+        Logger.w("sanitizing", "check for invalid mappings in " + puzzle);
         for (Character c : characterList) {
             if (charMapping.get(c) == null || charMapping.get(c) == 0) {
                 // Whoops! Puzzle has a broken character mapping
@@ -487,7 +485,7 @@ public class PuzzleProgress {
                 mCharMapping = null;
                 mCompleted = false;
                 getCharMapping(puzzle);
-                Log.w(TAG, "invalid character mapping for " + puzzle + "; reset mappings");
+                Logger.w("sanitizing", "invalid character mapping for " + puzzle + "; reset mappings");
                 break;
             }
         }

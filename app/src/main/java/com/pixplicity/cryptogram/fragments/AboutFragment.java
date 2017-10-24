@@ -11,7 +11,6 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.content.ContextCompat;
 import android.text.method.LinkMovementMethod;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -26,6 +25,7 @@ import android.widget.Toast;
 
 import com.pixplicity.cryptogram.R;
 import com.pixplicity.cryptogram.utils.HtmlCompat;
+import com.pixplicity.cryptogram.utils.Logger;
 import com.pixplicity.cryptogram.views.SimpleInputConnection;
 
 import butterknife.BindView;
@@ -33,7 +33,6 @@ import butterknife.BindView;
 
 public class AboutFragment extends BaseFragment {
 
-    private static final String TAG = AboutFragment.class.getSimpleName();
     public static final String FEEDBACK_EMAIL = "paul@pixplicity.com";
 
     @BindView(R.id.iv_logo)
@@ -145,7 +144,7 @@ public class AboutFragment extends BaseFragment {
             PackageInfo info = getActivity().getPackageManager().getPackageInfo(getActivity().getPackageName(), 0);
             versionString = getString(R.string.version, info.versionName, info.versionCode);
         } catch (PackageManager.NameNotFoundException e) {
-            Log.e(TAG, "Package not found", e);
+            Logger.e("version", "Package not found", e);
         }
         return versionString;
     }

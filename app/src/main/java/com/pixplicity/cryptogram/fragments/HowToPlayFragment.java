@@ -23,8 +23,6 @@ import butterknife.BindView;
 
 public class HowToPlayFragment extends BaseFragment {
 
-    private static final String TAG = HowToPlayFragment.class.getSimpleName();
-
     @BindView(R.id.tv_how_to_play_1)
     protected TextView mTvHowToPlay1;
 
