@@ -49,13 +49,12 @@ public class PuzzleProvider extends AssetProvider {
     private static PuzzleProvider sInstance;
 
     private int mCurrentIndex = -1;
+    private int mLastPuzzleId;
 
     private Map<String, Topic> mTopics;
     private Puzzle[] mPuzzles;
     private HashMap<Integer, Integer> mPuzzleIds;
     private SparseArray<PuzzleProgress> mPuzzleProgress;
-
-    private int mLastPuzzleId = -1;
 
     private final Random mRandom = new Random();
     private ArrayList<Integer> mRandomIndices;

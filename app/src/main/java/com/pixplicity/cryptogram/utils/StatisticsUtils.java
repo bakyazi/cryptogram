@@ -89,11 +89,17 @@ public class StatisticsUtils {
             } else {
                 fastestCompletionText = StringUtils.getDurationString(shortestDurationMs);
             }
-            ((TextView) mStatsView.findViewById(R.id.tv_stats_completed)).setText(
-                    context.getString(R.string.stats_total_completed_value,
-                            count,
-                            lastNumber,
-                            lastNumber == 0 ? 0 : count / (float) lastNumber * 100f));
+            if (lastNumber <= 0) {
+                ((TextView) mStatsView.findViewById(R.id.tv_stats_completed)).setText(
+                        context.getString(R.string.stats_total_completed_value,
+                                count));
+            } else {
+                ((TextView) mStatsView.findViewById(R.id.tv_stats_completed)).setText(
+                        context.getString(R.string.stats_total_completed_of_total_value,
+                                count,
+                                lastNumber,
+                                lastNumber == 0 ? 0 : count / (float) lastNumber * 100f));
+            }
             ((TextView) mStatsView.findViewById(R.id.tv_stats_average_score)).setText(
                     context.getString(R.string.stats_average_score_value,
                             scoreAverageText));
