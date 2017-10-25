@@ -342,7 +342,7 @@ public class PuzzleProvider extends AssetProvider {
         // Jump back to the first puzzle
         setCurrentIndex(0);
         EventProvider.postEventDelayed(
-                new PuzzleEvent.PuzzleResetEvent());
+                new PuzzleEvent.PuzzleResetEvent(null));
     }
 
     public void load(@Nullable final GoogleApiClient googleApiClient,

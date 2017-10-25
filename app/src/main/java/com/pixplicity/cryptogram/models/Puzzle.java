@@ -263,6 +263,10 @@ public class Puzzle {
         return getProgress().getUserChars(this);
     }
 
+    public boolean isUserCharInput(char inputChar) {
+        return getUserChars().contains(inputChar);
+    }
+
     public Character getUserChar(char c) {
         return getProgress().getUserChar(this, c);
     }
@@ -373,14 +377,6 @@ public class Puzzle {
             return null;
         }
         return getProgress().getScore(this);
-    }
-
-    public void setHadHints(boolean hadHints) {
-        getProgress().setHadHints(hadHints);
-    }
-
-    public boolean hadHints() {
-        return getProgress().hadHints();
     }
 
     public void onResume() {

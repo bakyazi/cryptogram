@@ -15,6 +15,9 @@
     <string name="highlight_hyphenation_title">Hyphenation</string>
     <string name="highlight_hyphenation_description">Watch out for the hyphen! The word continues on the next line.</string>
 
+    <string name="highlight_used_letters_title">Used characters</string>
+    <string name="highlight_used_letters_description">Used characters are now shown by default. You can change this setting and many others here.</string>
+
     <string name="drawer_open">Open drawer</string>
     <string name="drawer_close">Close drawer</string>
 
@@ -153,19 +156,25 @@
     <string name="submitting_puzzle">Submitting…</string>
 
     <!-- Settings -->
-    <string name="theme">Theme:</string>
-    <string name="randomize_puzzles">Randomize puzzles</string>
-    <string name="show_hints">Show used letters</string>
-    <string name="show_topic">Show puzzle topics</string>
-    <string name="auto_advance">Advance to next cell when filled</string>
-    <string name="skip_filled_cells">Skip over filled cells when advancing</string>
+    <string name="settings_theme">Theme</string>
     <string name="text_size">Text size:</string>
-    <string name="text_size_small">Small</string>
-    <string name="text_size_normal">Normal</string>
-    <string name="text_size_large">Large</string>
-    <string name="keyboard">Keyboard:</string>
+    <string name="text_size_small">Small text</string>
+    <string name="text_size_normal">Normal text</string>
+    <string name="text_size_large">Large text</string>
+
+    <string name="settings_keyboard">Keyboard</string>
     <string name="keyboard_builtin">Built-in</string>
     <string name="keyboard_system">System default</string>
+    <string name="show_hints">Show used letters</string>
+    <string name="auto_advance">Advance to next cell when filled</string>
+    <string name="skip_filled_cells">Skip over filled cells when advancing</string>
+
+    <string name="settings_display">Display</string>
+    <string name="show_topic">Show puzzle topics</string>
+    <string name="show_score">Show score</string>
+
+    <string name="settings_other">Other</string>
+    <string name="randomize_puzzles">Randomize puzzles</string>
 
     <!-- About -->
     <string name="keyboard_system_dialog">Some keyboards don’t play nicely with Cryptogram. If you experience problems, I please switch back to the built-in keyboard.</string>

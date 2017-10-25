@@ -447,17 +447,6 @@ public class PuzzleProgress {
         return score * addition;
     }
 
-    public synchronized void setHadHints(boolean hadHints) {
-        mHadHints = hadHints;
-    }
-
-    public synchronized boolean hadHints() {
-        if (mHadHints == null) {
-            mHadHints = false;
-        }
-        return mHadHints;
-    }
-
     public synchronized void sanitize(@NonNull Puzzle puzzle) {
         if (mSanitized) {
             return;

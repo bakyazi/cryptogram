@@ -82,6 +82,8 @@ public class KeyboardUtils {
 
     public interface Contract {
 
+        int ALPHA_GREYED = (int) (256 * 0.4f);
+
         Context getContext();
 
         int getKeyIndex();

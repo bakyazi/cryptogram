@@ -11,10 +11,11 @@ import android.text.TextPaint;
 import android.util.AttributeSet;
 
 import com.pixplicity.cryptogram.R;
+import com.pixplicity.cryptogram.events.PuzzleEvent;
 import com.pixplicity.cryptogram.models.Puzzle;
+import com.pixplicity.cryptogram.utils.EventProvider;
 import com.pixplicity.cryptogram.utils.StyleUtils;
-
-import java.util.Collection;
+import com.squareup.otto.Subscribe;
 
 
 public class HintView extends AppCompatTextView {
@@ -62,18 +63,20 @@ public class HintView extends AppCompatTextView {
         mCharH = bounds.height();
 
         if (isInEditMode()) {
-            setPuzzle(new Puzzle());
+            mPuzzle = new Puzzle();
         }
     }
 
-    @Nullable
-    public Puzzle getPuzzle() {
-        return mPuzzle;
+    @Override
+    protected void onAttachedToWindow() {
+        super.onAttachedToWindow();
+        EventProvider.getBus().register(this);
     }
 
-    public void setPuzzle(Puzzle puzzle) {
-        mPuzzle = puzzle;
-        requestLayout();
+    @Override
+    protected void onDetachedFromWindow() {
+        EventProvider.getBus().unregister(this);
+        super.onDetachedFromWindow();
     }
 
     @Override
@@ -138,7 +141,6 @@ public class HintView extends AppCompatTextView {
         int desiredHeight = getPaddingTop();
 
         if (mPuzzle != null) {
-            Collection<Character> userChars = mPuzzle.getUserChars();
             // Compute the height that works for this width
             float offsetY = mCharH / 2;
             float offsetX = (mBoxW / 2) - (mCharW / 2);
@@ -160,7 +162,7 @@ public class HintView extends AppCompatTextView {
                 if (canvas != null) {
                     String chr = String.valueOf(c);
                     // Check if it's been mapped already
-                    if (userChars.contains(c)) {
+                    if (mPuzzle.isUserCharInput(c)) {
                         mTextPaint.setAlpha(96);
                     } else {
                         mTextPaint.setAlpha(255);
@@ -175,6 +177,12 @@ public class HintView extends AppCompatTextView {
 
         desiredHeight += getPaddingBottom();
         return desiredHeight;
+    }
+
+    @Subscribe
+    public void onPuzzleProgress(PuzzleEvent.PuzzleProgressEvent event) {
+        mPuzzle = event.getPuzzle();
+        requestLayout();
     }
 
 }

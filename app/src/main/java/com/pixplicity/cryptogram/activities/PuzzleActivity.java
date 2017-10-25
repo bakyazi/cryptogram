@@ -37,6 +37,7 @@ import com.pixplicity.cryptogram.utils.LeaderboardProvider;
 import com.pixplicity.cryptogram.utils.PrefsUtils;
 import com.pixplicity.cryptogram.utils.StatisticsUtils;
 import com.pixplicity.cryptogram.utils.StringUtils;
+import com.pixplicity.cryptogram.utils.UpdateManager;
 import com.pixplicity.cryptogram.utils.VideoUtils;
 import com.pixplicity.cryptogram.views.CryptogramLayout;
 import com.pixplicity.cryptogram.views.CryptogramView;
@@ -90,6 +91,9 @@ public class PuzzleActivity extends BaseActivity {
     @BindView(R.id.tv_stats_time)
     protected TextView mTvStatsTime;
 
+    @BindView(R.id.vg_stats_reveals)
+    protected ViewGroup mVgStatsReveals;
+
     @BindView(R.id.tv_stats_reveals)
     protected TextView mTvStatsReveals;
 
@@ -138,8 +142,7 @@ public class PuzzleActivity extends BaseActivity {
                 .setFeedbackAction(Uri.parse("mailto:paul+cryptogram@pixplicity.com"))
                 .build();
 
-        mVgCryptogram.setCrytogramView(mCryptogramView);
-        mCryptogramView.setOnPuzzleProgressListener(this::onCryptogramUpdated);
+        mVgCryptogram.setCryptogramView(mCryptogramView);
         mCryptogramView.setOnHighlightListener(new CryptogramView.OnHighlightListener() {
             private SparseBooleanArray mHighlightShown = new SparseBooleanArray();
 
@@ -154,18 +157,22 @@ public class PuzzleActivity extends BaseActivity {
                 mHighlightShown.put(type, true);
                 switch (type) {
                     case PrefsUtils.TYPE_HIGHLIGHT_HYPHENATION:
-                        showHighlight(type, point,
+                        showHighlight(type, createTapTargetFromPoint(
+                                point,
                                 getString(R.string.highlight_hyphenation_title),
-                                getString(R.string.highlight_hyphenation_description)
+                                getString(R.string.highlight_hyphenation_description)),
+                                      1200
                         );
                         break;
                     case PrefsUtils.TYPE_HIGHLIGHT_TOUCH_INPUT:
                         if (mFreshInstall) {
                             PrefsUtils.setHighlighted(type, true);
                         } else {
-                            showHighlight(PrefsUtils.TYPE_HIGHLIGHT_TOUCH_INPUT, point,
+                            showHighlight(PrefsUtils.TYPE_HIGHLIGHT_TOUCH_INPUT, createTapTargetFromPoint(
+                                    point,
                                     getString(R.string.highlight_touch_input_title),
-                                    getString(R.string.highlight_touch_input_description)
+                                    getString(R.string.highlight_touch_input_description)),
+                                          1200
                             );
                         }
                         break;
@@ -179,6 +186,15 @@ public class PuzzleActivity extends BaseActivity {
             mVwKeyboard = mVsKeyboard.inflate();
             mVsKeyboard.setVisibility(View.VISIBLE);
             mCryptogramView.setKeyboardView(mVwKeyboard);
+        }
+
+        if (UpdateManager.consumeEnabledShowUsedLetters()) {
+            showHighlight(-1, TapTarget.forToolbarOverflow(
+                    mToolbar,
+                    getString(R.string.highlight_used_letters_title),
+                    getString(R.string.highlight_used_letters_description)),
+                    1200
+            );
         }
     }
 
@@ -202,7 +218,7 @@ public class PuzzleActivity extends BaseActivity {
         if (puzzle != null) {
             puzzle.onResume();
         }
-        updateCryptogram(puzzle);
+        showHintView(puzzle);
 
         EventProvider.getBus().register(this);
 
@@ -211,8 +227,15 @@ public class PuzzleActivity extends BaseActivity {
         } else {
             onGameplayReady();
         }
+    }
 
-        mHintView.setVisibility(PrefsUtils.getShowHints() ? View.VISIBLE : View.GONE);
+    @Override
+    protected void onResume() {
+        super.onResume();
+
+        final PuzzleProvider puzzleProvider = PuzzleProvider.getInstance(this);
+        Puzzle puzzle = puzzleProvider.getCurrent();
+        onPuzzleChanged(puzzle, true);
     }
 
     @Override
@@ -241,20 +264,23 @@ public class PuzzleActivity extends BaseActivity {
         return PrefsUtils.getOnboarding() < ONBOARDING_PAGES - 1;
     }
 
-    private void showHighlight(final int type, PointF point, final String title,
+    private TapTarget createTapTargetFromPoint(PointF point, final String title,
                                final String description) {
         Rect viewRect = new Rect();
         mCryptogramView.getGlobalVisibleRect(viewRect);
         final int targetX = (int) (point.x + viewRect.left);
         final int targetY = (int) (point.y + viewRect.top);
         final int targetRadius = 48;
-        Handler handler = new Handler();
-        handler.postDelayed(() -> {
+        return TapTarget.forBounds(new Rect(targetX - targetRadius, targetY - targetRadius, targetX + targetRadius, targetY + targetRadius),
+                                   title, description);
+    }
+
+    private void showHighlight(final int type, final TapTarget tapTarget, int delayMillis) {
+        new Handler().postDelayed(() -> {
             final long showTime = System.currentTimeMillis();
             TapTargetView.showFor(
                     PuzzleActivity.this,
-                    TapTarget.forBounds(new Rect(targetX - targetRadius, targetY - targetRadius, targetX + targetRadius, targetY + targetRadius),
-                            title, description)
+                    tapTarget
                              .titleTextColor(R.color.white)
                              .descriptionTextColor(R.color.white)
                              .outerCircleColor(R.color.highlight_color)
@@ -278,14 +304,14 @@ public class PuzzleActivity extends BaseActivity {
                         }
 
                         private void dismiss(TapTargetView view) {
-                            if (System.currentTimeMillis() - showTime >= 1500) {
+                            if (type >= 0 && System.currentTimeMillis() - showTime >= 1500) {
                                 // Ensure that the user saw the message
                                 PrefsUtils.setHighlighted(type, true);
                             }
                             view.dismiss(false);
                         }
                     });
-        }, HIGHLIGHT_DELAY);
+        }, delayMillis);
     }
 
     private void showOnboarding(final int page) {
@@ -376,7 +402,7 @@ public class PuzzleActivity extends BaseActivity {
                         puzzle.getNumber()));
             }
             // Invoke various events
-            onCryptogramUpdated(puzzle);
+            showPuzzleState(puzzle);
             puzzle.onResume();
         } else {
             mTvError.setVisibility(View.VISIBLE);
@@ -389,11 +415,9 @@ public class PuzzleActivity extends BaseActivity {
         mCryptogramView.requestFocus();
     }
 
-    public void onCryptogramUpdated(Puzzle puzzle) {
+    public void showPuzzleState(Puzzle puzzle) {
         // Update the HintView as the puzzle updates
-        mHintView.setPuzzle(puzzle);
         if (puzzle.isCompleted()) {
-            mHintView.setVisibility(View.GONE);
             mVgStats.setVisibility(View.VISIBLE);
             long durationMs = puzzle.getDurationMs();
             if (durationMs <= 0) {
@@ -402,15 +426,26 @@ public class PuzzleActivity extends BaseActivity {
                 mVgStatsTime.setVisibility(View.VISIBLE);
                 mTvStatsTime.setText(StringUtils.getDurationString(durationMs));
             }
-            int excessCount = puzzle.getExcessCount();
+            int excessCount = -1;
+            int reveals = -1;
+            Float score = null;
+            if (PrefsUtils.getShowScore()) {
+                excessCount = puzzle.getExcessCount();
+                reveals = puzzle.getReveals();
+                score = puzzle.getScore();
+            }
             if (excessCount < 0) {
                 mVgStatsExcess.setVisibility(View.GONE);
             } else {
                 mVgStatsExcess.setVisibility(View.VISIBLE);
                 mTvStatsExcess.setText(String.valueOf(excessCount));
             }
-            mTvStatsReveals.setText(String.valueOf(puzzle.getReveals()));
-            Float score = puzzle.getScore();
+            if (reveals < 0) {
+                mVgStatsReveals.setVisibility(View.GONE);
+            } else {
+                mVgStatsReveals.setVisibility(View.VISIBLE);
+                mTvStatsReveals.setText(String.valueOf(reveals));
+            }
             if (score != null) {
                 mVgStatsPractice.setVisibility(View.GONE);
                 mVgStatsScore.setVisibility(View.VISIBLE);
@@ -423,23 +458,33 @@ public class PuzzleActivity extends BaseActivity {
                 mVgStatsPractice.setVisibility(puzzle.isNoScore() ? View.VISIBLE : View.GONE);
             }
         } else {
-            if (PrefsUtils.getShowHints() && puzzle.hasUserChars()) {
-                puzzle.setHadHints(true);
-            }
-            mHintView.setVisibility(PrefsUtils.getShowHints() ? View.VISIBLE : View.GONE);
             mVgStats.setVisibility(View.GONE);
+        }
+        showHintView(puzzle);
+    }
+
+    protected void showHintView(@Nullable Puzzle puzzle) {
+        mHintView.setVisibility(puzzle != null && !puzzle.isCompleted()
+                                        && PrefsUtils.getShowUsedChars() && PrefsUtils.getUseSystemKeyboard()
+                                        ? View.VISIBLE : View.GONE);
+    }
+
+    public void onPuzzleChanged(Puzzle puzzle, boolean delayEvent) {
+        updateCryptogram(puzzle);
+        if (delayEvent) {
+            EventProvider.postEventDelayed(new PuzzleEvent.PuzzleProgressEvent(puzzle), 200);
+        } else {
+            EventProvider.postEvent(new PuzzleEvent.PuzzleProgressEvent(puzzle));
         }
     }
 
     @Subscribe
-    public void onPuzzleLoaded(PuzzleEvent.PuzzlesLoaded event) {
-        // Reload the current puzzle we're working on
-        updateCryptogram(PuzzleProvider.getInstance(PuzzleActivity.this)
-                                       .getCurrent());
+    public void onPuzzleProgress(PuzzleEvent.PuzzleProgressEvent event) {
+        showPuzzleState(event.getPuzzle());
     }
 
     @Subscribe
-    public void onPuzzleStyleChanged(PuzzleEvent.PuzzleStyleChanged event) {
+    public void onPuzzleStyleChanged(PuzzleEvent.PuzzleStyleChangedEvent event) {
         // Just recreate the activity
         recreate();
     }
@@ -569,7 +614,8 @@ public class PuzzleActivity extends BaseActivity {
                             .setPositiveButton(R.string.reset, (dialogInterface, i) -> {
                                 puzzle.reset(true);
                                 mCryptogramView.reset();
-                                onCryptogramUpdated(puzzle);
+                                showPuzzleState(puzzle);
+                                onPuzzleChanged(puzzle, false);
                             })
                             .setNegativeButton(R.string.cancel, (dialogInterface, i) -> {
                             })
@@ -631,7 +677,7 @@ public class PuzzleActivity extends BaseActivity {
 
     private void nextPuzzle() {
         Puzzle puzzle = PuzzleProvider.getInstance(this).getNext();
-        updateCryptogram(puzzle);
+        onPuzzleChanged(puzzle, false);
     }
 
 }

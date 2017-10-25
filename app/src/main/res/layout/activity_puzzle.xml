@@ -22,17 +22,6 @@
         android:text="@string/error_puzzle_missing"
         android:visibility="gone"/>
 
-    <com.pixplicity.cryptogram.views.HintView
-        android:id="@+id/hint"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="?attr/colorPrimary"
-        android:elevation="4dp"
-        android:padding="8dp"
-        android:textColor="@color/textLight"
-        tools:targetApi="lollipop"
-        tools:visibility="gone"/>
-
     <android.support.v4.widget.NestedScrollView
         android:layout_width="match_parent"
         android:layout_height="0dp"
@@ -78,11 +67,15 @@
                 android:layout_marginTop="16dp"
                 android:background="@drawable/bg_statistics"
                 android:gravity="center_horizontal"
-                android:padding="16dp">
+                android:paddingBottom="16dp"
+                android:paddingLeft="16dp"
+                android:paddingRight="16dp"
+                android:paddingTop="8dp"
+                android:stretchColumns="1">
 
                 <TableRow
                     android:id="@+id/vg_stats_time"
-                    android:layout_marginBottom="8dp">
+                    android:layout_marginTop="8dp">
 
                     <android.support.v7.widget.AppCompatTextView
                         android:layout_width="wrap_content"
@@ -104,7 +97,7 @@
 
                 <TableRow
                     android:id="@+id/vg_stats_excess"
-                    android:layout_marginBottom="8dp">
+                    android:layout_marginTop="8dp">
 
                     <android.support.v7.widget.AppCompatTextView
                         android:layout_width="wrap_content"
@@ -125,7 +118,8 @@
                 </TableRow>
 
                 <TableRow
-                    android:id="@+id/vg_stats_reveals">
+                    android:id="@+id/vg_stats_reveals"
+                    android:layout_marginTop="8dp">
 
                     <android.support.v7.widget.AppCompatTextView
                         android:layout_width="wrap_content"
@@ -187,6 +181,17 @@
         </com.pixplicity.cryptogram.views.CryptogramLayout>
 
     </android.support.v4.widget.NestedScrollView>
+
+    <com.pixplicity.cryptogram.views.HintView
+        android:id="@+id/hint"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="?attr/colorPrimary"
+        android:elevation="4dp"
+        android:padding="8dp"
+        android:textColor="@color/textLight"
+        tools:targetApi="lollipop"
+        tools:visibility="gone"/>
 
     <ViewStub
         android:id="@+id/vs_keyboard"

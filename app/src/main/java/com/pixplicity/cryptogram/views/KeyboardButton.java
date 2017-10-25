@@ -17,7 +17,12 @@ import android.view.MotionEvent;
 import android.view.View;
 
 import com.pixplicity.cryptogram.R;
+import com.pixplicity.cryptogram.events.PuzzleEvent;
+import com.pixplicity.cryptogram.models.Puzzle;
+import com.pixplicity.cryptogram.utils.EventProvider;
 import com.pixplicity.cryptogram.utils.KeyboardUtils;
+import com.pixplicity.cryptogram.utils.PrefsUtils;
+import com.squareup.otto.Subscribe;
 
 public class KeyboardButton extends AppCompatButton implements KeyboardUtils.Contract {
 
@@ -28,8 +33,10 @@ public class KeyboardButton extends AppCompatButton implements KeyboardUtils.Con
     private final Path mPath = new Path();
     private final Paint mPathPaint;
     private final TextPaint mTextPaint;
+    private final int mTextColor, mTextColorGreyed;
     private Rect mViewBounds = new Rect();
     private Rect mBox = new Rect();
+    private int mAlpha = 255;
 
     public KeyboardButton(Context context) {
         this(context, null);
@@ -107,6 +114,21 @@ public class KeyboardButton extends AppCompatButton implements KeyboardUtils.Con
             return true;
         });
         setText(KeyboardUtils.getKeyText(this));
+
+        mTextColor = getCurrentTextColor();
+        mTextColorGreyed = Color.argb(ALPHA_GREYED, Color.red(mTextColor), Color.green(mTextColor), Color.blue(mTextColor));
+    }
+
+    @Override
+    protected void onAttachedToWindow() {
+        super.onAttachedToWindow();
+        EventProvider.getBus().register(this);
+    }
+
+    @Override
+    protected void onDetachedFromWindow() {
+        EventProvider.getBus().unregister(this);
+        super.onDetachedFromWindow();
     }
 
     @Override
@@ -162,11 +184,26 @@ public class KeyboardButton extends AppCompatButton implements KeyboardUtils.Con
         super.onDraw(canvas);
 
         if (mShowLetter) {
+            mTextPaint.setAlpha(mAlpha);
             canvas.drawPath(mPath, mPathPaint);
             int x = mBox.left + (mBox.right - mBox.left) / 2;
             int y = mBox.top + (int) ((mBox.bottom - mBox.top) / 2 - (mTextPaint.descent() + mTextPaint.ascent()) / 2);
             canvas.drawText(KeyboardUtils.getKeyText(this), x, y, mTextPaint);
         }
+    }
+
+    @Subscribe
+    public void onPuzzleProgress(PuzzleEvent.PuzzleProgressEvent event) {
+        boolean input = false;
+        if (PrefsUtils.getShowUsedChars()) {
+            String keyText = KeyboardUtils.getKeyText(this);
+            if (keyText != null && keyText.length() > 0) {
+                Puzzle puzzle = event.getPuzzle();
+                input = puzzle.isUserCharInput(keyText.charAt(0));
+            }
+        }
+        setTextColor(input ? mTextColorGreyed : mTextColor);
+        getBackground().setAlpha(input ? ALPHA_GREYED : 255);
     }
 
 }

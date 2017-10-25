@@ -11,8 +11,9 @@ public class PrefsUtils {
     private static final String KEY_PROGRESS = "puzzle_progress";
     private static final String KEY_RANDOMIZE = "randomize";
     private static final String KEY_ONBOARDING = "onboarding";
-    private static final String KEY_SHOW_HINTS = "show_hints";
+    private static final String KEY_SHOW_USED_LETTERS = "show_used_letters";
     private static final String KEY_SHOW_TOPIC = "show_topic";
+    private static final String KEY_SHOW_SCORE = "show_score";
     private static final String KEY_DARK_THEME = "dark_theme";
     private static final String KEY_TEXT_SIZE = "text_size";
     private static final String KEY_AUTO_ADVANCE = "auto_advance";
@@ -25,6 +26,7 @@ public class PrefsUtils {
     private static final String KEY_HIGHLIGHTED_TOUCH_INPUT = "highlighted_touch_input";
     private static final String KEY_SAVEGAME_NAME = "savegame_name";
     private static final String KEY_USE_SYSTEM_KEYBOARD = "use_system_keyboard";
+    private static final String KEY_LAST_VERSION = "last_version";
 
     public static final int TYPE_HIGHLIGHT_HYPHENATION = 0;
     public static final int TYPE_HIGHLIGHT_TOUCH_INPUT = 1;
@@ -72,12 +74,12 @@ public class PrefsUtils {
         return Prefs.getInt(KEY_ONBOARDING, -1);
     }
 
-    public static boolean getShowHints() {
-        return Prefs.getBoolean(KEY_SHOW_HINTS, false);
+    public static boolean getShowUsedChars() {
+        return Prefs.getBoolean(KEY_SHOW_USED_LETTERS, true);
     }
 
-    public static void setShowHints(boolean show) {
-        Prefs.putBoolean(KEY_SHOW_HINTS, show);
+    public static void setShowUsedChars(boolean show) {
+        Prefs.putBoolean(KEY_SHOW_USED_LETTERS, show);
     }
 
     public static boolean getShowTopic() {
@@ -86,6 +88,14 @@ public class PrefsUtils {
 
     public static void setShowTopic(boolean show) {
         Prefs.putBoolean(KEY_SHOW_TOPIC, show);
+    }
+
+    public static boolean getShowScore() {
+        return Prefs.getBoolean(KEY_SHOW_SCORE, true);
+    }
+
+    public static void setShowScore(boolean show) {
+        Prefs.putBoolean(KEY_SHOW_SCORE, show);
     }
 
     public static boolean getDarkTheme() {
@@ -184,6 +194,19 @@ public class PrefsUtils {
 
     public static void setLastSavegameName(String savegameName) {
         Prefs.putString(KEY_SAVEGAME_NAME, savegameName);
+    }
+
+    public static void setLastVersion(int lastVersion) {
+        Prefs.putInt(KEY_LAST_VERSION, lastVersion);
+    }
+
+    public static int getLastVersion() {
+        int lastVersion = Prefs.getInt(KEY_LAST_VERSION, -1);
+        if (lastVersion == -1 && Prefs.contains(PrefsUtils.KEY_CURRENT_ID)) {
+            // This isn't a fresh install
+            lastVersion = 0;
+        }
+        return lastVersion;
     }
 
 }

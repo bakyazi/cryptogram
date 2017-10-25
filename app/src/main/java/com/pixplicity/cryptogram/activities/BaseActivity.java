@@ -252,6 +252,9 @@ public abstract class BaseActivity extends AppCompatActivity implements
             // Replace any splash screen image
             window.setBackgroundDrawableResource(R.drawable.bg_activity_dark);
         } else {
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+                window.getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_LIGHT_NAVIGATION_BAR);
+            }
             window.setBackgroundDrawableResource(R.drawable.bg_activity_light);
         }
 
