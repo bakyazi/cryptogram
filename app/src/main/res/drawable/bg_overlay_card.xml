@@ -3,8 +3,8 @@
 
     <gradient
         android:angle="315"
-        android:centerColor="@color/white"
-        android:endColor="@color/white"
+        android:centerColor="?attr/cardBackground"
+        android:endColor="?attr/cardBackground"
         android:startColor="@android:color/transparent"/>
 
 </shape>

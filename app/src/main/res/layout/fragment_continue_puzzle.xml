@@ -41,7 +41,7 @@
             android:layout_alignParentEnd="true"
             android:layout_alignParentRight="true"
             android:layout_below="@id/tv_label"
-            android:background="@drawable/bg_overlay_white"/>
+            android:background="@drawable/bg_overlay_card"/>
 
         <TextView
             android:id="@+id/tv_author"
