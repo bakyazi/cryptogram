@@ -50,14 +50,24 @@
 
         <receiver android:name=".utils.NotificationPublisher"/>
 
+        <service
+            android:name=".services.CryptogramJobService"
+            android:exported="false">
+            <intent-filter>
+                <action android:name="com.firebase.jobdispatcher.ACTION_EXECUTE"/>
+            </intent-filter>
+        </service>
+
         <meta-data
             android:name="android.max_aspect"
             android:value="2.1"/>
 
-        <meta-data android:name="com.google.android.gms.games.APP_ID"
-                   android:value="@string/app_id"/>
-        <meta-data android:name="com.google.android.gms.version"
-                   android:value="@integer/google_play_services_version"/>
+        <meta-data
+            android:name="com.google.android.gms.games.APP_ID"
+            android:value="@string/app_id"/>
+        <meta-data
+            android:name="com.google.android.gms.version"
+            android:value="@integer/google_play_services_version"/>
 
         <meta-data
             android:name="io.fabric.ApiKey"

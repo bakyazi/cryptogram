@@ -2,11 +2,15 @@ package com.pixplicity.cryptogram;
 
 import android.app.Application;
 import android.content.ContextWrapper;
-import android.content.pm.PackageInfo;
-import android.content.pm.PackageManager;
 
 import com.crashlytics.android.Crashlytics;
-import com.pixplicity.cryptogram.utils.PrefsUtils;
+import com.firebase.jobdispatcher.Constraint;
+import com.firebase.jobdispatcher.FirebaseJobDispatcher;
+import com.firebase.jobdispatcher.GooglePlayDriver;
+import com.firebase.jobdispatcher.Job;
+import com.firebase.jobdispatcher.RetryStrategy;
+import com.firebase.jobdispatcher.Trigger;
+import com.pixplicity.cryptogram.services.CryptogramJobService;
 import com.pixplicity.cryptogram.utils.UpdateManager;
 import com.pixplicity.easyprefs.library.Prefs;
 
@@ -55,6 +59,23 @@ public class CryptogramApp extends Application {
 
         // Prepare Realm
         Realm.init(this);
+
+        // Create a new dispatcher using the Google Play driver.
+        FirebaseJobDispatcher dispatcher = new FirebaseJobDispatcher(new GooglePlayDriver(this));
+        int windowStart = 24 * 60 * 60;
+        Job periodicDownloadJob = dispatcher.newJobBuilder()
+                                            .setService(CryptogramJobService.class)
+                                            .setTag("periodic-download")
+                                            .setConstraints(
+                                                    // only run on an unmetered network
+                                                    Constraint.ON_UNMETERED_NETWORK,
+                                                    // only run when the device is charging
+                                                    Constraint.DEVICE_CHARGING
+                                            )
+                                            .setRetryStrategy(RetryStrategy.DEFAULT_EXPONENTIAL)
+                                            .setTrigger(Trigger.executionWindow(windowStart, (int) (windowStart * 1.5)))
+                                            .build();
+        dispatcher.mustSchedule(periodicDownloadJob);
     }
 
 }
