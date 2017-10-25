@@ -466,7 +466,6 @@ public class PuzzleProgress {
         }
         ArrayList<Character> characterList = getCharacterList(puzzle);
         HashMap<Character, Character> charMapping = getCharMapping(puzzle);
-        Logger.w("sanitizing", "check for invalid mappings in " + puzzle);
         for (Character c : characterList) {
             if (charMapping.get(c) == null || charMapping.get(c) == 0) {
                 // Whoops! Puzzle has a broken character mapping
