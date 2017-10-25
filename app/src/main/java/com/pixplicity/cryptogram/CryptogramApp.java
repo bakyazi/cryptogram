@@ -62,10 +62,11 @@ public class CryptogramApp extends Application {
 
         // Create a new dispatcher using the Google Play driver.
         FirebaseJobDispatcher dispatcher = new FirebaseJobDispatcher(new GooglePlayDriver(this));
-        int windowStart = 24 * 60 * 60;
+        int windowStart = 12 * 60 * 60;
+        int windowEnd = (int) (windowStart * 1.5);
         Job periodicDownloadJob = dispatcher.newJobBuilder()
                                             .setService(CryptogramJobService.class)
-                                            .setTag("periodic-download")
+                                            .setTag(CryptogramJobService.TAG_PERIODIC_DOWNLOAD)
                                             .setConstraints(
                                                     // only run on an unmetered network
                                                     Constraint.ON_UNMETERED_NETWORK,
@@ -73,7 +74,8 @@ public class CryptogramApp extends Application {
                                                     Constraint.DEVICE_CHARGING
                                             )
                                             .setRetryStrategy(RetryStrategy.DEFAULT_EXPONENTIAL)
-                                            .setTrigger(Trigger.executionWindow(windowStart, (int) (windowStart * 1.5)))
+                                            .setTrigger(Trigger.executionWindow(windowStart, windowEnd))
+                                            .setRecurring(true)
                                             .build();
         dispatcher.mustSchedule(periodicDownloadJob);
     }
