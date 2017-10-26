@@ -58,14 +58,14 @@ android {
         }
     }
     configurations.all {
-        resolutionStrategy.force 'com.android.support:support-v13:26.1.0'
+        resolutionStrategy.force 'com.android.support:support-v13:27.0.0'
     }
-    compileSdkVersion 26
-    buildToolsVersion '26.0.2'
+    compileSdkVersion 27
+    buildToolsVersion '27.0.0'
     defaultConfig {
         applicationId "com.pixplicity.cryptogram"
         minSdkVersion 14
-        targetSdkVersion 26
+        targetSdkVersion 27
         versionCode 189
         versionName "1.8.0"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
@@ -110,18 +110,16 @@ repositories {
     maven { url "https://dl.bintray.com/pixplicity/maven" }
     maven { url "https://dl.bintray.com/drummer-aidan/maven" }
     maven { url 'https://maven.fabric.io/public' }
-    // FIXME currently only used for TapTargetView-SNAPSHOT (4d36558 below)
-    maven { url 'https://jitpack.io' }
 }
 
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
 
-    implementation 'com.android.support:appcompat-v7:26.1.0'
-    implementation 'com.android.support:support-v4:26.1.0'
-    implementation 'com.android.support:support-annotations:26.1.0'
-    implementation 'com.android.support:design:26.1.0'
-    implementation 'com.android.support:recyclerview-v7:26.1.0'
+    implementation 'com.android.support:appcompat-v7:27.0.0'
+    implementation 'com.android.support:support-v4:27.0.0'
+    implementation 'com.android.support:support-annotations:27.0.0'
+    implementation 'com.android.support:design:27.0.0'
+    implementation 'com.android.support:recyclerview-v7:27.0.0'
 
     implementation 'com.google.android.gms:play-services-games:11.4.2'
 
@@ -142,9 +140,7 @@ dependencies {
 
     implementation 'com.google.code.gson:gson:2.8.1'
 
-    // FIXME a fix is due in 1.9.2
-    // implementation 'com.getkeepsafe.taptargetview:taptargetview:1.9.1'
-    implementation 'com.github.KeepSafe:TapTargetView:4d36558'
+    implementation 'com.getkeepsafe.taptargetview:taptargetview:1.10.0'
 
     implementation('com.crashlytics.sdk.android:crashlytics:2.6.7@aar') {
         transitive = true
