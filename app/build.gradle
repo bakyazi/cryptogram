@@ -120,15 +120,18 @@ dependencies {
     implementation 'com.android.support:support-v4:27.0.0'
     implementation 'com.android.support:support-annotations:27.0.0'
     implementation 'com.android.support:design:27.0.0'
-    implementation 'com.android.support:cardview-v7:26.1.0'
+    implementation 'com.android.support:cardview-v7:27.0.0'
     implementation 'com.android.support:recyclerview-v7:27.0.0'
-    implementation 'com.android.support:gridlayout-v7:26.1.0'
+    implementation 'com.android.support:gridlayout-v7:27.0.0'
 
     implementation 'com.google.android.gms:play-services-games:11.4.2'
     implementation 'com.google.android.gms:play-services-auth:11.4.2'
 
     implementation 'com.jakewharton:butterknife:8.8.1'
     annotationProcessor 'com.jakewharton:butterknife-compiler:8.8.1'
+
+    implementation 'com.squareup.retrofit2:retrofit:2.3.0'
+    implementation 'com.squareup.retrofit2:converter-gson:2.3.0'
 
     implementation 'net.soulwolf.widget:ratiolayout:1.0.0'
     implementation 'com.afollestad.material-dialogs:core:0.9.4.7'
