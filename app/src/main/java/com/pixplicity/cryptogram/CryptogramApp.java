@@ -69,9 +69,7 @@ public class CryptogramApp extends Application {
                                             .setTag(CryptogramJobService.TAG_PERIODIC_DOWNLOAD)
                                             .setConstraints(
                                                     // only run on an unmetered network
-                                                    Constraint.ON_UNMETERED_NETWORK,
-                                                    // only run when the device is charging
-                                                    Constraint.DEVICE_CHARGING
+                                                    Constraint.ON_UNMETERED_NETWORK
                                             )
                                             .setRetryStrategy(RetryStrategy.DEFAULT_EXPONENTIAL)
                                             .setTrigger(Trigger.executionWindow(windowStart, windowEnd))
