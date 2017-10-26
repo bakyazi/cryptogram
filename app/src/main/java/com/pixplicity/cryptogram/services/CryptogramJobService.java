@@ -10,10 +10,14 @@ public class CryptogramJobService extends JobService {
 
     @Override
     public boolean onStartJob(JobParameters job) {
-        Logger.d("job", "executing job " + job.getTag());
         switch (job.getTag()) {
             case TAG_PERIODIC_DOWNLOAD: {
-                onPeriodicDownload();
+                onPeriodicDownload(job);
+            }
+            break;
+            default: {
+                Logger.w("job", "unknown job " + job.getTag());
+                jobFinished(job, false);
             }
             break;
         }
@@ -22,8 +26,9 @@ public class CryptogramJobService extends JobService {
         return false;
     }
 
-    protected void onPeriodicDownload() {
+    protected void onPeriodicDownload(JobParameters job) {
         // TODO
+        jobFinished(job, false);
     }
 
     @Override
