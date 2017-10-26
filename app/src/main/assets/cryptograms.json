@@ -1360,6 +1360,7 @@
       },
       {
         "author": "Abraham Lincoln",
+        "given": "E",
         "id": 36,
         "noscore": false,
         "text": "No man has a good enough memory to be a success­ful liar.",
@@ -1368,6 +1369,7 @@
       },
       {
         "author": "Oscar Wilde",
+        "given": "XY",
         "id": 37,
         "noscore": false,
         "text": "I can resist every­thing except temp­tation.",
@@ -1376,6 +1378,7 @@
       },
       {
         "author": "Mark Twain",
+        "given": "GH",
         "id": 38,
         "noscore": false,
         "text": "Go to Heaven for the climate, Hell for the company.",
@@ -1384,6 +1387,7 @@
       },
       {
         "author": "Robin Williams",
+        "given": "U",
         "id": 39,
         "noscore": false,
         "text": "I’m sorry, if you were right, I’d agree with you.",
@@ -1392,6 +1396,7 @@
       },
       {
         "author": "Jim Carrey",
+        "given": "S",
         "id": 40,
         "noscore": false,
         "text": "Behind every great man is a woman rolling her eyes.",
@@ -1400,6 +1405,7 @@
       },
       {
         "author": "Douglas Adams",
+        "given": "KY",
         "id": 41,
         "noscore": false,
         "text": "I love dead­lines. I like the whoo­shing sound they make as they fly by.",
@@ -1416,7 +1422,7 @@
       },
       {
         "author": "George Carlin",
-        "given": "TH",
+        "given": "HKT",
         "id": 43,
         "noscore": false,
         "text": "Weather forecast for tonight: dark.",
@@ -1425,6 +1431,7 @@
       },
       {
         "author": "Mark Twain",
+        "given": "I",
         "id": 44,
         "noscore": false,
         "text": "All gene­raliza­tions are false, inclu­ding this one.",
@@ -1441,6 +1448,7 @@
       },
       {
         "author": "Groucho Marx",
+        "given": "M",
         "id": 46,
         "noscore": false,
         "text": "I refuse to join any club that would have me as a member.",
@@ -1457,6 +1465,7 @@
       },
       {
         "author": "Robin Williams",
+        "given": "RY",
         "id": 48,
         "noscore": false,
         "text": "Why do they call it rush hour when nothing moves?",
@@ -2960,6 +2969,7 @@
       },
       {
         "author": "Walt Disney",
+        "given": "U",
         "id": 116,
         "noscore": false,
         "text": "If you can dream it, you can do it.",
@@ -2992,6 +3002,7 @@
       },
       {
         "author": "Nelson Mandela",
+        "given": "U",
         "id": 120,
         "noscore": false,
         "text": "It always seems impos­sible until it’s done.",
@@ -4837,7 +4848,7 @@
       },
       {
         "author": "J.R.R. Tolkien",
-        "given": "A",
+        "given": "AN",
         "id": 127,
         "noscore": false,
         "text": "Not all those who wander are lost.",
@@ -4854,7 +4865,7 @@
       },
       {
         "author": "Laurel Thatcher Ulrich",
-        "given": "W",
+        "given": "DIW",
         "id": 129,
         "noscore": false,
         "text": "Well-behaved women seldom make history.",
@@ -4895,9 +4906,10 @@
       },
       {
         "author": "Stephen King",
+        "given": "GY",
         "id": 134,
         "noscore": false,
-        "text": "Get busy living, or get busy dying.",
+        "text": "I guess it comes down to a simple choice, really. Get busy living, or get busy dying.",
         "topic": "From literature",
         "uuid": "9fd097ef-925a-4aff-aefa-fe24d49b4164"
       },
@@ -4919,6 +4931,7 @@
       },
       {
         "author": "David Mitchell",
+        "given": "F",
         "id": 137,
         "noscore": false,
         "text": "Travel far enough, you meet yourself.",
@@ -5234,6 +5247,7 @@
       },
       {
         "author": "Martin Luther King, Jr.",
+        "given": "V",
         "id": 22,
         "noscore": false,
         "text": "There can be no deep disap­point­ment where there is not deep love.",
@@ -5250,6 +5264,7 @@
       },
       {
         "author": "H. Jackson Brown, Jr.",
+        "given": "V",
         "id": 24,
         "noscore": false,
         "text": "Love is when the other person’s happi­ness is more impor­tant than your own.",
@@ -5258,6 +5273,7 @@
       },
       {
         "author": "Mother Teresa",
+        "given": "V",
         "id": 25,
         "noscore": false,
         "text": "Let us always meet each other with smile, for the smile is the begin­ning of love.",
@@ -5266,6 +5282,7 @@
       },
       {
         "author": "Lao Tzu",
+        "given": "V",
         "id": 26,
         "noscore": false,
         "text": "Kindness in words creates confi­dence. Kindness in thinking creates profound­ness. Kindness in giving creates love.",
@@ -5274,6 +5291,7 @@
       },
       {
         "author": "H. Jackson Brown, Jr.",
+        "given": "Y",
         "id": 27,
         "noscore": false,
         "text": "Some­times the heart sees what is invis­ible to the eye.",
@@ -5282,6 +5300,7 @@
       },
       {
         "author": "Mother Teresa",
+        "given": "V",
         "id": 28,
         "noscore": false,
         "text": "I have found the paradox, that if you love until it hurts, there can be no more hurt, only more love.",
@@ -5307,6 +5326,7 @@
       },
       {
         "author": "Aristotle",
+        "given": "V",
         "id": 31,
         "noscore": false,
         "text": "Love is composed of a single soul inhabit­ing two bodies.",
