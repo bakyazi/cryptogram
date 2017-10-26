@@ -325,4 +325,9 @@
     <string name="feedback_subject">Feedback on Cryptogram</string>
     <string name="feedback_body">Hi Pixplicity, \n\nI’m using Cryptogram version %1$s and my keyboard is “%2$s”. \n\nHere’s my feedback on Cryptogram: \n\n</string>
 
+    <!-- Notifications -->
+    <string name="notification_channel_specials">Specials</string>
+    <string name="notification_season_special_title">Season special</string>
+    <string name="notification_season_special_text">New puzzles, specially tailored for the season!</string>
+
 </resources>
