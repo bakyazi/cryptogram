@@ -19,11 +19,12 @@ public class CryptogramJobService extends JobService {
 
     @Override
     public boolean onStartJob(JobParameters job) {
+        Logger.d("api", "start job " + job);
         switch (job.getTag()) {
             case TAG_PERIODIC_DOWNLOAD: {
                 onPeriodicDownload(job);
             }
-            break;
+            return true;
             default: {
                 Logger.w("job", "unknown job " + job.getTag());
                 jobFinished(job, false);
@@ -39,10 +40,11 @@ public class CryptogramJobService extends JobService {
         // TODO
         CryptogramApp.getInstance().getApiService().getFree().enqueue(new Callback<Map<String, Topic>>() {
             @Override
-            public void onResponse(Call<Map<String, Topic>> call, Response<Map<String, Topic>> response) {
+            public void onResponse(Call<Map<String, Topic>> call,
+                                   Response<Map<String, Topic>> response) {
                 Logger.d("api", "response: HTTP " + response.code());
                 ResponseBody body = response.raw().body();
-                Logger.d("api", "response: " + body.contentLength() + " bytes");
+                Logger.d("api", "response: " + body.contentLength() + " bytes; cache=" + response.raw().cacheResponse());
                 jobFinished(job, false);
             }
 
@@ -56,6 +58,7 @@ public class CryptogramJobService extends JobService {
 
     @Override
     public boolean onStopJob(JobParameters job) {
+        Logger.d("api", "stop job " + job);
         // Should this job be retried?
         return false;
     }

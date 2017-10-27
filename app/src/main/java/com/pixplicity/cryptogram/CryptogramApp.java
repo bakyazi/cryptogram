@@ -19,6 +19,7 @@ import io.fabric.sdk.android.Fabric;
 import io.realm.Realm;
 import okhttp3.Cache;
 import okhttp3.OkHttpClient;
+import okhttp3.logging.HttpLoggingInterceptor;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
@@ -63,17 +64,24 @@ public class CryptogramApp extends Application {
                 .build();
 
         // Prepare Retrofit
-        int cacheSize = 10 * 1024 * 1024; // 10 MB
-        Cache cache = new Cache(getCacheDir(), cacheSize);
-        OkHttpClient okHttpClient = new OkHttpClient.Builder()
-                .cache(cache)
-                .build();
-        Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl("https://8080-dot-3161600-dot-devshell.appspot.com/")
-                .client(okHttpClient)
-                .addConverterFactory(GsonConverterFactory.create())
-                .build();
-        mApiService = retrofit.create(ApiService.class);
+        {
+            int cacheSize = 10 * 1024 * 1024; // 10 MB
+            Cache cache = new Cache(getCacheDir(), cacheSize);
+
+            HttpLoggingInterceptor logging = new HttpLoggingInterceptor();
+            logging.setLevel(HttpLoggingInterceptor.Level.HEADERS);
+
+            OkHttpClient okHttpClient = new OkHttpClient.Builder()
+                    .cache(cache)
+                    .addInterceptor(logging)
+                    .build();
+            Retrofit retrofit = new Retrofit.Builder()
+                    .baseUrl("https://cryptogram-183212.appspot.com/")
+                    .client(okHttpClient)
+                    .addConverterFactory(GsonConverterFactory.create())
+                    .build();
+            mApiService = retrofit.create(ApiService.class);
+        }
 
         // Prepare Realm
         Realm.init(this);
@@ -84,8 +92,8 @@ public class CryptogramApp extends Application {
         // Create a new dispatcher using the Google Play driver.
         FirebaseJobDispatcher dispatcher = new FirebaseJobDispatcher(new GooglePlayDriver(this));
         dispatcher.cancelAll();
-        int windowStart = 0; //12 * 60 * 60;
-        int windowEnd = 10; //(int) (windowStart * 1.5);
+        int windowStart = 5; //12 * 60 * 60;
+        int windowEnd = 60; //(int) (windowStart * 1.5);
         Job periodicDownloadJob = dispatcher.newJobBuilder()
                                             .setService(CryptogramJobService.class)
                                             .setTag(CryptogramJobService.TAG_PERIODIC_DOWNLOAD)
