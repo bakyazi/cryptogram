@@ -564,6 +564,9 @@ public class CryptogramActivity extends BaseActivity implements GoogleApiClient.
                     startActivityForResult(
                             Games.Leaderboards.getLeaderboardIntent(mGoogleApiClient, getString(R.string.leaderboard_scoreboard)),
                             RC_UNUSED);
+                } catch (SecurityException e) {
+                    // Not sure why we're still seeing errors about the connection state, but here we are
+                    Crashlytics.logException(e);
                 } catch (ActivityNotFoundException e) {
                     Toast.makeText(CryptogramActivity.this, R.string.google_play_games_not_installed, Toast.LENGTH_LONG).show();
                 }
@@ -581,6 +584,9 @@ public class CryptogramActivity extends BaseActivity implements GoogleApiClient.
                     startActivityForResult(
                             Games.Achievements.getAchievementsIntent(mGoogleApiClient),
                             RC_UNUSED);
+                } catch (SecurityException e) {
+                    // Not sure why we're still seeing errors about the connection state, but here we are
+                    Crashlytics.logException(e);
                 } catch (ActivityNotFoundException e) {
                     Toast.makeText(CryptogramActivity.this, R.string.google_play_games_not_installed, Toast.LENGTH_LONG).show();
                 }
