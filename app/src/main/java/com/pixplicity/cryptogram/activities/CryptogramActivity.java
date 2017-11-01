@@ -1180,6 +1180,9 @@ public class CryptogramActivity extends BaseActivity implements GoogleApiClient.
     }
 
     private void showGmsError(int errorCode) {
+        if (isFinishing()) {
+            return;
+        }
         new AlertDialog.Builder(this)
                 .setMessage(getString(R.string.google_play_games_connection_failure, mLastConnectionError, errorCode))
                 .setPositiveButton(android.R.string.ok, (dialog, i) -> dialog.dismiss())
