@@ -8,12 +8,15 @@ import com.firebase.jobdispatcher.Constraint;
 import com.firebase.jobdispatcher.FirebaseJobDispatcher;
 import com.firebase.jobdispatcher.GooglePlayDriver;
 import com.firebase.jobdispatcher.Job;
+import com.firebase.jobdispatcher.Lifetime;
 import com.firebase.jobdispatcher.RetryStrategy;
 import com.firebase.jobdispatcher.Trigger;
 import com.pixplicity.cryptogram.api.ApiService;
 import com.pixplicity.cryptogram.services.CryptogramJobService;
 import com.pixplicity.cryptogram.utils.UpdateManager;
 import com.pixplicity.easyprefs.library.Prefs;
+
+import java.util.concurrent.TimeUnit;
 
 import io.fabric.sdk.android.Fabric;
 import io.realm.Realm;
@@ -89,23 +92,32 @@ public class CryptogramApp extends Application {
         // Handle any app updates
         UpdateManager.init(this);
 
-        // Create a new dispatcher using the Google Play driver.
-        FirebaseJobDispatcher dispatcher = new FirebaseJobDispatcher(new GooglePlayDriver(this));
-        dispatcher.cancelAll();
-        int windowStart = 5; //12 * 60 * 60;
-        int windowEnd = 60; //(int) (windowStart * 1.5);
-        Job periodicDownloadJob = dispatcher.newJobBuilder()
-                                            .setService(CryptogramJobService.class)
-                                            .setTag(CryptogramJobService.TAG_PERIODIC_DOWNLOAD)
-                                            .setConstraints(
-                                                    // only run on an unmetered network
-                                                    Constraint.ON_UNMETERED_NETWORK
-                                            )
-                                            .setRetryStrategy(RetryStrategy.DEFAULT_EXPONENTIAL)
-                                            .setTrigger(Trigger.executionWindow(windowStart, windowEnd))
-                                            .setRecurring(true)
-                                            .build();
-        dispatcher.mustSchedule(periodicDownloadJob);
+        // Schedule jobs
+        {
+            // Create a new dispatcher using the Google Play driver
+            FirebaseJobDispatcher dispatcher = new FirebaseJobDispatcher(new GooglePlayDriver(this));
+
+            final int periodicity = (int) TimeUnit.HOURS.toSeconds(12);
+            final int toleranceInterval = (int) TimeUnit.HOURS.toSeconds(6);
+
+            Job periodicDownloadJob = dispatcher.newJobBuilder()
+                                                .setService(CryptogramJobService.class)
+                                                .setTag(CryptogramJobService.TAG_PERIODIC_DOWNLOAD)
+                                                .setConstraints(
+                                                        // only run on an unmetered network
+                                                        Constraint.ON_UNMETERED_NETWORK
+                                                )
+                                                .setRetryStrategy(RetryStrategy.DEFAULT_EXPONENTIAL)
+                                                .setTrigger(Trigger.executionWindow(periodicity, periodicity + toleranceInterval))
+                                                .setLifetime(Lifetime.FOREVER)
+                                                .setRecurring(true)
+                                                .setReplaceCurrent(true)
+                                                .build();
+            int result = dispatcher.schedule(periodicDownloadJob);
+            if (result != FirebaseJobDispatcher.SCHEDULE_RESULT_SUCCESS) {
+                Crashlytics.logException(new IllegalStateException("FirebaseJobDispatcher couldn't schedule job; result=" + result));
+            }
+        }
     }
 
     public ApiService getApiService() {
