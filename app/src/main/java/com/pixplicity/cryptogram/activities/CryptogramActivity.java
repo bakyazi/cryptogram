@@ -136,12 +136,6 @@ public class CryptogramActivity extends BaseActivity implements GoogleApiClient.
     @BindView(R.id.vg_stats)
     protected ViewGroup mVgStats;
 
-    @BindView(R.id.vg_stats_excess)
-    protected ViewGroup mVgStatsExcess;
-
-    @BindView(R.id.tv_stats_excess)
-    protected TextView mTvStatsExcess;
-
     @BindView(R.id.vg_stats_time)
     protected ViewGroup mVgStatsTime;
 
@@ -661,6 +655,14 @@ public class CryptogramActivity extends BaseActivity implements GoogleApiClient.
 
     private void onGameplayReady() {
         mCryptogramView.requestFocus();
+        if (UpdateManager.consumeScoreExcludesExcessInputs()) {
+            new MaterialDialog.Builder(this)
+                    .title(R.string.scoring_changed_title)
+                    .content(R.string.scoring_changed_message)
+                    .cancelable(false)
+                    .positiveText(R.string.scoring_changed_ok)
+                    .show();
+        }
     }
 
     public void showPuzzleState(Puzzle puzzle) {
@@ -675,19 +677,11 @@ public class CryptogramActivity extends BaseActivity implements GoogleApiClient.
                 mVgStatsTime.setVisibility(View.VISIBLE);
                 mTvStatsTime.setText(StringUtils.getDurationString(durationMs));
             }
-            int excessCount = -1;
             int reveals = -1;
             Float score = null;
             if (PrefsUtils.getShowScore()) {
-                excessCount = puzzle.getExcessCount();
                 reveals = puzzle.getReveals();
                 score = puzzle.getScore();
-            }
-            if (excessCount < 0) {
-                mVgStatsExcess.setVisibility(View.GONE);
-            } else {
-                mVgStatsExcess.setVisibility(View.VISIBLE);
-                mTvStatsExcess.setText(String.valueOf(excessCount));
             }
             if (reveals < 0) {
                 mVgStatsReveals.setVisibility(View.GONE);

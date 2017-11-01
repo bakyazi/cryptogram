@@ -436,8 +436,7 @@ public class PuzzleProgress {
 
     public synchronized boolean hasScore(@NonNull Puzzle puzzle) {
         long duration = puzzle.getDurationMs();
-        int excessCount = getExcessCount(puzzle);
-        if (duration == 0 || excessCount < 0) {
+        if (duration == 0) {
             return false;
         }
         return true;
@@ -448,12 +447,10 @@ public class PuzzleProgress {
             return null;
         }
         float duration = getDurationMs() / 1000f;
-        int excessCount = getExcessCount(puzzle);
         float score = 1;
         score = addScore(score, TARGET_DURATION / duration);
         score = addScore(score, (float) Math.pow(0.75f, getRevealedMistakes()));
         score = addScore(score, (MAX_REVEALS - getReveals()) / 6f);
-        score = addScore(score, (MAX_EXCESS_INPUT - excessCount) / 26f);
         // Never return a score below 0.0% or above 100.0%
         return Math.max(0f, Math.min(1f, score));
     }

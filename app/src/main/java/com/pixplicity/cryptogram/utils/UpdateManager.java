@@ -9,6 +9,7 @@ import com.pixplicity.easyprefs.library.Prefs;
 public class UpdateManager {
 
     private static boolean sEnabledShowUsedLetters;
+    private static boolean sScoreExcludesExcessInputs;
 
     public static void init(Context context) {
         try {
@@ -24,6 +25,9 @@ public class UpdateManager {
                         // Remove old setting
                         Prefs.remove("show_hints");
                     }
+                    if (lastVersion < 190) {
+                        sScoreExcludesExcessInputs = true;
+                    }
                 }
             }
         } catch (PackageManager.NameNotFoundException e) {
@@ -33,6 +37,14 @@ public class UpdateManager {
     public static boolean consumeEnabledShowUsedLetters() {
         if (sEnabledShowUsedLetters) {
             sEnabledShowUsedLetters = false;
+            return true;
+        }
+        return false;
+    }
+
+    public static boolean consumeScoreExcludesExcessInputs() {
+        if (sScoreExcludesExcessInputs) {
+            sScoreExcludesExcessInputs = false;
             return true;
         }
         return false;

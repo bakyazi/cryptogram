@@ -105,30 +105,6 @@
                     </TableRow>
 
                     <TableRow
-                        android:id="@+id/vg_stats_excess"
-                        android:layout_marginTop="8dp"
-                        tools:visibility="visible">
-
-                        <android.support.v7.widget.AppCompatTextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="@string/stats_excess"
-                            android:textColor="@color/textLight"/>
-
-                        <android.support.v7.widget.AppCompatTextView
-                            android:id="@+id/tv_stats_excess"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginLeft="8dp"
-                            android:layout_marginStart="8dp"
-                            android:minWidth="64dp"
-                            android:textColor="@color/textLight"
-                            android:textStyle="bold"
-                            tools:text="4"/>
-
-                    </TableRow>
-
-                    <TableRow
                         android:id="@+id/vg_stats_reveals"
                         android:layout_marginTop="8dp"
                         tools:visibility="gone">

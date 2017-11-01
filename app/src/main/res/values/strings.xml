@@ -70,7 +70,6 @@
     <string name="not_applicable">N/A</string>
     <string name="author_unknown">anonymous</string>
 
-    <string name="stats_excess">Number of excess inputs:</string>
     <string name="stats_time">Time elapsed:</string>
     <string name="stats_reveals">Characters revealed:</string>
     <string name="stats_score">Score:</string>
@@ -113,6 +112,10 @@
     <string name="saved_game_name">Game state on %1$s</string>
     <string name="saved_game_loading">Loading saved game…</string>
 
+    <string name="scoring_changed_title">Scoring has changed a bit</string>
+    <string name="scoring_changed_message">You are no longer punished for excess inputs, so try as many letters as you like!</string>
+    <string name="scoring_changed_ok">OK</string>
+
     <!-- Settings -->
     <string name="settings_theme">Theme</string>
     <string name="text_size">Text size:</string>
@@ -135,7 +138,7 @@
     <string name="randomize_puzzles">Randomize puzzles</string>
 
     <string name="keyboard_system_dialog">Some keyboards don’t play nicely with Cryptogram. If you experience problems, I please switch back to the built-in keyboard.</string>
-    <string name="keyboard_system_dialog_ok">Gotcha</string>
+    <string name="keyboard_system_dialog_ok">I understand</string>
 
     <string name="applying_settings">Applying settings…</string>
 
