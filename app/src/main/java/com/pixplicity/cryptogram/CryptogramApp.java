@@ -2,11 +2,9 @@ package com.pixplicity.cryptogram;
 
 import android.app.Application;
 import android.content.ContextWrapper;
-import android.content.pm.PackageInfo;
-import android.content.pm.PackageManager;
 
 import com.crashlytics.android.Crashlytics;
-import com.pixplicity.cryptogram.utils.PrefsUtils;
+import com.google.firebase.analytics.FirebaseAnalytics;
 import com.pixplicity.cryptogram.utils.UpdateManager;
 import com.pixplicity.easyprefs.library.Prefs;
 
@@ -24,6 +22,8 @@ public class CryptogramApp extends Application {
 
     private static CryptogramApp sInstance;
 
+    private FirebaseAnalytics mFirebaseAnalytics;
+
     public CryptogramApp() {
         super();
         sInstance = this;
@@ -36,6 +36,8 @@ public class CryptogramApp extends Application {
     @Override
     public void onCreate() {
         super.onCreate();
+
+        mFirebaseAnalytics = FirebaseAnalytics.getInstance(this);
 
         // Initialize Crashlytics
         Fabric.with(this, new Crashlytics());
