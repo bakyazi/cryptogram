@@ -1,5 +1,6 @@
 package com.pixplicity.cryptogram.models;
 
+import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.util.Log;
@@ -7,7 +8,9 @@ import android.util.Log;
 import com.crashlytics.android.answers.Answers;
 import com.crashlytics.android.answers.LevelEndEvent;
 import com.crashlytics.android.answers.LevelStartEvent;
+import com.google.firebase.analytics.FirebaseAnalytics;
 import com.google.gson.annotations.SerializedName;
+import com.pixplicity.cryptogram.CryptogramApp;
 import com.pixplicity.cryptogram.events.PuzzleEvent;
 import com.pixplicity.cryptogram.utils.EventProvider;
 
@@ -366,26 +369,40 @@ public class PuzzleProgress {
     }
 
     private synchronized void onStart(Puzzle puzzle) {
-        int puzzleNumber = puzzle.getNumber();
-        Answers.getInstance().logLevelStart(
-                new LevelStartEvent()
-                        .putLevelName("Puzzle #" + puzzleNumber));
+        {
+            // Analytics
+            int puzzleNumber = puzzle.getNumber();
+            String puzzleId = String.valueOf(puzzle.getId());
+            Bundle bundle = new Bundle();
+            bundle.putString(FirebaseAnalytics.Param.LEVEL, puzzleId);
+            CryptogramApp.getInstance().getFirebaseAnalytics().logEvent(CryptogramApp.EVENT_LEVEL_START, bundle);
+            Answers.getInstance().logLevelStart(
+                    new LevelStartEvent()
+                            .putLevelName("Puzzle #" + puzzleNumber));
+        }
 
         EventProvider.postEvent(
                 new PuzzleEvent.PuzzleStartedEvent(puzzle));
     }
 
     private synchronized void onCompleted(@NonNull Puzzle puzzle) {
-        int puzzleNumber = puzzle.getNumber();
-        LevelEndEvent event = new LevelEndEvent()
-                .putLevelName("Puzzle #" + puzzleNumber)
-                .putSuccess(true);
-        Float score = getScore(puzzle);
-        if (score != null) {
-            event.putScore(score);
+        {
+            // Analytics
+            int puzzleNumber = puzzle.getNumber();
+            Float score = getScore(puzzle);
+            String puzzleId = String.valueOf(puzzle.getId());
+            Bundle bundle = new Bundle();
+            bundle.putString(FirebaseAnalytics.Param.LEVEL, puzzleId);
+            LevelEndEvent event = new LevelEndEvent()
+                    .putLevelName("Puzzle #" + puzzleNumber)
+                    .putSuccess(true);
+            if (score != null) {
+                bundle.putFloat(FirebaseAnalytics.Param.SCORE, score);
+                event.putScore(score);
+            }
+            CryptogramApp.getInstance().getFirebaseAnalytics().logEvent(CryptogramApp.EVENT_LEVEL_END, bundle);
+            Answers.getInstance().logLevelEnd(event);
         }
-        Answers.getInstance().logLevelEnd(
-                event);
 
         EventProvider.postEventDelayed(
                 new PuzzleEvent.PuzzleCompletedEvent(puzzle));
