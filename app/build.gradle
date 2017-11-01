@@ -80,6 +80,13 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
             // We're no longer using the release key, but an upload key for Google Play App Signing
             //signingConfig signingConfigs.release
+            signingConfig signingConfigs.release
+        }
+        upload {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+            // We're no longer using the release key, but an upload key for Google Play App Signing
+            //signingConfig signingConfigs.release
             signingConfig signingConfigs.upload
         }
     }
