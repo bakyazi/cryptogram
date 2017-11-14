@@ -38,7 +38,7 @@ public class LeaderboardProvider {
                     Games.Leaderboards.submitScore(googleApiClient,
                             context.getString(R.string.leaderboard_scoreboard),
                             score);
-                } catch (SecurityException e) {
+                } catch (NullPointerException | SecurityException | IllegalStateException e) {
                     // Not sure why we're still seeing errors about the connection state, but here we are
                     Crashlytics.logException(e);
                 }

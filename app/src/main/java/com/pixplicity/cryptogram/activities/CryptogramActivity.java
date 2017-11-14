@@ -733,12 +733,6 @@ public class CryptogramActivity extends BaseActivity implements GoogleApiClient.
     }
 
     @Subscribe
-    public void onPuzzleStyleChanged(PuzzleEvent.PuzzleStyleChangedEvent event) {
-        // Just recreate the activity
-        recreate();
-    }
-
-    @Subscribe
     public void onPuzzleStarted(PuzzleEvent.PuzzleStartedEvent event) {
         if (mGoogleApiClient.isConnected()) {
             // Submit any achievements

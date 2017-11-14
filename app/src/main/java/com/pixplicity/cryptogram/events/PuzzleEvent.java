@@ -28,12 +28,6 @@ public abstract class PuzzleEvent {
         }
     }
 
-    public static class PuzzleStyleChangedEvent extends PuzzleEvent {
-        public PuzzleStyleChangedEvent() {
-            super(null);
-        }
-    }
-
     public static class KeyboardInputEvent extends PuzzleEvent {
         private final int mKeyCode;
 

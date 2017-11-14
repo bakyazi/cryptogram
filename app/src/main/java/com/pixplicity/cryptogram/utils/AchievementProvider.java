@@ -5,6 +5,7 @@ import android.os.AsyncTask;
 import android.support.annotation.NonNull;
 import android.util.Log;
 
+import com.crashlytics.android.Crashlytics;
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.games.Games;
 import com.pixplicity.cryptogram.BuildConfig;
@@ -188,7 +189,9 @@ public class AchievementProvider {
                 }
             }
         }
-    };
+    }
+
+    ;
 
     @NonNull
     public static AchievementProvider getInstance() {
@@ -247,10 +250,15 @@ public class AchievementProvider {
     }
 
     private void unlock(Context context, GoogleApiClient googleApiClient, int achievementResId) {
-        String achievementId = context.getString(achievementResId);
-        Games.Achievements.unlock(googleApiClient, achievementId);
-        if (DEBUG) {
-            Log.d(TAG, "unlocked: " + achievementId);
+        try {
+            String achievementId = context.getString(achievementResId);
+            Games.Achievements.unlock(googleApiClient, achievementId);
+            if (DEBUG) {
+                Log.d(TAG, "unlocked: " + achievementId);
+            }
+        } catch (SecurityException | IllegalStateException e) {
+            // Not sure why we're still seeing errors about the connection state, but here we are
+            Crashlytics.logException(e);
         }
     }
 

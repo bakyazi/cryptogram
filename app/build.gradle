@@ -11,6 +11,7 @@ buildscript {
 
 apply plugin: 'com.android.application'
 apply plugin: 'io.fabric'
+apply plugin: 'com.google.firebase.firebase-perf'
 
 android {
     compileOptions {
@@ -58,16 +59,16 @@ android {
         }
     }
     configurations.all {
-        resolutionStrategy.force 'com.android.support:support-v13:27.0.0'
+        resolutionStrategy.force 'com.android.support:support-v13:27.0.1'
     }
     compileSdkVersion 27
-    buildToolsVersion '27.0.0'
+    buildToolsVersion '27.0.1'
     defaultConfig {
         applicationId "com.pixplicity.cryptogram"
         minSdkVersion 14
         targetSdkVersion 27
-        versionCode 190
-        versionName "1.8.1"
+        versionCode 191
+        versionName "1.8.2"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
     }
     buildTypes {
@@ -122,21 +123,23 @@ repositories {
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
 
-    implementation 'com.android.support:appcompat-v7:27.0.0'
-    implementation 'com.android.support:support-v4:27.0.0'
-    implementation 'com.android.support:support-annotations:27.0.0'
-    implementation 'com.android.support:design:27.0.0'
-    implementation 'com.android.support:recyclerview-v7:27.0.0'
+    implementation 'com.android.support:appcompat-v7:27.0.1'
+    implementation 'com.android.support:support-v4:27.0.1'
+    implementation 'com.android.support:support-annotations:27.0.1'
+    implementation 'com.android.support:design:27.0.1'
+    implementation 'com.android.support:recyclerview-v7:27.0.1'
 
-    implementation 'com.google.android.gms:play-services-games:11.4.2'
+    implementation 'com.google.android.gms:play-services-games:11.6.0'
+
+    implementation 'com.google.firebase:firebase-core:11.6.0'
+    implementation 'com.google.firebase:firebase-perf:11.6.0'
 
     implementation 'com.jakewharton:butterknife:8.8.1'
-    implementation 'com.google.firebase:firebase-core:11.4.2'
     annotationProcessor 'com.jakewharton:butterknife-compiler:8.8.1'
 
     implementation 'net.soulwolf.widget:ratiolayout:1.0.0'
     implementation 'com.afollestad.material-dialogs:core:0.9.4.7'
-    implementation 'com.afollestad:easyvideoplayer:0.2.13'
+    implementation 'com.afollestad:easyvideoplayer:0.3.0'
 
     implementation 'com.github.bumptech.glide:glide:4.2.0'
 
@@ -159,7 +162,7 @@ dependencies {
     })
 
     testImplementation 'junit:junit:4.12'
-    testImplementation 'org.mockito:mockito-core:2.8.9'
+    testImplementation 'org.mockito:mockito-core:2.10.0'
     testImplementation 'org.powermock:powermock-api-mockito2:1.7.0'
     testImplementation 'org.powermock:powermock-module-junit4-rule-agent:1.7.0'
     testImplementation 'org.powermock:powermock-module-junit4-rule:1.7.0'
