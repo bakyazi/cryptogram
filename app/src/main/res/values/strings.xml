@@ -180,7 +180,6 @@
                 • The amount of time you take to complete the puzzle. Try to solve under 2 minutes.<br />
                 • Each time you reveal mistakes, your score is reduced by 25%.<br />
                 • Each time you reveal a letter, your score is reduced by 17%.<br />
-                • For each excess input (filling in an incorrect character), your score is reduced by 4%.<br />
                 • Each score reduction rule above is computed separately, and the final score is the multiple of all factors.
             ]]>
     </string>
