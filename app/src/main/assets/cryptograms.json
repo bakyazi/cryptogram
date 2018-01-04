@@ -3787,9 +3787,10 @@
     "topic": "Funny"
   },
   {
-    "text": "I hold a little fundraiser every day. Its called going to work.",
+    "text": "I hold a little fundraiser every day. It’s called going to work.",
     "author": "Stephen Colbert",
-    "topic": "Funny"
+    "topic": "Funny",
+    "given": "W"
   },
   {
     "text": "After obsessively Googling symptoms for four hours, I discovered “obsessively Googling symptoms” is a symptom of hypochondria.",
