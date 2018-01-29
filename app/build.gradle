@@ -168,5 +168,3 @@ dependencies {
     testImplementation 'org.powermock:powermock-module-junit4-rule:1.7.0'
     testImplementation 'org.powermock:powermock-module-junit4:1.7.0'
 }
-
-apply plugin: 'com.google.gms.google-services'
