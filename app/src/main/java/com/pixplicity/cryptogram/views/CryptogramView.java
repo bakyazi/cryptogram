@@ -529,7 +529,7 @@ public class CryptogramView extends AppCompatTextView {
 
         PointF highlightPosition = null;
 
-        mCharMap = new char[(int) (width / mBoxW)][100];
+        mCharMap = new char[100][(int) (width / mBoxW)];
 
         float offsetX1 = (mBoxW - mCharW1) / 4;
         float x = 0, y = mBoxH;
