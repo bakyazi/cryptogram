@@ -3350,7 +3350,7 @@
   },
   {
     "text": "An eye for an eye will only make the whole world blind.",
-    "author": "Mahatma Gandhi",
+    "author": "George Perry Graham",
     "topic": "Violence",
     "given": "A"
   },
@@ -3470,11 +3470,11 @@
     "author": "Alfred Tennyson",
     "topic": "Happiness",
     "given": "H"
-  },
+  },-
   {
-    "text": "I slept and dreamt that life was joy. I awoke and saw that life was service. I acted and behold, service was joy.",
-    "author": "Rabindranath Tagore",
-    "topic": "Joy"
+    "text": "The world has enough for everyone’s need but not enough for everyone’s greed.",
+    "author": "Frank Buchman",
+    "topic": "Greed"
   },
   {
     "text": "I don’t think of all the misery, but of the beauty that still remains.",
