@@ -123,16 +123,16 @@ repositories {
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
 
-    implementation 'com.android.support:appcompat-v7:27.0.1'
-    implementation 'com.android.support:support-v4:27.0.1'
-    implementation 'com.android.support:support-annotations:27.0.1'
-    implementation 'com.android.support:design:27.0.1'
-    implementation 'com.android.support:recyclerview-v7:27.0.1'
+    implementation 'com.android.support:appcompat-v7:27.1.1'
+    implementation 'com.android.support:support-v4:27.1.1'
+    implementation 'com.android.support:support-annotations:27.1.1'
+    implementation 'com.android.support:design:27.1.1'
+    implementation 'com.android.support:recyclerview-v7:27.1.1'
 
-    implementation 'com.google.android.gms:play-services-games:11.6.0'
+    implementation 'com.google.android.gms:play-services-games:15.0.0'
 
-    implementation 'com.google.firebase:firebase-core:11.6.0'
-    implementation 'com.google.firebase:firebase-perf:11.6.0'
+    implementation 'com.google.firebase:firebase-core:15.0.0'
+    implementation 'com.google.firebase:firebase-perf:15.0.0'
 
     implementation 'com.jakewharton:butterknife:8.8.1'
     annotationProcessor 'com.jakewharton:butterknife-compiler:8.8.1'
@@ -149,7 +149,7 @@ dependencies {
     implementation 'com.pixplicity.easyprefs:library:1.9.0'
     implementation 'com.pixplicity.generate:library:1.1.8'
 
-    implementation 'com.google.code.gson:gson:2.8.1'
+    implementation 'com.google.code.gson:gson:2.8.2'
 
     implementation 'com.getkeepsafe.taptargetview:taptargetview:1.10.0'
 
@@ -162,9 +162,10 @@ dependencies {
     })
 
     testImplementation 'junit:junit:4.12'
-    testImplementation 'org.mockito:mockito-core:2.10.0'
-    testImplementation 'org.powermock:powermock-api-mockito2:1.7.0'
-    testImplementation 'org.powermock:powermock-module-junit4-rule-agent:1.7.0'
-    testImplementation 'org.powermock:powermock-module-junit4-rule:1.7.0'
-    testImplementation 'org.powermock:powermock-module-junit4:1.7.0'
+    // Be careful updating; consult https://github.com/powermock/powermock/wiki/Mockito
+    testImplementation 'org.mockito:mockito-core:2.8.0'
+    testImplementation 'org.powermock:powermock-api-mockito2:1.7.3'
+    testImplementation 'org.powermock:powermock-module-junit4-rule-agent:1.7.3'
+    testImplementation 'org.powermock:powermock-module-junit4-rule:1.7.3'
+    testImplementation 'org.powermock:powermock-module-junit4:1.7.3'
 }
