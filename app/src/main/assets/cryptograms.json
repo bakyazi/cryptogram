@@ -3470,7 +3470,7 @@
     "author": "Alfred Tennyson",
     "topic": "Happiness",
     "given": "H"
-  },-
+  },
   {
     "text": "The world has enough for everyone’s need but not enough for everyone’s greed.",
     "author": "Frank Buchman",
@@ -4248,8 +4248,73 @@
     "topic": "Funny"
   },
   {
-    "text": "I’m being quoted to introduce something, but I have no idea what it is and certainly don’t endorse it.",
-    "author": "Randall Munroe",
-    "topic": "Funny"
+    "text": "Better to be slapped with the truth than kissed with a lie.",
+    "author": "Russian Proverb",
+    "topic": "Reasoning"
+  },
+  {
+    "text": "But if they had learned anything together, it was that wisdom comes to us when it can no longer do any good.",
+    "author": "Love in the Time of Cholera",
+    "topic": "Wisdom"
+  },
+  {
+    "text": "Always vote for principle, though you may vote alone, and you may cherish the sweetest reflection that your vote is never lost.",
+    "author": "John Quincy Adams",
+    "topic": "Governance"
+  },
+  {
+    "text": "Men and nations behave wisely once they have exhausted all the other alternatives.",
+    "author": "Abba Eban",
+    "topic": "Governance"
+  },
+  {
+    "text": "If you do not have boundaries, you do not have a path.",
+    "author": "Tariq Ramadan",
+    "topic": "Inspirational"
+  },
+  {
+    "text": "Although the world is full of suffering, it is full also of the overcoming of it.",
+    "author": "Helen Keller",
+    "topic": "Compassion"
+  },
+  {
+    "text": "If we see love, compassion and kindness, it is because we possess these qualities.",
+    "author": "Shams Tabrizi",
+    "topic": "Compassion"
+  },
+  {
+    "text": "For the love of a rose, the gardener becomes the slave of a thousand thorns.",
+    "author": "Turkish Proverb",
+    "topic": "Beauty"
+  },
+  {
+    "text": "Your mind is like this water, my friend. When it is agitated, it becomes difficult to see. But if you allow it to settle, the answer becomes clear.",
+    "author": "Bil Keane",
+    "topic": "Reasoning"
+  },
+  {
+    "text": "A little consideration, a little thought for others, makes all the difference.",
+    "author": "A.A. Milne",
+    "topic": "Compassion"
+  },
+  {
+    "text": "A man with a watch knows what time it is. A man with two watches is never sure.",
+    "author": "Segal’s Law",
+    "topic": "Knowledge"
+  },
+  {
+    "text": "We judge others by their behavior. We judge ourselves by our intentions.",
+    "author": "Ian Percy",
+    "topic": "Thoughtfulness"
+  },
+  {
+    "text": "We don’t have to be smarter than the rest, we have to be more disciplined than the rest.",
+    "author": "Warren Buffet",
+    "topic": "Success"
+  },
+  {
+    "text": "It pays to plan ahead. It wasn’t raining when Noah built the ark.",
+    "author": "Howard Ruff",
+    "topic": "Inspirational"
   }
 ]
