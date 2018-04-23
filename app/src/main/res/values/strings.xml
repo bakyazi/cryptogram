@@ -33,9 +33,12 @@
     <string name="statistics">Statistics</string>
     <string name="settings">Settings</string>
     <string name="help">Help…</string>
+    <string name="donate_bitcoin">Donate bitcoin</string>
+
     <string name="how_to_play">How do I play?</string>
     <string name="about">About</string>
     <string name="cancel">Cancel</string>
+
     <string name="skip_puzzle">Are you sure you’d like to skip this puzzle?</string>
     <string name="reveal_letter_confirmation">Are you sure you’d like to reveal the selected letter? This affects your score.</string>
     <string name="reveal_mistakes_confirmation">Are you sure you’d like to highlight all mistakes in the puzzle? This affects your score.</string>
@@ -141,6 +144,15 @@
     <string name="keyboard_system_dialog_ok">I understand</string>
 
     <string name="applying_settings">Applying settings…</string>
+
+    <string name="donate_title">Thanks for donating!</string>
+    <string name="donate_message">I tinker on this app in my spare time, and put aside proceeds for a nice cup of coffee or a dinner with a friend. It’s awesome people like you that make ad-free apps like this possible!</string>
+    <string name="donate_copy_address">Copy Bitcoin address</string>
+    <string name="donate_copy_success">Bitcoin address copied to the clipboard</string>
+    <string name="donate_copy_failure">Whoops, couldn’t copy it to the clipboard!</string>
+    <string name="install_bitcoin_wallet">Install Bitcoin wallet</string>
+    <string name="donate_launch_wallet">Launch Bitcoin wallet</string>
+    <string name="donate_launch_failure">Whoops, couldn’t launch your Bitcoin wallet!</string>
 
     <string name="send_feedback">Send feedback</string>
     <string name="rate">Rate!</string>
