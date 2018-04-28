@@ -18,6 +18,7 @@ public class CryptogramApp extends Application {
     public static final String CONTENT_STATISTICS = "statistics";
     public static final String CONTENT_SETTINGS = "settings";
     public static final String CONTENT_HOW_TO_PLAY = "how-to-play";
+    public static final String CONTENT_DONATE = "donate";
     public static final String CONTENT_ABOUT = "about";
     public static final String EVENT_LEVEL_START = "level_start";
     public static final String EVENT_LEVEL_END = "level_end";

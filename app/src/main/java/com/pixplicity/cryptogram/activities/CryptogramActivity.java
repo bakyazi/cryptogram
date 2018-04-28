@@ -1086,45 +1086,7 @@ public class CryptogramActivity extends BaseActivity implements GoogleApiClient.
             }
             return true;
             case R.id.action_donate: {
-                Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse("bitcoin:" + BuildConfig.BITCOIN_ADDRESS));
-
-                AlertDialog dialog = new AlertDialog.Builder(this)
-                        .setTitle(R.string.donate_title)
-                        .setMessage(R.string.donate_message)
-                        .setPositiveButton(R.string.donate_copy_address, (dialogInterface, i) -> {
-                            ClipboardManager clipboardManager = (ClipboardManager) getSystemService(CLIPBOARD_SERVICE);
-                            if (clipboardManager != null) {
-                                clipboardManager.setPrimaryClip(ClipData.newPlainText("text", BuildConfig.BITCOIN_ADDRESS));
-                                Toast.makeText(this, R.string.donate_copy_success, Toast.LENGTH_SHORT).show();
-                            } else {
-                                Toast.makeText(this, R.string.donate_copy_failure, Toast.LENGTH_SHORT).show();
-                                Crashlytics.logException(new IllegalStateException("Failed copying bitcoin address"));
-                            }
-                        })
-                        .setNegativeButton(R.string.donate_launch_wallet, ((dialog1, which) -> {
-                            try {
-                                startActivity(intent);
-                            } catch (ActivityNotFoundException ignore) {
-                                String installPackageName = "de.schildbach.wallet";
-                                try {
-                                    startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("market://details?id=" + installPackageName)));
-                                } catch (ActivityNotFoundException ignore2) {
-                                    try {
-                                        startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("https://play.google.com/store/apps/details?id=" + installPackageName)));
-                                    } catch (ActivityNotFoundException e) {
-                                        Toast.makeText(this, R.string.donate_launch_failure, Toast.LENGTH_SHORT).show();
-                                        Crashlytics.logException(new IllegalStateException("Failed launching Google Play", e));
-                                    }
-                                }
-                            }
-                        }))
-                        .show();
-
-                PackageManager packageManager = getPackageManager();
-                if (intent.resolveActivity(packageManager) == null) {
-                    // No intent available to handle action
-                    dialog.getButton(DialogInterface.BUTTON_NEGATIVE).setText(R.string.install_bitcoin_wallet);
-                }
+                startActivity(DonateActivity.create(this));
             }
             return true;
         }

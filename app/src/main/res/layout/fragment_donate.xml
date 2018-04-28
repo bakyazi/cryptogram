@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/vg_content"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_gravity="fill_vertical"
+    android:fillViewport="true"
+    tools:showIn="@layout/activity_donate">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="16dp">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="8dp"
+            android:gravity="center"
+            android:text="@string/donate_title"
+            android:textColor="#d00"
+            android:textSize="72sp" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="8dp"
+            android:text="@string/donate_message" />
+
+        <android.support.v7.widget.AppCompatButton
+            android:id="@+id/bt_bitcoin"
+            style="@style/Widget.AppCompat.Button.Borderless"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/activity_horizontal_margin"
+            android:layout_marginRight="@dimen/activity_horizontal_margin"
+            android:layout_marginTop="8dp"
+            android:drawableLeft="@drawable/ic_bitcoin"
+            android:drawableStart="@drawable/ic_bitcoin"
+            android:gravity="center"
+            android:paddingEnd="24dp"
+            android:paddingRight="24dp"
+            android:text="@string/donate_bitcoin"
+            android:textAllCaps="true"
+            tools:ignore="RtlSymmetry,UnusedAttribute" />
+
+        <android.support.v7.widget.AppCompatButton
+            android:id="@+id/bt_bitcoin_wallet"
+            style="@style/Widget.AppCompat.Button.Borderless"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/activity_horizontal_margin"
+            android:layout_marginRight="@dimen/activity_horizontal_margin"
+            android:layout_marginTop="8dp"
+            android:drawableLeft="@drawable/ic_google_play"
+            android:drawableStart="@drawable/ic_google_play"
+            android:gravity="center"
+            android:paddingEnd="24dp"
+            android:paddingRight="24dp"
+            android:text="@string/donate_google_play"
+            android:textAllCaps="true"
+            tools:ignore="RtlSymmetry,UnusedAttribute" />
+
+    </LinearLayout>
+
+</ScrollView>
