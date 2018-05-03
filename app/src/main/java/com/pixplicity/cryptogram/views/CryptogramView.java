@@ -24,7 +24,9 @@ import android.view.inputmethod.InputConnection;
 import android.view.inputmethod.InputMethodManager;
 
 import com.pixplicity.cryptogram.R;
+import com.pixplicity.cryptogram.events.PuzzleEvent;
 import com.pixplicity.cryptogram.models.Puzzle;
+import com.pixplicity.cryptogram.utils.EventProvider;
 import com.pixplicity.cryptogram.utils.PrefsUtils;
 import com.pixplicity.cryptogram.utils.StyleUtils;
 
@@ -59,7 +61,6 @@ public class CryptogramView extends AppCompatTextView {
 
     private boolean mDarkTheme;
 
-    private OnPuzzleProgressListener mOnPuzzleProgressListener;
     private OnHighlightListener mOnHighlightListener;
     private char[][] mCharMap;
     private View mKeyboardView;
@@ -154,6 +155,18 @@ public class CryptogramView extends AppCompatTextView {
         setClickable(true);
     }
 
+    @Override
+    protected void onAttachedToWindow() {
+        super.onAttachedToWindow();
+        EventProvider.getBus().register(this);
+    }
+
+    @Override
+    protected void onDetachedFromWindow() {
+        EventProvider.getBus().unregister(this);
+        super.onDetachedFromWindow();
+    }
+
     public void setKeyboardView(View keyboardView) {
         mKeyboardView = keyboardView;
     }
@@ -161,6 +174,10 @@ public class CryptogramView extends AppCompatTextView {
     @Override
     protected void onFocusChanged(boolean focused, int direction, Rect previouslyFocusedRect) {
         super.onFocusChanged(focused, direction, previouslyFocusedRect);
+        showFocus(focused);
+    }
+
+    private void showFocus(boolean focused) {
         if (focused) {
             showSoftInput();
         } else {
@@ -206,7 +223,7 @@ public class CryptogramView extends AppCompatTextView {
         }
         InputMethodManager inputMethodManager = (InputMethodManager) getContext().getSystemService(Context.INPUT_METHOD_SERVICE);
         if (inputMethodManager != null) {
-            inputMethodManager.hideSoftInputFromWindow(getWindowToken(), InputMethodManager.HIDE_IMPLICIT_ONLY);
+            inputMethodManager.hideSoftInputFromWindow(getWindowToken(), 0);
         }
     }
 
@@ -340,6 +357,7 @@ public class CryptogramView extends AppCompatTextView {
     public void setPuzzle(@Nullable Puzzle puzzle) {
         mPuzzle = puzzle;
         mSelectedCharacter = mSelectedCharacterLast = 0;
+        showFocus(hasFocus());
         requestLayout();
     }
 
@@ -356,11 +374,12 @@ public class CryptogramView extends AppCompatTextView {
             mSelectedCharacter = 0;
             return;
         }
-        // Stop highlighting mistakes
-        mHighlightMistakes = false;
         // Character does not occur in the mapping
         mSelectedCharacter = 0;
         if (mPuzzle.isInputChar(c)) {
+            // Stop highlighting mistakes
+            mHighlightMistakes = false;
+            // Proceed to highlight the associated character
             c = Character.toUpperCase(c);
             HashMap<Character, Character> charMapping = mPuzzle.getCharMapping();
             for (Character chrOrig : charMapping.keySet()) {
@@ -400,9 +419,7 @@ public class CryptogramView extends AppCompatTextView {
                 // Clear it
                 mPuzzle.setUserChar(selectedChar, (char) 0);
             }
-            if (mOnPuzzleProgressListener != null) {
-                mOnPuzzleProgressListener.onPuzzleProgress(mPuzzle);
-            }
+            EventProvider.postEvent(new PuzzleEvent.PuzzleProgressEvent(mPuzzle));
             redraw();
             return true;
         }
@@ -433,6 +450,8 @@ public class CryptogramView extends AppCompatTextView {
     public void reset() {
         mSelectedCharacter = 0;
         redraw();
+        EventProvider.postEvent(
+                new PuzzleEvent.PuzzleResetEvent(mPuzzle));
     }
 
     @Override
@@ -510,7 +529,7 @@ public class CryptogramView extends AppCompatTextView {
 
         PointF highlightPosition = null;
 
-        mCharMap = new char[(int) (width / mBoxW)][100];
+        mCharMap = new char[100][(int) (width / mBoxW)];
 
         float offsetX1 = (mBoxW - mCharW1) / 4;
         float x = 0, y = mBoxH;
@@ -641,6 +660,7 @@ public class CryptogramView extends AppCompatTextView {
     public boolean onTouchEvent(MotionEvent event) {
         switch (event.getAction()) {
             case MotionEvent.ACTION_DOWN:
+                showSoftInput();
                 if (mPuzzle != null) {
                     Character characterForMapping = mPuzzle.getCharacterForMapping(mSelectedCharacter);
                     mSelectedCharacterBeforeTouch = characterForMapping == null
@@ -683,19 +703,8 @@ public class CryptogramView extends AppCompatTextView {
         return 0;
     }
 
-    public void setOnPuzzleProgressListener(
-            OnPuzzleProgressListener onPuzzleProgressListener) {
-        mOnPuzzleProgressListener = onPuzzleProgressListener;
-    }
-
     public void setOnHighlightListener(OnHighlightListener onHighlightListener) {
         mOnHighlightListener = onHighlightListener;
-    }
-
-    public interface OnPuzzleProgressListener {
-
-        void onPuzzleProgress(Puzzle puzzle);
-
     }
 
     public interface OnHighlightListener {

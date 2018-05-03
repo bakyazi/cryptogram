@@ -16,11 +16,13 @@ import com.google.gson.Gson;
 import com.google.gson.JsonSyntaxException;
 import com.pixplicity.cryptogram.BuildConfig;
 import com.pixplicity.cryptogram.R;
+import com.pixplicity.cryptogram.events.PuzzleEvent;
 import com.pixplicity.cryptogram.models.Puzzle;
 import com.pixplicity.cryptogram.models.PuzzleList;
 import com.pixplicity.cryptogram.models.PuzzleProgress;
 import com.pixplicity.cryptogram.models.PuzzleProgressState;
 import com.pixplicity.cryptogram.models.Topic;
+import com.pixplicity.cryptogram.utils.EventProvider;
 import com.pixplicity.cryptogram.utils.PrefsUtils;
 import com.pixplicity.cryptogram.utils.SavegameManager;
 import com.pixplicity.cryptogram.views.CryptogramView;
@@ -221,6 +223,26 @@ public class PuzzleProvider extends AssetProvider {
         // Ensure that we've loaded all puzzle progress
         getProgress();
         mPuzzleProgress.put(puzzleId, progress);
+    }
+
+    /**
+     * Resets all puzzles.
+     */
+    public void resetAll(@Nullable PuzzleList puzzleList) {
+        for (Puzzle puzzle : mPuzzles) {
+            puzzle.reset(false);
+        }
+        mPuzzleProgress.clear();
+        saveLocal();
+
+        Puzzle currentPuzzle = null;
+        if (puzzleList != null) {
+            // TODO Jump back to the first puzzle
+            puzzleList.setCurrentIndex(0);
+            currentPuzzle = getCurrent(puzzleList);
+        }
+        EventProvider.postEventDelayed(
+                new PuzzleEvent.PuzzleResetEvent(currentPuzzle));
     }
 
     public void load(@Nullable final GoogleApiClient googleApiClient,

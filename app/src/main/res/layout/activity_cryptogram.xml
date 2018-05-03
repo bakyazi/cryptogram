@@ -14,7 +14,7 @@
         android:clipChildren="false"
         android:orientation="vertical">
 
-        <include layout="@layout/in_toolbar"/>
+        <include layout="@layout/in_toolbar_cryptogram_subtitle"/>
 
         <android.support.v7.widget.AppCompatTextView
             android:id="@+id/tv_error"
@@ -28,22 +28,12 @@
             android:text="@string/error_puzzle_missing"
             android:visibility="gone"/>
 
-        <com.pixplicity.cryptogram.views.HintView
-            android:id="@+id/hint"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="?attr/colorPrimary"
-            android:elevation="4dp"
-            android:padding="8dp"
-            android:textColor="@color/textLight"
-            tools:targetApi="lollipop"
-            tools:visibility="gone"/>
-
         <android.support.v4.widget.NestedScrollView
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_gravity="fill_vertical"
-            android:layout_weight="1">
+            android:layout_weight="1"
+            android:fillViewport="true">
 
             <com.pixplicity.cryptogram.views.CryptogramLayout
                 android:id="@+id/vg_cryptogram"
@@ -84,11 +74,16 @@
                     android:layout_marginTop="16dp"
                     android:background="@drawable/bg_statistics"
                     android:gravity="center_horizontal"
-                    android:padding="16dp">
+                    android:paddingBottom="16dp"
+                    android:paddingLeft="16dp"
+                    android:paddingRight="16dp"
+                    android:paddingTop="8dp"
+                    android:stretchColumns="1">
 
                     <TableRow
                         android:id="@+id/vg_stats_time"
-                        android:layout_marginBottom="8dp">
+                        android:layout_marginTop="8dp"
+                        tools:visibility="visible">
 
                         <android.support.v7.widget.AppCompatTextView
                             android:layout_width="wrap_content"
@@ -104,34 +99,15 @@
                             android:layout_marginStart="8dp"
                             android:minWidth="64dp"
                             android:textColor="@color/textLight"
-                            android:textStyle="bold"/>
+                            android:textStyle="bold"
+                            tools:text="01:23"/>
 
                     </TableRow>
 
                     <TableRow
-                        android:id="@+id/vg_stats_excess"
-                        android:layout_marginBottom="8dp">
-
-                        <android.support.v7.widget.AppCompatTextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="@string/stats_excess"
-                            android:textColor="@color/textLight"/>
-
-                        <android.support.v7.widget.AppCompatTextView
-                            android:id="@+id/tv_stats_excess"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginLeft="8dp"
-                            android:layout_marginStart="8dp"
-                            android:minWidth="64dp"
-                            android:textColor="@color/textLight"
-                            android:textStyle="bold"/>
-
-                    </TableRow>
-
-                    <TableRow
-                        android:id="@+id/vg_stats_reveals">
+                        android:id="@+id/vg_stats_reveals"
+                        android:layout_marginTop="8dp"
+                        tools:visibility="gone">
 
                         <android.support.v7.widget.AppCompatTextView
                             android:layout_width="wrap_content"
@@ -147,13 +123,15 @@
                             android:layout_marginStart="8dp"
                             android:minWidth="64dp"
                             android:textColor="@color/textLight"
-                            android:textStyle="bold"/>
+                            android:textStyle="bold"
+                            tools:text="0"/>
 
                     </TableRow>
 
                     <TableRow
                         android:id="@+id/vg_stats_score"
-                        android:layout_marginTop="8dp">
+                        android:layout_marginTop="8dp"
+                        tools:visibility="gone">
 
                         <android.support.v7.widget.AppCompatTextView
                             android:layout_width="wrap_content"
@@ -169,14 +147,16 @@
                             android:layout_marginStart="8dp"
                             android:minWidth="64dp"
                             android:textColor="@color/textLight"
-                            android:textStyle="bold"/>
+                            android:textStyle="bold"
+                            tools:text="68%"/>
 
                     </TableRow>
 
                     <TableRow
                         android:id="@+id/vg_stats_practice"
                         android:layout_marginTop="8dp"
-                        android:visibility="gone">
+                        android:visibility="gone"
+                        tools:visibility="visible">
 
                         <android.support.v7.widget.AppCompatTextView
                             android:layout_width="wrap_content"
@@ -193,6 +173,17 @@
             </com.pixplicity.cryptogram.views.CryptogramLayout>
 
         </android.support.v4.widget.NestedScrollView>
+
+        <com.pixplicity.cryptogram.views.HintView
+            android:id="@+id/hint"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="?attr/colorPrimary"
+            android:elevation="4dp"
+            android:padding="8dp"
+            android:textColor="@color/textLight"
+            tools:targetApi="lollipop"
+            tools:visibility="gone"/>
 
         <ViewStub
             android:id="@+id/vs_keyboard"

@@ -3,9 +3,12 @@ package com.pixplicity.cryptogram.utils;
 import android.content.Context;
 import android.os.AsyncTask;
 import android.support.annotation.NonNull;
+import android.util.Log;
 
+import com.crashlytics.android.Crashlytics;
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.games.Games;
+import com.pixplicity.cryptogram.BuildConfig;
 import com.pixplicity.cryptogram.CryptogramApp;
 import com.pixplicity.cryptogram.R;
 import com.pixplicity.cryptogram.models.Puzzle;
@@ -19,6 +22,7 @@ import java.util.TreeMap;
 public class AchievementProvider {
 
     private static final String TAG = AchievementProvider.class.getSimpleName();
+    private static final boolean DEBUG = BuildConfig.DEBUG && false;
 
     private static final int[] ACHIEVEMENTS = new int[]{
             R.string.achievement_wet_feet,
@@ -186,7 +190,9 @@ public class AchievementProvider {
                 }
             }
         }
-    };
+    }
+
+    ;
 
     @NonNull
     public static AchievementProvider getInstance() {
@@ -245,8 +251,16 @@ public class AchievementProvider {
     }
 
     private void unlock(Context context, GoogleApiClient googleApiClient, int achievementResId) {
-        String achievementId = context.getString(achievementResId);
-        Games.Achievements.unlock(googleApiClient, achievementId);
+        try {
+            String achievementId = context.getString(achievementResId);
+            Games.Achievements.unlock(googleApiClient, achievementId);
+            if (DEBUG) {
+                Log.d(TAG, "unlocked: " + achievementId);
+            }
+        } catch (SecurityException | IllegalStateException e) {
+            // Not sure why we're still seeing errors about the connection state, but here we are
+            Crashlytics.logException(e);
+        }
     }
 
     public static class AchievementStats {
@@ -287,7 +301,7 @@ public class AchievementProvider {
                 if (score != null && score >= 1f) {
                     mPerfectScore++;
                 }
-                if (puzzle.getExcessCount() == 0 && puzzle.getReveals() == 0 && !puzzle.hadHints()) {
+                if (puzzle.getExcessCount() == 0 && puzzle.getReveals() == 0) {
                     mUnlockedJackOfAllTrades = true;
                 }
                 long startTime = puzzle.getProgress().getStartTime();
@@ -352,7 +366,7 @@ public class AchievementProvider {
             return mLongestStreak;
         }
 
-        private Calendar toCalendar(long timestamp) {
+        private static Calendar toCalendar(long timestamp) {
             Calendar calendar = Calendar.getInstance();
             calendar.setTimeInMillis(timestamp);
             calendar.set(Calendar.HOUR_OF_DAY, 0);
@@ -362,11 +376,11 @@ public class AchievementProvider {
             return calendar;
         }
 
-        public synchronized boolean hasSeries(int length, int seriesDuration) {
+        public synchronized boolean hasSeries(int seriesLength, int seriesDuration) {
             Long[] keys = new Long[mTimes.size()];
             mTimes.keySet().toArray(keys);
-            for (int i = length; i < mTimes.size(); i++) {
-                long start = keys[i - length];
+            for (int i = seriesLength; i < mTimes.size(); i++) {
+                long start = keys[i - seriesLength];
                 long duration = mTimes.get(keys[i]);
                 if (duration == 0) {
                     continue;

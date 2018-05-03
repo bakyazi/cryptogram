@@ -1,5 +1,6 @@
 package com.pixplicity.cryptogram.models;
 
+import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.util.Log;
@@ -7,7 +8,9 @@ import android.util.Log;
 import com.crashlytics.android.answers.Answers;
 import com.crashlytics.android.answers.LevelEndEvent;
 import com.crashlytics.android.answers.LevelStartEvent;
+import com.google.firebase.analytics.FirebaseAnalytics;
 import com.google.gson.annotations.SerializedName;
+import com.pixplicity.cryptogram.CryptogramApp;
 import com.pixplicity.cryptogram.events.PuzzleEvent;
 import com.pixplicity.cryptogram.utils.EventProvider;
 
@@ -23,6 +26,10 @@ public class PuzzleProgress {
     private static final String TAG = PuzzleProgress.class.getSimpleName();
 
     private static final List<Character> ALPHABET = new ArrayList<>(26);
+
+    private static final float TARGET_DURATION = 3 * 60f;
+    private static final float MAX_REVEALS = 6f;
+    private static final float MAX_EXCESS_INPUT = 26f;
 
     static {
         for (int i = 'A'; i <= 'Z'; i++) {
@@ -226,9 +233,11 @@ public class PuzzleProgress {
 
     /**
      * Sets a selected hint to a character.
+     *
      * @return If the character was changed from a previous assignment; i.e. 'corrected' by the user.
      */
-    public synchronized boolean setUserChar(@NonNull Puzzle puzzle, char selectedCharacter, char c) {
+    public synchronized boolean setUserChar(@NonNull Puzzle puzzle, char selectedCharacter,
+                                            char c) {
         boolean changed = false;
         Character previousChar = getUserCharsMapping(puzzle).get(selectedCharacter);
         if (previousChar == null) {
@@ -250,19 +259,37 @@ public class PuzzleProgress {
         return changed;
     }
 
+    private int getUserCharsCount(@NonNull Puzzle puzzle) {
+        int count = 0;
+        HashMap<Character, Character> userCharsMapping = getUserCharsMapping(puzzle);
+        for (Character c : userCharsMapping.keySet()) {
+            if (puzzle.isGiven(c)) {
+                // This character is given by the puzzle
+                continue;
+            }
+            Character userChar = userCharsMapping.get(c);
+            if (userChar != null && userChar != 0) {
+                // This is a user filled character
+                count++;
+            }
+        }
+        return count;
+    }
+
     public synchronized int getExcessCount(@NonNull Puzzle puzzle) {
         if (mInputs == null) {
             return -1;
         }
         // Start with total number of inputs
-        int count = mInputs;
-        for (Character c : getUserCharsMapping(puzzle).values()) {
-            if (c != null && c != 0) {
-                // Subtract any filled in characters
-                count--;
-            }
+        return mInputs - getUserCharsCount(puzzle);
+    }
+
+    public synchronized boolean isInProgress(@NonNull Puzzle puzzle) {
+        if (isCompleted(puzzle)) {
+            return false;
         }
-        return count;
+        // Dumb approach of simply checking on inputs
+        return getUserCharsCount(puzzle) > 0;
     }
 
     public synchronized boolean isCompleted(@NonNull Puzzle puzzle) {
@@ -342,26 +369,40 @@ public class PuzzleProgress {
     }
 
     private synchronized void onStart(Puzzle puzzle) {
-        int puzzleNumber = puzzle.getNumber();
-        Answers.getInstance().logLevelStart(
-                new LevelStartEvent()
-                        .putLevelName("Puzzle #" + puzzleNumber));
+        {
+            // Analytics
+            int puzzleNumber = puzzle.getNumber();
+            String puzzleId = String.valueOf(puzzle.getId());
+            Bundle bundle = new Bundle();
+            bundle.putString(FirebaseAnalytics.Param.LEVEL, puzzleId);
+            CryptogramApp.getInstance().getFirebaseAnalytics().logEvent(CryptogramApp.EVENT_LEVEL_START, bundle);
+            Answers.getInstance().logLevelStart(
+                    new LevelStartEvent()
+                            .putLevelName("Puzzle #" + puzzleNumber));
+        }
 
         EventProvider.postEvent(
                 new PuzzleEvent.PuzzleStartedEvent(puzzle));
     }
 
     private synchronized void onCompleted(@NonNull Puzzle puzzle) {
-        int puzzleNumber = puzzle.getNumber();
-        LevelEndEvent event = new LevelEndEvent()
-                .putLevelName("Puzzle #" + puzzleNumber)
-                .putSuccess(true);
-        Float score = getScore(puzzle);
-        if (score != null) {
-            event.putScore(score);
+        {
+            // Analytics
+            int puzzleNumber = puzzle.getNumber();
+            Float score = getScore(puzzle);
+            String puzzleId = String.valueOf(puzzle.getId());
+            Bundle bundle = new Bundle();
+            bundle.putString(FirebaseAnalytics.Param.LEVEL, puzzleId);
+            LevelEndEvent event = new LevelEndEvent()
+                    .putLevelName("Puzzle #" + puzzleNumber)
+                    .putSuccess(true);
+            if (score != null) {
+                bundle.putFloat(FirebaseAnalytics.Param.SCORE, score);
+                event.putScore(score);
+            }
+            CryptogramApp.getInstance().getFirebaseAnalytics().logEvent(CryptogramApp.EVENT_LEVEL_END, bundle);
+            Answers.getInstance().logLevelEnd(event);
         }
-        Answers.getInstance().logLevelEnd(
-                event);
 
         EventProvider.postEventDelayed(
                 new PuzzleEvent.PuzzleCompletedEvent(puzzle));
@@ -395,8 +436,7 @@ public class PuzzleProgress {
 
     public synchronized boolean hasScore(@NonNull Puzzle puzzle) {
         long duration = puzzle.getDurationMs();
-        int excessCount = getExcessCount(puzzle);
-        if (duration == 0 || excessCount < 0) {
+        if (duration == 0) {
             return false;
         }
         return true;
@@ -407,12 +447,10 @@ public class PuzzleProgress {
             return null;
         }
         float duration = getDurationMs() / 1000f;
-        int excessCount = getExcessCount(puzzle);
         float score = 1;
-        score = addScore(score, 120f / duration);
+        score = addScore(score, TARGET_DURATION / duration);
         score = addScore(score, (float) Math.pow(0.75f, getRevealedMistakes()));
-        score = addScore(score, (6f - getReveals()) / 6f);
-        score = addScore(score, (26f - excessCount) / 26f);
+        score = addScore(score, (MAX_REVEALS - getReveals()) / 6f);
         // Never return a score below 0.0% or above 100.0%
         return Math.max(0f, Math.min(1f, score));
     }
@@ -423,17 +461,6 @@ public class PuzzleProgress {
             return score * -addition;
         }
         return score * addition;
-    }
-
-    public synchronized void setHadHints(boolean hadHints) {
-        mHadHints = hadHints;
-    }
-
-    public synchronized boolean hadHints() {
-        if (mHadHints == null) {
-            mHadHints = false;
-        }
-        return mHadHints;
     }
 
     public synchronized void sanitize(@NonNull Puzzle puzzle) {
@@ -475,7 +502,7 @@ public class PuzzleProgress {
         }
     }
 
-    public synchronized void reset(@NonNull Puzzle puzzle) {
+    public synchronized void reset(@Nullable Puzzle puzzle) {
         mUserChars = null;
         mCharMapping = null;
         mStartTime = null;
@@ -483,9 +510,13 @@ public class PuzzleProgress {
         mCompleted = null;
         if (isPlaying()) {
             mPlaying = null;
-            onResume(puzzle);
+            if (puzzle != null) {
+                onResume(puzzle);
+            }
         }
-        sanitize(puzzle);
+        if (puzzle != null) {
+            sanitize(puzzle);
+        }
     }
 
 }

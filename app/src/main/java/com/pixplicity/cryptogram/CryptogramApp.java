@@ -4,6 +4,8 @@ import android.app.Application;
 import android.content.ContextWrapper;
 
 import com.crashlytics.android.Crashlytics;
+import com.google.firebase.analytics.FirebaseAnalytics;
+import com.pixplicity.cryptogram.utils.UpdateManager;
 import com.pixplicity.easyprefs.library.Prefs;
 
 import io.fabric.sdk.android.Fabric;
@@ -17,8 +19,12 @@ public class CryptogramApp extends Application {
     public static final String CONTENT_SETTINGS = "settings";
     public static final String CONTENT_HOW_TO_PLAY = "how-to-play";
     public static final String CONTENT_ABOUT = "about";
+    public static final String EVENT_LEVEL_START = "level_start";
+    public static final String EVENT_LEVEL_END = "level_end";
 
     private static CryptogramApp sInstance;
+
+    private FirebaseAnalytics mFirebaseAnalytics;
 
     public CryptogramApp() {
         super();
@@ -33,6 +39,8 @@ public class CryptogramApp extends Application {
     public void onCreate() {
         super.onCreate();
 
+        mFirebaseAnalytics = FirebaseAnalytics.getInstance(this);
+
         // Initialize Crashlytics
         Fabric.with(this, new Crashlytics());
 
@@ -43,6 +51,12 @@ public class CryptogramApp extends Application {
                 .setPrefsName(getPackageName())
                 .setUseDefaultSharedPreference(true)
                 .build();
+
+        UpdateManager.init(this);
+    }
+
+    public FirebaseAnalytics getFirebaseAnalytics() {
+        return mFirebaseAnalytics;
     }
 
 }

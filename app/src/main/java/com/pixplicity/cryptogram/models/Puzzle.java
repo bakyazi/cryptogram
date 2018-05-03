@@ -184,6 +184,10 @@ public class Puzzle {
         return getProgress().getUserChars(this);
     }
 
+    public boolean isUserCharInput(char inputChar) {
+        return getUserChars().contains(inputChar);
+    }
+
     public Character getUserChar(char c) {
         return getProgress().getUserChar(this, c);
     }
@@ -209,6 +213,10 @@ public class Puzzle {
 
     public boolean isInstruction() {
         return mId < 0;
+    }
+
+    public boolean isInProgress() {
+        return getProgress().isInProgress(this);
     }
 
     public boolean isCompleted() {
@@ -292,14 +300,6 @@ public class Puzzle {
         return getProgress().getScore(this);
     }
 
-    public void setHadHints(boolean hadHints) {
-        getProgress().setHadHints(hadHints);
-    }
-
-    public boolean hadHints() {
-        return getProgress().hadHints();
-    }
-
     public void onResume() {
         getProgress().onResume(this);
     }
@@ -323,9 +323,11 @@ public class Puzzle {
         mLoadedProgress = true;
     }
 
-    public void reset() {
-        getProgress().reset(this);
-        save();
+    public void reset(boolean save) {
+        getProgress().reset(save ? this : null);
+        if (save) {
+            save();
+        }
     }
 
     public void save() {

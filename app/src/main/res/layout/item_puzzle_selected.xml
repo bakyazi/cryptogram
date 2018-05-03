@@ -8,13 +8,12 @@
     android:clickable="true"
     android:focusable="true"
     android:foreground="@drawable/ripple_primary_dark"
-    android:gravity="center_vertical"
     android:minHeight="48dp"
     android:orientation="horizontal"
-    android:paddingBottom="6dp"
+    android:paddingBottom="4dp"
     android:paddingLeft="16dp"
     android:paddingRight="16dp"
-    android:paddingTop="6dp">
+    android:paddingTop="4dp">
 
     <ImageView
         android:id="@+id/iv_completed"
@@ -30,6 +29,21 @@
         android:tint="@color/colorPrimaryDark"
         android:visibility="gone"
         tools:visibility="visible"/>
+
+    <ImageView
+        android:id="@+id/iv_in_progress"
+        android:layout_width="24dp"
+        android:layout_height="24dp"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentRight="true"
+        android:layout_centerVertical="true"
+        android:layout_marginLeft="16dp"
+        android:layout_marginStart="16dp"
+        android:contentDescription="@string/puzzle_completed"
+        android:src="@drawable/ic_in_progress"
+        android:tint="@color/colorPrimaryDark"
+        android:visibility="gone"
+        tools:visibility="gone"/>
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -53,7 +67,8 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="2dp"
             android:textColor="@color/colorPrimaryDark"
-            tools:text="Ralph Waldo Emerson"/>
+            tools:text="Ralph Waldo Emerson"
+            tools:visibility="visible"/>
 
     </LinearLayout>
 

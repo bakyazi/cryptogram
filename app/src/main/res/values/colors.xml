@@ -4,12 +4,13 @@
     <color name="colorTextPrimary">#000000</color>
     <color name="colorBackground">#f0f0f0</color>
     <color name="colorPrimary">#3F51B5</color>
+    <color name="colorPrimaryLight">#5f74ed</color>
     <color name="colorPrimaryDark">#303F9F</color>
     <color name="colorPrimaryDark_translucent">#80303F9F</color>
     <color name="colorAccent">#FF4081</color>
     <color name="colorAccentDisabled">#80FF4081</color>
     <color name="colorPuzzleText">#000000</color>
-    <color name="colorPuzzleComplete">#009000</color>
+    <color name="colorPuzzleComplete">#007000</color>
     <color name="colorPuzzleMistake">#c6001e</color>
     <color name="colorPuzzleHighlight">#80808ee0</color>
 
@@ -17,12 +18,13 @@
     <color name="colorDarkBackground">#000</color>
     <color name="colorDarkTextPrimary">#d0d0d0</color>
     <color name="colorDarkPrimary">#505050</color>
+    <color name="colorDarkPrimaryLight">#808080</color>
     <color name="colorDarkPrimaryDark">#202020</color>
     <color name="colorDarkPrimaryDark_translucent">#80202020</color>
     <color name="colorDarkAccent">#d9d9d9</color>
     <color name="colorDarkAccentDisabled">#80FF4081</color>
     <color name="colorDarkPuzzleText">@color/textLight</color>
-    <color name="colorDarkPuzzleComplete">#00d000</color>
+    <color name="colorDarkPuzzleComplete">#60ff60</color>
     <color name="colorDarkPuzzleMistake">#c6001e</color>
     <color name="colorDarkPuzzleHighlight">#80ffffff</color>
 

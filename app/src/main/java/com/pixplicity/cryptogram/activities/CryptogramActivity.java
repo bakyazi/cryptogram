@@ -2,17 +2,19 @@ package com.pixplicity.cryptogram.activities;
 
 import android.app.ProgressDialog;
 import android.content.ActivityNotFoundException;
+import android.content.ClipData;
+import android.content.ClipboardManager;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.IntentSender;
+import android.content.pm.PackageManager;
 import android.graphics.PointF;
 import android.graphics.Rect;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
-import android.support.annotation.ColorInt;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
-import android.support.design.widget.Snackbar;
 import android.support.v4.view.GravityCompat;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.LinearLayoutManager;
@@ -56,6 +58,7 @@ import com.google.android.gms.games.GamesActivityResultCodes;
 import com.google.android.gms.games.Player;
 import com.google.android.gms.games.snapshot.SnapshotMetadata;
 import com.google.android.gms.games.snapshot.Snapshots;
+import com.google.firebase.analytics.FirebaseAnalytics;
 import com.pixplicity.cryptogram.BuildConfig;
 import com.pixplicity.cryptogram.CryptogramApp;
 import com.pixplicity.cryptogram.R;
@@ -73,7 +76,7 @@ import com.pixplicity.cryptogram.utils.PrefsUtils;
 import com.pixplicity.cryptogram.utils.StatisticsUtils;
 import com.pixplicity.cryptogram.utils.SavegameManager;
 import com.pixplicity.cryptogram.utils.StringUtils;
-import com.pixplicity.cryptogram.utils.StyleUtils;
+import com.pixplicity.cryptogram.utils.UpdateManager;
 import com.pixplicity.cryptogram.utils.VideoUtils;
 import com.pixplicity.cryptogram.views.CryptogramLayout;
 import com.pixplicity.cryptogram.views.CryptogramView;
@@ -147,17 +150,14 @@ public class CryptogramActivity extends BaseActivity implements GoogleApiClient.
     @BindView(R.id.vg_stats)
     protected ViewGroup mVgStats;
 
-    @BindView(R.id.vg_stats_excess)
-    protected ViewGroup mVgStatsExcess;
-
-    @BindView(R.id.tv_stats_excess)
-    protected TextView mTvStatsExcess;
-
     @BindView(R.id.vg_stats_time)
     protected ViewGroup mVgStatsTime;
 
     @BindView(R.id.tv_stats_time)
     protected TextView mTvStatsTime;
+
+    @BindView(R.id.vg_stats_reveals)
+    protected ViewGroup mVgStatsReveals;
 
     @BindView(R.id.tv_stats_reveals)
     protected TextView mTvStatsReveals;
@@ -205,6 +205,9 @@ public class CryptogramActivity extends BaseActivity implements GoogleApiClient.
             getWindow().setBackgroundDrawableResource(R.drawable.bg_activity_dark);
         }
         setContentView(R.layout.activity_cryptogram);
+        if (isDarkTheme()) {
+            mVgStats.setBackgroundResource(R.drawable.bg_statistics_dark);
+        }
 
         final PuzzleProvider puzzleProvider = PuzzleProvider.getInstance(this);
 
@@ -235,7 +238,7 @@ public class CryptogramActivity extends BaseActivity implements GoogleApiClient.
                 if (mDrawerLayout != null) {
                     mDrawerLayout.closeDrawers();
                 }
-                updateCryptogram(mPuzzles.get(position));
+                onPuzzleChanged(puzzleProvider.get(position), false);
             }
         }, mPuzzles);
         mRvDrawer.setAdapter(mPuzzleAdapter);
@@ -281,8 +284,7 @@ public class CryptogramActivity extends BaseActivity implements GoogleApiClient.
 
         });
 
-        mVgCryptogram.setCrytogramView(mCryptogramView);
-        mCryptogramView.setOnPuzzleProgressListener(this::onCryptogramUpdated);
+        mVgCryptogram.setCryptogramView(mCryptogramView);
         mCryptogramView.setOnHighlightListener(new CryptogramView.OnHighlightListener() {
             private SparseBooleanArray mHighlightShown = new SparseBooleanArray();
 
@@ -297,18 +299,22 @@ public class CryptogramActivity extends BaseActivity implements GoogleApiClient.
                 mHighlightShown.put(type, true);
                 switch (type) {
                     case PrefsUtils.TYPE_HIGHLIGHT_HYPHENATION:
-                        showHighlight(type, point,
+                        showHighlight(type, createTapTargetFromPoint(
+                                point,
                                 getString(R.string.highlight_hyphenation_title),
-                                getString(R.string.highlight_hyphenation_description)
+                                getString(R.string.highlight_hyphenation_description)),
+                                1200
                         );
                         break;
                     case PrefsUtils.TYPE_HIGHLIGHT_TOUCH_INPUT:
                         if (mFreshInstall) {
                             PrefsUtils.setHighlighted(type, true);
                         } else {
-                            showHighlight(PrefsUtils.TYPE_HIGHLIGHT_TOUCH_INPUT, point,
+                            showHighlight(PrefsUtils.TYPE_HIGHLIGHT_TOUCH_INPUT, createTapTargetFromPoint(
+                                    point,
                                     getString(R.string.highlight_touch_input_title),
-                                    getString(R.string.highlight_touch_input_description)
+                                    getString(R.string.highlight_touch_input_description)),
+                                    1200
                             );
                         }
                         break;
@@ -324,13 +330,20 @@ public class CryptogramActivity extends BaseActivity implements GoogleApiClient.
             mCryptogramView.setKeyboardView(mVwKeyboard);
         }
 
-        updateCryptogram(puzzleProvider.getCurrent(mPuzzles));
-
         Intent intent = getIntent();
         if (intent != null) {
             if (intent.getBooleanExtra(EXTRA_LAUNCH_SETTINGS, false)) {
                 startActivity(SettingsActivity.create(this));
             }
+        }
+
+        if (UpdateManager.consumeEnabledShowUsedLetters()) {
+            showHighlight(-1, TapTarget.forToolbarOverflow(
+                    mToolbar,
+                    getString(R.string.highlight_used_letters_title),
+                    getString(R.string.highlight_used_letters_description)),
+                    1200
+            );
         }
     }
 
@@ -343,6 +356,8 @@ public class CryptogramActivity extends BaseActivity implements GoogleApiClient.
     protected void onStart() {
         super.onStart();
 
+        EventProvider.getBus().register(this);
+
         mGoogleApiClient.connect();
 
         final PuzzleProvider puzzleProvider = PuzzleProvider.getInstance(this);
@@ -350,16 +365,22 @@ public class CryptogramActivity extends BaseActivity implements GoogleApiClient.
         if (puzzle != null) {
             puzzle.onResume();
         }
-
-        EventProvider.getBus().register(this);
+        showHintView(puzzle);
 
         if (hasOnBoardingPages()) {
             showOnboarding(0);
         } else {
             onGameplayReady();
         }
+    }
 
-        mHintView.setVisibility(PrefsUtils.getShowHints() ? View.VISIBLE : View.GONE);
+    @Override
+    protected void onResume() {
+        super.onResume();
+
+        final PuzzleProvider puzzleProvider = PuzzleProvider.getInstance(this);
+        Puzzle puzzle = puzzleProvider.getCurrent(mPuzzles);
+        onPuzzleChanged(puzzle, true);
     }
 
     @Override
@@ -404,7 +425,11 @@ public class CryptogramActivity extends BaseActivity implements GoogleApiClient.
                 switch (resultCode) {
                     case RESULT_OK: {
                         // Logged in
-                        Answers.getInstance().logLogin(new LoginEvent().putSuccess(true));
+                        {
+                            // Analytics
+                            CryptogramApp.getInstance().getFirebaseAnalytics().logEvent(FirebaseAnalytics.Event.LOGIN, null);
+                            Answers.getInstance().logLogin(new LoginEvent().putSuccess(true));
+                        }
                         mGoogleApiClient.connect();
                     }
                     break;
@@ -440,8 +465,8 @@ public class CryptogramActivity extends BaseActivity implements GoogleApiClient.
                                 new SavegameManager.OnLoadResult() {
                                     @Override
                                     public void onLoadSuccess() {
-                                        updateCryptogram(PuzzleProvider.getInstance(CryptogramActivity.this)
-                                                                       .getCurrent(mPuzzles));
+                                        onPuzzleChanged(PuzzleProvider.getInstance(CryptogramActivity.this)
+                                                                       .getCurrent(mPuzzles), false);
                                         showSnackbar("Game loaded.");
                                         pd.dismiss();
                                     }
@@ -475,26 +500,29 @@ public class CryptogramActivity extends BaseActivity implements GoogleApiClient.
         return PrefsUtils.getOnboarding() < ONBOARDING_PAGES - 1;
     }
 
-    private void showHighlight(final int type, PointF point, final String title,
-                               final String description) {
+    private TapTarget createTapTargetFromPoint(PointF point, final String title,
+                                               final String description) {
         Rect viewRect = new Rect();
         mCryptogramView.getGlobalVisibleRect(viewRect);
         final int targetX = (int) (point.x + viewRect.left);
         final int targetY = (int) (point.y + viewRect.top);
         final int targetRadius = 48;
-        Handler handler = new Handler();
-        handler.postDelayed(() -> {
+        return TapTarget.forBounds(new Rect(targetX - targetRadius, targetY - targetRadius, targetX + targetRadius, targetY + targetRadius),
+                title, description);
+    }
+
+    private void showHighlight(final int type, final TapTarget tapTarget, int delayMillis) {
+        new Handler().postDelayed(() -> {
             final long showTime = System.currentTimeMillis();
             TapTargetView.showFor(
                     CryptogramActivity.this,
-                    TapTarget.forBounds(new Rect(targetX - targetRadius, targetY - targetRadius, targetX + targetRadius, targetY + targetRadius),
-                            title, description)
-                             .titleTextColor(R.color.white)
-                             .descriptionTextColor(R.color.white)
-                             .outerCircleColor(R.color.highlight_color)
-                             .cancelable(true)
-                             .tintTarget(false)
-                             .transparentTarget(true),
+                    tapTarget
+                            .titleTextColor(R.color.white)
+                            .descriptionTextColor(R.color.white)
+                            .outerCircleColor(R.color.highlight_color)
+                            .cancelable(true)
+                            .tintTarget(false)
+                            .transparentTarget(true),
                     new TapTargetView.Listener() {
                         @Override
                         public void onTargetClick(TapTargetView view) {
@@ -512,7 +540,7 @@ public class CryptogramActivity extends BaseActivity implements GoogleApiClient.
                         }
 
                         private void dismiss(TapTargetView view) {
-                            if (System.currentTimeMillis() - showTime >= 1500) {
+                            if (type >= 0 && System.currentTimeMillis() - showTime >= 1500) {
                                 // Ensure that the user saw the message
                                 PrefsUtils.setHighlighted(type, true);
                             }
@@ -591,11 +619,18 @@ public class CryptogramActivity extends BaseActivity implements GoogleApiClient.
             Button btLeaderboards = dialogView.findViewById(R.id.bt_leaderboards);
             btLeaderboards.setOnClickListener(view -> {
                 dialog.dismiss();
-                Answers.getInstance().logContentView(new ContentViewEvent().putContentName(CryptogramApp.CONTENT_LEADERBOARDS));
+                {
+                    // Analytics
+                    CryptogramApp.getInstance().getFirebaseAnalytics().logEvent(CryptogramApp.CONTENT_LEADERBOARDS, null);
+                    Answers.getInstance().logContentView(new ContentViewEvent().putContentName(CryptogramApp.CONTENT_LEADERBOARDS));
+                }
                 try {
                     startActivityForResult(
                             Games.Leaderboards.getLeaderboardIntent(mGoogleApiClient, getString(R.string.leaderboard_scoreboard)),
                             RC_UNUSED);
+                } catch (SecurityException e) {
+                    // Not sure why we're still seeing errors about the connection state, but here we are
+                    Crashlytics.logException(e);
                 } catch (ActivityNotFoundException e) {
                     Toast.makeText(CryptogramActivity.this, R.string.google_play_games_not_installed, Toast.LENGTH_LONG).show();
                 }
@@ -604,11 +639,18 @@ public class CryptogramActivity extends BaseActivity implements GoogleApiClient.
             Button btAchievements = dialogView.findViewById(R.id.bt_achievements);
             btAchievements.setOnClickListener(view -> {
                 dialog.dismiss();
-                Answers.getInstance().logContentView(new ContentViewEvent().putContentName(CryptogramApp.CONTENT_ACHIEVEMENTS));
+                {
+                    // Analytics
+                    CryptogramApp.getInstance().getFirebaseAnalytics().logEvent(CryptogramApp.CONTENT_ACHIEVEMENTS, null);
+                    Answers.getInstance().logContentView(new ContentViewEvent().putContentName(CryptogramApp.CONTENT_ACHIEVEMENTS));
+                }
                 try {
                     startActivityForResult(
                             Games.Achievements.getAchievementsIntent(mGoogleApiClient),
                             RC_UNUSED);
+                } catch (SecurityException e) {
+                    // Not sure why we're still seeing errors about the connection state, but here we are
+                    Crashlytics.logException(e);
                 } catch (ActivityNotFoundException e) {
                     Toast.makeText(CryptogramActivity.this, R.string.google_play_games_not_installed, Toast.LENGTH_LONG).show();
                 }
@@ -669,32 +711,38 @@ public class CryptogramActivity extends BaseActivity implements GoogleApiClient.
                 mTvTopic.setText(getString(R.string.topic, topic));
             }
             if (puzzle.isInstruction() || puzzle.isNoScore()) {
-                mToolbar.setSubtitle(puzzle.getTitle(this));
+                setToolbarSubtitle(puzzle.getTitle(this));
             } else {
-                mToolbar.setSubtitle(getString(
+                setToolbarSubtitle(getString(
                         R.string.puzzle_number,
                         puzzle.getNumber()));
             }
             // Invoke various events
-            onCryptogramUpdated(puzzle);
+            showPuzzleState(puzzle);
             puzzle.onResume();
         } else {
             mTvError.setVisibility(View.VISIBLE);
             mVgCryptogram.setVisibility(View.GONE);
-            mToolbar.setSubtitle(null);
+            setToolbarSubtitle(null);
         }
     }
 
     private void onGameplayReady() {
         mCryptogramView.requestFocus();
+        if (UpdateManager.consumeScoreExcludesExcessInputs()) {
+            new MaterialDialog.Builder(this)
+                    .title(R.string.scoring_changed_title)
+                    .content(R.string.scoring_changed_message)
+                    .cancelable(false)
+                    .positiveText(R.string.scoring_changed_ok)
+                    .show();
+        }
     }
 
-    public void onCryptogramUpdated(Puzzle puzzle) {
+    public void showPuzzleState(Puzzle puzzle) {
         // Update the HintView as the puzzle updates
-        mHintView.setPuzzle(puzzle);
         mPuzzleAdapter.notifyDataSetChanged();
         if (puzzle.isCompleted()) {
-            mHintView.setVisibility(View.GONE);
             mVgStats.setVisibility(View.VISIBLE);
             long durationMs = puzzle.getDurationMs();
             if (durationMs <= 0) {
@@ -703,15 +751,18 @@ public class CryptogramActivity extends BaseActivity implements GoogleApiClient.
                 mVgStatsTime.setVisibility(View.VISIBLE);
                 mTvStatsTime.setText(StringUtils.getDurationString(durationMs));
             }
-            int excessCount = puzzle.getExcessCount();
-            if (excessCount < 0) {
-                mVgStatsExcess.setVisibility(View.GONE);
-            } else {
-                mVgStatsExcess.setVisibility(View.VISIBLE);
-                mTvStatsExcess.setText(String.valueOf(excessCount));
+            int reveals = -1;
+            Float score = null;
+            if (PrefsUtils.getShowScore()) {
+                reveals = puzzle.getReveals();
+                score = puzzle.getScore();
             }
-            mTvStatsReveals.setText(String.valueOf(puzzle.getReveals()));
-            Float score = puzzle.getScore();
+            if (reveals < 0) {
+                mVgStatsReveals.setVisibility(View.GONE);
+            } else {
+                mVgStatsReveals.setVisibility(View.VISIBLE);
+                mTvStatsReveals.setText(String.valueOf(reveals));
+            }
             if (score != null) {
                 mVgStatsPractice.setVisibility(View.GONE);
                 mVgStatsScore.setVisibility(View.VISIBLE);
@@ -724,18 +775,29 @@ public class CryptogramActivity extends BaseActivity implements GoogleApiClient.
                 mVgStatsPractice.setVisibility(puzzle.isNoScore() ? View.VISIBLE : View.GONE);
             }
         } else {
-            if (PrefsUtils.getShowHints() && puzzle.hasUserChars()) {
-                puzzle.setHadHints(true);
-            }
-            mHintView.setVisibility(PrefsUtils.getShowHints() ? View.VISIBLE : View.GONE);
             mVgStats.setVisibility(View.GONE);
+        }
+        showHintView(puzzle);
+    }
+
+    protected void showHintView(@Nullable Puzzle puzzle) {
+        mHintView.setVisibility(puzzle != null && !puzzle.isCompleted()
+                && PrefsUtils.getShowUsedChars() && PrefsUtils.getUseSystemKeyboard()
+                ? View.VISIBLE : View.GONE);
+    }
+
+    public void onPuzzleChanged(Puzzle puzzle, boolean delayEvent) {
+        updateCryptogram(puzzle);
+        if (delayEvent) {
+            EventProvider.postEventDelayed(new PuzzleEvent.PuzzleProgressEvent(puzzle), 200);
+        } else {
+            EventProvider.postEvent(new PuzzleEvent.PuzzleProgressEvent(puzzle));
         }
     }
 
     @Subscribe
-    public void onPuzzleStyleChanged(PuzzleEvent.PuzzleStyleChanged event) {
-        // Just recreate the activity
-        recreate();
+    public void onPuzzleProgress(PuzzleEvent.PuzzleProgressEvent event) {
+        showPuzzleState(event.getPuzzle());
     }
 
     @Subscribe
@@ -747,14 +809,19 @@ public class CryptogramActivity extends BaseActivity implements GoogleApiClient.
     }
 
     @Subscribe
+    public void onPuzzleReset(PuzzleEvent.PuzzleResetEvent event) {
+        updateCryptogram(event.getPuzzle());
+    }
+
+    @Subscribe
     public void onPuzzleCompleted(PuzzleEvent.PuzzleCompletedEvent event) {
         updateCryptogram(event.getPuzzle());
 
         // Increment the trigger for displaying the rating dialog
-        mRate.launched();
+        mRate.count();
 
         // Allow the rating dialog to appear if needed
-        mRate.check();
+        mRate.showRequest();
 
         if (mGoogleApiClient.isConnected()) {
             // Submit score
@@ -869,9 +936,10 @@ public class CryptogramActivity extends BaseActivity implements GoogleApiClient.
                     new AlertDialog.Builder(this)
                             .setMessage(R.string.reset_puzzle)
                             .setPositiveButton(R.string.reset, (dialogInterface, i) -> {
-                                puzzle.reset();
+                                puzzle.reset(true);
                                 mCryptogramView.reset();
-                                onCryptogramUpdated(puzzle);
+                                showPuzzleState(puzzle);
+                                onPuzzleChanged(puzzle, false);
                             })
                             .setNegativeButton(R.string.cancel, (dialogInterface, i) -> {
                             })
@@ -915,11 +983,11 @@ public class CryptogramActivity extends BaseActivity implements GoogleApiClient.
                                 int puzzleNumber = Integer.parseInt(input.toString());
                                 PuzzleProvider provider = PuzzleProvider
                                         .getInstance(CryptogramActivity.this);
-                                Puzzle puzzle1 = provider.getByNumber(puzzleNumber);
-                                if (puzzle1 == null) {
+                                Puzzle newPuzzle = provider.getByNumber(puzzleNumber);
+                                if (newPuzzle == null) {
                                     showSnackbar(getString(R.string.puzzle_nonexistant, puzzleNumber));
                                 } else {
-                                    updateCryptogram(puzzle1);
+                                    onPuzzleChanged(newPuzzle, false);
                                 }
                             } catch (NumberFormatException ignored) {
                             }
@@ -939,18 +1007,29 @@ public class CryptogramActivity extends BaseActivity implements GoogleApiClient.
                 } else {
                     text = getString(
                             R.string.share_partial,
-                            puzzle == null ? getString(R.string.author_unknown) : puzzle.getAuthor(),
+                            puzzle == null
+                                    ? getString(R.string.author_unknown)
+                                    : puzzle.getAuthor(),
                             getString(R.string.share_url));
                 }
                 intent.putExtra(Intent.EXTRA_TEXT, text);
                 startActivity(Intent.createChooser(intent, getString(R.string.share)));
-                // Log the event
-                Answers.getInstance().logShare(
-                        new ShareEvent()
-                                .putContentId(puzzle == null ? null : String.valueOf(puzzle.getId()))
-                                .putContentType("puzzle")
-                                .putContentName(text)
-                );
+                {
+                    // Analytics
+                    String puzzleId = puzzle == null
+                            ? null
+                            : String.valueOf(puzzle.getId());
+                    Bundle bundle = new Bundle();
+                    bundle.putString(FirebaseAnalytics.Param.LEVEL, puzzleId);
+                    bundle.putString(FirebaseAnalytics.Param.CONTENT, text);
+                    CryptogramApp.getInstance().getFirebaseAnalytics().logEvent(FirebaseAnalytics.Event.SHARE, bundle);
+                    Answers.getInstance().logShare(
+                            new ShareEvent()
+                                    .putContentId(puzzleId)
+                                    .putContentType("puzzle")
+                                    .putContentName(text)
+                    );
+                }
             }
             return true;
             case R.id.action_stats: {
@@ -974,29 +1053,55 @@ public class CryptogramActivity extends BaseActivity implements GoogleApiClient.
                 startActivity(AboutActivity.create(this));
             }
             return true;
+            case R.id.action_donate: {
+                Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse("bitcoin:" + BuildConfig.BITCOIN_ADDRESS));
+
+                AlertDialog dialog = new AlertDialog.Builder(this)
+                        .setTitle(R.string.donate_title)
+                        .setMessage(R.string.donate_message)
+                        .setPositiveButton(R.string.donate_copy_address, (dialogInterface, i) -> {
+                            ClipboardManager clipboardManager = (ClipboardManager) getSystemService(CLIPBOARD_SERVICE);
+                            if (clipboardManager != null) {
+                                clipboardManager.setPrimaryClip(ClipData.newPlainText("text", BuildConfig.BITCOIN_ADDRESS));
+                                Toast.makeText(this, R.string.donate_copy_success, Toast.LENGTH_SHORT).show();
+                            } else {
+                                Toast.makeText(this, R.string.donate_copy_failure, Toast.LENGTH_SHORT).show();
+                                Crashlytics.logException(new IllegalStateException("Failed copying bitcoin address"));
+                            }
+                        })
+                        .setNegativeButton(R.string.donate_launch_wallet, ((dialog1, which) -> {
+                            try {
+                                startActivity(intent);
+                            } catch (ActivityNotFoundException ignore) {
+                                String installPackageName = "de.schildbach.wallet";
+                                try {
+                                    startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("market://details?id=" + installPackageName)));
+                                } catch (ActivityNotFoundException ignore2) {
+                                    try {
+                                        startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("https://play.google.com/store/apps/details?id=" + installPackageName)));
+                                    } catch (ActivityNotFoundException e) {
+                                        Toast.makeText(this, R.string.donate_launch_failure, Toast.LENGTH_SHORT).show();
+                                        Crashlytics.logException(new IllegalStateException("Failed launching Google Play", e));
+                                    }
+                                }
+                            }
+                        }))
+                        .show();
+
+                PackageManager packageManager = getPackageManager();
+                if (intent.resolveActivity(packageManager) == null) {
+                    // No intent available to handle action
+                    dialog.getButton(DialogInterface.BUTTON_NEGATIVE).setText(R.string.install_bitcoin_wallet);
+                }
+            }
+            return true;
         }
         return super.onOptionsItemSelected(item);
     }
 
-    private void showSnackbar(String text) {
-        final Snackbar snackbar = Snackbar.make(getViewRoot(), text, Snackbar.LENGTH_SHORT);
-        View snackBarView = snackbar.getView();
-
-        // Set background
-        @ColorInt int colorPrimary = StyleUtils.getColor(this, R.attr.colorPrimary);
-        snackBarView.setBackgroundColor(colorPrimary);
-
-        // Set foreground
-        @ColorInt int textColor = StyleUtils.getColor(this, R.attr.textColorOnPrimary);
-        TextView textView = snackBarView.findViewById(android.support.design.R.id.snackbar_text);
-        textView.setTextColor(textColor);
-
-        snackbar.show();
-    }
-
     private void nextPuzzle() {
         Puzzle puzzle = mPuzzles.getNext();
-        updateCryptogram(puzzle);
+        onPuzzleChanged(puzzle, false);
     }
 
     // Google Play Services
@@ -1089,6 +1194,9 @@ public class CryptogramActivity extends BaseActivity implements GoogleApiClient.
     }
 
     private void showGmsError(int errorCode) {
+        if (isFinishing()) {
+            return;
+        }
         new AlertDialog.Builder(this)
                 .setMessage(getString(R.string.google_play_games_connection_failure, mLastConnectionError, errorCode))
                 .setPositiveButton(android.R.string.ok, (dialog, i) -> dialog.dismiss())

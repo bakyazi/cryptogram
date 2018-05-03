@@ -173,6 +173,7 @@
   {
     "text": "There can be no deep disap­point­ment where there is not deep love.",
     "author": "Martin Luther King, Jr.",
+    "given": "V",
     "topic": "Love"
   },
   {
@@ -183,26 +184,31 @@
   {
     "text": "Love is when the other person’s happi­ness is more impor­tant than your own.",
     "author": "H. Jackson Brown, Jr.",
+    "given": "V",
     "topic": "Love"
   },
   {
     "text": "Let us always meet each other with smile, for the smile is the begin­ning of love.",
     "author": "Mother Teresa",
+    "given": "V",
     "topic": "Love"
   },
   {
     "text": "Kindness in words creates confi­dence. Kindness in thinking creates profound­ness. Kindness in giving creates love.",
     "author": "Lao Tzu",
+    "given": "V",
     "topic": "Love"
   },
   {
     "text": "Some­times the heart sees what is invis­ible to the eye.",
     "author": "H. Jackson Brown, Jr.",
+    "given": "Y",
     "topic": "Love"
   },
   {
     "text": "I have found the paradox, that if you love until it hurts, there can be no more hurt, only more love.",
     "author": "Mother Teresa",
+    "given": "V",
     "topic": "Love"
   },
   {
@@ -219,6 +225,7 @@
   {
     "text": "Love is composed of a single soul inhabit­ing two bodies.",
     "author": "Aristotle",
+    "given": "V",
     "topic": "Love"
   },
   {
@@ -244,31 +251,37 @@
   {
     "text": "No man has a good enough memory to be a success­ful liar.",
     "author": "Abraham Lincoln",
+    "given": "E",
     "topic": "Funny"
   },
   {
     "text": "I can resist every­thing except temp­tation.",
     "author": "Oscar Wilde",
+    "given": "XY",
     "topic": "Funny"
   },
   {
     "text": "Go to Heaven for the climate, Hell for the company.",
     "author": "Mark Twain",
+    "given": "GH",
     "topic": "Funny"
   },
   {
     "text": "I’m sorry, if you were right, I’d agree with you.",
     "author": "Robin Williams",
+    "given": "U",
     "topic": "Funny"
   },
   {
     "text": "Behind every great man is a woman rolling her eyes.",
     "author": "Jim Carrey",
+    "given": "S",
     "topic": "Funny"
   },
   {
     "text": "I love dead­lines. I like the whoo­shing sound they make as they fly by.",
     "author": "Douglas Adams",
+    "given": "KY",
     "topic": "Funny"
   },
   {
@@ -279,12 +292,13 @@
   {
     "text": "Weather forecast for tonight: dark.",
     "author": "George Carlin",
-    "given": "TH",
+    "given": "HKT",
     "topic": "Funny"
   },
   {
     "text": "All gene­raliza­tions are false, inclu­ding this one.",
     "author": "Mark Twain",
+    "given": "I",
     "topic": "Funny"
   },
   {
@@ -295,6 +309,7 @@
   {
     "text": "I refuse to join any club that would have me as a member.",
     "author": "Groucho Marx",
+    "given": "M",
     "topic": "Funny"
   },
   {
@@ -305,6 +320,7 @@
   {
     "text": "Why do they call it rush hour when nothing moves?",
     "author": "Robin Williams",
+    "given": "RY",
     "topic": "Funny"
   },
   {
@@ -321,11 +337,11 @@
   {
     "text": "Forgive, forget. Bear with the faults of others as you would have them bear with yours.",
     "author": "Phillips Brooks",
-    "topic": "Life"
+    "topic": "Forgiveness"
   },
   {
     "text": "Success is not final, failure is not fatal: it is the courage to continue that counts.",
-    "author": "Winston Churchill",
+    "author": "Unknown",
     "topic": "Success"
   },
   {
@@ -646,6 +662,7 @@
   {
     "text": "If you can dream it, you can do it.",
     "author": "Walt Disney",
+    "given": "U",
     "topic": "Inspirational"
   },
   {
@@ -666,6 +683,7 @@
   {
     "text": "It always seems impos­sible until it’s done.",
     "author": "Nelson Mandela",
+    "given": "U",
     "topic": "Inspirational"
   },
   {
@@ -701,7 +719,7 @@
   {
     "text": "Not all those who wander are lost.",
     "author": "J.R.R. Tolkien",
-    "given": "A",
+    "given": "AN",
     "topic": "From literature"
   },
   {
@@ -712,7 +730,7 @@
   {
     "text": "Well-behaved women seldom make history.",
     "author": "Laurel Thatcher Ulrich",
-    "given": "W",
+    "given": "DIW",
     "topic": "From literature"
   },
   {
@@ -736,8 +754,9 @@
     "topic": "From literature"
   },
   {
-    "text": "Get busy living, or get busy dying.",
+    "text": "I guess it comes down to a simple choice, really. Get busy living, or get busy dying.",
     "author": "Stephen King",
+    "given": "GY",
     "topic": "From literature"
   },
   {
@@ -753,6 +772,7 @@
   {
     "text": "Travel far enough, you meet yourself.",
     "author": "David Mitchell",
+    "given": "F",
     "topic": "From literature"
   },
   {
@@ -3330,7 +3350,7 @@
   },
   {
     "text": "An eye for an eye will only make the whole world blind.",
-    "author": "Mahatma Gandhi",
+    "author": "George Perry Graham",
     "topic": "Violence",
     "given": "A"
   },
@@ -3452,9 +3472,9 @@
     "given": "H"
   },
   {
-    "text": "I slept and dreamt that life was joy. I awoke and saw that life was service. I acted and behold, service was joy.",
-    "author": "Rabindranath Tagore",
-    "topic": "Joy"
+    "text": "The world has enough for everyone’s need but not enough for everyone’s greed.",
+    "author": "Frank Buchman",
+    "topic": "Greed"
   },
   {
     "text": "I don’t think of all the misery, but of the beauty that still remains.",
@@ -3767,9 +3787,10 @@
     "topic": "Funny"
   },
   {
-    "text": "I hold a little fundraiser every day. Its called going to work.",
+    "text": "I hold a little fundraiser every day. It’s called going to work.",
     "author": "Stephen Colbert",
-    "topic": "Funny"
+    "topic": "Funny",
+    "given": "W"
   },
   {
     "text": "After obsessively Googling symptoms for four hours, I discovered “obsessively Googling symptoms” is a symptom of hypochondria.",
@@ -4140,5 +4161,292 @@
     "text": "Life was meant to be lived, and curiosity must be kept alive. One must never, for whatever reason, turn his back on life.",
     "author": "Eleanor Roosevelt",
     "topic": "Life"
+  },
+  {
+    "text": "The biggest mistake people make in life is not trying to make a living at doing what they most enjoy.",
+    "author": "Malcolm Forbes",
+    "topic": "Life"
+  },
+  {
+    "text": "There are no mistakes. The events we bring upon ourselves, no matter how unpleasant, are necessary in order to learn what we need to learn; whatever steps we take, they’re necessary to reach the places we’ve chosen to go.",
+    "author": "Richard Bach",
+    "topic": "Life"
+  },
+  {
+    "text": "We can lift ourselves out of ignorance, we can find ourselves as creatures of excellence and intelligence and skill.",
+    "author": "Richard Bach",
+    "topic": "Knowledge"
+  },
+  {
+    "text": "The only thing that shatters dreams is compromise.",
+    "author": "Richard Bach",
+    "given": "IM",
+    "topic": "Ambition"
+  },
+  {
+    "text": "Believe you know all the answers, and you know all the answers. Believe you’re a master, and you are.",
+    "author": "Richard Bach",
+    "given": "A",
+    "topic": "Confidence"
+  },
+  {
+    "text": "The simplest questions are the most profound. Where were you born? Where is your home? Where are you going? What are you doing? Think about these once in a while and watch your answers change.",
+    "author": "Richard Bach",
+    "topic": "Thoughtfulness"
+  },
+  {
+    "text": "A tiny change today brings a dramatically different tomorrow.",
+    "author": "Richard Bach",
+    "given": "TY",
+    "topic": "Inspirational"
+  },
+  {
+    "text": "An easy life doesn’t teach us anything. In the end it’s the learning that matters: what we’ve learned and how we’ve grown.",
+    "author": "Richard Bach",
+    "topic": "Life"
+  },
+  {
+    "text": "We either make ourselves miserable, or we make ourselves strong. The amount of work is the same.",
+    "author": "Carlos Castañeda",
+    "given": "MW",
+    "topic": "Motivational"
+  },
+  {
+    "text": "If one advances confidently in the direction of his dreams, and endeavors to live the life which he has imagined, he will meet with a success unexpected in common hours.",
+    "author": "Henry David Thoreau",
+    "topic": "Confidence"
+  },
+  {
+    "text": "I have often wondered how it is that every man loves himself more than all the rest of men, but yet sets less value on his own opinion of himself than on the opinion of others.",
+    "author": "Marcus Aurelius",
+    "topic": "Confidence"
+  },
+  {
+    "text": "Remember me and smile, for it’s better to forget than to remember me and cry.",
+    "author": "Dr. Seuss",
+    "given": "CIN",
+    "topic": "Goodbye"
+  },
+  {
+    "text": "I disagree strongly with whatever work this quote is attached to.",
+    "author": "Randall Munroe",
+    "topic": "Funny"
+  },
+  {
+    "text": "This quote is often falsely attributed to Mark Twain.",
+    "author": "Randall Munroe",
+    "topic": "Funny"
+  },
+  {
+    "text": "This quote will be the only part of the presentation you remember.",
+    "author": "Randall Munroe",
+    "topic": "Funny"
+  },
+  {
+    "text": "This quote only looks profound when it’s in a script font over a sunset.",
+    "author": "Randall Munroe",
+    "topic": "Funny"
+  },
+  {
+    "text": "Better to be slapped with the truth than kissed with a lie.",
+    "author": "Russian Proverb",
+    "topic": "Reasoning"
+  },
+  {
+    "text": "But if they had learned anything together, it was that wisdom comes to us when it can no longer do any good.",
+    "author": "Love in the Time of Cholera",
+    "topic": "Wisdom"
+  },
+  {
+    "text": "Always vote for principle, though you may vote alone, and you may cherish the sweetest reflection that your vote is never lost.",
+    "author": "John Quincy Adams",
+    "topic": "Governance"
+  },
+  {
+    "text": "Men and nations behave wisely once they have exhausted all the other alternatives.",
+    "author": "Abba Eban",
+    "topic": "Governance"
+  },
+  {
+    "text": "If you do not have boundaries, you do not have a path.",
+    "author": "Tariq Ramadan",
+    "topic": "Inspirational"
+  },
+  {
+    "text": "Although the world is full of suffering, it is full also of the overcoming of it.",
+    "author": "Helen Keller",
+    "topic": "Compassion"
+  },
+  {
+    "text": "If we see love, compassion and kindness, it is because we possess these qualities.",
+    "author": "Shams Tabrizi",
+    "topic": "Compassion"
+  },
+  {
+    "text": "For the love of a rose, the gardener becomes the slave of a thousand thorns.",
+    "author": "Turkish Proverb",
+    "topic": "Beauty"
+  },
+  {
+    "text": "Your mind is like this water, my friend. When it is agitated, it becomes difficult to see. But if you allow it to settle, the answer becomes clear.",
+    "author": "Bil Keane",
+    "topic": "Reasoning"
+  },
+  {
+    "text": "A little consideration, a little thought for others, makes all the difference.",
+    "author": "A.A. Milne",
+    "topic": "Compassion"
+  },
+  {
+    "text": "A man with a watch knows what time it is. A man with two watches is never sure.",
+    "author": "Segal’s Law",
+    "topic": "Knowledge"
+  },
+  {
+    "text": "We judge others by their behavior. We judge ourselves by our intentions.",
+    "author": "Ian Percy",
+    "topic": "Thoughtfulness"
+  },
+  {
+    "text": "It pays to plan ahead. It wasn’t raining when Noah built the ark.",
+    "author": "Howard Ruff",
+    "topic": "Inspirational"
+  },
+  {
+    "text": "Someone’s sitting in the shade today because someone planted a tree a long time ago.",
+    "author": "Warren Buffet",
+    "topic": "Inspirational"
+  },
+  {
+    "text": "When you combine ignorance and leverage, you get some pretty interesting results.",
+    "author": "Warren Buffet",
+    "topic": "Governance"
+  },
+  {
+    "text": "No matter how great the talent or efforts, some things just take time. You can’t produce a baby in one month by getting nine women pregnant.",
+    "author": "Warren Buffet",
+    "topic": "Patience"
+  },
+  {
+    "text": "We don’t have to be smarter than the rest, we have to be more disciplined than the rest.",
+    "author": "Warren Buffet",
+    "topic": "Success"
+  },
+  {
+    "text": "It takes twenty years to build a reputation and five minutes to ruin it. If you think about that you’ll do things differently.",
+    "author": "Warren Buffet",
+    "topic": "Success"
+  },
+  {
+    "text": "Should you find yourself in a chronically leaking boat, energy devoted to changing vessels is likely to be more productive than energy devoted to patching leaks.",
+    "author": "Warren Buffet",
+    "topic": "Success"
+  },
+  {
+    "text": "You only have to do a very few things right in your life so long as you don’t do too many things wrong.",
+    "author": "Warren Buffet",
+    "topic": "Success"
+  },
+  {
+    "text": "You never know who’s swimming naked until the tide goes out.",
+    "author": "Warren Buffet",
+    "topic": "Finance"
+  },
+  {
+    "text": "Never ask a barber if you need a haircut.",
+    "author": "Warren Buffet",
+    "topic": "Finance"
+  },
+  {
+    "text": "There seems to be some perverse human characteristic that likes to make easy things difficult.",
+    "author": "Warren Buffet",
+    "topic": "Life"
+  },
+  {
+    "text": "Finance is not merely about making money. It’s about achieving our deep goals and protecting the fruits of our labor. It’s about stewardship and, therefore, about achieving the good society.",
+    "author": "Robert J. Shiller",
+    "topic": "Finance"
+  },
+  {
+    "text": "One of the funny things about the stock market is that every time one person buys, another sells, and both think they are astute.",
+    "author": "William Feather",
+    "topic": "Finance"
+  },
+  {
+    "text": "If you’ve been playing poker for half an hour and you still don’t know who the patsy is, you’re the patsy.",
+    "author": "Warren Buffet",
+    "topic": "Finance"
+  },
+  {
+    "text": "Learning to love is hard and we pay dearly for it. It takes hard work and a long apprenticeship, for it is not just for a moment that we must learn to love, but forever.",
+    "author": "Fyodor Dostoyevsky",
+    "topic": "Love"
+  },
+  {
+    "text": "Above all, don’t lie to yourself. The man who lies to himself and listens to his own lie comes to a point that he cannot distinguish the truth within him, or around him, and so loses all respect for himself and for others.",
+    "author": "Fyodor Dostoyevsky",
+    "topic": "Honesty"
+  },
+  {
+    "text": "A man always has two reasons for what he does — a good one, and the real one.",
+    "author": "J.P. Morgan",
+    "topic": "Honesty"
+  },
+  {
+    "text": "People speak sometimes about the “bestial” cruelty of man, but that is terribly unjust and offensive to beasts, no animal could ever be so cruel as a man, so artfully, so artistically cruel.",
+    "author": "Fyodor Dostoyevsky",
+    "topic": "Kindness"
+  },
+  {
+    "text": "Too many people spend money they haven’t earned, to buy things they don’t want, to impress people that they don’t like.",
+    "author": "Will Rogers",
+    "topic": "Life"
+  },
+  {
+    "text": "Wealth consists not in having great possessions, but in having few wants.",
+    "author": "Epictetus",
+    "topic": "Happiness"
+  },
+  {
+    "text": "The first step towards getting somewhere is to decide that you are not going to stay where you are.",
+    "author": "J.P. Morgan",
+    "topic": "Inspirational"
+  },
+  {
+    "text": "Go as far as you can see; when you get there, you’ll be able to see farther.",
+    "author": "J.P. Morgan",
+    "topic": "Ambition"
+  },
+  {
+    "text": "A man’s worth is no greater than the worth of his ambitions.",
+    "author": "Marcus Aurelius",
+    "topic": "Ambition"
+  },
+  {
+    "text": "Who is the happier man, he who has braved the storm of life and lived or he who has stayed securely on shore and merely existed?",
+    "author": "Hunter S. Thompson",
+    "topic": "Ambition"
+  },
+  {
+    "text": "A man who procrastinates in his choosing will inevitably have his choice made for him by circumstance.",
+    "author": "Hunter S. Thompson",
+    "topic": "Motivational"
+  },
+  {
+    "text": "Sex without love is as hollow and ridiculous as love without sex.",
+    "author": "Hunter S. Thompson",
+    "topic": "Love"
+  },
+  {
+    "text": "A man sees what he wants to see and disregards the rest.",
+    "author": "Paul Simon",
+    "given": "T",
+    "topic": "Reasoning"
+  },
+  {
+    "text": "A bad day is when I lie in the bed and I think of things that might have been,",
+    "author": "Paul Simon",
+    "given": "T",
+    "topic": "Depression"
   }
 ]

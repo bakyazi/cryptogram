@@ -1,6 +1,5 @@
 package com.pixplicity.cryptogram.fragments;
 
-import android.graphics.ColorMatrixColorFilter;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
@@ -21,17 +20,6 @@ import butterknife.BindView;
 public class HowToPlayFragment extends BaseFragment {
 
     private static final String TAG = HowToPlayFragment.class.getSimpleName();
-
-    /**
-     * Color matrix that flips the components (<code>-1.0f * c + 255 = 255 - c</code>)
-     * and keeps the alpha intact.
-     */
-    private static final float[] NEGATIVE = {
-            -1.0f,     0,     0,    0, 255, // red
-            0, -1.0f,     0,    0, 255, // green
-            0,     0, -1.0f,    0, 255, // blue
-            0,     0,     0, 1.0f,   0  // alpha
-    };
 
     @BindView(R.id.tv_how_to_play_1)
     protected TextView mTvHowToPlay1;
@@ -65,8 +53,8 @@ public class HowToPlayFragment extends BaseFragment {
         super.onViewCreated(view, savedInstanceState);
 
         if (isDarkTheme()) {
-            mIvInstructions1.getDrawable().setColorFilter(new ColorMatrixColorFilter(NEGATIVE));
-            mIvInstructions2.getDrawable().setColorFilter(new ColorMatrixColorFilter(NEGATIVE));
+            invert(mIvInstructions1);
+            invert(mIvInstructions2);
         }
 
         mTvHowToPlay1.setText(

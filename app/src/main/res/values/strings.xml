@@ -15,6 +15,9 @@
     <string name="highlight_hyphenation_title">Hyphenation</string>
     <string name="highlight_hyphenation_description">Watch out for the hyphen! The word continues on the next line.</string>
 
+    <string name="highlight_used_letters_title">Used characters</string>
+    <string name="highlight_used_letters_description">Used characters are now shown by default. You can change this setting and many others here.</string>
+
     <string name="drawer_open">Open drawer</string>
     <string name="drawer_close">Close drawer</string>
 
@@ -30,15 +33,23 @@
     <string name="statistics">Statistics</string>
     <string name="settings">Settings</string>
     <string name="help">Help…</string>
+    <string name="donate_bitcoin">Donate bitcoin</string>
+
     <string name="how_to_play">How do I play?</string>
     <string name="about">About</string>
     <string name="cancel">Cancel</string>
+
     <string name="skip_puzzle">Are you sure you’d like to skip this puzzle?</string>
     <string name="reveal_letter_confirmation">Are you sure you’d like to reveal the selected letter? This affects your score.</string>
     <string name="reveal_mistakes_confirmation">Are you sure you’d like to highlight all mistakes in the puzzle? This affects your score.</string>
     <string name="reset_puzzle">Are you sure you’d like to reset this puzzle?</string>
     <string name="never_ask_again">Never ask again</string>
-    <string name="reset_dialogs">Reset all suppressed  dialogs</string>
+    <string name="reset_dialogs">Reset all suppressed dialogs</string>
+    <string name="reset_all_puzzles">Reset all puzzles</string>
+    <string name="reset_all_puzzles_confirmation">Are you sure you’d like to reset all puzzles? There’s no going back! Type “%1$s” to permanently reset all puzzles.</string>
+    <string name="reset_all_puzzles_keyword">do it</string>
+    <string name="reset_all_puzzles_executed">All puzzles have been reset</string>
+    <string name="reset_all_puzzles_cancelled">You didn’t say the magic word!</string>
 
     <string name="error_puzzle_missing">Whoops! Looks like we couldn’t load the puzzle.</string>
     <string name="error_puzzles_load_failure">Whoops! Looks like we couldn’t load any puzzles.</string>
@@ -63,7 +74,6 @@
     <string name="not_applicable">N/A</string>
     <string name="author_unknown">anonymous</string>
 
-    <string name="stats_excess">Number of excess inputs:</string>
     <string name="stats_time">Time elapsed:</string>
     <string name="stats_reveals">Characters revealed:</string>
     <string name="stats_score">Score:</string>
@@ -110,28 +120,48 @@
     <string name="saved_game_name">Game state on %1$s</string>
     <string name="saved_game_loading">Loading saved game…</string>
 
+    <string name="scoring_changed_title">Scoring has changed a bit</string>
+    <string name="scoring_changed_message">You are no longer punished for excess inputs, so try as many letters as you like!</string>
+    <string name="scoring_changed_ok">OK</string>
+
     <!-- Settings -->
-    <string name="theme">Theme:</string>
-    <string name="randomize_puzzles">Randomize puzzles</string>
-    <string name="show_hints">Show used letters</string>
-    <string name="show_topic">Show puzzle topics</string>
-    <string name="auto_advance">Advance to next cell when filled</string>
-    <string name="skip_filled_cells">Skip over filled cells when advancing</string>
+    <string name="settings_theme">Theme</string>
     <string name="text_size">Text size:</string>
-    <string name="text_size_small">Small</string>
-    <string name="text_size_normal">Normal</string>
-    <string name="text_size_large">Large</string>
-    <string name="keyboard">Keyboard:</string>
+    <string name="text_size_small">Small text</string>
+    <string name="text_size_normal">Normal text</string>
+    <string name="text_size_large">Large text</string>
+
+    <string name="settings_keyboard">Keyboard</string>
     <string name="keyboard_builtin">Built-in</string>
     <string name="keyboard_system">System default</string>
+    <string name="show_hints">Show used letters</string>
+    <string name="auto_advance">Advance to next cell when filled</string>
+    <string name="skip_filled_cells">Skip over filled cells when advancing</string>
+
+    <string name="settings_display">Display</string>
+    <string name="show_topic">Show puzzle topics</string>
+    <string name="show_score">Show score</string>
+
+    <string name="settings_other">Other</string>
+    <string name="randomize_puzzles">Randomize puzzles</string>
 
     <string name="keyboard_system_dialog">Some keyboards don’t play nicely with Cryptogram. If you experience problems, I please switch back to the built-in keyboard.</string>
-    <string name="keyboard_system_dialog_ok">Gotcha</string>
+    <string name="keyboard_system_dialog_ok">I understand</string>
 
     <string name="applying_settings">Applying settings…</string>
 
-    <string name="join_beta">Join beta</string>
+    <string name="donate_title">Thanks for donating!</string>
+    <string name="donate_message">I tinker on this app in my spare time, and put aside proceeds for a nice cup of coffee or a dinner with a friend. It’s awesome people like you that make ad-free apps like this possible!</string>
+    <string name="donate_copy_address">Copy Bitcoin address</string>
+    <string name="donate_copy_success">Bitcoin address copied to the clipboard</string>
+    <string name="donate_copy_failure">Whoops, couldn’t copy it to the clipboard!</string>
+    <string name="install_bitcoin_wallet">Install Bitcoin wallet</string>
+    <string name="donate_launch_wallet">Launch Bitcoin wallet</string>
+    <string name="donate_launch_failure">Whoops, couldn’t launch your Bitcoin wallet!</string>
+
     <string name="send_feedback">Send feedback</string>
+    <string name="rate">Rate!</string>
+    <string name="join_beta">Join beta</string>
     <string name="made_with_love_by">MADE WITH LOVE BY</string>
     <string name="pixplicity">Pixplicity</string>
 
@@ -167,7 +197,6 @@
                 • The amount of time you take to complete the puzzle. Try to solve under 2 minutes.<br />
                 • Each time you reveal mistakes, your score is reduced by 25%.<br />
                 • Each time you reveal a letter, your score is reduced by 17%.<br />
-                • For each excess input (filling in an incorrect character), your score is reduced by 4%.<br />
                 • Each score reduction rule above is computed separately, and the final score is the multiple of all factors.
             ]]>
     </string>
@@ -225,13 +254,13 @@
                 <b>Copyright © 2017 Pixplicity</b>
             </p>
             <p>
-                Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the "Software"), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:
+                Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the “Software”), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:
             </p>
             <p>
                 The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
             </p>
             <p>
-                THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+                THE SOFTWARE IS PROVIDED “AS IS”, WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
             </p>
         ]]>
     </string>
@@ -263,11 +292,12 @@
     </string>
     <string name="website">Visit Pixplicity.com</string>
     <string name="url_pixplicity">https://pixplicity.com/?utm_source=component_app&amp;utm_medium=android-app&amp;utm_content=en&amp;utm_campaign=component_app</string>
-    <string name="url_beta">https://play.google.com/apps/testing/com.pixplicity.cryptogram</string>
+    <string name="url_google_play">http://play.google.com/store/apps/details?id=%1$s</string>
+    <string name="url_beta">https://play.google.com/apps/testing/%1$s</string>
 
     <string name="rating">Nice, you’re solving some cryptograms!\n\nWould you mind visiting the Play store to give %1$s a rating? It would help in sharing the fun!\n\nInstead, if you’re experiencing problems, please give me some feedback so I can improve. Thanks!</string>
 
     <string name="feedback_subject">Feedback on Cryptogram</string>
-    <string name="feedback_body">Hi Pixplicity, \n\nI’m using Cryptogram version %1$s and my keyboard is "%2$s". \n\nHere’s my feedback on Cryptogram: \n\n</string>
+    <string name="feedback_body">Hi Pixplicity, \n\nI’m using Cryptogram version %1$s and my keyboard is “%2$s”. \n\nHere’s my feedback on Cryptogram: \n\n</string>
 
 </resources>
