@@ -1,9 +1,9 @@
 package com.pixplicity.cryptogram.fragments;
 
-import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v4.app.FragmentActivity;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -16,6 +16,7 @@ import android.widget.CompoundButton;
 import android.widget.RadioButton;
 
 import com.afollestad.materialdialogs.MaterialDialog;
+import com.crashlytics.android.Crashlytics;
 import com.pixplicity.cryptogram.R;
 import com.pixplicity.cryptogram.activities.BaseActivity;
 import com.pixplicity.cryptogram.activities.CryptogramActivity;
@@ -54,26 +55,29 @@ public class SettingsFragment extends BaseFragment {
     @BindView(R.id.rb_text_size_large)
     protected RadioButton mRbTextSizeLarge;
 
+    @BindView(R.id.cb_show_topic)
+    protected CheckBox mCbShowTopic;
+
+    @BindView(R.id.cb_show_score)
+    protected CheckBox mCbShowScore;
+
     @BindView(R.id.rb_keyboard_builtin)
     protected RadioButton mRbKeyboardBuiltin;
 
     @BindView(R.id.rb_keyboard_system)
     protected RadioButton mRbKeyboardSystem;
 
-    @BindView(R.id.cb_randomize)
-    protected CheckBox mCbRandomize;
-
     @BindView(R.id.cb_show_hints)
     protected CheckBox mCbShowHints;
-
-    @BindView(R.id.cb_show_topic)
-    protected CheckBox mCbShowTopic;
 
     @BindView(R.id.cb_auto_advance)
     protected CheckBox mCbAutoAdvance;
 
     @BindView(R.id.cb_skip_filled_cells)
     protected CheckBox mCbSkipFilledCells;
+
+    @BindView(R.id.cb_randomize)
+    protected CheckBox mCbRandomize;
 
     @BindView(R.id.bt_reset_dialogs)
     protected Button mBtResetDialogs;
@@ -114,6 +118,7 @@ public class SettingsFragment extends BaseFragment {
     }
 
     private void update() {
+        // Theme settings
         updateCompoundButton(mRbThemeLight, !PrefsUtils.getDarkTheme(), (compoundButton, checked) -> {
             if (checked) {
                 setTheme(false);
@@ -124,6 +129,8 @@ public class SettingsFragment extends BaseFragment {
                 setTheme(true);
             }
         });
+
+        // Display settings
         updateCompoundButton(mRbTextSizeSmall, PrefsUtils.getTextSize() == -1, (compoundButton, checked) -> {
             if (checked) {
                 setTextSize(-1);
@@ -139,6 +146,13 @@ public class SettingsFragment extends BaseFragment {
                 setTextSize(1);
             }
         });
+        updateCompoundButton(mCbShowTopic, PrefsUtils.getShowTopic(),
+                (compoundButton, checked) -> PrefsUtils.setShowTopic(checked));
+        updateCompoundButton(mCbShowScore, PrefsUtils.getShowScore(),
+                (compoundButton, checked) -> PrefsUtils.setShowScore(checked));
+
+
+        // Keyboard settings
         updateCompoundButton(mRbKeyboardBuiltin, !PrefsUtils.getUseSystemKeyboard(), (compoundButton, checked) -> {
             if (checked) {
                 setUseSystemKeyboard(false);
@@ -154,16 +168,16 @@ public class SettingsFragment extends BaseFragment {
                         .show();
             }
         });
-        updateCompoundButton(mCbRandomize, PrefsUtils.getRandomize(),
-                (compoundButton, checked) -> PrefsUtils.setRandomize(checked));
-        updateCompoundButton(mCbShowHints, PrefsUtils.getShowHints(),
-                (compoundButton, checked) -> PrefsUtils.setShowHints(checked));
-        updateCompoundButton(mCbShowTopic, PrefsUtils.getShowTopic(),
-                (compoundButton, checked) -> PrefsUtils.setShowTopic(checked));
+        updateCompoundButton(mCbShowHints, PrefsUtils.getShowUsedChars(),
+                (compoundButton, checked) -> PrefsUtils.setShowUsedChars(checked));
         updateCompoundButton(mCbAutoAdvance, PrefsUtils.getAutoAdvance(),
                 (compoundButton, checked) -> PrefsUtils.setAutoAdvance(checked));
         updateCompoundButton(mCbSkipFilledCells, PrefsUtils.getSkipFilledCells(),
                 (compoundButton, checked) -> PrefsUtils.setSkipFilledCells(checked));
+
+        // Other settings
+        updateCompoundButton(mCbRandomize, PrefsUtils.getRandomize(),
+                (compoundButton, checked) -> PrefsUtils.setRandomize(checked));
 
         mBtResetDialogs.setEnabled(PrefsUtils.getNeverAskRevealLetter() || PrefsUtils.getNeverAskRevealMistakes());
     }
@@ -171,7 +185,7 @@ public class SettingsFragment extends BaseFragment {
     private void setTextSize(int textSize) {
         PrefsUtils.setTextSize(textSize);
         StyleUtils.reset();
-        EventProvider.postEvent(new PuzzleEvent.PuzzleStyleChanged());
+        relaunch();
     }
 
     private void setTheme(boolean theme) {
@@ -189,13 +203,21 @@ public class SettingsFragment extends BaseFragment {
         mVgBusy.setVisibility(View.VISIBLE);
         mVgContent.setVisibility(View.GONE);
         // Relaunch as though launched from home screen
-        Context context = getActivity().getBaseContext();
-        Intent i = context.getPackageManager()
-                          .getLaunchIntentForPackage(context.getPackageName());
-        i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-        i.putExtra(CryptogramActivity.EXTRA_LAUNCH_SETTINGS, true);
-        startActivity(i);
-        getActivity().finish();
+        FragmentActivity activity = getActivity();
+        if (activity != null) {
+            Intent i = activity.getPackageManager()
+                               .getLaunchIntentForPackage(activity.getPackageName());
+            if (i != null) {
+                i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                i.putExtra(CryptogramActivity.EXTRA_LAUNCH_SETTINGS, true);
+                startActivity(i);
+            } else {
+                Crashlytics.logException(new IllegalStateException("No launch intent available"));
+            }
+            activity.finish();
+        } else {
+            Crashlytics.logException(new IllegalStateException("Fragment not attached"));
+        }
     }
 
     private void updateCompoundButton(CompoundButton compoundButton, boolean checked,

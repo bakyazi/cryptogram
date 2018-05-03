@@ -24,6 +24,7 @@ public class HowToPlayActivity extends BaseActivity {
 
         setHomeButtonEnabled(true);
 
+        CryptogramApp.getInstance().getFirebaseAnalytics().setCurrentScreen(this, CryptogramApp.CONTENT_HOW_TO_PLAY, null);
         Answers.getInstance().logContentView(new ContentViewEvent().putContentName(CryptogramApp.CONTENT_HOW_TO_PLAY));
     }
 

@@ -2,6 +2,7 @@ package com.pixplicity.cryptogram.utils;
 
 import android.os.AsyncTask;
 
+import com.crashlytics.android.Crashlytics;
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.games.Games;
 import com.pixplicity.cryptogram.CryptogramApp;
@@ -34,9 +35,14 @@ public class LeaderboardProvider {
                 if (!googleApiClient.isConnected()) {
                     return;
                 }
-                Games.Leaderboards.submitScore(googleApiClient,
-                        context.getString(R.string.leaderboard_scoreboard),
-                        score);
+                try {
+                    Games.Leaderboards.submitScore(googleApiClient,
+                            context.getString(R.string.leaderboard_scoreboard),
+                            score);
+                } catch (NullPointerException | SecurityException | IllegalStateException e) {
+                    // Not sure why we're still seeing errors about the connection state, but here we are
+                    Crashlytics.logException(e);
+                }
             }
         }.execute();
     }

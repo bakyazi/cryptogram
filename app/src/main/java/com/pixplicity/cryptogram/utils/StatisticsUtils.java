@@ -18,8 +18,11 @@ import com.pixplicity.cryptogram.providers.PuzzleProvider;
 public class StatisticsUtils {
 
     public static void showDialog(Context context) {
-        // Log the event
-        Answers.getInstance().logContentView(new ContentViewEvent().putContentName(CryptogramApp.CONTENT_STATISTICS));
+        {
+            // Analytics
+            CryptogramApp.getInstance().getFirebaseAnalytics().logEvent(CryptogramApp.CONTENT_STATISTICS, null);
+            Answers.getInstance().logContentView(new ContentViewEvent().putContentName(CryptogramApp.CONTENT_STATISTICS));
+        }
         // Compose the dialog
         TableLayout dialogView = (TableLayout) LayoutInflater.from(context).inflate(R.layout.dialog_statistics, null);
         PuzzleProvider provider = PuzzleProvider.getInstance(context);

@@ -20,6 +20,7 @@
     <!-- Base application theme. -->
     <style name="AppTheme" parent="@style/Theme.AppCompat.Light.NoActionBar">
         <item name="android:windowBackground">@drawable/bg_splash</item>
+        <item name="android:navigationBarColor" tools:ignore="NewApi">#00000000</item>
 
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
@@ -52,6 +53,7 @@
 
     <style name="AppTheme.Dark" parent="@style/Theme.AppCompat.NoActionBar">
         <item name="android:windowBackground">@drawable/bg_splash</item>
+        <item name="android:navigationBarColor" tools:ignore="NewApi">#00000000</item>
 
         <item name="colorPrimary">@color/colorDarkPrimary</item>
         <item name="colorPrimaryDark">@color/colorDarkPrimaryDark</item>
@@ -89,8 +91,8 @@
         <item name="android:shadowColor">?attr/keyboardForeground1</item>
         <item name="android:paddingLeft">8dp</item>
         <item name="android:paddingRight">8dp</item>
-        <item name="android:paddingTop">@dimen/keyboard_button_padding</item>
-        <item name="android:paddingBottom">@dimen/keyboard_button_padding</item>
+        <item name="android:paddingTop">0dp</item>
+        <item name="android:paddingBottom">0dp</item>
         <item name="android:textSize">@dimen/keyboard_text_size</item>
     </style>
 
@@ -99,6 +101,8 @@
         <item name="tint">?attr/keyboardForeground2</item>
         <item name="android:backgroundTint" tools:targetApi="lollipop">?attr/keyboardBackground2</item>
         <item name="backgroundTint">?attr/keyboardBackground2</item>
+        <item name="android:paddingTop">@dimen/keyboard_image_button_padding</item>
+        <item name="android:paddingBottom">@dimen/keyboard_image_button_padding</item>
     </style>
 
     <style name="DrawerArrowStyle" parent="@style/Widget.AppCompat.DrawerArrowToggle">

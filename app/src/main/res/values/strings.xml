@@ -15,6 +15,9 @@
     <string name="highlight_hyphenation_title">Hyphenation</string>
     <string name="highlight_hyphenation_description">Watch out for the hyphen! The word continues on the next line.</string>
 
+    <string name="highlight_used_letters_title">Used characters</string>
+    <string name="highlight_used_letters_description">Used characters are now shown by default. You can change this setting and many others here.</string>
+
     <string name="drawer_open">Open drawer</string>
     <string name="drawer_close">Close drawer</string>
 
@@ -30,9 +33,12 @@
     <string name="statistics">Statistics</string>
     <string name="settings">Settings</string>
     <string name="help">Help…</string>
+    <string name="donate_bitcoin">Donate bitcoin</string>
+
     <string name="how_to_play">How do I play?</string>
     <string name="about">About</string>
     <string name="cancel">Cancel</string>
+
     <string name="skip_puzzle">Are you sure you’d like to skip this puzzle?</string>
     <string name="reveal_letter_confirmation">Are you sure you’d like to reveal the selected letter? This affects your score.</string>
     <string name="reveal_mistakes_confirmation">Are you sure you’d like to highlight all mistakes in the puzzle? This affects your score.</string>
@@ -68,7 +74,6 @@
     <string name="not_applicable">N/A</string>
     <string name="author_unknown">anonymous</string>
 
-    <string name="stats_excess">Number of excess inputs:</string>
     <string name="stats_time">Time elapsed:</string>
     <string name="stats_reveals">Characters revealed:</string>
     <string name="stats_score">Score:</string>
@@ -111,29 +116,48 @@
     <string name="saved_game_name">Game state on %1$s</string>
     <string name="saved_game_loading">Loading saved game…</string>
 
+    <string name="scoring_changed_title">Scoring has changed a bit</string>
+    <string name="scoring_changed_message">You are no longer punished for excess inputs, so try as many letters as you like!</string>
+    <string name="scoring_changed_ok">OK</string>
+
     <string name="all_topics">All topics</string>
     <string name="all_topics_description">Have fun and be inspired by puzzles from all topics.</string>
     <string name="play">Play</string>
 
     <!-- Settings -->
-    <string name="theme">Theme:</string>
-    <string name="randomize_puzzles">Randomize puzzles</string>
-    <string name="show_hints">Show used letters</string>
-    <string name="show_topic">Show puzzle topics</string>
-    <string name="auto_advance">Advance to next cell when filled</string>
-    <string name="skip_filled_cells">Skip over filled cells when advancing</string>
+    <string name="settings_theme">Theme</string>
     <string name="text_size">Text size:</string>
-    <string name="text_size_small">Small</string>
-    <string name="text_size_normal">Normal</string>
-    <string name="text_size_large">Large</string>
-    <string name="keyboard">Keyboard:</string>
+    <string name="text_size_small">Small text</string>
+    <string name="text_size_normal">Normal text</string>
+    <string name="text_size_large">Large text</string>
+
+    <string name="settings_keyboard">Keyboard</string>
     <string name="keyboard_builtin">Built-in</string>
     <string name="keyboard_system">System default</string>
+    <string name="show_hints">Show used letters</string>
+    <string name="auto_advance">Advance to next cell when filled</string>
+    <string name="skip_filled_cells">Skip over filled cells when advancing</string>
+
+    <string name="settings_display">Display</string>
+    <string name="show_topic">Show puzzle topics</string>
+    <string name="show_score">Show score</string>
+
+    <string name="settings_other">Other</string>
+    <string name="randomize_puzzles">Randomize puzzles</string>
 
     <string name="keyboard_system_dialog">Some keyboards don’t play nicely with Cryptogram. If you experience problems, I please switch back to the built-in keyboard.</string>
-    <string name="keyboard_system_dialog_ok">Gotcha</string>
+    <string name="keyboard_system_dialog_ok">I understand</string>
 
     <string name="applying_settings">Applying settings…</string>
+
+    <string name="donate_title">Thanks for donating!</string>
+    <string name="donate_message">I tinker on this app in my spare time, and put aside proceeds for a nice cup of coffee or a dinner with a friend. It’s awesome people like you that make ad-free apps like this possible!</string>
+    <string name="donate_copy_address">Copy Bitcoin address</string>
+    <string name="donate_copy_success">Bitcoin address copied to the clipboard</string>
+    <string name="donate_copy_failure">Whoops, couldn’t copy it to the clipboard!</string>
+    <string name="install_bitcoin_wallet">Install Bitcoin wallet</string>
+    <string name="donate_launch_wallet">Launch Bitcoin wallet</string>
+    <string name="donate_launch_failure">Whoops, couldn’t launch your Bitcoin wallet!</string>
 
     <string name="send_feedback">Send feedback</string>
     <string name="rate">Rate!</string>
@@ -173,7 +197,6 @@
                 • The amount of time you take to complete the puzzle. Try to solve under 2 minutes.<br />
                 • Each time you reveal mistakes, your score is reduced by 25%.<br />
                 • Each time you reveal a letter, your score is reduced by 17%.<br />
-                • For each excess input (filling in an incorrect character), your score is reduced by 4%.<br />
                 • Each score reduction rule above is computed separately, and the final score is the multiple of all factors.
             ]]>
     </string>

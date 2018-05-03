@@ -38,4 +38,8 @@ public class EventProvider {
         return getInstance().mHandler.post(() -> getBus().post(event));
     }
 
+    public static boolean postEventDelayed(final Object event, long delayMillis) {
+        return getInstance().mHandler.postDelayed(() -> getBus().post(event), delayMillis);
+    }
+
 }

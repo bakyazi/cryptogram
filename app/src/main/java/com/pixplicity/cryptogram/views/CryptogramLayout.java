@@ -1,10 +1,9 @@
 package com.pixplicity.cryptogram.views;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.support.annotation.Nullable;
-import android.support.v4.view.GestureDetectorCompat;
 import android.util.AttributeSet;
-import android.view.GestureDetector;
 import android.view.MotionEvent;
 import android.widget.LinearLayout;
 
@@ -12,7 +11,6 @@ import android.widget.LinearLayout;
 public class CryptogramLayout extends LinearLayout {
 
     private CryptogramView mCryptogramView;
-    private GestureDetectorCompat mGestureDetector;
 
     public CryptogramLayout(Context context) {
         super(context);
@@ -31,25 +29,25 @@ public class CryptogramLayout extends LinearLayout {
 
     private void init(Context context) {
         setClickable(true);
-        mGestureDetector = new GestureDetectorCompat(context, new GestureDetector.SimpleOnGestureListener() {
-            @Override
-            public boolean onSingleTapUp(MotionEvent motionEvent) {
-                if (mCryptogramView != null) {
-                    mCryptogramView.showSoftInput();
-                }
-                return false;
-            }
-        });
     }
 
-    public void setCrytogramView(CryptogramView view) {
-        mCryptogramView = view;
-    }
-
+    @SuppressLint("ClickableViewAccessibility")
     @Override
-    public boolean dispatchTouchEvent(MotionEvent ev) {
-        mGestureDetector.onTouchEvent(ev);
-        return super.dispatchTouchEvent(ev);
+    public boolean onTouchEvent(MotionEvent event) {
+        switch (event.getAction()) {
+            case MotionEvent.ACTION_UP:
+                if (mCryptogramView != null) {
+                    mCryptogramView.hideSoftInput();
+                    // Clear selected character
+                    mCryptogramView.setSelectedCharacter((char) 0);
+                }
+                break;
+        }
+        return super.onTouchEvent(event);
+    }
+
+    public void setCryptogramView(CryptogramView view) {
+        mCryptogramView = view;
     }
 
 }
