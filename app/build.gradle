@@ -22,39 +22,40 @@ android {
         debug {
             Properties props = new Properties()
             try {
-                props.load(new FileInputStream("../.signing/debug.properties"))
+                props.load(new FileInputStream(".signing/debug.properties"))
                 storeFile file('../.signing/debug.jks')
                 storePassword(props['DEBUG_STORE_PASSWORD'])
                 keyAlias(props['DEBUG_KEY_ALIAS'])
                 keyPassword(props['DEBUG_KEY_PASSWORD'])
             } catch (IOException ignore) {
-                // Ignore; use local default
+                println "Missing debug keystore and/or properties"
+                throw ignore
             }
         }
         release {
             Properties props = new Properties()
             try {
-                props.load(new FileInputStream("../.signing/release.properties"))
+                props.load(new FileInputStream(".signing/release.properties"))
                 storeFile file('../.signing/release.jks')
                 storePassword(props['RELEASE_STORE_PASSWORD'])
                 keyAlias(props['RELEASE_KEY_ALIAS'])
                 keyPassword(props['RELEASE_KEY_PASSWORD'])
             } catch (IOException e) {
-                println "WARNING: Missing release keystore and properties"
-                println e
+                println "Missing release keystore and/or properties"
+                throw e
             }
         }
         upload {
             Properties props = new Properties()
             try {
-                props.load(new FileInputStream("../.signing/upload-keystore.properties"))
+                props.load(new FileInputStream(".signing/upload-keystore.properties"))
                 storeFile file('../.signing/upload-keystore.jks')
                 storePassword(props['RELEASE_STORE_PASSWORD'])
                 keyAlias(props['RELEASE_KEY_ALIAS'])
                 keyPassword(props['RELEASE_KEY_PASSWORD'])
             } catch (IOException e) {
-                println "WARNING: Missing release keystore and properties"
-                println e
+                println "Missing upload keystore and/or properties"
+                throw e
             }
         }
     }
