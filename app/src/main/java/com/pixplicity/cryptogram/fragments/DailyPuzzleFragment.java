@@ -66,7 +66,7 @@ public class DailyPuzzleFragment extends BaseFragment {
             if (TextUtils.isEmpty(author)) {
                 mTvDailyAuthor.setText(null);
             } else {
-                mTvDailyAuthor.setText(getString(R.string.quote_by, author));
+                mTvDailyAuthor.setText(getString(R.string.quote, author));
             }
             Date date = puzzle.getDate();
             if (date == null) {

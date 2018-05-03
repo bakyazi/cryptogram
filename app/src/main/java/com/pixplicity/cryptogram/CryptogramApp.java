@@ -13,6 +13,7 @@ import com.firebase.jobdispatcher.RetryStrategy;
 import com.firebase.jobdispatcher.Trigger;
 import com.pixplicity.cryptogram.api.ApiService;
 import com.pixplicity.cryptogram.services.CryptogramJobService;
+import com.google.firebase.analytics.FirebaseAnalytics;
 import com.pixplicity.cryptogram.utils.UpdateManager;
 import com.pixplicity.easyprefs.library.Prefs;
 
@@ -37,10 +38,14 @@ public class CryptogramApp extends Application {
     public static final String CONTENT_CONTRIBUTE = "contribute";
     public static final String CONTENT_HOW_TO_PLAY = "how-to-play";
     public static final String CONTENT_ABOUT = "about";
+    public static final String EVENT_LEVEL_START = "level_start";
+    public static final String EVENT_LEVEL_END = "level_end";
 
     private static CryptogramApp sInstance;
 
     private ApiService mApiService;
+
+    private FirebaseAnalytics mFirebaseAnalytics;
 
     public CryptogramApp() {
         super();
@@ -54,6 +59,8 @@ public class CryptogramApp extends Application {
     @Override
     public void onCreate() {
         super.onCreate();
+
+        mFirebaseAnalytics = FirebaseAnalytics.getInstance(this);
 
         // Initialize Crashlytics
         Fabric.with(this, new Crashlytics());
@@ -122,6 +129,10 @@ public class CryptogramApp extends Application {
 
     public ApiService getApiService() {
         return mApiService;
+    }
+
+    public FirebaseAnalytics getFirebaseAnalytics() {
+        return mFirebaseAnalytics;
     }
 
 }

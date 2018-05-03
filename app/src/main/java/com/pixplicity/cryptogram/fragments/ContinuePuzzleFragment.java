@@ -41,7 +41,7 @@ public class ContinuePuzzleFragment extends BaseFragment {
             if (TextUtils.isEmpty(author)) {
                 mTvAuthor.setText(null);
             } else {
-                mTvAuthor.setText(getString(R.string.quote_by, author));
+                mTvAuthor.setText(getString(R.string.quote, author));
             }
         }
     }

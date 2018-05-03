@@ -1,9 +1,9 @@
 package com.pixplicity.cryptogram.fragments;
 
-import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v4.app.FragmentActivity;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -16,6 +16,7 @@ import android.widget.CompoundButton;
 import android.widget.RadioButton;
 
 import com.afollestad.materialdialogs.MaterialDialog;
+import com.crashlytics.android.Crashlytics;
 import com.pixplicity.cryptogram.R;
 import com.pixplicity.cryptogram.activities.BaseActivity;
 import com.pixplicity.cryptogram.activities.LandingActivity;
@@ -186,7 +187,7 @@ public class SettingsFragment extends BaseFragment {
     private void setTextSize(int textSize) {
         PrefsUtils.setTextSize(textSize);
         StyleUtils.reset();
-        EventProvider.postEvent(new PuzzleEvent.PuzzleStyleChangedEvent());
+        relaunch();
     }
 
     private void setTheme(boolean theme) {
@@ -203,13 +204,21 @@ public class SettingsFragment extends BaseFragment {
         mVgBusy.setVisibility(View.VISIBLE);
         mVgContent.setVisibility(View.GONE);
         // Relaunch as though launched from home screen
-        Context context = getActivity().getBaseContext();
-        Intent i = context.getPackageManager()
-                          .getLaunchIntentForPackage(context.getPackageName());
-        i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-        i.putExtra(LandingActivity.EXTRA_LAUNCH_SETTINGS, true);
-        startActivity(i);
-        getActivity().finish();
+        FragmentActivity activity = getActivity();
+        if (activity != null) {
+            Intent i = activity.getPackageManager()
+                               .getLaunchIntentForPackage(activity.getPackageName());
+            if (i != null) {
+                i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                i.putExtra(LandingActivity.EXTRA_LAUNCH_SETTINGS, true);
+                startActivity(i);
+            } else {
+                Crashlytics.logException(new IllegalStateException("No launch intent available"));
+            }
+            activity.finish();
+        } else {
+            Crashlytics.logException(new IllegalStateException("Fragment not attached"));
+        }
     }
 
     private void updateCompoundButton(CompoundButton compoundButton, boolean checked,

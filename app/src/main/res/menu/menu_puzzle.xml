@@ -83,4 +83,11 @@
 
     </item>
 
+    <item
+        android:id="@+id/action_donate"
+        android:icon="@drawable/ic_bitcoin"
+        android:orderInCategory="410"
+        android:title="@string/donate_bitcoin"
+        app:showAsAction="never"/>
+
 </menu>

@@ -11,6 +11,7 @@ buildscript {
 
 apply plugin: 'com.android.application'
 apply plugin: 'io.fabric'
+apply plugin: 'com.google.firebase.firebase-perf'
 apply plugin: 'realm-android'
 
 android {
@@ -28,7 +29,8 @@ android {
                 keyAlias(props['DEBUG_KEY_ALIAS'])
                 keyPassword(props['DEBUG_KEY_PASSWORD'])
             } catch (IOException ignore) {
-                // Ignore; use local default
+                println "Missing debug keystore and/or properties"
+                throw ignore
             }
         }
         release {
@@ -40,8 +42,8 @@ android {
                 keyAlias(props['RELEASE_KEY_ALIAS'])
                 keyPassword(props['RELEASE_KEY_PASSWORD'])
             } catch (IOException e) {
-                println "WARNING: Missing release keystore and properties"
-                println e
+                println "Missing release keystore and/or properties"
+                throw e
             }
         }
         upload {
@@ -53,23 +55,24 @@ android {
                 keyAlias(props['RELEASE_KEY_ALIAS'])
                 keyPassword(props['RELEASE_KEY_PASSWORD'])
             } catch (IOException e) {
-                println "WARNING: Missing release keystore and properties"
-                println e
+                println "Missing upload keystore and/or properties"
+                throw e
             }
         }
     }
     configurations.all {
-        resolutionStrategy.force 'com.android.support:support-v13:27.0.0'
+        resolutionStrategy.force 'com.android.support:support-v13:27.1.1'
     }
     compileSdkVersion 27
-    buildToolsVersion '27.0.0'
     defaultConfig {
         applicationId "com.pixplicity.cryptogram"
         minSdkVersion 14
         targetSdkVersion 27
-        versionCode 189
-        versionName "1.8.0"
+        versionCode 194
+        versionName "1.8.4"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+
+        buildConfigField("String", "BITCOIN_ADDRESS", "\"35YPTPGZNeVrUNFA9Tn7A8HVx4nhFd1989\"")
     }
     buildTypes {
         debug {
@@ -77,6 +80,13 @@ android {
             signingConfig signingConfigs.debug
         }
         release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+            // We're no longer using the release key, but an upload key for Google Play App Signing
+            //signingConfig signingConfigs.release
+            signingConfig signingConfigs.release
+        }
+        upload {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
             // We're no longer using the release key, but an upload key for Google Play App Signing
@@ -116,16 +126,21 @@ repositories {
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
 
-    implementation 'com.android.support:appcompat-v7:27.0.0'
-    implementation 'com.android.support:support-v4:27.0.0'
-    implementation 'com.android.support:support-annotations:27.0.0'
-    implementation 'com.android.support:design:27.0.0'
-    implementation 'com.android.support:cardview-v7:27.0.0'
-    implementation 'com.android.support:recyclerview-v7:27.0.0'
-    implementation 'com.android.support:gridlayout-v7:27.0.0'
+    implementation 'com.android.support:appcompat-v7:27.1.1'
+    implementation 'com.android.support:support-v4:27.1.1'
+    implementation 'com.android.support:support-annotations:27.1.1'
+    implementation 'com.android.support:design:27.1.1'
+    implementation 'com.android.support:cardview-v7:27.1.1'
+    implementation 'com.android.support:recyclerview-v7:27.1.1'
+    implementation 'com.android.support:gridlayout-v7:27.1.1'
 
-    implementation 'com.google.android.gms:play-services-games:11.4.2'
-    implementation 'com.google.android.gms:play-services-auth:11.4.2'
+    implementation 'com.google.android.gms:play-services-games:15.0.0'
+    implementation 'com.google.android.gms:play-services-auth:15.0.0'
+
+    implementation 'com.google.firebase:firebase-core:15.0.0'
+    implementation 'com.google.firebase:firebase-perf:15.0.0'
+
+    implementation 'com.firebase:firebase-jobdispatcher:0.8.4'
 
     implementation 'com.jakewharton:butterknife:8.8.1'
     annotationProcessor 'com.jakewharton:butterknife-compiler:8.8.1'
@@ -136,7 +151,7 @@ dependencies {
 
     implementation 'net.soulwolf.widget:ratiolayout:1.0.0'
     implementation 'com.afollestad.material-dialogs:core:0.9.4.7'
-    implementation 'com.afollestad:easyvideoplayer:0.2.13'
+    implementation 'com.afollestad:easyvideoplayer:0.3.0'
 
     implementation 'com.github.bumptech.glide:glide:4.2.0'
 
@@ -146,8 +161,7 @@ dependencies {
     implementation 'com.pixplicity.easyprefs:library:1.9.0'
     implementation 'com.pixplicity.generate:library:1.1.8'
 
-    implementation 'com.google.code.gson:gson:2.8.1'
-    implementation 'com.firebase:firebase-jobdispatcher:0.8.4'
+    implementation 'com.google.code.gson:gson:2.8.2'
 
     implementation 'com.getkeepsafe.taptargetview:taptargetview:1.10.0'
 
@@ -160,11 +174,10 @@ dependencies {
     })
 
     testImplementation 'junit:junit:4.12'
-    testImplementation 'org.mockito:mockito-core:2.8.9'
-    testImplementation 'org.powermock:powermock-api-mockito2:1.7.0'
-    testImplementation 'org.powermock:powermock-module-junit4-rule-agent:1.7.0'
-    testImplementation 'org.powermock:powermock-module-junit4-rule:1.7.0'
-    testImplementation 'org.powermock:powermock-module-junit4:1.7.0'
+    // Be careful updating; consult https://github.com/powermock/powermock/wiki/Mockito
+    testImplementation 'org.mockito:mockito-core:2.8.0'
+    testImplementation 'org.powermock:powermock-api-mockito2:1.7.3'
+    testImplementation 'org.powermock:powermock-module-junit4-rule-agent:1.7.3'
+    testImplementation 'org.powermock:powermock-module-junit4-rule:1.7.3'
+    testImplementation 'org.powermock:powermock-module-junit4:1.7.3'
 }
-
-apply plugin: 'com.google.gms.google-services'

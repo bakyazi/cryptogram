@@ -8,7 +8,7 @@
     android:clipChildren="false"
     android:orientation="vertical">
 
-    <include layout="@layout/in_toolbar_cryptogram_subtitle"/>
+    <include layout="@layout/in_toolbar_cryptogram_subtitle" />
 
     <android.support.v7.widget.AppCompatTextView
         android:id="@+id/tv_error"
@@ -20,13 +20,14 @@
         android:paddingRight="@dimen/activity_horizontal_margin"
         android:paddingTop="@dimen/activity_vertical_margin"
         android:text="@string/error_puzzle_missing"
-        android:visibility="gone"/>
+        android:visibility="gone" />
 
     <android.support.v4.widget.NestedScrollView
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_gravity="fill_vertical"
-        android:layout_weight="1">
+        android:layout_weight="1"
+        android:fillViewport="true">
 
         <com.pixplicity.cryptogram.views.CryptogramLayout
             android:id="@+id/vg_cryptogram"
@@ -41,7 +42,7 @@
             <com.pixplicity.cryptogram.views.CryptogramView
                 android:id="@+id/cryptogram"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"/>
+                android:layout_height="wrap_content" />
 
             <android.support.v7.widget.AppCompatTextView
                 android:id="@+id/tv_author"
@@ -50,7 +51,7 @@
                 android:layout_marginTop="16dp"
                 android:gravity="end"
                 android:textStyle="italic"
-                tools:text="John Doe"/>
+                tools:text="John Doe" />
 
             <android.support.v7.widget.AppCompatTextView
                 android:id="@+id/tv_topic"
@@ -58,7 +59,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="8dp"
                 android:gravity="end"
-                tools:text="Inspirational"/>
+                tools:text="Inspirational" />
 
             <TableLayout
                 android:id="@+id/vg_stats"
@@ -75,13 +76,14 @@
 
                 <TableRow
                     android:id="@+id/vg_stats_time"
-                    android:layout_marginTop="8dp">
+                    android:layout_marginTop="8dp"
+                    tools:visibility="visible">
 
                     <android.support.v7.widget.AppCompatTextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="@string/stats_time"
-                        android:textColor="@color/textLight"/>
+                        android:textColor="@color/textLight" />
 
                     <android.support.v7.widget.AppCompatTextView
                         android:id="@+id/tv_stats_time"
@@ -91,41 +93,21 @@
                         android:layout_marginStart="8dp"
                         android:minWidth="64dp"
                         android:textColor="@color/textLight"
-                        android:textStyle="bold"/>
-
-                </TableRow>
-
-                <TableRow
-                    android:id="@+id/vg_stats_excess"
-                    android:layout_marginTop="8dp">
-
-                    <android.support.v7.widget.AppCompatTextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="@string/stats_excess"
-                        android:textColor="@color/textLight"/>
-
-                    <android.support.v7.widget.AppCompatTextView
-                        android:id="@+id/tv_stats_excess"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginLeft="8dp"
-                        android:layout_marginStart="8dp"
-                        android:minWidth="64dp"
-                        android:textColor="@color/textLight"
-                        android:textStyle="bold"/>
+                        android:textStyle="bold"
+                        tools:text="01:23" />
 
                 </TableRow>
 
                 <TableRow
                     android:id="@+id/vg_stats_reveals"
-                    android:layout_marginTop="8dp">
+                    android:layout_marginTop="8dp"
+                    tools:visibility="gone">
 
                     <android.support.v7.widget.AppCompatTextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="@string/stats_reveals"
-                        android:textColor="@color/textLight"/>
+                        android:textColor="@color/textLight" />
 
                     <android.support.v7.widget.AppCompatTextView
                         android:id="@+id/tv_stats_reveals"
@@ -135,19 +117,21 @@
                         android:layout_marginStart="8dp"
                         android:minWidth="64dp"
                         android:textColor="@color/textLight"
-                        android:textStyle="bold"/>
+                        android:textStyle="bold"
+                        tools:text="0" />
 
                 </TableRow>
 
                 <TableRow
                     android:id="@+id/vg_stats_score"
-                    android:layout_marginTop="8dp">
+                    android:layout_marginTop="8dp"
+                    tools:visibility="gone">
 
                     <android.support.v7.widget.AppCompatTextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="@string/stats_score"
-                        android:textColor="@color/textLight"/>
+                        android:textColor="@color/textLight" />
 
                     <android.support.v7.widget.AppCompatTextView
                         android:id="@+id/tv_stats_score"
@@ -157,14 +141,16 @@
                         android:layout_marginStart="8dp"
                         android:minWidth="64dp"
                         android:textColor="@color/textLight"
-                        android:textStyle="bold"/>
+                        android:textStyle="bold"
+                        tools:text="68%" />
 
                 </TableRow>
 
                 <TableRow
                     android:id="@+id/vg_stats_practice"
                     android:layout_marginTop="8dp"
-                    android:visibility="gone">
+                    android:visibility="gone"
+                    tools:visibility="visible">
 
                     <android.support.v7.widget.AppCompatTextView
                         android:layout_width="wrap_content"
@@ -172,7 +158,7 @@
                         android:layout_span="2"
                         android:text="@string/stats_practice"
                         android:textColor="@color/textLight"
-                        android:textStyle="italic"/>
+                        android:textStyle="italic" />
 
                 </TableRow>
 
@@ -191,13 +177,13 @@
         android:padding="8dp"
         android:textColor="@color/textLight"
         tools:targetApi="lollipop"
-        tools:visibility="gone"/>
+        tools:visibility="gone" />
 
     <ViewStub
         android:id="@+id/vs_keyboard"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="bottom"
-        android:layout="@layout/in_keyboard"/>
+        android:layout="@layout/in_keyboard" />
 
 </LinearLayout>

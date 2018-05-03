@@ -24,6 +24,7 @@ public class SettingsActivity extends BaseActivity {
 
         mToolbar.setTitle(R.string.settings);
 
+        CryptogramApp.getInstance().getFirebaseAnalytics().setCurrentScreen(this, CryptogramApp.CONTENT_SETTINGS, null);
         Answers.getInstance().logContentView(new ContentViewEvent().putContentName(CryptogramApp.CONTENT_SETTINGS));
     }
 

@@ -391,11 +391,12 @@ public class CryptogramView extends AppCompatTextView {
             mSelectedCharacter = 0;
             return;
         }
-        // Stop highlighting mistakes
-        mHighlightMistakes = false;
         // Character does not occur in the mapping
         mSelectedCharacter = 0;
         if (mPuzzle.isInputChar(c)) {
+            // Stop highlighting mistakes
+            mHighlightMistakes = false;
+            // Proceed to highlight the associated character
             c = Character.toUpperCase(c);
             HashMap<Character, Character> charMapping = mPuzzle.getCharMapping();
             for (Character chrOrig : charMapping.keySet()) {
@@ -545,7 +546,7 @@ public class CryptogramView extends AppCompatTextView {
 
         PointF highlightPosition = null;
 
-        mCharMap = new char[(int) (width / mBoxW)][100];
+        mCharMap = new char[100][(int) (width / mBoxW)];
 
         int paddingLeft = getPaddingLeft();
         width -= paddingLeft + getPaddingRight();

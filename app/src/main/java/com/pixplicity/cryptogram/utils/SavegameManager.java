@@ -47,7 +47,7 @@ public class SavegameManager {
             } else {
                 return null;
             }
-        } catch (IllegalStateException e) {
+        } catch (SecurityException | IllegalStateException e) {
             // Not sure why we're still seeing errors about the connection state, but here we are
             Crashlytics.logException(e);
             return null;

@@ -1,8 +1,13 @@
 package com.pixplicity.cryptogram.activities;
 
 import android.app.Activity;
+import android.content.ActivityNotFoundException;
+import android.content.ClipData;
+import android.content.ClipboardManager;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.graphics.PointF;
 import android.graphics.Rect;
 import android.net.Uri;
@@ -19,6 +24,9 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.ViewStub;
 import android.widget.TextView;
+import android.widget.Toast;
+
+import com.crashlytics.android.Crashlytics;
 
 import com.afollestad.easyvideoplayer.EasyVideoPlayer;
 import com.afollestad.materialdialogs.MaterialDialog;
@@ -26,7 +34,9 @@ import com.crashlytics.android.answers.Answers;
 import com.crashlytics.android.answers.ShareEvent;
 import com.getkeepsafe.taptargetview.TapTarget;
 import com.getkeepsafe.taptargetview.TapTargetView;
+import com.google.firebase.analytics.FirebaseAnalytics;
 import com.pixplicity.cryptogram.BuildConfig;
+import com.pixplicity.cryptogram.CryptogramApp;
 import com.pixplicity.cryptogram.R;
 import com.pixplicity.cryptogram.events.PuzzleEvent;
 import com.pixplicity.cryptogram.models.Puzzle;
@@ -51,6 +61,8 @@ import java.util.Locale;
 import java.util.concurrent.TimeUnit;
 
 import butterknife.BindView;
+
+import static android.content.Context.CLIPBOARD_SERVICE;
 
 public class PuzzleActivity extends BaseActivity {
 
@@ -78,12 +90,6 @@ public class PuzzleActivity extends BaseActivity {
 
     @BindView(R.id.vg_stats)
     protected ViewGroup mVgStats;
-
-    @BindView(R.id.vg_stats_excess)
-    protected ViewGroup mVgStatsExcess;
-
-    @BindView(R.id.tv_stats_excess)
-    protected TextView mTvStatsExcess;
 
     @BindView(R.id.vg_stats_time)
     protected ViewGroup mVgStatsTime;
@@ -265,7 +271,7 @@ public class PuzzleActivity extends BaseActivity {
     }
 
     private TapTarget createTapTargetFromPoint(PointF point, final String title,
-                               final String description) {
+                                               final String description) {
         Rect viewRect = new Rect();
         mCryptogramView.getGlobalVisibleRect(viewRect);
         final int targetX = (int) (point.x + viewRect.left);
@@ -281,12 +287,12 @@ public class PuzzleActivity extends BaseActivity {
             TapTargetView.showFor(
                     PuzzleActivity.this,
                     tapTarget
-                             .titleTextColor(R.color.white)
-                             .descriptionTextColor(R.color.white)
-                             .outerCircleColor(R.color.highlight_color)
-                             .cancelable(true)
-                             .tintTarget(false)
-                             .transparentTarget(true),
+                            .titleTextColor(R.color.white)
+                            .descriptionTextColor(R.color.white)
+                            .outerCircleColor(R.color.highlight_color)
+                            .cancelable(true)
+                            .tintTarget(false)
+                            .transparentTarget(true),
                     new TapTargetView.Listener() {
                         @Override
                         public void onTargetClick(TapTargetView view) {
@@ -385,7 +391,7 @@ public class PuzzleActivity extends BaseActivity {
                 mTvAuthor.setVisibility(View.GONE);
             } else {
                 mTvAuthor.setVisibility(View.VISIBLE);
-                mTvAuthor.setText(getString(R.string.quote_by, author));
+                mTvAuthor.setText(getString(R.string.quote, author));
             }
             String topic = puzzle.getTopic();
             if ((!PrefsUtils.getShowTopic() && !puzzle.isCompleted()) || topic == null) {
@@ -413,6 +419,14 @@ public class PuzzleActivity extends BaseActivity {
 
     private void onGameplayReady() {
         mCryptogramView.requestFocus();
+        if (UpdateManager.consumeScoreExcludesExcessInputs()) {
+            new MaterialDialog.Builder(this)
+                    .title(R.string.scoring_changed_title)
+                    .content(R.string.scoring_changed_message)
+                    .cancelable(false)
+                    .positiveText(R.string.scoring_changed_ok)
+                    .show();
+        }
     }
 
     public void showPuzzleState(Puzzle puzzle) {
@@ -426,19 +440,11 @@ public class PuzzleActivity extends BaseActivity {
                 mVgStatsTime.setVisibility(View.VISIBLE);
                 mTvStatsTime.setText(StringUtils.getDurationString(durationMs));
             }
-            int excessCount = -1;
             int reveals = -1;
             Float score = null;
             if (PrefsUtils.getShowScore()) {
-                excessCount = puzzle.getExcessCount();
                 reveals = puzzle.getReveals();
                 score = puzzle.getScore();
-            }
-            if (excessCount < 0) {
-                mVgStatsExcess.setVisibility(View.GONE);
-            } else {
-                mVgStatsExcess.setVisibility(View.VISIBLE);
-                mTvStatsExcess.setText(String.valueOf(excessCount));
             }
             if (reveals < 0) {
                 mVgStatsReveals.setVisibility(View.GONE);
@@ -465,8 +471,8 @@ public class PuzzleActivity extends BaseActivity {
 
     protected void showHintView(@Nullable Puzzle puzzle) {
         mHintView.setVisibility(puzzle != null && !puzzle.isCompleted()
-                                        && PrefsUtils.getShowUsedChars() && PrefsUtils.getUseSystemKeyboard()
-                                        ? View.VISIBLE : View.GONE);
+                && PrefsUtils.getShowUsedChars() && PrefsUtils.getUseSystemKeyboard()
+                ? View.VISIBLE : View.GONE);
     }
 
     public void onPuzzleChanged(Puzzle puzzle, boolean delayEvent) {
@@ -481,12 +487,6 @@ public class PuzzleActivity extends BaseActivity {
     @Subscribe
     public void onPuzzleProgress(PuzzleEvent.PuzzleProgressEvent event) {
         showPuzzleState(event.getPuzzle());
-    }
-
-    @Subscribe
-    public void onPuzzleStyleChanged(PuzzleEvent.PuzzleStyleChangedEvent event) {
-        // Just recreate the activity
-        recreate();
     }
 
     @Subscribe
@@ -643,15 +643,22 @@ public class PuzzleActivity extends BaseActivity {
                 }
                 intent.putExtra(Intent.EXTRA_TEXT, text);
                 startActivity(Intent.createChooser(intent, getString(R.string.share)));
-                // Log the event
-                Answers.getInstance().logShare(
-                        new ShareEvent()
-                                .putContentId(puzzle == null
-                                        ? null
-                                        : String.valueOf(puzzle.getId()))
-                                .putContentType("puzzle")
-                                .putContentName(text)
-                );
+                {
+                    // Analytics
+                    String puzzleId = puzzle == null
+                            ? null
+                            : String.valueOf(puzzle.getId());
+                    Bundle bundle = new Bundle();
+                    bundle.putString(FirebaseAnalytics.Param.LEVEL, puzzleId);
+                    bundle.putString(FirebaseAnalytics.Param.CONTENT, text);
+                    CryptogramApp.getInstance().getFirebaseAnalytics().logEvent(FirebaseAnalytics.Event.SHARE, bundle);
+                    Answers.getInstance().logShare(
+                            new ShareEvent()
+                                    .putContentId(puzzleId)
+                                    .putContentType("puzzle")
+                                    .putContentName(text)
+                    );
+                }
             }
             return true;
             case R.id.action_stats: {
@@ -669,6 +676,48 @@ public class PuzzleActivity extends BaseActivity {
             return true;
             case R.id.action_about: {
                 startActivity(AboutActivity.create(this));
+            }
+            return true;
+            case R.id.action_donate: {
+                Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse("bitcoin:" + BuildConfig.BITCOIN_ADDRESS));
+
+                AlertDialog dialog = new AlertDialog.Builder(this)
+                        .setTitle(R.string.donate_title)
+                        .setMessage(R.string.donate_message)
+                        .setPositiveButton(R.string.donate_copy_address, (dialogInterface, i) -> {
+                            ClipboardManager clipboardManager = (ClipboardManager) getSystemService(CLIPBOARD_SERVICE);
+                            if (clipboardManager != null) {
+                                clipboardManager.setPrimaryClip(ClipData.newPlainText("text", BuildConfig.BITCOIN_ADDRESS));
+                                Toast.makeText(this, R.string.donate_copy_success, Toast.LENGTH_SHORT).show();
+                            } else {
+                                Toast.makeText(this, R.string.donate_copy_failure, Toast.LENGTH_SHORT).show();
+                                Crashlytics.logException(new IllegalStateException("Failed copying bitcoin address"));
+                            }
+                        })
+                        .setNegativeButton(R.string.donate_launch_wallet, ((dialog1, which) -> {
+                            try {
+                                startActivity(intent);
+                            } catch (ActivityNotFoundException ignore) {
+                                String installPackageName = "de.schildbach.wallet";
+                                try {
+                                    startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("market://details?id=" + installPackageName)));
+                                } catch (ActivityNotFoundException ignore2) {
+                                    try {
+                                        startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("https://play.google.com/store/apps/details?id=" + installPackageName)));
+                                    } catch (ActivityNotFoundException e) {
+                                        Toast.makeText(this, R.string.donate_launch_failure, Toast.LENGTH_SHORT).show();
+                                        Crashlytics.logException(new IllegalStateException("Failed launching Google Play", e));
+                                    }
+                                }
+                            }
+                        }))
+                        .show();
+
+                PackageManager packageManager = getPackageManager();
+                if (intent.resolveActivity(packageManager) == null) {
+                    // No intent available to handle action
+                    dialog.getButton(DialogInterface.BUTTON_NEGATIVE).setText(R.string.install_bitcoin_wallet);
+                }
             }
             return true;
         }
