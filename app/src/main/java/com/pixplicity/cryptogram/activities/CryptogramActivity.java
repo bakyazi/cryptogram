@@ -273,7 +273,7 @@ public class CryptogramActivity extends BaseActivity implements GoogleApiClient.
         Intent intent = getIntent();
         if (intent != null) {
             if (intent.getBooleanExtra(EXTRA_LAUNCH_SETTINGS, false)) {
-                startActivity(SettingsActivity.create(this));
+                startActivity(SettingsActivity.Companion.create(this));
             }
         }
 
@@ -1074,15 +1074,15 @@ public class CryptogramActivity extends BaseActivity implements GoogleApiClient.
             }
             return true;
             case R.id.action_settings: {
-                startActivity(SettingsActivity.create(this));
+                startActivity(SettingsActivity.Companion.create(this));
             }
             return true;
             case R.id.action_how_to_play: {
-                startActivity(HowToPlayActivity.create(this));
+                startActivity(HowToPlayActivity.Companion.create(this));
             }
             return true;
             case R.id.action_about: {
-                startActivity(AboutActivity.create(this));
+                startActivity(AboutActivity.Companion.create(this));
             }
             return true;
             case R.id.action_donate: {
