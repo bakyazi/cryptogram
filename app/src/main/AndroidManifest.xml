@@ -1,9 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
-<manifest package="com.pixplicity.cryptogram"
-          xmlns:android="http://schemas.android.com/apk/res/android"
-          xmlns:tools="http://schemas.android.com/tools">
+<manifest
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    package="com.pixplicity.cryptogram">
 
-    <uses-permission android:name="android.permission.INTERNET"/>
+    <uses-permission android:name="android.permission.INTERNET" />
 
     <application
         android:name=".CryptogramApp"
@@ -11,49 +12,55 @@
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:supportsRtl="true"
-        android:theme="@style/AppTheme">
+        android:theme="@style/AppTheme"
+        tools:ignore="GoogleAppIndexingWarning">
 
         <activity
             android:name=".activities.CryptogramActivity"
             android:windowSoftInputMode="adjustResize">
             <intent-filter>
-                <action android:name="android.intent.action.MAIN"/>
+                <action android:name="android.intent.action.MAIN" />
 
-                <category android:name="android.intent.category.LAUNCHER"/>
+                <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
 
         <activity
             android:name=".activities.HowToPlayActivity"
             android:parentActivityName=".activities.CryptogramActivity"
-            tools:targetApi="jelly_bean"/>
+            tools:targetApi="jelly_bean" />
 
         <activity
             android:name=".activities.AboutActivity"
             android:parentActivityName=".activities.CryptogramActivity"
-            tools:targetApi="jelly_bean"/>
+            tools:targetApi="jelly_bean" />
 
         <activity
             android:name=".activities.SettingsActivity"
             android:parentActivityName=".activities.CryptogramActivity"
-            tools:targetApi="jelly_bean"/>
+            tools:targetApi="jelly_bean" />
 
-        <receiver android:name=".utils.NotificationPublisher"/>
+        <activity
+            android:name=".activities.DonateActivity"
+            android:parentActivityName=".activities.CryptogramActivity"
+            tools:targetApi="jelly_bean" />
+
+        <receiver android:name=".utils.NotificationPublisher" />
 
         <meta-data
             android:name="android.max_aspect"
-            android:value="2.1"/>
+            android:value="2.1" />
 
         <meta-data
             android:name="com.google.android.gms.games.APP_ID"
-            android:value="@string/app_id"/>
+            android:value="@string/app_id" />
         <meta-data
             android:name="com.google.android.gms.version"
-            android:value="@integer/google_play_services_version"/>
+            android:value="@integer/google_play_services_version" />
 
         <meta-data
             android:name="io.fabric.ApiKey"
-            android:value="cb7ab6c28552bf25b9c45e17100b55d0e3a8686a"/>
+            android:value="cb7ab6c28552bf25b9c45e17100b55d0e3a8686a" />
 
     </application>
 

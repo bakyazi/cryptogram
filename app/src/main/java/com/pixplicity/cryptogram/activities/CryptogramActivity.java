@@ -1086,7 +1086,7 @@ public class CryptogramActivity extends BaseActivity implements GoogleApiClient.
             }
             return true;
             case R.id.action_donate: {
-                startActivity(DonateActivity.create(this));
+                startActivity(DonateActivity.Companion.create(this));
             }
             return true;
         }
