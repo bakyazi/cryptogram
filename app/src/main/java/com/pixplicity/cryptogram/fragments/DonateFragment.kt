@@ -26,6 +26,7 @@ class DonateFragment : BaseFragment(), PurchasesUpdatedListener {
         private val TAG = DonateFragment::class.java.simpleName
     }
 
+    private val skuList = arrayListOf("donation_1")
     private val skus = HashMap<String, SkuDetails>()
     private var purchases = ArrayList<Purchase>()
     private lateinit var billingClient: BillingClient
@@ -48,7 +49,6 @@ class DonateFragment : BaseFragment(), PurchasesUpdatedListener {
             override fun onBillingSetupFinished(@BillingClient.BillingResponse billingResponseCode: Int) {
                 if (billingResponseCode == BillingClient.BillingResponse.OK) {
                     // The billing client is ready; query purchases
-                    val skuList = arrayListOf("donation_1")
                     val params = SkuDetailsParams.newBuilder()
                     params.setSkusList(skuList).setType(BillingClient.SkuType.INAPP)
                     billingClient.querySkuDetailsAsync(params.build(), { responseCode, skuDetailsList ->
@@ -77,10 +77,11 @@ class DonateFragment : BaseFragment(), PurchasesUpdatedListener {
         bt_bitcoin.setOnClickListener {
             val context = context!!
             val intent = Intent(Intent.ACTION_VIEW, Uri.parse("bitcoin:" + BuildConfig.BITCOIN_ADDRESS))
+            // FIXME perhaps check if a compatible app is installed
+            //context.packageManager.resolveActivity(intent, PackageManager.MATCH_DEFAULT_ONLY)
 
             val dialog = AlertDialog.Builder(context)
-                    .setTitle(R.string.donate_title)
-                    .setMessage(R.string.donate_message)
+                    .setMessage(getString(R.string.donate_bitcoin_message, BuildConfig.BITCOIN_ADDRESS))
                     .setPositiveButton(R.string.donate_copy_address) { dialogInterface, i ->
                         val clipboardManager = context.getSystemService(CLIPBOARD_SERVICE) as ClipboardManager?
                         if (clipboardManager != null) {
@@ -118,13 +119,29 @@ class DonateFragment : BaseFragment(), PurchasesUpdatedListener {
         }
 
         bt_in_app_purchase.setOnClickListener {
-            val flowParams = BillingFlowParams.newBuilder()
-                    .setSku("donation_1")
-                    .setType(BillingClient.SkuType.INAPP)
-                    .build()
-            val responseCode = billingClient.launchBillingFlow(activity, flowParams)
-            Log.d(TAG, "launchBillingFlow: $responseCode")
+            when (skuList.count()) {
+                0 -> {
+                    // Nothing to purchase
+                }
+                1 -> {
+                    // Only one to purchase
+                    doInAppPurchase(skuList.first())
+                }
+                else -> {
+                    // FIXME display list
+                    doInAppPurchase(skuList.first())
+                }
+            }
         }
+    }
+
+    private fun doInAppPurchase(sku: String) {
+        val flowParams = BillingFlowParams.newBuilder()
+                .setSku(sku)
+                .setType(BillingClient.SkuType.INAPP)
+                .build()
+        val responseCode = billingClient.launchBillingFlow(activity, flowParams)
+        Log.d(TAG, "launchBillingFlow: $responseCode")
     }
 
     override fun onPurchasesUpdated(responseCode: Int, purchases: MutableList<Purchase>?) {
