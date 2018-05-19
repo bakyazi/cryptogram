@@ -4235,6 +4235,7 @@
   {
     "text": "This quote is often falsely attributed to Mark Twain.",
     "author": "Randall Munroe",
+    "given": "EI",
     "topic": "Funny"
   },
   {
@@ -4355,6 +4356,7 @@
   {
     "text": "Never ask a barber if you need a haircut.",
     "author": "Warren Buffet",
+    "given": "RST",
     "topic": "Finance"
   },
   {
@@ -4444,9 +4446,8 @@
     "topic": "Reasoning"
   },
   {
-    "text": "A bad day is when I lie in the bed and I think of things that might have been,",
+    "text": "A bad day is when I lie in the bed and I think of things that might have been.",
     "author": "Paul Simon",
-    "given": "T",
     "topic": "Depression"
   }
 ]
