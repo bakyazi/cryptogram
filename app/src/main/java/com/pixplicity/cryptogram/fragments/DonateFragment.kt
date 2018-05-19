@@ -5,9 +5,11 @@ import android.content.Context.CLIPBOARD_SERVICE
 import android.net.Uri
 import android.os.Bundle
 import android.support.v7.app.AlertDialog
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.TextView
 import android.widget.Toast
 import com.android.billingclient.api.*
 import com.crashlytics.android.Crashlytics
@@ -15,9 +17,17 @@ import com.pixplicity.cryptogram.BuildConfig
 import com.pixplicity.cryptogram.R
 import com.pixplicity.cryptogram.utils.invertedTheme
 import kotlinx.android.synthetic.main.fragment_donate.*
+import java.text.DateFormat
+import java.util.*
 
 class DonateFragment : BaseFragment(), PurchasesUpdatedListener {
 
+    companion object {
+        private val TAG = DonateFragment::class.java.simpleName
+    }
+
+    private val skus = HashMap<String, SkuDetails>()
+    private var purchases = ArrayList<Purchase>()
     private lateinit var billingClient: BillingClient
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
@@ -38,26 +48,26 @@ class DonateFragment : BaseFragment(), PurchasesUpdatedListener {
             override fun onBillingSetupFinished(@BillingClient.BillingResponse billingResponseCode: Int) {
                 if (billingResponseCode == BillingClient.BillingResponse.OK) {
                     // The billing client is ready; query purchases
-                    val skuList = arrayListOf("domation_1")
+                    val skuList = arrayListOf("donation_1")
                     val params = SkuDetailsParams.newBuilder()
                     params.setSkusList(skuList).setType(BillingClient.SkuType.INAPP)
                     billingClient.querySkuDetailsAsync(params.build(), { responseCode, skuDetailsList ->
                         // TODO display a list of SKUs
+                        skuDetailsList.forEach {
+                            skus[it.sku] = it
+                            Log.d(TAG, "querySkuDetailsAsync: ${it.sku}; ${it.title}; ${it.description}")
+                        }
+                        showPurchases()
                     })
-                    billingClient.queryPurchaseHistoryAsync(BillingClient.SkuType.INAPP, { responseCode, purchasesList ->
-                        if (responseCode == BillingClient.BillingResponse.OK && purchasesList != null) {
-                            for (purchase in purchasesList) {
-                                // TODO display list of purchases
-                                when (purchase.sku) {
-                                    "donation_1" -> {
-                                        // ...
-                                    }
-                                }
-                            }
+                    billingClient.queryPurchaseHistoryAsync(BillingClient.SkuType.INAPP, { responseCode, purchases ->
+                        if (responseCode == BillingClient.BillingResponse.OK && purchases != null) {
+                            this@DonateFragment.purchases = ArrayList(purchases)
+                            showPurchases()
                         }
                     })
                 }
             }
+
             override fun onBillingServiceDisconnected() {
                 // Try to restart the connection on the next request to
                 // Google Play by calling the startConnection() method.
@@ -95,9 +105,7 @@ class DonateFragment : BaseFragment(), PurchasesUpdatedListener {
                                     Toast.makeText(context, R.string.donate_launch_failure, Toast.LENGTH_SHORT).show()
                                     Crashlytics.logException(IllegalStateException("Failed launching Google Play", e))
                                 }
-
                             }
-
                         }
                     }
                     .show()
@@ -115,23 +123,48 @@ class DonateFragment : BaseFragment(), PurchasesUpdatedListener {
                     .setType(BillingClient.SkuType.INAPP)
                     .build()
             val responseCode = billingClient.launchBillingFlow(activity, flowParams)
+            Log.d(TAG, "launchBillingFlow: $responseCode")
         }
     }
 
     override fun onPurchasesUpdated(responseCode: Int, purchases: MutableList<Purchase>?) {
+        Log.d(TAG, "onPurchasesUpdated: $responseCode")
         if (responseCode == BillingClient.BillingResponse.OK && purchases != null) {
             purchases.forEach {
+                Log.d(TAG, "consumeAsync: ${it.purchaseToken}")
                 billingClient.consumeAsync(it.purchaseToken, { responseCode, outToken ->
+                    Log.d(TAG, "consumeAsync: ${it.purchaseToken}; responseCode= $responseCode")
                     if (responseCode == BillingClient.BillingResponse.OK) {
                         // Handle the success of the consume operation.
                         // For example, increase the number of coins inside the user&#39;s basket.
                     }
                 })
             }
+            this.purchases = ArrayList(purchases)
+            showPurchases()
         } else if (responseCode == BillingClient.BillingResponse.USER_CANCELED) {
             // Handle an error caused by a user cancelling the purchase flow.
         } else {
             // Handle any other error codes.
+        }
+    }
+
+    private fun showPurchases() {
+        tv_donations.visibility = if (purchases.isEmpty()) View.GONE else View.VISIBLE
+        vg_donations.visibility = if (purchases.isEmpty()) View.GONE else View.VISIBLE
+        vg_donations.removeAllViews()
+        val df = DateFormat.getDateInstance(DateFormat.LONG)
+        for (purchase in purchases) {
+            Log.d(TAG, "queryPurchaseHistoryAsync: ${purchase.originalJson}")
+            val tv_donation = layoutInflater.inflate(R.layout.li_donation, null) as TextView
+            val sku = skus[purchase.sku]
+            val description = if (sku != null) {
+                sku.title
+            } else {
+                purchase.sku
+            }
+            tv_donation.text = df.format(Date(purchase.purchaseTime)) + ": " + description
+            vg_donations.addView(tv_donation)
         }
     }
 

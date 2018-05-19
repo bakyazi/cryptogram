@@ -35,10 +35,10 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginLeft="@dimen/activity_horizontal_margin"
-            android:layout_marginRight="@dimen/activity_horizontal_margin"
             android:layout_marginTop="8dp"
-            android:drawableLeft="@drawable/ic_bitcoin"
+            android:layout_marginRight="@dimen/activity_horizontal_margin"
             android:drawableStart="@drawable/ic_bitcoin"
+            android:drawableLeft="@drawable/ic_bitcoin"
             android:gravity="center"
             android:paddingEnd="24dp"
             android:paddingRight="24dp"
@@ -52,16 +52,31 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginLeft="@dimen/activity_horizontal_margin"
-            android:layout_marginRight="@dimen/activity_horizontal_margin"
             android:layout_marginTop="8dp"
-            android:drawableLeft="@drawable/ic_google_play"
+            android:layout_marginRight="@dimen/activity_horizontal_margin"
             android:drawableStart="@drawable/ic_google_play"
+            android:drawableLeft="@drawable/ic_google_play"
             android:gravity="center"
             android:paddingEnd="24dp"
             android:paddingRight="24dp"
             android:text="@string/donate_google_play"
             android:textAllCaps="true"
             tools:ignore="RtlSymmetry,UnusedAttribute" />
+
+        <TextView
+            android:id="@+id/tv_donations"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:text="Your past donations through Google Play:"
+            android:visibility="gone" />
+
+        <LinearLayout
+            android:id="@+id/vg_donations"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:visibility="gone" />
 
     </LinearLayout>
 
