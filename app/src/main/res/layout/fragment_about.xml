@@ -124,7 +124,7 @@
             android:textStyle="bold"/>
 
         <TextView
-            android:id="@+id/artwork"
+            android:id="@+id/tv_artwork"
             style="@style/InfoTextView"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"

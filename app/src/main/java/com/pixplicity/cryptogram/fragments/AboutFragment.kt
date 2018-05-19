@@ -2,31 +2,18 @@ package com.pixplicity.cryptogram.fragments
 
 import android.content.ActivityNotFoundException
 import android.content.Intent
-import android.content.pm.PackageInfo
 import android.content.pm.PackageManager
-import android.graphics.drawable.Drawable
 import android.net.Uri
 import android.os.Bundle
 import android.support.v4.content.ContextCompat
 import android.text.method.LinkMovementMethod
 import android.util.Log
-import android.view.LayoutInflater
-import android.view.Menu
-import android.view.MenuInflater
-import android.view.MenuItem
-import android.view.View
-import android.view.ViewGroup
-import android.view.inputmethod.InputMethodInfo
-import android.widget.Button
-import android.widget.ImageView
-import android.widget.TextView
+import android.view.*
 import android.widget.Toast
-
 import com.pixplicity.cryptogram.R
 import com.pixplicity.cryptogram.utils.HtmlCompat
 import com.pixplicity.cryptogram.views.SimpleInputConnection
-
-import butterknife.BindView
+import kotlinx.android.synthetic.main.fragment_about.*
 
 
 class AboutFragment : BaseFragment() {
@@ -35,33 +22,6 @@ class AboutFragment : BaseFragment() {
         private val TAG = AboutFragment::class.java.simpleName
         val FEEDBACK_EMAIL = "paul@pixplicity.com"
     }
-
-    @BindView(R.id.iv_logo)
-    var mIvLogo: ImageView? = null
-
-    @BindView(R.id.tv_version)
-    var mTvVersion: TextView? = null
-
-    @BindView(R.id.tv_about_this_app_1)
-    var mTvAboutThisApp1: TextView? = null
-
-    @BindView(R.id.tv_about_this_app_2)
-    var mTvAboutThisApp2: TextView? = null
-
-    @BindView(R.id.tv_disclaimer)
-    var mTvDisclaimer: TextView? = null
-
-    @BindView(R.id.tv_licenses)
-    var mTvLicenses: TextView? = null
-
-    @BindView(R.id.artwork)
-    var mTvArtwork: TextView? = null
-
-    @BindView(R.id.bt_website)
-    var mBtWebsite: Button? = null
-
-    @BindView(R.id.iv_pixplicity)
-    var mIvPixplicity: ImageView? = null
 
     private val versionString: String?
         get() {
@@ -95,27 +55,27 @@ class AboutFragment : BaseFragment() {
         super.onViewCreated(view, savedInstanceState)
 
         if (isDarkTheme) {
-            invert(mIvLogo!!)
+            invert(iv_logo)
         }
         // App version
         val versionString = versionString
-        mTvVersion!!.text = versionString
+        tv_version.text = versionString
 
         // About this app
         val appName = getString(R.string.app_name)
-        mTvAboutThisApp1!!.text = HtmlCompat.fromHtml(getString(R.string.about_this_app_1, appName))
-        mTvAboutThisApp2!!.text = HtmlCompat.fromHtml(getString(R.string.about_this_app_2))
+        tv_about_this_app_1.text = HtmlCompat.fromHtml(getString(R.string.about_this_app_1, appName))
+        tv_about_this_app_2.text = HtmlCompat.fromHtml(getString(R.string.about_this_app_2))
 
         // Legal
-        mTvDisclaimer!!.text = HtmlCompat.fromHtml(getString(R.string.disclaimer))
+        tv_disclaimer.text = HtmlCompat.fromHtml(getString(R.string.disclaimer))
 
         // Licenses
-        mTvLicenses!!.movementMethod = LinkMovementMethod.getInstance()
-        mTvLicenses!!.text = HtmlCompat.fromHtml(getString(R.string.licenses))
+        tv_licenses.movementMethod = LinkMovementMethod.getInstance()
+        tv_licenses.text = HtmlCompat.fromHtml(getString(R.string.licenses))
 
         // Artwork
-        mTvArtwork!!.movementMethod = LinkMovementMethod.getInstance()
-        mTvArtwork!!.text = HtmlCompat.fromHtml(getString(R.string.artwork))
+        tv_artwork.movementMethod = LinkMovementMethod.getInstance()
+        tv_artwork.text = HtmlCompat.fromHtml(getString(R.string.artwork))
 
         val drawableId = if (isDarkTheme)
             R.drawable.im_pixplicity_white
@@ -125,7 +85,7 @@ class AboutFragment : BaseFragment() {
         val drawable = ContextCompat.getDrawable(context!!, drawableId)
         // drawable = VectorDrawableCompat.create(getResources(), drawableId, getActivity().getTheme());
 
-        mIvPixplicity!!.setImageDrawable(drawable)
+        iv_pixplicity.setImageDrawable(drawable)
 
         // Website
         val launchWebsite = View.OnClickListener {
@@ -137,8 +97,8 @@ class AboutFragment : BaseFragment() {
                 Toast.makeText(context, R.string.error_no_activity, Toast.LENGTH_LONG).show()
             }
         }
-        mBtWebsite!!.setOnClickListener(launchWebsite)
-        mIvPixplicity!!.setOnClickListener(launchWebsite)
+        bt_website.setOnClickListener(launchWebsite)
+        iv_pixplicity.setOnClickListener(launchWebsite)
     }
 
     override fun onOptionsItemSelected(item: MenuItem?): Boolean {
