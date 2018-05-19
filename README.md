@@ -19,6 +19,7 @@ Best of all, it's completely free, and free of ads! Enjoy!
 
 * [Paul Lammertsma](https://github.com/pflammertsma)
 * [Chinmay Pai](https://github.com/Thunderbottom)
+* [Maggie Salak](https://github.com/MaggieSalak)
 
 ## License
 

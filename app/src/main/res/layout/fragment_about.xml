@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.v4.widget.NestedScrollView
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.v4.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
@@ -18,7 +17,7 @@
             android:adjustViewBounds="true"
             android:contentDescription="@string/app_name"
             android:scaleType="centerInside"
-            android:src="?attr/im_launcher"/>
+            android:src="?attr/im_launcher" />
 
         <ImageView
             android:id="@+id/iv_logo"
@@ -30,14 +29,14 @@
             android:contentDescription="@string/app_name"
             android:maxWidth="240dp"
             android:scaleType="centerInside"
-            android:src="@drawable/im_logo"/>
+            android:src="@drawable/im_logo" />
 
         <TextView
             android:id="@+id/tv_version"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="center_horizontal"
-            tools:text="vX.Y.Z"/>
+            tools:text="vX.Y.Z" />
 
         <TextView
             android:id="@+id/tv_about_this_app_1"
@@ -45,7 +44,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="16dp"
-            android:text="@string/about_this_app_1"/>
+            android:text="@string/about_this_app_1" />
 
         <TextView
             style="@style/InfoTextView"
@@ -54,7 +53,7 @@
             android:layout_marginTop="8dp"
             android:gravity="center_horizontal"
             android:text="@string/made_with_love_by"
-            android:textSize="14sp"/>
+            android:textSize="14sp" />
 
         <ImageView
             android:id="@+id/iv_pixplicity"
@@ -64,14 +63,14 @@
             android:adjustViewBounds="true"
             android:contentDescription="@string/pixplicity"
             android:scaleType="centerInside"
-            android:src="@drawable/im_pixplicity_color"/>
+            android:src="@drawable/im_pixplicity_color" />
 
         <TextView
             android:id="@+id/tv_about_this_app_2"
             style="@style/InfoTextView"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="@string/about_this_app_2"/>
+            android:text="@string/about_this_app_2" />
 
         <android.support.v7.widget.AppCompatButton
             android:id="@+id/bt_website"
@@ -84,14 +83,14 @@
             android:text="@string/website"
             android:textAllCaps="true"
             android:textColor="@color/link"
-            tools:ignore="UnusedAttribute"/>
+            tools:ignore="UnusedAttribute" />
 
         <TextView
             style="@style/InfoTextView.Title"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="@string/title_disclaimer"
-            android:textStyle="bold"/>
+            android:textStyle="bold" />
 
         <TextView
             android:id="@+id/tv_disclaimer"
@@ -99,21 +98,21 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="@string/disclaimer"
-            tools:targetApi="ice_cream_sandwich"/>
+            tools:targetApi="ice_cream_sandwich" />
 
         <TextView
             style="@style/InfoTextView.Title"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="@string/title_licenses"
-            android:textStyle="bold"/>
+            android:textStyle="bold" />
 
         <TextView
             android:id="@+id/tv_licenses"
             style="@style/InfoTextView"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            tools:text="@string/licenses"/>
+            tools:text="@string/licenses" />
 
         <TextView
             style="@style/InfoTextView.Title"
@@ -121,15 +120,31 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="24dp"
             android:text="@string/title_artwork"
-            android:textStyle="bold"/>
+            android:textStyle="bold" />
 
         <TextView
-            android:id="@+id/artwork"
+            android:id="@+id/tv_artwork"
             style="@style/InfoTextView"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="@string/artwork"
-            tools:targetApi="ice_cream_sandwich"/>
+            tools:targetApi="ice_cream_sandwich" />
+
+        <TextView
+            style="@style/InfoTextView.Title"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="24dp"
+            android:text="@string/title_contributors"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/tv_contributors"
+            style="@style/InfoTextView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/contributors"
+            tools:targetApi="ice_cream_sandwich" />
 
     </LinearLayout>
 

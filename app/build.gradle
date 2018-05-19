@@ -10,6 +10,8 @@ buildscript {
 }
 
 apply plugin: 'com.android.application'
+apply plugin: 'kotlin-android'
+apply plugin: 'kotlin-android-extensions'
 apply plugin: 'io.fabric'
 apply plugin: 'com.google.firebase.firebase-perf'
 
@@ -67,8 +69,8 @@ android {
         applicationId "com.pixplicity.cryptogram"
         minSdkVersion 14
         targetSdkVersion 27
-        versionCode 194
-        versionName "1.8.4"
+        versionCode 195
+        versionName "1.8.5"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
 
         buildConfigField("String", "BITCOIN_ADDRESS", "\"35YPTPGZNeVrUNFA9Tn7A8HVx4nhFd1989\"")
@@ -120,10 +122,13 @@ repositories {
     maven { url "https://dl.bintray.com/pixplicity/maven" }
     maven { url "https://dl.bintray.com/drummer-aidan/maven" }
     maven { url 'https://maven.fabric.io/public' }
+    mavenCentral()
 }
 
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
+
+    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
 
     implementation 'com.android.support:appcompat-v7:27.1.1'
     implementation 'com.android.support:support-v4:27.1.1'
@@ -133,10 +138,12 @@ dependencies {
     implementation 'com.android.support:recyclerview-v7:27.1.1'
     implementation 'com.android.support:gridlayout-v7:27.1.1'
 
-    implementation 'com.google.android.gms:play-services-games:15.0.0'
+    implementation 'com.android.billingclient:billing:1.1'
 
-    implementation 'com.google.firebase:firebase-core:15.0.0'
-    implementation 'com.google.firebase:firebase-perf:15.0.0'
+    implementation 'com.google.android.gms:play-services-games:15.0.1'
+
+    implementation 'com.google.firebase:firebase-core:15.0.2'
+    implementation 'com.google.firebase:firebase-perf:15.2.0'
 
     implementation 'com.jakewharton:butterknife:8.8.1'
     annotationProcessor 'com.jakewharton:butterknife-compiler:8.8.1'
@@ -145,11 +152,11 @@ dependencies {
     implementation 'com.afollestad.material-dialogs:core:0.9.4.7'
     implementation 'com.afollestad:easyvideoplayer:0.3.0'
 
-    implementation 'com.github.bumptech.glide:glide:4.2.0'
+    implementation 'com.github.bumptech.glide:glide:4.6.1'
 
     implementation 'com.squareup:otto:1.3.8'
 
-    implementation 'com.pixplicity.htmlcompat:library:1.0.0'
+    implementation 'com.pixplicity.htmlcompat:library:1.1.1'
     implementation 'com.pixplicity.easyprefs:library:1.9.0'
     implementation 'com.pixplicity.generate:library:1.1.8'
 

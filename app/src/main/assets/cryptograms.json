@@ -803,6 +803,7 @@
   {
     "text": "When you want some­thing, all the universe cons­pires in helping you to achieve it.",
     "author": "Paulo Coelho",
+    "given": "H",
     "topic": "From literature"
   },
   {
@@ -2513,7 +2514,7 @@
   {
     "text": "Whenever you find yourself on the side of the majority, it is time to pause and reflect.",
     "author": "Mark Twain",
-    "topic": "Inspirational"
+    "topic": "Thoughtfulness"
   },
   {
     "text": "The pessi­mist com­plains about the wind; the optimist expects it to change; the realist adjusts the sails.",
@@ -4235,6 +4236,7 @@
   {
     "text": "This quote is often falsely attributed to Mark Twain.",
     "author": "Randall Munroe",
+    "given": "EI",
     "topic": "Funny"
   },
   {
@@ -4355,6 +4357,7 @@
   {
     "text": "Never ask a barber if you need a haircut.",
     "author": "Warren Buffet",
+    "given": "RST",
     "topic": "Finance"
   },
   {
@@ -4444,9 +4447,101 @@
     "topic": "Reasoning"
   },
   {
-    "text": "A bad day is when I lie in the bed and I think of things that might have been,",
+    "text": "A bad day is when I lie in the bed and I think of things that might have been.",
     "author": "Paul Simon",
-    "given": "T",
     "topic": "Depression"
+  },
+  {
+    "text": "The human race is unimportant. It is the self that must not be betrayed.",
+    "author": "John Fowles",
+    "given": "U",
+    "topic": "Life"
+  },
+  {
+    "text": "The most important questions in life can never be answered by anyone except oneself.",
+    "author": "John Fowles",
+    "given": "A",
+    "topic": "Life"
+  },
+  {
+    "text": "We make our world significant by the courage of our questions and by the depth of our answers.",
+    "author": "Carl Sagan",
+    "topic": "Thoughtfulness"
+  },
+  {
+    "text": "The way to get started is to quit talking and begin doing.",
+    "author": "Walt Disney",
+    "given": "T",
+    "topic": "Motivational"
+  },
+  {
+    "text": "To play a wrong note is insignificant; to play without passion is inexcusable.",
+    "author": "Ludwig van Beethoven",
+    "given": "T",
+    "topic": "Beauty"
+  },
+  {
+    "text": "Do not merely practice your art, but force your way into its secrets; it deserves that, for only art and science can exalt man to divinity.",
+    "author": "Ludwig van Beethoven",
+    "topic": "Beauty"
+  },
+  {
+    "text": "The world is a king, and like a king, desires flattery in return for favor; but true art is selfish and perverse — it will not submit to the mold of flattery.",
+    "author": "Ludwig van Beethoven",
+    "topic": "Art"
+  },
+  {
+    "text": "The oldest, truest, most beautiful organ of music, the origin to which alone our music owes its being, is the human voice.",
+    "author": "Richard Wagner",
+    "topic": "Art"
+  },
+  {
+    "text": "A fellow of mediocre talent will remain a mediocrity, whether he travels or not; but one of superior talent will go to seed if he always remains in the same place.",
+    "author": "Wolfgang Amadeus Mozart",
+    "topic": "Ambition"
+  },
+  {
+    "text": "I never lie down at night without reflecting that — young as I am — I may not live to see another day.",
+    "author": "Wolfgang Amadeus Mozart",
+    "topic": "Thoughtfulness"
+  },
+  {
+    "text": "Be silent, if you choose; but when it is necessary, speak — and speak in such a way that people will remember it.",
+    "author": "Wolfgang Amadeus Mozart",
+    "topic": "Thoughtfulness"
+  },
+  {
+    "text": "If I could only impress on the soul of every friend of music, how inimitable are Mozart’s works, how profound, how musically intelligent, how extraordinarily sensitive!",
+    "author": "Joseph Haydn",
+    "topic": "Art"
+  },
+  {
+    "text": "Music expresses that which cannot be said and on which it is impossible to be silent.",
+    "author": "William Shakespeare (Victor Hugo)",
+    "given": "N",
+    "topic": "Art"
+  },
+  {
+    "text": "It was music, more than anything else, that led the Pythagoreans to believe that the universe is a harmonious place governed by numbers.",
+    "author": "Ian Stewart",
+    "given": "MU",
+    "topic": "Art"
+  },
+  {
+    "text": "Music is a world within itself, with a language we all understand.",
+    "author": "Stevie Wonder",
+    "given": "W",
+    "topic": "Art"
+  },
+  {
+    "text": "The conscious utterance of thought, by speech or action, to any end, is art.",
+    "author": "Ralph Waldo Emerson",
+    "given": "AE",
+    "topic": "Art"
+  },
+  {
+    "text": "He is but a poor philosopher who holds a view so narrow as to exclude forms not to his personal taste.",
+    "author": "John Galsworthy",
+    "topic": "Art"
   }
 ]
