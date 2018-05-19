@@ -69,7 +69,7 @@ android {
         applicationId "com.pixplicity.cryptogram"
         minSdkVersion 14
         targetSdkVersion 27
-        versionCode 196
+        versionCode 197
         versionName "1.8.6"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
 
