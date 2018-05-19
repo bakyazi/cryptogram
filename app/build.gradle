@@ -69,8 +69,8 @@ android {
         applicationId "com.pixplicity.cryptogram"
         minSdkVersion 14
         targetSdkVersion 27
-        versionCode 195
-        versionName "1.8.5"
+        versionCode 196
+        versionName "1.8.6"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
 
         buildConfigField("String", "BITCOIN_ADDRESS", "\"35YPTPGZNeVrUNFA9Tn7A8HVx4nhFd1989\"")
@@ -80,18 +80,16 @@ android {
             applicationIdSuffix ".debug"
             signingConfig signingConfigs.debug
         }
-        release {
-            minifyEnabled false
-            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
-            // We're no longer using the release key, but an upload key for Google Play App Signing
-            //signingConfig signingConfigs.release
-            signingConfig signingConfigs.release
-        }
         upload {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
-            // We're no longer using the release key, but an upload key for Google Play App Signing
-            //signingConfig signingConfigs.release
+            signingConfig signingConfigs.upload
+        }
+        uploadDebug {
+            minifyEnabled false
+            debuggable true
+            jniDebuggable true
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
             signingConfig signingConfigs.upload
         }
     }
