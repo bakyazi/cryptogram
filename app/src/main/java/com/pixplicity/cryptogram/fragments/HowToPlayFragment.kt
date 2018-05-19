@@ -7,6 +7,7 @@ import android.view.ViewGroup
 import com.pixplicity.cryptogram.R
 import com.pixplicity.cryptogram.utils.HtmlCompat
 import com.pixplicity.cryptogram.utils.VideoUtils
+import com.pixplicity.cryptogram.utils.invertedTheme
 import kotlinx.android.synthetic.main.fragment_how_to_play.*
 
 
@@ -21,8 +22,8 @@ class HowToPlayFragment : BaseFragment() {
         super.onViewCreated(view, savedInstanceState)
 
         if (isDarkTheme) {
-            invert(iv_instructions1)
-            invert(iv_instructions2)
+            iv_instructions1.invertedTheme()
+            iv_instructions2.invertedTheme()
         }
 
         tv_how_to_play_1.text = HtmlCompat.fromHtml(getString(R.string.how_to_play_1))

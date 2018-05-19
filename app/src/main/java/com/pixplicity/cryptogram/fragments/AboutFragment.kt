@@ -12,6 +12,7 @@ import android.view.*
 import android.widget.Toast
 import com.pixplicity.cryptogram.R
 import com.pixplicity.cryptogram.utils.HtmlCompat
+import com.pixplicity.cryptogram.utils.invertedTheme
 import com.pixplicity.cryptogram.views.SimpleInputConnection
 import kotlinx.android.synthetic.main.fragment_about.*
 
@@ -55,7 +56,7 @@ class AboutFragment : BaseFragment() {
         super.onViewCreated(view, savedInstanceState)
 
         if (isDarkTheme) {
-            invert(iv_logo)
+            iv_logo.invertedTheme()
         }
         // App version
         val versionString = versionString
