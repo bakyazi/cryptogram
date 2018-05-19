@@ -47,7 +47,7 @@
             tools:ignore="RtlSymmetry,UnusedAttribute" />
 
         <android.support.v7.widget.AppCompatButton
-            android:id="@+id/bt_bitcoin_wallet"
+            android:id="@+id/bt_in_app_purchase"
             style="@style/Widget.AppCompat.Button.Borderless"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
