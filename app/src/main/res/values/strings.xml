@@ -287,6 +287,16 @@
             • <a href="https://twitter.com/madebyoliver">madebyoliver on Twitter</a>
             ]]>
     </string>
+    <string name="title_contributors">Contributors</string>
+    <string name="contributors">
+        <![CDATA[
+            Thanks to the contributors:
+            <br /><br />
+            • <a href="https://github.com/pflammertsma">Paul Lammertsma</a><br />
+            • <a href="https://github.com/Thunderbottom">Chinmay Pai</a><br />
+            • <a href="https://github.com/MaggieSalak">Maggie Salak</a>
+            ]]>
+    </string>
     <string name="website">Visit Pixplicity.com</string>
     <string name="url_pixplicity">https://pixplicity.com/?utm_source=component_app&amp;utm_medium=android-app&amp;utm_content=en&amp;utm_campaign=component_app</string>
     <string name="url_google_play">http://play.google.com/store/apps/details?id=%1$s</string>

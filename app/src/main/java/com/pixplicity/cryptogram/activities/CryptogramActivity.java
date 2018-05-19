@@ -273,7 +273,7 @@ public class CryptogramActivity extends BaseActivity implements GoogleApiClient.
         Intent intent = getIntent();
         if (intent != null) {
             if (intent.getBooleanExtra(EXTRA_LAUNCH_SETTINGS, false)) {
-                startActivity(SettingsActivity.create(this));
+                startActivity(SettingsActivity.Companion.create(this));
             }
         }
 
@@ -499,13 +499,13 @@ public class CryptogramActivity extends BaseActivity implements GoogleApiClient.
             case 0:
                 titleStringResId = R.string.intro1_title;
                 textStringResId = R.string.intro1_text;
-                video = VideoUtils.VIDEO_INSTRUCTION;
+                video = VideoUtils.INSTANCE.getVIDEO_INSTRUCTION();
                 break;
             case 1:
                 titleStringResId = R.string.intro2_title;
                 textStringResId = R.string.intro2_text;
                 actionStringResId = R.string.intro_done;
-                video = VideoUtils.VIDEO_HELP;
+                video = VideoUtils.INSTANCE.getVIDEO_HELP();
                 break;
             case ONBOARDING_PAGES:
             default:
@@ -528,7 +528,7 @@ public class CryptogramActivity extends BaseActivity implements GoogleApiClient.
         tvIntro.setText(textStringResId);
 
         final RatioFrameLayout vgRatio = customView.findViewById(R.id.vg_ratio);
-        EasyVideoPlayer player = VideoUtils.setup(this, vgRatio, video);
+        EasyVideoPlayer player = VideoUtils.INSTANCE.setup(this, vgRatio, video);
 
         new MaterialDialog.Builder(this)
                 .title(titleStringResId)
@@ -1074,15 +1074,15 @@ public class CryptogramActivity extends BaseActivity implements GoogleApiClient.
             }
             return true;
             case R.id.action_settings: {
-                startActivity(SettingsActivity.create(this));
+                startActivity(SettingsActivity.Companion.create(this));
             }
             return true;
             case R.id.action_how_to_play: {
-                startActivity(HowToPlayActivity.create(this));
+                startActivity(HowToPlayActivity.Companion.create(this));
             }
             return true;
             case R.id.action_about: {
-                startActivity(AboutActivity.create(this));
+                startActivity(AboutActivity.Companion.create(this));
             }
             return true;
             case R.id.action_donate: {
