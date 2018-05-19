@@ -77,6 +77,10 @@ class AboutFragment : BaseFragment() {
         tv_artwork.movementMethod = LinkMovementMethod.getInstance()
         tv_artwork.text = HtmlCompat.fromHtml(getString(R.string.artwork))
 
+        // Contributors
+        tv_contributors.movementMethod = LinkMovementMethod.getInstance()
+        tv_contributors.text = HtmlCompat.fromHtml(getString(R.string.contributors))
+
         val drawableId = if (isDarkTheme)
             R.drawable.im_pixplicity_white
         else
