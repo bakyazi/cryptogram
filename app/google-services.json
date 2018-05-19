@@ -8,22 +8,30 @@
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:1070342491314:android:66758193479a5817",
+        "mobilesdk_app_id": "1:1070342491314:android:38ff9719ad9176bb",
         "android_client_info": {
-          "package_name": "com.pixplicity.cryptogram.debug"
+          "package_name": "com.pixplicity.cryptogram"
         }
       },
       "oauth_client": [
+        {
+          "client_id": "1070342491314-mfv0a54f2tr1lp9gfnaesn7cvac7gfgn.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.pixplicity.cryptogram",
+            "certificate_hash": "5ab20e85d5cb3e1d923b638f16529761543c96f8"
+          }
+        },
         {
           "client_id": "1070342491314-e5bt883dcvrcj3u3nhsq1j0k227raltd.apps.googleusercontent.com",
           "client_type": 3
         },
         {
-          "client_id": "1070342491314-osgkr34ujjd8spt8be5s8a1lcoeoe8gn.apps.googleusercontent.com",
+          "client_id": "1070342491314-lv9o0t11e2pi8r9sl6esc95p3h7ecc4g.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
-            "package_name": "com.pixplicity.cryptogram.debug",
-            "certificate_hash": "5e66968507ad68eb5e71e41371c82760ac1f972f"
+            "package_name": "com.pixplicity.cryptogram",
+            "certificate_hash": "c8bbcb3b0e678aa6d9b13a7f045345132800ecc1"
           }
         }
       ],
@@ -52,9 +60,9 @@
     },
     {
       "client_info": {
-        "mobilesdk_app_id": "1:1070342491314:android:38ff9719ad9176bb",
+        "mobilesdk_app_id": "1:1070342491314:android:66758193479a5817",
         "android_client_info": {
-          "package_name": "com.pixplicity.cryptogram"
+          "package_name": "com.pixplicity.cryptogram.debug"
         }
       },
       "oauth_client": [
@@ -63,11 +71,11 @@
           "client_type": 3
         },
         {
-          "client_id": "1070342491314-lv9o0t11e2pi8r9sl6esc95p3h7ecc4g.apps.googleusercontent.com",
+          "client_id": "1070342491314-osgkr34ujjd8spt8be5s8a1lcoeoe8gn.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
-            "package_name": "com.pixplicity.cryptogram",
-            "certificate_hash": "c8bbcb3b0e678aa6d9b13a7f045345132800ecc1"
+            "package_name": "com.pixplicity.cryptogram.debug",
+            "certificate_hash": "5e66968507ad68eb5e71e41371c82760ac1f972f"
           }
         }
       ],
