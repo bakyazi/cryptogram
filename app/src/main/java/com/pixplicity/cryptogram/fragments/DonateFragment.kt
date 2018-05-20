@@ -4,6 +4,7 @@ import android.content.*
 import android.content.Context.CLIPBOARD_SERVICE
 import android.net.Uri
 import android.os.Bundle
+import android.os.Handler
 import android.support.v7.app.AlertDialog
 import android.util.Log
 import android.view.LayoutInflater
@@ -30,6 +31,8 @@ class DonateFragment : BaseFragment(), PurchasesUpdatedListener {
     private val skus = HashMap<String, SkuDetails>()
     private var purchases = ArrayList<Purchase>()
     private lateinit var billingClient: BillingClient
+
+    private var handler = Handler()
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
@@ -167,21 +170,23 @@ class DonateFragment : BaseFragment(), PurchasesUpdatedListener {
     }
 
     private fun showPurchases() {
-        tv_donations.visibility = if (purchases.isEmpty()) View.GONE else View.VISIBLE
-        vg_donations.visibility = if (purchases.isEmpty()) View.GONE else View.VISIBLE
-        vg_donations.removeAllViews()
-        val df = DateFormat.getDateInstance(DateFormat.LONG)
-        for (purchase in purchases) {
-            Log.d(TAG, "queryPurchaseHistoryAsync: ${purchase.originalJson}")
-            val tv_donation = layoutInflater.inflate(R.layout.li_donation, null) as TextView
-            val sku = skus[purchase.sku]
-            val description = if (sku != null) {
-                sku.title
-            } else {
-                purchase.sku
+        handler.post {
+            tv_donations.visibility = if (purchases.isEmpty()) View.GONE else View.VISIBLE
+            vg_donations.visibility = if (purchases.isEmpty()) View.GONE else View.VISIBLE
+            vg_donations.removeAllViews()
+            val df = DateFormat.getDateInstance(DateFormat.LONG)
+            for (purchase in purchases) {
+                Log.d(TAG, "queryPurchaseHistoryAsync: ${purchase.originalJson}")
+                val tv_donation = layoutInflater.inflate(R.layout.li_donation, null) as TextView
+                val sku = skus[purchase.sku]
+                val description = if (sku != null) {
+                    sku.title
+                } else {
+                    purchase.sku
+                }
+                tv_donation.text = df.format(Date(purchase.purchaseTime)) + ": " + description
+                vg_donations.addView(tv_donation)
             }
-            tv_donation.text = df.format(Date(purchase.purchaseTime)) + ": " + description
-            vg_donations.addView(tv_donation)
         }
     }
 
