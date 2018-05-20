@@ -256,7 +256,7 @@ public class AchievementProvider {
             if (DEBUG) {
                 Log.d(TAG, "unlocked: " + achievementId);
             }
-        } catch (SecurityException | IllegalStateException e) {
+        } catch (SecurityException | IllegalStateException | NullPointerException e) {
             // Not sure why we're still seeing errors about the connection state, but here we are
             Crashlytics.logException(e);
         }
