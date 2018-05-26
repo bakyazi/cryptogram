@@ -17,6 +17,7 @@ import com.crashlytics.android.Crashlytics
 import com.pixplicity.cryptogram.BuildConfig
 import com.pixplicity.cryptogram.R
 import com.pixplicity.cryptogram.utils.invertedTheme
+import com.pixplicity.cryptogram.utils.sendFeedback
 import kotlinx.android.synthetic.main.fragment_donate.*
 import java.text.DateFormat
 import java.util.*
@@ -155,13 +156,28 @@ class DonateFragment : BaseFragment(), PurchasesUpdatedListener {
                 billingClient.consumeAsync(it.purchaseToken, { responseCode, outToken ->
                     Log.d(TAG, "consumeAsync: ${it.purchaseToken}; responseCode= $responseCode")
                     if (responseCode == BillingClient.BillingResponse.OK) {
-                        // Handle the success of the consume operation.
-                        // For example, increase the number of coins inside the user&#39;s basket.
+                        handler.post {
+                            // Display thank-you message
+                            if (context != null) {
+                                AlertDialog.Builder(context!!)
+                                        .setMessage(R.string.donate_thank_you)
+                                        .setPositiveButton(R.string.donate_thank_you_feedback, { dialog, _ ->
+                                            sendFeedback(context!!, it.purchaseToken.takeLast(8))
+                                            dialog.dismiss()
+                                        })
+                                        .setNegativeButton(R.string.donate_thank_you_continue, { dialog, _ ->
+                                            dialog.dismiss()
+                                        })
+                                        .show()
+                            }
+                        }
                     }
                 })
             }
             this.purchases = ArrayList(purchases)
-            showPurchases()
+            handler.post {
+                showPurchases()
+            }
         } else if (responseCode == BillingClient.BillingResponse.USER_CANCELED) {
             // Handle an error caused by a user cancelling the purchase flow.
         } else {
@@ -170,23 +186,21 @@ class DonateFragment : BaseFragment(), PurchasesUpdatedListener {
     }
 
     private fun showPurchases() {
-        handler.post {
-            tv_donations.visibility = if (purchases.isEmpty()) View.GONE else View.VISIBLE
-            vg_donations.visibility = if (purchases.isEmpty()) View.GONE else View.VISIBLE
-            vg_donations.removeAllViews()
-            val df = DateFormat.getDateInstance(DateFormat.LONG)
-            for (purchase in purchases) {
-                Log.d(TAG, "queryPurchaseHistoryAsync: ${purchase.originalJson}")
-                val tv_donation = layoutInflater.inflate(R.layout.li_donation, null) as TextView
-                val sku = skus[purchase.sku]
-                val description = if (sku != null) {
-                    sku.title
-                } else {
-                    purchase.sku
-                }
-                tv_donation.text = df.format(Date(purchase.purchaseTime)) + ": " + description
-                vg_donations.addView(tv_donation)
+        tv_donations.visibility = if (purchases.isEmpty()) View.GONE else View.VISIBLE
+        vg_donations.visibility = if (purchases.isEmpty()) View.GONE else View.VISIBLE
+        vg_donations.removeAllViews()
+        val df = DateFormat.getDateInstance(DateFormat.LONG)
+        for (purchase in purchases) {
+            Log.d(TAG, "queryPurchaseHistoryAsync: ${purchase.originalJson}")
+            val tv_donation = layoutInflater.inflate(R.layout.li_donation, null) as TextView
+            val sku = skus[purchase.sku]
+            val description = if (sku != null) {
+                sku.title
+            } else {
+                purchase.sku
             }
+            tv_donation.text = df.format(Date(purchase.purchaseTime)) + ": " + description
+            vg_donations.addView(tv_donation)
         }
     }
 
