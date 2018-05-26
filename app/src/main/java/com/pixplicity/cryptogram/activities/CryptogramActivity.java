@@ -75,6 +75,7 @@ import com.pixplicity.cryptogram.utils.VideoUtils;
 import com.pixplicity.cryptogram.views.CryptogramLayout;
 import com.pixplicity.cryptogram.views.CryptogramView;
 import com.pixplicity.cryptogram.views.HintView;
+import com.pixplicity.easyprefs.library.Prefs;
 import com.pixplicity.generate.Rate;
 import com.squareup.otto.Subscribe;
 
@@ -758,6 +759,15 @@ public class CryptogramActivity extends BaseActivity implements GoogleApiClient.
 
         // Allow the rating dialog to appear if needed
         mRate.showRequest();
+
+        // Conditional behavior after X triggers
+        // FIXME if only we could use mRate.getCount() here
+        long count = Prefs.getLong("launch_count_l", 0L);
+        if (count == 100 || count == 300) {
+            // Prompt for donations
+            // TODO only display if user hasn't donated
+            // TODO display dialog
+        }
 
         if (mGoogleApiClient.isConnected()) {
             // Submit score
