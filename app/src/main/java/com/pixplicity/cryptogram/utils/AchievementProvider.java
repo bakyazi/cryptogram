@@ -223,7 +223,7 @@ public class AchievementProvider {
     public void onCryptogramStart(GoogleApiClient googleApiClient) {
         CryptogramApp context = CryptogramApp.getInstance();
 
-        mStartedInAirplaneMode = SystemUtils.isAirplaneModeOn(context);
+        mStartedInAirplaneMode = SystemUtils.INSTANCE.isAirplaneModeOn(context);
 
         save();
     }
@@ -236,7 +236,7 @@ public class AchievementProvider {
     public void onCryptogramCompleted(GoogleApiClient googleApiClient) {
         CryptogramApp context = CryptogramApp.getInstance();
 
-        if (mStartedInAirplaneMode && SystemUtils.isAirplaneModeOn(context)) {
+        if (mStartedInAirplaneMode && SystemUtils.INSTANCE.isAirplaneModeOn(context)) {
             mUnlockedFlightMode = true;
         }
 
