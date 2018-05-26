@@ -156,6 +156,9 @@
     <string name="install_bitcoin_wallet">Install Bitcoin wallet</string>
     <string name="donate_launch_wallet">Launch Bitcoin wallet</string>
     <string name="donate_launch_failure">Whoops, couldn’t launch your Bitcoin wallet!</string>
+    <string name="donate_thank_you">Thank you so much! With your contribution, you help Cryptogram stay fun for everybody!\n\nYou’re welcome to submit some feedback about what you do and don’t like.</string>
+    <string name="donate_thank_you_feedback">Send feedback</string>
+    <string name="donate_thank_you_continue">Continue</string>
 
     <string name="send_feedback">Send feedback</string>
     <string name="rate">Rate!</string>
@@ -306,6 +309,8 @@
     <string name="rating">Nice, you’re solving some cryptograms!\n\nWould you mind visiting the Play store to give %1$s a rating? It would help in sharing the fun!\n\nInstead, if you’re experiencing problems, please give me some feedback so I can improve. Thanks!</string>
 
     <string name="feedback_subject">Feedback on Cryptogram</string>
-    <string name="feedback_body">Hi Pixplicity, \n\nI’m using Cryptogram version %1$s and my keyboard is “%2$s”. \n\nHere’s my feedback on Cryptogram: \n\n</string>
+    <string name="feedback_subject_donation">Feedback on Cryptogram (donation %1$s)</string>
+    <string name="feedback_body">Hi Pixplicity, \n\nI’m using Cryptogram version %1$s and my keyboard is “%2$s”. I’m running Android %3$s on $4%s. \n\nHere’s my feedback on Cryptogram: \n\n</string>
+    <string name="feedback_body_donation">Hi Pixplicity, \n\nI love Cryptogram so much that I donated! I’m using Cryptogram version %1$s and my keyboard is “%2$s”. I’m running Android %3$s on $4%s. \n\nHere’s my extra-special fan feedback: \n\n</string>
 
 </resources>

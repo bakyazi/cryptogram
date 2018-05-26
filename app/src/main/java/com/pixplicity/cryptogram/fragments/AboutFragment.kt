@@ -2,40 +2,25 @@ package com.pixplicity.cryptogram.fragments
 
 import android.content.ActivityNotFoundException
 import android.content.Intent
-import android.content.pm.PackageManager
 import android.net.Uri
 import android.os.Bundle
 import android.support.v4.content.ContextCompat
 import android.text.method.LinkMovementMethod
-import android.util.Log
 import android.view.*
 import android.widget.Toast
 import com.pixplicity.cryptogram.R
 import com.pixplicity.cryptogram.utils.HtmlCompat
+import com.pixplicity.cryptogram.utils.getVersionString
 import com.pixplicity.cryptogram.utils.invertedTheme
-import com.pixplicity.cryptogram.views.SimpleInputConnection
+import com.pixplicity.cryptogram.utils.sendFeedback
 import kotlinx.android.synthetic.main.fragment_about.*
 
 
 class AboutFragment : BaseFragment() {
 
     companion object {
-        private val TAG = AboutFragment::class.java.simpleName
         val FEEDBACK_EMAIL = "paul@pixplicity.com"
     }
-
-    private val versionString: String?
-        get() {
-            var versionString: String? = null
-            try {
-                val info = activity!!.packageManager.getPackageInfo(activity!!.packageName, 0)
-                versionString = getString(R.string.version, info.versionName, info.versionCode)
-            } catch (e: PackageManager.NameNotFoundException) {
-                Log.e(TAG, "Package not found", e)
-            }
-
-            return versionString
-        }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -59,8 +44,7 @@ class AboutFragment : BaseFragment() {
             iv_logo.invertedTheme()
         }
         // App version
-        val versionString = versionString
-        tv_version.text = versionString
+        tv_version.text = getVersionString(context!!)
 
         // About this app
         val appName = getString(R.string.app_name)
@@ -110,19 +94,7 @@ class AboutFragment : BaseFragment() {
         when (item!!.itemId) {
             R.id.action_feedback -> {
                 run {
-                    val intent = Intent(Intent.ACTION_SENDTO, Uri.fromParts(
-                            "mailto", FEEDBACK_EMAIL, null))
-                    intent.putExtra(Intent.EXTRA_EMAIL, arrayOf(FEEDBACK_EMAIL))
-                    intent.putExtra(Intent.EXTRA_SUBJECT, getString(R.string.feedback_subject))
-                    val ime = SimpleInputConnection.getIme(context!!)
-                    val keyboardPackageName = if (ime == null) "unknown" else ime.packageName
-                    intent.putExtra(Intent.EXTRA_TEXT, getString(R.string.feedback_body, versionString, keyboardPackageName))
-                    intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
-                    try {
-                        startActivity(intent)
-                    } catch (e: ActivityNotFoundException) {
-                        Toast.makeText(context, R.string.error_no_activity, Toast.LENGTH_LONG).show()
-                    }
+                    sendFeedback(context!!, null)
                 }
                 return true
             }
