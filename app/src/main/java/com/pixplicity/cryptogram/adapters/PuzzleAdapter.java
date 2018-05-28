@@ -31,7 +31,7 @@ public class PuzzleAdapter extends RecyclerView.Adapter<PuzzleAdapter.ViewHolder
         mContext = context;
         mOnItemClickListener = onItemClickListener;
 
-        PuzzleProvider provider = PuzzleProvider.getInstance(mContext);
+        PuzzleProvider provider = PuzzleProvider.Companion.getInstance(mContext);
         mPuzzles = provider.getAll();
     }
 
@@ -61,7 +61,7 @@ public class PuzzleAdapter extends RecyclerView.Adapter<PuzzleAdapter.ViewHolder
 
     @Override
     public int getItemViewType(int position) {
-        if (PuzzleProvider.getInstance(mContext).getCurrentIndex() == position) {
+        if (PuzzleProvider.Companion.getInstance(mContext).getCurrentIndex() == position) {
             return TYPE_SELECTED;
         }
         return TYPE_NORMAL;

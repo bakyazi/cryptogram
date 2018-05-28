@@ -70,7 +70,7 @@ public class SavegameManager {
             final Context context = googleApiClient.getContext();
             try {
                 final String progressJson = new String(snapshot.getSnapshotContents().readFully());
-                PuzzleProvider.getInstance(context).setProgressFromJson(progressJson);
+                PuzzleProvider.Companion.getInstance(context).setProgressFromJson(progressJson);
                 PrefsUtils.setLastSavegameName(snapshotName);
             } catch (IOException e) {
                 Crashlytics.logException(e);
@@ -94,7 +94,7 @@ public class SavegameManager {
         final Context context = googleApiClient.getContext();
 
         // Set the data payload for the snapshot
-        String progressJson = PuzzleProvider.getInstance(context).getProgressJson();
+        String progressJson = PuzzleProvider.Companion.getInstance(context).getProgressJson();
         final byte[] data = progressJson.getBytes();
         snapshot.getSnapshotContents().writeBytes(data);
 

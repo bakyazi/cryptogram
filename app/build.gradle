@@ -137,10 +137,10 @@ dependencies {
 
     implementation 'com.android.billingclient:billing:1.1'
 
-    implementation 'com.google.android.gms:play-services-games:15.0.1'
+    implementation 'com.google.android.gms:play-services-games:11.4.2'
 
-    implementation 'com.google.firebase:firebase-core:15.0.2'
-    implementation 'com.google.firebase:firebase-perf:15.2.0'
+    implementation 'com.google.firebase:firebase-core:11.4.2'
+    implementation 'com.google.firebase:firebase-perf:11.4.2'
 
     implementation 'com.jakewharton:butterknife:8.8.1'
     annotationProcessor 'com.jakewharton:butterknife-compiler:8.8.1'

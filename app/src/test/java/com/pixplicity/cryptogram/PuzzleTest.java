@@ -38,7 +38,7 @@ public class PuzzleTest {
 
     @Test
     public void validProvider() throws Exception {
-        System.out.println("Total puzzles: " + PuzzleProvider.getInstance(null).getCount());
+        System.out.println("Total puzzles: " + PuzzleProvider.Companion.getInstance(null).getCount());
     }
 
     @Test
@@ -47,7 +47,7 @@ public class PuzzleTest {
             if (VERBOSE) {
                 System.out.print("seed " + seed + ":");
             }
-            PuzzleProgress.setRandomSeed(seed);
+            PuzzleProgress.Companion.setRandomSeed(seed);
             Puzzle puzzle = new Puzzle.Mock();
             PuzzleProgress progress = new PuzzleProgress();
             HashMap<Character, Character> mapping = progress.getCharMapping(puzzle);
@@ -71,7 +71,7 @@ public class PuzzleTest {
         Levenshtein levenshtein = new Levenshtein();
         @SuppressLint("UseSparseArrays") HashMap<Integer, Puzzle> hashes = new HashMap<>();
         ArrayList<String> errors = new ArrayList<>();
-        for (Puzzle puzzle : PuzzleProvider.getInstance(null).getAll()) {
+        for (Puzzle puzzle : PuzzleProvider.Companion.getInstance(null).getAll()) {
             int id = puzzle.getId();
             String text = puzzle.getText();
             String author = puzzle.getAuthor();
@@ -120,7 +120,7 @@ public class PuzzleTest {
                         errors.add("Levenshtein distance of " + puzzle + " is " + distance + " to " + otherPuzzle);
                     }
                 }
-                if (CryptogramView.ENABLE_HYPHENATION) {
+                if (CryptogramView.Companion.getENABLE_HYPHENATION()) {
                     for (String word : puzzle.getWords()) {
                         word = word.replaceAll("[^a-zA-Z\u00AD\\-]", "");
                         for (String wordPart : word.split("[\u00AD\\-]")) {
@@ -160,8 +160,8 @@ public class PuzzleTest {
 
     @Test
     public void hyphenation() {
-        if (CryptogramView.ENABLE_HYPHENATION) {
-            Puzzle puzzle = PuzzleProvider.getInstance(null).get(0);
+        if (CryptogramView.Companion.getENABLE_HYPHENATION()) {
+            Puzzle puzzle = PuzzleProvider.Companion.getInstance(null).get(0);
             int lineWidthInChars = 12;
             for (int i = 0; i < lineWidthInChars; i++) {
                 System.out.print('=');

@@ -298,7 +298,7 @@ public class Puzzle {
 
     private void load() {
         if (!mLoadedProgress && !mIsMock) {
-            mProgress = PuzzleProvider.getInstance(CryptogramApp.getInstance()).getProgress().get(mId);
+            mProgress = PuzzleProvider.Companion.getInstance(CryptogramApp.getInstance()).getProgress().get(mId);
             if (mProgress != null) {
                 mProgress.sanitize(this);
             }
@@ -315,7 +315,7 @@ public class Puzzle {
 
     public void save() {
         if (!mIsMock) {
-            final PuzzleProvider puzzleProvider = PuzzleProvider.getInstance(CryptogramApp.getInstance());
+            final PuzzleProvider puzzleProvider = PuzzleProvider.Companion.getInstance(CryptogramApp.getInstance());
             final PuzzleProgress progress = getProgress();
             if (progress != null) {
                 puzzleProvider.setProgress(progress.getId(), progress);
