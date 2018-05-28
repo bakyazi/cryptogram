@@ -152,10 +152,12 @@ class CryptogramActivity : BaseActivity(), GoogleApiClient.ConnectionCallbacks, 
         })
 
         if (PrefsUtils.getUseSystemKeyboard()) {
-            vs_keyboard.visibility = View.GONE
+            mVwKeyboard?.visibility = View.GONE
         } else {
-            mVwKeyboard = vs_keyboard.inflate()
-            vs_keyboard.visibility = View.VISIBLE
+            if (mVwKeyboard == null) {
+                mVwKeyboard = vs_keyboard.inflate()
+            }
+            mVwKeyboard?.visibility = View.VISIBLE
             cryptogram.setKeyboardView(mVwKeyboard)
         }
 

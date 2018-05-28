@@ -12,14 +12,14 @@ object LeaderboardProvider {
 
     fun submit(googleApiClient: GoogleApiClient) {
         val context = CryptogramApp.getInstance()
-        object : AsyncTask<Void, Void, Long>() {
-            override fun doInBackground(vararg voids: Void): Long? {
+        object : AsyncTask<Void?, Void?, Long>() {
+            override fun doInBackground(vararg voids: Void?): Long {
                 synchronized(this@LeaderboardProvider) {
                     return PuzzleProvider.getInstance(context).totalScore
                 }
             }
 
-            override fun onPostExecute(score: Long?) {
+            override fun onPostExecute(score: Long) {
                 if (!googleApiClient.isConnected) {
                     return
                 }

@@ -287,9 +287,9 @@ class PuzzleProvider @Throws(IOException::class) private constructor(context: Co
             onLoadResult?.onLoadFailure()
             return
         }
-        object : AsyncTask<Void, Void, Snapshot>() {
+        object : AsyncTask<Void?, Void?, Snapshot?>() {
 
-            override fun doInBackground(vararg voids: Void): Snapshot? {
+            override fun doInBackground(vararg voids: Void?): Snapshot? {
                 return SavegameManager.load(googleApiClient, snapshotMetadata.uniqueName)
             }
 
@@ -314,9 +314,9 @@ class PuzzleProvider @Throws(IOException::class) private constructor(context: Co
             return
         }
         // Create a new snapshot named with a unique string
-        object : AsyncTask<Void, Void, SnapshotMetadata>() {
+        object : AsyncTask<Void?, Void?, SnapshotMetadata?>() {
 
-            override fun doInBackground(vararg voids: Void): SnapshotMetadata {
+            override fun doInBackground(vararg voids: Void?): SnapshotMetadata {
                 return SavegameManager.save(googleApiClient)
             }
 

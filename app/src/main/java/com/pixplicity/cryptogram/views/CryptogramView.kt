@@ -356,7 +356,7 @@ class CryptogramView : AppCompatTextView {
         }
     }
 
-    override fun onCreateInputConnection(outAttrs: EditorInfo): InputConnection {
+    override fun onCreateInputConnection(outAttrs: EditorInfo): InputConnection? {
         if (PrefsUtils.getUseSystemKeyboard()) {
             outAttrs.inputType = SimpleInputConnection.INPUT_TYPE
             if (SimpleInputConnection.hasFaultyIme(context)) {

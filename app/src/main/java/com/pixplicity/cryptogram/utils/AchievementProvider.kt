@@ -28,9 +28,9 @@ object AchievementProvider {
     private var mStartedInAirplaneMode: Boolean = false
     private var mUnlockedFlightMode: Boolean = false
 
-    private class AchievementTask internal constructor(private val mGoogleApiClient: GoogleApiClient?) : AsyncTask<Void, Void, Void>() {
+    private class AchievementTask internal constructor(private val mGoogleApiClient: GoogleApiClient?) : AsyncTask<Void?, Void?, Void?>() {
 
-        override fun doInBackground(vararg voids: Void): Void? {
+        override fun doInBackground(vararg voids: Void?): Void? {
             if (mGoogleApiClient != null) {
                 val context = mGoogleApiClient.context
                 AchievementStats.calculate(context)
@@ -38,7 +38,7 @@ object AchievementProvider {
             return null
         }
 
-        override fun onPostExecute(aVoid: Void) {
+        override fun onPostExecute(aVoid: Void?) {
             if (mGoogleApiClient == null || !mGoogleApiClient.isConnected) {
                 return
             }

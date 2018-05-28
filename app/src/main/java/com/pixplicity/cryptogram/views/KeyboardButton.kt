@@ -27,6 +27,10 @@ import com.squareup.otto.Subscribe
 
 class KeyboardButton : AppCompatButton, KeyboardUtils.Contract {
 
+    companion object {
+        private val TAG = KeyboardButton::class.java.simpleName
+    }
+
     private var mShowLetter: Boolean = false
 
     override var keyIndex: Int = 0
@@ -41,7 +45,7 @@ class KeyboardButton : AppCompatButton, KeyboardUtils.Contract {
     private val mAlpha = 255
 
     constructor(context: Context) : this(context, null)
-    constructor(context: Context, attrs: AttributeSet?) : this(context, attrs, 0)
+    constructor(context: Context, attrs: AttributeSet?) : this(context, attrs, R.attr.keyboardButtonStyle)
     constructor(context: Context, attrs: AttributeSet?, defStyleAttr: Int) : super(context, attrs, defStyleAttr) {
         // Get theme colors
         val typedValue = TypedValue()
@@ -187,12 +191,7 @@ class KeyboardButton : AppCompatButton, KeyboardUtils.Contract {
             }
         }
         setTextColor(if (input) mTextColorGreyed else mTextColor)
-        background.alpha = if (input) KeyboardUtils.Contract.Companion.ALPHA_GREYED else 255
-    }
-
-    companion object {
-
-        private val TAG = KeyboardButton::class.java.simpleName
+        background?.alpha = if (input) KeyboardUtils.Contract.ALPHA_GREYED else 255
     }
 
 }

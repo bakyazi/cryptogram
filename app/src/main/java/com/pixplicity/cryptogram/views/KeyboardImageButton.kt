@@ -36,8 +36,7 @@ class KeyboardImageButton @JvmOverloads constructor(context: Context, attrs: Att
         }
 
         setOnClickListener { view -> KeyboardUtils.dispatch(this) }
-        val drawable: Drawable?
-        drawable = ContextCompat.getDrawable(getContext(), KeyboardUtils.getKeyIcon(this))
+        val drawable: Drawable? = ContextCompat.getDrawable(getContext(), KeyboardUtils.getKeyIcon(this))
         drawable!!.alpha = mAlpha
         setImageDrawable(drawable)
     }
@@ -57,7 +56,7 @@ class KeyboardImageButton @JvmOverloads constructor(context: Context, attrs: Att
         var input = false
         if (PrefsUtils.getShowUsedChars()) {
             val keyText = KeyboardUtils.getKeyText(this)
-            if (keyText != null && keyText.length > 0) {
+            if (keyText != null && keyText.isNotEmpty()) {
                 val puzzle = event.puzzle
                 input = puzzle.isUserCharInput(keyText[0])
             }
