@@ -155,7 +155,7 @@ dependencies {
 
     implementation 'com.pixplicity.htmlcompat:library:1.1.1'
     implementation 'com.pixplicity.easyprefs:library:1.9.0'
-    implementation 'com.pixplicity.generate:library:1.1.8'
+    implementation 'com.pixplicity.generate:library:1.2.0'
 
     implementation 'com.google.code.gson:gson:2.8.2'
 
