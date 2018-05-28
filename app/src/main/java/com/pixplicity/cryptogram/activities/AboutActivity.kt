@@ -25,7 +25,7 @@ class AboutActivity : BaseActivity() {
 
         setHomeButtonEnabled(true)
 
-        CryptogramApp.getInstance().firebaseAnalytics.setCurrentScreen(this, CryptogramApp.CONTENT_ABOUT, null)
+        CryptogramApp.instance.firebaseAnalytics.setCurrentScreen(this, CryptogramApp.CONTENT_ABOUT, null)
         Answers.getInstance().logContentView(ContentViewEvent().putContentName(CryptogramApp.CONTENT_ABOUT))
     }
 

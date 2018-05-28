@@ -56,7 +56,7 @@ public abstract class BaseActivity extends AppCompatActivity {
     public void setContentView(@LayoutRes int layoutResID) {
         // Replace any splash screen image
         getWindow().setBackgroundDrawableResource(R.drawable.bg_activity_light);
-        mDarkTheme = PrefsUtils.getDarkTheme();
+        mDarkTheme = PrefsUtils.INSTANCE.getDarkTheme();
         if (mDarkTheme) {
             setTheme(R.style.AppTheme_Dark);
             // Replace any splash screen image
@@ -226,11 +226,11 @@ public abstract class BaseActivity extends AppCompatActivity {
         View snackBarView = snackbar.getView();
 
         // Set background
-        @ColorInt int colorPrimary = StyleUtils.getColor(this, R.attr.colorPrimary);
+        @ColorInt int colorPrimary = StyleUtils.INSTANCE.getColor(this, R.attr.colorPrimary);
         snackBarView.setBackgroundColor(colorPrimary);
 
         // Set foreground
-        @ColorInt int textColor = StyleUtils.getColor(this, R.attr.textColorOnPrimary);
+        @ColorInt int textColor = StyleUtils.INSTANCE.getColor(this, R.attr.textColorOnPrimary);
         TextView textView = snackBarView.findViewById(android.support.design.R.id.snackbar_text);
         textView.setTextColor(textColor);
 

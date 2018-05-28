@@ -110,12 +110,16 @@ class CryptogramActivity : BaseActivity(), GoogleApiClient.ConnectionCallbacks, 
                 .build()
 
         rv_drawer.layoutManager = LinearLayoutManager(this)
-        mAdapter = PuzzleAdapter(this) { position ->
-            if (mDrawerLayout != null) {
-                mDrawerLayout!!.closeDrawers()
+        mAdapter = PuzzleAdapter(this, object : PuzzleAdapter.OnItemClickListener {
+            override fun onItemClick(position: Int) {
+                if (mDrawerLayout != null) {
+                    mDrawerLayout!!.closeDrawers()
+                }
+                puzzleProvider[position]?.let {
+                    onPuzzleChanged(it, false)
+                }
             }
-            onPuzzleChanged(puzzleProvider.get(position), false)
-        }
+        })
         rv_drawer.adapter = mAdapter
 
         vg_cryptogram.setCryptogramView(cryptogram)
@@ -151,7 +155,7 @@ class CryptogramActivity : BaseActivity(), GoogleApiClient.ConnectionCallbacks, 
             }
         })
 
-        if (PrefsUtils.getUseSystemKeyboard()) {
+        if (PrefsUtils.useSystemKeyboard) {
             mVwKeyboard?.visibility = View.GONE
         } else {
             if (mVwKeyboard == null) {
@@ -205,8 +209,9 @@ class CryptogramActivity : BaseActivity(), GoogleApiClient.ConnectionCallbacks, 
         super.onResume()
 
         val puzzleProvider = PuzzleProvider.getInstance(this)
-        val puzzle = puzzleProvider.current
-        onPuzzleChanged(puzzle, true)
+        puzzleProvider.current?.let {
+            onPuzzleChanged(it, true)
+        }
     }
 
     override fun onStop() {
@@ -249,7 +254,7 @@ class CryptogramActivity : BaseActivity(), GoogleApiClient.ConnectionCallbacks, 
                             // Logged in
                             run {
                                 // Analytics
-                                CryptogramApp.getInstance().firebaseAnalytics.logEvent(FirebaseAnalytics.Event.LOGIN, null)
+                                CryptogramApp.instance.firebaseAnalytics?.logEvent(FirebaseAnalytics.Event.LOGIN, null)
                                 Answers.getInstance().logLogin(LoginEvent().putSuccess(true))
                             }
                             mGoogleApiClient!!.connect()
@@ -282,9 +287,10 @@ class CryptogramActivity : BaseActivity(), GoogleApiClient.ConnectionCallbacks, 
                         PuzzleProvider.getInstance(this).load(mGoogleApiClient, snapshotMetadata,
                                 object : SavegameManager.OnLoadResult {
                                     override fun onLoadSuccess() {
-                                        onPuzzleChanged(PuzzleProvider.getInstance(this@CryptogramActivity)
-                                                .current, false)
-                                        showSnackbar("Game loaded.")
+                                        PuzzleProvider.getInstance(this@CryptogramActivity).current?.let {
+                                            onPuzzleChanged(it, false)
+                                            showSnackbar("Game loaded.")
+                                        }
                                         pd.dismiss()
                                     }
 
@@ -319,8 +325,10 @@ class CryptogramActivity : BaseActivity(), GoogleApiClient.ConnectionCallbacks, 
                         val snapshotMetadata = intent.getParcelableExtra<SnapshotMetadata>(Snapshots.EXTRA_SNAPSHOT_METADATA)
                         PuzzleProvider.getInstance(this).load(mGoogleApiClient, snapshotMetadata, object : SavegameManager.OnLoadResult {
                             override fun onLoadSuccess() {
-                                onPuzzleChanged(PuzzleProvider.getInstance(this@CryptogramActivity).current, false)
-                                showSnackbar("Game loaded.")
+                                PuzzleProvider.getInstance(this@CryptogramActivity).current?.let {
+                                    onPuzzleChanged(it, false)
+                                    showSnackbar("Game loaded.")
+                                }
                                 pd.dismiss()
                             }
 
@@ -346,7 +354,7 @@ class CryptogramActivity : BaseActivity(), GoogleApiClient.ConnectionCallbacks, 
     }
 
     private fun hasOnBoardingPages(): Boolean {
-        return PrefsUtils.getOnboarding() < ONBOARDING_PAGES - 1
+        return PrefsUtils.onboarding < ONBOARDING_PAGES - 1
     }
 
     private fun createTapTargetFromPoint(point: PointF, title: String,
@@ -423,7 +431,7 @@ class CryptogramActivity : BaseActivity(), GoogleApiClient.ConnectionCallbacks, 
             }
         }
 
-        val onboarding = PrefsUtils.getOnboarding()
+        val onboarding = PrefsUtils.onboarding
         if (onboarding == -1) {
             mFreshInstall = true
         }
@@ -449,7 +457,7 @@ class CryptogramActivity : BaseActivity(), GoogleApiClient.ConnectionCallbacks, 
                     player?.start()
                 }
                 .onAny { dialog, which ->
-                    PrefsUtils.setOnboarding(page)
+                    PrefsUtils.onboarding = page
                     showOnboarding(page + 1)
                 }
                 .show()
@@ -469,7 +477,7 @@ class CryptogramActivity : BaseActivity(), GoogleApiClient.ConnectionCallbacks, 
                 dialog.dismiss()
                 run {
                     // Analytics
-                    CryptogramApp.getInstance().firebaseAnalytics.logEvent(CryptogramApp.CONTENT_LEADERBOARDS, null)
+                    CryptogramApp.instance.firebaseAnalytics.logEvent(CryptogramApp.CONTENT_LEADERBOARDS, null)
                     Answers.getInstance().logContentView(ContentViewEvent().putContentName(CryptogramApp.CONTENT_LEADERBOARDS))
                 }
                 try {
@@ -489,7 +497,7 @@ class CryptogramActivity : BaseActivity(), GoogleApiClient.ConnectionCallbacks, 
                 dialog.dismiss()
                 run {
                     // Analytics
-                    CryptogramApp.getInstance().firebaseAnalytics.logEvent(CryptogramApp.CONTENT_ACHIEVEMENTS, null)
+                    CryptogramApp.instance.firebaseAnalytics.logEvent(CryptogramApp.CONTENT_ACHIEVEMENTS, null)
                     Answers.getInstance().logContentView(ContentViewEvent().putContentName(CryptogramApp.CONTENT_ACHIEVEMENTS))
                 }
                 try {
@@ -548,7 +556,7 @@ class CryptogramActivity : BaseActivity(), GoogleApiClient.ConnectionCallbacks, 
                 tv_author.text = getString(R.string.quote, author)
             }
             val topic = puzzle.topic
-            if (!PrefsUtils.getShowTopic() && !puzzle.isCompleted || topic == null) {
+            if (!PrefsUtils.showTopic && !puzzle.isCompleted || topic == null) {
                 tv_topic.visibility = View.GONE
             } else {
                 tv_topic.visibility = View.VISIBLE
@@ -597,7 +605,7 @@ class CryptogramActivity : BaseActivity(), GoogleApiClient.ConnectionCallbacks, 
             }
             var reveals = -1
             var score: Float? = null
-            if (PrefsUtils.getShowScore()) {
+            if (PrefsUtils.showScore) {
                 reveals = puzzle.reveals
                 score = puzzle.score
             }
@@ -626,13 +634,13 @@ class CryptogramActivity : BaseActivity(), GoogleApiClient.ConnectionCallbacks, 
 
     protected fun showHintView(puzzle: Puzzle?) {
         hint.visibility = if (puzzle != null && !puzzle.isCompleted
-                && PrefsUtils.getShowUsedChars() && PrefsUtils.getUseSystemKeyboard())
+                && PrefsUtils.showUsedChars && PrefsUtils.useSystemKeyboard)
             View.VISIBLE
         else
             View.GONE
     }
 
-    fun onPuzzleChanged(puzzle: Puzzle?, delayEvent: Boolean) {
+    fun onPuzzleChanged(puzzle: Puzzle, delayEvent: Boolean) {
         updateCryptogram(puzzle)
         if (delayEvent) {
             EventProvider.postEventDelayed(PuzzleEvent.PuzzleProgressEvent(puzzle), 200)
@@ -737,7 +745,7 @@ class CryptogramActivity : BaseActivity(), GoogleApiClient.ConnectionCallbacks, 
                     if (puzzle == null || !cryptogram.hasSelectedCharacter()) {
                         showSnackbar(getString(R.string.reveal_letter_instruction))
                     } else {
-                        if (PrefsUtils.getNeverAskRevealLetter()) {
+                        if (PrefsUtils.neverAskRevealLetter) {
                             cryptogram.revealCharacterMapping(
                                     cryptogram.selectedCharacter)
                         } else {
@@ -746,7 +754,7 @@ class CryptogramActivity : BaseActivity(), GoogleApiClient.ConnectionCallbacks, 
                                     .checkBoxPromptRes(R.string.never_ask_again, false, null)
                                     .positiveText(R.string.reveal)
                                     .onPositive { dialog, which ->
-                                        PrefsUtils.setNeverAskRevealLetter(dialog.isPromptCheckBoxChecked)
+                                        PrefsUtils.neverAskRevealLetter = dialog.isPromptCheckBoxChecked
                                         cryptogram.revealCharacterMapping(
                                                 cryptogram.selectedCharacter)
                                     }
@@ -759,7 +767,7 @@ class CryptogramActivity : BaseActivity(), GoogleApiClient.ConnectionCallbacks, 
             }
             R.id.action_reveal_mistakes -> {
                 run {
-                    if (PrefsUtils.getNeverAskRevealMistakes()) {
+                    if (PrefsUtils.neverAskRevealMistakes) {
                         cryptogram.revealMistakes()
                     } else {
                         MaterialDialog.Builder(this)
@@ -767,7 +775,7 @@ class CryptogramActivity : BaseActivity(), GoogleApiClient.ConnectionCallbacks, 
                                 .checkBoxPromptRes(R.string.never_ask_again, false, null)
                                 .positiveText(R.string.reveal)
                                 .onPositive { dialog, which ->
-                                    PrefsUtils.setNeverAskRevealMistakes(dialog.isPromptCheckBoxChecked)
+                                    PrefsUtils.neverAskRevealMistakes = dialog.isPromptCheckBoxChecked
                                     cryptogram.revealMistakes()
                                 }
                                 .negativeText(R.string.cancel)
@@ -878,7 +886,7 @@ class CryptogramActivity : BaseActivity(), GoogleApiClient.ConnectionCallbacks, 
                     val bundle = Bundle()
                     bundle.putString(FirebaseAnalytics.Param.LEVEL, puzzleId)
                     bundle.putString(FirebaseAnalytics.Param.CONTENT, text)
-                    CryptogramApp.getInstance().firebaseAnalytics.logEvent(FirebaseAnalytics.Event.SHARE, bundle)
+                    CryptogramApp.instance.firebaseAnalytics.logEvent(FirebaseAnalytics.Event.SHARE, bundle)
                     Answers.getInstance().logShare(
                             ShareEvent()
                                     .putContentId(puzzleId)
@@ -891,7 +899,7 @@ class CryptogramActivity : BaseActivity(), GoogleApiClient.ConnectionCallbacks, 
             R.id.action_stats -> {
                 run {
                     // Analytics
-                    CryptogramApp.getInstance().firebaseAnalytics.logEvent(CryptogramApp.CONTENT_STATISTICS, null)
+                    CryptogramApp.instance.firebaseAnalytics.logEvent(CryptogramApp.CONTENT_STATISTICS, null)
                     Answers.getInstance().logContentView(ContentViewEvent().putContentName(CryptogramApp.CONTENT_STATISTICS))
                 }
                 // Compose the dialog
@@ -1004,7 +1012,9 @@ class CryptogramActivity : BaseActivity(), GoogleApiClient.ConnectionCallbacks, 
 
     private fun nextPuzzle() {
         val puzzle = PuzzleProvider.getInstance(this).next
-        onPuzzleChanged(puzzle, false)
+        puzzle?.let {
+            onPuzzleChanged(it, false)
+        }
     }
 
     // Google Play Services

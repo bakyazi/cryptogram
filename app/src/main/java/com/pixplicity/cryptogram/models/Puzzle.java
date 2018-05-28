@@ -123,7 +123,7 @@ public class Puzzle {
     @NonNull
     public String[] getWordsForLineWidth(int lineWidthInChars) {
         LinkedList<String> wordParts = new LinkedList<>();
-        Word[] words = Word.from(getWords());
+        Word[] words = Word.Companion.from(getWords());
         int lineRemaining = lineWidthInChars;
         for (Word word : words) {
             lineRemaining = word.fillForSpace(wordParts, lineRemaining, lineWidthInChars);
@@ -298,7 +298,7 @@ public class Puzzle {
 
     private void load() {
         if (!mLoadedProgress && !mIsMock) {
-            mProgress = PuzzleProvider.Companion.getInstance(CryptogramApp.getInstance()).getProgress().get(mId);
+            mProgress = PuzzleProvider.Companion.getInstance(CryptogramApp.instance).getProgress().get(mId);
             if (mProgress != null) {
                 mProgress.sanitize(this);
             }
@@ -315,7 +315,7 @@ public class Puzzle {
 
     public void save() {
         if (!mIsMock) {
-            final PuzzleProvider puzzleProvider = PuzzleProvider.Companion.getInstance(CryptogramApp.getInstance());
+            final PuzzleProvider puzzleProvider = PuzzleProvider.Companion.getInstance(CryptogramApp.instance);
             final PuzzleProgress progress = getProgress();
             if (progress != null) {
                 puzzleProvider.setProgress(progress.getId(), progress);
@@ -326,7 +326,7 @@ public class Puzzle {
 
     @Override
     public String toString() {
-        return "#" + getId() + ": " + getText().length() + " chars, author '" + getAuthor() + "' (“" + StringUtils.ellipsize(mText.replace("\u00AD", ""), 40) + "”)";
+        return "#" + getId() + ": " + getText().length() + " chars, author '" + getAuthor() + "' (“" + StringUtils.INSTANCE.ellipsize(mText.replace("\u00AD", ""), 40) + "”)";
     }
 
 }

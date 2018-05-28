@@ -21,7 +21,7 @@ class DonateActivity : BaseActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_donate)
 
-        CryptogramApp.getInstance().firebaseAnalytics.setCurrentScreen(this, CryptogramApp.CONTENT_DONATE, null)
+        CryptogramApp.instance.firebaseAnalytics.setCurrentScreen(this, CryptogramApp.CONTENT_DONATE, null)
         Answers.getInstance().logContentView(ContentViewEvent().putContentName(CryptogramApp.CONTENT_DONATE))
     }
 

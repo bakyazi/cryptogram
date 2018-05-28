@@ -57,13 +57,13 @@ class PuzzleProvider @Throws(IOException::class) private constructor(context: Co
         get() = mCurrentIndex
         set(index) {
             mCurrentIndex = index
-            PrefsUtils.setCurrentId(getIdFromIndex(index))
+            PrefsUtils.currentId = getIdFromIndex(index)
         }
 
     val current: Puzzle?
         get() {
             if (mCurrentIndex < 0) {
-                mCurrentIndex = getIndexFromId(PrefsUtils.getCurrentId())
+                mCurrentIndex = getIndexFromId(PrefsUtils.currentId)
             }
             return if (mCurrentIndex < 0) {
                 next
@@ -79,7 +79,7 @@ class PuzzleProvider @Throws(IOException::class) private constructor(context: Co
             if (count == 0) {
                 return null
             }
-            if (PrefsUtils.getRandomize()) {
+            if (PrefsUtils.randomize) {
                 if (mRandomIndices == null) {
                     mRandomIndices = ArrayList()
                     for (i in 0 until all.size) {
@@ -137,7 +137,7 @@ class PuzzleProvider @Throws(IOException::class) private constructor(context: Co
             if (mPuzzleProgress == null) {
                 var failures = 0
                 mPuzzleProgress = SparseArray()
-                val progressStrSet = PrefsUtils.getProgress()
+                val progressStrSet = PrefsUtils.progress?.toMutableSet()
                 if (progressStrSet != null) {
                     for (progressStr in progressStrSet) {
                         try {
@@ -153,7 +153,7 @@ class PuzzleProvider @Throws(IOException::class) private constructor(context: Co
                     }
                 }
                 if (failures > 0) {
-                    PrefsUtils.setProgress(progressStrSet)
+                    PrefsUtils.progress = progressStrSet
                 }
             }
             return mPuzzleProgress!!
@@ -240,7 +240,7 @@ class PuzzleProvider @Throws(IOException::class) private constructor(context: Co
 
     fun setCurrentId(id: Int) {
         mCurrentIndex = getIndexFromId(id)
-        PrefsUtils.setCurrentId(id)
+        PrefsUtils.currentId = id
     }
 
     operator fun get(index: Int): Puzzle? {
@@ -316,7 +316,7 @@ class PuzzleProvider @Throws(IOException::class) private constructor(context: Co
         // Create a new snapshot named with a unique string
         object : AsyncTask<Void?, Void?, SnapshotMetadata?>() {
 
-            override fun doInBackground(vararg voids: Void?): SnapshotMetadata {
+            override fun doInBackground(vararg voids: Void?): SnapshotMetadata? {
                 return SavegameManager.save(googleApiClient)
             }
 
@@ -340,7 +340,7 @@ class PuzzleProvider @Throws(IOException::class) private constructor(context: Co
         for (i in 0 until progressList.size()) {
             progressStrSet.add(mGson.toJson(progressList.valueAt(i)))
         }
-        PrefsUtils.setProgress(progressStrSet)
+        PrefsUtils.progress = progressStrSet
     }
 
     fun setProgressFromJson(json: String) {

@@ -11,7 +11,7 @@ import com.pixplicity.cryptogram.R
 object LeaderboardProvider {
 
     fun submit(googleApiClient: GoogleApiClient) {
-        val context = CryptogramApp.getInstance()
+        val context = CryptogramApp.instance
         object : AsyncTask<Void?, Void?, Long>() {
             override fun doInBackground(vararg voids: Void?): Long {
                 synchronized(this@LeaderboardProvider) {

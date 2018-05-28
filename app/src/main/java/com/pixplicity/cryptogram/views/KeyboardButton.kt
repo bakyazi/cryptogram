@@ -183,11 +183,12 @@ class KeyboardButton : AppCompatButton, KeyboardUtils.Contract {
     @Subscribe
     fun onPuzzleProgress(event: PuzzleEvent.PuzzleProgressEvent) {
         var input = false
-        if (PrefsUtils.getShowUsedChars()) {
+        if (PrefsUtils.showUsedChars) {
             val keyText = KeyboardUtils.getKeyText(this)
             if (keyText != null && keyText.isNotEmpty()) {
-                val puzzle = event.puzzle
-                input = puzzle.isUserCharInput(keyText[0])
+                event.puzzle?.let {
+                    input = it.isUserCharInput(keyText[0])
+                }
             }
         }
         setTextColor(if (input) mTextColorGreyed else mTextColor)

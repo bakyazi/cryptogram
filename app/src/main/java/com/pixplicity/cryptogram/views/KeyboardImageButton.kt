@@ -54,11 +54,12 @@ class KeyboardImageButton @JvmOverloads constructor(context: Context, attrs: Att
     @Subscribe
     fun onPuzzleProgress(event: PuzzleEvent.PuzzleProgressEvent) {
         var input = false
-        if (PrefsUtils.getShowUsedChars()) {
+        if (PrefsUtils.showUsedChars) {
             val keyText = KeyboardUtils.getKeyText(this)
             if (keyText != null && keyText.isNotEmpty()) {
-                val puzzle = event.puzzle
-                input = puzzle.isUserCharInput(keyText[0])
+                event.puzzle?.let {
+                    input = it.isUserCharInput(keyText[0])
+                }
             }
         }
         mAlpha = if (input) KeyboardUtils.Contract.Companion.ALPHA_GREYED else 255

@@ -124,7 +124,7 @@ class CryptogramView : AppCompatTextView {
         val res = resources
 
         if (!isInEditMode) {
-            mDarkTheme = PrefsUtils.getDarkTheme()
+            mDarkTheme = PrefsUtils.darkTheme
         } else {
             mPuzzle = Puzzle.Mock("This is an example puzzle.", "Author", "Topic")
         }
@@ -190,7 +190,7 @@ class CryptogramView : AppCompatTextView {
         mCharW1 = bounds.width().toFloat()
 
         if (!isInEditMode && Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-            showSoftInputOnFocus = PrefsUtils.getUseSystemKeyboard()
+            showSoftInputOnFocus = PrefsUtils.useSystemKeyboard
         }
         isFocusable = true
         isFocusableInTouchMode = true
@@ -284,7 +284,7 @@ class CryptogramView : AppCompatTextView {
                 mSelectedCharacter = mSelectedCharacterLast
             }
             // Respect user preference to skipp filled cells
-            val skipFilledCells = PrefsUtils.getSkipFilledCells()
+            val skipFilledCells = PrefsUtils.skipFilledCells
             var fallbackHintChar: Char = 0.toChar()
             if (mSelectedCharacter.toInt() != 0) {
                 index = charMapping.indexOf(mSelectedCharacter) + 1
@@ -332,7 +332,7 @@ class CryptogramView : AppCompatTextView {
         if (mPuzzle != null && !mPuzzle!!.isCompleted) {
             if (setUserChar(selectedCharacter, c)) {
                 // User filled this cell
-                if (mPuzzle!!.isInputChar(c) && PrefsUtils.getAutoAdvance()) {
+                if (mPuzzle!!.isInputChar(c) && PrefsUtils.autoAdvance) {
                     // Automatically advance to the next character
                     selectNextCharacter()
                 } else {
@@ -349,7 +349,7 @@ class CryptogramView : AppCompatTextView {
     }
 
     override fun getInputType(): Int {
-        return if (PrefsUtils.getUseSystemKeyboard()) {
+        return if (PrefsUtils.useSystemKeyboard) {
             SimpleInputConnection.INPUT_TYPE
         } else {
             SimpleInputConnection.INPUT_NONE
@@ -357,7 +357,7 @@ class CryptogramView : AppCompatTextView {
     }
 
     override fun onCreateInputConnection(outAttrs: EditorInfo): InputConnection? {
-        if (PrefsUtils.getUseSystemKeyboard()) {
+        if (PrefsUtils.useSystemKeyboard) {
             outAttrs.inputType = SimpleInputConnection.INPUT_TYPE
             if (SimpleInputConnection.hasFaultyIme(context)) {
                 outAttrs.inputType = outAttrs.inputType or SimpleInputConnection.INPUT_TYPE_FOR_FAULTY_IME
@@ -375,7 +375,7 @@ class CryptogramView : AppCompatTextView {
     }
 
     override fun onCheckIsTextEditor(): Boolean {
-        return PrefsUtils.getUseSystemKeyboard()
+        return PrefsUtils.useSystemKeyboard
     }
 
     fun hasSelectedCharacter(): Boolean {
@@ -387,26 +387,28 @@ class CryptogramView : AppCompatTextView {
         mHighlightMistakes = false
         // Map the currently selected character to what the user inputs
         if (selectedChar.toInt() != 0 && mPuzzle != null) {
-            if (mPuzzle!!.isRevealed(selectedChar)) {
-                // This character was already revealed; don't allow the user to alter it
-                if (mPuzzle!!.setUserChar(selectedChar, selectedChar)) {
-                    // TODO show highlight
+            mPuzzle?.let {
+                if (it.isRevealed(selectedChar)) {
+                    // This character was already revealed; don't allow the user to alter it
+                    if (it.setUserChar(selectedChar, selectedChar)) {
+                        // TODO show highlight
+                    }
+                } else {
+                    // Check for completion state
+                    it.isCompleted
+                    if (it.isInputChar(userChar)) {
+                        // Enter the user's mapping
+                        it.setUserChar(selectedChar, Character.toUpperCase(userChar))
+                        if (it.isCompleted) {
+                            hideSoftInput()
+                        }
+                    } else {
+                        // Clear it
+                        it.setUserChar(selectedChar, 0.toChar())
+                    }
+                    EventProvider.postEvent(PuzzleEvent.PuzzleProgressEvent(it))
                 }
-                return true
             }
-            // Check for completion state
-            mPuzzle!!.isCompleted
-            if (mPuzzle!!.isInputChar(userChar)) {
-                // Enter the user's mapping
-                mPuzzle!!.setUserChar(selectedChar, Character.toUpperCase(userChar))
-                if (mPuzzle!!.isCompleted) {
-                    hideSoftInput()
-                }
-            } else {
-                // Clear it
-                mPuzzle!!.setUserChar(selectedChar, 0.toChar())
-            }
-            EventProvider.postEvent(PuzzleEvent.PuzzleProgressEvent(mPuzzle))
             redraw()
             return true
         }
@@ -414,8 +416,8 @@ class CryptogramView : AppCompatTextView {
     }
 
     fun revealCharacterMapping(c: Char) {
-        if (mPuzzle != null) {
-            mPuzzle!!.reveal(c)
+        mPuzzle?.let {
+            it.reveal(c)
         }
         if (setUserChar(c, c)) {
             // Answer revealed; clear the selection

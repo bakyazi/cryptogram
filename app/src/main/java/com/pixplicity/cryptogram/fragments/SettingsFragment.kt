@@ -43,8 +43,8 @@ class SettingsFragment : BaseFragment() {
             rb_theme_dark.isChecked = true
         }
         bt_reset_dialogs.setOnClickListener {
-            PrefsUtils.setNeverAskRevealLetter(false)
-            PrefsUtils.setNeverAskRevealMistakes(false)
+            PrefsUtils.neverAskRevealLetter = false
+            PrefsUtils.neverAskRevealMistakes = false
             update()
         }
         bt_reset_all_puzzles.setOnClickListener {
@@ -69,45 +69,45 @@ class SettingsFragment : BaseFragment() {
 
     private fun update() {
         // Theme settings
-        updateCompoundButton(rb_theme_light, !PrefsUtils.getDarkTheme(), CompoundButton.OnCheckedChangeListener { _, checked ->
+        updateCompoundButton(rb_theme_light, !PrefsUtils.darkTheme, CompoundButton.OnCheckedChangeListener { _, checked ->
             if (checked) {
                 setTheme(false)
             }
         })
-        updateCompoundButton(rb_theme_dark, PrefsUtils.getDarkTheme(), CompoundButton.OnCheckedChangeListener { _, checked ->
+        updateCompoundButton(rb_theme_dark, PrefsUtils.darkTheme, CompoundButton.OnCheckedChangeListener { _, checked ->
             if (checked) {
                 setTheme(true)
             }
         })
 
         // Display settings
-        updateCompoundButton(rb_text_size_small, PrefsUtils.getTextSize() == -1, CompoundButton.OnCheckedChangeListener { _, checked ->
+        updateCompoundButton(rb_text_size_small, PrefsUtils.textSize == -1, CompoundButton.OnCheckedChangeListener { _, checked ->
             if (checked) {
                 setTextSize(-1)
             }
         })
-        updateCompoundButton(rb_text_size_normal, PrefsUtils.getTextSize() == 0, CompoundButton.OnCheckedChangeListener { _, checked ->
+        updateCompoundButton(rb_text_size_normal, PrefsUtils.textSize == 0, CompoundButton.OnCheckedChangeListener { _, checked ->
             if (checked) {
                 setTextSize(0)
             }
         })
-        updateCompoundButton(rb_text_size_large, PrefsUtils.getTextSize() == 1, CompoundButton.OnCheckedChangeListener { _, checked ->
+        updateCompoundButton(rb_text_size_large, PrefsUtils.textSize == 1, CompoundButton.OnCheckedChangeListener { _, checked ->
             if (checked) {
                 setTextSize(1)
             }
         })
-        updateCompoundButton(cb_show_topic, PrefsUtils.getShowTopic(),
-                CompoundButton.OnCheckedChangeListener { _, checked -> PrefsUtils.setShowTopic(checked) })
-        updateCompoundButton(cb_show_score, PrefsUtils.getShowScore(),
-                CompoundButton.OnCheckedChangeListener { _, checked -> PrefsUtils.setShowScore(checked) })
+        updateCompoundButton(cb_show_topic, PrefsUtils.showTopic,
+                CompoundButton.OnCheckedChangeListener { _, checked -> PrefsUtils.showTopic = checked })
+        updateCompoundButton(cb_show_score, PrefsUtils.showScore,
+                CompoundButton.OnCheckedChangeListener { _, checked -> PrefsUtils.showScore = checked })
 
         // Keyboard settings
-        updateCompoundButton(rb_keyboard_builtin, !PrefsUtils.getUseSystemKeyboard(), CompoundButton.OnCheckedChangeListener { _, checked ->
+        updateCompoundButton(rb_keyboard_builtin, !PrefsUtils.useSystemKeyboard, CompoundButton.OnCheckedChangeListener { _, checked ->
             if (checked) {
                 setUseSystemKeyboard(false)
             }
         })
-        updateCompoundButton(rb_keyboard_system, PrefsUtils.getUseSystemKeyboard(), CompoundButton.OnCheckedChangeListener { _, checked ->
+        updateCompoundButton(rb_keyboard_system, PrefsUtils.useSystemKeyboard, CompoundButton.OnCheckedChangeListener { _, checked ->
             if (checked) {
                 // Show warning that it works for shit
                 MaterialDialog.Builder(activity!!)
@@ -117,33 +117,33 @@ class SettingsFragment : BaseFragment() {
                         .show()
             }
         })
-        updateCompoundButton(cb_show_hints, PrefsUtils.getShowUsedChars(),
-                CompoundButton.OnCheckedChangeListener { _, checked -> PrefsUtils.setShowUsedChars(checked) })
-        updateCompoundButton(cb_auto_advance, PrefsUtils.getAutoAdvance(),
-                CompoundButton.OnCheckedChangeListener { _, checked -> PrefsUtils.setAutoAdvance(checked) })
-        updateCompoundButton(cb_skip_filled_cells, PrefsUtils.getSkipFilledCells(),
-                CompoundButton.OnCheckedChangeListener { _, checked -> PrefsUtils.setSkipFilledCells(checked) })
+        updateCompoundButton(cb_show_hints, PrefsUtils.showUsedChars,
+                CompoundButton.OnCheckedChangeListener { _, checked -> PrefsUtils.showUsedChars = checked })
+        updateCompoundButton(cb_auto_advance, PrefsUtils.autoAdvance,
+                CompoundButton.OnCheckedChangeListener { _, checked -> PrefsUtils.autoAdvance = checked })
+        updateCompoundButton(cb_skip_filled_cells, PrefsUtils.skipFilledCells,
+                CompoundButton.OnCheckedChangeListener { _, checked -> PrefsUtils.skipFilledCells = checked })
 
         // Other settings
-        updateCompoundButton(cb_randomize, PrefsUtils.getRandomize(),
-                CompoundButton.OnCheckedChangeListener { _, checked -> PrefsUtils.setRandomize(checked) })
+        updateCompoundButton(cb_randomize, PrefsUtils.randomize,
+                CompoundButton.OnCheckedChangeListener { _, checked -> PrefsUtils.randomize = checked })
 
-        bt_reset_dialogs.isEnabled = PrefsUtils.getNeverAskRevealLetter() || PrefsUtils.getNeverAskRevealMistakes()
+        bt_reset_dialogs.isEnabled = PrefsUtils.neverAskRevealLetter || PrefsUtils.neverAskRevealMistakes
     }
 
     private fun setTextSize(textSize: Int) {
-        PrefsUtils.setTextSize(textSize)
+        PrefsUtils.textSize = textSize
         StyleUtils.reset()
         relaunch()
     }
 
     private fun setTheme(theme: Boolean) {
-        PrefsUtils.setDarkTheme(theme)
+        PrefsUtils.darkTheme = theme
         relaunch()
     }
 
     private fun setUseSystemKeyboard(useSystemKeyboard: Boolean) {
-        PrefsUtils.setUseSystemKeyboard(useSystemKeyboard)
+        PrefsUtils.useSystemKeyboard = useSystemKeyboard
         relaunch()
     }
 

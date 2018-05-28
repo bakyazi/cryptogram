@@ -136,7 +136,7 @@ object AchievementProvider {
                         }
                     }
                     else -> {
-                        val achievementId = CryptogramApp.getInstance().getString(achievementResId)
+                        val achievementId = CryptogramApp.instance.getString(achievementResId)
                         throw IllegalStateException("unknown achievement $achievementId")
                     }
                 }
@@ -160,7 +160,7 @@ object AchievementProvider {
      * @param googleApiClient
      */
     fun onCryptogramStart(googleApiClient: GoogleApiClient) {
-        val context = CryptogramApp.getInstance()
+        val context = CryptogramApp.instance
 
         mStartedInAirplaneMode = SystemUtils.isAirplaneModeOn(context)
 
@@ -173,7 +173,7 @@ object AchievementProvider {
      * @param googleApiClient
      */
     fun onCryptogramCompleted(googleApiClient: GoogleApiClient) {
-        val context = CryptogramApp.getInstance()
+        val context = CryptogramApp.instance
 
         if (mStartedInAirplaneMode && SystemUtils.isAirplaneModeOn(context)) {
             mUnlockedFlightMode = true
