@@ -70,8 +70,8 @@ android {
         applicationId "com.pixplicity.cryptogram"
         minSdkVersion 14
         targetSdkVersion 27
-        versionCode 197
-        versionName "1.8.6"
+        versionCode 198
+        versionName "1.8.7"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
 
         buildConfigField("String", "BITCOIN_ADDRESS", "\"35YPTPGZNeVrUNFA9Tn7A8HVx4nhFd1989\"")
