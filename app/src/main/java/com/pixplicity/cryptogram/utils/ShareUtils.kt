@@ -24,18 +24,18 @@ fun getVersionString(context: Context): String? {
     return versionString
 }
 
-fun sendFeedback(context: Context, orderId: String?) {
+fun sendFeedback(context: Context, purchaseId: String?) {
     var versionString: String? = getVersionString(context)
 
     val intent = Intent(Intent.ACTION_SENDTO, Uri.fromParts(
             "mailto", AboutFragment.FEEDBACK_EMAIL, null))
     intent.putExtra(Intent.EXTRA_EMAIL, arrayOf(AboutFragment.FEEDBACK_EMAIL))
     intent.putExtra(Intent.EXTRA_SUBJECT,
-            if (orderId != null) context.getString(R.string.feedback_subject_donation, orderId)
+            if (purchaseId != null) context.getString(R.string.feedback_subject_donation, purchaseId)
             else context.getString(R.string.feedback_subject))
     val ime = SimpleInputConnection.getIme(context)
     val keyboardPackageName = if (ime == null) "unknown" else ime.packageName
-    val message = context.getString(if (orderId != null) R.string.feedback_body_donation else R.string.feedback_body,
+    val message = context.getString(if (purchaseId != null) R.string.feedback_body_donation else R.string.feedback_body,
             versionString,
             keyboardPackageName,
             Build.VERSION.RELEASE,
@@ -49,11 +49,11 @@ fun sendFeedback(context: Context, orderId: String?) {
     }
 }
 
-fun donationThankYou(context: Context, orderId: String) {
+fun donationThankYou(context: Context, purchaseId: String) {
     AlertDialog.Builder(context)
             .setMessage(R.string.donate_thank_you)
             .setPositiveButton(R.string.donate_thank_you_feedback, { dialog, _ ->
-                sendFeedback(context, orderId)
+                sendFeedback(context, purchaseId)
                 dialog.dismiss()
             })
             .setNegativeButton(R.string.donate_thank_you_continue, { dialog, _ ->
