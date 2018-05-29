@@ -311,7 +311,7 @@
 
     <string name="feedback_subject">Feedback on Cryptogram</string>
     <string name="feedback_subject_donation">Feedback on Cryptogram (donation %1$s)</string>
-    <string name="feedback_body">Hi Pixplicity, \n\nI’m using Cryptogram version %1$s and my keyboard is “%2$s”. I’m running Android %3$s on %4$s. \n\nHere’s my feedback on Cryptogram: \n\n</string>
-    <string name="feedback_body_donation">Hi Pixplicity, \n\nI love Cryptogram so much that I donated! I’m using Cryptogram version %1$s and my keyboard is “%2$s”. I’m running Android %3$s on %4$s. \n\nHere’s my extra-special fan feedback: \n\n</string>
+    <string name="feedback_body">Hi Pixplicity, \n\nI’m using Cryptogram version %1$s and my keyboard is “%2$s”. I’m running Android %3$s on my %4$s. \n\nHere’s my feedback on Cryptogram: \n\n</string>
+    <string name="feedback_body_donation">Hi Pixplicity, \n\nI love Cryptogram so much that I donated! I’m using Cryptogram version %1$s and my keyboard is “%2$s”. I’m running Android %3$s on my %4$s. \n\nHere’s my extra-special fan feedback: \n\n</string>
 
 </resources>
