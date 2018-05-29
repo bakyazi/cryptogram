@@ -22,7 +22,7 @@
  * THE SOFTWARE.
  */
 
-package com.pixplicity.cryptogram.stringsimilarity;
+package com.pixplicity.cryptogram.stringsimilarity
 
 /**
  * String distances that implement this interface are metrics, which means:
@@ -33,8 +33,8 @@ package com.pixplicity.cryptogram.stringsimilarity;
  *
  * @author Thibault Debatty
  */
-public interface MetricStringDistance extends StringDistance {
+interface MetricStringDistance : StringDistance {
 
-    double distance(String s1, String s2);
+    override fun distance(s1: String, s2: String): Double
 
 }

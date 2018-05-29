@@ -22,15 +22,15 @@
  * THE SOFTWARE.
  */
 
-package com.pixplicity.cryptogram.stringsimilarity;
+package com.pixplicity.cryptogram.stringsimilarity
 
-import java.io.Serializable;
+import java.io.Serializable
 
 /**
  * @author Thibault Debatty
  */
-public interface StringDistance extends Serializable {
+interface StringDistance : Serializable {
 
-    double distance(String s1, String s2);
+    fun distance(s1: String, s2: String): Double
 
 }

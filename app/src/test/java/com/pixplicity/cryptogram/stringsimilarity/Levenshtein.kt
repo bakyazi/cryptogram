@@ -1,4 +1,4 @@
-package com.pixplicity.cryptogram.stringsimilarity;
+package com.pixplicity.cryptogram.stringsimilarity
 
 /**
  * The Levenshtein distance between two words is the minimum number of
@@ -7,7 +7,7 @@ package com.pixplicity.cryptogram.stringsimilarity;
  *
  * @author Thibault Debatty
  */
-public class Levenshtein implements MetricStringDistance {
+class Levenshtein : MetricStringDistance {
 
     /**
      * The Levenshtein distance, or edit distance, between two words is the
@@ -34,69 +34,61 @@ public class Levenshtein implements MetricStringDistance {
      * @return The computed Levenshtein distance.
      * @throws NullPointerException if s1 or s2 is null.
      */
-    public final double distance(final String s1, final String s2) {
-        if (s1 == null) {
-            throw new NullPointerException("s1 must not be null");
+    override fun distance(s1: String, s2: String): Double {
+        if (s1 == s2) {
+            return 0.0
         }
 
-        if (s2 == null) {
-            throw new NullPointerException("s2 must not be null");
+        if (s1.length == 0) {
+            return s2.length.toDouble()
         }
 
-        if (s1.equals(s2)) {
-            return 0;
-        }
-
-        if (s1.length() == 0) {
-            return s2.length();
-        }
-
-        if (s2.length() == 0) {
-            return s1.length();
+        if (s2.length == 0) {
+            return s1.length.toDouble()
         }
 
         // create two work vectors of integer distances
-        int[] v0 = new int[s2.length() + 1];
-        int[] v1 = new int[s2.length() + 1];
-        int[] vtemp;
+        var v0 = IntArray(s2.length + 1)
+        var v1 = IntArray(s2.length + 1)
+        var vtemp: IntArray
 
         // initialize v0 (the previous row of distances)
         // this row is A[0][i]: edit distance for an empty s
         // the distance is just the number of characters to delete from t
-        for (int i = 0; i < v0.length; i++) {
-            v0[i] = i;
+        for (i in v0.indices) {
+            v0[i] = i
         }
 
-        for (int i = 0; i < s1.length(); i++) {
+        for (i in 0 until s1.length) {
             // calculate v1 (current row distances) from the previous row v0
             // first element of v1 is A[i+1][0]
             //   edit distance is delete (i+1) chars from s to match empty t
-            v1[0] = i + 1;
+            v1[0] = i + 1
 
             // use formula to fill in the rest of the row
-            for (int j = 0; j < s2.length(); j++) {
-                int cost = 1;
-                if (s1.charAt(i) == s2.charAt(j)) {
-                    cost = 0;
+            for (j in 0 until s2.length) {
+                var cost = 1
+                if (s1[i] == s2[j]) {
+                    cost = 0
                 }
                 v1[j + 1] = Math.min(
-                        v1[j] + 1,              // Cost of insertion
+                        v1[j] + 1, // Cost of insertion
                         Math.min(
-                                v0[j + 1] + 1,  // Cost of remove
-                                v0[j] + cost)); // Cost of substitution
+                                v0[j + 1] + 1, // Cost of remove
+                                v0[j] + cost)) // Cost of substitution
             }
 
             // copy v1 (current row) to v0 (previous row) for next iteration
             //System.arraycopy(v1, 0, v0, 0, v0.length);
 
             // Flip references to current and previous row
-            vtemp = v0;
-            v0 = v1;
-            v1 = vtemp;
+            vtemp = v0
+            v0 = v1
+            v1 = vtemp
 
         }
 
-        return v0[s2.length()];
+        return v0[s2.length].toDouble()
     }
 
 }
