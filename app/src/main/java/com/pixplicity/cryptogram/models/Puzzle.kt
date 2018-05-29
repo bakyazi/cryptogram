@@ -163,7 +163,7 @@ open class Puzzle {
     }
 
     fun isUserCharInput(inputChar: Char): Boolean {
-        return userChars.contains(inputChar)
+        return userChars.contains(inputChar) || isGiven(inputChar)
     }
 
     fun getUserChar(c: Char): Char? {
@@ -186,13 +186,13 @@ open class Puzzle {
     }
 
     fun isInputChar(c: Char): Boolean {
-        return c >= 'a' && c <= 'z' || c >= 'A' && c <= 'Z'
+        return c in 'a'..'z' || c in 'A'..'Z'
     }
 
     fun isGiven(matchChar: Char): Boolean {
-        if (given != null) {
-            for (j in 0 until given!!.length) {
-                val c = given!![j]
+        given?.let {
+            for (j in 0 until it.length) {
+                val c = it[j]
                 if (c == matchChar) {
                     return true
                 }
@@ -263,10 +263,8 @@ open class Puzzle {
         if (!mIsMock) {
             val puzzleProvider = PuzzleProvider.getInstance(CryptogramApp.instance)
             val progress = progress
-            if (progress != null) {
-                puzzleProvider.setProgress(progress.id, progress)
-                puzzleProvider.saveLocal()
-            }
+            puzzleProvider.setProgress(progress.id, progress)
+            puzzleProvider.saveLocal()
         }
     }
 
