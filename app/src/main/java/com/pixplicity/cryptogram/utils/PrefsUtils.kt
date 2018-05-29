@@ -23,6 +23,7 @@ object PrefsUtils {
     private const val KEY_SAVEGAME_NAME = "savegame_name"
     private const val KEY_USE_SYSTEM_KEYBOARD = "use_system_keyboard"
     private const val KEY_LAST_VERSION = "last_version"
+    private const val KEY_DONATION_FEEDBACK = "donation_feedback"
 
     const val TYPE_HIGHLIGHT_HYPHENATION = 0
     const val TYPE_HIGHLIGHT_TOUCH_INPUT = 1

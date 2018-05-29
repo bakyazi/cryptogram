@@ -6,6 +6,7 @@ import android.content.Intent
 import android.content.pm.PackageManager
 import android.net.Uri
 import android.os.Build
+import android.support.v7.app.AlertDialog
 import android.util.Log
 import android.widget.Toast
 import com.pixplicity.cryptogram.R
@@ -46,4 +47,17 @@ fun sendFeedback(context: Context, donationId: String?) {
     } catch (e: ActivityNotFoundException) {
         Toast.makeText(context, R.string.error_no_activity, Toast.LENGTH_LONG).show()
     }
+}
+
+fun donationThankYou(context: Context, purchaseToken: String) {
+    AlertDialog.Builder(context)
+            .setMessage(R.string.donate_thank_you)
+            .setPositiveButton(R.string.donate_thank_you_feedback, { dialog, _ ->
+                sendFeedback(context, purchaseToken.takeLast(8))
+                dialog.dismiss()
+            })
+            .setNegativeButton(R.string.donate_thank_you_continue, { dialog, _ ->
+                dialog.dismiss()
+            })
+            .show()
 }

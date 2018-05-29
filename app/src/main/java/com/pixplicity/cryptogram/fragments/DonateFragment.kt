@@ -10,14 +10,18 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageButton
 import android.widget.TextView
 import android.widget.Toast
 import com.android.billingclient.api.*
 import com.crashlytics.android.Crashlytics
 import com.pixplicity.cryptogram.BuildConfig
 import com.pixplicity.cryptogram.R
+import com.pixplicity.cryptogram.utils.PrefsUtils
+import com.pixplicity.cryptogram.utils.donationThankYou
 import com.pixplicity.cryptogram.utils.invertedTheme
 import com.pixplicity.cryptogram.utils.sendFeedback
+import com.pixplicity.easyprefs.library.Prefs
 import kotlinx.android.synthetic.main.fragment_donate.*
 import java.text.DateFormat
 import java.util.*
@@ -152,23 +156,15 @@ class DonateFragment : BaseFragment(), PurchasesUpdatedListener {
         Log.d(TAG, "onPurchasesUpdated: $responseCode")
         if (responseCode == BillingClient.BillingResponse.OK && purchases != null) {
             purchases.forEach {
-                Log.d(TAG, "consumeAsync: ${it.purchaseToken}")
-                billingClient.consumeAsync(it.purchaseToken, { responseCode, outToken ->
-                    Log.d(TAG, "consumeAsync: ${it.purchaseToken}; responseCode= $responseCode")
+                val purchaseToken = it.purchaseToken
+                Log.d(TAG, "consumeAsync: $purchaseToken")
+                billingClient.consumeAsync(purchaseToken, { responseCode, _ ->
+                    Log.d(TAG, "consumeAsync: $purchaseToken; responseCode= $responseCode")
                     if (responseCode == BillingClient.BillingResponse.OK) {
                         handler.post {
-                            // Display thank-you message
-                            if (context != null) {
-                                AlertDialog.Builder(context!!)
-                                        .setMessage(R.string.donate_thank_you)
-                                        .setPositiveButton(R.string.donate_thank_you_feedback, { dialog, _ ->
-                                            sendFeedback(context!!, it.purchaseToken.takeLast(8))
-                                            dialog.dismiss()
-                                        })
-                                        .setNegativeButton(R.string.donate_thank_you_continue, { dialog, _ ->
-                                            dialog.dismiss()
-                                        })
-                                        .show()
+                            context?.let {
+                                // Display thank-you message
+                                donationThankYou(it, purchaseToken)
                             }
                         }
                     }
@@ -192,7 +188,9 @@ class DonateFragment : BaseFragment(), PurchasesUpdatedListener {
         val df = DateFormat.getDateInstance(DateFormat.LONG)
         for (purchase in purchases) {
             Log.d(TAG, "queryPurchaseHistoryAsync: ${purchase.originalJson}")
-            val tv_donation = layoutInflater.inflate(R.layout.li_donation, null) as TextView
+            val vg_donation = layoutInflater.inflate(R.layout.li_donation, null) as ViewGroup
+            val tv_donation = vg_donation.findViewById<TextView>(R.id.tv_donation)
+            val bt_feedback = vg_donation.findViewById<ImageButton>(R.id.bt_donation_feedback)
             val sku = skus[purchase.sku]
             val description = if (sku != null) {
                 sku.title
@@ -200,7 +198,13 @@ class DonateFragment : BaseFragment(), PurchasesUpdatedListener {
                 purchase.sku
             }
             tv_donation.text = df.format(Date(purchase.purchaseTime)) + ": " + description
-            vg_donations.addView(tv_donation)
+            bt_feedback.setOnClickListener {
+                donationThankYou(it.context, purchase.purchaseToken)
+            }
+            if (isDarkTheme) {
+                bt_feedback.invertedTheme()
+            }
+            vg_donations.addView(vg_donation)
         }
     }
 
