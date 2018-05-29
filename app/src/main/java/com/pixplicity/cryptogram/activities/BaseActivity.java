@@ -25,27 +25,19 @@ import com.pixplicity.cryptogram.R;
 import com.pixplicity.cryptogram.utils.PrefsUtils;
 import com.pixplicity.cryptogram.utils.StyleUtils;
 
-import butterknife.BindView;
-import butterknife.ButterKnife;
-
 public abstract class BaseActivity extends AppCompatActivity {
 
     @Nullable
-    @BindView(R.id.vg_root)
     protected View mVgRoot;
 
     @Nullable
-    @BindView(R.id.drawer_layout)
     protected DrawerLayout mDrawerLayout;
 
-    @BindView(R.id.coordinator)
     protected View mVgCoordinator;
 
-    @BindView(R.id.toolbar)
     protected Toolbar mToolbar;
 
     @Nullable
-    @BindView(R.id.tv_toolbar_subtitle)
     protected TextView mTvToolbarSubtitle;
 
     protected ActionBarDrawerToggle mDrawerToggle;
@@ -68,7 +60,13 @@ public abstract class BaseActivity extends AppCompatActivity {
             getWindow().setBackgroundDrawableResource(R.drawable.bg_activity_light);
         }
         super.setContentView(layoutResID);
-        ButterKnife.bind(this);
+
+        // FIXME find a way to use kotlin android extensions here
+        mVgRoot = findViewById(R.id.vg_root);
+        mDrawerLayout = findViewById(R.id.drawer_layout);
+        mVgCoordinator = findViewById(R.id.coordinator);
+        mToolbar = findViewById(R.id.toolbar);
+        mTvToolbarSubtitle = findViewById(R.id.tv_toolbar_subtitle);
 
         setSupportActionBar(mToolbar);
         mToolbar.setContentInsetStartWithNavigation(0);

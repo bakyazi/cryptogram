@@ -20,7 +20,6 @@ import android.widget.Button
 import android.widget.TableLayout
 import android.widget.TextView
 import android.widget.Toast
-import butterknife.OnClick
 import com.afollestad.materialdialogs.DialogAction
 import com.afollestad.materialdialogs.MaterialDialog
 import com.crashlytics.android.Crashlytics
@@ -178,10 +177,8 @@ class CryptogramActivity : BaseActivity(), GoogleApiClient.ConnectionCallbacks, 
                     1200
             )
         }
-    }
 
-    override fun onNewIntent(intent: Intent) {
-        super.onNewIntent(intent)
+        vg_google_play_games.setOnClickListener { onClickGooglePlayGames() }
     }
 
     override fun onStart() {
@@ -461,7 +458,6 @@ class CryptogramActivity : BaseActivity(), GoogleApiClient.ConnectionCallbacks, 
                 .show()
     }
 
-    @OnClick(R.id.vg_google_play_games)
     fun onClickGooglePlayGames() {
         if (mGoogleApiClient!!.isConnected) {
             // Connected; show gameplay options
