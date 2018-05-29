@@ -157,6 +157,7 @@ class DonateFragment : BaseFragment(), PurchasesUpdatedListener {
         if (responseCode == BillingClient.BillingResponse.OK && purchases != null) {
             purchases.forEach {
                 val purchaseToken = it.purchaseToken
+                val orderId = it.orderId.takeLast(10)
                 Log.d(TAG, "consumeAsync: $purchaseToken")
                 billingClient.consumeAsync(purchaseToken, { responseCode, _ ->
                     Log.d(TAG, "consumeAsync: $purchaseToken; responseCode= $responseCode")
@@ -164,7 +165,7 @@ class DonateFragment : BaseFragment(), PurchasesUpdatedListener {
                         handler.post {
                             context?.let {
                                 // Display thank-you message
-                                donationThankYou(it, purchaseToken)
+                                donationThankYou(it, orderId)
                             }
                         }
                     }
@@ -197,9 +198,10 @@ class DonateFragment : BaseFragment(), PurchasesUpdatedListener {
             } else {
                 purchase.sku
             }
-            tv_donation.text = df.format(Date(purchase.purchaseTime)) + ": " + description
+            val orderId = purchase.orderId.takeLast(10)
+            tv_donation.text = getString(R.string.donation_list_item, df.format(Date(purchase.purchaseTime)), description, orderId)
             bt_feedback.setOnClickListener {
-                donationThankYou(it.context, purchase.purchaseToken)
+                donationThankYou(it.context, orderId)
             }
             if (isDarkTheme) {
                 bt_feedback.invertedTheme()
