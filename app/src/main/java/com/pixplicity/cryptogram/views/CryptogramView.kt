@@ -27,9 +27,9 @@ import java.util.*
 class CryptogramView : AppCompatTextView {
 
     companion object {
-        val ENABLE_HYPHENATION = false
-        private val SOFT_HYPHEN = "\u00AD"
-        private val KEYBOARD_ANIMATION_DURATION_MS = 200
+        const val ENABLE_HYPHENATION = false
+        private const val SOFT_HYPHEN = "\u00AD"
+        private const val KEYBOARD_ANIMATION_DURATION_MS = 200
     }
 
     private var mPuzzle: Puzzle? = null
@@ -90,7 +90,7 @@ class CryptogramView : AppCompatTextView {
                 for (chrOrig in charMapping.keys) {
                     val chrMapped = charMapping[chrOrig]
                     if (chrMapped == c) {
-                        mSelectedCharacter = chrOrig!!
+                        mSelectedCharacter = chrOrig
                         mSelectedCharacterLast = chrOrig
                         break
                     }
@@ -216,12 +216,12 @@ class CryptogramView : AppCompatTextView {
         }
     }
 
-    fun showSoftInput() {
+    private fun showSoftInput() {
         if (mPuzzle != null && !mPuzzle!!.isCompleted) {
             // Show keyboard
             if (mKeyboardView == null) {
                 val inputMethodManager = context.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
-                inputMethodManager?.showSoftInput(this, InputMethodManager.SHOW_IMPLICIT)
+                inputMethodManager.showSoftInput(this, InputMethodManager.SHOW_IMPLICIT)
             } else {
                 // Show built-in keyboard
                 mKeyboardView!!.visibility = View.VISIBLE
@@ -250,7 +250,7 @@ class CryptogramView : AppCompatTextView {
                     })
         }
         val inputMethodManager = context.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
-        inputMethodManager?.hideSoftInputFromWindow(windowToken, 0)
+        inputMethodManager.hideSoftInputFromWindow(windowToken, 0)
     }
 
     override fun onKeyUp(keyCode: Int, event: KeyEvent): Boolean {
@@ -374,7 +374,7 @@ class CryptogramView : AppCompatTextView {
         return mSelectedCharacter.toInt() != 0
     }
 
-    fun setUserChar(selectedChar: Char, userChar: Char): Boolean {
+    private fun setUserChar(selectedChar: Char, userChar: Char): Boolean {
         // Stop highlighting mistakes
         mHighlightMistakes = false
         // Map the currently selected character to what the user inputs
@@ -408,12 +408,13 @@ class CryptogramView : AppCompatTextView {
     }
 
     fun revealCharacterMapping(c: Char) {
-        mPuzzle?.let {
-            it.reveal(c)
-        }
+        mPuzzle?.reveal(c)
         if (setUserChar(c, c)) {
             // Answer revealed; clear the selection
             selectedCharacter = 0.toChar()
+        }
+        mPuzzle?.let {
+            EventProvider.postEvent(PuzzleEvent.PuzzleProgressEvent(it))
         }
     }
 
@@ -444,15 +445,14 @@ class CryptogramView : AppCompatTextView {
         val width: Int
 
         //Measure Width
-        if (widthMode == View.MeasureSpec.EXACTLY) {
-            //Must be this size
-            width = widthSize
-        } else if (widthMode == View.MeasureSpec.AT_MOST) {
-            //Can't be bigger than...
-            width = Math.min(desiredWidth, widthSize)
-        } else {
-            //Be whatever you want
-            width = desiredWidth
+        width = when (widthMode) {
+            View.MeasureSpec.EXACTLY -> //Must be this size
+                widthSize
+            View.MeasureSpec.AT_MOST -> //Can't be bigger than...
+                Math.min(desiredWidth, widthSize)
+            View.MeasureSpec.UNSPECIFIED -> //Be whatever you want
+                desiredWidth
+            else -> throw IllegalStateException("widthMode $widthMode")
         }
 
         var desiredHeight = 0
@@ -465,15 +465,14 @@ class CryptogramView : AppCompatTextView {
         }
 
         //Measure Height
-        if (heightMode == View.MeasureSpec.EXACTLY) {
-            //Must be this size
-            height = heightSize
-        } else if (heightMode == View.MeasureSpec.AT_MOST) {
-            //Can't be bigger than...
-            height = Math.min(desiredHeight, heightSize)
-        } else {
-            //Be whatever you want
-            height = desiredHeight
+        height = when (heightMode) {
+            View.MeasureSpec.EXACTLY -> //Must be this size
+                heightSize
+            View.MeasureSpec.AT_MOST -> //Can't be bigger than...
+                Math.min(desiredHeight, heightSize)
+            View.MeasureSpec.UNSPECIFIED -> //Be whatever you want
+                desiredHeight
+            else -> throw IllegalStateException("widthMode $widthMode")
         }
 
         setMeasuredDimension(width, height)
@@ -576,9 +575,9 @@ class CryptogramView : AppCompatTextView {
     private fun drawWord(canvas: Canvas?, charMapping: HashMap<Char, Char>?,
                          textPaintUser: TextPaint?, linePaint: Paint?, offsetX: Float,
                          x: Float, y: Float, word: String): Float {
-        var x = x
+        var newX = x
         if (canvas == null || mPuzzle == null) {
-            return x + mBoxW * word.length
+            return newX + mBoxW * word.length
         }
         for (i in 0 until word.length) {
             var c = Character.toUpperCase(word[i])
@@ -586,14 +585,14 @@ class CryptogramView : AppCompatTextView {
             val mappedChar = if (charMapping == null) null else charMapping[c]
             if (mSelectedCharacter == c) {
                 // The user is inputting this character; highlight it
-                canvas.drawRect(x + mBoxInset, y - mBoxH + mBoxInset, x + mBoxW - mBoxInset, y + mBoxPadding - mBoxInset, mBoxPaint1!!)
-                canvas.drawRect(x + mBoxInset, y - mBoxH + mBoxInset, x + mBoxW - mBoxInset, y + mBoxPadding - mBoxInset, mBoxPaint2!!)
+                canvas.drawRect(newX + mBoxInset, y - mBoxH + mBoxInset, newX + mBoxW - mBoxInset, y + mBoxPadding - mBoxInset, mBoxPaint1!!)
+                canvas.drawRect(newX + mBoxInset, y - mBoxH + mBoxInset, newX + mBoxW - mBoxInset, y + mBoxPadding - mBoxInset, mBoxPaint2!!)
                 //canvas.drawRect(x, y - mBoxH, x + mBoxW, y + mBoxPadding, mBoxPaint2);
             }
             if (mappedChar != null) {
                 chr = mappedChar.toString()
-                canvas.drawText(chr, x + mBoxPadding, y + mBoxH + mBoxPadding, mTextPaintMapping!!)
-                val xPos = (x / mBoxW).toInt()
+                canvas.drawText(chr, newX + mBoxPadding, y + mBoxH + mBoxPadding, mTextPaintMapping!!)
+                val xPos = (newX / mBoxW).toInt()
                 val yPos = (y / mLineHeight).toInt()
                 if (yPos >= 0 && yPos < mCharMap!!.size) {
                     if (xPos >= 0 && xPos < mCharMap!![yPos].size) {
@@ -603,10 +602,10 @@ class CryptogramView : AppCompatTextView {
             }
             if (mPuzzle!!.isRevealed(c)) {
                 // This box has already been revealed to the user
-                canvas.drawLine(x + offsetX, y + mBoxPadding, x + mBoxW - offsetX, y + mBoxPadding, mLinePaint2!!)
+                canvas.drawLine(newX + offsetX, y + mBoxPadding, newX + mBoxW - offsetX, y + mBoxPadding, mLinePaint2!!)
             } else if (mPuzzle!!.isInputChar(c)) {
                 // This is a box the user has to fill to complete the puzzle
-                canvas.drawLine(x + offsetX, y + mBoxPadding, x + mBoxW - offsetX, y + mBoxPadding, linePaint!!)
+                canvas.drawLine(newX + offsetX, y + mBoxPadding, newX + mBoxW - offsetX, y + mBoxPadding, linePaint!!)
                 c = getUserInput(c)
             }
             if (c.toInt() > 0) {
@@ -619,12 +618,12 @@ class CryptogramView : AppCompatTextView {
                 }
                 // The character should be drawn in place
                 chr = c.toString()
-                canvas.drawText(chr, x + offsetX, y, textPaint)
+                canvas.drawText(chr, newX + offsetX, y, textPaint)
             }
             // Box width
-            x += mBoxW
+            newX += mBoxW
         }
-        return x
+        return newX
     }
 
     fun redraw() {
