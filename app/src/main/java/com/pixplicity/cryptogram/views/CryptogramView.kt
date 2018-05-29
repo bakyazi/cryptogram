@@ -520,6 +520,7 @@ class CryptogramView : AppCompatTextView {
         var x = 0f
         var y = mBoxH
         for (origWord in mPuzzle!!.words) {
+            if (origWord == null) continue
             val displayWord = origWord.replace(SOFT_HYPHEN, "")
             var word = if (!ENABLE_HYPHENATION) displayWord else origWord
             val w = displayWord.length * mBoxW

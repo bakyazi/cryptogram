@@ -8,10 +8,11 @@ class Word(wordString: String) {
 
         private val SOFT_HYPHEN = "\u00AD"
 
-        fun from(wordStrings: Array<String>): Array<Word?> {
+        fun from(wordStrings: Array<String?>): Array<Word?> {
             val words = arrayOfNulls<Word>(wordStrings.size)
             for (i in wordStrings.indices) {
-                words[i] = Word(wordStrings[i])
+                val wordString = wordStrings[i] ?: continue
+                words[i] = Word(wordString)
             }
             return words
         }

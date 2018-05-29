@@ -186,6 +186,7 @@ class PuzzleProgress {
             }
             mCharacterList = ArrayList()
             for (word in puzzle.words) {
+                if (word == null) continue
                 for (i in 0 until word.length) {
                     val c = Character.toUpperCase(word[i])
                     if (puzzle.isInputChar(c)) {
@@ -212,6 +213,7 @@ class PuzzleProgress {
         if (mUserChars == null) {
             mUserChars = HashMap()
             for (word in puzzle.words) {
+                if (word == null) continue
                 for (i in 0 until word.length) {
                     val c = Character.toUpperCase(word[i])
                     if (puzzle.isInputChar(c)) {
