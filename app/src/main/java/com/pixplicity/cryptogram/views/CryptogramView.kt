@@ -3,12 +3,7 @@ package com.pixplicity.cryptogram.views
 import android.animation.Animator
 import android.animation.AnimatorListenerAdapter
 import android.content.Context
-import android.content.res.Resources
-import android.graphics.Canvas
-import android.graphics.Paint
-import android.graphics.PointF
-import android.graphics.Rect
-import android.graphics.Typeface
+import android.graphics.*
 import android.os.Build
 import android.support.v4.content.ContextCompat
 import android.support.v7.widget.AppCompatTextView
@@ -20,16 +15,13 @@ import android.view.View
 import android.view.inputmethod.EditorInfo
 import android.view.inputmethod.InputConnection
 import android.view.inputmethod.InputMethodManager
-
 import com.pixplicity.cryptogram.R
 import com.pixplicity.cryptogram.events.PuzzleEvent
 import com.pixplicity.cryptogram.models.Puzzle
 import com.pixplicity.cryptogram.utils.EventProvider
 import com.pixplicity.cryptogram.utils.PrefsUtils
 import com.pixplicity.cryptogram.utils.StyleUtils
-
-import java.util.ArrayList
-import java.util.HashMap
+import java.util.*
 
 
 class CryptogramView : AppCompatTextView {

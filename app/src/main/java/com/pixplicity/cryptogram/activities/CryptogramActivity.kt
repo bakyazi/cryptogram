@@ -20,7 +20,6 @@ import android.widget.Button
 import android.widget.TableLayout
 import android.widget.TextView
 import android.widget.Toast
-import butterknife.BindView
 import butterknife.OnClick
 import com.afollestad.materialdialogs.DialogAction
 import com.afollestad.materialdialogs.MaterialDialog
@@ -48,7 +47,6 @@ import com.pixplicity.cryptogram.events.PuzzleEvent
 import com.pixplicity.cryptogram.models.Puzzle
 import com.pixplicity.cryptogram.utils.*
 import com.pixplicity.cryptogram.views.CryptogramView
-import com.pixplicity.cryptogram.views.HintView
 import com.pixplicity.easyprefs.library.Prefs
 import com.pixplicity.generate.Rate
 import com.squareup.otto.Subscribe

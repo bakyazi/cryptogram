@@ -1,6 +1,6 @@
 package com.pixplicity.cryptogram.utils
 
-import java.util.Locale
+import java.util.*
 
 object StringUtils {
 

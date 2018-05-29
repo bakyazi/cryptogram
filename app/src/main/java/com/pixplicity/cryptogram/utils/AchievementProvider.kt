@@ -3,7 +3,6 @@ package com.pixplicity.cryptogram.utils
 import android.content.Context
 import android.os.AsyncTask
 import android.util.Log
-
 import com.crashlytics.android.Crashlytics
 import com.google.android.gms.common.api.GoogleApiClient
 import com.google.android.gms.games.Games
@@ -11,9 +10,7 @@ import com.pixplicity.cryptogram.BuildConfig
 import com.pixplicity.cryptogram.CryptogramApp
 import com.pixplicity.cryptogram.R
 import com.pixplicity.easyprefs.library.Prefs
-
-import java.util.Calendar
-import java.util.TreeMap
+import java.util.*
 
 object AchievementProvider {
 

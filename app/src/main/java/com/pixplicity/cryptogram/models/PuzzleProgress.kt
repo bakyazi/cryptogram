@@ -2,7 +2,6 @@ package com.pixplicity.cryptogram.models
 
 import android.os.Bundle
 import android.util.Log
-
 import com.crashlytics.android.answers.Answers
 import com.crashlytics.android.answers.LevelEndEvent
 import com.crashlytics.android.answers.LevelStartEvent
@@ -11,10 +10,7 @@ import com.google.gson.annotations.SerializedName
 import com.pixplicity.cryptogram.CryptogramApp
 import com.pixplicity.cryptogram.events.PuzzleEvent
 import com.pixplicity.cryptogram.utils.EventProvider
-
-import java.util.ArrayList
-import java.util.HashMap
-import java.util.Random
+import java.util.*
 
 class PuzzleProgress {
 

@@ -1,9 +1,7 @@
 package com.pixplicity.cryptogram.utils
 
-import android.content.Context
 import android.support.annotation.DrawableRes
 import android.view.KeyEvent
-
 import com.pixplicity.cryptogram.events.PuzzleEvent
 
 object KeyboardUtils {

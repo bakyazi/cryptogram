@@ -7,14 +7,10 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
-
 import com.pixplicity.cryptogram.R
 import com.pixplicity.cryptogram.models.Puzzle
-import com.pixplicity.cryptogram.utils.PuzzleProvider
 import com.pixplicity.cryptogram.utils.PrefsUtils
-
-import butterknife.BindView
-import butterknife.ButterKnife
+import com.pixplicity.cryptogram.utils.PuzzleProvider
 
 class PuzzleAdapter(private val mContext: Context, private val mOnItemClickListener: OnItemClickListener) : RecyclerView.Adapter<PuzzleAdapter.ViewHolder>() {
 

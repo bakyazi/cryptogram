@@ -1,9 +1,7 @@
 package com.pixplicity.cryptogram.utils
 
 import android.content.Context
-import android.content.pm.PackageInfo
 import android.content.pm.PackageManager
-
 import com.pixplicity.easyprefs.library.Prefs
 
 object UpdateManager {

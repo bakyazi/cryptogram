@@ -1,15 +1,10 @@
 package com.pixplicity.cryptogram.fragments
 
-import android.graphics.ColorMatrixColorFilter
 import android.os.Bundle
 import android.support.v4.app.Fragment
-import android.support.v4.app.FragmentActivity
 import android.view.View
-import android.widget.ImageView
-
-import com.pixplicity.cryptogram.activities.BaseActivity
-
 import butterknife.ButterKnife
+import com.pixplicity.cryptogram.activities.BaseActivity
 
 abstract class BaseFragment : Fragment() {
 

@@ -5,7 +5,6 @@ import android.os.AsyncTask
 import android.util.Log
 import android.util.SparseArray
 import android.widget.Toast
-
 import com.crashlytics.android.Crashlytics
 import com.google.android.gms.common.api.GoogleApiClient
 import com.google.android.gms.games.snapshot.Snapshot
@@ -18,17 +17,10 @@ import com.pixplicity.cryptogram.models.Puzzle
 import com.pixplicity.cryptogram.models.PuzzleProgress
 import com.pixplicity.cryptogram.models.PuzzleProgressState
 import com.pixplicity.cryptogram.views.CryptogramView
-
 import java.io.IOException
 import java.io.InputStream
 import java.io.InputStreamReader
-import java.util.ArrayList
-import java.util.Arrays
-import java.util.Collections
-import java.util.HashMap
-import java.util.LinkedHashSet
-import java.util.LinkedList
-import java.util.Random
+import java.util.*
 
 class PuzzleProvider @Throws(IOException::class) private constructor(context: Context?) {
 

@@ -6,7 +6,6 @@ import android.text.InputType
 import android.view.inputmethod.BaseInputConnection
 import android.view.inputmethod.InputMethodInfo
 import android.view.inputmethod.InputMethodManager
-import android.view.inputmethod.InputMethodSubtype
 
 class SimpleInputConnection(private val mCryptogramView: CryptogramView) : BaseInputConnection(mCryptogramView, true) {
     private var mLastComposition: String? = null

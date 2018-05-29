@@ -1,15 +1,12 @@
 package com.pixplicity.cryptogram.views
 
 import android.content.Context
-import android.content.res.TypedArray
 import android.graphics.drawable.Drawable
 import android.support.v4.content.ContextCompat
 import android.support.v7.widget.AppCompatImageButton
 import android.util.AttributeSet
-
 import com.pixplicity.cryptogram.R
 import com.pixplicity.cryptogram.events.PuzzleEvent
-import com.pixplicity.cryptogram.models.Puzzle
 import com.pixplicity.cryptogram.utils.EventProvider
 import com.pixplicity.cryptogram.utils.KeyboardUtils
 import com.pixplicity.cryptogram.utils.PrefsUtils

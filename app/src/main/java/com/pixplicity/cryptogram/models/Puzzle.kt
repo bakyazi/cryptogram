@@ -1,16 +1,12 @@
 package com.pixplicity.cryptogram.models
 
 import android.content.Context
-
 import com.google.gson.annotations.SerializedName
 import com.pixplicity.cryptogram.CryptogramApp
 import com.pixplicity.cryptogram.R
 import com.pixplicity.cryptogram.utils.PuzzleProvider
 import com.pixplicity.cryptogram.utils.StringUtils
-
-import java.util.ArrayList
-import java.util.HashMap
-import java.util.LinkedList
+import java.util.*
 
 open class Puzzle {
 

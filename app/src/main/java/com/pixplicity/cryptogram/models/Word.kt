@@ -1,6 +1,6 @@
 package com.pixplicity.cryptogram.models
 
-import java.util.LinkedList
+import java.util.*
 
 class Word(wordString: String) {
 
