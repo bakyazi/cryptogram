@@ -4578,5 +4578,22 @@
     "author": "Robert Frost",
     "given": "O",
     "topic": "Life"
+  },
+  {
+    "text": "Education is the ability to listen to almost anything without losing your temper or your self-confidence.",
+    "author": "Robert Frost",
+    "given": "R",
+    "topic": "Education"
+  },
+  {
+    "text": "A poem begins as a lump in the throat, a sense of wrong, a homesickness, a lovesickness.",
+    "author": "Robert Frost",
+    "topic": "Literacy"
+  },
+  {
+    "text": "We are the first human generation smart enough to build artificially intelligent machines smarter than us and stupid enough to actually build them.",
+    "author": "James Whitaker",
+    "given": "W",
+    "topic": "Technology"
   }
 ]
