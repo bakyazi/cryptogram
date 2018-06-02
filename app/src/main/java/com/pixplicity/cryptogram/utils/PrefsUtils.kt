@@ -92,7 +92,7 @@ object PrefsUtils {
         get() = Prefs.getBoolean(KEY_USE_SYSTEM_KEYBOARD, false)
         set(useSystemKeyboard) = Prefs.putBoolean(KEY_USE_SYSTEM_KEYBOARD, useSystemKeyboard)
 
-    var lastSavegameName: String
+    var lastSavegameName: String?
         get() = Prefs.getString(KEY_SAVEGAME_NAME, null)
         set(savegameName) = Prefs.putString(KEY_SAVEGAME_NAME, savegameName)
 
