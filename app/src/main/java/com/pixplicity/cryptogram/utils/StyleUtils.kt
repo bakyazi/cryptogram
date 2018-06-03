@@ -8,11 +8,9 @@ import android.util.TypedValue
 
 object StyleUtils {
 
-    private var sSizeMultiplier: Float? = null
-
-    private val sizeMultiplier: Float
+    private var sizeMultiplier: Float? = null
         get() {
-            if (sSizeMultiplier == null) {
+            if (field == null) {
                 var textSize: Float
                 try {
                     textSize = PrefsUtils.textSize.toFloat()
@@ -20,18 +18,18 @@ object StyleUtils {
                     textSize = 1f
                 }
 
-                sSizeMultiplier = Math.pow(1.25, textSize.toDouble()).toFloat()
+                field = Math.pow(1.25, textSize.toDouble()).toFloat()
             }
-            return sSizeMultiplier!!
+            return field
         }
 
     fun reset() {
-        sSizeMultiplier = null
+        sizeMultiplier = null
     }
 
     fun getSize(res: Resources, @DimenRes dimensionId: Int): Int {
         val textSize = res.getDimensionPixelSize(dimensionId)
-        return Math.round(textSize * sizeMultiplier)
+        return Math.round(textSize * (sizeMultiplier ?: 1f))
     }
 
     @ColorInt

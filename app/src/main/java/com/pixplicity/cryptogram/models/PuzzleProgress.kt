@@ -10,6 +10,7 @@ import com.google.gson.annotations.SerializedName
 import com.pixplicity.cryptogram.CryptogramApp
 import com.pixplicity.cryptogram.events.PuzzleEvent
 import com.pixplicity.cryptogram.utils.EventProvider
+import com.pixplicity.cryptogram.utils.PrefsUtils
 import java.util.*
 
 class PuzzleProgress {

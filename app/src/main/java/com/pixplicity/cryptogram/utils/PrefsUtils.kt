@@ -8,6 +8,7 @@ object PrefsUtils {
     private const val KEY_CURRENT_ID = "current_puzzle_index"
     private const val KEY_PROGRESS = "puzzle_progress"
     private const val KEY_RANDOMIZE = "randomize"
+    private const val KEY_HARDCORE_MODE = "hardcoreMode"
     private const val KEY_ONBOARDING = "onboarding"
     private const val KEY_SHOW_USED_LETTERS = "show_used_letters"
     private const val KEY_SHOW_TOPIC = "show_topic"
@@ -47,6 +48,10 @@ object PrefsUtils {
     var randomize: Boolean
         get() = Prefs.getBoolean(KEY_RANDOMIZE, false)
         set(randomize) = Prefs.putBoolean(KEY_RANDOMIZE, randomize)
+
+    var hardcoreMode: Boolean
+        get() = Prefs.getBoolean(KEY_HARDCORE_MODE, false)
+        set(hardcoreMode) = Prefs.putBoolean(KEY_HARDCORE_MODE, hardcoreMode)
 
     var onboarding: Int
         get() = Prefs.getInt(KEY_ONBOARDING, -1)

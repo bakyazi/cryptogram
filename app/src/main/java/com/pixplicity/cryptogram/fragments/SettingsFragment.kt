@@ -113,7 +113,8 @@ class SettingsFragment : BaseFragment() {
                 MaterialDialog.Builder(activity!!)
                         .content(R.string.keyboard_system_dialog)
                         .positiveText(R.string.keyboard_system_dialog_ok)
-                        .dismissListener { setUseSystemKeyboard(true) }
+                        .negativeText(R.string.keyboard_system_dialog_cancel)
+                        .onPositive { _, _ -> setUseSystemKeyboard(true) }
                         .show()
             }
         })
@@ -127,6 +128,20 @@ class SettingsFragment : BaseFragment() {
         // Other settings
         updateCompoundButton(cb_randomize, PrefsUtils.randomize,
                 CompoundButton.OnCheckedChangeListener { _, checked -> PrefsUtils.randomize = checked })
+        updateCompoundButton(cb_hardcore, PrefsUtils.hardcoreMode,
+                CompoundButton.OnCheckedChangeListener { _, checked ->
+                    if (checked) {
+                        // Show warning that it works for shit
+                        MaterialDialog.Builder(activity!!)
+                                .content(R.string.hardcore_dialog)
+                                .positiveText(R.string.hardcore_dialog_ok)
+                                .negativeText(R.string.hardcore_dialog_cancel)
+                                .onPositive { _, _ -> PrefsUtils.hardcoreMode = checked }
+                                .show()
+                    } else {
+                        PrefsUtils.hardcoreMode = checked
+                    }
+                })
 
         bt_reset_dialogs.isEnabled = PrefsUtils.neverAskRevealLetter || PrefsUtils.neverAskRevealMistakes
     }
