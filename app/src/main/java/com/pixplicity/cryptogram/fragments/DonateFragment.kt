@@ -206,6 +206,7 @@ class DonateFragment : BaseFragment(), PurchasesUpdatedListener {
                 .putItemId(purchaseId)
                 .putSuccess(true)
         Answers.getInstance().logPurchase(purchaseEvent)
+        // Note that Firebase Analytics are reported automatically
 
         Log.d(TAG, "consumeAsync: [...]$purchaseId")
         billingClient.consumeAsync(purchase.purchaseToken, { responseCode, _ ->
