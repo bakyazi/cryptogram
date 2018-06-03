@@ -49,6 +49,32 @@ fun sendFeedback(context: Context, purchaseId: String?) {
     }
 }
 
+fun sendErrorFeedback(context: Context, purchaseToken: String, errorCode: Int) {
+    var versionString: String? = getVersionString(context)
+
+    val intent = Intent(Intent.ACTION_SENDTO, Uri.fromParts(
+            "mailto", AboutFragment.FEEDBACK_EMAIL, null))
+    intent.putExtra(Intent.EXTRA_EMAIL, arrayOf(AboutFragment.FEEDBACK_EMAIL))
+    intent.putExtra(Intent.EXTRA_SUBJECT,
+            context.getString(R.string.feedback_subject_error, purchaseToken))
+    val ime = SimpleInputConnection.getIme(context)
+    val keyboardPackageName = if (ime == null) "unknown" else ime.packageName
+    val message = context.getString(R.string.feedback_body_error,
+            versionString,
+            keyboardPackageName,
+            Build.VERSION.RELEASE,
+            Build.MANUFACTURER + " " + Build.MODEL,
+            purchaseToken,
+            errorCode)
+    intent.putExtra(Intent.EXTRA_TEXT, message)
+    intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+    try {
+        context.startActivity(intent)
+    } catch (e: ActivityNotFoundException) {
+        Toast.makeText(context, R.string.error_no_activity, Toast.LENGTH_LONG).show()
+    }
+}
+
 fun donationThankYou(context: Context, purchaseId: String) {
     AlertDialog.Builder(context)
             .setMessage(R.string.donate_thank_you)
@@ -57,6 +83,19 @@ fun donationThankYou(context: Context, purchaseId: String) {
                 dialog.dismiss()
             })
             .setNegativeButton(R.string.donate_thank_you_continue, { dialog, _ ->
+                dialog.dismiss()
+            })
+            .show()
+}
+
+fun donationError(context: Context, purchaseToken: String, errorCode: Int) {
+    AlertDialog.Builder(context)
+            .setMessage(R.string.donate_error)
+            .setPositiveButton(R.string.donate_error_feedback, { dialog, _ ->
+                sendErrorFeedback(context, purchaseToken, errorCode)
+                dialog.dismiss()
+            })
+            .setNegativeButton(R.string.donate_error_cancel, { dialog, _ ->
                 dialog.dismiss()
             })
             .show()

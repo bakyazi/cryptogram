@@ -21,8 +21,9 @@ object PrefsUtils {
     private const val KEY_NEVER_ASK_REVEAL_MISTAKES = "never_ask_reveal_mistakes"
     private const val KEY_HIGHLIGHTED_HYPHENATION = "highlighted_hyphenation"
     private const val KEY_HIGHLIGHTED_TOUCH_INPUT = "highlighted_touch_input"
-    private const val KEY_SAVEGAME_NAME = "savegame_name"
     private const val KEY_USE_SYSTEM_KEYBOARD = "use_system_keyboard"
+    private const val KEY_SAVEGAME_NAME = "savegame_name"
+    private const val KEY_PURCHASES = "purchases"
     private const val KEY_LAST_VERSION = "last_version"
     private const val KEY_DONATION_FEEDBACK = "donation_feedback"
 
@@ -100,6 +101,10 @@ object PrefsUtils {
     var lastSavegameName: String?
         get() = Prefs.getString(KEY_SAVEGAME_NAME, null)
         set(savegameName) = Prefs.putString(KEY_SAVEGAME_NAME, savegameName)
+
+    var purchases: Set<String>?
+        get() = Prefs.getStringSet(KEY_PURCHASES, null)
+        set(purchases) = Prefs.putStringSet(KEY_PURCHASES, purchases)
 
     // This isn't a fresh install
     var lastVersion: Int
