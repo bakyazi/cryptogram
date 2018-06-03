@@ -147,6 +147,17 @@ class DonateFragment : BaseFragment(), PurchasesUpdatedListener {
                 .setType(BillingClient.SkuType.INAPP)
                 .build()
         val responseCode = billingClient.launchBillingFlow(activity, flowParams)
+        when (responseCode) {
+            BillingClient.BillingResponse.OK,
+            BillingClient.BillingResponse.USER_CANCELED -> {
+                // Ignore
+            }
+            else -> {
+                context?.let {
+                    donationError(it, "[purchase-start]", responseCode)
+                }
+            }
+        }
         Log.d(TAG, "launchBillingFlow: $responseCode")
     }
 
@@ -154,30 +165,7 @@ class DonateFragment : BaseFragment(), PurchasesUpdatedListener {
         Log.d(TAG, "onPurchasesUpdated: $responseCode")
         if (responseCode == BillingClient.BillingResponse.OK && purchases != null) {
             purchases.forEach {
-                val orderIdShort = it.orderId.takeLast(10)
-                val purchaseToken = it.purchaseToken
-                val purchaseTokenShort = it.purchaseToken.takeLast(9)
-                val purchaseId = if (orderIdShort.isEmpty()) purchaseTokenShort else orderIdShort
-                Log.d(TAG, "consumeAsync: [...]$purchaseTokenShort")
-                billingClient.consumeAsync(it.purchaseToken, { responseCode, _ ->
-                    Log.d(TAG, "consumeAsync: [...]$purchaseTokenShort; responseCode=$responseCode")
-                    when (responseCode) {
-                        BillingClient.BillingResponse.OK -> handler.post {
-                            context?.let {
-                                // Display thank-you message
-                                donationThankYou(it, purchaseId)
-                            }
-                        }
-                        BillingClient.BillingResponse.USER_CANCELED -> {
-                            // Ignore
-                        }
-                        else -> handler.post {
-                            context?.let {
-                                donationError(it, purchaseToken, responseCode)
-                            }
-                        }
-                    }
-                })
+                consume(it)
             }
             this.purchases = ArrayList(purchases)
             handler.post {
@@ -190,13 +178,46 @@ class DonateFragment : BaseFragment(), PurchasesUpdatedListener {
         }
     }
 
+    private fun consume(purchase: Purchase, silent: Boolean = false) {
+        val orderIdShort = purchase.orderId.takeLast(10)
+        val purchaseToken = purchase.purchaseToken
+        val purchaseTokenShort = purchase.purchaseToken.takeLast(9)
+        val purchaseId = if (orderIdShort.isEmpty()) purchaseTokenShort else orderIdShort
+        Log.d(TAG, "consumeAsync: [...]$purchaseTokenShort")
+        billingClient.consumeAsync(purchase.purchaseToken, { responseCode, _ ->
+            Log.d(TAG, "consumeAsync: [...]$purchaseTokenShort; responseCode=$responseCode")
+            when (responseCode) {
+                BillingClient.BillingResponse.OK ->
+                    if (!silent) handler.post {
+                        context?.let {
+                            // Display thank-you message
+                            donationThankYou(it, purchaseId)
+                        }
+                    }
+                BillingClient.BillingResponse.USER_CANCELED -> {
+                    // Ignore
+                }
+                else ->
+                    if (!silent) handler.post {
+                        context?.let {
+                            donationError(it, purchaseToken, responseCode)
+                        }
+                    }
+            }
+        })
+    }
+
     private fun showPurchases() {
         tv_donations.visibility = if (purchases.isEmpty()) View.GONE else View.VISIBLE
         vg_donations.visibility = if (purchases.isEmpty()) View.GONE else View.VISIBLE
         vg_donations.removeAllViews()
         val df = DateFormat.getDateInstance(DateFormat.LONG)
         for (purchase in purchases) {
-            Log.d(TAG, "queryPurchaseHistoryAsync: ${purchase.originalJson}")
+            Log.d(TAG, "showPurchases: ${purchase.originalJson}")
+            if (purchase.purchaseToken != null) {
+                // Purchase hasn't been consumed yet
+                consume(purchase, silent = true)
+            }
             val vg_donation = layoutInflater.inflate(R.layout.item_donation, null) as ViewGroup
             val tv_donation = vg_donation.findViewById<TextView>(R.id.tv_donation)
             val bt_feedback = vg_donation.findViewById<ImageButton>(R.id.bt_donation_feedback)
