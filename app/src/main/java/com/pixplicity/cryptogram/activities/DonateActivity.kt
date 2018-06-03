@@ -21,6 +21,10 @@ class DonateActivity : BaseActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_donate)
 
+        mToolbar.setTitle(R.string.donate)
+
+        setHomeButtonEnabled(true)
+
         CryptogramApp.instance.firebaseAnalytics.setCurrentScreen(this, CryptogramApp.CONTENT_DONATE, null)
         Answers.getInstance().logContentView(ContentViewEvent().putContentName(CryptogramApp.CONTENT_DONATE))
     }
