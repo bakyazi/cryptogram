@@ -15,6 +15,8 @@ import android.widget.TextView
 import android.widget.Toast
 import com.android.billingclient.api.*
 import com.crashlytics.android.Crashlytics
+import com.crashlytics.android.answers.Answers
+import com.crashlytics.android.answers.PurchaseEvent
 import com.pixplicity.cryptogram.BuildConfig
 import com.pixplicity.cryptogram.R
 import com.pixplicity.cryptogram.utils.PrefsUtils
@@ -23,6 +25,7 @@ import com.pixplicity.cryptogram.utils.donationThankYou
 import com.pixplicity.cryptogram.utils.invertedTheme
 import kotlinx.android.synthetic.main.fragment_donate.*
 import org.json.JSONException
+import java.math.BigDecimal
 import java.text.DateFormat
 import java.util.*
 
@@ -188,6 +191,22 @@ class DonateFragment : BaseFragment(), PurchasesUpdatedListener {
     private fun consume(purchase: Purchase, silent: Boolean = false) {
         val purchaseToken = purchase.purchaseToken
         val purchaseId = getPurchaseId(purchase)
+
+        // Log purchase
+        val purchaseEvent = PurchaseEvent()
+        val sku = skus[purchase.sku]
+        if (sku != null) {
+            purchaseEvent
+                    .putItemPrice(BigDecimal.valueOf(sku.price.toDouble()))
+                    .putCurrency(Currency.getInstance(sku.priceCurrencyCode))
+                    .putItemName(sku.title)
+                    .putItemType(sku.type)
+        }
+        purchaseEvent
+                .putItemId(purchaseId)
+                .putSuccess(true)
+        Answers.getInstance().logPurchase(purchaseEvent)
+
         Log.d(TAG, "consumeAsync: [...]$purchaseId")
         billingClient.consumeAsync(purchase.purchaseToken, { responseCode, _ ->
             Log.d(TAG, "consumeAsync: [...]$purchaseId; responseCode=$responseCode")
