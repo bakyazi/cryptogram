@@ -1980,6 +1980,7 @@
   {
     "text": "You never change things by fighting the existing reality. To change some­thing, build a new model that makes the existing model obsolete.",
     "author": "R. Buckminster Fuller",
+    "given": "H",
     "topic": "Technology"
   },
   {
@@ -2000,6 +2001,7 @@
   {
     "text": "Even the techno­logy that promises to unite us, divides us. Each of us is now electro­nically connect­ed to the globe, and yet we feel utterly alone.",
     "author": "Dan Brown",
+    "given": "S",
     "topic": "Technology"
   },
   {
@@ -4307,6 +4309,7 @@
   {
     "text": "We judge others by their behavior. We judge ourselves by our intentions.",
     "author": "Ian Percy",
+    "given": "Y",
     "topic": "Thoughtfulness"
   },
   {
@@ -4595,5 +4598,31 @@
     "author": "James Whitaker",
     "given": "W",
     "topic": "Technology"
+  },
+  {
+    "text": "I think that novels that leave out technology misrepresent life as badly as Victorians misrepresented life by leaving out sex.",
+    "author": "Kurt Vonnegut",
+    "topic": "Technology"
+  },
+  {
+    "text": "Beware of the man who works hard to learn something, learns it, and finds himself no wiser than before.",
+    "author": "Kurt Vonnegut",
+    "topic": "Knowledge"
+  },
+  {
+    "text": "Laughter and tears are both responses to frustration and exhaustion. I myself prefer to laugh, since there is less cleaning do to do afterward.",
+    "author": "Kurt Vonnegut",
+    "topic": "Optimism"
+  },
+  {
+    "text": "A purpose of human life, no matter who is controlling it, is to love whoever is around to be loved.",
+    "author": "Kurt Vonnegut",
+    "topic": "Love"
+  },
+  {
+    "text": "It is a capital mistake to theorize before one has data. Insensibly one begins to twist facts to suit theories, instead of theories to suit facts.",
+    "author": "Arthur Conan Doyle",
+    "given": "C",
+    "topic": "Scepticism"
   }
 ]
