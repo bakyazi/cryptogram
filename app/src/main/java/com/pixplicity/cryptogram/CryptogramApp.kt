@@ -51,7 +51,7 @@ class CryptogramApp : Application() {
         val EVENT_LEVEL_START = "level_start"
         val EVENT_LEVEL_END = "level_end"
 
-        lateinit var instance: CryptogramApp
+        var instance: CryptogramApp? = null
 
     }
 

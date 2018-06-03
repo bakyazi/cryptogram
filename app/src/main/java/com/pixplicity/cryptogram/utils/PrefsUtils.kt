@@ -35,9 +35,7 @@ object PrefsUtils {
         set(currentId) = Prefs.putInt(PrefsUtils.KEY_CURRENT_ID, currentId)
 
     var progress: Set<String>?
-        get() = if (CryptogramApp.instance == null) {
-            null
-        } else Prefs.getOrderedStringSet(PrefsUtils.KEY_PROGRESS, null)
+        get() = if (CryptogramApp.instance == null) null else Prefs.getOrderedStringSet(PrefsUtils.KEY_PROGRESS, null)
         set(progressStrSet) {
             if (CryptogramApp.instance == null) {
                 return
@@ -50,7 +48,9 @@ object PrefsUtils {
         set(randomize) = Prefs.putBoolean(KEY_RANDOMIZE, randomize)
 
     var hardcoreMode: Boolean
-        get() = Prefs.getBoolean(KEY_HARDCORE_MODE, false)
+        get() =
+            if (CryptogramApp.instance == null) false
+            else Prefs.getBoolean(KEY_HARDCORE_MODE, false)
         set(hardcoreMode) = Prefs.putBoolean(KEY_HARDCORE_MODE, hardcoreMode)
 
     var onboarding: Int
