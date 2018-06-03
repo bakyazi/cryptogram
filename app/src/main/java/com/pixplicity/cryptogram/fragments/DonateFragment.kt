@@ -17,6 +17,7 @@ import com.android.billingclient.api.*
 import com.crashlytics.android.Crashlytics
 import com.pixplicity.cryptogram.BuildConfig
 import com.pixplicity.cryptogram.R
+import com.pixplicity.cryptogram.utils.donationError
 import com.pixplicity.cryptogram.utils.donationThankYou
 import com.pixplicity.cryptogram.utils.invertedTheme
 import kotlinx.android.synthetic.main.fragment_donate.*
@@ -153,17 +154,26 @@ class DonateFragment : BaseFragment(), PurchasesUpdatedListener {
         Log.d(TAG, "onPurchasesUpdated: $responseCode")
         if (responseCode == BillingClient.BillingResponse.OK && purchases != null) {
             purchases.forEach {
-                val orderId = it.orderId.takeLast(10)
-                val purchaseToken = it.purchaseToken.takeLast(9)
-                val purchaseId = if (orderId.isEmpty()) purchaseToken else orderId
-                Log.d(TAG, "consumeAsync: [...]$purchaseToken")
+                val orderIdShort = it.orderId.takeLast(10)
+                val purchaseToken = it.purchaseToken
+                val purchaseTokenShort = it.purchaseToken.takeLast(9)
+                val purchaseId = if (orderIdShort.isEmpty()) purchaseTokenShort else orderIdShort
+                Log.d(TAG, "consumeAsync: [...]$purchaseTokenShort")
                 billingClient.consumeAsync(it.purchaseToken, { responseCode, _ ->
-                    Log.d(TAG, "consumeAsync: [...]$purchaseToken; responseCode=$responseCode")
-                    if (responseCode == BillingClient.BillingResponse.OK) {
-                        handler.post {
+                    Log.d(TAG, "consumeAsync: [...]$purchaseTokenShort; responseCode=$responseCode")
+                    when (responseCode) {
+                        BillingClient.BillingResponse.OK -> handler.post {
                             context?.let {
                                 // Display thank-you message
                                 donationThankYou(it, purchaseId)
+                            }
+                        }
+                        BillingClient.BillingResponse.USER_CANCELED -> {
+                            // Ignore
+                        }
+                        else -> handler.post {
+                            context?.let {
+                                donationError(it, purchaseToken, responseCode)
                             }
                         }
                     }
