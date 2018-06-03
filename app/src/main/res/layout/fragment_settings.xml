@@ -53,8 +53,8 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
-                    android:layout_marginLeft="16dp"
-                    android:layout_marginStart="16dp" />
+                    android:layout_marginStart="16dp"
+                    android:layout_marginLeft="16dp" />
 
                 <ImageView
                     android:id="@+id/iv_theme_dark"
@@ -72,8 +72,8 @@
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="8dp"
                 android:layout_marginTop="24dp"
+                android:layout_marginBottom="8dp"
                 android:text="@string/settings_display"
                 android:textAllCaps="true"
                 android:textStyle="bold" />
@@ -98,8 +98,8 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
-                    android:layout_marginLeft="16dp"
                     android:layout_marginStart="16dp"
+                    android:layout_marginLeft="16dp"
                     android:layout_weight="1"
                     android:paddingLeft="8dp"
                     android:paddingRight="8dp"
@@ -110,8 +110,8 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
-                    android:layout_marginLeft="16dp"
                     android:layout_marginStart="16dp"
+                    android:layout_marginLeft="16dp"
                     android:layout_weight="1"
                     android:paddingLeft="8dp"
                     android:paddingRight="8dp"
@@ -140,8 +140,8 @@
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="8dp"
                 android:layout_marginTop="24dp"
+                android:layout_marginBottom="8dp"
                 android:text="@string/settings_keyboard"
                 android:textAllCaps="true"
                 android:textStyle="bold" />
@@ -166,8 +166,8 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
-                    android:layout_marginLeft="16dp"
                     android:layout_marginStart="16dp"
+                    android:layout_marginLeft="16dp"
                     android:layout_weight="1"
                     android:paddingLeft="8dp"
                     android:paddingRight="8dp"
@@ -205,8 +205,8 @@
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="8dp"
                 android:layout_marginTop="24dp"
+                android:layout_marginBottom="8dp"
                 android:text="@string/settings_other"
                 android:textAllCaps="true"
                 android:textStyle="bold" />
@@ -219,6 +219,15 @@
                 android:paddingRight="8dp"
                 android:text="@string/randomize_puzzles" />
 
+            <android.support.v7.widget.AppCompatCheckBox
+                android:id="@+id/cb_hardcore"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:paddingLeft="8dp"
+                android:paddingRight="8dp"
+                android:text="@string/hardcore_mode" />
+
             <Space
                 android:layout_width="0dp"
                 android:layout_height="0dp"
@@ -230,8 +239,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="@dimen/activity_horizontal_margin"
-                android:layout_marginRight="@dimen/activity_horizontal_margin"
                 android:layout_marginTop="16dp"
+                android:layout_marginRight="@dimen/activity_horizontal_margin"
                 android:gravity="center"
                 android:text="@string/reset_dialogs"
                 android:textAllCaps="true"
@@ -243,8 +252,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="@dimen/activity_horizontal_margin"
-                android:layout_marginRight="@dimen/activity_horizontal_margin"
                 android:layout_marginTop="8dp"
+                android:layout_marginRight="@dimen/activity_horizontal_margin"
                 android:gravity="center"
                 android:text="@string/reset_all_puzzles"
                 android:textAllCaps="true"

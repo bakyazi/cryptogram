@@ -4,6 +4,7 @@ import android.content.Context
 import com.google.gson.annotations.SerializedName
 import com.pixplicity.cryptogram.CryptogramApp
 import com.pixplicity.cryptogram.R
+import com.pixplicity.cryptogram.utils.PrefsUtils
 import com.pixplicity.cryptogram.utils.PuzzleProvider
 import com.pixplicity.cryptogram.utils.StringUtils
 import java.util.*
@@ -32,6 +33,9 @@ open class Puzzle {
 
     @SerializedName("given")
     var given: String? = null
+        get() =
+            if (PrefsUtils.hardcoreMode) null
+            else field
         protected set
 
     @SerializedName("noscore")
