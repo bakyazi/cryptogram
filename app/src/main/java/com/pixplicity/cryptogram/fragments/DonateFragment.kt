@@ -157,7 +157,7 @@ class DonateFragment : BaseFragment(), PurchasesUpdatedListener {
                 val purchaseToken = it.purchaseToken.takeLast(9)
                 val purchaseId = if (orderId.isEmpty()) purchaseToken else orderId
                 Log.d(TAG, "consumeAsync: [...]$purchaseToken")
-                billingClient.consumeAsync(purchaseToken, { responseCode, _ ->
+                billingClient.consumeAsync(it.purchaseToken, { responseCode, _ ->
                     Log.d(TAG, "consumeAsync: [...]$purchaseToken; responseCode=$responseCode")
                     if (responseCode == BillingClient.BillingResponse.OK) {
                         handler.post {
