@@ -23,6 +23,7 @@ object PrefsUtils {
     private const val KEY_USE_SYSTEM_KEYBOARD = "use_system_keyboard"
     private const val KEY_SAVEGAME_NAME = "savegame_name"
     private const val KEY_PURCHASES = "purchases"
+    private const val KEY_SUGGEST_DONATION_COUNT = "suggest_donation_count"
     private const val KEY_LAST_VERSION = "last_version"
     private const val KEY_DONATION_FEEDBACK = "donation_feedback"
 
@@ -100,6 +101,10 @@ object PrefsUtils {
     var purchases: Set<String>?
         get() = Prefs.getStringSet(KEY_PURCHASES, null)
         set(purchases) = Prefs.putStringSet(KEY_PURCHASES, purchases)
+
+    var suggestDonationCount: Long
+        get() = Prefs.getLong(KEY_SUGGEST_DONATION_COUNT, 50)
+        set(suggestDonationCount) = Prefs.putLong(KEY_SUGGEST_DONATION_COUNT, suggestDonationCount)
 
     // This isn't a fresh install
     var lastVersion: Int

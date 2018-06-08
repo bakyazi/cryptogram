@@ -17,10 +17,7 @@ import com.android.billingclient.api.*
 import com.crashlytics.android.Crashlytics
 import com.pixplicity.cryptogram.BuildConfig
 import com.pixplicity.cryptogram.R
-import com.pixplicity.cryptogram.utils.PrefsUtils
-import com.pixplicity.cryptogram.utils.donationError
-import com.pixplicity.cryptogram.utils.donationThankYou
-import com.pixplicity.cryptogram.utils.invertedTheme
+import com.pixplicity.cryptogram.utils.*
 import kotlinx.android.synthetic.main.fragment_donate.*
 import org.json.JSONException
 import java.text.DateFormat
@@ -32,11 +29,10 @@ class DonateFragment : BaseFragment(), PurchasesUpdatedListener {
         private val TAG = DonateFragment::class.java.simpleName
     }
 
-    private val skuList = arrayListOf("donation_1")
+    private lateinit var billingClient: BillingClient
     private val skus = HashMap<String, SkuDetails>()
     private var purchases = ArrayList<Purchase>()
     private var purchasesConsumed: MutableSet<String>? = null
-    private lateinit var billingClient: BillingClient
 
     private var handler = Handler()
 
@@ -44,6 +40,8 @@ class DonateFragment : BaseFragment(), PurchasesUpdatedListener {
                               savedInstanceState: Bundle?): View? {
         return inflater.inflate(R.layout.fragment_donate, container, false)
     }
+
+    // FIXME merge most of this with BillingUtils
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -63,7 +61,7 @@ class DonateFragment : BaseFragment(), PurchasesUpdatedListener {
                 if (billingResponseCode == BillingClient.BillingResponse.OK) {
                     // The billing client is ready; query purchases
                     val params = SkuDetailsParams.newBuilder()
-                    params.setSkusList(skuList).setType(BillingClient.SkuType.INAPP)
+                    params.setSkusList(BillingUtils.SKU_LIST).setType(BillingClient.SkuType.INAPP)
                     billingClient.querySkuDetailsAsync(params.build(), { responseCode, skuDetailsList ->
                         // TODO display a list of SKUs
                         skuDetailsList.forEach {
@@ -132,17 +130,17 @@ class DonateFragment : BaseFragment(), PurchasesUpdatedListener {
         }
 
         bt_in_app_purchase.setOnClickListener {
-            when (skuList.count()) {
+            when (BillingUtils.SKU_LIST.count()) {
                 0 -> {
                     // Nothing to purchase
                 }
                 1 -> {
                     // Only one to purchase
-                    doInAppPurchase(skuList.first())
+                    doInAppPurchase(BillingUtils.SKU_LIST.first())
                 }
                 else -> {
                     // FIXME display list
-                    doInAppPurchase(skuList.first())
+                    doInAppPurchase(BillingUtils.SKU_LIST.first())
                 }
             }
         }
@@ -172,7 +170,20 @@ class DonateFragment : BaseFragment(), PurchasesUpdatedListener {
         Log.d(TAG, "onPurchasesUpdated: $responseCode")
         if (responseCode == BillingClient.BillingResponse.OK && purchases != null) {
             purchases.forEach {
-                consume(it)
+                BillingUtils.consume(billingClient, it, { purchaseId ->
+                    handler.post {
+                        context?.let {
+                            // Display thank-you message
+                            donationThankYou(it, purchaseId)
+                        }
+                    }
+                }, { purchaseToken, responseCode ->
+                    handler.post {
+                        context?.let {
+                            donationError(it, purchaseToken, responseCode)
+                        }
+                    }
+                })
             }
             this.purchases = ArrayList(purchases)
             handler.post {
@@ -183,47 +194,6 @@ class DonateFragment : BaseFragment(), PurchasesUpdatedListener {
         } else {
             // Handle any other error codes.
         }
-    }
-
-    private fun consume(purchase: Purchase, silent: Boolean = false) {
-        val purchaseToken = purchase.purchaseToken
-        val purchaseId = getPurchaseId(purchase)
-        Log.d(TAG, "consumeAsync: [...]$purchaseId")
-        billingClient.consumeAsync(purchase.purchaseToken, { responseCode, _ ->
-            Log.d(TAG, "consumeAsync: [...]$purchaseId; responseCode=$responseCode")
-            when (responseCode) {
-                BillingClient.BillingResponse.OK -> {
-                    purchasesConsumed?.add(purchase.originalJson)
-                    PrefsUtils.purchases = purchasesConsumed
-                    if (!silent) handler.post {
-                        context?.let {
-                            // Display thank-you message
-                            donationThankYou(it, purchaseId)
-                        }
-                    }
-                }
-                BillingClient.BillingResponse.USER_CANCELED -> {
-                    // Ignore
-                }
-                BillingClient.BillingResponse.ITEM_NOT_OWNED -> {
-                    // Already consumed
-                    purchasesConsumed?.add(purchase.originalJson)
-                    PrefsUtils.purchases = purchasesConsumed
-                }
-                else ->
-                    if (!silent) handler.post {
-                        context?.let {
-                            donationError(it, purchaseToken, responseCode)
-                        }
-                    }
-            }
-        })
-    }
-
-    private fun getPurchaseId(purchase: Purchase): String {
-        val orderIdShort = purchase.orderId.takeLast(10)
-        val purchaseTokenShort = purchase.purchaseToken.takeLast(9)
-        return if (orderIdShort.isEmpty()) purchaseTokenShort else orderIdShort
     }
 
     private fun showPurchasesInitial() {
@@ -245,10 +215,10 @@ class DonateFragment : BaseFragment(), PurchasesUpdatedListener {
         val df = DateFormat.getDateInstance(DateFormat.LONG)
         for (purchase in purchases) {
             Log.d(TAG, "showPurchases: ${purchase.originalJson}")
-            val purchaseId = getPurchaseId(purchase)
+            val purchaseId = BillingUtils.getPurchaseId(purchase)
             if (consume && purchase.purchaseToken != null && purchasesConsumed?.contains(purchase.originalJson) != true) {
                 // Purchase hasn't been consumed yet
-                consume(purchase, silent = true)
+                BillingUtils.consume(billingClient, purchase, null, null)
             }
             val vg_donation = layoutInflater.inflate(R.layout.item_donation, null) as ViewGroup
             val tv_donation = vg_donation.findViewById<TextView>(R.id.tv_donation)
