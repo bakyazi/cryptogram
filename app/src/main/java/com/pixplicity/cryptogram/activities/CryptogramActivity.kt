@@ -676,10 +676,20 @@ class CryptogramActivity : BaseActivity(), GoogleApiClient.ConnectionCallbacks, 
         // Conditional behavior after X triggers
         // FIXME if only we could use mRate.getCount() here
         val count = Prefs.getLong("launch_count_l", 0L)
-        if (count == 100L || count == 300L) {
-            // Prompt for donations
-            // TODO only display if user hasn't donated
-            // TODO display dialog
+        val suggestDonationCount = PrefsUtils.suggestDonationCount
+        if (count >= suggestDonationCount) {
+            PrefsUtils.suggestDonationCount = suggestDonationCount * 2
+            // Prompt for donations only if user hasn't already donated
+            if (PrefsUtils.purchases == null) {
+                // Query purchases
+                BillingUtils.updatePurchases(this) {
+                    // Don't suggest donating here; the user may be mid-puzzle
+                    // We'll wait for the next puzzle to complete
+                    PrefsUtils.suggestDonationCount = suggestDonationCount + 1
+                }
+            } else {
+                BillingUtils.suggestDonation(this)
+            }
         }
 
         mGoogleApiClient?.let {
