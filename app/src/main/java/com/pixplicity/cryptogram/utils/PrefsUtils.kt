@@ -75,7 +75,7 @@ object PrefsUtils {
         set(textSize) = Prefs.putInt(KEY_TEXT_SIZE, textSize)
 
     var autoAdvance: Boolean
-        get() = Prefs.getBoolean(KEY_AUTO_ADVANCE, false)
+        get() = Prefs.getBoolean(KEY_AUTO_ADVANCE, true)
         set(show) = Prefs.putBoolean(KEY_AUTO_ADVANCE, show)
 
     var skipFilledCells: Boolean
