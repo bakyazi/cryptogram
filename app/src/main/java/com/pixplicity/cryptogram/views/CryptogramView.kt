@@ -418,15 +418,16 @@ class CryptogramView : AppCompatTextView {
         }
     }
 
-    fun revealMistakes() {
+    fun revealMistakes(): Int {
         if (mPuzzle == null) {
-            return
+            return -1
         }
         if (!mHighlightMistakes) {
             mPuzzle!!.revealedMistakes()
             mHighlightMistakes = true
         }
         redraw()
+        return mPuzzle!!.mistakeCount
     }
 
     fun reset() {

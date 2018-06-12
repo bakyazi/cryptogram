@@ -84,6 +84,9 @@ open class Puzzle {
     val userChars: Collection<Char>
         get() = progress.getUserChars(this)
 
+    val mistakeCount: Int
+        get() = progress.getMistakeCount(this)
+
     val isInstruction: Boolean
         get() = id < 0
 

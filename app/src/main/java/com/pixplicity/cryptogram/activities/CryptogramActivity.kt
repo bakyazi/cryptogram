@@ -746,46 +746,25 @@ class CryptogramActivity : BaseActivity(), GoogleApiClient.ConnectionCallbacks, 
         val puzzle = cryptogram.puzzle
         when (item.itemId) {
             R.id.action_next -> {
-                run { nextPuzzle() }
+                nextPuzzle()
                 return true
             }
             R.id.action_reveal_letter -> {
-                run {
-                    if (puzzle == null || !cryptogram.hasSelectedCharacter()) {
-                        showSnackbar(getString(R.string.reveal_letter_instruction))
-                    } else {
-                        if (PrefsUtils.neverAskRevealLetter) {
-                            cryptogram.revealCharacterMapping(
-                                    cryptogram.selectedCharacter)
-                        } else {
-                            MaterialDialog.Builder(this)
-                                    .content(R.string.reveal_letter_confirmation)
-                                    .checkBoxPromptRes(R.string.never_ask_again, false, null)
-                                    .positiveText(R.string.reveal)
-                                    .onPositive { dialog, which ->
-                                        PrefsUtils.neverAskRevealLetter = dialog.isPromptCheckBoxChecked
-                                        cryptogram.revealCharacterMapping(
-                                                cryptogram.selectedCharacter)
-                                    }
-                                    .negativeText(R.string.cancel)
-                                    .show()
-                        }
-                    }
-                }
-                return true
-            }
-            R.id.action_reveal_mistakes -> {
-                run {
-                    if (PrefsUtils.neverAskRevealMistakes) {
-                        cryptogram.revealMistakes()
+                if (puzzle == null || !cryptogram.hasSelectedCharacter()) {
+                    showSnackbar(getString(R.string.reveal_letter_instruction))
+                } else {
+                    if (PrefsUtils.neverAskRevealLetter) {
+                        cryptogram.revealCharacterMapping(
+                                cryptogram.selectedCharacter)
                     } else {
                         MaterialDialog.Builder(this)
-                                .content(R.string.reveal_mistakes_confirmation)
+                                .content(R.string.reveal_letter_confirmation)
                                 .checkBoxPromptRes(R.string.never_ask_again, false, null)
                                 .positiveText(R.string.reveal)
                                 .onPositive { dialog, which ->
-                                    PrefsUtils.neverAskRevealMistakes = dialog.isPromptCheckBoxChecked
-                                    cryptogram.revealMistakes()
+                                    PrefsUtils.neverAskRevealLetter = dialog.isPromptCheckBoxChecked
+                                    cryptogram.revealCharacterMapping(
+                                            cryptogram.selectedCharacter)
                                 }
                                 .negativeText(R.string.cancel)
                                 .show()
@@ -793,31 +772,46 @@ class CryptogramActivity : BaseActivity(), GoogleApiClient.ConnectionCallbacks, 
                 }
                 return true
             }
-            R.id.action_reveal_puzzle -> {
-                run {
-                    if (BuildConfig.DEBUG) {
-                        puzzle?.revealPuzzle()
-                        cryptogram.redraw()
-                    } else {
-                        throw IllegalStateException("Only applicable to debug builds")
+            R.id.action_reveal_mistakes -> {
+                if (PrefsUtils.neverAskRevealMistakes) {
+                    if (cryptogram.revealMistakes() == 0) {
+                        showSnackbar(getString(R.string.reveal_mistakes_none))
                     }
+                } else {
+                    MaterialDialog.Builder(this)
+                            .content(R.string.reveal_mistakes_confirmation)
+                            .checkBoxPromptRes(R.string.never_ask_again, false, null)
+                            .positiveText(R.string.reveal)
+                            .onPositive { dialog, which ->
+                                PrefsUtils.neverAskRevealMistakes = dialog.isPromptCheckBoxChecked
+                                cryptogram.revealMistakes()
+                            }
+                            .negativeText(R.string.cancel)
+                            .show()
+                }
+                return true
+            }
+            R.id.action_reveal_puzzle -> {
+                if (BuildConfig.DEBUG) {
+                    puzzle?.revealPuzzle()
+                    cryptogram.redraw()
+                } else {
+                    throw IllegalStateException("Only applicable to debug builds")
                 }
                 return true
             }
             R.id.action_reset -> {
-                run {
-                    if (puzzle != null) {
-                        AlertDialog.Builder(this)
-                                .setMessage(R.string.reset_puzzle)
-                                .setPositiveButton(R.string.reset) { dialogInterface, i ->
-                                    puzzle.reset(true)
-                                    cryptogram.reset()
-                                    showPuzzleState(puzzle)
-                                    onPuzzleChanged(puzzle, false)
-                                }
-                                .setNegativeButton(R.string.cancel) { dialogInterface, i -> }
-                                .show()
-                    }
+                if (puzzle != null) {
+                    AlertDialog.Builder(this)
+                            .setMessage(R.string.reset_puzzle)
+                            .setPositiveButton(R.string.reset) { dialogInterface, i ->
+                                puzzle.reset(true)
+                                cryptogram.reset()
+                                showPuzzleState(puzzle)
+                                onPuzzleChanged(puzzle, false)
+                            }
+                            .setNegativeButton(R.string.cancel) { dialogInterface, i -> }
+                            .show()
                 }
                 return true
             }
@@ -906,11 +900,10 @@ class CryptogramActivity : BaseActivity(), GoogleApiClient.ConnectionCallbacks, 
                 return true
             }
             R.id.action_stats -> {
-                run {
-                    // Analytics
-                    CryptogramApp.instance.firebaseAnalytics.logEvent(CryptogramApp.CONTENT_STATISTICS, null)
-                    Answers.getInstance().logContentView(ContentViewEvent().putContentName(CryptogramApp.CONTENT_STATISTICS))
-                }
+                // Analytics
+                CryptogramApp.instance.firebaseAnalytics.logEvent(CryptogramApp.CONTENT_STATISTICS, null)
+                Answers.getInstance().logContentView(ContentViewEvent().putContentName(CryptogramApp.CONTENT_STATISTICS))
+
                 // Compose the dialog
                 val dialogView = LayoutInflater.from(this).inflate(R.layout.dialog_statistics, null) as TableLayout
                 puzzle?.save()
@@ -956,41 +949,36 @@ class CryptogramActivity : BaseActivity(), GoogleApiClient.ConnectionCallbacks, 
                             provider.lastNumber)
                     dialogView.addView(view)
                 }
-                run {
-                    val view = LayoutInflater.from(this).inflate(R.layout.in_statistics_row, null)
-                    (view.findViewById<View>(R.id.tv_label) as TextView).setText(R.string.stats_average_score_label)
-                    (view.findViewById<View>(R.id.tv_value) as TextView).text = getString(R.string.stats_average_score_value,
+                LayoutInflater.from(this).inflate(R.layout.in_statistics_row, null).let {
+                    (it.findViewById<View>(R.id.tv_label) as TextView).setText(R.string.stats_average_score_label)
+                    (it.findViewById<View>(R.id.tv_value) as TextView).text = getString(R.string.stats_average_score_value,
                             scoreAverageText)
-                    dialogView.addView(view)
+                    dialogView.addView(it)
                 }
-                run {
-                    val view = LayoutInflater.from(this).inflate(R.layout.in_statistics_row, null)
-                    (view.findViewById<View>(R.id.tv_label) as TextView).setText(R.string.stats_cumulative_score_label)
-                    (view.findViewById<View>(R.id.tv_value) as TextView).text = getString(R.string.stats_cumulative_score_value,
+                LayoutInflater.from(this).inflate(R.layout.in_statistics_row, null).let {
+                    (it.findViewById<View>(R.id.tv_label) as TextView).setText(R.string.stats_cumulative_score_label)
+                    (it.findViewById<View>(R.id.tv_value) as TextView).text = getString(R.string.stats_cumulative_score_value,
                             scoreCumulativeText)
-                    dialogView.addView(view)
+                    dialogView.addView(it)
                 }
-                run {
-                    val view = LayoutInflater.from(this).inflate(R.layout.in_statistics_row, null)
-                    (view.findViewById<View>(R.id.tv_label) as TextView).setText(R.string.stats_fastest_completion_label)
-                    (view.findViewById<View>(R.id.tv_value) as TextView).text = getString(R.string.stats_fastest_completion_value,
+                LayoutInflater.from(this).inflate(R.layout.in_statistics_row, null).let {
+                    (it.findViewById<View>(R.id.tv_label) as TextView).setText(R.string.stats_fastest_completion_label)
+                    (it.findViewById<View>(R.id.tv_value) as TextView).text = getString(R.string.stats_fastest_completion_value,
                             fastestCompletion)
-                    dialogView.addView(view)
+                    dialogView.addView(it)
                 }
-                run {
-                    val view = LayoutInflater.from(this).inflate(R.layout.in_statistics_row, null)
-                    (view.findViewById<View>(R.id.tv_label) as TextView).setText(R.string.stats_total_time_spent_label)
-                    (view.findViewById<View>(R.id.tv_value) as TextView).text = getString(R.string.stats_total_time_spent_value,
+                LayoutInflater.from(this).inflate(R.layout.in_statistics_row, null).let {
+                    (it.findViewById<View>(R.id.tv_label) as TextView).setText(R.string.stats_total_time_spent_label)
+                    (it.findViewById<View>(R.id.tv_value) as TextView).text = getString(R.string.stats_total_time_spent_value,
                             StringUtils.getDurationString(totalDurationMs))
-                    dialogView.addView(view)
+                    dialogView.addView(it)
                 }
-                run {
-                    val view = LayoutInflater.from(this).inflate(R.layout.in_statistics_row, null)
-                    (view.findViewById<View>(R.id.tv_label) as TextView).setText(R.string.stats_longest_streak_label)
-                    (view.findViewById<View>(R.id.tv_value) as TextView).text = getString(R.string.stats_longest_streak_value,
+                LayoutInflater.from(this).inflate(R.layout.in_statistics_row, null).let {
+                    (it.findViewById<View>(R.id.tv_label) as TextView).setText(R.string.stats_longest_streak_label)
+                    (it.findViewById<View>(R.id.tv_value) as TextView).text = getString(R.string.stats_longest_streak_value,
                             longestStreak,
                             resources.getQuantityString(R.plurals.days, longestStreak))
-                    dialogView.addView(view)
+                    dialogView.addView(it)
                 }
                 AlertDialog.Builder(this)
                         .setTitle(R.string.statistics)

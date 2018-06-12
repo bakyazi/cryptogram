@@ -222,6 +222,19 @@ class PuzzleProgress {
     }
 
     @Synchronized
+    fun getMistakeCount(puzzle: Puzzle): Int {
+        var mistakes = 0
+        val mapping = getUserCharsMapping(puzzle)
+        mapping.keys.forEach {
+            val input = mapping[it]
+            if (input != 0.toChar() && it != input) {
+                mistakes++
+            }
+        }
+        return mistakes
+    }
+
+    @Synchronized
     fun getUserChars(puzzle: Puzzle): Collection<Char> {
         return getUserCharsMapping(puzzle).values
     }
