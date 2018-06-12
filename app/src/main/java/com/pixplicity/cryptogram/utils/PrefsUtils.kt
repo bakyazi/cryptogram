@@ -103,7 +103,7 @@ object PrefsUtils {
         set(purchases) = Prefs.putStringSet(KEY_PURCHASES, purchases)
 
     var suggestDonationCount: Long
-        get() = Prefs.getLong(KEY_SUGGEST_DONATION_COUNT, 50)
+        get() = Prefs.getLong(KEY_SUGGEST_DONATION_COUNT, BillingUtils.DONATION_SUGGESTION_FREQUENCY.toLong())
         set(suggestDonationCount) = Prefs.putLong(KEY_SUGGEST_DONATION_COUNT, suggestDonationCount)
 
     // This isn't a fresh install

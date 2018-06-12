@@ -46,7 +46,6 @@ import com.pixplicity.cryptogram.events.PuzzleEvent
 import com.pixplicity.cryptogram.models.Puzzle
 import com.pixplicity.cryptogram.utils.*
 import com.pixplicity.cryptogram.views.CryptogramView
-import com.pixplicity.easyprefs.library.Prefs
 import com.pixplicity.generate.Rate
 import com.squareup.otto.Subscribe
 import kotlinx.android.synthetic.main.activity_cryptogram.*
@@ -674,20 +673,26 @@ class CryptogramActivity : BaseActivity(), GoogleApiClient.ConnectionCallbacks, 
         mRate!!.showRequest()
 
         // Conditional behavior after X triggers
-        // FIXME if only we could use mRate.getCount() here
-        val count = Prefs.getLong("launch_count_l", 0L)
+        val provider = PuzzleProvider.getInstance(this)
+        var count = 0L
+        for (c in provider.all) {
+            if (!c.isInstruction && c.isCompleted) {
+                count++
+            }
+        }
         val suggestDonationCount = PrefsUtils.suggestDonationCount
         if (count >= suggestDonationCount) {
-            PrefsUtils.suggestDonationCount = suggestDonationCount * 2
             // Prompt for donations only if user hasn't already donated
-            if (PrefsUtils.purchases == null) {
+            val purchases = PrefsUtils.purchases
+            PrefsUtils.suggestDonationCount = count + BillingUtils.DONATION_SUGGESTION_FREQUENCY
+            if (purchases == null) {
                 // Query purchases
                 BillingUtils.updatePurchases(this) {
                     // Don't suggest donating here; the user may be mid-puzzle
                     // We'll wait for the next puzzle to complete
-                    PrefsUtils.suggestDonationCount = suggestDonationCount + 1
+                    PrefsUtils.suggestDonationCount = count + 1
                 }
-            } else {
+            } else if (purchases.isEmpty()) {
                 BillingUtils.suggestDonation(this)
             }
         }
@@ -702,7 +707,7 @@ class CryptogramActivity : BaseActivity(), GoogleApiClient.ConnectionCallbacks, 
             }
 
             // Attempt to save the game to Google Play Saved Games
-            PuzzleProvider.getInstance(this).save(it, null)
+            provider.save(it, null)
         }
     }
 

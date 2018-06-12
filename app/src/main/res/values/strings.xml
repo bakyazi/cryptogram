@@ -166,6 +166,10 @@
     <string name="donation_list">Thanks so much! Your past donations through Google Play:</string>
     <string name="donation_list_item">%1$s: %2$s\n(order %3$s)</string>
 
+    <string name="donate_suggest_text">Nice, you sure are enjoying Cryptogram!\n\nI could use your help keeping Cryptogram completely free and ad-free.</string>
+    <string name="donate_suggest_donate">Donate ❤</string>
+    <string name="donate_suggest_nope">Continue playing</string>
+
     <string name="send_feedback">Send feedback</string>
     <string name="rate">Rate!</string>
     <string name="join_beta">Join beta</string>

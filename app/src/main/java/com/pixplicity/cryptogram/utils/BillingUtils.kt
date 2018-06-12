@@ -3,38 +3,45 @@ package com.pixplicity.cryptogram.utils
 import android.app.Activity
 import android.content.Context
 import android.util.Log
+import com.afollestad.materialdialogs.MaterialDialog
 import com.android.billingclient.api.*
 import com.crashlytics.android.answers.Answers
 import com.crashlytics.android.answers.PurchaseEvent
+import com.pixplicity.cryptogram.R
+import com.pixplicity.cryptogram.activities.DonateActivity
 import java.math.BigDecimal
-import java.text.DateFormat
 import java.util.*
 
 object BillingUtils {
 
-    val TAG = BillingUtils::class.java.simpleName
+    private val TAG = BillingUtils::class.java.simpleName
 
+    const val DONATION_SUGGESTION_FREQUENCY = 50
     val SKU_LIST = arrayListOf("donation_1")
 
     private val skus = HashMap<String, SkuDetails>()
     private var purchases = ArrayList<Purchase>()
     private var purchasesConsumed: MutableSet<String>? = null
 
-    fun updatePurchases(context: Context, function: () -> Unit) {
-        val billingClient = BillingClient.newBuilder(context).setListener(object : PurchasesUpdatedListener {
-            override fun onPurchasesUpdated(responseCode: Int, purchases: MutableList<Purchase>?) {
-                TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
-            }
+    private lateinit var billingClient: BillingClient
 
+    fun updatePurchases(context: Context, function: () -> Unit) {
+        purchasesConsumed = (PrefsUtils.purchases ?: emptySet()).toMutableSet()
+        Log.d(TAG, "updatePurchases: $purchasesConsumed")
+        billingClient = BillingClient.newBuilder(context).setListener(object : PurchasesUpdatedListener {
+            override fun onPurchasesUpdated(responseCode: Int, purchases: MutableList<Purchase>?) {
+                this@BillingUtils.purchases = ArrayList(purchases)
+                handlePurchases(billingClient, consume = true)
+            }
         }).build()
         billingClient.startConnection(object : BillingClientStateListener {
             override fun onBillingSetupFinished(@BillingClient.BillingResponse billingResponseCode: Int) {
+                Log.d(TAG, "updatePurchases: billing ready")
                 if (billingResponseCode == BillingClient.BillingResponse.OK) {
                     // The billing client is ready; query purchases
                     val params = SkuDetailsParams.newBuilder()
                     params.setSkusList(SKU_LIST).setType(BillingClient.SkuType.INAPP)
                     billingClient.querySkuDetailsAsync(params.build(), { responseCode, skuDetailsList ->
-                        // TODO display a list of SKUs
                         skuDetailsList.forEach {
                             skus[it.sku] = it
                             Log.d(TAG, "querySkuDetailsAsync: ${it.sku}; ${it.title}; ${it.description}")
@@ -53,6 +60,7 @@ object BillingUtils {
             override fun onBillingServiceDisconnected() {
                 // Try to restart the connection on the next request to
                 // Google Play by calling the startConnection() method.
+                Log.d(TAG, "updatePurchases: billing disconnected")
             }
         })
     }
@@ -109,6 +117,7 @@ object BillingUtils {
     }
 
     private fun handlePurchases(billingClient: BillingClient, consume: Boolean = false) {
+        Log.d(TAG, "handlePurchases: ${purchases.size} purchases")
         for (purchase in purchases) {
             Log.d(TAG, "handlePurchases: ${purchase.originalJson}")
             if (consume && purchase.purchaseToken != null && purchasesConsumed?.contains(purchase.originalJson) != true) {
@@ -127,18 +136,20 @@ object BillingUtils {
                     removed.add(consumedSignature)
                 }
             }
-            if (removed.isNotEmpty()) {
-                purchasesConsumed?.removeAll(removed)
-                Log.d(TAG, "handlePurchases: update consumed")
-                PrefsUtils.purchases = purchasesConsumed
-            }
+            purchasesConsumed?.removeAll(removed)
+            Log.d(TAG, "handlePurchases: update consumed")
+            PrefsUtils.purchases = purchasesConsumed
         }
     }
 
     fun suggestDonation(activity: Activity) {
-        if (PrefsUtils.purchases?.isEmpty() == true) {
-            // TODO prompt for donations
-        }
+        // Prompt user for a donations
+        MaterialDialog.Builder(activity)
+                .content(R.string.donate_suggest_text)
+                .positiveText(R.string.donate_suggest_donate)
+                .negativeText(R.string.donate_suggest_nope)
+                .onPositive { _, _ -> activity.startActivity(DonateActivity.create(activity)) }
+                .show()
     }
 
 }
