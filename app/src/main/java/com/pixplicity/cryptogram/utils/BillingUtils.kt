@@ -80,7 +80,7 @@ object BillingUtils {
         val sku = skus[purchase.sku]
         if (sku != null) {
             purchaseEvent
-                    .putItemPrice(BigDecimal.valueOf(sku.price.toDouble()))
+                    .putItemPrice(BigDecimal.valueOf(sku.priceAmountMicros / 1000))
                     .putCurrency(Currency.getInstance(sku.priceCurrencyCode))
                     .putItemName(sku.title)
                     .putItemType(sku.type)
