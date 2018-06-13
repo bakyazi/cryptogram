@@ -141,9 +141,15 @@
 
     <string name="settings_other">Other</string>
     <string name="randomize_puzzles">Randomize puzzles</string>
+    <string name="hardcore_mode">Hardcore mode: no given characters</string>
 
-    <string name="keyboard_system_dialog">Some keyboards don’t play nicely with Cryptogram. If you experience problems, I please switch back to the built-in keyboard.</string>
-    <string name="keyboard_system_dialog_ok">I understand</string>
+    <string name="keyboard_system_dialog">Some keyboards don’t play nicely with Cryptogram. If you experience problems, please switch back to the built-in keyboard.</string>
+    <string name="keyboard_system_dialog_ok">Understood</string>
+    <string name="keyboard_system_dialog_cancel">Cancel</string>
+
+    <string name="hardcore_dialog">In hardcore mode, no characters are given when starting a puzzle. This does not affect your score; it’s a personal challenge.</string>
+    <string name="hardcore_dialog_ok">Let’s try!</string>
+    <string name="hardcore_dialog_cancel">Cancel</string>
 
     <string name="applying_settings">Applying settings…</string>
 

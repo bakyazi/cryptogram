@@ -248,7 +248,7 @@ class CryptogramActivity : BaseActivity(), GoogleApiClient.ConnectionCallbacks, 
                             // Logged in
                             run {
                                 // Analytics
-                                CryptogramApp.instance.firebaseAnalytics?.logEvent(FirebaseAnalytics.Event.LOGIN, null)
+                                CryptogramApp.instance!!.firebaseAnalytics?.logEvent(FirebaseAnalytics.Event.LOGIN, null)
                                 Answers.getInstance().logLogin(LoginEvent().putSuccess(true))
                             }
                             mGoogleApiClient!!.connect()
@@ -470,7 +470,7 @@ class CryptogramActivity : BaseActivity(), GoogleApiClient.ConnectionCallbacks, 
                 dialog.dismiss()
                 run {
                     // Analytics
-                    CryptogramApp.instance.firebaseAnalytics.logEvent(CryptogramApp.CONTENT_LEADERBOARDS, null)
+                    CryptogramApp.instance!!.firebaseAnalytics.logEvent(CryptogramApp.CONTENT_LEADERBOARDS, null)
                     Answers.getInstance().logContentView(ContentViewEvent().putContentName(CryptogramApp.CONTENT_LEADERBOARDS))
                 }
                 try {
@@ -490,7 +490,7 @@ class CryptogramActivity : BaseActivity(), GoogleApiClient.ConnectionCallbacks, 
                 dialog.dismiss()
                 run {
                     // Analytics
-                    CryptogramApp.instance.firebaseAnalytics.logEvent(CryptogramApp.CONTENT_ACHIEVEMENTS, null)
+                    CryptogramApp.instance!!.firebaseAnalytics.logEvent(CryptogramApp.CONTENT_ACHIEVEMENTS, null)
                     Answers.getInstance().logContentView(ContentViewEvent().putContentName(CryptogramApp.CONTENT_ACHIEVEMENTS))
                 }
                 try {
@@ -889,7 +889,7 @@ class CryptogramActivity : BaseActivity(), GoogleApiClient.ConnectionCallbacks, 
                     val bundle = Bundle()
                     bundle.putString(FirebaseAnalytics.Param.LEVEL, puzzleId)
                     bundle.putString(FirebaseAnalytics.Param.CONTENT, text)
-                    CryptogramApp.instance.firebaseAnalytics.logEvent(FirebaseAnalytics.Event.SHARE, bundle)
+                    CryptogramApp.instance!!.firebaseAnalytics.logEvent(FirebaseAnalytics.Event.SHARE, bundle)
                     Answers.getInstance().logShare(
                             ShareEvent()
                                     .putContentId(puzzleId)
@@ -901,7 +901,7 @@ class CryptogramActivity : BaseActivity(), GoogleApiClient.ConnectionCallbacks, 
             }
             R.id.action_stats -> {
                 // Analytics
-                CryptogramApp.instance.firebaseAnalytics.logEvent(CryptogramApp.CONTENT_STATISTICS, null)
+                CryptogramApp.instance!!.firebaseAnalytics.logEvent(CryptogramApp.CONTENT_STATISTICS, null)
                 Answers.getInstance().logContentView(ContentViewEvent().putContentName(CryptogramApp.CONTENT_STATISTICS))
 
                 // Compose the dialog

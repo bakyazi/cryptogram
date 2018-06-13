@@ -25,7 +25,7 @@ class HowToPlayActivity : BaseActivity() {
 
         setHomeButtonEnabled(true)
 
-        CryptogramApp.instance.firebaseAnalytics.setCurrentScreen(this, CryptogramApp.CONTENT_HOW_TO_PLAY, null)
+        CryptogramApp.instance!!.firebaseAnalytics.setCurrentScreen(this, CryptogramApp.CONTENT_HOW_TO_PLAY, null)
         Answers.getInstance().logContentView(ContentViewEvent().putContentName(CryptogramApp.CONTENT_HOW_TO_PLAY))
     }
 

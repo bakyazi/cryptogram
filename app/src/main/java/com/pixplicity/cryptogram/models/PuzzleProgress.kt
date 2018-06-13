@@ -10,6 +10,7 @@ import com.google.gson.annotations.SerializedName
 import com.pixplicity.cryptogram.CryptogramApp
 import com.pixplicity.cryptogram.events.PuzzleEvent
 import com.pixplicity.cryptogram.utils.EventProvider
+import com.pixplicity.cryptogram.utils.PrefsUtils
 import java.util.*
 
 class PuzzleProgress {
@@ -380,7 +381,7 @@ class PuzzleProgress {
             val puzzleId = puzzle.id.toString()
             val bundle = Bundle()
             bundle.putString(FirebaseAnalytics.Param.LEVEL, puzzleId)
-            CryptogramApp.instance.firebaseAnalytics.logEvent(CryptogramApp.EVENT_LEVEL_START, bundle)
+            CryptogramApp.instance!!.firebaseAnalytics.logEvent(CryptogramApp.EVENT_LEVEL_START, bundle)
             Answers.getInstance().logLevelStart(
                     LevelStartEvent()
                             .putLevelName("Puzzle #$puzzleNumber"))
@@ -406,7 +407,7 @@ class PuzzleProgress {
                 bundle.putFloat(FirebaseAnalytics.Param.SCORE, score)
                 event.putScore(score)
             }
-            CryptogramApp.instance.firebaseAnalytics.logEvent(CryptogramApp.EVENT_LEVEL_END, bundle)
+            CryptogramApp.instance!!.firebaseAnalytics.logEvent(CryptogramApp.EVENT_LEVEL_END, bundle)
             Answers.getInstance().logLevelEnd(event)
         }
 
