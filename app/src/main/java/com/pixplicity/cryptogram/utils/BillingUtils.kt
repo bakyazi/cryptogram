@@ -29,7 +29,6 @@ object BillingUtils {
 
     fun updatePurchases(context: Context, function: () -> Unit) {
         purchasesConsumed = (PrefsUtils.purchases ?: emptySet()).toMutableSet()
-        Log.d(TAG, "updatePurchases: $purchasesConsumed")
         billingClient = BillingClient.newBuilder(context).setListener(object : PurchasesUpdatedListener {
             override fun onPurchasesUpdated(responseCode: Int, purchases: MutableList<Purchase>?) {
                 this@BillingUtils.purchases = ArrayList(purchases)
@@ -38,7 +37,6 @@ object BillingUtils {
         }).build()
         billingClient.startConnection(object : BillingClientStateListener {
             override fun onBillingSetupFinished(@BillingClient.BillingResponse billingResponseCode: Int) {
-                Log.d(TAG, "updatePurchases: billing ready")
                 if (billingResponseCode == BillingClient.BillingResponse.OK) {
                     // The billing client is ready; query purchases
                     val params = SkuDetailsParams.newBuilder()
@@ -46,7 +44,6 @@ object BillingUtils {
                     billingClient.querySkuDetailsAsync(params.build(), { responseCode, skuDetailsList ->
                         skuDetailsList.forEach {
                             skus[it.sku] = it
-                            Log.d(TAG, "querySkuDetailsAsync: ${it.sku}; ${it.title}; ${it.description}")
                         }
                         handlePurchases(billingClient, consume = true)
                     })
@@ -62,7 +59,6 @@ object BillingUtils {
             override fun onBillingServiceDisconnected() {
                 // Try to restart the connection on the next request to
                 // Google Play by calling the startConnection() method.
-                Log.d(TAG, "updatePurchases: billing disconnected")
             }
         })
     }
@@ -95,9 +91,7 @@ object BillingUtils {
         Answers.getInstance().logPurchase(purchaseEvent)
         // Note that Firebase Analytics are reported automatically
 
-        Log.d(TAG, "consumeAsync: [...]$purchaseId")
         billingClient.consumeAsync(purchase.purchaseToken, { responseCode, _ ->
-            Log.d(TAG, "consumeAsync: [...]$purchaseId; responseCode=$responseCode")
             when (responseCode) {
                 BillingClient.BillingResponse.OK -> {
                     purchasesConsumed?.add(purchase.originalJson)
@@ -119,9 +113,7 @@ object BillingUtils {
     }
 
     private fun handlePurchases(billingClient: BillingClient, consume: Boolean = false) {
-        Log.d(TAG, "handlePurchases: ${purchases.size} purchases")
         for (purchase in purchases) {
-            Log.d(TAG, "handlePurchases: ${purchase.originalJson}")
             if (consume && purchase.purchaseToken != null && purchasesConsumed?.contains(purchase.originalJson) != true) {
                 // Purchase hasn't been consumed yet
                 consume(billingClient, purchase, null, null)
@@ -134,12 +126,10 @@ object BillingUtils {
             purchasesConsumed?.forEach {
                 val consumedSignature = it
                 purchases.filter { it.originalJson != consumedSignature }.forEach {
-                    Log.d(TAG, "handlePurchases: remove $consumedSignature")
                     removed.add(consumedSignature)
                 }
             }
             purchasesConsumed?.removeAll(removed)
-            Log.d(TAG, "handlePurchases: update consumed")
             PrefsUtils.purchases = purchasesConsumed
         }
     }

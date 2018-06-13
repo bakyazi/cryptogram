@@ -1017,7 +1017,6 @@ class CryptogramActivity : BaseActivity(), GoogleApiClient.ConnectionCallbacks, 
     // Google Play Services
     override fun onConnected(bundle: Bundle?) {
         mLastConnectionError = 0
-        Log.d(TAG, "onConnected(): connected to Google APIs")
 
         updateGooglePlayGames()
 
@@ -1034,14 +1033,11 @@ class CryptogramActivity : BaseActivity(), GoogleApiClient.ConnectionCallbacks, 
 
     // Google Play Services
     override fun onConnectionSuspended(i: Int) {
-        Log.d(TAG, "onConnectionSuspended(): attempting to connect")
         mGoogleApiClient!!.connect()
     }
 
     override fun onConnectionFailed(connectionResult: ConnectionResult) {
-        Log.d(TAG, "onConnectionFailed: attempting to resolve")
         if (mResolvingConnectionFailure) {
-            Log.d(TAG, "onConnectionFailed: already resolving")
             return
         }
 
@@ -1053,7 +1049,6 @@ class CryptogramActivity : BaseActivity(), GoogleApiClient.ConnectionCallbacks, 
             var noResolution = true
             if (connectionResult.hasResolution()) {
                 try {
-                    Log.d(TAG, "onConnectionFailed: offering resolution")
                     connectionResult.startResolutionForResult(this, RC_PLAY_GAMES)
                     noResolution = false
                 } catch (e: IntentSender.SendIntentException) {
