@@ -21,7 +21,7 @@ class HowToPlayActivity : BaseActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_how_to_play)
 
-        mToolbar.setTitle(R.string.how_to_play)
+        mToolbar?.setTitle(R.string.how_to_play)
 
         setHomeButtonEnabled(true)
 

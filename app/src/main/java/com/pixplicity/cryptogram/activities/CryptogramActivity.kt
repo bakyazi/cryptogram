@@ -720,9 +720,9 @@ class CryptogramActivity : BaseActivity(), GoogleApiClient.ConnectionCallbacks, 
                 keyCode, 0))
     }
 
-    override fun onDrawerOpened(drawerView: View) {}
+    override fun onDrawerOpened(drawerView: View?) {}
 
-    override fun onDrawerClosed(drawerView: View) {}
+    override fun onDrawerClosed(drawerView: View?) {}
 
     override fun onDrawerMoving() {
         cryptogram.hideSoftInput()

@@ -21,7 +21,7 @@ class DonateActivity : BaseActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_donate)
 
-        mToolbar.setTitle(R.string.donate)
+        mToolbar?.setTitle(R.string.donate)
 
         setHomeButtonEnabled(true)
 

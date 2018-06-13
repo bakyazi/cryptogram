@@ -21,7 +21,7 @@ class SettingsActivity : BaseActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_settings)
 
-        mToolbar.setTitle(R.string.settings)
+        mToolbar?.setTitle(R.string.settings)
 
         setHomeButtonEnabled(true)
 
