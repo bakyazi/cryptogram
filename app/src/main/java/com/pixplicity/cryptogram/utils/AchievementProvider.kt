@@ -17,7 +17,28 @@ object AchievementProvider {
     private val TAG = AchievementProvider::class.java.simpleName
     private val DEBUG = BuildConfig.DEBUG && false
 
-    private val ACHIEVEMENTS = intArrayOf(R.string.achievement_wet_feet, R.string.achievement_boned_up, R.string.achievement_bookworm, R.string.achievement_whizkid, R.string.achievement_nobrainer, R.string.achievement_flight_mode, R.string.achievement_its_the_bees_knees, R.string.achievement_cream_of_the_crop, R.string.achievement_jack_of_all_trades, R.string.achievement_hope_youre_comfortable, R.string.achievement_hope_youre_really_comfortable, R.string.achievement_zen_master, R.string.achievement_twoday_streak, R.string.achievement_threeday_streak, R.string.achievement_fiveday_streak)
+    private val ACHIEVEMENTS = intArrayOf(
+            R.string.achievement_wet_feet,
+            R.string.achievement_boned_up,
+            R.string.achievement_bookworm,
+            R.string.achievement_whizkid,
+            R.string.achievement_geek,
+            R.string.achievement_coolio,
+            R.string.achievement_hipster,
+            R.string.achievement_rasta,
+            R.string.achievement_clever,
+            R.string.achievement_scholar,
+            R.string.achievement_nobrainer,
+            R.string.achievement_flight_mode,
+            R.string.achievement_its_the_bees_knees,
+            R.string.achievement_cream_of_the_crop,
+            R.string.achievement_jack_of_all_trades,
+            R.string.achievement_hope_youre_comfortable,
+            R.string.achievement_hope_youre_really_comfortable,
+            R.string.achievement_zen_master,
+            R.string.achievement_twoday_streak,
+            R.string.achievement_threeday_streak,
+            R.string.achievement_fiveday_streak)
 
     private val KEY_STARTED_IN_AIRPLANE_MODE = "started_in_airplane_mode"
     private val KEY_UNLOCKED_FLIGHT_MODE = "unlocked_flight_mode"
