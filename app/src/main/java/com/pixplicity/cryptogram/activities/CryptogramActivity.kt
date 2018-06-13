@@ -46,7 +46,6 @@ import com.pixplicity.cryptogram.events.PuzzleEvent
 import com.pixplicity.cryptogram.models.Puzzle
 import com.pixplicity.cryptogram.utils.*
 import com.pixplicity.cryptogram.views.CryptogramView
-import com.pixplicity.easyprefs.library.Prefs
 import com.pixplicity.generate.Rate
 import com.squareup.otto.Subscribe
 import kotlinx.android.synthetic.main.activity_cryptogram.*
@@ -674,12 +673,28 @@ class CryptogramActivity : BaseActivity(), GoogleApiClient.ConnectionCallbacks, 
         mRate!!.showRequest()
 
         // Conditional behavior after X triggers
-        // FIXME if only we could use mRate.getCount() here
-        val count = Prefs.getLong("launch_count_l", 0L)
-        if (count == 100L || count == 300L) {
-            // Prompt for donations
-            // TODO only display if user hasn't donated
-            // TODO display dialog
+        val provider = PuzzleProvider.getInstance(this)
+        var count = 0L
+        for (c in provider.all) {
+            if (!c.isInstruction && c.isCompleted) {
+                count++
+            }
+        }
+        val suggestDonationCount = PrefsUtils.suggestDonationCount
+        if (count >= suggestDonationCount) {
+            // Prompt for donations only if user hasn't already donated
+            val purchases = PrefsUtils.purchases
+            PrefsUtils.suggestDonationCount = count + BillingUtils.DONATION_SUGGESTION_FREQUENCY
+            if (purchases == null) {
+                // Query purchases
+                BillingUtils.updatePurchases(this) {
+                    // Don't suggest donating here; the user may be mid-puzzle
+                    // We'll wait for the next puzzle to complete
+                    PrefsUtils.suggestDonationCount = count + 1
+                }
+            } else if (purchases.isEmpty()) {
+                BillingUtils.suggestDonation(this)
+            }
         }
 
         mGoogleApiClient?.let {
@@ -692,7 +707,7 @@ class CryptogramActivity : BaseActivity(), GoogleApiClient.ConnectionCallbacks, 
             }
 
             // Attempt to save the game to Google Play Saved Games
-            PuzzleProvider.getInstance(this).save(it, null)
+            provider.save(it, null)
         }
     }
 
@@ -731,46 +746,25 @@ class CryptogramActivity : BaseActivity(), GoogleApiClient.ConnectionCallbacks, 
         val puzzle = cryptogram.puzzle
         when (item.itemId) {
             R.id.action_next -> {
-                run { nextPuzzle() }
+                nextPuzzle()
                 return true
             }
             R.id.action_reveal_letter -> {
-                run {
-                    if (puzzle == null || !cryptogram.hasSelectedCharacter()) {
-                        showSnackbar(getString(R.string.reveal_letter_instruction))
-                    } else {
-                        if (PrefsUtils.neverAskRevealLetter) {
-                            cryptogram.revealCharacterMapping(
-                                    cryptogram.selectedCharacter)
-                        } else {
-                            MaterialDialog.Builder(this)
-                                    .content(R.string.reveal_letter_confirmation)
-                                    .checkBoxPromptRes(R.string.never_ask_again, false, null)
-                                    .positiveText(R.string.reveal)
-                                    .onPositive { dialog, which ->
-                                        PrefsUtils.neverAskRevealLetter = dialog.isPromptCheckBoxChecked
-                                        cryptogram.revealCharacterMapping(
-                                                cryptogram.selectedCharacter)
-                                    }
-                                    .negativeText(R.string.cancel)
-                                    .show()
-                        }
-                    }
-                }
-                return true
-            }
-            R.id.action_reveal_mistakes -> {
-                run {
-                    if (PrefsUtils.neverAskRevealMistakes) {
-                        cryptogram.revealMistakes()
+                if (puzzle == null || !cryptogram.hasSelectedCharacter()) {
+                    showSnackbar(getString(R.string.reveal_letter_instruction))
+                } else {
+                    if (PrefsUtils.neverAskRevealLetter) {
+                        cryptogram.revealCharacterMapping(
+                                cryptogram.selectedCharacter)
                     } else {
                         MaterialDialog.Builder(this)
-                                .content(R.string.reveal_mistakes_confirmation)
+                                .content(R.string.reveal_letter_confirmation)
                                 .checkBoxPromptRes(R.string.never_ask_again, false, null)
                                 .positiveText(R.string.reveal)
                                 .onPositive { dialog, which ->
-                                    PrefsUtils.neverAskRevealMistakes = dialog.isPromptCheckBoxChecked
-                                    cryptogram.revealMistakes()
+                                    PrefsUtils.neverAskRevealLetter = dialog.isPromptCheckBoxChecked
+                                    cryptogram.revealCharacterMapping(
+                                            cryptogram.selectedCharacter)
                                 }
                                 .negativeText(R.string.cancel)
                                 .show()
@@ -778,31 +772,46 @@ class CryptogramActivity : BaseActivity(), GoogleApiClient.ConnectionCallbacks, 
                 }
                 return true
             }
-            R.id.action_reveal_puzzle -> {
-                run {
-                    if (BuildConfig.DEBUG) {
-                        puzzle?.revealPuzzle()
-                        cryptogram.redraw()
-                    } else {
-                        throw IllegalStateException("Only applicable to debug builds")
+            R.id.action_reveal_mistakes -> {
+                if (PrefsUtils.neverAskRevealMistakes) {
+                    if (cryptogram.revealMistakes() == 0) {
+                        showSnackbar(getString(R.string.reveal_mistakes_none))
                     }
+                } else {
+                    MaterialDialog.Builder(this)
+                            .content(R.string.reveal_mistakes_confirmation)
+                            .checkBoxPromptRes(R.string.never_ask_again, false, null)
+                            .positiveText(R.string.reveal)
+                            .onPositive { dialog, which ->
+                                PrefsUtils.neverAskRevealMistakes = dialog.isPromptCheckBoxChecked
+                                cryptogram.revealMistakes()
+                            }
+                            .negativeText(R.string.cancel)
+                            .show()
+                }
+                return true
+            }
+            R.id.action_reveal_puzzle -> {
+                if (BuildConfig.DEBUG) {
+                    puzzle?.revealPuzzle()
+                    cryptogram.redraw()
+                } else {
+                    throw IllegalStateException("Only applicable to debug builds")
                 }
                 return true
             }
             R.id.action_reset -> {
-                run {
-                    if (puzzle != null) {
-                        AlertDialog.Builder(this)
-                                .setMessage(R.string.reset_puzzle)
-                                .setPositiveButton(R.string.reset) { dialogInterface, i ->
-                                    puzzle.reset(true)
-                                    cryptogram.reset()
-                                    showPuzzleState(puzzle)
-                                    onPuzzleChanged(puzzle, false)
-                                }
-                                .setNegativeButton(R.string.cancel) { dialogInterface, i -> }
-                                .show()
-                    }
+                if (puzzle != null) {
+                    AlertDialog.Builder(this)
+                            .setMessage(R.string.reset_puzzle)
+                            .setPositiveButton(R.string.reset) { dialogInterface, i ->
+                                puzzle.reset(true)
+                                cryptogram.reset()
+                                showPuzzleState(puzzle)
+                                onPuzzleChanged(puzzle, false)
+                            }
+                            .setNegativeButton(R.string.cancel) { dialogInterface, i -> }
+                            .show()
                 }
                 return true
             }
@@ -891,11 +900,10 @@ class CryptogramActivity : BaseActivity(), GoogleApiClient.ConnectionCallbacks, 
                 return true
             }
             R.id.action_stats -> {
-                run {
-                    // Analytics
-                    CryptogramApp.instance!!.firebaseAnalytics.logEvent(CryptogramApp.CONTENT_STATISTICS, null)
-                    Answers.getInstance().logContentView(ContentViewEvent().putContentName(CryptogramApp.CONTENT_STATISTICS))
-                }
+                // Analytics
+                CryptogramApp.instance!!.firebaseAnalytics.logEvent(CryptogramApp.CONTENT_STATISTICS, null)
+                Answers.getInstance().logContentView(ContentViewEvent().putContentName(CryptogramApp.CONTENT_STATISTICS))
+
                 // Compose the dialog
                 val dialogView = LayoutInflater.from(this).inflate(R.layout.dialog_statistics, null) as TableLayout
                 puzzle?.save()
@@ -941,41 +949,36 @@ class CryptogramActivity : BaseActivity(), GoogleApiClient.ConnectionCallbacks, 
                             provider.lastNumber)
                     dialogView.addView(view)
                 }
-                run {
-                    val view = LayoutInflater.from(this).inflate(R.layout.in_statistics_row, null)
-                    (view.findViewById<View>(R.id.tv_label) as TextView).setText(R.string.stats_average_score_label)
-                    (view.findViewById<View>(R.id.tv_value) as TextView).text = getString(R.string.stats_average_score_value,
+                LayoutInflater.from(this).inflate(R.layout.in_statistics_row, null).let {
+                    (it.findViewById<View>(R.id.tv_label) as TextView).setText(R.string.stats_average_score_label)
+                    (it.findViewById<View>(R.id.tv_value) as TextView).text = getString(R.string.stats_average_score_value,
                             scoreAverageText)
-                    dialogView.addView(view)
+                    dialogView.addView(it)
                 }
-                run {
-                    val view = LayoutInflater.from(this).inflate(R.layout.in_statistics_row, null)
-                    (view.findViewById<View>(R.id.tv_label) as TextView).setText(R.string.stats_cumulative_score_label)
-                    (view.findViewById<View>(R.id.tv_value) as TextView).text = getString(R.string.stats_cumulative_score_value,
+                LayoutInflater.from(this).inflate(R.layout.in_statistics_row, null).let {
+                    (it.findViewById<View>(R.id.tv_label) as TextView).setText(R.string.stats_cumulative_score_label)
+                    (it.findViewById<View>(R.id.tv_value) as TextView).text = getString(R.string.stats_cumulative_score_value,
                             scoreCumulativeText)
-                    dialogView.addView(view)
+                    dialogView.addView(it)
                 }
-                run {
-                    val view = LayoutInflater.from(this).inflate(R.layout.in_statistics_row, null)
-                    (view.findViewById<View>(R.id.tv_label) as TextView).setText(R.string.stats_fastest_completion_label)
-                    (view.findViewById<View>(R.id.tv_value) as TextView).text = getString(R.string.stats_fastest_completion_value,
+                LayoutInflater.from(this).inflate(R.layout.in_statistics_row, null).let {
+                    (it.findViewById<View>(R.id.tv_label) as TextView).setText(R.string.stats_fastest_completion_label)
+                    (it.findViewById<View>(R.id.tv_value) as TextView).text = getString(R.string.stats_fastest_completion_value,
                             fastestCompletion)
-                    dialogView.addView(view)
+                    dialogView.addView(it)
                 }
-                run {
-                    val view = LayoutInflater.from(this).inflate(R.layout.in_statistics_row, null)
-                    (view.findViewById<View>(R.id.tv_label) as TextView).setText(R.string.stats_total_time_spent_label)
-                    (view.findViewById<View>(R.id.tv_value) as TextView).text = getString(R.string.stats_total_time_spent_value,
+                LayoutInflater.from(this).inflate(R.layout.in_statistics_row, null).let {
+                    (it.findViewById<View>(R.id.tv_label) as TextView).setText(R.string.stats_total_time_spent_label)
+                    (it.findViewById<View>(R.id.tv_value) as TextView).text = getString(R.string.stats_total_time_spent_value,
                             StringUtils.getDurationString(totalDurationMs))
-                    dialogView.addView(view)
+                    dialogView.addView(it)
                 }
-                run {
-                    val view = LayoutInflater.from(this).inflate(R.layout.in_statistics_row, null)
-                    (view.findViewById<View>(R.id.tv_label) as TextView).setText(R.string.stats_longest_streak_label)
-                    (view.findViewById<View>(R.id.tv_value) as TextView).text = getString(R.string.stats_longest_streak_value,
+                LayoutInflater.from(this).inflate(R.layout.in_statistics_row, null).let {
+                    (it.findViewById<View>(R.id.tv_label) as TextView).setText(R.string.stats_longest_streak_label)
+                    (it.findViewById<View>(R.id.tv_value) as TextView).text = getString(R.string.stats_longest_streak_value,
                             longestStreak,
                             resources.getQuantityString(R.plurals.days, longestStreak))
-                    dialogView.addView(view)
+                    dialogView.addView(it)
                 }
                 AlertDialog.Builder(this)
                         .setTitle(R.string.statistics)
@@ -1014,7 +1017,6 @@ class CryptogramActivity : BaseActivity(), GoogleApiClient.ConnectionCallbacks, 
     // Google Play Services
     override fun onConnected(bundle: Bundle?) {
         mLastConnectionError = 0
-        Log.d(TAG, "onConnected(): connected to Google APIs")
 
         updateGooglePlayGames()
 
@@ -1031,14 +1033,11 @@ class CryptogramActivity : BaseActivity(), GoogleApiClient.ConnectionCallbacks, 
 
     // Google Play Services
     override fun onConnectionSuspended(i: Int) {
-        Log.d(TAG, "onConnectionSuspended(): attempting to connect")
         mGoogleApiClient!!.connect()
     }
 
     override fun onConnectionFailed(connectionResult: ConnectionResult) {
-        Log.d(TAG, "onConnectionFailed: attempting to resolve")
         if (mResolvingConnectionFailure) {
-            Log.d(TAG, "onConnectionFailed: already resolving")
             return
         }
 
@@ -1050,7 +1049,6 @@ class CryptogramActivity : BaseActivity(), GoogleApiClient.ConnectionCallbacks, 
             var noResolution = true
             if (connectionResult.hasResolution()) {
                 try {
-                    Log.d(TAG, "onConnectionFailed: offering resolution")
                     connectionResult.startResolutionForResult(this, RC_PLAY_GAMES)
                     noResolution = false
                 } catch (e: IntentSender.SendIntentException) {

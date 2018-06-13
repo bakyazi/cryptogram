@@ -56,6 +56,7 @@
     <string name="error_no_activity">Whoops! Looks like there aren’t any apps installed to do that.</string>
 
     <string name="reveal_letter_instruction">Please select a letter first.</string>
+    <string name="reveal_mistakes_none">No mistakes! Keep it up!</string>
 
     <string name="puzzle_number_instruction">Instructional puzzle</string>
     <string name="puzzle_number_practice">Puzzle #%1$d (practice)</string>
@@ -171,6 +172,10 @@
     <string name="donate_error_cancel">Cancel</string>
     <string name="donation_list">Thanks so much! Your past donations through Google Play:</string>
     <string name="donation_list_item">%1$s: %2$s\n(order %3$s)</string>
+
+    <string name="donate_suggest_text">Nice, you sure are enjoying Cryptogram!\n\nI could use your help keeping Cryptogram completely free and ad-free.</string>
+    <string name="donate_suggest_donate">Donate ❤</string>
+    <string name="donate_suggest_nope">Continue playing</string>
 
     <string name="send_feedback">Send feedback</string>
     <string name="rate">Rate!</string>
@@ -297,10 +302,7 @@
     <string name="title_artwork">Artwork</string>
     <string name="artwork">
         <![CDATA[
-            Leaderboard and achievement iconography graciously provided by Oliver Stone:
-            <br /><br />
-            • <a href="http://www.flaticon.com/authors/madebyoliver">madebyoliver on Flaticon</a><br />
-            • <a href="https://twitter.com/madebyoliver">madebyoliver on Twitter</a>
+            Leaderboard and achievement iconography graciously provided by <a href="https://twitter.com/madebyoliver">Oliver Stone</a>.
             ]]>
     </string>
     <string name="title_contributors">Contributors</string>
@@ -310,6 +312,7 @@
             <br /><br />
             • <a href="https://github.com/pflammertsma">Paul Lammertsma</a><br />
             • <a href="https://github.com/Thunderbottom">Chinmay Pai</a><br />
+            • <a href="https://github.com/mlagerberg">Mathijs Lagerberg</a><br />
             • <a href="https://github.com/MaggieSalak">Maggie Salak</a>
             ]]>
     </string>
@@ -325,6 +328,6 @@
     <string name="feedback_body">Hi Pixplicity, \n\nI’m using Cryptogram version %1$s and my keyboard is “%2$s”. I’m running Android %3$s on my %4$s. \n\nHere’s my feedback on Cryptogram: \n\n</string>
     <string name="feedback_body_donation">Hi Pixplicity, \n\nI love Cryptogram so much that I donated! I’m using Cryptogram version %1$s and my keyboard is “%2$s”. I’m running Android %3$s on my %4$s. \n\nHere’s my extra-special fan feedback: \n\n</string>
     <string name="feedback_subject_error">Payment error for Cryptogram (donation %1$s)</string>
-    <string name="feedback_body_error">Hi Pixplicity, \n\nI love Cryptogram so much that I wanted to donate! Unfortunately the payment for purchase %5$s failed with error code $6%d. I’m using Cryptogram version %1$s and my keyboard is “%2$s”. I’m running Android %3$s on my %4$s. \n\n</string>
+    <string name="feedback_body_error">Hi Pixplicity, \n\nI love Cryptogram so much that I wanted to donate! Unfortunately the payment for purchase %5$s failed with error code %6$d. I’m using Cryptogram version %1$s and my keyboard is “%2$s”. I’m running Android %3$s on my %4$s. \n\n</string>
 
 </resources>

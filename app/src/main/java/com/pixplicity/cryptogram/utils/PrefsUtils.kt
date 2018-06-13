@@ -24,6 +24,7 @@ object PrefsUtils {
     private const val KEY_USE_SYSTEM_KEYBOARD = "use_system_keyboard"
     private const val KEY_SAVEGAME_NAME = "savegame_name"
     private const val KEY_PURCHASES = "purchases"
+    private const val KEY_SUGGEST_DONATION_COUNT = "suggest_donation_count"
     private const val KEY_LAST_VERSION = "last_version"
     private const val KEY_DONATION_FEEDBACK = "donation_feedback"
 
@@ -79,7 +80,7 @@ object PrefsUtils {
         set(textSize) = Prefs.putInt(KEY_TEXT_SIZE, textSize)
 
     var autoAdvance: Boolean
-        get() = Prefs.getBoolean(KEY_AUTO_ADVANCE, false)
+        get() = Prefs.getBoolean(KEY_AUTO_ADVANCE, true)
         set(show) = Prefs.putBoolean(KEY_AUTO_ADVANCE, show)
 
     var skipFilledCells: Boolean
@@ -105,6 +106,10 @@ object PrefsUtils {
     var purchases: Set<String>?
         get() = Prefs.getStringSet(KEY_PURCHASES, null)
         set(purchases) = Prefs.putStringSet(KEY_PURCHASES, purchases)
+
+    var suggestDonationCount: Long
+        get() = Prefs.getLong(KEY_SUGGEST_DONATION_COUNT, BillingUtils.DONATION_SUGGESTION_FREQUENCY.toLong())
+        set(suggestDonationCount) = Prefs.putLong(KEY_SUGGEST_DONATION_COUNT, suggestDonationCount)
 
     // This isn't a fresh install
     var lastVersion: Int
