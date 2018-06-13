@@ -66,6 +66,42 @@ object AchievementProvider {
                             AchievementProvider.unlock(context, mGoogleApiClient, achievementResId)
                         }
                     }
+                    R.string.achievement_geek -> {
+                        // Complete fifty puzzles.
+                        if (AchievementStats.completed >= 50) {
+                            AchievementProvider.unlock(context, mGoogleApiClient, achievementResId)
+                        }
+                    }
+                    R.string.achievement_coolio -> {
+                        // Complete one hundred puzzles.
+                        if (AchievementStats.completed >= 100) {
+                            AchievementProvider.unlock(context, mGoogleApiClient, achievementResId)
+                        }
+                    }
+                    R.string.achievement_hipster -> {
+                        // Complete two hundred puzzles.
+                        if (AchievementStats.completed >= 200) {
+                            AchievementProvider.unlock(context, mGoogleApiClient, achievementResId)
+                        }
+                    }
+                    R.string.achievement_rasta -> {
+                        // Complete three hundred puzzles.
+                        if (AchievementStats.completed >= 300) {
+                            AchievementProvider.unlock(context, mGoogleApiClient, achievementResId)
+                        }
+                    }
+                    R.string.achievement_clever -> {
+                        // Complete four hundred puzzles.
+                        if (AchievementStats.completed >= 400) {
+                            AchievementProvider.unlock(context, mGoogleApiClient, achievementResId)
+                        }
+                    }
+                    R.string.achievement_scholar -> {
+                        // Complete five hundred puzzles.
+                        if (AchievementStats.completed >= 500) {
+                            AchievementProvider.unlock(context, mGoogleApiClient, achievementResId)
+                        }
+                    }
                     R.string.achievement_flight_mode -> {
                         // Solve a puzzle in airplane mode. Isn't this the perfect game for a long flight?
                         if (AchievementProvider.mUnlockedFlightMode) {

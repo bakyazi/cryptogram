@@ -10,6 +10,12 @@ Save this file as res/values/games-ids.xml in your project.
     <string name="achievement_boned_up">CgkIspmJq5MfEAIQAg</string>
     <string name="achievement_bookworm">CgkIspmJq5MfEAIQBg</string>
     <string name="achievement_whizkid">CgkIspmJq5MfEAIQDg</string>
+    <string name="achievement_geek">CgkIspmJq5MfEAIQEg</string>
+    <string name="achievement_coolio">CgkIspmJq5MfEAIQEw</string>
+    <string name="achievement_hipster">CgkIspmJq5MfEAIQFA</string>
+    <string name="achievement_rasta">CgkIspmJq5MfEAIQFQ</string>
+    <string name="achievement_clever">CgkIspmJq5MfEAIQFw</string>
+    <string name="achievement_scholar">CgkIspmJq5MfEAIQFg</string>
     <string name="achievement_flight_mode">CgkIspmJq5MfEAIQCQ</string>
     <string name="achievement_its_the_bees_knees">CgkIspmJq5MfEAIQCA</string>
     <string name="achievement_cream_of_the_crop">CgkIspmJq5MfEAIQDQ</string>
