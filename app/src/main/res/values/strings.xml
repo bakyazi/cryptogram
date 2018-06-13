@@ -296,9 +296,7 @@
     <string name="title_artwork">Artwork</string>
     <string name="artwork">
         <![CDATA[
-            Leaderboard and achievement iconography graciously provided by Oliver Stone:
-            <br /><br />
-            • <a href="https://twitter.com/madebyoliver">madebyoliver on Twitter</a>
+            Leaderboard and achievement iconography graciously provided by <a href="https://twitter.com/madebyoliver">Oliver Stone</a>.
             ]]>
     </string>
     <string name="title_contributors">Contributors</string>
@@ -308,6 +306,7 @@
             <br /><br />
             • <a href="https://github.com/pflammertsma">Paul Lammertsma</a><br />
             • <a href="https://github.com/Thunderbottom">Chinmay Pai</a><br />
+            • <a href="https://github.com/mlagerberg">Mathijs Lagerberg</a><br />
             • <a href="https://github.com/MaggieSalak">Maggie Salak</a>
             ]]>
     </string>
