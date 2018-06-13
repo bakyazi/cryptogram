@@ -68,12 +68,16 @@ class DonateFragment : BaseFragment(), PurchasesUpdatedListener {
                             skus[it.sku] = it
                             Log.d(TAG, "querySkuDetailsAsync: ${it.sku}; ${it.title}; ${it.description}")
                         }
-                        showPurchases(consume = true)
+                        handler.post {
+                            showPurchases(consume = true)
+                        }
                     })
                     billingClient.queryPurchaseHistoryAsync(BillingClient.SkuType.INAPP, { responseCode, purchases ->
                         if (responseCode == BillingClient.BillingResponse.OK && purchases != null) {
                             this@DonateFragment.purchases = ArrayList(purchases)
-                            showPurchases(consume = true)
+                            handler.post {
+                                showPurchases(consume = true)
+                            }
                         }
                     })
                 }
