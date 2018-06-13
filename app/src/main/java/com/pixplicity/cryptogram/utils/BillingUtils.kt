@@ -6,7 +6,9 @@ import android.util.Log
 import com.afollestad.materialdialogs.MaterialDialog
 import com.android.billingclient.api.*
 import com.crashlytics.android.answers.Answers
+import com.crashlytics.android.answers.ContentViewEvent
 import com.crashlytics.android.answers.PurchaseEvent
+import com.pixplicity.cryptogram.CryptogramApp
 import com.pixplicity.cryptogram.R
 import com.pixplicity.cryptogram.activities.DonateActivity
 import java.math.BigDecimal
@@ -150,6 +152,10 @@ object BillingUtils {
                 .negativeText(R.string.donate_suggest_nope)
                 .onPositive { _, _ -> activity.startActivity(DonateActivity.create(activity)) }
                 .show()
+
+        // Log event
+        CryptogramApp.instance!!.firebaseAnalytics.setCurrentScreen(activity, CryptogramApp.CONTENT_DONATE_SUGGESTION, null)
+        Answers.getInstance().logContentView(ContentViewEvent().putContentName(CryptogramApp.CONTENT_DONATE_SUGGESTION))
     }
 
 }

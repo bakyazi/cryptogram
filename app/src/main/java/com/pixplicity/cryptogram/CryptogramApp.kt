@@ -46,6 +46,7 @@ class CryptogramApp : Application() {
         val CONTENT_STATISTICS = "statistics"
         val CONTENT_SETTINGS = "settings"
         val CONTENT_HOW_TO_PLAY = "how-to-play"
+        val CONTENT_DONATE_SUGGESTION = "donate_suggestion"
         val CONTENT_DONATE = "donate"
         val CONTENT_ABOUT = "about"
         val EVENT_LEVEL_START = "level_start"
