@@ -248,7 +248,7 @@ class CryptogramActivity : BaseActivity(), GoogleApiClient.ConnectionCallbacks, 
                             // Logged in
                             run {
                                 // Analytics
-                                CryptogramApp.instance!!.firebaseAnalytics?.logEvent(FirebaseAnalytics.Event.LOGIN, null)
+                                CryptogramApp.instance!!.firebaseAnalytics.logEvent(FirebaseAnalytics.Event.LOGIN, null)
                                 Answers.getInstance().logLogin(LoginEvent().putSuccess(true))
                             }
                             mGoogleApiClient!!.connect()

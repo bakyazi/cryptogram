@@ -80,7 +80,7 @@ object BillingUtils {
         val sku = skus[purchase.sku]
         if (sku != null) {
             purchaseEvent
-                    .putItemPrice(BigDecimal.valueOf(sku.priceAmountMicros / 1000))
+                    .putItemPrice(BigDecimal.valueOf(sku.priceAmountMicros / 1000000L))
                     .putCurrency(Currency.getInstance(sku.priceCurrencyCode))
                     .putItemName(sku.title)
                     .putItemType(sku.type)
@@ -144,7 +144,7 @@ object BillingUtils {
                 .show()
 
         // Log event
-        CryptogramApp.instance!!.firebaseAnalytics.setCurrentScreen(activity, CryptogramApp.CONTENT_DONATE_SUGGESTION, null)
+        CryptogramApp.instance!!.firebaseAnalytics.logEvent(CryptogramApp.CONTENT_DONATE_SUGGESTION, null)
         Answers.getInstance().logContentView(ContentViewEvent().putContentName(CryptogramApp.CONTENT_DONATE_SUGGESTION))
     }
 
