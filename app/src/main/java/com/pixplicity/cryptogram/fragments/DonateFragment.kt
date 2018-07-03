@@ -62,7 +62,7 @@ class DonateFragment : BaseFragment(), PurchasesUpdatedListener {
                     // The billing client is ready; query purchases
                     val params = SkuDetailsParams.newBuilder()
                     params.setSkusList(BillingUtils.SKU_LIST).setType(BillingClient.SkuType.INAPP)
-                    billingClient.querySkuDetailsAsync(params.build(), { responseCode, skuDetailsList ->
+                    billingClient.querySkuDetailsAsync(params.build()) { _, skuDetailsList ->
                         // TODO display a list of SKUs
                         skuDetailsList.forEach {
                             skus[it.sku] = it
@@ -71,15 +71,15 @@ class DonateFragment : BaseFragment(), PurchasesUpdatedListener {
                         handler.post {
                             showPurchases(consume = true)
                         }
-                    })
-                    billingClient.queryPurchaseHistoryAsync(BillingClient.SkuType.INAPP, { responseCode, purchases ->
+                    }
+                    billingClient.queryPurchaseHistoryAsync(BillingClient.SkuType.INAPP) { responseCode, purchases ->
                         if (responseCode == BillingClient.BillingResponse.OK && purchases != null) {
                             this@DonateFragment.purchases = ArrayList(purchases)
                             handler.post {
                                 showPurchases(consume = true)
                             }
                         }
-                    })
+                    }
                 }
             }
 
@@ -213,6 +213,7 @@ class DonateFragment : BaseFragment(), PurchasesUpdatedListener {
     }
 
     private fun showPurchases(consume: Boolean = false) {
+        if (activity?.isFinishing != false) return
         tv_donations.visibility = if (purchases.isEmpty()) View.GONE else View.VISIBLE
         vg_donations.visibility = if (purchases.isEmpty()) View.GONE else View.VISIBLE
         vg_donations.removeAllViews()
