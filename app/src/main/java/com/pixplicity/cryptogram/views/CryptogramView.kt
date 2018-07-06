@@ -380,14 +380,14 @@ class CryptogramView : AppCompatTextView {
         // Map the currently selected character to what the user inputs
         if (selectedChar.toInt() != 0 && mPuzzle != null) {
             mPuzzle?.let {
+                // Check for completion state
+                it.isCompleted
                 if (it.isRevealed(selectedChar)) {
                     // This character was already revealed; don't allow the user to alter it
                     if (it.setUserChar(selectedChar, selectedChar)) {
                         // TODO show highlight
                     }
                 } else {
-                    // Check for completion state
-                    it.isCompleted
                     if (it.isInputChar(userChar)) {
                         // Enter the user's mapping
                         it.setUserChar(selectedChar, Character.toUpperCase(userChar))
