@@ -172,7 +172,7 @@ open class Puzzle {
     }
 
     fun isUserCharInput(inputChar: Char): Boolean {
-        return userChars.contains(inputChar) || isGiven(inputChar)
+        return userChars.contains(inputChar) || isGivenOrRevealed(inputChar)
     }
 
     fun getUserChar(c: Char): Char? {
@@ -210,6 +210,14 @@ open class Puzzle {
         return false
     }
 
+    fun isRevealed(c: Char): Boolean {
+        return if (given != null && given!!.indexOf(c) > -1) {
+            true
+        } else progress.isRevealed(c)
+    }
+
+    fun isGivenOrRevealed(matchChar: Char) = isGiven(matchChar) || isRevealed(matchChar)
+
     fun reveal(c: Char) {
         if (!isInputChar(c)) {
             // Not applicable
@@ -230,12 +238,6 @@ open class Puzzle {
             progress.setUserChar(this, c, c)
         }
         save()
-    }
-
-    fun isRevealed(c: Char): Boolean {
-        return if (given != null && given!!.indexOf(c) > -1) {
-            true
-        } else progress.isRevealed(c)
     }
 
     fun onResume() {

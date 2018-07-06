@@ -108,7 +108,7 @@ class PuzzleProgress {
             } else System.currentTimeMillis() - mStartTime!!
         }
 
-    constructor() {}
+    constructor()
 
     constructor(puzzle: Puzzle) {
         id = puzzle.id
@@ -320,7 +320,7 @@ class PuzzleProgress {
             } else {
                 for (character in userChars.keys) {
                     // In order to be correct, the key and value must be identical
-                    if (character !== userChars[character] && !puzzle.isGiven(character)) {
+                    if (character != userChars[character] && !puzzle.isGivenOrRevealed(character)) {
                         mCompleted = false
                         break
                     }
