@@ -133,9 +133,6 @@ class KeyboardButton : AppCompatButton, KeyboardUtils.Contract {
             val boxWidth = resources.getDimensionPixelSize(R.dimen.keyboard_popup_width)
             val boxHeight = resources.getDimensionPixelSize(R.dimen.keyboard_popup_height)
             val boxLeft = Math.max(-left, Math.min(parentWidth - left - boxWidth, width / 2 - boxWidth / 2))
-            if (keyIndex == 16 || keyIndex == 17) {
-                Log.d(TAG, "onLayout: $keyIndex; $parentWidth - $right")
-            }
             mBox.left = boxLeft
             mBox.top = -boxHeight
             mBox.right = boxLeft + boxWidth

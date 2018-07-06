@@ -26,8 +26,7 @@ class HintView : AppCompatTextView {
     private var mBoxW: Float = 0.toFloat()
     private var mCharH: Float = 0.toFloat()
     private var mCharW: Float = 0.toFloat()
-    private var mTextPaint: TextPaint? = null
-
+    private lateinit var mTextPaint: TextPaint
 
     constructor(context: Context) : super(context) {
         init(context, null, 0)
@@ -45,17 +44,17 @@ class HintView : AppCompatTextView {
         val res = context.resources
 
         mTextPaint = TextPaint()
-        mTextPaint!!.color = currentTextColor
-        mTextPaint!!.isAntiAlias = true
-        mTextPaint!!.typeface = Typeface.MONOSPACE
+        mTextPaint.color = currentTextColor
+        mTextPaint.isAntiAlias = true
+        mTextPaint.typeface = Typeface.MONOSPACE
 
         // Compute size of each box
         mMinBoxW = StyleUtils.getSize(res, R.dimen.puzzle_box_width).toFloat()
-        mTextPaint!!.textSize = StyleUtils.getSize(res, R.dimen.puzzle_hint_size).toFloat()
+        mTextPaint.textSize = StyleUtils.getSize(res, R.dimen.puzzle_hint_size).toFloat()
 
         // Compute size of a single char (assumes monospaced font!)
         val bounds = Rect()
-        mTextPaint!!.getTextBounds("M", 0, 1, bounds)
+        mTextPaint.getTextBounds("M", 0, 1, bounds)
         mCharW = bounds.width().toFloat()
         mCharH = bounds.height().toFloat()
 
@@ -131,7 +130,7 @@ class HintView : AppCompatTextView {
     private fun drawChars(canvas: Canvas?, width: Int): Int {
         var desiredHeight = paddingTop
 
-        if (mPuzzle != null) {
+        mPuzzle?.let {
             // Compute the height that works for this width
             val offsetY = mCharH / 2
             val offsetX = mBoxW / 2 - mCharW / 2
@@ -153,13 +152,13 @@ class HintView : AppCompatTextView {
                 if (canvas != null) {
                     val chr = c.toString()
                     // Check if it's been mapped already
-                    if (mPuzzle!!.isUserCharInput(c)) {
-                        mTextPaint!!.alpha = 96
+                    if (it.isUserCharInput(c)) {
+                        mTextPaint.alpha = 96
                     } else {
-                        mTextPaint!!.alpha = 255
+                        mTextPaint.alpha = 255
                     }
                     // Draw the character
-                    canvas.drawText(chr, x + offsetX, y, mTextPaint!!)
+                    canvas.drawText(chr, x + offsetX, y, mTextPaint)
                 }
                 c++
             }
