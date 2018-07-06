@@ -14,7 +14,6 @@ apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-android-extensions'
 apply plugin: 'io.fabric'
 apply plugin: 'com.google.firebase.firebase-perf'
-apply plugin: 'com.google.gms.google-services'
 
 android {
     compileOptions {
@@ -65,11 +64,11 @@ android {
     configurations.all {
         resolutionStrategy.force 'com.android.support:support-v13:27.1.1'
     }
-    compileSdkVersion 27
+    compileSdkVersion 28
     defaultConfig {
         applicationId "com.pixplicity.cryptogram"
         minSdkVersion 14
-        targetSdkVersion 27
+        targetSdkVersion 28
         versionCode 205
         versionName "1.8.11"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
@@ -129,18 +128,21 @@ dependencies {
 
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
 
-    implementation 'com.android.support:appcompat-v7:27.1.1'
-    implementation 'com.android.support:support-v4:27.1.1'
-    implementation 'com.android.support:support-annotations:27.1.1'
-    implementation 'com.android.support:design:27.1.1'
-    implementation 'com.android.support:recyclerview-v7:27.1.1'
+    implementation 'com.android.support:appcompat-v7:28.0.0-alpha3'
+    implementation 'com.android.support:support-v4:28.0.0-alpha3'
+    implementation 'com.android.support:support-annotations:28.0.0-alpha3'
+    implementation 'com.android.support:design:28.0.0-alpha3'
+    implementation 'com.android.support:recyclerview-v7:28.0.0-alpha3'
 
     implementation 'com.android.billingclient:billing:1.1'
 
-    implementation 'com.google.android.gms:play-services-games:11.4.2'
+    //noinspection GradleDependency
+    implementation 'com.google.android.gms:play-services-games:11.8.0'
 
-    implementation 'com.google.firebase:firebase-core:11.4.2'
-    implementation 'com.google.firebase:firebase-perf:11.4.2'
+    //noinspection GradleDependency
+    implementation 'com.google.firebase:firebase-core:11.8.0'
+    //noinspection GradleDependency
+    implementation 'com.google.firebase:firebase-perf:11.8.0'
 
     implementation 'net.soulwolf.widget:ratiolayout:1.0.0'
     implementation 'com.afollestad.material-dialogs:core:0.9.4.7'
@@ -174,3 +176,5 @@ dependencies {
     testImplementation 'org.powermock:powermock-module-junit4-rule:1.7.3'
     testImplementation 'org.powermock:powermock-module-junit4:1.7.3'
 }
+
+apply plugin: 'com.google.gms.google-services'
