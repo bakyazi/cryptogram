@@ -31,7 +31,6 @@ class CryptogramLayout : LinearLayout {
     override fun onTouchEvent(event: MotionEvent): Boolean {
         when (event.action) {
             MotionEvent.ACTION_UP -> if (mCryptogramView != null) {
-                mCryptogramView!!.hideSoftInput()
                 // Clear selected character
                 mCryptogramView!!.selectedCharacter = 0.toChar()
             }
