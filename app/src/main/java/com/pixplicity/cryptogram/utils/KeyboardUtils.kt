@@ -6,6 +6,13 @@ import com.pixplicity.cryptogram.events.PuzzleEvent
 
 object KeyboardUtils {
 
+    interface Contract {
+        companion object {
+            const val ALPHA_GREYED = (256 * 0.4f).toInt()
+        }
+        val keyIndex: Int
+    }
+
     private enum class KeyValue(
             @DrawableRes val drawableRes: Int,
             val text: String?,
@@ -62,16 +69,6 @@ object KeyboardUtils {
     @DrawableRes
     fun getKeyIcon(contract: Contract): Int {
         return fromKeycode(contract.keyIndex).drawableRes
-    }
-
-    interface Contract {
-
-        val keyIndex: Int
-
-        companion object {
-            val ALPHA_GREYED = (256 * 0.4f).toInt()
-        }
-
     }
 
 }

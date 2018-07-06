@@ -533,6 +533,7 @@ class CryptogramActivity : BaseActivity(), GoogleApiClient.ConnectionCallbacks, 
 
     private fun updateCryptogram(puzzle: Puzzle?) {
         if (puzzle != null) {
+            puzzle.checkCompleted()
             val provider = PuzzleProvider.getInstance(this)
             provider.setCurrentId(puzzle.id)
             rv_drawer.scrollToPosition(provider.currentIndex)

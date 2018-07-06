@@ -10,7 +10,6 @@ import com.google.gson.annotations.SerializedName
 import com.pixplicity.cryptogram.CryptogramApp
 import com.pixplicity.cryptogram.events.PuzzleEvent
 import com.pixplicity.cryptogram.utils.EventProvider
-import com.pixplicity.cryptogram.utils.PrefsUtils
 import java.util.*
 
 class PuzzleProgress {
@@ -299,14 +298,18 @@ class PuzzleProgress {
 
     @Synchronized
     fun isInProgress(puzzle: Puzzle): Boolean {
-        return if (isCompleted(puzzle)) {
+        return if (checkCompleted(puzzle)) {
             false
         } else getUserCharsCount(puzzle) > 0
         // Dumb approach of simply checking on inputs
     }
 
-    @Synchronized
     fun isCompleted(puzzle: Puzzle): Boolean {
+        return mCompleted == true
+    }
+
+    @Synchronized
+    fun checkCompleted(puzzle: Puzzle): Boolean {
         if (mCompleted != true) {
             mCompleted = true
             val userChars = getUserCharsMapping(puzzle)
@@ -317,7 +320,7 @@ class PuzzleProgress {
             } else {
                 for (character in userChars.keys) {
                     // In order to be correct, the key and value must be identical
-                    if (character != null && character !== userChars[character] && !puzzle.isGiven(character)) {
+                    if (character !== userChars[character] && !puzzle.isGiven(character)) {
                         mCompleted = false
                         break
                     }
@@ -355,7 +358,7 @@ class PuzzleProgress {
 
     @Synchronized
     fun onResume(puzzle: Puzzle) {
-        if (!isPlaying && !isCompleted(puzzle)) {
+        if (!isPlaying && !checkCompleted(puzzle)) {
             if (mStartTime == null || mStartTime == 0L) {
                 onStart(puzzle)
             }

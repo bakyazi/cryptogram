@@ -84,7 +84,7 @@ class PuzzleProvider @Throws(IOException::class) private constructor(context: Co
                 while (iter.hasNext()) {
                     val index = iter.next()
                     var puzzle = get(index)
-                    if (puzzle == null || puzzle.isCompleted) {
+                    if (puzzle == null || puzzle.checkCompleted()) {
                         iter.remove()
                         puzzle = null
                     }

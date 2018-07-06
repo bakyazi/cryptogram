@@ -100,6 +100,8 @@ open class Puzzle {
     val isCompleted: Boolean
         get() = progress.isCompleted(this)
 
+    fun checkCompleted() = progress.checkCompleted(this)
+
     val reveals: Int
         get() = progress.reveals
 
