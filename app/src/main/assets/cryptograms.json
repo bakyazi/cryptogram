@@ -4698,5 +4698,35 @@
     "author": "Stephen Hawking's last words",
     "given": "T",
     "topic": "Life"
+  },
+  {
+    "text": "Kindness is the language which the deaf can hear and the blind can see.",
+    "author": "Mark Twain",
+    "given": "D",
+    "topic": "Inspirational"
+  },
+  {
+    "text": "Great things in business are never done by one person. They're done by a team of people.",
+    "author": "Steve Jobs",
+    "given": "P",
+    "topic": "Inspirational"
+  },
+  {
+    "text": "Success is a lousy teacher. It seduces smart people into thinking they can't lose.",
+    "author": "Bill Gates",
+    "given": "T",
+    "topic": "Life"
+  },
+  {
+    "text": "When the whole world is silent, even one voice becomes powerful.",
+    "author": "Malala Yousafzai",
+    "given": "L",
+    "topic": "Inspirational"
+  },
+  {
+    "text": "You can waste your lives drawing lines. Or you can live your life crossing them.",
+    "author": "Shonda Rhimes",
+    "given": "L",
+    "topic": "Motivational"
   }
 ]
