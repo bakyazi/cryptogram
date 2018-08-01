@@ -2287,6 +2287,7 @@
   {
     "text": "Great things in business are never done by one person. They’re done by a team of people.",
     "author": "Steve Jobs",
+    "given": "P",
     "topic": "Business"
   },
   {
@@ -4696,7 +4697,7 @@
   {
     "text": "Be aware of the preciousness of time.",
     "author": "Stephen Hawking's last words",
-    "given": "T",
+    "given": "TW",
     "topic": "Life"
   },
   {
@@ -4706,13 +4707,7 @@
     "topic": "Inspirational"
   },
   {
-    "text": "Great things in business are never done by one person. They're done by a team of people.",
-    "author": "Steve Jobs",
-    "given": "P",
-    "topic": "Inspirational"
-  },
-  {
-    "text": "Success is a lousy teacher. It seduces smart people into thinking they can't lose.",
+    "text": "Success is a lousy teacher. It seduces smart people into thinking they can’t lose.",
     "author": "Bill Gates",
     "given": "T",
     "topic": "Life"
