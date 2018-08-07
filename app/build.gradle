@@ -160,6 +160,8 @@ dependencies {
 
     implementation 'com.getkeepsafe.taptargetview:taptargetview:1.10.0'
 
+    implementation 'com.simplecityapps:recyclerview-fastscroll:1.0.18'
+
     implementation('com.crashlytics.sdk.android:crashlytics:2.6.7@aar') {
         transitive = true
     }
