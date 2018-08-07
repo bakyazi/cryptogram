@@ -4692,8 +4692,33 @@
     "topic": "Scepticism"
   },
   {
+    "text": "I have possessed that heart, that noble soul, in whose presence I seemed to be more than I really was, because I was all that I could be.",
+    "author": "Johann Wolfgang von Goethe",
+    "given": "S",
+    "topic": "Thoughtfulness"
+  },
+  {
+    "text": "Adults, just like children, tumble about in the world without knowing where they come from and where they’re going.",
+    "author": "Johann Wolfgang von Goethe",
+    "given": "GW",
+    "topic": "Thoughtfulness"
+  },
+  {
+    "text": "The man who, solely from regard to the opinion of others, and without any wish or necessity of his own, toils after gold, honor, or any other phantom, is no better than a fool.",
+    "author": "Johann Wolfgang von Goethe",
+    "given": "FH",
+    "topic": "Happiness"
+  },
+  {
+    "text": "Soldiers are citizens of death’s grey land,\nDrawing no dividend from time’s tomorrows.\nIn the great hour of destiny they stand,\nEach with his feuds, and jealousies, and sorrows.",
+    "author": "Siegfried Sassoon, “The War Poems”",
+    "given": "FG",
+    "topic": "War"
+  },
+  {
     "text": "We are prisoners of our own experience. We simply thought that we would go in with a sledgehammer, knock things down, clean them up and it would be all over. And it’s very, very difficult to dispel ignorance if you retain arrogance.",
     "author": "Sam Wilson, US Army Vietnam veteran",
+    "given": "PR",
     "topic": "War"
   },
   {
@@ -4701,6 +4726,18 @@
     "author": "Ken Burns",
     "given": "AH",
     "topic": "War"
+  },
+  {
+    "text": "I wonder how I looked to you;\nI wonder, were you as terrified as I was?\nI wonder, did you hate me as much as I hated you?\nI wonder how long you’d been fighting your war;\nI wonder if you had any children;\nAnd I wonder had you survived and we met today, would you speak to me?",
+    "author": "Excerpt from the poem “Notes to the Man who Shot Me, Revisited,” by John Musgrave",
+    "given": "W",
+    "topic": "War"
+  },
+  {
+    "text": "I didn’t want to wake up. I was having a much better time asleep. And that’s really sad. It was almost like a reverse nightmare, like when you wake up from a nightmare you’re so relieved. I woke up into a nightmare.",
+    "author": "Ned Vizzini",
+    "given": "V",
+    "topic": "Depression"
   },
   {
     "text": "Be aware of the preciousness of time.",
@@ -4731,5 +4768,35 @@
     "author": "Shonda Rhimes",
     "given": "L",
     "topic": "Motivational"
+  },
+  {
+    "text": "It is not true that people stop pursuing dreams because they grow old, they grow old because they stop pursuing dreams.",
+    "author": "Gabriel García Márquez",
+    "given": "O",
+    "topic": "Motivational"
+  },
+  {
+    "text": "There are some things in this world you rely on, like a sure bet. And when they let you down, shifting from where you’ve carefully placed them, it shakes your faith, right where you stand.",
+    "author": "Sarah Dessen",
+    "given": "W",
+    "topic": "Disillusionment"
+  },
+  {
+    "text": "Maturity is a bitter disappointment for which no remedy exists, unless laughter could be said to remedy anything.",
+    "author": "Kurt Vonnegut",
+    "given": "IT",
+    "topic": "Disillusionment"
+  },
+  {
+    "text": "When you once see something as false which you have accepted as true, as natural, as human, then you can never go back to it.",
+    "author": "Jiddu Krishnamurti",
+    "given": "EM",
+    "topic": "Disillusionment"
+  },
+  {
+    "text": "It’s hard to communicate anything exactly and that’s why perfect relationships between people are difficult to find.",
+    "author": "Gustave Flaubert",
+    "given": "DGM",
+    "topic": "Thoughtfulness"
   }
 ]
