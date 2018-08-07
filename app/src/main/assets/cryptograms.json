@@ -231,21 +231,25 @@
   {
     "text": "The sweetest of all sounds is that of the voice of the woman we love.",
     "author": "Jean de la Bruyere",
+    "given": "N",
     "topic": "Love"
   },
   {
     "text": "Keep love in your heart. A life without it is like a sunless garden when the flowers are dead.",
     "author": "Oscar Wilde",
+    "given": "GW",
     "topic": "Love"
   },
   {
     "text": "Always remember that you are abso­lutely unique. Just like everyone else.",
     "author": "Margaret Mead",
+    "given": "U",
     "topic": "Funny"
   },
   {
     "text": "People who think they know every­thing are a great annoy­ance to those of us who do.",
     "author": "Isaac Asimov",
+    "given": "H",
     "topic": "Funny"
   },
   {
@@ -287,6 +291,7 @@
   {
     "text": "Laziness is nothing more than the habit of resting before you get tired.",
     "author": "Jules Renard",
+    "given": "I",
     "topic": "Funny"
   },
   {
@@ -304,6 +309,7 @@
   {
     "text": "It’s amazing that the amount of news that happens in the world every day always just exactly fits the news­paper.",
     "author": "Jerry Seinfeld",
+    "given": "W",
     "topic": "Funny"
   },
   {
@@ -315,6 +321,7 @@
   {
     "text": "The trouble with having an open mind, of course, is that people will insist on coming along and trying to put things in it.",
     "author": "Terry Pratchett",
+    "given": "R",
     "topic": "Funny"
   },
   {
@@ -4407,7 +4414,7 @@
   {
     "text": "Too many people spend money they haven’t earned, to buy things they don’t want, to impress people that they don’t like.",
     "author": "Will Rogers",
-    "topic": "Life"
+    "topic": "Happiness"
   },
   {
     "text": "Wealth consists not in having great possessions, but in having few wants.",
@@ -4690,13 +4697,14 @@
     "topic": "War"
   },
   {
-    "text": "What doesn’t change is human nature. Human nature stays the same. ",
+    "text": "What doesn’t change is human nature. Human nature stays the same.",
     "author": "Ken Burns",
+    "given": "AH",
     "topic": "War"
   },
   {
     "text": "Be aware of the preciousness of time.",
-    "author": "Stephen Hawking's last words",
+    "author": "Stephen Hawking’s last words",
     "given": "TW",
     "topic": "Life"
   },
