@@ -72,8 +72,6 @@ android {
         versionCode 207
         versionName "1.8.13"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
-
-        buildConfigField("String", "BITCOIN_ADDRESS", "\"35YPTPGZNeVrUNFA9Tn7A8HVx4nhFd1989\"")
     }
     buildTypes {
         debug {

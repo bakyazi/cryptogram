@@ -51,7 +51,6 @@ class DonateFragment : BaseFragment(), PurchasesUpdatedListener {
         Log.d(TAG, "${purchasesConsumed?.size} purchases consumed")
 
         if (isDarkTheme) {
-            bt_bitcoin.invertedTheme()
             bt_in_app_purchase.invertedTheme()
         }
 
@@ -88,50 +87,6 @@ class DonateFragment : BaseFragment(), PurchasesUpdatedListener {
                 // Google Play by calling the startConnection() method.
             }
         })
-
-        bt_bitcoin.setOnClickListener {
-            val context = context!!
-            val intent = Intent(Intent.ACTION_VIEW, Uri.parse("bitcoin:" + BuildConfig.BITCOIN_ADDRESS))
-            // FIXME perhaps check if a compatible app is installed
-            //context.packageManager.resolveActivity(intent, PackageManager.MATCH_DEFAULT_ONLY)
-
-            val dialog = AlertDialog.Builder(context)
-                    .setMessage(getString(R.string.donate_bitcoin_message, BuildConfig.BITCOIN_ADDRESS))
-                    .setPositiveButton(R.string.donate_copy_address) { dialogInterface, i ->
-                        val clipboardManager = context.getSystemService(CLIPBOARD_SERVICE) as ClipboardManager?
-                        if (clipboardManager != null) {
-                            clipboardManager.primaryClip = ClipData.newPlainText("text", BuildConfig.BITCOIN_ADDRESS)
-                            Toast.makeText(context, R.string.donate_copy_success, Toast.LENGTH_SHORT).show()
-                        } else {
-                            Toast.makeText(context, R.string.donate_copy_failure, Toast.LENGTH_SHORT).show()
-                            Crashlytics.logException(IllegalStateException("Failed copying bitcoin address"))
-                        }
-                    }
-                    .setNegativeButton(R.string.donate_launch_wallet) { dialog1, which ->
-                        try {
-                            startActivity(intent)
-                        } catch (ignore: ActivityNotFoundException) {
-                            val installPackageName = "de.schildbach.wallet"
-                            try {
-                                startActivity(Intent(Intent.ACTION_VIEW, Uri.parse("market://details?id=$installPackageName")))
-                            } catch (ignore2: ActivityNotFoundException) {
-                                try {
-                                    startActivity(Intent(Intent.ACTION_VIEW, Uri.parse("https://play.google.com/store/apps/details?id=$installPackageName")))
-                                } catch (e: ActivityNotFoundException) {
-                                    Toast.makeText(context, R.string.donate_launch_failure, Toast.LENGTH_SHORT).show()
-                                    Crashlytics.logException(IllegalStateException("Failed launching Google Play", e))
-                                }
-                            }
-                        }
-                    }
-                    .show()
-
-            val packageManager = context.packageManager
-            if (intent.resolveActivity(packageManager) == null) {
-                // No intent available to handle action
-                dialog.getButton(DialogInterface.BUTTON_NEGATIVE).setText(R.string.install_bitcoin_wallet)
-            }
-        }
 
         bt_in_app_purchase.setOnClickListener {
             when (BillingUtils.SKU_LIST.count()) {

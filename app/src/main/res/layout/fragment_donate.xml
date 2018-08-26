@@ -30,23 +30,6 @@
             android:text="@string/donate_message" />
 
         <android.support.v7.widget.AppCompatButton
-            android:id="@+id/bt_bitcoin"
-            style="@style/Widget.AppCompat.Button.Borderless"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="@dimen/activity_horizontal_margin"
-            android:layout_marginTop="8dp"
-            android:layout_marginRight="@dimen/activity_horizontal_margin"
-            android:drawableStart="@drawable/ic_bitcoin"
-            android:drawableLeft="@drawable/ic_bitcoin"
-            android:gravity="center"
-            android:paddingEnd="24dp"
-            android:paddingRight="24dp"
-            android:text="@string/donate_bitcoin"
-            android:textAllCaps="true"
-            tools:ignore="RtlSymmetry,UnusedAttribute" />
-
-        <android.support.v7.widget.AppCompatButton
             android:id="@+id/bt_in_app_purchase"
             style="@style/Widget.AppCompat.Button.Borderless"
             android:layout_width="match_parent"

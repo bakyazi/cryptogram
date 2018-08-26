@@ -155,15 +155,7 @@
 
     <string name="donate_title">❤</string>
     <string name="donate_message">Cryptogram is a free &amp; ad-free app I tinker on in my spare time. I love working on it and hearing feedback from users who love it!\n\nIf you’ve enjoyed playing, please consider a donation. I put all proceeds aside for a nice cup of coffee or a dinner with friends.\n\nDon’t hesitate to let me know that you’ve made a donation. I’d love to thank you!</string>
-    <string name="donate_bitcoin">Donate bitcoin</string>
-    <string name="donate_bitcoin_message">BitCoin is also a great way to donate!\n\nHere’s my address:\n%1$s</string>
     <string name="donate_google_play">Donate through Google Play</string>
-    <string name="donate_copy_address">Copy Bitcoin address</string>
-    <string name="donate_copy_success">Bitcoin address copied to the clipboard</string>
-    <string name="donate_copy_failure">Whoops, couldn’t copy it to the clipboard!</string>
-    <string name="install_bitcoin_wallet">Install Bitcoin wallet</string>
-    <string name="donate_launch_wallet">Launch Bitcoin wallet</string>
-    <string name="donate_launch_failure">Whoops, couldn’t launch your Bitcoin wallet!</string>
     <string name="donate_thank_you">Thank you so much! With your contribution, you help Cryptogram stay fun for everybody!\n\nYou’re welcome to submit some feedback about what you do and don’t like.</string>
     <string name="donate_thank_you_feedback">Send feedback</string>
     <string name="donate_thank_you_continue">Continue</string>
