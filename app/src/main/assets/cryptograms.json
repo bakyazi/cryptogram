@@ -507,9 +507,9 @@
     "topic": "Inspirational"
   },
   {
-    "text": "The world is full of magical things patient­ly waiting for our wits to grow sharper.",
-    "author": "Bertrand Russell",
-    "topic": "Inspirational"
+    "text": "The uni­verse is full of magical things, patient­ly waiting for our wits to sharpen.",
+    "author": "Eden Phillpotts",
+    "topic": "Beauty"
   },
   {
     "text": "All you need is the plan, the road map, and the courage to press on to your desti­nation.",
@@ -4824,7 +4824,7 @@
     "topic": "Loneliness"
   },
   {
-    "text": "Depression is such a cruel punishment. There are no fevers, no rashes, no blood tests to send people scurrying in concern - just the slow erosion of self as insidious as cancer. And like cancer, it is essentially a solitary experience; a room in hell with only your name on the door.",
+    "text": "Depression is such a cruel punishment. There are no fevers, no rashes, no blood tests to send people scurrying in concern — just the slow erosion of self as insidious as cancer. And like cancer, it is essentially a solitary experience; a room in hell with only your name on the door.",
     "author": "Martha Manning",
     "given": "L",
     "topic": "Depression"
@@ -4852,5 +4852,35 @@
     "author": "Stephen Fry",
     "given": "L",
     "topic": "Depression"
+  },
+  {
+    "text": "None are more hopelessly enslaved than those who falsely believe they are free.",
+    "author": "Johann Wolfgang von Goethe",
+    "given": "NWY",
+    "topic": "Equality"
+  },
+  {
+    "text": "Everything that irritates us about others can lead us to an understanding of ourselves.",
+    "author": "C.G. Jung",
+    "given": "OS",
+    "topic": "Thoughtfulness"
+  },
+  {
+    "text": "There are things known and there are things unknown, and in between are the doors of perception.",
+    "author": "Aldous Huxley",
+    "given": "KR",
+    "topic": "Thoughtfulness"
+  },
+  {
+    "text": "I dreamed a thousand new paths. I woke and walked my old one.",
+    "author": "Chinese Proverb",
+    "given": "DW",
+    "topic": "Thoughtfulness"
+  },
+  {
+    "text": "Dream lofty dreams, and as you dream, so you shall become. Your vision is the promise of what you shall one day be; your ideal is the prophecy of what you shall at last unveil.",
+    "author": "James Allen",
+    "given": "Y",
+    "topic": "Ambition"
   }
 ]
