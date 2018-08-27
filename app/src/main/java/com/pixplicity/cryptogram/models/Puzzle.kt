@@ -98,7 +98,7 @@ open class Puzzle {
         get() = progress.isInProgress(this)
 
     val isCompleted: Boolean
-        get() = progress.isCompleted(this)
+        get() = progress.isCompleted()
 
     fun checkCompleted() = progress.checkCompleted(this)
 
@@ -255,9 +255,9 @@ open class Puzzle {
 
     private fun load() {
         if (!mLoadedProgress && !mIsMock) {
-            mProgress = PuzzleProvider.getInstance(CryptogramApp.instance).progress.get(id)
-            if (mProgress != null) {
-                mProgress!!.sanitize(this)
+            PuzzleProvider.getInstance(CryptogramApp.instance).progress.get(id).let {
+                mProgress = it
+                it?.sanitize(this)
             }
         }
         mLoadedProgress = true

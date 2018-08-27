@@ -304,7 +304,7 @@ class PuzzleProgress {
         // Dumb approach of simply checking on inputs
     }
 
-    fun isCompleted(puzzle: Puzzle): Boolean {
+    fun isCompleted(): Boolean {
         return mCompleted == true
     }
 
@@ -464,7 +464,7 @@ class PuzzleProgress {
         val i = getUserCharsMapping(puzzle).keys.iterator()
         while (i.hasNext()) {
             val c = i.next()
-            if (c == null || !puzzle.isInputChar(c)) {
+            if (!puzzle.isInputChar(c)) {
                 i.remove()
             }
         }
@@ -474,7 +474,6 @@ class PuzzleProgress {
         }
         val characterList = getCharacterList(puzzle)
         val charMapping = getCharMapping(puzzle)
-        Log.w(TAG, "check for invalid mappings in $puzzle")
         for (c in characterList) {
             if (charMapping[c]?.toInt() ?: 0 == 0) {
                 // Whoops! Puzzle has a broken character mapping
@@ -518,9 +517,8 @@ class PuzzleProgress {
 
         private val ALPHABET = ArrayList<Char>(26)
 
-        private val TARGET_DURATION = 3 * 60f
-        private val MAX_REVEALS = 6f
-        private val MAX_EXCESS_INPUT = 26f
+        private const val TARGET_DURATION = 3 * 60f
+        private const val MAX_REVEALS = 6f
 
         init {
             var i: Int = 'A'.toInt()
