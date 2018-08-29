@@ -69,8 +69,8 @@ android {
         applicationId "com.pixplicity.cryptogram"
         minSdkVersion 14
         targetSdkVersion 28
-        versionCode 207
-        versionName "1.8.13"
+        versionCode 208
+        versionName "1.8.14"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
     }
     buildTypes {
@@ -126,11 +126,11 @@ dependencies {
 
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
 
-    implementation 'com.android.support:appcompat-v7:28.0.0-beta01'
-    implementation 'com.android.support:support-v4:28.0.0-beta01'
-    implementation 'com.android.support:support-annotations:28.0.0-beta01'
-    implementation 'com.android.support:design:28.0.0-beta01'
-    implementation 'com.android.support:recyclerview-v7:28.0.0-beta01'
+    implementation 'com.android.support:appcompat-v7:28.0.0-rc01'
+    implementation 'com.android.support:support-v4:28.0.0-rc01'
+    implementation 'com.android.support:support-annotations:28.0.0-rc01'
+    implementation 'com.android.support:design:28.0.0-rc01'
+    implementation 'com.android.support:recyclerview-v7:28.0.0-rc01'
 
     implementation 'com.android.billingclient:billing:1.1'
 
