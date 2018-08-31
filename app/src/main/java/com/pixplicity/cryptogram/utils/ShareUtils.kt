@@ -25,7 +25,7 @@ fun getVersionString(context: Context): String? {
 }
 
 fun sendFeedback(context: Context, purchaseId: String?) {
-    var versionString: String? = getVersionString(context)
+    val versionString: String? = getVersionString(context)
 
     val intent = Intent(Intent.ACTION_SENDTO, Uri.fromParts(
             "mailto", AboutFragment.FEEDBACK_EMAIL, null))
@@ -50,13 +50,13 @@ fun sendFeedback(context: Context, purchaseId: String?) {
 }
 
 fun sendErrorFeedback(context: Context, purchaseToken: String, errorCode: Int) {
-    var versionString: String? = getVersionString(context)
+    val versionString: String? = getVersionString(context)
 
     val intent = Intent(Intent.ACTION_SENDTO, Uri.fromParts(
             "mailto", AboutFragment.FEEDBACK_EMAIL, null))
     intent.putExtra(Intent.EXTRA_EMAIL, arrayOf(AboutFragment.FEEDBACK_EMAIL))
     intent.putExtra(Intent.EXTRA_SUBJECT,
-            context.getString(R.string.feedback_subject_error, purchaseToken))
+            context.getString(R.string.feedback_subject_error))
     val ime = SimpleInputConnection.getIme(context)
     val keyboardPackageName = if (ime == null) "unknown" else ime.packageName
     val message = context.getString(R.string.feedback_body_error,
@@ -78,25 +78,25 @@ fun sendErrorFeedback(context: Context, purchaseToken: String, errorCode: Int) {
 fun donationThankYou(context: Context, purchaseId: String) {
     AlertDialog.Builder(context)
             .setMessage(R.string.donate_thank_you)
-            .setPositiveButton(R.string.donate_thank_you_feedback, { dialog, _ ->
+            .setPositiveButton(R.string.donate_thank_you_feedback) { dialog, _ ->
                 sendFeedback(context, purchaseId)
                 dialog.dismiss()
-            })
-            .setNegativeButton(R.string.donate_thank_you_continue, { dialog, _ ->
+            }
+            .setNegativeButton(R.string.donate_thank_you_continue) { dialog, _ ->
                 dialog.dismiss()
-            })
+            }
             .show()
 }
 
 fun donationError(context: Context, purchaseToken: String, errorCode: Int) {
     AlertDialog.Builder(context)
             .setMessage(R.string.donate_error)
-            .setPositiveButton(R.string.donate_error_feedback, { dialog, _ ->
+            .setPositiveButton(R.string.donate_error_feedback) { dialog, _ ->
                 sendErrorFeedback(context, purchaseToken, errorCode)
                 dialog.dismiss()
-            })
-            .setNegativeButton(R.string.donate_error_cancel, { dialog, _ ->
+            }
+            .setNegativeButton(R.string.donate_error_cancel) { dialog, _ ->
                 dialog.dismiss()
-            })
+            }
             .show()
 }
