@@ -4974,12 +4974,6 @@
     "topic": "Aspiration"
   },
   {
-    "text": "Things are never quite as scary when you’ve got a best friend.",
-    "author": "Bill Watterson",
-    "given": "GQV",
-    "topic": "Love"
-  },
-  {
     "text": "Shutting off the thought process is not rejuvenating; the mind is like a car battery — it recharges by running.",
     "author": "Bill Watterson",
     "given": "GJO",
@@ -4990,5 +4984,23 @@
     "author": "Bill Watterson",
     "given": "L",
     "topic": "Aspiration"
+  },
+  {
+    "text": "If people sat outside and looked at the stars each night, I’ll bet they’d live a lot differently.",
+    "author": "Bill Watterson",
+    "given": "O",
+    "topic": "Life"
+  },
+  {
+    "text": "Sometimes I think the surest sign that intelligent life exists elsewhere in the universe is that none of it has tried to contact us.",
+    "author": "Bill Watterson",
+    "given": "LU",
+    "topic": "Life"
+  },
+  {
+    "text": "Things are never quite as scary when you’ve got a best friend.",
+    "author": "Bill Watterson",
+    "given": "GQV",
+    "topic": "Love"
   }
 ]
